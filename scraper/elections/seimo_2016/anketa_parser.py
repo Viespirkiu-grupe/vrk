@@ -5,7 +5,7 @@ from pathlib import Path
 import re
 from typing import Any
 
-from bs4 import BeautifulSoup, Tag
+from bs4 import BeautifulSoup, NavigableString, Tag
 
 from scraper.elections.seimo_2016.sitemap import ELECTION_ID, resolve_candidate_url
 from scraper.shared.files import slugify, write_json
@@ -36,6 +36,10 @@ def _extract_links(container: Tag | None) -> list[str]:
         return []
 
     links: list[str] = []
+    if container.name == "a" and container.get("href"):
+        href = normalize_space(container.get("href", ""))
+        links.append(resolve_candidate_url(href))
+
     for anchor in container.find_all("a", href=True):
         href = normalize_space(anchor.get("href", ""))
         links.append(resolve_candidate_url(href))
@@ -496,41 +500,130 @@ def _extract_section_id(*candidates: str) -> str:
     return ""
 
 
+def _index_sections_by_id(sections: list[dict[str, Any]]) -> dict[str, Any]:
+    by_section_id: dict[str, Any] = {}
+    for section in sections:
+        if not isinstance(section, dict):
+            continue
+        section_id = section.get("sectionId")
+        if not isinstance(section_id, str) or not section_id:
+            continue
+
+        existing = by_section_id.get(section_id)
+        if existing is None:
+            by_section_id[section_id] = section
+        elif isinstance(existing, list):
+            existing.append(section)
+        else:
+            by_section_id[section_id] = [existing, section]
+
+    return by_section_id
+
+
 def _parse_privaciu_interesu_html(html: str) -> dict[str, Any]:
+    def _parse_privaciu_section(table: Tag) -> dict[str, Any]:
+        heading = _tag_text(table.find("h4"))
+        title = heading or _extract_table_title(table)
+        section_id = _extract_section_id(heading, title)
+        headers = _extract_table_headers(table)
+
+        row_payloads: list[dict[str, Any]] = []
+        for tr in table.find_all("tr"):
+            cells = tr.find_all("td", recursive=False)
+            if not cells:
+                continue
+
+            values = [_tag_text(cell) for cell in cells]
+            if not any(values):
+                continue
+
+            row_payloads.append({"values": values})
+
+        section: dict[str, Any] = {
+            "title": title,
+            "sectionId": section_id,
+        }
+
+        is_key_value = bool(row_payloads) and all(len(row["values"]) <= 2 for row in row_payloads)
+        if is_key_value:
+            items: list[dict[str, str]] = []
+            for row in row_payloads:
+                values = row["values"]
+                key = values[0].rstrip(":")
+                value = values[1] if len(values) > 1 else ""
+                if key == title and not value:
+                    continue
+                items.append(
+                    {
+                        "key": key,
+                        "value": value,
+                    }
+                )
+            section["items"] = items
+        else:
+            section["columns"] = headers
+            section["rows"] = [row["values"] for row in row_payloads]
+
+        return section
+
     soup = BeautifulSoup(html, "lxml")
     content = _find_main_content_after_tabnav(soup) or soup
     sections: list[dict[str, Any]] = []
-    by_section_id: dict[str, Any] = {}
     for table in content.select("table.tabinc.partydata"):
-        heading = _tag_text(table.find("h4"))
-        parsed = _parse_generic_table(table, title=heading)
-        parsed["heading"] = heading
+        sections.append(_parse_privaciu_section(table))
 
-        section_id = _extract_section_id(heading, str(parsed.get("title", "")))
-        parsed["sectionId"] = section_id
-
-        if section_id:
-            existing = by_section_id.get(section_id)
-            if existing is None:
-                by_section_id[section_id] = parsed
-            elif isinstance(existing, list):
-                existing.append(parsed)
-            else:
-                by_section_id[section_id] = [existing, parsed]
-
-        sections.append(parsed)
     return {
         "sections": sections,
-        "bySectionId": by_section_id,
     }
 
 
 def _parse_turto_ir_pajamu_html(html: str) -> dict[str, Any]:
+    def _parse_turto_section(table: Tag) -> dict[str, Any]:
+        title = _extract_table_title(table)
+        items: list[dict[str, Any]] = []
+
+        for tr in table.find_all("tr"):
+            cells = tr.find_all("td", recursive=False)
+            if not cells:
+                continue
+
+            values = [_tag_text(cell) for cell in cells]
+            if not any(values):
+                continue
+
+            row_links = [_extract_links(cell) for cell in cells]
+
+            if len(values) == 1:
+                key = values[0].rstrip(":")
+                value = ""
+                urls = row_links[0] if row_links else []
+            else:
+                key = values[0].rstrip(":")
+                value = values[1]
+                urls = row_links[1] if len(row_links) > 1 else []
+
+            # Some tables repeat the section title as a one-cell row.
+            if key == title and not value:
+                continue
+
+            items.append(
+                {
+                    "key": key,
+                    "value": value,
+                    "urls": urls,
+                }
+            )
+
+        return {
+            "title": title,
+            "items": items,
+        }
+
     soup = BeautifulSoup(html, "lxml")
     content = _find_main_content_after_tabnav(soup) or soup
     sections: list[dict[str, Any]] = []
     for table in content.select("table.tabinc"):
-        sections.append(_parse_generic_table(table))
+        sections.append(_parse_turto_section(table))
     return {
         "sections": sections,
     }
@@ -546,30 +639,108 @@ def _parse_kita_html(html: str) -> dict[str, Any]:
 
 
 def _parse_politines_kampanijos_html(html: str) -> dict[str, Any]:
+    def _append_campaign_item(items: list[dict[str, Any]], key: str, value: str, urls: list[str]) -> None:
+        key = normalize_space(key).rstrip(":")
+        value = normalize_space(value)
+
+        if not key and not value and not urls:
+            return
+
+        if items:
+            last_item = items[-1]
+            if not last_item.get("key") and not last_item.get("value") and not last_item.get("urls"):
+                items[-1] = {"key": key, "value": value, "urls": urls}
+                return
+
+        items.append(
+            {
+                "key": key,
+                "value": value,
+                "urls": urls,
+            }
+        )
+
+    def _parse_campaign_block(picklist: Tag) -> dict[str, Any]:
+        title = _tag_text(picklist.find("h3"))
+        items: list[dict[str, Any]] = []
+
+        for child in picklist.children:
+            if isinstance(child, NavigableString):
+                text = normalize_space(str(child))
+                if text:
+                    _append_campaign_item(items, "", text, [])
+                continue
+
+            if not isinstance(child, Tag):
+                continue
+
+            if child.name == "h3":
+                continue
+
+            if child.name == "br":
+                continue
+
+            if child.name == "a":
+                value = _tag_text(child)
+                urls = _extract_links(child)
+                if items and not items[-1].get("key") and items[-1].get("value"):
+                    previous_value = str(items[-1].get("value", "")).rstrip(":")
+                    items[-1] = {
+                        "key": previous_value,
+                        "value": value,
+                        "urls": urls,
+                    }
+                else:
+                    _append_campaign_item(items, "", value, urls)
+                continue
+
+            if child.name == "table":
+                for tr in child.find_all("tr"):
+                    cells = tr.find_all("td", recursive=False)
+                    if not cells:
+                        continue
+
+                    values = [_tag_text(cell) for cell in cells]
+                    urls_by_cell = [_extract_links(cell) for cell in cells]
+                    if not any(values) and not any(urls_by_cell):
+                        continue
+
+                    if len(cells) == 1:
+                        notice_value = values[0]
+                        if notice_value == title:
+                            continue
+                        _append_campaign_item(items, "", notice_value, urls_by_cell[0] if urls_by_cell else [])
+                        continue
+
+                    key = values[0]
+                    value = values[1] if len(values) > 1 else ""
+                    if key == title and not value:
+                        continue
+                    urls = urls_by_cell[1] if len(urls_by_cell) > 1 else []
+                    _append_campaign_item(items, key, value, urls)
+                continue
+
+            text = _tag_text(child)
+            if text:
+                _append_campaign_item(items, "", text, _extract_links(child))
+
+        return {
+            "title": title,
+            "items": items,
+        }
+
     soup = BeautifulSoup(html, "lxml")
     section_description = _tag_text(soup.select_one("div.sectionDescription"))
     tab_links = _parse_tabnav(soup.select_one("ul#tabnav"))
 
-    picklists: list[dict[str, Any]] = []
+    blocks: list[dict[str, Any]] = []
     for picklist in soup.select("div.picklist"):
-        picklist_title = _tag_text(picklist.find("h3"))
-        picklist_texts = _extract_non_empty_text_nodes(picklist)
-        tables = [_parse_generic_table(table) for table in picklist.select("table.partydata")]
-        picklists.append(
-            {
-                "title": picklist_title,
-                "texts": picklist_texts,
-                "tables": tables,
-            }
-        )
-
-    tables = [_parse_generic_table(table) for table in soup.select("table.partydata")]
+        blocks.append(_parse_campaign_block(picklist))
 
     return {
         "sectionDescription": section_description,
         "tabLinks": tab_links,
-        "picklists": picklists,
-        "tables": tables,
+        "blocks": blocks,
     }
 
 
@@ -656,8 +827,9 @@ def parse_anketa_sample(
         if data is not None:
             raw_data[key] = data
             if key == "privaciuInteresuDeklaracija" and isinstance(data, dict):
-                by_section_id = data.get("bySectionId")
-                if isinstance(by_section_id, dict):
+                sections = data.get("sections")
+                if isinstance(sections, list):
+                    by_section_id = _index_sections_by_id(sections)
                     normalized["privaciuInteresuDeklaracija"] = {
                         "bySectionId": by_section_id,
                     }
