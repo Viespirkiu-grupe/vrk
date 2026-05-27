@@ -1,6 +1,11 @@
 import argparse
 from pathlib import Path
 
+from scraper.elections.seimo_2016.anketa_parser import parse_anketa_samples
+from scraper.elections.seimo_2016.candidate_samples import (
+    fetch_candidates_with_tabs,
+    fetch_first_candidate_with_tabs,
+)
 from scraper.elections.seimo_2016.sitemap import (
     ELECTION_ID,
     build_sitemap_from_sample,
@@ -30,6 +35,60 @@ def build_parser() -> argparse.ArgumentParser:
         help="Path to HTML sample file. Defaults to samples/html/2016-seimo/list.html",
     )
 
+    candidate_sample_parser = subparsers.add_parser(
+        "fetch-first-candidate-samples",
+        help="Download first sitemap candidate page and tab subpages as HTML samples",
+    )
+    candidate_sample_parser.add_argument("election_id", choices=[ELECTION_ID])
+    candidate_sample_parser.add_argument(
+        "--sitemap",
+        type=Path,
+        default=Path("sitemaps/2016-seimo.json"),
+        help="Path to sitemap JSON. Defaults to sitemaps/2016-seimo.json",
+    )
+
+    targeted_sample_parser = subparsers.add_parser(
+        "fetch-candidate-samples",
+        help="Download selected candidate page and tab subpages as HTML samples",
+    )
+    targeted_sample_parser.add_argument("election_id", choices=[ELECTION_ID])
+    targeted_sample_parser.add_argument(
+        "--candidate-id",
+        action="append",
+        required=True,
+        help="Candidate ID from sitemap. Can be passed multiple times.",
+    )
+    targeted_sample_parser.add_argument(
+        "--sitemap",
+        type=Path,
+        default=Path("sitemaps/2016-seimo.json"),
+        help="Path to sitemap JSON. Defaults to sitemaps/2016-seimo.json",
+    )
+
+    parse_anketa_parser = subparsers.add_parser(
+        "parse-anketa-samples",
+        help="Parse saved anketa HTML samples into initial structured JSON output",
+    )
+    parse_anketa_parser.add_argument("election_id", choices=[ELECTION_ID])
+    parse_anketa_parser.add_argument(
+        "--candidate-id",
+        action="append",
+        default=None,
+        help="Candidate ID to parse. Can be passed multiple times. If omitted, parse all sampled candidates.",
+    )
+    parse_anketa_parser.add_argument(
+        "--samples-root",
+        type=Path,
+        default=Path("samples/html/2016-seimo"),
+        help="Path to candidate sample folders. Defaults to samples/html/2016-seimo",
+    )
+    parse_anketa_parser.add_argument(
+        "--output-root",
+        type=Path,
+        default=Path("data/2016-seimo"),
+        help="Path to output JSON folder. Defaults to data/2016-seimo",
+    )
+
     return parser
 
 
@@ -53,6 +112,71 @@ def main() -> int:
                 dups=stats["duplicate_candidate_ids"],
             )
         )
+        return 0
+
+    if args.command == "fetch-first-candidate-samples":
+        result = fetch_first_candidate_with_tabs(sitemap_path=args.sitemap)
+        candidate = result["candidate"]
+        print(f"Candidate: {candidate['candidateName']} ({candidate['candidateId']})")
+        print(f"Anketa sample: {result['anketa_path']}")
+        print(
+            "Tab samples saved: {saved} (tab links found: {found})".format(
+                saved=result["tabs_saved"],
+                found=result["tab_count"],
+            )
+        )
+        missing = result["missing_expected_tabs"]
+        if missing:
+            print("Missing expected tabs: " + ", ".join(missing))
+        else:
+            print("All expected candidate tabs found")
+        print(f"Index: {result['index_path']}")
+        return 0
+
+    if args.command == "fetch-candidate-samples":
+        payload = fetch_candidates_with_tabs(
+            candidate_ids=args.candidate_id,
+            sitemap_path=args.sitemap,
+        )
+        print(f"Fetched candidates: {payload['count']}")
+        for result in payload["results"]:
+            candidate = result["candidate"]
+            print(f"- {candidate['candidateName']} ({candidate['candidateId']})")
+            print(
+                "  Tab samples saved: {saved} (tab links found: {found})".format(
+                    saved=result["tabs_saved"],
+                    found=result["tab_count"],
+                )
+            )
+            missing = result["missing_expected_tabs"]
+            if missing:
+                print("  Missing expected tabs: " + ", ".join(missing))
+            else:
+                print("  All expected candidate tabs found")
+            print(f"  Index: {result['index_path']}")
+        return 0
+
+    if args.command == "parse-anketa-samples":
+        results = parse_anketa_samples(
+            candidate_ids=args.candidate_id,
+            samples_root=args.samples_root,
+            output_root=args.output_root,
+        )
+        print(f"Parsed candidates: {len(results)}")
+        for result in results:
+            print(
+                "- {name} ({cid}) -> {path}".format(
+                    name=result["candidateName"] or "Unknown",
+                    cid=result["candidateId"],
+                    path=result["outputPath"],
+                )
+            )
+            print(
+                "  rows={rows}, answered={answered}".format(
+                    rows=result["rowCount"],
+                    answered=result["answeredRowCount"],
+                )
+            )
         return 0
 
     parser.error("Unknown command")
