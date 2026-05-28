@@ -310,6 +310,48 @@ def _first_nested_table_rows(row: dict[str, Any] | None) -> list[Any]:
     return answer
 
 
+def _merge_split_anketa_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    merged_rows: list[dict[str, Any]] = []
+    index = 0
+
+    while index < len(rows):
+        row = rows[index]
+
+        if index + 1 < len(rows):
+            next_row = rows[index + 1]
+            row_answer = row.get("answer")
+            next_answer = next_row.get("answer")
+            row_prompt = normalize_space(str(row.get("prompt", "")))
+            next_prompt = normalize_space(str(next_row.get("prompt", "")))
+
+            should_merge_q9_2 = (
+                row.get("questionNumber") == "9.2"
+                and isinstance(row_answer, str)
+                and row_answer == ""
+                and next_row.get("questionNumber") is None
+                and isinstance(next_answer, str)
+                and next_answer != ""
+                and next_prompt.lower().startswith("tai nurodoma šioje anketoje")
+            )
+
+            if should_merge_q9_2:
+                merged_rows.append(
+                    {
+                        "rowIndex": row.get("rowIndex"),
+                        "questionNumber": row.get("questionNumber"),
+                        "prompt": normalize_space(f"{row_prompt} {next_prompt}"),
+                        "answer": next_answer,
+                    }
+                )
+                index += 2
+                continue
+
+        merged_rows.append(row)
+        index += 1
+
+    return merged_rows
+
+
 def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     q5 = _find_row_by_question_number(rows, "5")
     q6 = _find_row_by_question_number(rows, "6")
@@ -319,7 +361,6 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     q8_4 = _find_row_by_question_number(rows, "8.4")
     q9_1 = _find_row_by_question_number(rows, "9.1")
     q9_2 = _find_row_by_question_number(rows, "9.2")
-    q9_2_followup = _find_row_by_prompt_prefix(rows, "tai nurodoma šioje anketoje")
     q9_3_1 = _find_row_by_question_number(rows, "9.3.1")
     q9_3_2 = _find_row_by_question_number(rows, "9.3.2")
     q9_3_3 = _find_row_by_question_number(rows, "9.3.3")
@@ -357,7 +398,6 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
                 _row_answer_text(q9_1)
             ),
             "buvote-pripazintas-kaltu": _normalize_text_value(_row_answer_text(q9_2)),
-            "teistumo-paaiskinimas": _normalize_text_value(_row_answer_text(q9_2_followup)),
             "veika-veliau-dekriminalizuota": _normalize_text_value(_row_answer_text(q9_3_1)),
             "uzsienio-teismo-veika-lietuvoje-nenusikalstama": _normalize_text_value(
                 _row_answer_text(q9_3_2)
@@ -437,13 +477,15 @@ def _parse_anketa_table(table: Tag | None) -> dict[str, Any]:
             }
         )
 
-    normalized = _normalize_anketa_rows(parsed_rows)
+    merged_rows = _merge_split_anketa_rows(parsed_rows)
+    answered_count = sum(1 for row in merged_rows if row.get("answer"))
+    normalized = _normalize_anketa_rows(merged_rows)
 
     return {
-        "rows": parsed_rows,
+        "rows": merged_rows,
         "normalized": normalized,
         "stats": {
-            "rowCount": len(parsed_rows),
+            "rowCount": len(merged_rows),
             "answeredRowCount": answered_count,
         },
     }
