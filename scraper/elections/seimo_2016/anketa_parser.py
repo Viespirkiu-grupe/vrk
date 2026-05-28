@@ -1210,41 +1210,61 @@ def _normalize_biografija_data(payload: dict[str, Any]) -> dict[str, Any]:
 def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]:
     sections = payload.get("sections") if isinstance(payload.get("sections"), list) else []
     by_section: dict[str, Any] = {}
-    for section in sections:
+    for index, section in enumerate(sections, start=1):
         if not isinstance(section, dict):
             continue
-        section_title = str(section.get("title", ""))
-        section_id = str(section.get("sectionId", ""))
-        section_key = _source_key(section_id or section_title)
-        if not section_key:
-            continue
+        section_title = str(section.get("title", "")).strip()
+        section_id = str(section.get("sectionId", "")).strip()
+        section_key = _source_key(section_id or section_title) or f"sekcija-{index}"
 
-        normalized_section: dict[str, Any] = {
-            "pavadinimas": _normalize_text_value(section_title),
-            "sekcijos-id": _normalize_text_value(section_id),
-        }
+        normalized_section: dict[str, Any] = {}
 
         if isinstance(section.get("items"), list):
-            items: dict[str, Any] = {}
+            item_values: dict[str, Any] = {}
             for item in section["items"]:
                 if not isinstance(item, dict):
                     continue
                 item_label = str(item.get("key", ""))
                 item_key = _source_key(item_label)
+                item_value = _normalize_text_value(item.get("value"))
                 if not item_key:
                     continue
-                items[item_key] = {
-                    "pavadinimas": _normalize_text_value(item_label),
-                    "reiksme": _normalize_text_value(item.get("value")),
-                }
-            normalized_section["irasai"] = items
+                item_values[item_key] = item_value
+            if item_values:
+                normalized_section = item_values
 
         if isinstance(section.get("columns"), list):
-            normalized_section["stulpeliai"] = [
+            normalized_columns = [
                 _normalize_text_value(column) for column in section["columns"] if _normalize_text_value(column) is not None
             ]
+        else:
+            normalized_columns = []
+
         if isinstance(section.get("rows"), list):
-            normalized_section["eilutes"] = section.get("rows", [])
+            normalized_rows: list[dict[str, Any]] = []
+            for row in section.get("rows", []):
+                if not isinstance(row, list):
+                    continue
+
+                effective_columns = normalized_columns
+                if len(normalized_columns) == len(row) + 1:
+                    effective_columns = normalized_columns[1:]
+
+                row_object: dict[str, Any] = {}
+                for column_index, value in enumerate(row):
+                    label = (
+                        effective_columns[column_index]
+                        if column_index < len(effective_columns)
+                        else f"stulpelis-{column_index + 1}"
+                    )
+                    key = _source_key(label) or f"stulpelis-{column_index + 1}"
+                    row_object[key] = _normalize_text_value(value)
+
+                if row_object:
+                    normalized_rows.append(row_object)
+
+            if normalized_rows:
+                normalized_section = normalized_rows
 
         by_section[section_key] = normalized_section
 
