@@ -49,6 +49,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Path to sitemap JSON. Defaults to sitemaps/2016-seimo.json",
     )
     candidate_sample_parser.add_argument(
+        "--samples-root",
+        type=Path,
+        default=Path("samples/html/2016-seimo"),
+        help="Path to candidate sample folders. Defaults to samples/html/2016-seimo",
+    )
+    candidate_sample_parser.add_argument(
         "--allow-new-samples",
         action="store_true",
         help=(
@@ -73,6 +79,12 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         default=Path("sitemaps/2016-seimo.json"),
         help="Path to sitemap JSON. Defaults to sitemaps/2016-seimo.json",
+    )
+    targeted_sample_parser.add_argument(
+        "--samples-root",
+        type=Path,
+        default=Path("samples/html/2016-seimo"),
+        help="Path to candidate sample folders. Defaults to samples/html/2016-seimo",
     )
     targeted_sample_parser.add_argument(
         "--allow-new-samples",
@@ -152,6 +164,7 @@ def main() -> int:
     if args.command == "fetch-first-candidate-samples":
         result = fetch_first_candidate_with_tabs(
             sitemap_path=args.sitemap,
+            samples_root=args.samples_root,
             allow_new_candidate_dir=args.allow_new_samples,
         )
         candidate = result["candidate"]
@@ -175,6 +188,7 @@ def main() -> int:
         payload = fetch_candidates_with_tabs(
             candidate_ids=args.candidate_id,
             sitemap_path=args.sitemap,
+            samples_root=args.samples_root,
             allow_new_candidate_dir=args.allow_new_samples,
         )
         print(f"Fetched candidates: {payload['count']}")

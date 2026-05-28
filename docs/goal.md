@@ -2,83 +2,87 @@
 
 ## Goal
 
-Collect structured election and candidate data from many different election sites, starting as simply as possible and keeping the pipeline easy to extend.
+Collect structured election and candidate data from VRK election pages, starting with the 2016 Seimo election, while keeping the workflow reliable and easy to extend election-by-election.
 
-The first version should prioritize reliability and fast iteration over deduplication or heavy normalization.
+The current implementation is intentionally focused on one election module and fixture-driven parser development.
 
 ## Stack
 
 - Use Python for the scraper codebase.
-- Use Playwright only when a site needs a real browser, JavaScript execution, or Cloudflare-style protection.
+- Use `requests` + `beautifulsoup4` + `lxml` for fetching and parsing current pages.
 - Use simple HTTP fetching first whenever a page can be downloaded directly.
 - Keep parsing and file writing plain and explicit.
 
-This means the default path is:
+Current default path:
 
 1. Fetch page content.
-2. Parse the page.
-3. Normalize to a small JSON record.
-4. Save the record immediately.
+2. Save HTML samples for reproducible parser work.
+3. Parse saved samples into structured JSON.
+4. Emit anomalies for layout and data-shape issues.
 
-If a site can be scraped without a browser, do not use Playwright for it.
+If a site can be scraped without a browser, do not add browser automation.
 
 ## File Layout
 
-We will save one JSON file per candidate-election pair.
+The repository currently uses one JSON file per candidate-election pair and keeps fixtures versioned.
 
-Candidate identity will be represented by a slug built from the person name, usually in the form `name-surname`.
+Candidate identity is represented by a slug in the form `name-surname`.
 If the source already contains a stable identifier, we can store it too, but the filename will rely on the human-readable name slug.
 
-Recommended layout:
+Current layout:
 
 - `data/<election_id>/<candidate_id>-<election_id>.json`
-- `data/<election_id>/manifest.json`
-- `samples/html/<election_id>/...` for HTML samples used during development and testing
+- `data/<election_id>/anomalies.jsonl`
+- `samples/html/<election_id>/list.html`
+- `samples/html/<election_id>/<candidate_id>/anketa.html`
+- `samples/html/<election_id>/<candidate_id>/<tab>.html`
+- `samples/html/<election_id>/<candidate_id>/campaigns/<campaign-key>/<tab>.html`
+- `sitemaps/<election_id>.json`
 
-Example record file name:
+Example record file:
 
 - `data/2024-seimo/jonas-jonaitis-2024-seimo.json`
 
-The JSON file name should encode the person and election so it is easy to trace and re-run.
+The JSON file name encodes person and election for traceability and reruns.
 
-Each election has its own schema.
+Each election owns its own schema.
 There is no global record schema across all elections, so each election folder owns its own parser rules and output shape.
-The only thing that stays consistent is the file naming convention and the fact that each JSON record belongs to one candidate in one election.
+The stable convention is file naming and one-record-per-candidate-election.
 
 ## JSON Schema
 
-Keep the first version simple and permissive.
+The current 2016 Seimo output keeps both raw and normalized sections.
 
-Each candidate-election JSON file should contain the schema for that specific election.
+Each candidate-election JSON file contains election-specific payloads.
 
-At minimum, every record should include:
+Current top-level fields include:
 
 - `candidateId` as the name-based slug
 - `electionId`
-- `scrapedAt`
-- `sourceUrl`
 - `candidateName`
+- `source` (contains `candidateSourceUrl`)
+- `rawData`
+- `normalized`
 
-Everything else can vary by election and be stored in whatever shape best matches that election.
-If needed, the election-specific JSON can also include `rawFields`, `normalizedFields`, `notes`, `flags`, or any election-only fields.
+2016 Seimo currently stores:
 
-Do not try to dedupe aggressively in the scraper layer yet.
-Save everything that looks useful, even if it is redundant.
+- `rawData.profile`, `rawData.anketa`, and parsed subpages (`biografija`, `turtoIrPajamuDeklaracijos`, `privaciuInteresuDeklaracija`, `kita`, optional `politinesKampanijosDalyvioDuomenys`)
+- `normalized` sections keyed close to source semantics in Lithuanian (`profilis`, `anketa`, `biografija`, `turto-ir-pajamu-deklaracijos`, `privaciu-interesu-deklaracija`, `kita`, optional `politines-kampanijos-dalyvio-duomenys`)
+
+See the dedicated schema document for field-level details: `docs/OUTPUT_SCHEMA.md`.
 
 ## Sitemap Building
 
-There is no global sitemap or reliable master listing for all elections.
-Each election needs its own discovery step.
+Each election uses its own discovery step and sitemap file.
 
-The workflow should be:
+Current workflow:
 
 1. Launch the election tool for one election.
 2. Build a sitemap for that election.
-3. Crawl that sitemap instead of repeatedly probing archive listings.
-4. Parse the discovered pages into candidate records.
+3. Fetch selected candidate samples from the sitemap.
+4. Parse samples into candidate JSON records.
 
-That sitemap can be a simple JSON file that lists the pages to visit for the election.
-It does not need to be a public website sitemap; it is just an internal crawl plan.
+The sitemap is an internal crawl plan, not a public website sitemap.
 
 Suggested sitemap layout:
 
@@ -88,7 +92,7 @@ This keeps discovery separate from scraping and avoids spamming the archive list
 
 ## Raw HTML Samples
 
-Keep a small set of raw HTML samples in the repo for development and regression testing.
+Keep a small set of raw HTML samples in the repo for parser development and regression testing.
 
 Use them for:
 
@@ -96,73 +100,77 @@ Use them for:
 - fixture-based tests
 - checking layout changes when a site breaks
 
-Suggested structure:
+Current fixture structure (2016 Seimo):
 
-- `samples/html/<election_id>/page.html`
 - `samples/html/<election_id>/list.html`
-- `samples/html/<election_id>/candidate.html`
+- `samples/html/<election_id>/page.html`
+- `samples/html/<election_id>/<candidate_id>/anketa.html`
+- `samples/html/<election_id>/<candidate_id>/<tab>.html`
+- `samples/html/<election_id>/<candidate_id>/index.json`
+- `samples/html/<election_id>/<candidate_id>/campaigns/<campaign-key>/index.json`
 
-These samples should be small, representative, and easy to refresh.
+Fixture policy and allowlist constraints are documented in `docs/FIXTURE_SAMPLES.md`.
 
 ## Build And Run
 
-The scrapers should be runnable from a single command entrypoint.
+The scraper is runnable from a single command entrypoint.
 
-There will be a global controller plus one module per election.
-The global controller can run one election, or all elections.
-Each election module contains its own sitemap builder, parser, and runner.
+Current implementation supports 2016 Seimo commands via `python -m scraper`.
 
-Suggested modes:
+Implemented commands:
 
-- run one election by id
-- run all elections
-- run a development mode against stored HTML samples
-- build only the sitemap for one election
+- `fetch-sample <election_id>`
+- `sitemap <election_id> [--sample <path>]`
+- `fetch-first-candidate-samples <election_id> [--sitemap ...] [--samples-root ...] [--allow-new-samples]`
+- `fetch-candidate-samples <election_id> --candidate-id <id> ... [--allow-new-samples]`
+- `parse-anketa-samples <election_id> [--candidate-id <id> ...] [--samples-root ...] [--output-root ...] [--anomalies-path ...]`
 
-Examples of usage:
+Full CLI usage and examples are documented in `docs/CLI_REFERENCE.md`.
 
-- `python -m scraper run <election_id>`
-- `python -m scraper run all`
-- `python -m scraper sitemap <election_id>`
-- `python -m scraper test <election_id>`
+Batch execution helper:
+
+- `scripts/run_seimo_2016_batches.sh` iterates sitemap IDs, fetches temporary samples, parses candidates, appends anomalies, and tracks run state under `.run-state/seimo-2016/`.
 
 ## Testing
 
-Testing should start with the smallest useful layer:
+Testing is fixture-first and parser-focused.
 
-1. Parser tests against saved HTML samples.
-2. Schema validation for emitted JSON.
-3. A small end-to-end smoke test for one site.
+Current suite includes:
 
-The goal is to catch breakage early without making the scraper too complicated.
+1. `tests/test_seimo_2016_sample_allowlist.py` for fixture directory allowlist.
+2. `tests/test_seimo_2016_candidate_samples.py` for sample fetching behavior.
+3. `tests/test_seimo_2016_campaign_parser.py` for campaign tab parsing and normalization.
+4. `tests/test_seimo_2016_anomaly_detection.py` for structural anomaly events.
+5. `tests/test_seimo_2016_anketa_split_merge.py` for split-row anketa merging.
+6. `tests/test_seimo_2016_privaciu_normalization.py` for private-interest normalization.
+7. `tests/test_seimo_2016_turto_normalization.py` for asset/income normalization.
+
+Run with `pytest tests/` or a focused subset while iterating.
 
 ## Code Structure
 
-The codebase should be organized around elections, not around a single global schema.
+The codebase is organized around elections.
 
-Suggested structure:
+Current structure:
 
 - `scraper/cli.py` for the command-line entrypoint
-- `scraper/controller.py` for selecting one election or all elections
 - `scraper/elections/<election_id>/sitemap.py` for discovery and sitemap building
-- `scraper/elections/<election_id>/parser.py` for parsing that election's HTML
-- `scraper/elections/<election_id>/runner.py` for fetching, parsing, and writing files
+- `scraper/elections/<election_id>/candidate_samples.py` for candidate and tab sample capture
+- `scraper/elections/<election_id>/anketa_parser.py` for parsing sampled HTML into JSON payloads
 - `scraper/shared/http.py` for shared fetch helpers
-- `scraper/shared/browser.py` for Playwright helpers when needed
 - `scraper/shared/files.py` for JSON and sample file writing
+- `scraper/shared/anomalies.py` for anomaly event payloads and JSONL writing
 - `samples/html/<election_id>/...` for saved HTML fixtures
 - `data/<election_id>/...` for scraped JSON outputs
 
-Each election module should be self-contained enough that new elections can be added without changing older ones.
-The global controller should only coordinate which election module to run.
+Each election module should stay self-contained so new election parsers can be added with minimal coupling.
 
 ## Launch Strategy
 
-The scraper should support:
+Current workflow supports:
 
-- one-off manual runs
-- full site runs
-- resume/retry behavior later if needed
+- one-off manual fixture capture and parsing
+- targeted candidate parsing by ID
+- resumable batch processing via `scripts/run_seimo_2016_batches.sh`
 
-At the beginning, launching should be simple and direct.
-We can add orchestration, deduplication, and smarter retries later once the basic pipeline is stable.
+As additional election modules are introduced, keep command semantics consistent while preserving per-election parsing schemas.

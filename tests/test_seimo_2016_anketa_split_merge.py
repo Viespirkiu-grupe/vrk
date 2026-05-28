@@ -38,7 +38,7 @@ class Seimo2016AnketaSplitMergeTests(unittest.TestCase):
         )
 
         pareiskimai = payload["normalized"]["anketa"]["pareiskimai"]
-        self.assertEqual(pareiskimai["buvote-pripazintas-kaltu"], "Ne")
+        self.assertEqual(pareiskimai["ar-buvote-pripazintas-kaltu"], "Ne")
         self.assertNotIn("teistumo-paaiskinimas", pareiskimai)
 
 

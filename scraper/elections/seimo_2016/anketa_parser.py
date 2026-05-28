@@ -1599,7 +1599,6 @@ def _parse_campaign_sample_entry(entry: dict[str, Any]) -> dict[str, Any] | None
         "label": entry.get("label", ""),
         "slug": entry.get("slug", ""),
         "url": entry.get("url", ""),
-        "sourcePath": path,
         "data": parsed,
         "sectionDescription": header.get("sectionDescription", ""),
         "availableTabs": header.get("availableTabs", []),
@@ -1673,7 +1672,6 @@ def _parse_nested_campaign_samples(
                     "label": tab.get("label", ""),
                     "slug": tab.get("slug", ""),
                     "url": tab.get("url", ""),
-                    "sourcePath": tab.get("sourcePath", ""),
                     "data": tab.get("data", {}),
                 }
             )
@@ -1695,7 +1693,6 @@ def _parse_nested_campaign_samples(
                 "campaignKey": campaign.get("campaignKey", ""),
                 "campaignLabel": campaign.get("campaignLabel", ""),
                 "campaignUrl": campaign.get("campaignUrl", ""),
-                "campaignDir": campaign.get("campaignDir", ""),
                 "sectionDescription": section_description,
                 "availableTabs": available_tabs,
                 "participant": participant,
@@ -1752,7 +1749,6 @@ def _parse_optional_subpages(
             continue
 
         pages[key] = {
-            "sourcePath": str(path),
             "data": parsed_data,
         }
 
@@ -1883,12 +1879,10 @@ def parse_anketa_sample(
         "anketa": parsed["anketa"]["normalized"],
     }
 
-    page_samples: dict[str, str] = {"anketa": str(anketa_path)}
     for key, payload in subpages.items():
         if not isinstance(payload, dict):
             continue
         data = payload.get("data")
-        source_path = payload.get("sourcePath")
         if data is not None:
             if key != "politinesKampanijosDalyvioDuomenys":
                 raw_data[key] = data
@@ -1900,8 +1894,6 @@ def parse_anketa_sample(
                 normalized["turto-ir-pajamu-deklaracijos"] = _normalize_turto_ir_pajamu_data(data)
             if key == "kita" and isinstance(data, dict):
                 normalized["kita"] = _normalize_kita_data(data)
-        if isinstance(source_path, str) and source_path:
-            page_samples[key] = source_path
 
     if nested_campaigns:
         campaign_key = "politinesKampanijosDalyvioDuomenys"
@@ -1914,12 +1906,6 @@ def parse_anketa_sample(
             "campaigns": nested_campaigns,
         }
         normalized["politines-kampanijos-dalyvio-duomenys"] = _normalize_campaigns(raw_data[campaign_key])
-
-        for campaign in nested_campaigns:
-            campaign_dir = campaign.get("campaignDir")
-            campaign_key_value = campaign.get("campaignKey", "")
-            if isinstance(campaign_dir, str) and campaign_dir and campaign_key_value:
-                page_samples[f"campaign::{campaign_key_value}"] = campaign_dir
     elif isinstance(root_campaign_data, dict):
         campaign_key = "politinesKampanijosDalyvioDuomenys"
         raw_data[campaign_key] = root_campaign_data
@@ -1948,26 +1934,12 @@ def parse_anketa_sample(
             "kita",
         ],
     )
-    page_samples = _order_dict_keys(
-        page_samples,
-        [
-            "anketa",
-            "biografija",
-            "turtoIrPajamuDeklaracijos",
-            "privaciuInteresuDeklaracija",
-            "politinesKampanijosDalyvioDuomenys",
-            "kita",
-        ],
-    )
-
     output_payload = {
         "electionId": ELECTION_ID,
         "candidateId": candidate_id,
         "candidateName": candidate_name,
         "source": {
-            "samplePath": str(anketa_path),
             "candidateSourceUrl": candidate_source_url,
-            "pageSamples": page_samples,
         },
         "rawData": raw_data,
         "normalized": _normalize_missing_values(normalized),

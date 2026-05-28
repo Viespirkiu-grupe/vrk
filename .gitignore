@@ -28,6 +28,7 @@ dist/
 .env.*
 
 # Generated scraper outputs
-samples/
-sitemaps/
+.run-state/
 data/
+sitemaps/
+samples/
