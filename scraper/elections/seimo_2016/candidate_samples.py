@@ -314,8 +314,15 @@ def _fetch_campaign_tabs(
 def _fetch_candidate_tabs(
     entry: dict[str, str],
     samples_root: Path,
+    allow_new_candidate_dir: bool,
 ) -> dict[str, Any]:
     candidate_dir = samples_root / entry["candidateId"]
+    if not candidate_dir.exists() and not allow_new_candidate_dir:
+        raise ValueError(
+            "Refusing to create new sample candidate directory "
+            f"{candidate_dir}. Samples are fixture-only by default. "
+            "Pass --allow-new-samples to enable one-time fixture capture."
+        )
     candidate_dir.mkdir(parents=True, exist_ok=True)
 
     anketa_html = fetch_text(entry["url"])
@@ -479,15 +486,21 @@ def _fetch_candidate_tabs(
 def fetch_first_candidate_with_tabs(
     sitemap_path: Path = DEFAULT_SITEMAP_PATH,
     samples_root: Path = DEFAULT_SAMPLES_ROOT,
+    allow_new_candidate_dir: bool = False,
 ) -> dict[str, Any]:
     entry = _load_first_sitemap_entry(sitemap_path)
-    return _fetch_candidate_tabs(entry=entry, samples_root=samples_root)
+    return _fetch_candidate_tabs(
+        entry=entry,
+        samples_root=samples_root,
+        allow_new_candidate_dir=allow_new_candidate_dir,
+    )
 
 
 def fetch_candidates_with_tabs(
     candidate_ids: list[str],
     sitemap_path: Path = DEFAULT_SITEMAP_PATH,
     samples_root: Path = DEFAULT_SAMPLES_ROOT,
+    allow_new_candidate_dir: bool = False,
 ) -> dict[str, Any]:
     if not candidate_ids:
         raise ValueError("At least one candidate id must be provided")
@@ -502,7 +515,13 @@ def fetch_candidates_with_tabs(
     results: list[dict[str, Any]] = []
     for candidate_id in candidate_ids:
         entry = entries_by_id[candidate_id]
-        results.append(_fetch_candidate_tabs(entry=entry, samples_root=samples_root))
+        results.append(
+            _fetch_candidate_tabs(
+                entry=entry,
+                samples_root=samples_root,
+                allow_new_candidate_dir=allow_new_candidate_dir,
+            )
+        )
 
     return {
         "election_id": ELECTION_ID,

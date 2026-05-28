@@ -48,6 +48,14 @@ def build_parser() -> argparse.ArgumentParser:
         default=Path("sitemaps/2016-seimo.json"),
         help="Path to sitemap JSON. Defaults to sitemaps/2016-seimo.json",
     )
+    candidate_sample_parser.add_argument(
+        "--allow-new-samples",
+        action="store_true",
+        help=(
+            "Allow creating new candidate directories under samples root. "
+            "Disabled by default so sample fixtures stay fixed."
+        ),
+    )
 
     targeted_sample_parser = subparsers.add_parser(
         "fetch-candidate-samples",
@@ -65,6 +73,14 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         default=Path("sitemaps/2016-seimo.json"),
         help="Path to sitemap JSON. Defaults to sitemaps/2016-seimo.json",
+    )
+    targeted_sample_parser.add_argument(
+        "--allow-new-samples",
+        action="store_true",
+        help=(
+            "Allow creating new candidate directories under samples root. "
+            "Disabled by default so sample fixtures stay fixed."
+        ),
     )
 
     parse_anketa_parser = subparsers.add_parser(
@@ -134,7 +150,10 @@ def main() -> int:
         return 0
 
     if args.command == "fetch-first-candidate-samples":
-        result = fetch_first_candidate_with_tabs(sitemap_path=args.sitemap)
+        result = fetch_first_candidate_with_tabs(
+            sitemap_path=args.sitemap,
+            allow_new_candidate_dir=args.allow_new_samples,
+        )
         candidate = result["candidate"]
         print(f"Candidate: {candidate['candidateName']} ({candidate['candidateId']})")
         print(f"Anketa sample: {result['anketa_path']}")
@@ -156,6 +175,7 @@ def main() -> int:
         payload = fetch_candidates_with_tabs(
             candidate_ids=args.candidate_id,
             sitemap_path=args.sitemap,
+            allow_new_candidate_dir=args.allow_new_samples,
         )
         print(f"Fetched candidates: {payload['count']}")
         for result in payload["results"]:
