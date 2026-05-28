@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import re
+import shutil
 from typing import Any
 from urllib.parse import urlparse
 
@@ -21,6 +23,12 @@ EXPECTED_TABS = {
     "privaciu-interesu-deklaracija",
     "kita",
 }
+
+CAMPAIGN_TAB_SLUG = "politines-kampanijos-dalyvio-duomenys"
+CAMPAIGN_LINK_PATTERN = re.compile(
+    r"/(savarankiskas[^/]*|atstovaujamasis[^/]*)_pkdId-(\d+)\.html",
+    flags=re.IGNORECASE,
+)
 
 
 def normalize_space(value: str) -> str:
@@ -107,6 +115,136 @@ def _label_slug_from_url(url: str) -> str:
     return slugify(stem)
 
 
+def _extract_campaign_key_from_url(url: str) -> str:
+    parsed = urlparse(url)
+    stem = Path(parsed.path).stem
+    match = CAMPAIGN_LINK_PATTERN.search(parsed.path)
+    if match:
+        campaign_type = slugify(match.group(1))
+        pkd_id = match.group(2)
+        return f"{campaign_type}-pkdid-{pkd_id}"
+    return slugify(stem)
+
+
+def _extract_campaign_root_links(campaign_html: str, fallback_url: str) -> list[dict[str, str]]:
+    soup = BeautifulSoup(campaign_html, "lxml")
+    links: list[dict[str, str]] = []
+    seen: set[str] = set()
+
+    fallback_key = _extract_campaign_key_from_url(fallback_url)
+    links.append(
+        {
+            "label": "",
+            "url": fallback_url,
+            "campaignKey": fallback_key,
+        }
+    )
+    seen.add(fallback_url)
+
+    for anchor in soup.find_all("a", href=True):
+        href = normalize_space(anchor.get("href", ""))
+        if not href:
+            continue
+
+        url = resolve_candidate_url(href)
+        if url in seen:
+            continue
+
+        path = urlparse(url).path
+        match = CAMPAIGN_LINK_PATTERN.search(path)
+        if match is None:
+            continue
+
+        campaign_type = slugify(match.group(1))
+        is_root_type = campaign_type.startswith("savarankiskasizdininkas") or campaign_type.startswith(
+            "atstovaujamasis"
+        )
+        if not is_root_type:
+            continue
+
+        seen.add(url)
+        links.append(
+            {
+                "label": normalize_space(anchor.get_text(" ", strip=True)),
+                "url": url,
+                "campaignKey": _extract_campaign_key_from_url(url),
+            }
+        )
+
+    return links
+
+
+def _fetch_campaign_tabs(
+    candidate_dir: Path,
+    campaign_link: dict[str, str],
+) -> dict[str, Any]:
+    campaign_url = campaign_link["url"]
+    campaign_key = campaign_link["campaignKey"]
+
+    campaigns_root = candidate_dir / "campaigns"
+    campaigns_root.mkdir(parents=True, exist_ok=True)
+
+    campaign_dir = campaigns_root / campaign_key
+    campaign_dir.mkdir(parents=True, exist_ok=True)
+
+    root_html = fetch_text(campaign_url)
+
+    tab_links = _extract_tab_links(root_html)
+    seen_file_slugs: dict[str, int] = {}
+    saved_tabs: list[dict[str, Any]] = []
+
+    if not tab_links:
+        root_path = campaign_dir / "root.html"
+        root_path.write_text(root_html, encoding="utf-8")
+    else:
+        for tab in tab_links:
+            fallback_slug = _label_slug_from_url(tab["url"])
+            file_slug = _dedupe_filename_slug(tab["slug"] or fallback_slug, seen_file_slugs)
+            file_path = campaign_dir / f"{file_slug}.html"
+
+            if tab["url"] == campaign_url:
+                file_path.write_text(root_html, encoding="utf-8")
+                fetched = False
+            else:
+                tab_html = fetch_text(tab["url"])
+                file_path.write_text(tab_html, encoding="utf-8")
+                fetched = True
+
+            saved_tabs.append(
+                {
+                    "label": tab["label"],
+                    "slug": file_slug,
+                    "url": tab["url"],
+                    "path": str(file_path),
+                    "fetched": fetched,
+                }
+            )
+
+    index_path = campaign_dir / "index.json"
+    index_payload = {
+        "campaignKey": campaign_key,
+        "campaignLabel": campaign_link.get("label", ""),
+        "campaignUrl": campaign_url,
+        "tabCount": len(tab_links),
+        "tabSamples": saved_tabs,
+        "campaignRootPath": str(campaign_dir / "root.html") if not tab_links else "",
+    }
+    index_path.write_text(
+        json.dumps(index_payload, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    return {
+        "campaignKey": campaign_key,
+        "campaignLabel": campaign_link.get("label", ""),
+        "campaignUrl": campaign_url,
+        "campaignDir": str(campaign_dir),
+        "tabCount": len(tab_links),
+        "tabSamples": saved_tabs,
+        "indexPath": str(index_path),
+    }
+
+
 def _fetch_candidate_tabs(
     entry: dict[str, str],
     samples_root: Path,
@@ -126,6 +264,8 @@ def _fetch_candidate_tabs(
 
     seen_file_slugs: dict[str, int] = {}
     saved_tabs: list[dict[str, Any]] = []
+    campaign_tab_html = ""
+    campaign_tab_url = ""
 
     for tab in tab_links:
         fallback_slug = _label_slug_from_url(tab["url"])
@@ -140,6 +280,10 @@ def _fetch_candidate_tabs(
             file_path.write_text(tab_html, encoding="utf-8")
             fetched = True
 
+        if tab["slug"] == CAMPAIGN_TAB_SLUG:
+            campaign_tab_html = anketa_html if not fetched else tab_html
+            campaign_tab_url = tab["url"]
+
         saved_tabs.append(
             {
                 "label": tab["label"],
@@ -150,6 +294,24 @@ def _fetch_candidate_tabs(
             }
         )
 
+    campaign_samples: list[dict[str, Any]] = []
+    if campaign_tab_html and campaign_tab_url:
+        campaigns_root = candidate_dir / "campaigns"
+        if campaigns_root.exists():
+            shutil.rmtree(campaigns_root)
+
+        campaign_links = _extract_campaign_root_links(campaign_tab_html, campaign_tab_url)
+        seen_campaign_keys: dict[str, int] = {}
+        for link in campaign_links:
+            base_key = link["campaignKey"] or "campaign"
+            campaign_key = _dedupe_filename_slug(base_key, seen_campaign_keys)
+            campaign_link = {
+                "label": link.get("label", ""),
+                "url": link["url"],
+                "campaignKey": campaign_key,
+            }
+            campaign_samples.append(_fetch_campaign_tabs(candidate_dir, campaign_link))
+
     index_path = candidate_dir / "index.json"
     index_payload = {
         "electionId": ELECTION_ID,
@@ -158,6 +320,7 @@ def _fetch_candidate_tabs(
         "tabCount": len(tab_links),
         "tabSamples": saved_tabs,
         "missingExpectedTabs": missing_expected_tabs,
+        "campaignSamples": campaign_samples,
     }
     index_path.write_text(
         json.dumps(index_payload, ensure_ascii=False, indent=2) + "\n",
@@ -172,6 +335,7 @@ def _fetch_candidate_tabs(
         "tab_count": len(tab_links),
         "tabs_saved": len(saved_tabs),
         "missing_expected_tabs": missing_expected_tabs,
+        "campaign_samples": campaign_samples,
         "index_path": index_path,
     }
 
