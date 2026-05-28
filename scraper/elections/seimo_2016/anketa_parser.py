@@ -20,6 +20,26 @@ MISSING_TEXT_VALUES = {
     "-",
 }
 
+TURTO_PAJAMU_KEY_ALIASES = {
+    "i-privalomas-registruoti-turtas": "privalomas-registruoti-turtas",
+    "ii-vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
+    "iii-pinigines-lesos": "pinigines-lesos",
+    "iv-suteiktos-paskolos": "suteiktos-paskolos",
+    "v-gautos-paskolos": "gautos-paskolos",
+    "gautu-pajamu-suma-gpm308-formos-12-13-13a-14-20-laukeliu-ir-gpm308-formos-v-priedo-v13-laukeliu-suma": "gautos-pajamos",
+    "isskaiciuota-sumoketa-pajamu-mokescio-suma-gpm308-formos-26-laukelis": "sumoketas-pajamu-mokestis",
+}
+
+TURTO_PAJAMU_OUTPUT_ORDER = [
+    "privalomas-registruoti-turtas",
+    "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
+    "pinigines-lesos",
+    "suteiktos-paskolos",
+    "gautos-paskolos",
+    "gautos-pajamos",
+    "sumoketas-pajamu-mokestis",
+]
+
 
 def normalize_space(value: str) -> str:
     return " ".join(value.split())
@@ -1233,36 +1253,47 @@ def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]
     }
 
 
+def _parse_eur_amount(value: Any) -> int | float | None:
+    normalized_value = _normalize_text_value(value)
+    if normalized_value is None:
+        return None
+
+    compact = normalized_value.replace("\u00a0", " ")
+    compact = re.sub(r"\beur\b", "", compact, flags=re.IGNORECASE)
+    compact = compact.replace(" ", "").replace(",", ".")
+
+    if not compact or not re.fullmatch(r"-?\d+(?:\.\d+)?", compact):
+        return None
+
+    amount = float(compact)
+    if amount.is_integer():
+        return int(amount)
+    return amount
+
+
 def _normalize_turto_ir_pajamu_data(payload: dict[str, Any]) -> dict[str, Any]:
     sections = payload.get("sections") if isinstance(payload.get("sections"), list) else []
-    normalized_sections: list[dict[str, Any]] = []
+    normalized_fields: dict[str, int | float | None] = {
+        key: None for key in TURTO_PAJAMU_OUTPUT_ORDER
+    }
+
     for section in sections:
         if not isinstance(section, dict):
             continue
-        section_entries: dict[str, Any] = {}
+
         for item in section.get("items", []):
             if not isinstance(item, dict):
                 continue
+
             item_label = str(item.get("key", ""))
-            item_key = _source_key(item_label)
-            if not item_key:
+            source_key = _source_key(item_label)
+            target_key = TURTO_PAJAMU_KEY_ALIASES.get(source_key)
+            if target_key is None:
                 continue
-            section_entries[item_key] = {
-                "pavadinimas": _normalize_text_value(item_label),
-                "reiksme": _normalize_text_value(item.get("value")),
-                "nuorodos": _normalize_links(item.get("urls")),
-            }
 
-        normalized_sections.append(
-            {
-                "pavadinimas": _normalize_text_value(section.get("title")),
-                "irasai": section_entries,
-            }
-        )
+            normalized_fields[target_key] = _parse_eur_amount(item.get("value"))
 
-    return {
-        "sekcijos": normalized_sections,
-    }
+    return normalized_fields
 
 
 def _normalize_kita_data(payload: dict[str, Any]) -> dict[str, Any]:
