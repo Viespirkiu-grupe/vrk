@@ -1209,7 +1209,7 @@ def _normalize_biografija_data(payload: dict[str, Any]) -> dict[str, Any]:
 
 def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]:
     sections = payload.get("sections") if isinstance(payload.get("sections"), list) else []
-    by_section: dict[str, Any] = {}
+    result: dict[str, Any] = {}
     for index, section in enumerate(sections, start=1):
         if not isinstance(section, dict):
             continue
@@ -1266,11 +1266,18 @@ def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]
             if normalized_rows:
                 normalized_section = normalized_rows
 
-        by_section[section_key] = normalized_section
+        # Hoist declarant fields (deklaruojantis-asmuo) to the top level
+        if isinstance(normalized_section, dict) and "deklaruojantis-asmuo" in normalized_section:
+            result.update(normalized_section)
+            continue
 
-    return {
-        "pagal-skyriu": by_section,
-    }
+        # Drop sections with no id/title (spouse/secondary blocks with fallback keys)
+        if section_key.startswith("sekcija-"):
+            continue
+
+        result[section_key] = normalized_section
+
+    return result
 
 
 def _parse_eur_amount(value: Any) -> int | float | None:

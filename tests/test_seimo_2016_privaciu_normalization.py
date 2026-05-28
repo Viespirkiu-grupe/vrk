@@ -23,34 +23,31 @@ class Seimo2016PrivaciuNormalizationTests(unittest.TestCase):
 
     def test_key_value_sections_use_flat_object(self) -> None:
         payload = self._parse_candidate("agne-sirinskiene")
-        normalized = payload["normalized"]["privaciu-interesu-deklaracija"]["pagal-skyriu"]
+        normalized = payload["normalized"]["privaciu-interesu-deklaracija"]
 
-        person_section = normalized["agne-sirinskiene"]
-        self.assertEqual(person_section, {"deklaruojantis-asmuo": "AGNĖ ŠIRINSKIENĖ"})
+        self.assertEqual(normalized["deklaruojantis-asmuo"], "AGNĖ ŠIRINSKIENĖ")
 
     def test_matrix_sections_use_row_objects(self) -> None:
         payload = self._parse_candidate("agne-sirinskiene")
-        normalized = payload["normalized"]["privaciu-interesu-deklaracija"]["pagal-skyriu"]
+        normalized = payload["normalized"]["privaciu-interesu-deklaracija"]
 
         matrix_section = normalized["id001j"]
         self.assertIsInstance(matrix_section, list)
         self.assertGreater(len(matrix_section), 0)
         self.assertIsInstance(matrix_section[0], dict)
-        self.assertEqual(matrix_section[0]["asmuo-kurio-rysys-bus-nurodytas"], "Deklaruojantysis")
+        self.assertEqual(matrix_section[0]["asmuo-kurio-rysys-nurodytas"], "Deklaruojantysis")
         self.assertEqual(matrix_section[0]["valstybe"], "Lietuvos Respublika")
         self.assertEqual(matrix_section[0]["rysys-su-juridiniu-asmeniu"], "Darbuotojas, turintis administravimo įgaliojimus")
 
-    def test_empty_title_and_id_section_is_preserved_with_fallback_key(self) -> None:
+    def test_spouse_section_is_dropped(self) -> None:
         payload = self._parse_candidate("agne-sirinskiene")
-        normalized = payload["normalized"]["privaciu-interesu-deklaracija"]["pagal-skyriu"]
+        normalized = payload["normalized"]["privaciu-interesu-deklaracija"]
 
-        self.assertIn("sekcija-2", normalized)
-        self.assertEqual(normalized["sekcija-2"]["vardas"], "ARVYDAS")
-        self.assertEqual(normalized["sekcija-2"]["pavarde"], "ŠIRINSKAS")
+        self.assertNotIn("sekcija-2", normalized)
 
     def test_old_wrapper_fields_are_removed(self) -> None:
         payload = self._parse_candidate("agne-sirinskiene")
-        normalized = payload["normalized"]["privaciu-interesu-deklaracija"]["pagal-skyriu"]
+        normalized = payload["normalized"]["privaciu-interesu-deklaracija"]
 
         for section in normalized.values():
             if isinstance(section, dict):
