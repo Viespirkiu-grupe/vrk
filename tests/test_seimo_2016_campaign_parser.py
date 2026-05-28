@@ -60,17 +60,20 @@ class Seimo2016CampaignParserTests(unittest.TestCase):
         contracts_data = next(tab for tab in campaign["tabs"] if tab["slug"] == "sutartys")["data"]
         self.assertEqual(len(contracts_data["contracts"]), 4)
 
-        normalized_campaign = payload["normalized"]["politinesKampanijosDalyvioDuomenys"]["campaigns"][0]
-        self.assertEqual(normalized_campaign["status"], "Savarankiškas")
-        self.assertEqual(normalized_campaign["contact"]["email"], "neskelbtina")
-        self.assertEqual(normalized_campaign["donations"]["gautos-ir-priimtos-aukos"]["totals"]["is-viso"], 20052.31)
-        self.assertEqual(len(normalized_campaign["contracts"]), 4)
+        normalized_campaign = payload["normalized"]["politines-kampanijos-dalyvio-duomenys"]["kampanijos"][0]
+        self.assertEqual(normalized_campaign["statusas"], "Savarankiškas")
+        self.assertEqual(normalized_campaign["kontaktai"]["el-pastas"], "neskelbtina")
+        self.assertEqual(
+            normalized_campaign["aukos-pagal-sekcija"]["gautos-ir-priimtos-aukos"]["totals"]["is-viso"],
+            20052.31,
+        )
+        self.assertEqual(len(normalized_campaign["sutartys"]), 4)
 
     def test_regina_has_no_campaign_section(self) -> None:
         payload = self._parse_candidate("regina-ablom")
 
         self.assertNotIn("politinesKampanijosDalyvioDuomenys", payload["rawData"])
-        self.assertNotIn("politinesKampanijosDalyvioDuomenys", payload["normalized"])
+        self.assertNotIn("politines-kampanijos-dalyvio-duomenys", payload["normalized"])
 
 
 if __name__ == "__main__":

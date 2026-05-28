@@ -13,10 +13,46 @@ from scraper.shared.files import slugify, write_json
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2016-seimo")
 DEFAULT_OUTPUT_ROOT = Path("data/2016-seimo")
+MISSING_TEXT_VALUES = {
+    "",
+    "nenurodė",
+    "nenurode",
+    "-",
+}
 
 
 def normalize_space(value: str) -> str:
     return " ".join(value.split())
+
+
+def _normalize_text_value(value: Any) -> str | None:
+    if value is None:
+        return None
+    if not isinstance(value, str):
+        return str(value)
+
+    normalized = normalize_space(value)
+    if normalized.lower() in MISSING_TEXT_VALUES:
+        return None
+    return normalized
+
+
+def _source_key(label: str) -> str:
+    return slugify(normalize_space(label).rstrip(":"))
+
+
+def _normalize_links(values: Any) -> list[str]:
+    if not isinstance(values, list):
+        return []
+    links: list[str] = []
+    for item in values:
+        if not isinstance(item, str):
+            continue
+        value = normalize_space(item)
+        if not value or value in links:
+            continue
+        links.append(value)
+    return links
 
 
 def parse_question_number(text: str) -> str | None:
@@ -211,10 +247,33 @@ def _extract_answer_text(cell: Tag, nested_tables: list[Tag]) -> str:
 
 
 def _split_list_value(value: str) -> list[str]:
-    if not value:
+    normalized_value = _normalize_text_value(value)
+    if normalized_value is None:
         return []
-    parts = [normalize_space(item) for item in value.split(",")]
-    return [item for item in parts if item]
+    parts = [normalize_space(item) for item in normalized_value.split(",")]
+    normalized_parts: list[str] = []
+    for item in parts:
+        candidate = _normalize_text_value(item)
+        if candidate is None:
+            continue
+        normalized_parts.append(candidate)
+    return normalized_parts
+
+
+def _normalize_table_records(records: list[Any]) -> list[Any]:
+    normalized_records: list[Any] = []
+    for row in records:
+        if isinstance(row, dict):
+            normalized_row: dict[str, Any] = {}
+            for key, value in row.items():
+                source_key = _source_key(str(key))
+                if not source_key:
+                    continue
+                normalized_row[source_key] = _normalize_text_value(value)
+            normalized_records.append(normalized_row)
+        else:
+            normalized_records.append(row)
+    return normalized_records
 
 
 def _row_answer_text(row: dict[str, Any] | None) -> str:
@@ -281,41 +340,51 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     q21 = _find_row_by_question_number(rows, "21")
 
     return {
-        "birthDate": _row_answer_text(q5),
-        "residenceAddress": _row_answer_text(q6),
-        "declarations": {
-            "unfinishedSentence": _row_answer_text(q8_1),
-            "activeServiceOfficer": _row_answer_text(q8_2),
-            "otherCitizenship": _row_answer_text(q8_3),
-            "foreignOath": _row_answer_text(q8_4),
-            "cooperationWithForeignServices": _row_answer_text(q9_1),
-            "convictionQuestion": _row_answer_text(q9_2),
-            "convictionAnswer": _row_answer_text(q9_2_followup),
-            "decriminalizedOffense": _row_answer_text(q9_3_1),
-            "foreignCourtNonCriminal": _row_answer_text(q9_3_2),
-            "politicalPersecution": _row_answer_text(q9_3_3),
-            "legalArguments": _row_answer_text(q9_3_4),
+        "gimimo-data": _normalize_text_value(_row_answer_text(q5)),
+        "nuolatines-gyvenamosios-vietos-adresas": _normalize_text_value(_row_answer_text(q6)),
+        "pareiskimai": {
+            "teismo-paskirta-bausme-nebaigta": _normalize_text_value(
+                _row_answer_text(q8_1)
+            ),
+            "atliekate-karo-ar-alternatyviaja-tarnyba": _normalize_text_value(
+                _row_answer_text(q8_2)
+            ),
+            "turite-kitos-valstybes-pilietybe": _normalize_text_value(_row_answer_text(q8_3)),
+            "susijes-priesaika-uzsienio-valstybei": _normalize_text_value(
+                _row_answer_text(q8_4)
+            ),
+            "bendradarbiavote-su-uzsienio-specialiosiomis-tarnybomis": _normalize_text_value(
+                _row_answer_text(q9_1)
+            ),
+            "buvote-pripazintas-kaltu": _normalize_text_value(_row_answer_text(q9_2)),
+            "teistumo-paaiskinimas": _normalize_text_value(_row_answer_text(q9_2_followup)),
+            "veika-veliau-dekriminalizuota": _normalize_text_value(_row_answer_text(q9_3_1)),
+            "uzsienio-teismo-veika-lietuvoje-nenusikalstama": _normalize_text_value(
+                _row_answer_text(q9_3_2)
+            ),
+            "patraukimas-laikomas-politiniu-persekiojimu": _normalize_text_value(_row_answer_text(q9_3_3)),
+            "teisiniai-argumentai": _normalize_text_value(_row_answer_text(q9_3_4)),
         },
-        "birthPlace": _row_answer_text(q10),
-        "nationality": _row_answer_text(q11),
-        "education": {
-            "summary": _row_answer_text(q12),
-            "records": _first_nested_table_rows(q12),
+        "gimimo-vieta": _normalize_text_value(_row_answer_text(q10)),
+        "tautybe": _normalize_text_value(_row_answer_text(q11)),
+        "issilavinimas": {
+            "aprasas": _normalize_text_value(_row_answer_text(q12)),
+            "irasai": _normalize_table_records(_first_nested_table_rows(q12)),
         },
-        "pedagogicalTitleOrDegree": _row_answer_text(pedagogical),
-        "foreignLanguages": _split_list_value(_row_answer_text(q13)),
-        "partyMembership": _row_answer_text(q14),
-        "previousElectedPositions": {
-            "summary": _row_answer_text(q15),
-            "records": _first_nested_table_rows(q15),
+        "pedagoginis-vardas-mokslo-laipsnis": _normalize_text_value(_row_answer_text(pedagogical)),
+        "uzsienio-kalbos": _split_list_value(_row_answer_text(q13)),
+        "partija-politine-organizacija": _normalize_text_value(_row_answer_text(q14)),
+        "anksciau-isrinktas": {
+            "aprasas": _normalize_text_value(_row_answer_text(q15)),
+            "irasai": _normalize_table_records(_first_nested_table_rows(q15)),
         },
-        "primaryWorkplace": _row_answer_text(q16),
-        "socialActivities": _row_answer_text(q17),
-        "hobbies": _row_answer_text(q18),
-        "maritalStatus": _row_answer_text(q19),
-        "spouseName": _row_answer_text(spouse),
-        "children": _row_answer_text(q20),
-        "aboutSelf": _row_answer_text(q21),
+        "pagrindine-darboviete-pareigos": _normalize_text_value(_row_answer_text(q16)),
+        "visuomenine-veikla": _normalize_text_value(_row_answer_text(q17)),
+        "pomegiai": _normalize_text_value(_row_answer_text(q18)),
+        "seimine-padetis": _normalize_text_value(_row_answer_text(q19)),
+        "vyro-ar-zmonos-vardas-pavarde": _normalize_text_value(_row_answer_text(spouse)),
+        "vaiku-vardai-pavardes": _normalize_text_value(_row_answer_text(q20)),
+        "ka-dar-noretumete-parasyti-apie-save": _normalize_text_value(_row_answer_text(q21)),
     }
 
 
@@ -606,7 +675,20 @@ def _parse_campaign_participant_picklist(picklist: Tag | None) -> dict[str, Any]
             participant_type = value
             break
 
-    registration = _parse_registration_details(notices[0] if notices else "")
+    registration_source = ""
+    for notice in notices:
+        if re.search(r"registruot", notice, flags=re.IGNORECASE):
+            registration_source = notice
+            break
+    if not registration_source:
+        for notice in notices:
+            if re.search(r"\d{4}-\d{2}-\d{2}", notice):
+                registration_source = notice
+                break
+    if not registration_source and notices:
+        registration_source = notices[0]
+
+    registration = _parse_registration_details(registration_source)
     return {
         "title": _tag_text(picklist.find("h3")),
         "participantType": participant_type,
@@ -894,7 +976,7 @@ def _parse_campaign_tab_data(slug: str, html: str) -> dict[str, Any]:
 def _normalize_campaigns(raw_campaign_data: dict[str, Any]) -> dict[str, Any]:
     campaigns = raw_campaign_data.get("campaigns")
     if not isinstance(campaigns, list):
-        return {"campaigns": []}
+        return {"kampanijos": []}
 
     normalized_campaigns: list[dict[str, Any]] = []
     for campaign in campaigns:
@@ -930,29 +1012,54 @@ def _normalize_campaigns(raw_campaign_data: dict[str, Any]) -> dict[str, Any]:
                     contracts = data.get("contracts", []) if isinstance(data.get("contracts"), list) else []
 
         participant = campaign.get("participant") if isinstance(campaign.get("participant"), dict) else {}
+        treasurer = campaign.get("treasurer") if isinstance(campaign.get("treasurer"), dict) else {}
+        auditor = campaign.get("auditor") if isinstance(campaign.get("auditor"), dict) else {}
+
+        normalized_donations: dict[str, Any] = {}
+        for donation_key, donation_payload in donations.items():
+            if not donation_key:
+                continue
+            normalized_donations[_source_key(donation_key)] = donation_payload
+
         normalized_campaigns.append(
             {
-                "campaignKey": campaign.get("campaignKey", ""),
-                "campaignLabel": campaign.get("campaignLabel", ""),
-                "campaignUrl": campaign.get("campaignUrl", ""),
-                "status": participant.get("status", ""),
-                "participantType": participant.get("participantType", ""),
-                "registeredDate": participant.get("registeredDate", ""),
-                "decisionNumber": participant.get("decisionNumber", ""),
-                "contact": {
-                    "inquiryPhone": participant.get("inquiryPhone", ""),
-                    "email": participant.get("email", ""),
+                "kampanijos-raktas": _normalize_text_value(campaign.get("campaignKey")),
+                "kampanijos-pavadinimas": _normalize_text_value(campaign.get("campaignLabel")),
+                "kampanijos-url": _normalize_text_value(campaign.get("campaignUrl")),
+                "statusas": _normalize_text_value(participant.get("status")),
+                "dalyvio-tipas": _normalize_text_value(participant.get("participantType")),
+                "registravimo-data": _normalize_text_value(participant.get("registeredDate")),
+                "sprendimo-numeris": _normalize_text_value(participant.get("decisionNumber")),
+                "kontaktai": {
+                    "telefonas-pasiteirauti": _normalize_text_value(participant.get("inquiryPhone")),
+                    "el-pastas": _normalize_text_value(participant.get("email")),
                 },
-                "treasurer": campaign.get("treasurer", {}),
-                "auditor": campaign.get("auditor", {}),
-                "tabSlugs": tab_slugs,
-                "donations": donations,
-                "financingReports": financing_reports,
-                "contracts": contracts,
+                "izdininkas": {
+                    "vardas-pavarde": _normalize_text_value(treasurer.get("name")),
+                    "telefonas": _normalize_text_value(treasurer.get("phone")),
+                    "el-pastas": _normalize_text_value(treasurer.get("email")),
+                    "imones-pavadinimas": _normalize_text_value(treasurer.get("companyName")),
+                    "imones-kodas": _normalize_text_value(treasurer.get("companyCode")),
+                }
+                if treasurer
+                else {},
+                "auditorius": {
+                    "vardas-pavarde": _normalize_text_value(auditor.get("name")),
+                    "telefonas": _normalize_text_value(auditor.get("phone")),
+                    "el-pastas": _normalize_text_value(auditor.get("email")),
+                    "imones-pavadinimas": _normalize_text_value(auditor.get("companyName")),
+                    "imones-kodas": _normalize_text_value(auditor.get("companyCode")),
+                }
+                if auditor
+                else {},
+                "skirtukai": [_source_key(slug) for slug in tab_slugs if slug],
+                "aukos-pagal-sekcija": normalized_donations,
+                "finansavimo-ataskaitos": financing_reports,
+                "sutartys": contracts,
             }
         )
 
-    return {"campaigns": normalized_campaigns}
+    return {"kampanijos": normalized_campaigns}
 
 
 def _parse_biografija_html(html: str) -> dict[str, Any]:
@@ -992,6 +1099,138 @@ def _index_sections_by_id(sections: list[dict[str, Any]]) -> dict[str, Any]:
             by_section_id[section_id] = [existing, section]
 
     return by_section_id
+
+
+def _normalize_profile_data(profile: dict[str, Any]) -> dict[str, Any]:
+    normalized_fields: dict[str, Any] = {}
+    fields = profile.get("fields") if isinstance(profile.get("fields"), list) else []
+    for field in fields:
+        if not isinstance(field, dict):
+            continue
+        key_text = str(field.get("key", ""))
+        key = _source_key(key_text)
+        if not key:
+            continue
+        normalized_fields[key] = {
+            "pavadinimas": _normalize_text_value(key_text),
+            "reiksme": _normalize_text_value(field.get("displayValue")),
+            "nuorodos": _normalize_links(field.get("urls")),
+        }
+
+    return {
+        "kandidato-vardas-pavarde": _normalize_text_value(profile.get("candidateDisplayName")),
+        "isrinkimo-pastaba": _normalize_text_value(profile.get("electedNote")),
+        "nuotraukos-src": _normalize_text_value(profile.get("photoSrc")),
+        "anketiniai-laukai": normalized_fields,
+    }
+
+
+def _normalize_biografija_data(payload: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "tekstas": _normalize_text_value(payload.get("text")),
+    }
+
+
+def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]:
+    sections = payload.get("sections") if isinstance(payload.get("sections"), list) else []
+    by_section: dict[str, Any] = {}
+    for section in sections:
+        if not isinstance(section, dict):
+            continue
+        section_title = str(section.get("title", ""))
+        section_id = str(section.get("sectionId", ""))
+        section_key = _source_key(section_id or section_title)
+        if not section_key:
+            continue
+
+        normalized_section: dict[str, Any] = {
+            "pavadinimas": _normalize_text_value(section_title),
+            "sekcijos-id": _normalize_text_value(section_id),
+        }
+
+        if isinstance(section.get("items"), list):
+            items: dict[str, Any] = {}
+            for item in section["items"]:
+                if not isinstance(item, dict):
+                    continue
+                item_label = str(item.get("key", ""))
+                item_key = _source_key(item_label)
+                if not item_key:
+                    continue
+                items[item_key] = {
+                    "pavadinimas": _normalize_text_value(item_label),
+                    "reiksme": _normalize_text_value(item.get("value")),
+                }
+            normalized_section["irasai"] = items
+
+        if isinstance(section.get("columns"), list):
+            normalized_section["stulpeliai"] = [
+                _normalize_text_value(column) for column in section["columns"] if _normalize_text_value(column) is not None
+            ]
+        if isinstance(section.get("rows"), list):
+            normalized_section["eilutes"] = section.get("rows", [])
+
+        by_section[section_key] = normalized_section
+
+    return {
+        "pagal-skyriu": by_section,
+    }
+
+
+def _normalize_turto_ir_pajamu_data(payload: dict[str, Any]) -> dict[str, Any]:
+    sections = payload.get("sections") if isinstance(payload.get("sections"), list) else []
+    normalized_sections: list[dict[str, Any]] = []
+    for section in sections:
+        if not isinstance(section, dict):
+            continue
+        section_entries: dict[str, Any] = {}
+        for item in section.get("items", []):
+            if not isinstance(item, dict):
+                continue
+            item_label = str(item.get("key", ""))
+            item_key = _source_key(item_label)
+            if not item_key:
+                continue
+            section_entries[item_key] = {
+                "pavadinimas": _normalize_text_value(item_label),
+                "reiksme": _normalize_text_value(item.get("value")),
+                "nuorodos": _normalize_links(item.get("urls")),
+            }
+
+        normalized_sections.append(
+            {
+                "pavadinimas": _normalize_text_value(section.get("title")),
+                "irasai": section_entries,
+            }
+        )
+
+    return {
+        "sekcijos": normalized_sections,
+    }
+
+
+def _normalize_kita_data(payload: dict[str, Any]) -> dict[str, Any]:
+    texts = payload.get("texts") if isinstance(payload.get("texts"), list) else []
+    normalized_texts = [
+        value
+        for value in (_normalize_text_value(text) for text in texts)
+        if value is not None
+    ]
+
+    return {
+        "tekstai": normalized_texts,
+        "nuorodos": _normalize_links(payload.get("links")),
+    }
+
+
+def _normalize_missing_values(value: Any) -> Any:
+    if isinstance(value, str):
+        return _normalize_text_value(value)
+    if isinstance(value, list):
+        return [_normalize_missing_values(item) for item in value]
+    if isinstance(value, dict):
+        return {key: _normalize_missing_values(item) for key, item in value.items()}
+    return value
 
 
 def _parse_privaciu_interesu_html(html: str) -> dict[str, Any]:
@@ -1521,6 +1760,7 @@ def parse_anketa_sample(
     }
 
     normalized: dict[str, Any] = {
+        "profilis": _normalize_profile_data(parsed["profile"]),
         "anketa": parsed["anketa"]["normalized"],
     }
 
@@ -1533,13 +1773,14 @@ def parse_anketa_sample(
         if data is not None:
             if key != "politinesKampanijosDalyvioDuomenys":
                 raw_data[key] = data
+            if key == "biografija" and isinstance(data, dict):
+                normalized["biografija"] = _normalize_biografija_data(data)
             if key == "privaciuInteresuDeklaracija" and isinstance(data, dict):
-                sections = data.get("sections")
-                if isinstance(sections, list):
-                    by_section_id = _index_sections_by_id(sections)
-                    normalized["privaciuInteresuDeklaracija"] = {
-                        "bySectionId": by_section_id,
-                    }
+                normalized["privaciu-interesu-deklaracija"] = _normalize_privaciu_interesu_data(data)
+            if key == "turtoIrPajamuDeklaracijos" and isinstance(data, dict):
+                normalized["turto-ir-pajamu-deklaracijos"] = _normalize_turto_ir_pajamu_data(data)
+            if key == "kita" and isinstance(data, dict):
+                normalized["kita"] = _normalize_kita_data(data)
         if isinstance(source_path, str) and source_path:
             page_samples[key] = source_path
 
@@ -1553,7 +1794,7 @@ def parse_anketa_sample(
             "sectionDescription": section_description,
             "campaigns": nested_campaigns,
         }
-        normalized[campaign_key] = _normalize_campaigns(raw_data[campaign_key])
+        normalized["politines-kampanijos-dalyvio-duomenys"] = _normalize_campaigns(raw_data[campaign_key])
 
         for campaign in nested_campaigns:
             campaign_dir = campaign.get("campaignDir")
@@ -1574,7 +1815,7 @@ def parse_anketa_sample(
             "pageSamples": page_samples,
         },
         "rawData": raw_data,
-        "normalized": normalized,
+        "normalized": _normalize_missing_values(normalized),
     }
 
     output_path = output_root / f"{candidate_id}-{ELECTION_ID}.json"
