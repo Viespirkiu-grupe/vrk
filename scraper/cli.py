@@ -1,5 +1,6 @@
 import argparse
 from pathlib import Path
+from typing import Any
 
 from scraper.elections.seimo_2016.anketa_parser import parse_anketa_samples
 from scraper.elections.seimo_2016.candidate_samples import (
@@ -11,6 +12,7 @@ from scraper.elections.seimo_2016.sitemap import (
     build_sitemap_from_sample,
     fetch_listing_sample,
 )
+from scraper.shared.anomalies import write_jsonl
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -88,8 +90,25 @@ def build_parser() -> argparse.ArgumentParser:
         default=Path("data/2016-seimo"),
         help="Path to output JSON folder. Defaults to data/2016-seimo",
     )
+    parse_anketa_parser.add_argument(
+        "--anomalies-path",
+        type=Path,
+        default=None,
+        help="Path to write anomalies JSONL. Defaults to <output-root>/anomalies.jsonl",
+    )
 
     return parser
+
+
+def _summarize_anomalies(anomalies: list[dict[str, Any]]) -> tuple[dict[str, int], dict[str, int]]:
+    by_type: dict[str, int] = {}
+    by_severity: dict[str, int] = {}
+    for event in anomalies:
+        event_type = str(event.get("eventType", "unknown"))
+        severity = str(event.get("severity", "unknown"))
+        by_type[event_type] = by_type.get(event_type, 0) + 1
+        by_severity[severity] = by_severity.get(severity, 0) + 1
+    return by_type, by_severity
 
 
 def main() -> int:
@@ -153,6 +172,9 @@ def main() -> int:
                 print("  Missing expected tabs: " + ", ".join(missing))
             else:
                 print("  All expected candidate tabs found")
+            anomalies = result.get("anomalies", [])
+            if anomalies:
+                print(f"  Anomalies: {len(anomalies)}")
             print(f"  Index: {result['index_path']}")
         return 0
 
@@ -162,6 +184,7 @@ def main() -> int:
             samples_root=args.samples_root,
             output_root=args.output_root,
         )
+        all_anomalies: list[dict[str, Any]] = []
         print(f"Parsed candidates: {len(results)}")
         for result in results:
             print(
@@ -176,6 +199,29 @@ def main() -> int:
                     rows=result["rowCount"],
                     answered=result["answeredRowCount"],
                 )
+            )
+            anomalies = result.get("anomalies", [])
+            all_anomalies.extend(anomalies)
+            if anomalies:
+                print(f"  anomalies={len(anomalies)}")
+
+        anomalies_path = args.anomalies_path or (args.output_root / "anomalies.jsonl")
+        write_jsonl(anomalies_path, all_anomalies)
+        by_type, by_severity = _summarize_anomalies(all_anomalies)
+        print(f"Anomalies saved: {anomalies_path}")
+        print(f"Total anomalies: {len(all_anomalies)}")
+        if by_severity:
+            print(
+                "By severity: "
+                + ", ".join(
+                    f"{name}={count}" for name, count in sorted(by_severity.items(), key=lambda item: item[0])
+                )
+            )
+        if by_type:
+            top_types = sorted(by_type.items(), key=lambda item: (-item[1], item[0]))[:10]
+            print(
+                "Top anomaly types: "
+                + ", ".join(f"{name}={count}" for name, count in top_types)
             )
         return 0
 

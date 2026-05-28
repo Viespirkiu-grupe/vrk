@@ -8,6 +8,7 @@ from typing import Any
 from bs4 import BeautifulSoup, NavigableString, Tag
 
 from scraper.elections.seimo_2016.sitemap import ELECTION_ID, resolve_candidate_url
+from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.files import slugify, write_json
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2016-seimo")
@@ -322,6 +323,7 @@ def _parse_anketa_table(table: Tag | None) -> dict[str, Any]:
     if table is None:
         return {
             "rows": [],
+            "normalized": _normalize_anketa_rows([]),
             "stats": {
                 "rowCount": 0,
                 "answeredRowCount": 0,
@@ -393,6 +395,11 @@ def parse_anketa_html(html: str) -> dict[str, Any]:
         "profile": profile,
         "tabs": tabs,
         "anketa": anketa,
+        "diagnostics": {
+            "tabnavFound": tabnav is not None,
+            "profileTableFound": profile_table is not None,
+            "anketaTableFound": anketa_table is not None,
+        },
     }
 
 
@@ -1343,7 +1350,12 @@ def _parse_nested_campaign_samples(
     return parsed_campaigns
 
 
-def _parse_optional_subpages(candidate_dir: Path) -> dict[str, Any]:
+def _parse_optional_subpages(
+    candidate_dir: Path,
+    candidate_id: str,
+    candidate_source_url: str | None,
+    anomalies: list[dict[str, Any]],
+) -> dict[str, Any]:
     pages: dict[str, Any] = {}
     parser_map: dict[str, Any] = {
         "biografija": ("biografija.html", _parse_biografija_html),
@@ -1361,9 +1373,29 @@ def _parse_optional_subpages(candidate_dir: Path) -> dict[str, Any]:
         if not path.exists():
             continue
         html = path.read_text(encoding="utf-8")
+        try:
+            parsed_data = parser(html)
+        except Exception as exc:
+            anomalies.append(
+                build_anomaly_event(
+                    event_type="SubpageParseError",
+                    severity="error",
+                    stage="parse",
+                    election_id=ELECTION_ID,
+                    candidate_id=candidate_id,
+                    source_url=candidate_source_url,
+                    detail={
+                        "subpage": key,
+                        "sourcePath": str(path),
+                        "error": str(exc),
+                    },
+                )
+            )
+            continue
+
         pages[key] = {
             "sourcePath": str(path),
-            "data": parser(html),
+            "data": parsed_data,
         }
 
     return pages
@@ -1396,14 +1428,84 @@ def parse_anketa_sample(
 
     html = anketa_path.read_text(encoding="utf-8")
     parsed = parse_anketa_html(html)
-    subpages = _parse_optional_subpages(candidate_dir)
     meta = _load_candidate_meta(candidate_dir)
     candidate_meta = meta.get("candidate", {}) if isinstance(meta, dict) else {}
-    root_campaign_data = subpages.get("politinesKampanijosDalyvioDuomenys", {}).get("data")
-    nested_campaigns = _parse_nested_campaign_samples(
-        meta if isinstance(meta, dict) else None,
-        root_campaign_data if isinstance(root_campaign_data, dict) else None,
+    candidate_source_url = candidate_meta.get("url") if isinstance(candidate_meta, dict) else None
+
+    anomalies: list[dict[str, Any]] = []
+    diagnostics = parsed.get("diagnostics", {})
+    if not diagnostics.get("tabnavFound", False):
+        anomalies.append(
+            build_anomaly_event(
+                event_type="TabnavSelectorNotFound",
+                severity="critical",
+                stage="parse",
+                election_id=ELECTION_ID,
+                candidate_id=candidate_id,
+                source_url=candidate_source_url,
+            )
+        )
+    if not diagnostics.get("profileTableFound", False):
+        anomalies.append(
+            build_anomaly_event(
+                event_type="ProfileTableMissing",
+                severity="error",
+                stage="parse",
+                election_id=ELECTION_ID,
+                candidate_id=candidate_id,
+                source_url=candidate_source_url,
+            )
+        )
+    if not diagnostics.get("anketaTableFound", False):
+        anomalies.append(
+            build_anomaly_event(
+                event_type="AnketaTableNotFound",
+                severity="critical",
+                stage="parse",
+                election_id=ELECTION_ID,
+                candidate_id=candidate_id,
+                source_url=candidate_source_url,
+            )
+        )
+
+    anketa_stats = parsed["anketa"]["stats"]
+    if anketa_stats["rowCount"] == 0:
+        anomalies.append(
+            build_anomaly_event(
+                event_type="AnketaTableEmpty",
+                severity="error",
+                stage="parse",
+                election_id=ELECTION_ID,
+                candidate_id=candidate_id,
+                source_url=candidate_source_url,
+            )
+        )
+
+    subpages = _parse_optional_subpages(
+        candidate_dir=candidate_dir,
+        candidate_id=candidate_id,
+        candidate_source_url=candidate_source_url,
+        anomalies=anomalies,
     )
+    root_campaign_data = subpages.get("politinesKampanijosDalyvioDuomenys", {}).get("data")
+    try:
+        nested_campaigns = _parse_nested_campaign_samples(
+            meta if isinstance(meta, dict) else None,
+            root_campaign_data if isinstance(root_campaign_data, dict) else None,
+        )
+    except Exception as exc:
+        anomalies.append(
+            build_anomaly_event(
+                event_type="CampaignDataStructureDrift",
+                severity="error",
+                stage="parse",
+                election_id=ELECTION_ID,
+                candidate_id=candidate_id,
+                source_url=candidate_source_url,
+                detail={"error": str(exc)},
+            )
+        )
+        nested_campaigns = []
 
     candidate_name = ""
     if isinstance(candidate_meta, dict):
@@ -1468,7 +1570,7 @@ def parse_anketa_sample(
         "candidateName": candidate_name,
         "source": {
             "samplePath": str(anketa_path),
-            "candidateSourceUrl": candidate_meta.get("url") if isinstance(candidate_meta, dict) else None,
+            "candidateSourceUrl": candidate_source_url,
             "pageSamples": page_samples,
         },
         "rawData": raw_data,
@@ -1478,13 +1580,13 @@ def parse_anketa_sample(
     output_path = output_root / f"{candidate_id}-{ELECTION_ID}.json"
     write_json(output_path, output_payload)
 
-    anketa_stats = parsed["anketa"]["stats"]
     stats = {
         "candidateId": candidate_id,
         "candidateName": candidate_name,
         "outputPath": str(output_path),
         "rowCount": anketa_stats["rowCount"],
         "answeredRowCount": anketa_stats["answeredRowCount"],
+        "anomalies": anomalies,
     }
     return output_path, stats
 

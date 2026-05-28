@@ -10,6 +10,7 @@ from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 
 from scraper.elections.seimo_2016.sitemap import ELECTION_ID, resolve_candidate_url
+from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.files import slugify
 from scraper.shared.http import fetch_text
 
@@ -177,6 +178,9 @@ def _extract_campaign_root_links(campaign_html: str, fallback_url: str) -> list[
 def _fetch_campaign_tabs(
     candidate_dir: Path,
     campaign_link: dict[str, str],
+    anomalies: list[dict[str, Any]],
+    candidate_id: str,
+    candidate_url: str,
 ) -> dict[str, Any]:
     campaign_url = campaign_link["url"]
     campaign_key = campaign_link["campaignKey"]
@@ -187,13 +191,53 @@ def _fetch_campaign_tabs(
     campaign_dir = campaigns_root / campaign_key
     campaign_dir.mkdir(parents=True, exist_ok=True)
 
-    root_html = fetch_text(campaign_url)
+    try:
+        root_html = fetch_text(campaign_url)
+    except Exception as exc:
+        anomalies.append(
+            build_anomaly_event(
+                event_type="CampaignRootFetchFailed",
+                severity="error",
+                stage="fetch",
+                election_id=ELECTION_ID,
+                candidate_id=candidate_id,
+                source_url=candidate_url,
+                detail={
+                    "campaignUrl": campaign_url,
+                    "campaignKey": campaign_key,
+                    "error": str(exc),
+                },
+            )
+        )
+        return {
+            "campaignKey": campaign_key,
+            "campaignLabel": campaign_link.get("label", ""),
+            "campaignUrl": campaign_url,
+            "campaignDir": str(campaign_dir),
+            "tabCount": 0,
+            "tabSamples": [],
+            "indexPath": "",
+        }
 
     tab_links = _extract_tab_links(root_html)
     seen_file_slugs: dict[str, int] = {}
     saved_tabs: list[dict[str, Any]] = []
 
     if not tab_links:
+        anomalies.append(
+            build_anomaly_event(
+                event_type="CampaignTabLinkExtractionEmpty",
+                severity="warning",
+                stage="fetch",
+                election_id=ELECTION_ID,
+                candidate_id=candidate_id,
+                source_url=candidate_url,
+                detail={
+                    "campaignUrl": campaign_url,
+                    "campaignKey": campaign_key,
+                },
+            )
+        )
         root_path = campaign_dir / "root.html"
         root_path.write_text(root_html, encoding="utf-8")
     else:
@@ -206,7 +250,27 @@ def _fetch_campaign_tabs(
                 file_path.write_text(root_html, encoding="utf-8")
                 fetched = False
             else:
-                tab_html = fetch_text(tab["url"])
+                try:
+                    tab_html = fetch_text(tab["url"])
+                except Exception as exc:
+                    anomalies.append(
+                        build_anomaly_event(
+                            event_type="CampaignTabDownloadFailed",
+                            severity="error",
+                            stage="fetch",
+                            election_id=ELECTION_ID,
+                            candidate_id=candidate_id,
+                            source_url=candidate_url,
+                            detail={
+                                "campaignUrl": campaign_url,
+                                "tabLabel": tab["label"],
+                                "tabSlug": tab["slug"],
+                                "tabUrl": tab["url"],
+                                "error": str(exc),
+                            },
+                        )
+                    )
+                    continue
                 file_path.write_text(tab_html, encoding="utf-8")
                 fetched = True
 
@@ -257,10 +321,35 @@ def _fetch_candidate_tabs(
     anketa_path.write_text(anketa_html, encoding="utf-8")
 
     tab_links = _extract_tab_links(anketa_html)
+    anomalies: list[dict[str, Any]] = []
+    if not tab_links:
+        anomalies.append(
+            build_anomaly_event(
+                event_type="TabLinkExtractionEmpty",
+                severity="error",
+                stage="fetch",
+                election_id=ELECTION_ID,
+                candidate_id=entry["candidateId"],
+                source_url=entry["url"],
+            )
+        )
+
     found_tab_slugs = {
         tab["slug"] for tab in tab_links if tab["slug"]
     }
     missing_expected_tabs = sorted(EXPECTED_TABS - found_tab_slugs)
+    if missing_expected_tabs:
+        anomalies.append(
+            build_anomaly_event(
+                event_type="MissingExpectedTab",
+                severity="warning",
+                stage="fetch",
+                election_id=ELECTION_ID,
+                candidate_id=entry["candidateId"],
+                source_url=entry["url"],
+                detail={"missingTabs": missing_expected_tabs},
+            )
+        )
 
     seen_file_slugs: dict[str, int] = {}
     saved_tabs: list[dict[str, Any]] = []
@@ -276,7 +365,26 @@ def _fetch_candidate_tabs(
             file_path.write_text(anketa_html, encoding="utf-8")
             fetched = False
         else:
-            tab_html = fetch_text(tab["url"])
+            try:
+                tab_html = fetch_text(tab["url"])
+            except Exception as exc:
+                anomalies.append(
+                    build_anomaly_event(
+                        event_type="TabDownloadFailed",
+                        severity="error",
+                        stage="fetch",
+                        election_id=ELECTION_ID,
+                        candidate_id=entry["candidateId"],
+                        source_url=entry["url"],
+                        detail={
+                            "tabLabel": tab["label"],
+                            "tabSlug": tab["slug"],
+                            "tabUrl": tab["url"],
+                            "error": str(exc),
+                        },
+                    )
+                )
+                continue
             file_path.write_text(tab_html, encoding="utf-8")
             fetched = True
 
@@ -310,7 +418,31 @@ def _fetch_candidate_tabs(
                 "url": link["url"],
                 "campaignKey": campaign_key,
             }
-            campaign_samples.append(_fetch_campaign_tabs(candidate_dir, campaign_link))
+            campaign_samples.append(
+                _fetch_campaign_tabs(
+                    candidate_dir,
+                    campaign_link,
+                    anomalies,
+                    candidate_id=entry["candidateId"],
+                    candidate_url=entry["url"],
+                )
+            )
+
+    if len(saved_tabs) < len(tab_links):
+        anomalies.append(
+            build_anomaly_event(
+                event_type="TabDownloadPartial",
+                severity="error",
+                stage="fetch",
+                election_id=ELECTION_ID,
+                candidate_id=entry["candidateId"],
+                source_url=entry["url"],
+                detail={
+                    "tabCount": len(tab_links),
+                    "tabsSaved": len(saved_tabs),
+                },
+            )
+        )
 
     index_path = candidate_dir / "index.json"
     index_payload = {
@@ -321,6 +453,7 @@ def _fetch_candidate_tabs(
         "tabSamples": saved_tabs,
         "missingExpectedTabs": missing_expected_tabs,
         "campaignSamples": campaign_samples,
+        "anomalies": anomalies,
     }
     index_path.write_text(
         json.dumps(index_payload, ensure_ascii=False, indent=2) + "\n",
@@ -336,6 +469,7 @@ def _fetch_candidate_tabs(
         "tabs_saved": len(saved_tabs),
         "missing_expected_tabs": missing_expected_tabs,
         "campaign_samples": campaign_samples,
+        "anomalies": anomalies,
         "index_path": index_path,
     }
 
