@@ -220,24 +220,26 @@ def _fetch_campaign_tabs(
         }
 
     tab_links = _extract_tab_links(root_html)
+    has_tabnav = BeautifulSoup(root_html, "lxml").select_one("ul#tabnav") is not None
     seen_file_slugs: dict[str, int] = {}
     saved_tabs: list[dict[str, Any]] = []
 
     if not tab_links:
-        anomalies.append(
-            build_anomaly_event(
-                event_type="CampaignTabLinkExtractionEmpty",
-                severity="warning",
-                stage="fetch",
-                election_id=ELECTION_ID,
-                candidate_id=candidate_id,
-                source_url=candidate_url,
-                detail={
-                    "campaignUrl": campaign_url,
-                    "campaignKey": campaign_key,
-                },
+        if has_tabnav:
+            anomalies.append(
+                build_anomaly_event(
+                    event_type="CampaignTabLinkExtractionEmpty",
+                    severity="warning",
+                    stage="fetch",
+                    election_id=ELECTION_ID,
+                    candidate_id=candidate_id,
+                    source_url=candidate_url,
+                    detail={
+                        "campaignUrl": campaign_url,
+                        "campaignKey": campaign_key,
+                    },
+                )
             )
-        )
         root_path = campaign_dir / "root.html"
         root_path.write_text(root_html, encoding="utf-8")
     else:
