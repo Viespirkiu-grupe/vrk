@@ -127,52 +127,15 @@ def _extract_campaign_key_from_url(url: str) -> str:
     return slugify(stem)
 
 
-def _extract_campaign_root_links(campaign_html: str, fallback_url: str) -> list[dict[str, str]]:
-    soup = BeautifulSoup(campaign_html, "lxml")
-    links: list[dict[str, str]] = []
-    seen: set[str] = set()
-
+def _extract_campaign_root_links(fallback_url: str) -> list[dict[str, str]]:
     fallback_key = _extract_campaign_key_from_url(fallback_url)
-    links.append(
+    return [
         {
             "label": "",
             "url": fallback_url,
             "campaignKey": fallback_key,
         }
-    )
-    seen.add(fallback_url)
-
-    for anchor in soup.find_all("a", href=True):
-        href = normalize_space(anchor.get("href", ""))
-        if not href:
-            continue
-
-        url = resolve_candidate_url(href)
-        if url in seen:
-            continue
-
-        path = urlparse(url).path
-        match = CAMPAIGN_LINK_PATTERN.search(path)
-        if match is None:
-            continue
-
-        campaign_type = slugify(match.group(1))
-        is_root_type = campaign_type.startswith("savarankiskasizdininkas") or campaign_type.startswith(
-            "atstovaujamasis"
-        )
-        if not is_root_type:
-            continue
-
-        seen.add(url)
-        links.append(
-            {
-                "label": normalize_space(anchor.get_text(" ", strip=True)),
-                "url": url,
-                "campaignKey": _extract_campaign_key_from_url(url),
-            }
-        )
-
-    return links
+    ]
 
 
 def _fetch_campaign_tabs(
@@ -362,7 +325,6 @@ def _fetch_candidate_tabs(
 
     seen_file_slugs: dict[str, int] = {}
     saved_tabs: list[dict[str, Any]] = []
-    campaign_tab_html = ""
     campaign_tab_url = ""
 
     for tab in tab_links:
@@ -398,7 +360,6 @@ def _fetch_candidate_tabs(
             fetched = True
 
         if tab["slug"] == CAMPAIGN_TAB_SLUG:
-            campaign_tab_html = anketa_html if not fetched else tab_html
             campaign_tab_url = tab["url"]
 
         saved_tabs.append(
@@ -412,12 +373,12 @@ def _fetch_candidate_tabs(
         )
 
     campaign_samples: list[dict[str, Any]] = []
-    if campaign_tab_html and campaign_tab_url:
+    if campaign_tab_url:
         campaigns_root = candidate_dir / "campaigns"
         if campaigns_root.exists():
             shutil.rmtree(campaigns_root)
 
-        campaign_links = _extract_campaign_root_links(campaign_tab_html, campaign_tab_url)
+        campaign_links = _extract_campaign_root_links(campaign_tab_url)
         seen_campaign_keys: dict[str, int] = {}
         for link in campaign_links:
             base_key = link["campaignKey"] or "campaign"
