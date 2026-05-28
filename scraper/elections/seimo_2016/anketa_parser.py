@@ -55,6 +55,20 @@ def _normalize_links(values: Any) -> list[str]:
     return links
 
 
+def _order_dict_keys(payload: dict[str, Any], ordered_keys: list[str]) -> dict[str, Any]:
+    ordered: dict[str, Any] = {}
+    for key in ordered_keys:
+        if key in payload:
+            ordered[key] = payload[key]
+
+    for key, value in payload.items():
+        if key in ordered:
+            continue
+        ordered[key] = value
+
+    return ordered
+
+
 def parse_question_number(text: str) -> str | None:
     match = re.match(r"^\s*(\d+(?:\.\d+)*)\.\s*", text)
     if not match:
@@ -1846,6 +1860,42 @@ def parse_anketa_sample(
     elif isinstance(root_campaign_data, dict):
         campaign_key = "politinesKampanijosDalyvioDuomenys"
         raw_data[campaign_key] = root_campaign_data
+
+    raw_data = _order_dict_keys(
+        raw_data,
+        [
+            "profile",
+            "anketa",
+            "biografija",
+            "turtoIrPajamuDeklaracijos",
+            "privaciuInteresuDeklaracija",
+            "politinesKampanijosDalyvioDuomenys",
+            "kita",
+        ],
+    )
+    normalized = _order_dict_keys(
+        normalized,
+        [
+            "profilis",
+            "anketa",
+            "biografija",
+            "turto-ir-pajamu-deklaracijos",
+            "privaciu-interesu-deklaracija",
+            "politines-kampanijos-dalyvio-duomenys",
+            "kita",
+        ],
+    )
+    page_samples = _order_dict_keys(
+        page_samples,
+        [
+            "anketa",
+            "biografija",
+            "turtoIrPajamuDeklaracijos",
+            "privaciuInteresuDeklaracija",
+            "politinesKampanijosDalyvioDuomenys",
+            "kita",
+        ],
+    )
 
     output_payload = {
         "electionId": ELECTION_ID,

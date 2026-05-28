@@ -75,6 +75,35 @@ class Seimo2016CampaignParserTests(unittest.TestCase):
         self.assertNotIn("politinesKampanijosDalyvioDuomenys", payload["rawData"])
         self.assertNotIn("politines-kampanijos-dalyvio-duomenys", payload["normalized"])
 
+    def test_output_sections_follow_menu_order(self) -> None:
+        payload = self._parse_candidate("agne-sirinskiene")
+
+        self.assertEqual(
+            list(payload["rawData"].keys()),
+            [
+                "profile",
+                "anketa",
+                "biografija",
+                "turtoIrPajamuDeklaracijos",
+                "privaciuInteresuDeklaracija",
+                "politinesKampanijosDalyvioDuomenys",
+                "kita",
+            ],
+        )
+
+        self.assertEqual(
+            list(payload["normalized"].keys()),
+            [
+                "profilis",
+                "anketa",
+                "biografija",
+                "turto-ir-pajamu-deklaracijos",
+                "privaciu-interesu-deklaracija",
+                "politines-kampanijos-dalyvio-duomenys",
+                "kita",
+            ],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
