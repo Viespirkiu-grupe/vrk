@@ -835,7 +835,6 @@ def _extract_heading_text(tag: Tag | NavigableString | None) -> str:
 
 def _parse_donations_table(table: Tag) -> dict[str, Any]:
     records: list[dict[str, Any]] = []
-    summary: list[dict[str, Any]] = []
 
     for tr in table.find_all("tr"):
         cells = tr.find_all(["td", "th"], recursive=False)
@@ -851,7 +850,6 @@ def _parse_donations_table(table: Tag) -> dict[str, Any]:
 
         first_value = values[0]
         if re.match(r"^\d+\.$", first_value) and len(values) >= 7:
-            amount_text = values[5]
             records.append(
                 {
                     "rowNumber": first_value,
@@ -859,32 +857,32 @@ def _parse_donations_table(table: Tag) -> dict[str, Any]:
                     "municipality": values[2],
                     "date": values[3],
                     "incomeSourceCode": values[4],
-                    "amountText": amount_text,
-                    "amount": _parse_decimal_value(amount_text),
+                    "amount": _parse_decimal_value(values[5]),
                     "notes": values[6],
                 }
             )
             continue
 
-        if len(values) >= 2:
-            summary.append(
-                {
-                    "label": first_value.rstrip(":"),
-                    "amountText": values[1],
-                    "amount": _parse_decimal_value(values[1]),
-                    "note": values[2] if len(values) > 2 else "",
-                }
-            )
-
     totals: dict[str, Any] = {}
-    for item in summary:
-        key = _build_campaign_title_key(str(item.get("label", "")))
+    for tr in table.find_all("tr"):
+        cells = tr.find_all(["td", "th"], recursive=False)
+        if not cells or any(cell.name == "th" for cell in cells):
+            continue
+
+        values = [_tag_text(cell) for cell in cells]
+        if not any(values) or len(values) < 2:
+            continue
+
+        first_value = values[0]
+        if re.match(r"^\d+\.$", first_value):
+            continue
+
+        key = _build_campaign_title_key(first_value.rstrip(":"))
         if key:
-            totals[key] = item.get("amount")
+            totals[key] = _parse_decimal_value(values[1])
 
     return {
         "records": records,
-        "summary": summary,
         "totals": totals,
     }
 
@@ -898,12 +896,24 @@ def _parse_campaign_donations_html(html: str) -> dict[str, Any]:
     sections: list[dict[str, Any]] = []
     current_title = ""
 
+    def _make_no_data_section(title: str, text: str) -> dict[str, Any]:
+        if _source_key(title) in {"nepriimtos-aukos", "vrk-sprendimais-pripazintos-ir-papildytos-dalyvio-politines-kampanijos-pajamos"}:
+            return {
+                "status": "noData",
+                "message": text,
+            }
+        return {
+            "title": title,
+            "status": "noData",
+            "message": text,
+        }
+
     for child in content.children:
         if isinstance(child, NavigableString):
             text = normalize_space(str(child))
             if not text or not current_title:
                 continue
-            sections.append({"title": current_title, "status": "noData", "message": text})
+            sections.append(_make_no_data_section(current_title, text))
             current_title = ""
             continue
 
@@ -932,7 +942,7 @@ def _parse_campaign_donations_html(html: str) -> dict[str, Any]:
 
         text = _tag_text(child)
         if text and current_title:
-            sections.append({"title": current_title, "status": "noData", "message": text})
+            sections.append(_make_no_data_section(current_title, text))
             current_title = ""
 
     return {"sections": sections}
@@ -1049,10 +1059,10 @@ def _parse_campaign_tab_data(slug: str, html: str) -> dict[str, Any]:
     return _parse_campaign_generic_html(html)
 
 
-def _normalize_campaigns(raw_campaign_data: dict[str, Any]) -> dict[str, Any]:
+def _normalize_campaigns(raw_campaign_data: dict[str, Any]) -> list[dict[str, Any]]:
     campaigns = raw_campaign_data.get("campaigns")
     if not isinstance(campaigns, list):
-        return {"kampanijos": []}
+        return []
 
     normalized_campaigns: list[dict[str, Any]] = []
     for campaign in campaigns:
@@ -1063,15 +1073,12 @@ def _normalize_campaigns(raw_campaign_data: dict[str, Any]) -> dict[str, Any]:
         donations: dict[str, Any] = {}
         financing_reports: list[dict[str, Any]] = []
         contracts: list[dict[str, Any]] = []
-        tab_slugs: list[str] = []
 
         if isinstance(tabs, list):
             for tab in tabs:
                 if not isinstance(tab, dict):
                     continue
                 slug = str(tab.get("slug", ""))
-                if slug:
-                    tab_slugs.append(slug)
                 data = tab.get("data")
                 if not isinstance(data, dict):
                     continue
@@ -1079,7 +1086,10 @@ def _normalize_campaigns(raw_campaign_data: dict[str, Any]) -> dict[str, Any]:
                     for section in data.get("sections", []):
                         if not isinstance(section, dict):
                             continue
-                        section_key = _build_campaign_title_key(str(section.get("title", "")))
+                        section_title = str(section.get("title", ""))
+                        if _source_key(section_title) == "spausdinimui":
+                            continue
+                        section_key = _build_campaign_title_key(section_title)
                         if section_key:
                             donations[section_key] = section
                 elif slug == "finansavimo-ataskaitos":
@@ -1099,11 +1109,7 @@ def _normalize_campaigns(raw_campaign_data: dict[str, Any]) -> dict[str, Any]:
 
         normalized_campaigns.append(
             {
-                "kampanijos-raktas": _normalize_text_value(campaign.get("campaignKey")),
-                "kampanijos-pavadinimas": _normalize_text_value(campaign.get("campaignLabel")),
-                "kampanijos-url": _normalize_text_value(campaign.get("campaignUrl")),
                 "statusas": _normalize_text_value(participant.get("status")),
-                "dalyvio-tipas": _normalize_text_value(participant.get("participantType")),
                 "registravimo-data": _normalize_text_value(participant.get("registeredDate")),
                 "sprendimo-numeris": _normalize_text_value(participant.get("decisionNumber")),
                 "kontaktai": {
@@ -1128,14 +1134,13 @@ def _normalize_campaigns(raw_campaign_data: dict[str, Any]) -> dict[str, Any]:
                 }
                 if auditor
                 else {},
-                "skirtukai": [_source_key(slug) for slug in tab_slugs if slug],
                 "aukos-pagal-sekcija": normalized_donations,
                 "finansavimo-ataskaitos": financing_reports,
                 "sutartys": contracts,
             }
         )
 
-    return {"kampanijos": normalized_campaigns}
+    return normalized_campaigns
 
 
 def _parse_biografija_html(html: str) -> dict[str, Any]:

@@ -35,7 +35,7 @@ class Seimo2016PrivaciuNormalizationTests(unittest.TestCase):
         self.assertIsInstance(matrix_section, list)
         self.assertGreater(len(matrix_section), 0)
         self.assertIsInstance(matrix_section[0], dict)
-        self.assertEqual(matrix_section[0]["asmuo-kurio-rysys-nurodytas"], "Deklaruojantysis")
+        self.assertEqual(matrix_section[0]["asmuo-kurio-rysys-bus-nurodytas"], "Deklaruojantysis")
         self.assertEqual(matrix_section[0]["valstybe"], "Lietuvos Respublika")
         self.assertEqual(matrix_section[0]["rysys-su-juridiniu-asmeniu"], "Darbuotojas, turintis administravimo įgaliojimus")
 

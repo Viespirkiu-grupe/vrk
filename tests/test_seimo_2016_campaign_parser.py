@@ -48,9 +48,17 @@ class Seimo2016CampaignParserTests(unittest.TestCase):
             section for section in donations_data["sections"] if section["title"] == "Gautos ir priimtos aukos"
         )
         self.assertEqual(len(received_section["records"]), 8)
+        self.assertNotIn("amountText", received_section["records"][0])
         self.assertEqual(received_section["records"][0]["incomeSourceCode"], "PL")
         self.assertEqual(received_section["totals"]["is-viso"], 20052.31)
         self.assertEqual(received_section["totals"]["kandidato-nuosavos-lesos"], 5987.0)
+        self.assertNotIn("summary", received_section)
+
+        no_data_sections = [section for section in donations_data["sections"] if section.get("status") == "noData"]
+        self.assertEqual(len(no_data_sections), 2)
+        for section in no_data_sections:
+            self.assertNotIn("title", section)
+            self.assertEqual(section["message"], "Duomenų nėra")
 
         financing_data = next(tab for tab in campaign["tabs"] if tab["slug"] == "finansavimo-ataskaitos")["data"]
         self.assertEqual(len(financing_data["reports"]), 2)
@@ -60,9 +68,10 @@ class Seimo2016CampaignParserTests(unittest.TestCase):
         contracts_data = next(tab for tab in campaign["tabs"] if tab["slug"] == "sutartys")["data"]
         self.assertEqual(len(contracts_data["contracts"]), 4)
 
-        normalized_campaign = payload["normalized"]["politines-kampanijos-dalyvio-duomenys"]["kampanijos"][0]
+        normalized_campaign = payload["normalized"]["politines-kampanijos-dalyvio-duomenys"][0]
         self.assertEqual(normalized_campaign["statusas"], "Savarankiškas")
         self.assertEqual(normalized_campaign["kontaktai"]["el-pastas"], "neskelbtina")
+        self.assertNotIn("spausdinimui", normalized_campaign["aukos-pagal-sekcija"])
         self.assertEqual(
             normalized_campaign["aukos-pagal-sekcija"]["gautos-ir-priimtos-aukos"]["totals"]["is-viso"],
             20052.31,
