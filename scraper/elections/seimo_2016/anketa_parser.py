@@ -396,27 +396,27 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
 
     return {
         "gimimo-data": _normalize_text_value(_row_answer_text(q5)),
-        "nuolatines-gyvenamosios-vietos-adresas": _normalize_text_value(_row_answer_text(q6)),
+        "adresas": _normalize_text_value(_row_answer_text(q6)),
         "pareiskimai": {
-            "teismo-paskirta-bausme-nebaigta": _normalize_text_value(
+            "ar-nebaigta-teismo-paskirta-bausme": _normalize_text_value(
                 _row_answer_text(q8_1)
             ),
-            "atliekate-karo-ar-alternatyviaja-tarnyba": _normalize_text_value(
+            "ar-atliekate-karo-tarnyba": _normalize_text_value(
                 _row_answer_text(q8_2)
             ),
-            "turite-kitos-valstybes-pilietybe": _normalize_text_value(_row_answer_text(q8_3)),
-            "susijes-priesaika-uzsienio-valstybei": _normalize_text_value(
+            "ar-turite-kitos-valstybes-pilietybe": _normalize_text_value(_row_answer_text(q8_3)),
+            "ar-susijes-priesaika-uzsienio-valstybei": _normalize_text_value(
                 _row_answer_text(q8_4)
             ),
-            "bendradarbiavote-su-uzsienio-specialiosiomis-tarnybomis": _normalize_text_value(
+            "ar-bendradarbiavote-su-uzsienio-tarnybomis": _normalize_text_value(
                 _row_answer_text(q9_1)
             ),
-            "buvote-pripazintas-kaltu": _normalize_text_value(_row_answer_text(q9_2)),
-            "veika-veliau-dekriminalizuota": _normalize_text_value(_row_answer_text(q9_3_1)),
-            "uzsienio-teismo-veika-lietuvoje-nenusikalstama": _normalize_text_value(
+            "ar-buvote-pripazintas-kaltu": _normalize_text_value(_row_answer_text(q9_2)),
+            "ar-veika-dekriminalizuota": _normalize_text_value(_row_answer_text(q9_3_1)),
+            "ar-buvote-pripazintas-kaltu-uzsienyje": _normalize_text_value(
                 _row_answer_text(q9_3_2)
             ),
-            "patraukimas-laikomas-politiniu-persekiojimu": _normalize_text_value(_row_answer_text(q9_3_3)),
+            "ar-buvote-pripazintas-kaltu-uzsienyje-del-politinio-persekiojimo": _normalize_text_value(_row_answer_text(q9_3_3)),
             "teisiniai-argumentai": _normalize_text_value(_row_answer_text(q9_3_4)),
         },
         "gimimo-vieta": _normalize_text_value(_row_answer_text(q10)),
@@ -425,20 +425,20 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
             "aprasas": _normalize_text_value(_row_answer_text(q12)),
             "irasai": _normalize_table_records(_first_nested_table_rows(q12)),
         },
-        "pedagoginis-vardas-mokslo-laipsnis": _normalize_text_value(_row_answer_text(pedagogical)),
+        "pedagoginis-vardas": _normalize_text_value(_row_answer_text(pedagogical)),
         "uzsienio-kalbos": _split_list_value(_row_answer_text(q13)),
-        "partija-politine-organizacija": _normalize_text_value(_row_answer_text(q14)),
+        "politine-organizacija": _normalize_text_value(_row_answer_text(q14)),
         "anksciau-isrinktas": {
             "aprasas": _normalize_text_value(_row_answer_text(q15)),
             "irasai": _normalize_table_records(_first_nested_table_rows(q15)),
         },
-        "pagrindine-darboviete-pareigos": _normalize_text_value(_row_answer_text(q16)),
+        "pagrindine-darboviete": _normalize_text_value(_row_answer_text(q16)),
         "visuomenine-veikla": _normalize_text_value(_row_answer_text(q17)),
         "pomegiai": _normalize_text_value(_row_answer_text(q18)),
         "seimine-padetis": _normalize_text_value(_row_answer_text(q19)),
-        "vyro-ar-zmonos-vardas-pavarde": _normalize_text_value(_row_answer_text(spouse)),
+        "sutuoktinio-vardas-pavarde": _normalize_text_value(_row_answer_text(spouse)),
         "vaiku-vardai-pavardes": _normalize_text_value(_row_answer_text(q20)),
-        "ka-dar-noretumete-parasyti-apie-save": _normalize_text_value(_row_answer_text(q21)),
+        "kita-apie-save": _normalize_text_value(_row_answer_text(q21)),
     }
 
 
@@ -1174,10 +1174,10 @@ def _normalize_profile_data(profile: dict[str, Any]) -> dict[str, Any]:
         }
 
     return {
-        "kandidato-vardas-pavarde": _normalize_text_value(profile.get("candidateDisplayName")),
-        "isrinkimo-pastaba": _normalize_text_value(profile.get("electedNote")),
-        "nuotraukos-src": _normalize_text_value(profile.get("photoSrc")),
-        "anketiniai-laukai": normalized_fields,
+        "vardas-pavarde": _normalize_text_value(profile.get("candidateDisplayName")),
+        "pastaba": _normalize_text_value(profile.get("electedNote")),
+        "nuotrauka": _normalize_text_value(profile.get("photoSrc")),
+        "kita": normalized_fields,
     }
 
 
