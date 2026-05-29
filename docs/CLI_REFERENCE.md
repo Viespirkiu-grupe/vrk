@@ -13,6 +13,12 @@ python -m scraper <command> [args]
 - `2016-seimo`
 - `2020-seimo`
 
+## Election Separation
+
+Each election ID uses its own parser module, HTML samples, sitemap, and output folder.
+Running or editing workflows for `2020-seimo` should not require touching `2016-seimo`, and vice versa, because election HTML layouts differ.
+The election ID in each command is the isolation boundary that selects the correct scraper implementation.
+
 ## Commands
 
 ### `fetch-sample`

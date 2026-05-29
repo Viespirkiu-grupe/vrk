@@ -49,6 +49,10 @@ Each election owns its own schema.
 There is no global record schema across all elections, so each election folder owns its own parser rules and output shape.
 The stable convention is file naming and one-record-per-candidate-election.
 
+Each election scraper is also maintained independently.
+When editing one election parser (for example `2020-seimo`), do not change another election parser (for example `2016-seimo`) unless the task explicitly requires cross-election work.
+This is required because VRK HTML structure and field layout differ by election.
+
 ## JSON Schema
 
 The current 2016 Seimo output keeps both raw and normalized sections.
@@ -164,6 +168,7 @@ Current structure:
 - `data/<election_id>/...` for scraped JSON outputs
 
 Each election module should stay self-contained so new election parsers can be added with minimal coupling.
+In practice, this means parser and fixture changes for one election should not modify another election module unless explicitly planned.
 
 ## Launch Strategy
 

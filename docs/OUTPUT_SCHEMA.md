@@ -6,6 +6,9 @@ This document describes the current output shape produced by:
 python -m scraper parse-anketa-samples 2016-seimo
 ```
 
+Scope note: this page is election-specific.
+`2016-seimo` and `2020-seimo` use separate scraper modules because their HTML differs, so schema details here should not be treated as a shared cross-election contract.
+
 Records are written as:
 
 - `data/2016-seimo/<candidate-id>-2016-seimo.json`
@@ -62,7 +65,7 @@ Expected section order in current implementation:
 
 - `biografija`:
   - 2016: source-close biography payload
-  - 2020: simplified `rows[]` (anketa-like) where each row contains `rowIndex`, `questionNumber`, `prompt`, `answer`
+  - 2020 (reference only, different election parser): simplified `rows[]` (anketa-like) where each row contains `rowIndex`, `questionNumber`, `prompt`, `answer`
     - scalar rows: `answer` is string
     - table rows (for education/work history): `answer` is a list of row objects
 - `turtoIrPajamuDeklaracijos`: `sections[]` of `{title, items[]}`
