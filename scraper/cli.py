@@ -2,17 +2,112 @@ import argparse
 from pathlib import Path
 from typing import Any
 
-from scraper.elections.seimo_2016.anketa_parser import parse_anketa_samples
+from scraper.elections.seimo_2016.anketa_parser import parse_anketa_samples as parse_2016_anketa_samples
 from scraper.elections.seimo_2016.candidate_samples import (
-    fetch_candidates_with_tabs,
-    fetch_first_candidate_with_tabs,
+    fetch_candidates_with_tabs as fetch_2016_candidates_with_tabs,
+    fetch_first_candidate_with_tabs as fetch_2016_first_candidate_with_tabs,
 )
 from scraper.elections.seimo_2016.sitemap import (
-    ELECTION_ID,
-    build_sitemap_from_sample,
-    fetch_listing_sample,
+    ELECTION_ID as SEIMO_2016_ELECTION_ID,
+    build_sitemap_from_sample as build_2016_sitemap_from_sample,
+    fetch_listing_sample as fetch_2016_listing_sample,
+)
+from scraper.elections.seimo_2020.candidate_samples import (
+    fetch_candidates_with_tabs as fetch_2020_candidates_with_tabs,
+    fetch_first_candidate_with_tabs as fetch_2020_first_candidate_with_tabs,
+)
+from scraper.elections.seimo_2020.anketa_parser import parse_anketa_samples as parse_2020_anketa_samples
+from scraper.elections.seimo_2020.sitemap import (
+    ELECTION_ID as SEIMO_2020_ELECTION_ID,
+    build_sitemap_from_sample as build_2020_sitemap_from_sample,
+    fetch_listing_sample as fetch_2020_listing_sample,
 )
 from scraper.shared.anomalies import write_jsonl
+
+FETCHABLE_ELECTION_IDS = [SEIMO_2016_ELECTION_ID, SEIMO_2020_ELECTION_ID]
+PARSABLE_ELECTION_IDS = [SEIMO_2016_ELECTION_ID, SEIMO_2020_ELECTION_ID]
+
+
+def _fetch_listing_sample_for_election(election_id: str) -> Path:
+    if election_id == SEIMO_2016_ELECTION_ID:
+        return fetch_2016_listing_sample()
+    if election_id == SEIMO_2020_ELECTION_ID:
+        return fetch_2020_listing_sample()
+    raise ValueError(f"Unsupported election id: {election_id}")
+
+
+def _build_sitemap_from_sample_for_election(election_id: str, sample_path: Path | None) -> tuple[Path, dict[str, int]]:
+    if election_id == SEIMO_2016_ELECTION_ID:
+        return build_2016_sitemap_from_sample(sample_path=sample_path)
+    if election_id == SEIMO_2020_ELECTION_ID:
+        return build_2020_sitemap_from_sample(sample_path=sample_path)
+    raise ValueError(f"Unsupported election id: {election_id}")
+
+
+def _fetch_first_candidate_with_tabs_for_election(
+    election_id: str,
+    sitemap_path: Path,
+    samples_root: Path,
+    allow_new_samples: bool,
+) -> dict[str, Any]:
+    if election_id == SEIMO_2016_ELECTION_ID:
+        return fetch_2016_first_candidate_with_tabs(
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
+    if election_id == SEIMO_2020_ELECTION_ID:
+        return fetch_2020_first_candidate_with_tabs(
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
+    raise ValueError(f"Unsupported election id: {election_id}")
+
+
+def _fetch_candidates_with_tabs_for_election(
+    election_id: str,
+    candidate_ids: list[str],
+    sitemap_path: Path,
+    samples_root: Path,
+    allow_new_samples: bool,
+) -> dict[str, Any]:
+    if election_id == SEIMO_2016_ELECTION_ID:
+        return fetch_2016_candidates_with_tabs(
+            candidate_ids=candidate_ids,
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
+    if election_id == SEIMO_2020_ELECTION_ID:
+        return fetch_2020_candidates_with_tabs(
+            candidate_ids=candidate_ids,
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
+    raise ValueError(f"Unsupported election id: {election_id}")
+
+
+def _parse_anketa_samples_for_election(
+    election_id: str,
+    candidate_ids: list[str] | None,
+    samples_root: Path,
+    output_root: Path,
+) -> list[dict[str, Any]]:
+    if election_id == SEIMO_2016_ELECTION_ID:
+        return parse_2016_anketa_samples(
+            candidate_ids=candidate_ids,
+            samples_root=samples_root,
+            output_root=output_root,
+        )
+    if election_id == SEIMO_2020_ELECTION_ID:
+        return parse_2020_anketa_samples(
+            candidate_ids=candidate_ids,
+            samples_root=samples_root,
+            output_root=output_root,
+        )
+    raise ValueError(f"Unsupported election id: {election_id}")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -23,13 +118,13 @@ def build_parser() -> argparse.ArgumentParser:
         "fetch-sample",
         help="Download and save raw HTML sample for an election",
     )
-    fetch_parser.add_argument("election_id", choices=[ELECTION_ID])
+    fetch_parser.add_argument("election_id", choices=FETCHABLE_ELECTION_IDS)
 
     sitemap_parser = subparsers.add_parser(
         "sitemap",
         help="Build sitemap JSON from a saved HTML sample",
     )
-    sitemap_parser.add_argument("election_id", choices=[ELECTION_ID])
+    sitemap_parser.add_argument("election_id", choices=FETCHABLE_ELECTION_IDS)
     sitemap_parser.add_argument(
         "--sample",
         type=Path,
@@ -41,18 +136,18 @@ def build_parser() -> argparse.ArgumentParser:
         "fetch-first-candidate-samples",
         help="Download first sitemap candidate page and tab subpages as HTML samples",
     )
-    candidate_sample_parser.add_argument("election_id", choices=[ELECTION_ID])
+    candidate_sample_parser.add_argument("election_id", choices=FETCHABLE_ELECTION_IDS)
     candidate_sample_parser.add_argument(
         "--sitemap",
         type=Path,
-        default=Path("sitemaps/2016-seimo.json"),
-        help="Path to sitemap JSON. Defaults to sitemaps/2016-seimo.json",
+        default=None,
+        help="Path to sitemap JSON. Defaults to sitemaps/<election-id>.json",
     )
     candidate_sample_parser.add_argument(
         "--samples-root",
         type=Path,
-        default=Path("samples/html/2016-seimo"),
-        help="Path to candidate sample folders. Defaults to samples/html/2016-seimo",
+        default=None,
+        help="Path to candidate sample folders. Defaults to samples/html/<election-id>",
     )
     candidate_sample_parser.add_argument(
         "--allow-new-samples",
@@ -67,7 +162,7 @@ def build_parser() -> argparse.ArgumentParser:
         "fetch-candidate-samples",
         help="Download selected candidate page and tab subpages as HTML samples",
     )
-    targeted_sample_parser.add_argument("election_id", choices=[ELECTION_ID])
+    targeted_sample_parser.add_argument("election_id", choices=FETCHABLE_ELECTION_IDS)
     targeted_sample_parser.add_argument(
         "--candidate-id",
         action="append",
@@ -77,14 +172,14 @@ def build_parser() -> argparse.ArgumentParser:
     targeted_sample_parser.add_argument(
         "--sitemap",
         type=Path,
-        default=Path("sitemaps/2016-seimo.json"),
-        help="Path to sitemap JSON. Defaults to sitemaps/2016-seimo.json",
+        default=None,
+        help="Path to sitemap JSON. Defaults to sitemaps/<election-id>.json",
     )
     targeted_sample_parser.add_argument(
         "--samples-root",
         type=Path,
-        default=Path("samples/html/2016-seimo"),
-        help="Path to candidate sample folders. Defaults to samples/html/2016-seimo",
+        default=None,
+        help="Path to candidate sample folders. Defaults to samples/html/<election-id>",
     )
     targeted_sample_parser.add_argument(
         "--allow-new-samples",
@@ -99,7 +194,7 @@ def build_parser() -> argparse.ArgumentParser:
         "parse-anketa-samples",
         help="Parse saved anketa HTML samples into initial structured JSON output",
     )
-    parse_anketa_parser.add_argument("election_id", choices=[ELECTION_ID])
+    parse_anketa_parser.add_argument("election_id", choices=PARSABLE_ELECTION_IDS)
     parse_anketa_parser.add_argument(
         "--candidate-id",
         action="append",
@@ -109,14 +204,14 @@ def build_parser() -> argparse.ArgumentParser:
     parse_anketa_parser.add_argument(
         "--samples-root",
         type=Path,
-        default=Path("samples/html/2016-seimo"),
-        help="Path to candidate sample folders. Defaults to samples/html/2016-seimo",
+        default=None,
+        help="Path to candidate sample folders. Defaults to samples/html/<election-id>",
     )
     parse_anketa_parser.add_argument(
         "--output-root",
         type=Path,
-        default=Path("data/2016-seimo"),
-        help="Path to output JSON folder. Defaults to data/2016-seimo",
+        default=None,
+        help="Path to output JSON folder. Defaults to data/<election-id>",
     )
     parse_anketa_parser.add_argument(
         "--anomalies-path",
@@ -144,12 +239,15 @@ def main() -> int:
     args = parser.parse_args()
 
     if args.command == "fetch-sample":
-        sample_path = fetch_listing_sample()
+        sample_path = _fetch_listing_sample_for_election(args.election_id)
         print(f"Saved HTML sample: {sample_path}")
         return 0
 
     if args.command == "sitemap":
-        output_path, stats = build_sitemap_from_sample(sample_path=args.sample)
+        output_path, stats = _build_sitemap_from_sample_for_election(
+            args.election_id,
+            sample_path=args.sample,
+        )
         print(f"Saved sitemap: {output_path}")
         print(
             "Rows: {rows}, extracted: {extracted}, skipped: {skipped}, duplicateIds: {dups}".format(
@@ -162,10 +260,11 @@ def main() -> int:
         return 0
 
     if args.command == "fetch-first-candidate-samples":
-        result = fetch_first_candidate_with_tabs(
-            sitemap_path=args.sitemap,
-            samples_root=args.samples_root,
-            allow_new_candidate_dir=args.allow_new_samples,
+        result = _fetch_first_candidate_with_tabs_for_election(
+            election_id=args.election_id,
+            sitemap_path=args.sitemap or Path(f"sitemaps/{args.election_id}.json"),
+            samples_root=args.samples_root or Path(f"samples/html/{args.election_id}"),
+            allow_new_samples=args.allow_new_samples,
         )
         candidate = result["candidate"]
         print(f"Candidate: {candidate['candidateName']} ({candidate['candidateId']})")
@@ -185,11 +284,12 @@ def main() -> int:
         return 0
 
     if args.command == "fetch-candidate-samples":
-        payload = fetch_candidates_with_tabs(
+        payload = _fetch_candidates_with_tabs_for_election(
+            election_id=args.election_id,
             candidate_ids=args.candidate_id,
-            sitemap_path=args.sitemap,
-            samples_root=args.samples_root,
-            allow_new_candidate_dir=args.allow_new_samples,
+            sitemap_path=args.sitemap or Path(f"sitemaps/{args.election_id}.json"),
+            samples_root=args.samples_root or Path(f"samples/html/{args.election_id}"),
+            allow_new_samples=args.allow_new_samples,
         )
         print(f"Fetched candidates: {payload['count']}")
         for result in payload["results"]:
@@ -213,10 +313,13 @@ def main() -> int:
         return 0
 
     if args.command == "parse-anketa-samples":
-        results = parse_anketa_samples(
+        samples_root = args.samples_root or Path(f"samples/html/{args.election_id}")
+        output_root = args.output_root or Path(f"data/{args.election_id}")
+        results = _parse_anketa_samples_for_election(
+            election_id=args.election_id,
             candidate_ids=args.candidate_id,
-            samples_root=args.samples_root,
-            output_root=args.output_root,
+            samples_root=samples_root,
+            output_root=output_root,
         )
         all_anomalies: list[dict[str, Any]] = []
         print(f"Parsed candidates: {len(results)}")
@@ -239,7 +342,7 @@ def main() -> int:
             if anomalies:
                 print(f"  anomalies={len(anomalies)}")
 
-        anomalies_path = args.anomalies_path or (args.output_root / "anomalies.jsonl")
+        anomalies_path = args.anomalies_path or (output_root / "anomalies.jsonl")
         write_jsonl(anomalies_path, all_anomalies)
         by_type, by_severity = _summarize_anomalies(all_anomalies)
         print(f"Anomalies saved: {anomalies_path}")

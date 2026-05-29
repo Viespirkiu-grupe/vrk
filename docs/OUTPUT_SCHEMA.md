@@ -60,7 +60,11 @@ Expected section order in current implementation:
 
 ### Other raw sections
 
-- `biografija`: `text`, `html`
+- `biografija`:
+  - 2016: source-close biography payload
+  - 2020: simplified `rows[]` (anketa-like) where each row contains `rowIndex`, `questionNumber`, `prompt`, `answer`
+    - scalar rows: `answer` is string
+    - table rows (for education/work history): `answer` is a list of row objects
 - `turtoIrPajamuDeklaracijos`: `sections[]` of `{title, items[]}`
 - `privaciuInteresuDeklaracija`: `sections[]`
 - `kita`: free text and links payload
@@ -85,6 +89,7 @@ Notes:
 - Keys are source-close and often Lithuanian.
 - Placeholder strings like `Nenurode` are converted to null values by normalization logic.
 - Campaign section is omitted when candidate has no campaign participant tab.
+- Biography in 2020 is intentionally simplified: no raw `text`/`html` and no section-kind wrappers; normalized 2020 biography no longer stores `tekstas`/`sekcijos`.
 
 ## Anomalies JSONL
 

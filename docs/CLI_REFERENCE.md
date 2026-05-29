@@ -11,6 +11,7 @@ python -m scraper <command> [args]
 ## Supported Election IDs
 
 - `2016-seimo`
+- `2020-seimo`
 
 ## Commands
 
@@ -89,6 +90,7 @@ Parse saved candidate samples into output JSON records.
 ```bash
 python -m scraper parse-anketa-samples 2016-seimo
 python -m scraper parse-anketa-samples 2016-seimo --candidate-id regina-ablom
+python -m scraper parse-anketa-samples 2020-seimo --candidate-id agne-sirinskiene
 ```
 
 Options:
