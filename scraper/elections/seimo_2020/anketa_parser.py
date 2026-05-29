@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from copy import deepcopy
 import json
 import re
 from pathlib import Path
@@ -7,7 +8,7 @@ from typing import Any
 
 from bs4 import BeautifulSoup, NavigableString, Tag
 
-from scraper.elections.seimo_2020.sitemap import ELECTION_ID
+from scraper.elections.seimo_2020.sitemap import ELECTION_ID, resolve_candidate_url
 from scraper.elections.seimo_2016.anketa_parser import (
     _load_candidate_meta,
     _normalize_campaigns,
@@ -502,6 +503,311 @@ def _parse_optional_subpages(
     return pages
 
 
+def _is_sprendimai_header_row(values: list[str]) -> bool:
+    compact = [normalize_space(v).lower() for v in values if isinstance(v, str) and v.strip()]
+    if not compact:
+        return True
+
+    joined = " ".join(compact)
+    if "sprendimas" in joined and len(compact) <= 3:
+        return True
+
+    header_tokens = {"eil.", "nr.", "pavadinimas", "data", "numeris", "pastaba"}
+    if header_tokens.intersection(compact):
+        return True
+
+    return False
+
+
+def _transform_sprendimai_payload(data: Any) -> Any:
+    if not isinstance(data, dict):
+        return data
+
+    blocks = data.get("blocks")
+    if not isinstance(blocks, list):
+        return data
+
+    row_entries: list[list[str]] = []
+    urls: list[str] = []
+
+    for block in blocks:
+        if not isinstance(block, dict):
+            continue
+
+        title = normalize_space(str(block.get("title", ""))).lower()
+        if title == "links":
+            raw_urls = block.get("urls")
+            if isinstance(raw_urls, list):
+                for url in raw_urls:
+                    if not isinstance(url, str):
+                        continue
+                    value = normalize_space(url)
+                    if value and value not in urls:
+                        urls.append(value)
+            continue
+
+        rows = block.get("rows")
+        if not isinstance(rows, list):
+            continue
+
+        for row in rows:
+            if not isinstance(row, list):
+                continue
+            values = [normalize_space(str(cell)) for cell in row]
+            if not any(values):
+                continue
+            row_entries.append(values)
+
+    records: list[dict[str, Any]] = []
+    for values in row_entries:
+        if _is_sprendimai_header_row(values):
+            continue
+
+        record = {
+            "rowNumber": values[0] if len(values) > 0 else "",
+            "title": values[1] if len(values) > 1 else "",
+            "date": values[2] if len(values) > 2 else "",
+            "number": values[3] if len(values) > 3 else "",
+            "note": values[4] if len(values) > 4 else "",
+            "urls": [],
+        }
+        if not record["title"]:
+            continue
+        records.append(record)
+
+    if not records and not urls:
+        return {"records": []}
+
+    for index, url in enumerate(urls):
+        if index >= len(records):
+            break
+        records[index]["urls"] = [url]
+
+    return {
+        "records": records,
+        "urls": urls,
+    }
+
+
+def _extract_table_links(cell: Tag) -> list[str]:
+    urls: list[str] = []
+    for anchor in cell.find_all("a"):
+        for attr in ("data-download-href", "data-direct-href", "href"):
+            href = anchor.get(attr)
+            if not isinstance(href, str):
+                continue
+            value = normalize_space(href)
+            if not value or value == "#":
+                continue
+            resolved = resolve_candidate_url(value)
+            if resolved not in urls:
+                urls.append(resolved)
+    return urls
+
+
+def _parse_auditoriaus_ataskaita_html(html: str) -> list[dict[str, Any]]:
+    soup = BeautifulSoup(html, "lxml")
+
+    report_table: Tag | None = None
+    for table in soup.select("table.partydata"):
+        title = _tag_text(table.find("h3"))
+        if "Auditoriaus ataskaita" in title:
+            report_table = table
+            break
+
+    if report_table is None:
+        return []
+
+    report_rows: list[dict[str, Any]] = []
+    for tr in report_table.select("tr"):
+        cells = tr.find_all("td", recursive=False)
+        if len(cells) < 4:
+            continue
+
+        row_number = _tag_text(cells[0])
+        status = _tag_text(cells[2]) if len(cells) > 2 else ""
+        document_type = _tag_text(cells[3]) if len(cells) > 3 else ""
+        urls = _extract_table_links(cells[4]) if len(cells) > 4 else []
+
+        if not row_number or not status or not document_type:
+            continue
+
+        report_rows.append(
+            {
+                "rowNumber": row_number,
+                "status": status,
+                "documentType": document_type,
+                "urls": urls,
+            }
+        )
+
+    return report_rows
+
+
+def _hydrate_auditor_reports_from_samples(
+    campaigns: list[dict[str, Any]],
+    candidate_dir: Path,
+) -> list[dict[str, Any]]:
+    hydrated: list[dict[str, Any]] = []
+    for campaign in campaigns:
+        if not isinstance(campaign, dict):
+            continue
+
+        campaign_payload = deepcopy(campaign)
+        campaign_key = normalize_space(str(campaign_payload.get("campaignKey", "")))
+        if not campaign_key:
+            hydrated.append(campaign_payload)
+            continue
+
+        report_path = candidate_dir / "campaigns" / campaign_key / "auditorius.html"
+        if not report_path.exists():
+            hydrated.append(campaign_payload)
+            continue
+
+        reports = _parse_auditoriaus_ataskaita_html(report_path.read_text(encoding="utf-8"))
+        if reports:
+            auditor_payload = campaign_payload.get("auditor")
+            if not isinstance(auditor_payload, dict):
+                auditor_payload = {}
+            auditor_payload["auditoriausAtaskaita"] = reports
+            campaign_payload["auditor"] = auditor_payload
+
+            tabs = campaign_payload.get("tabs")
+            if isinstance(tabs, list):
+                for tab in tabs:
+                    if not isinstance(tab, dict):
+                        continue
+                    slug = normalize_space(str(tab.get("slug", ""))).lower()
+                    if slug != "auditorius":
+                        continue
+                    if not tab.get("data"):
+                        tab["data"] = reports
+
+        hydrated.append(campaign_payload)
+
+    return hydrated
+
+
+def _transform_campaign_tabs_for_2020(campaigns: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    transformed: list[dict[str, Any]] = []
+    for campaign in campaigns:
+        if not isinstance(campaign, dict):
+            continue
+
+        campaign_payload = deepcopy(campaign)
+        tabs = campaign_payload.get("tabs")
+        if isinstance(tabs, list):
+            for tab in tabs:
+                if not isinstance(tab, dict):
+                    continue
+                slug = normalize_space(str(tab.get("slug", ""))).lower()
+                if slug != "sprendimai":
+                    continue
+                tab["data"] = _transform_sprendimai_payload(tab.get("data"))
+
+        transformed.append(campaign_payload)
+
+    return transformed
+
+
+def _normalize_sprendimai_records(payload: Any) -> list[dict[str, Any]]:
+    if not isinstance(payload, dict):
+        return []
+
+    records = payload.get("records")
+    if not isinstance(records, list):
+        return []
+
+    normalized_records: list[dict[str, Any]] = []
+    for record in records:
+        if not isinstance(record, dict):
+            continue
+
+        urls: list[str] = []
+        raw_urls = record.get("urls")
+        if isinstance(raw_urls, list):
+            for url in raw_urls:
+                if not isinstance(url, str):
+                    continue
+                value = normalize_space(url)
+                if value:
+                    urls.append(value)
+
+        normalized_record = {
+            "rowNumber": _normalize_text_value(record.get("rowNumber")),
+            "title": _normalize_text_value(record.get("title")),
+            "date": _normalize_text_value(record.get("date")),
+            "number": _normalize_text_value(record.get("number")),
+            "note": _normalize_text_value(record.get("note")),
+            "urls": urls,
+        }
+        if normalized_record["title"] is None:
+            continue
+        normalized_records.append(normalized_record)
+
+    return normalized_records
+
+
+def _simplify_campaigns_for_raw_output(campaigns: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    tab_key_map = {
+        "auku-ir-aukotoju-sarasas": "aukuIrAukotojuSarasas",
+        "finansavimo-ataskaitos": "finansavimoAtaskaitos",
+        "sutartys": "sutartys",
+        "sprendimai": "sprendimai",
+    }
+
+    simplified: list[dict[str, Any]] = []
+    for campaign in campaigns:
+        if not isinstance(campaign, dict):
+            continue
+
+        simplified_campaign: dict[str, Any] = {
+            "campaignKey": campaign.get("campaignKey", ""),
+            "campaignLabel": campaign.get("campaignLabel", ""),
+            "campaignUrl": campaign.get("campaignUrl", ""),
+            "sectionDescription": campaign.get("sectionDescription", ""),
+            "participant": campaign.get("participant"),
+            "treasurer": campaign.get("treasurer"),
+            "auditor": campaign.get("auditor"),
+        }
+
+        extra_sections: dict[str, Any] = {}
+        tabs = campaign.get("tabs")
+        if isinstance(tabs, list):
+            for tab in tabs:
+                if not isinstance(tab, dict):
+                    continue
+
+                slug = str(tab.get("slug", "")).strip()
+                if not slug or slug == "izdininkas":
+                    continue
+
+                data = tab.get("data")
+                if not isinstance(data, (dict, list)) or not data:
+                    continue
+
+                if slug == "auditorius":
+                    auditor_payload = simplified_campaign.get("auditor")
+                    if not isinstance(auditor_payload, dict):
+                        auditor_payload = {}
+                    auditor_payload["auditoriausAtaskaita"] = data
+                    simplified_campaign["auditor"] = auditor_payload
+                    continue
+
+                mapped_key = tab_key_map.get(slug)
+                if mapped_key is not None:
+                    simplified_campaign[mapped_key] = data
+                else:
+                    extra_sections[slug] = data
+
+        if extra_sections:
+            simplified_campaign["kitiSkyriai"] = extra_sections
+
+        simplified.append(simplified_campaign)
+
+    return simplified
+
+
 def parse_anketa_sample(
     candidate_id: str,
     samples_root: Path = DEFAULT_SAMPLES_ROOT,
@@ -593,6 +899,9 @@ def parse_anketa_sample(
         )
         nested_campaigns = []
 
+    nested_campaigns = _transform_campaign_tabs_for_2020(nested_campaigns)
+    nested_campaigns = _hydrate_auditor_reports_from_samples(nested_campaigns, candidate_dir)
+
     candidate_name = ""
     if isinstance(candidate_meta, dict):
         candidate_name = str(candidate_meta.get("candidateName", "")).strip()
@@ -633,11 +942,33 @@ def parse_anketa_sample(
         if isinstance(root_campaign_data, dict):
             section_description = str(root_campaign_data.get("sectionDescription", ""))
 
-        raw_data[campaign_key] = {
+        simplified_campaigns = _simplify_campaigns_for_raw_output(nested_campaigns)
+
+        full_campaign_payload = {
             "sectionDescription": section_description,
             "campaigns": nested_campaigns,
         }
-        normalized["politines-kampanijos-dalyvio-duomenys"] = _normalize_campaigns(raw_data[campaign_key])
+        raw_data[campaign_key] = {
+            "sectionDescription": section_description,
+            "campaigns": simplified_campaigns,
+        }
+        normalized_campaigns = _normalize_campaigns(full_campaign_payload)
+        if isinstance(normalized_campaigns, list):
+            for index, campaign in enumerate(normalized_campaigns):
+                if not isinstance(campaign, dict):
+                    continue
+                if index >= len(simplified_campaigns):
+                    continue
+                raw_campaign = simplified_campaigns[index]
+                if not isinstance(raw_campaign, dict):
+                    continue
+
+                sprendimai_payload = raw_campaign.get("sprendimai")
+                normalized_sprendimai = _normalize_sprendimai_records(sprendimai_payload)
+                if normalized_sprendimai:
+                    campaign["sprendimai"] = normalized_sprendimai
+
+        normalized["politines-kampanijos-dalyvio-duomenys"] = normalized_campaigns
     elif isinstance(root_campaign_data, dict):
         campaign_key = "politinesKampanijosDalyvioDuomenys"
         raw_data[campaign_key] = root_campaign_data
