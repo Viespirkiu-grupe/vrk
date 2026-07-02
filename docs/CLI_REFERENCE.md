@@ -14,6 +14,7 @@ python -m scraper <command> [args]
 - `2020-seimo`
 - `2024-seimo`
 - `2019-ep` (European Parliament)
+- `2024-ep` (European Parliament)
 
 ## Election Separation
 
@@ -132,6 +133,26 @@ Resumable batch processing helper:
 
 - `scripts/run_ep_2019_batches.sh` mirrors the Seimo batch scripts, tracking run
   state under `.run-state/ep-2019/`.
+
+## European Parliament (`2024-ep`) Workflow
+
+The 2024 EP election shares the 2024-era page layout with `2024-seimo`
+(candidate anketa links use the `KandidatasAnketa_rkndId-*` stem and tab
+content sits directly after the tab navigation), while keeping the EP tab set
+of `2019-ep`. Candidate pages carry no campaign tab — campaigns were run by
+the party lists.
+
+```bash
+python -m scraper fetch-sample 2024-ep
+python -m scraper sitemap 2024-ep
+python -m scraper fetch-candidate-samples 2024-ep --candidate-id vitalijus-mitrofanovas --allow-new-samples
+python -m scraper parse-anketa-samples 2024-ep --candidate-id vitalijus-mitrofanovas
+```
+
+Resumable batch processing helper:
+
+- `scripts/run_ep_2024_batches.sh` mirrors the other batch scripts, tracking
+  run state under `.run-state/ep-2024/`.
 
 ## Helpful Checks
 

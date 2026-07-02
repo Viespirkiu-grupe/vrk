@@ -42,6 +42,21 @@ education record tables, candidates with campaign donation data, and a candidate
 holding an academic degree / pedagogic title (guards the `9.x` and `12.x`
 question-number parsing that would otherwise silently drop those answers).
 
+For `2024-ep` the allowlist (`tests/test_ep_2024_sample_allowlist.py`) is:
+
+- `vitalijus-mitrofanovas`
+- `edvinas-guobys`
+- `zivile-pinskuviene`
+- `tomas-baranauskas`
+- `vilija-blinkeviciute`
+- `petras-grazulis`
+
+This mix covers an elected MEP (elected note in the profile), a candidate with
+an academic degree (guards the 2024 `2.1`/`2.2` biography numbering), a
+candidate with conviction and mandate-loss details (`13.1`-`13.4` and `14.1`
+conditional answers), an extra private-interest section (`Ryšiai sudarius
+sandorius`), and regular non-elected candidates.
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:

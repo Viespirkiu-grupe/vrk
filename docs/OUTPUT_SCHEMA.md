@@ -141,3 +141,38 @@ EP-specific notes:
   spouse block is retained under
   `deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris` rather than dropped.
   Candidates who filed no declaration yield an empty object.
+
+## Appendix: 2024 European Parliament (`2024-ep`)
+
+Records are written as `data/2024-ep/<candidate-id>-2024-ep.json` with the same
+top-level fields. Candidate pages carry no campaign tab (campaigns were run by
+the party lists), so the `normalized` section order is `profilis`, `anketa`,
+`biografija`, `turto-ir-pajamu-deklaracijos`, `privaciu-interesu-deklaracija`,
+`kita`.
+
+2024 EP-specific notes:
+
+- `normalized.anketa` follows the 2024 question numbering: `adresas` (Q6),
+  `einamos-pareigos` (Q7), and `narystes-politinese-organizacijose.irasai`
+  (the Q8 membership table, rendered in its own row after the heading).
+- `normalized.anketa.pareiskimai` carries the Rinkimų kodekso 76 str.
+  declarations (Q9–Q16, including the `13.5`–`13.7` sub-questions).
+- `teistumo-detales` holds the conditional Q13.1–Q13.4 conviction details
+  (only filled when Q13 is "Taip"); each conviction table is folded into one
+  record under `nusikalstamos-veikos.irasai`. `mandato-netekimo-detales`
+  holds the conditional Q14.1 answer.
+- `biografija` is a structured questionnaire (unlike the 2019 free text):
+  `gimimo-data`/`gimimo-vieta` (Q1), `issilavinimas.irasai` (Q2),
+  `mokslo-laipsnis` (Q2.1), `pedagoginis-vardas` (Q2.2), `uzsienio-kalbos`
+  (Q3), `darbo-patirtis.irasai` (Q4), `visuomenine-veikla` (Q5), `pomegiai`
+  (Q6), `seimine-padetis` (Q7).
+- `turto-ir-pajamu-deklaracijos` keeps the seven canonical keys shared with
+  the other elections; the full GPM311 income breakdown stays in `rawData`.
+- `privaciu-interesu-deklaracija` merges the leading summary table to the top
+  level (`pateikimo-data`, `deklaruojantis-asmuo`,
+  `sutuoktinis-sugyventinis-ar-partneris`) and keys each `h4` section by its
+  slugified title (`deklaruojancio-darbovietes`, `sutuoktinio-darbovietes`,
+  `rysiai-su-juridiniais-asmenimis`, `rysiai-sudarius-sandorius`, …), each a
+  list of records.
+- `profilis.nuotrauka` is a URL to the candidate photo (`kandImg/...`), not a
+  base64 data URI as in 2019.
