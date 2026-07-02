@@ -1,0 +1,139 @@
+import json
+import tempfile
+import unittest
+from pathlib import Path
+
+from scraper.elections.seimo_2024.anketa_parser import parse_anketa_sample
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+SAMPLES_ROOT = REPO_ROOT / "samples" / "html" / "2024-seimo"
+
+
+def _parse(candidate_id: str) -> dict:
+    with tempfile.TemporaryDirectory() as tmp:
+        output_path, _ = parse_anketa_sample(
+            candidate_id=candidate_id,
+            samples_root=SAMPLES_ROOT,
+            output_root=Path(tmp),
+        )
+        return json.loads(output_path.read_text(encoding="utf-8"))
+
+
+class Seimo2024AnketaParserTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.algirdas = _parse("algirdas-butkevicius")
+        self.vilma = _parse("vilma-aasrum")
+
+    def test_top_level_fields(self) -> None:
+        self.assertEqual(self.algirdas["electionId"], "2024-seimo")
+        self.assertEqual(self.algirdas["candidateId"], "algirdas-butkevicius")
+        self.assertEqual(self.algirdas["candidateName"], "Algirdas BUTKEVIČIUS")
+        self.assertTrue(
+            self.algirdas["source"]["candidateSourceUrl"].endswith("KandidatasAnketa_rkndId-2436053.html")
+        )
+
+    def test_normalized_section_order(self) -> None:
+        self.assertEqual(
+            list(self.algirdas["normalized"].keys()),
+            [
+                "profilis",
+                "anketa",
+                "biografija",
+                "turto-ir-pajamu-deklaracijos",
+                "privaciu-interesu-deklaracija",
+                "politines-kampanijos-dalyvio-duomenys",
+                "kita",
+            ],
+        )
+
+    def test_subpage_raw_data_not_empty(self) -> None:
+        # The 2024 layout renders tab content as direct siblings of
+        # ul#tabnav; a regression to the 2016-era "div after tabnav" /
+        # "table.tabinc" selectors silently empties all three sections.
+        raw = self.algirdas["rawData"]
+        self.assertGreater(len(raw["biografija"]["rows"]), 0)
+        self.assertGreater(len(raw["turtoIrPajamuDeklaracijos"]["sections"]), 0)
+        self.assertGreater(len(raw["privaciuInteresuDeklaracija"]["sections"]), 0)
+
+    def test_biografija_birth_and_marital(self) -> None:
+        biografija = self.algirdas["normalized"]["biografija"]
+        self.assertEqual(biografija["gimimo-data"], "1958-11-19")
+        self.assertEqual(biografija["gimimo-vieta"], "Radviliškio rajonas")
+        self.assertEqual(biografija["seimine-padetis"], "Vedęs")
+
+    def test_biografija_education_records_attached_to_question_2(self) -> None:
+        irasai = self.algirdas["normalized"]["biografija"]["issilavinimas"]["irasai"]
+        self.assertEqual(len(irasai), 3)
+        self.assertEqual(irasai[0]["mokymo-istaigos-pavadinimas"], "Vilniaus Gedimino technikos universitetas")
+        self.assertEqual(irasai[0]["baigimo-metai"], "2008")
+
+    def test_biografija_work_records_attached_to_question_4(self) -> None:
+        irasai = self.algirdas["normalized"]["biografija"]["darbo-patirtis"]["irasai"]
+        self.assertEqual(len(irasai), 6)
+        self.assertEqual(irasai[0]["darboviete"], "Lietuvos Respublikos Seimas")
+        self.assertEqual(irasai[0]["darbo-pradzia"], "1996")
+        self.assertEqual(irasai[0]["pareigos"], "Seimo narys")
+
+    def test_biografija_languages_split(self) -> None:
+        self.assertEqual(
+            self.algirdas["normalized"]["biografija"]["uzsienio-kalbos"],
+            ["Anglų (Įgudęs)", "Rusų (Įgudęs)"],
+        )
+
+    def test_academic_degree_captured(self) -> None:
+        # Q2.1/Q2.2 use the 2024 numbering; the 2016/2020-era mapping
+        # ("3.1"/"3.2") would silently null these out.
+        biografija = self.algirdas["normalized"]["biografija"]
+        self.assertEqual(biografija["mokslo-laipsnis"], "Daktaras")
+        self.assertEqual(biografija["pedagoginis-vardas"], "Neturiu")
+
+    def test_biografija_activity_and_hobbies(self) -> None:
+        biografija = self.vilma["normalized"]["biografija"]
+        self.assertTrue(biografija["visuomenine-veikla"].startswith("Lietuvos valstiečių ir žaliųjų sąjungos"))
+        self.assertEqual(biografija["pomegiai"], "Politika")
+
+    def test_turto_amounts(self) -> None:
+        turto = self.algirdas["normalized"]["turto-ir-pajamu-deklaracijos"]
+        self.assertEqual(turto["privalomas-registruoti-turtas"], 85215)
+        self.assertEqual(turto["vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai"], 0)
+        self.assertEqual(turto["pinigines-lesos"], 76674)
+        self.assertEqual(turto["suteiktos-paskolos"], 0)
+        self.assertEqual(turto["gautos-paskolos"], 31800)
+        self.assertEqual(turto["gautos-pajamos"], 61513.89)
+        self.assertEqual(turto["sumoketas-pajamu-mokestis"], 11596.56)
+
+    def test_privaciu_declaration_summary(self) -> None:
+        privaciu = self.algirdas["normalized"]["privaciu-interesu-deklaracija"]
+        self.assertEqual(privaciu["pateikimo-data"], "2024-07-22")
+        self.assertEqual(privaciu["deklaruojantis-asmuo"], "Algirdas BUTKEVIČIUS")
+        self.assertEqual(privaciu["sutuoktinis-sugyventinis-ar-partneris"], "Janina BUTKEVIČIENĖ")
+
+    def test_privaciu_workplace_and_legal_tie_records(self) -> None:
+        privaciu = self.algirdas["normalized"]["privaciu-interesu-deklaracija"]
+        darbovietes = privaciu["deklaruojancio-darbovietes"]
+        self.assertEqual(len(darbovietes), 1)
+        self.assertEqual(darbovietes[0]["pavadinimas"], "Lietuvos Respublikos Seimo kanceliarija")
+        self.assertEqual(darbovietes[0]["pareigos"], "Seimo narys")
+
+        rysiai = privaciu["rysiai-su-juridiniais-asmenimis"]
+        self.assertEqual(len(rysiai), 2)
+        self.assertEqual(rysiai[1]["juridinio-asmens-pavadinimas"], 'Demokratų sąjunga "Vardan Lietuvos"')
+        self.assertEqual(rysiai[1]["rysio-pobudis"], "Narys")
+
+    def test_privaciu_transaction_records(self) -> None:
+        sandoriai = self.algirdas["normalized"]["privaciu-interesu-deklaracija"]["rysiai-sudarius-sandorius"]
+        self.assertEqual(len(sandoriai), 1)
+        self.assertEqual(sandoriai[0]["sandorio-rusis"], "Lizingas")
+        self.assertEqual(sandoriai[0]["sudarymo-data"], "2024-06-27")
+
+    def test_privaciu_spouse_workplace_records(self) -> None:
+        privaciu = self.vilma["normalized"]["privaciu-interesu-deklaracija"]
+        sutuoktinio = privaciu["sutuoktinio-darbovietes"]
+        self.assertEqual(len(sutuoktinio), 1)
+        self.assertEqual(sutuoktinio[0]["pavadinimas"], "Eramet AS")
+        self.assertEqual(sutuoktinio[0]["registracijos-salis"], "Užsienio valstybė")
+
+
+if __name__ == "__main__":
+    unittest.main()

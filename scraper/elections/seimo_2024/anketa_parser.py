@@ -1,28 +1,29 @@
 from __future__ import annotations
 
 from copy import deepcopy
-import json
-import re
 from pathlib import Path
 from typing import Any
 
-from bs4 import BeautifulSoup, NavigableString, Tag
+from bs4 import BeautifulSoup, Tag
 
 from scraper.elections.seimo_2024.sitemap import ELECTION_ID, resolve_candidate_url
 from scraper.elections.seimo_2016.anketa_parser import (
+    _find_row_by_question_number,
     _load_candidate_meta,
     _normalize_campaigns,
     _normalize_kita_data,
     _normalize_missing_values,
     _normalize_profile_data,
     _normalize_table_records,
-    _normalize_turto_ir_pajamu_data,
     _order_dict_keys,
+    _parse_eur_amount,
     _parse_kita_html,
     _parse_nested_campaign_samples,
+    _parse_nested_table,
     _parse_politines_kampanijos_html,
-    _parse_turto_ir_pajamu_html,
+    _row_answer_text,
     parse_anketa_html,
+    parse_question_number,
 )
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.files import slugify, write_json
@@ -35,6 +36,29 @@ MISSING_TEXT_VALUES = {
     "nenurodė",
     "nenurode",
 }
+
+# The 2024 pages carry the same asset labels as the 2024 EP pages ("I.
+# Privalomas registruoti turtas" ...) and the same two GPM311 income summary
+# labels, so the alias table matches the 2024 EP module.
+TURTO_PAJAMU_KEY_ALIASES = {
+    "i-privalomas-registruoti-turtas": "privalomas-registruoti-turtas",
+    "ii-vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
+    "iii-pinigines-lesos": "pinigines-lesos",
+    "iv-suteiktos-paskolos": "suteiktos-paskolos",
+    "v-gautos-paskolos": "gautos-paskolos",
+    "deklaruota-apmokestinamuju-ir-neapmokestinamuju-pajamu-suma": "gautos-pajamos",
+    "deklaruota-moketina-pajamu-mokescio-suma": "sumoketas-pajamu-mokestis",
+}
+
+TURTO_PAJAMU_OUTPUT_ORDER = [
+    "privalomas-registruoti-turtas",
+    "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
+    "pinigines-lesos",
+    "suteiktos-paskolos",
+    "gautos-paskolos",
+    "gautos-pajamos",
+    "sumoketas-pajamu-mokestis",
+]
 
 
 def normalize_space(value: str) -> str:
@@ -61,17 +85,6 @@ def _tag_text(tag: Tag | None) -> str:
     if tag is None:
         return ""
     return normalize_space(tag.get_text(" ", strip=True))
-
-
-def _find_main_content_after_tabnav(soup: BeautifulSoup) -> Tag | None:
-    tabnav = soup.select_one("ul#tabnav")
-    if tabnav is None:
-        return None
-
-    for sibling in tabnav.next_siblings:
-        if isinstance(sibling, Tag) and sibling.name == "div":
-            return sibling
-    return tabnav.find_next("div")
 
 
 def _build_prompt_text(cell: Tag) -> str:
@@ -103,61 +116,6 @@ def _extract_answer_text(cell: Tag, nested_tables: list[Tag]) -> str:
     return " | ".join(answers)
 
 
-def _extract_table_headers(table: Tag) -> list[str]:
-    headers: list[str] = []
-    thead = table.find("thead")
-    if thead is not None:
-        for th in thead.find_all("th"):
-            value = _tag_text(th)
-            if value:
-                headers.append(value)
-        if headers:
-            return headers
-
-    for th in table.find_all("th", recursive=False):
-        value = _tag_text(th)
-        if value:
-            headers.append(value)
-    return headers
-
-
-def _parse_nested_table(table: Tag) -> dict[str, Any]:
-    headers = _extract_table_headers(table)
-    rows: list[dict[str, Any]] = []
-
-    body = table.find("tbody", recursive=False)
-    if body is not None:
-        tr_nodes = body.find_all("tr", recursive=False)
-    else:
-        tr_nodes = table.find_all("tr", recursive=False)
-
-    for tr in tr_nodes:
-        cells = tr.find_all(["td", "th"], recursive=False)
-        if not cells:
-            continue
-        if any(cell.name == "th" for cell in cells):
-            continue
-
-        values = [_tag_text(cell) for cell in cells]
-        if not any(values):
-            continue
-
-        if headers and len(values) == len(headers):
-            normalized_row: dict[str, str] = {}
-            for index, value in enumerate(values):
-                key = _source_key(headers[index]) or f"stulpelis-{index + 1}"
-                normalized_row[key] = value
-            rows.append(normalized_row)
-        else:
-            rows.append({f"stulpelis-{index + 1}": value for index, value in enumerate(values)})
-
-    return {
-        "headers": headers,
-        "rows": rows,
-        "rowCount": len(rows),
-    }
-
-
 def _split_birth_value(value: str | None) -> tuple[str | None, str | None]:
     normalized = _normalize_text_value(value)
     if not normalized:
@@ -185,270 +143,283 @@ def _split_list_value(value: str | None) -> list[str]:
     return values
 
 
-def _extract_question_number(prompt: str) -> str:
-    match = re.match(r"^\s*(\d+(?:\.\d+)*)(?:\.)?\s*", prompt)
-    if not match:
-        return ""
-    return match.group(1)
+def _record_groups_for_question(rows: list[dict[str, Any]], question_number: str) -> list[list[Any]]:
+    # Record tables ("2. Išsilavinimas:", "4. Darbo patirtis:") are rendered
+    # in their own <tr> right after the question row, so each table lands in
+    # a separate parsed row without a question number. Collect every
+    # consecutive such row; one group per table.
+    row = _find_row_by_question_number(rows, question_number)
+    if row is None:
+        return []
+
+    groups: list[list[Any]] = []
+    answer = row.get("answer")
+    if isinstance(answer, list) and answer:
+        groups.append(answer)
+
+    index = rows.index(row)
+    for next_row in rows[index + 1:]:
+        if next_row.get("questionNumber") or not isinstance(next_row.get("answer"), list):
+            break
+        groups.append(next_row["answer"])
+
+    return groups
 
 
-def _first_scalar_answer(answers: list[Any]) -> str | None:
-    for answer in answers:
-        if not isinstance(answer, str):
-            continue
-        normalized = _normalize_text_value(answer)
-        if normalized is not None:
-            return normalized
-    return None
-
-
-def _first_table_rows(answers: list[Any]) -> list[dict[str, Any]]:
-    for answer in answers:
-        if not isinstance(answer, list):
-            continue
-
-        rows = [row for row in answer if isinstance(row, dict)]
-        if rows:
-            return rows
-    return []
+def _records_for_question(rows: list[dict[str, Any]], question_number: str) -> list[Any]:
+    records: list[Any] = []
+    for group in _record_groups_for_question(rows, question_number):
+        records.extend(group)
+    return records
 
 
 def _parse_biografija_html(html: str) -> dict[str, Any]:
     soup = BeautifulSoup(html, "lxml")
-    content = _find_main_content_after_tabnav(soup)
-    outer_table = content.find("table") if content is not None else None
+    tabnav = soup.select_one("ul#tabnav")
+    outer_table = tabnav.find_next("table") if tabnav is not None else None
 
     rows: list[dict[str, Any]] = []
-    pending_heading: dict[str, str] | None = None
+    if outer_table is None:
+        return {"rows": rows}
 
-    if outer_table is not None:
-        tbody = outer_table.find("tbody", recursive=False)
-        if tbody is not None:
-            tr_nodes = tbody.find_all("tr", recursive=False)
-        else:
-            tr_nodes = outer_table.find_all("tr", recursive=False)
+    body = outer_table.find("tbody", recursive=False)
+    if body is not None:
+        tr_nodes = body.find_all("tr", recursive=False)
+    else:
+        tr_nodes = outer_table.find_all("tr", recursive=False)
 
-        for tr in tr_nodes:
-            cell = tr.find("td", recursive=False)
-            if cell is None:
+    for tr in tr_nodes:
+        cell = tr.find("td", recursive=False)
+        if cell is None:
+            continue
+
+        nested_tables = cell.find_all("table")
+        prompt = _build_prompt_text(cell)
+        question_number = parse_question_number(prompt)
+
+        if nested_tables:
+            table_rows: list[Any] = []
+            for nested_table in nested_tables:
+                parsed_table = _parse_nested_table(nested_table)
+                table_rows.extend(parsed_table.get("rows", []))
+
+            # Record tables ("2. Išsilavinimas:", "4. Darbo patirtis:") sit in
+            # their own row right below the heading row; attach them to it.
+            if not prompt and rows and not rows[-1]["answer"]:
+                rows[-1]["answer"] = table_rows
                 continue
 
-            nested_tables = cell.find_all("table")
-            prompt = _build_prompt_text(cell)
-            question_number = _extract_question_number(prompt)
-            answer = _extract_answer_text(cell, nested_tables)
-
-            if nested_tables:
-                if not prompt and pending_heading is not None:
-                    prompt = pending_heading.get("prompt", "")
-                if not question_number and pending_heading is not None:
-                    question_number = pending_heading.get("questionNumber", "")
-
-                table_rows: list[dict[str, Any]] = []
-                for nested_table in nested_tables:
-                    parsed_table = _parse_nested_table(nested_table)
-                    for row in parsed_table.get("rows", []):
-                        if isinstance(row, dict):
-                            table_rows.append(row)
-
-                rows.append(
-                    {
-                        "rowIndex": len(rows) + 1,
-                        "questionNumber": question_number,
-                        "prompt": normalize_space(prompt),
-                        "answer": table_rows,
-                    }
-                )
-                pending_heading = None
-                continue
-
-            normalized_prompt = normalize_space(prompt)
             rows.append(
                 {
                     "rowIndex": len(rows) + 1,
                     "questionNumber": question_number,
-                    "prompt": normalized_prompt,
-                    "answer": answer,
+                    "prompt": prompt,
+                    "answer": table_rows,
                 }
             )
+            continue
 
-            if normalized_prompt and not answer:
-                pending_heading = {
-                    "questionNumber": question_number,
-                    "prompt": normalized_prompt.rstrip(":"),
-                }
-            else:
-                pending_heading = None
+        answer = _extract_answer_text(cell, [])
+        if not prompt and not answer:
+            continue
 
-    return {
-        "rows": rows,
-    }
+        rows.append(
+            {
+                "rowIndex": len(rows) + 1,
+                "questionNumber": question_number,
+                "prompt": prompt,
+                "answer": answer,
+            }
+        )
+
+    return {"rows": rows}
 
 
 def _normalize_biografija_data(payload: dict[str, Any]) -> dict[str, Any]:
     rows = payload.get("rows") if isinstance(payload.get("rows"), list) else []
-    by_question: dict[str, list[Any]] = {}
 
-    for row in rows:
-        if not isinstance(row, dict):
-            continue
+    def _answer(question_number: str) -> str | None:
+        return _normalize_text_value(
+            _row_answer_text(_find_row_by_question_number(rows, question_number))
+        )
 
-        question_number = _normalize_text_value(row.get("questionNumber"))
-        if not question_number:
-            continue
+    birth_date, birth_place = _split_birth_value(_answer("1"))
 
-        answer = row.get("answer")
-        by_question.setdefault(question_number, []).append(answer)
-
-    birth_date, birth_place = _split_birth_value(_first_scalar_answer(by_question.get("1", [])))
-    education_rows = _normalize_table_records(_first_table_rows(by_question.get("3", [])))
-    work_rows = _normalize_table_records(_first_table_rows(by_question.get("5", [])))
-
-    result: dict[str, Any] = {
+    return {
         "gimimo-data": birth_date,
         "gimimo-vieta": birth_place,
-        "tautybe": _first_scalar_answer(by_question.get("2", [])),
         "issilavinimas": {
-            "irasai": education_rows,
+            "irasai": _normalize_table_records(_records_for_question(rows, "2")),
         },
-        "mokslo-laipsnis": _first_scalar_answer(by_question.get("3.1", [])),
-        "pedagoginis-vardas": _first_scalar_answer(by_question.get("3.2", [])),
-        "uzsienio-kalbos": _split_list_value(_first_scalar_answer(by_question.get("4", []))),
+        "mokslo-laipsnis": _answer("2.1"),
+        "pedagoginis-vardas": _answer("2.2"),
+        "uzsienio-kalbos": _split_list_value(_answer("3")),
         "darbo-patirtis": {
-            "irasai": work_rows,
+            "irasai": _normalize_table_records(_records_for_question(rows, "4")),
         },
-        "moksline-pedagogine-visuomenine-veikla": _first_scalar_answer(by_question.get("6", [])),
-        "pomegiai": _first_scalar_answer(by_question.get("7", [])),
-        "seimine-padetis": _first_scalar_answer(by_question.get("8", [])),
-        "sutuoktinio-vardas-pavarde": _first_scalar_answer(by_question.get("8.1", [])),
-        "vaiku-vardai-pavardes": _first_scalar_answer(by_question.get("8.2", [])),
-        "kita-apie-save": _first_scalar_answer(by_question.get("9", [])),
+        "visuomenine-veikla": _answer("5"),
+        "pomegiai": _answer("6"),
+        "seimine-padetis": _answer("7"),
     }
 
-    return result
 
+def _parse_turto_ir_pajamu_html(html: str) -> dict[str, Any]:
+    soup = BeautifulSoup(html, "lxml")
+    tabnav = soup.select_one("ul#tabnav")
+    if tabnav is None:
+        return {"sections": []}
 
-def _parse_privaciu_interesu_html(html: str) -> dict[str, Any]:
-    def _extract_section_title(table: Tag) -> str:
-        heading = _tag_text(table.find("h4"))
-        if heading:
-            return heading
-        first_row = table.find("tr")
-        if first_row is None:
-            return ""
-        bold = first_row.find("b")
-        if bold is not None:
-            return _tag_text(bold)
-        th = first_row.find("th")
-        if th is not None:
-            return _tag_text(th)
-        cells = first_row.find_all("td", recursive=False)
-        if len(cells) == 1:
-            return _tag_text(cells[0]).rstrip(":")
-        return ""
+    sections: list[dict[str, Any]] = []
+    for table in tabnav.find_next_siblings("table"):
+        title = ""
+        items: list[dict[str, str]] = []
 
-    def _extract_section_id(title: str) -> str:
-        match = re.search(r"\b(ID\d{3}[A-Z])\b", title)
-        return match.group(1).lower() if match else ""
-
-    def _parse_section(table: Tag) -> dict[str, Any]:
-        title = _extract_section_title(table)
-        section_id = _extract_section_id(title)
-        headers = _extract_table_headers(table)
-
-        row_payloads: list[list[str]] = []
         for tr in table.find_all("tr"):
             cells = tr.find_all("td", recursive=False)
             if not cells:
                 continue
-            values = [_tag_text(cell) for cell in cells]
-            if not any(values):
+
+            prompt = normalize_space(
+                " ".join(_build_prompt_text(cell) for cell in cells)
+            )
+            answers = [_extract_answer_text(cell, []) for cell in cells]
+            answer = " | ".join(value for value in answers if value)
+
+            if not prompt and not answer:
                 continue
-            row_payloads.append(values)
 
-        section: dict[str, Any] = {"title": title, "sectionId": section_id}
+            # Bold-only rows are the declaration heading ("METINĖS ...
+            # IŠRAŠAS (2023 m.)") and form labels ("GPM311 formos
+            # deklaracijos:"); the first one names the section.
+            if not prompt:
+                if not title:
+                    title = answer
+                continue
 
-        is_key_value = bool(row_payloads) and all(len(v) <= 2 for v in row_payloads)
-        if is_key_value:
-            items: list[dict[str, str]] = []
-            for values in row_payloads:
-                key = values[0].rstrip(":")
-                value = values[1] if len(values) > 1 else ""
-                if key == title and not value:
-                    continue
-                items.append({"key": key, "value": value})
-            section["items"] = items
-        else:
-            section["columns"] = headers
-            section["rows"] = row_payloads
+            items.append({"key": prompt.rstrip(":").rstrip("–").strip(), "value": answer})
 
-        return section
+        sections.append({"title": title, "items": items})
 
-    soup = BeautifulSoup(html, "lxml")
-    content = _find_main_content_after_tabnav(soup) or soup
-    sections = [_parse_section(t) for t in content.select("table.tabinc.partydata")]
     return {"sections": sections}
 
 
-def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]:
-    def _source_key(label: str) -> str:
-        return slugify(normalize_space(label).rstrip(":"))
-
+def _normalize_turto_ir_pajamu_data(payload: dict[str, Any]) -> dict[str, Any]:
     sections = payload.get("sections") if isinstance(payload.get("sections"), list) else []
-    result: dict[str, Any] = {}
-    for index, section in enumerate(sections, start=1):
+    normalized_fields: dict[str, int | float | None] = {
+        key: None for key in TURTO_PAJAMU_OUTPUT_ORDER
+    }
+
+    for section in sections:
         if not isinstance(section, dict):
             continue
+        for item in section.get("items", []):
+            if not isinstance(item, dict):
+                continue
+            source_key = _source_key(str(item.get("key", "")))
+            target_key = TURTO_PAJAMU_KEY_ALIASES.get(source_key)
+            if target_key is None:
+                continue
+            normalized_fields[target_key] = _parse_eur_amount(item.get("value"))
+
+    return normalized_fields
+
+
+def _parse_privaciu_record_table(table: Tag) -> dict[str, Any]:
+    record_type = ""
+    th = table.find("th")
+    if th is not None:
+        record_type = _tag_text(th)
+
+    items: list[dict[str, str]] = []
+    for tr in table.find_all("tr"):
+        cells = tr.find_all("td", recursive=False)
+        if not cells:
+            continue
+
+        if len(cells) >= 2:
+            key = _tag_text(cells[0]).rstrip(":")
+            value = _tag_text(cells[-1])
+        else:
+            key = _build_prompt_text(cells[0]).rstrip(":")
+            value = _extract_answer_text(cells[0], [])
+
+        if not key and not value:
+            continue
+
+        items.append({"key": key, "value": value})
+
+    return {"recordType": record_type, "items": items}
+
+
+def _parse_privaciu_interesu_html(html: str) -> dict[str, Any]:
+    # 2024 layout: a leading key/value summary table (declaration date,
+    # declarant, spouse), then repeated <h4 class="pid-table-title"> section
+    # headings each followed by one record table per workplace/legal tie.
+    soup = BeautifulSoup(html, "lxml")
+    tabnav = soup.select_one("ul#tabnav")
+    if tabnav is None:
+        return {"sections": []}
+
+    sections: list[dict[str, Any]] = []
+    current: dict[str, Any] | None = None
+
+    for sibling in tabnav.next_siblings:
+        if not isinstance(sibling, Tag):
+            continue
+
+        if sibling.name == "h4":
+            current = {"title": _tag_text(sibling), "records": []}
+            sections.append(current)
+            continue
+
+        if sibling.name == "table":
+            if current is None:
+                current = {"title": "", "records": []}
+                sections.append(current)
+            current["records"].append(_parse_privaciu_record_table(sibling))
+
+    return {
+        "sections": [section for section in sections if section["records"]],
+    }
+
+
+def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]:
+    sections = payload.get("sections") if isinstance(payload.get("sections"), list) else []
+    result: dict[str, Any] = {}
+
+    for section in sections:
+        if not isinstance(section, dict):
+            continue
+
         section_title = str(section.get("title", "")).strip()
-        section_id = str(section.get("sectionId", "")).strip()
-        section_key = _source_key(section_id or section_title) or f"sekcija-{index}"
+        records = section.get("records") if isinstance(section.get("records"), list) else []
 
-        normalized_section: dict[str, Any] = {}
-
-        if isinstance(section.get("items"), list):
-            item_values: dict[str, Any] = {}
-            for item in section["items"]:
+        normalized_records: list[dict[str, Any]] = []
+        for record in records:
+            if not isinstance(record, dict):
+                continue
+            normalized_record: dict[str, Any] = {}
+            for item in record.get("items", []):
                 if not isinstance(item, dict):
                     continue
                 item_key = _source_key(str(item.get("key", "")))
-                item_value = _normalize_text_value(item.get("value"))
-                if item_key:
-                    item_values[item_key] = item_value
-            if item_values:
-                normalized_section = item_values
-
-        normalized_columns: list[str] = []
-        if isinstance(section.get("columns"), list):
-            normalized_columns = [
-                v for v in (_normalize_text_value(c) for c in section["columns"]) if v is not None
-            ]
-
-        if isinstance(section.get("rows"), list):
-            normalized_rows: list[dict[str, Any]] = []
-            for row in section["rows"]:
-                if not isinstance(row, list):
+                if not item_key:
                     continue
-                effective = normalized_columns
-                if len(normalized_columns) == len(row) + 1:
-                    effective = normalized_columns[1:]
-                row_obj: dict[str, Any] = {}
-                for i, val in enumerate(row):
-                    label = effective[i] if i < len(effective) else f"stulpelis-{i + 1}"
-                    key = _source_key(label) or f"stulpelis-{i + 1}"
-                    row_obj[key] = _normalize_text_value(val)
-                if row_obj:
-                    normalized_rows.append(row_obj)
-            if normalized_rows:
-                normalized_section = normalized_rows
+                normalized_record[item_key] = _normalize_text_value(item.get("value"))
+            if normalized_record:
+                normalized_records.append(normalized_record)
 
-        if isinstance(normalized_section, dict) and "deklaruojantis-asmuo" in normalized_section:
-            result.update(normalized_section)
+        if not section_title:
+            # The untitled leading table holds declaration-level key/values
+            # (pateikimo-data, deklaruojantis-asmuo, sutuoktinis...).
+            for record in normalized_records:
+                result.update(record)
             continue
 
-        if section_key.startswith("sekcija-"):
+        section_key = _source_key(section_title)
+        if not section_key:
             continue
-
-        result[section_key] = normalized_section
+        result[section_key] = normalized_records
 
     return result
 
