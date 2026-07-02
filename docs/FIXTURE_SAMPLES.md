@@ -24,6 +24,24 @@ This is enforced by:
 
 - `tests/test_seimo_2016_sample_allowlist.py`
 
+## Other elections
+
+Each election folder keeps its own small, test-protected fixture set under
+`samples/html/<election_id>/` with the same policy. For `2019-ep` the allowlist
+(`tests/test_ep_2019_sample_allowlist.py`) is:
+
+- `daiva-adutaviciene`
+- `petras-austrevicius`
+- `andrius-kubilius`
+- `ausra-maldeikiene`
+- `liudas-mazylis`
+- `laima-liucija-andrikiene`
+
+This mix covers a non-elected candidate, returning MEPs with prior-mandate and
+education record tables, candidates with campaign donation data, and a candidate
+holding an academic degree / pedagogic title (guards the `9.x` and `12.x`
+question-number parsing that would otherwise silently drop those answers).
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:

@@ -12,6 +12,8 @@ python -m scraper <command> [args]
 
 - `2016-seimo`
 - `2020-seimo`
+- `2024-seimo`
+- `2019-ep` (European Parliament)
 
 ## Election Separation
 
@@ -111,6 +113,25 @@ Output:
 - Writes one JSON file per parsed candidate in output root.
 - Writes anomalies JSONL summary file.
 - Prints parsed row counts and anomaly summary.
+
+## European Parliament (`2019-ep`) Workflow
+
+The 2019 EP election uses the same command surface as the Seimo modules; only
+the election ID changes. Its candidate pages differ structurally from the Seimo
+pages (the anketa is split across several sibling tables and the private
+interest tab is pluralised), but the output schema is kept parallel.
+
+```bash
+python -m scraper fetch-sample 2019-ep
+python -m scraper sitemap 2019-ep
+python -m scraper fetch-candidate-samples 2019-ep --candidate-id petras-austrevicius --allow-new-samples
+python -m scraper parse-anketa-samples 2019-ep --candidate-id petras-austrevicius
+```
+
+Resumable batch processing helper:
+
+- `scripts/run_ep_2019_batches.sh` mirrors the Seimo batch scripts, tracking run
+  state under `.run-state/ep-2019/`.
 
 ## Helpful Checks
 
