@@ -176,3 +176,37 @@ the party lists), so the `normalized` section order is `profilis`, `anketa`,
   list of records.
 - `profilis.nuotrauka` is a URL to the candidate photo (`kandImg/...`), not a
   base64 data URI as in 2019.
+
+## Appendix: 2019 Presidential (`2019-prezidento`)
+
+Records are written as `data/2019-prezidento/<candidate-id>-2019-prezidento.json`
+with the same top-level fields. The candidate pages share the 2019 template
+family, so this module is kept schema-parallel to 2019 EP. The `normalized`
+section order is `profilis`, `anketa`, `biografija`,
+`turto-ir-pajamu-deklaracijos`, `privaciu-interesu-deklaracija`, `patiketiniai`,
+`politines-kampanijos-dalyvio-duomenys`, `kita`.
+
+2019 presidential-specific notes:
+
+- `profilis.pastaba` holds the participation/elected status line for **every**
+  candidate, not only the winner: `Išrinktas II ture` (elected), `Dalyvavo II
+  ture` (reached the run-off), or `Dalyvavo I ture` (first round only).
+- `normalized.anketa` mirrors 2019 EP: free-text `biografija`, the Q12
+  `issilavinimas.irasai` education table, `mokslo-laipsnis` (Q12.1),
+  `pedagoginis-vardas` (Q12.2), the Q15 `anksciau-isrinktas` block, and the
+  Q19 split into `seimine-padetis` and `sutuoktinio-vardas-pavarde`.
+- `normalized.anketa.pareiskimai` carries the presidential eligibility
+  questions under the Prezidento rinkimų įstatymas: citizenship by origin and
+  residency (`8.1`, `8.2`), the Seimas-eligibility sub-questions (`8.3.1`–
+  `8.3.4`), and the other-citizenship questions (`9.1`–`9.3`).
+- `patiketiniai` is the presidential-only "Patikėtiniai" (trustees) tab,
+  normalized to a list of text entries. It is empty for every 2019 candidate
+  but is captured and parsed defensively.
+- `turto-ir-pajamu-deklaracijos` keeps the seven canonical keys shared with the
+  other elections; the full GPM308 income breakdown stays in `rawData`.
+- `privaciu-interesu-deklaracija` follows the 2019 EP shape: the declarant is
+  hoisted to `deklaruojantis-asmuo`, the spouse block is retained under
+  `deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris`, and each
+  declaration section is keyed by its id (`id001j`, `id001s`, `id001i`,
+  `id001a`, `id001f`, …).
+- `profilis.nuotrauka` is a base64 data URI, as in 2019 EP.
