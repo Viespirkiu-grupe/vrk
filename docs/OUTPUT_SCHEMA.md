@@ -210,3 +210,50 @@ section order is `profilis`, `anketa`, `biografija`,
   declaration section is keyed by its id (`id001j`, `id001s`, `id001i`,
   `id001a`, `id001f`, …).
 - `profilis.nuotrauka` is a base64 data URI, as in 2019 EP.
+
+## Appendix: 2024 Presidential (`2024-prezidento`)
+
+Records are written as `data/2024-prezidento/<candidate-id>-2024-prezidento.json`
+with the same top-level fields. Candidate pages share the 2024-era layout and the
+five-tab set of `2024-ep` — there is no trustees tab and no campaign tab (unlike
+`2019-prezidento`), so the `normalized` section order is `profilis`, `anketa`,
+`biografija`, `turto-ir-pajamu-deklaracijos`, `privaciu-interesu-deklaracija`,
+`kita`.
+
+2024 presidential-specific notes:
+
+- `profilis.pastaba` holds the run-off / elected status line for **every**
+  candidate: `Išrinktas II ture` (elected), `Dalyvavo II ture` (reached the
+  run-off), or `Dalyvavo I ture` (first round only). The nomination line is
+  captured under `profilis.kita.kandidata-iskele` (e.g. `išsikėlė pats` for a
+  self-nominated candidate, or the nominating party name).
+- `profilis.nuotrauka` is a URL to the candidate photo (`kandImg/...`), as in
+  2024 EP.
+- `normalized.anketa` follows the 2024 question numbering: `adresas` (Q6),
+  `einamos-pareigos` (Q7), and `narystes-politinese-organizacijose.irasai`
+  (the Q8 membership table). Candidates who declare no membership answer Q8 with
+  inline text, yielding an empty `irasai`.
+- `normalized.anketa.pareiskimai` carries the Rinkimų kodekso 76 str.
+  declarations. Q9–Q14 (including the `13.5`–`13.7` sub-questions) share their
+  wording — and keys — with the 2024 EP module. Q15–Q18 are the presidential
+  eligibility questions and diverge from EP:
+  `ar-esate-ar-buvote-kitos-valstybes-pilietis` (Q15),
+  `ar-susijes-priesaika-uzsienio-valstybei` (Q16),
+  `ar-esate-pilietis-pagal-kilme` (Q17), and
+  `ar-gyvenate-lietuvoje-trejus-metus` (Q18).
+- `teistumo-detales` holds the conditional Q13.1–Q13.4 conviction details and
+  `mandato-netekimo-detales` the conditional Q14.1 answer. No 2024 presidential
+  candidate answered Q13/Q14 "Taip", so these are null/empty in practice but are
+  parsed defensively.
+- `biografija` is the same structured questionnaire as 2024 EP:
+  `gimimo-data`/`gimimo-vieta` (Q1), `issilavinimas.irasai` (Q2),
+  `mokslo-laipsnis` (Q2.1), `pedagoginis-vardas` (Q2.2), `uzsienio-kalbos`
+  (Q3), `darbo-patirtis.irasai` (Q4), `visuomenine-veikla` (Q5), `pomegiai`
+  (Q6), `seimine-padetis` (Q7).
+- `turto-ir-pajamu-deklaracijos` keeps the seven canonical keys shared with the
+  other elections; the full GPM311 income breakdown stays in `rawData`.
+- `privaciu-interesu-deklaracija` merges the leading summary table to the top
+  level (`pateikimo-data`, `deklaruojantis-asmuo`,
+  `sutuoktinis-sugyventinis-ar-partneris`) and keys each `h4` section by its
+  slugified title (`deklaruojancio-darbovietes`, `sutuoktinio-darbovietes`,
+  `rysiai-su-juridiniais-asmenimis`, …), each a list of records.

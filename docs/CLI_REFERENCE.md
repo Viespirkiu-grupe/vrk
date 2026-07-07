@@ -15,6 +15,8 @@ python -m scraper <command> [args]
 - `2024-seimo`
 - `2019-ep` (European Parliament)
 - `2024-ep` (European Parliament)
+- `2019-prezidento` (Presidential)
+- `2024-prezidento` (Presidential)
 
 ## Election Separation
 
@@ -153,6 +155,24 @@ Resumable batch processing helper:
 
 - `scripts/run_ep_2024_batches.sh` mirrors the other batch scripts, tracking
   run state under `.run-state/ep-2024/`.
+
+## Presidential (`2024-prezidento`) Workflow
+
+The 2024 presidential election shares the 2024-era page layout with `2024-ep`
+(candidate anketa links use the `KandidatasAnketa_rkndId-*` stem and tab content
+sits directly after the tab navigation) and the same five-tab set (no trustees
+tab and no campaign tab, unlike `2019-prezidento`). The listing keeps the
+presidential shape: a stats table (`table1`) plus a candidate table (`table2`)
+whose name cell follows a leading photo cell. The anketa reuses the EP Q6–Q14
+declarations but swaps in the presidential eligibility questions for Q15–Q18
+(dual citizenship, foreign oath, citizen by origin, three-year residency).
+
+```bash
+python -m scraper fetch-sample 2024-prezidento
+python -m scraper sitemap 2024-prezidento
+python -m scraper fetch-candidate-samples 2024-prezidento --candidate-id gitanas-nauseda --allow-new-samples
+python -m scraper parse-anketa-samples 2024-prezidento --candidate-id gitanas-nauseda
+```
 
 ## Helpful Checks
 

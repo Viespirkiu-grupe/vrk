@@ -57,6 +57,27 @@ candidate with conviction and mandate-loss details (`13.1`-`13.4` and `14.1`
 conditional answers), an extra private-interest section (`Ryšiai sudarius
 sandorius`), and regular non-elected candidates.
 
+For `2024-prezidento` the allowlist
+(`tests/test_prezidento_2024_sample_allowlist.py`) is the complete eight-candidate
+field (as with `2019-prezidento`, presidential elections are small enough to keep
+every candidate):
+
+- `andrius-mazuronis`
+- `dainius-zalimas`
+- `eduardas-vaitkus`
+- `giedrimas-jeglinskas`
+- `gitanas-nauseda`
+- `ignas-vegele`
+- `ingrida-simonyte`
+- `remigijus-zemaitaitis`
+
+This covers the winner (`Išrinktas II ture`), the run-off runner-up (`Dalyvavo
+II ture`), and first-round candidates (`Dalyvavo I ture`); self-nominated vs
+party-nominated candidates; a candidate whose Q8 membership answer is inline
+text rather than a table (guards the empty-records path); an academic with a
+pedagogic title (guards the `2.1`/`2.2` biography numbering); and a candidate
+with an extra `Ryšiai su juridiniais asmenimis` private-interest section.
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:
