@@ -454,3 +454,38 @@ Candidate pages otherwise follow the 2024 layout:
   who publish five tabs instead of six. Both participant types appear among the
   rest.
 - `kita` is empty for every candidate in this election.
+
+## Appendix: 2017 mayors (`2017-balandzio-23-meru`)
+
+Records are written as
+`data/2017-balandzio-23-meru/<candidate-id>-2017-balandzio-23-meru.json`. These
+pages predate the 2024 layout, so the section shapes follow the 2016/2019 era:
+
+- `profilis.pastaba` holds the elected note for the two elected mayors;
+  `profilis.kita` carries `savivaldybe`, `iskele-i-tarybos-narius-merus`
+  (mayors were also council members under the rules of the time), `turas`,
+  `sarasas`, `numeris-sarase`, `porinkiminis-numeris-sarase`.
+- `profilis.nuotrauka` is a base64 data URI, as in 2019 EP.
+- `normalized.anketa` keeps the 2016 Seimo keys, because the biography
+  questions are part of the anketa rather than a separate tab: `gimimo-data`
+  (Q5), `adresas` (Q6), `gimimo-vieta` (Q10), `tautybe` (Q11), `issilavinimas`
+  (Q12), `uzsienio-kalbos` (Q13), `politine-organizacija` (Q14),
+  `anksciau-isrinktas` (Q15), `pagrindine-darboviete` (Q16),
+  `visuomenine-veikla` (Q17), `pomegiai` (Q18), `seimine-padetis` (Q19),
+  `vaiku-vardai-pavardes` (Q20). `pedagoginis-vardas`,
+  `sutuoktinio-vardas-pavarde` and `kita-apie-save` are matched on their prompt
+  text — the first two carry no question number, and Q21 is written with its
+  number in brackets at the end.
+- `pareiskimai` holds the savivaldybių tarybų rinkimų įstatymo 36 str. 11 d.
+  declarations. There is no `8.1` on these pages, and the four that exist are
+  numbered without a trailing dot. `ar-buvote-pripazintas-kaltu` comes from Q9,
+  which asks whether the candidate has anything to declare under the conviction
+  paragraph (36 str. 12 d.); its answer is rendered on the continuation row that
+  quotes the statute.
+- `biografija` is free text (`{"tekstas": ...}`), as in 2016 Seimo.
+- `turto-ir-pajamu-deklaracijos` keeps the seven canonical keys, but the income
+  rows are GPM308 fields and name their own field numbers, so the aliases are
+  local to this module.
+- `privaciu-interesu-deklaracija` hoists the declarant and keys each declaration
+  block by its section id (`id001j`, `id001s`, …), as in 2019 EP.
+- `kita` is empty for every candidate in this election.

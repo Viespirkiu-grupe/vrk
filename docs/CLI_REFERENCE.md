@@ -20,6 +20,7 @@ python -m scraper <command> [args]
 - `2023-spalio-8-kupiskio-mero` (2023-10-08 early Kupiškis district mayoral election)
 - `2023-rugsejo-3-seimo-raseiniai-kedainiai` (2023-09-03 early Seimo by-election in Raseiniai–Kėdainiai No. 42)
 - `2025-kovo-16-meru` (2025-03-16 early mayoral elections in Jonava, Joniškis and Panevėžys)
+- `2017-balandzio-23-meru` (2017-04-23 new mayoral elections in Jonava and Šakiai districts)
 
 ## Election Separation
 
@@ -263,6 +264,36 @@ python -m scraper fetch-sample 2025-kovo-16-meru
 python -m scraper sitemap 2025-kovo-16-meru
 python -m scraper fetch-candidate-samples 2025-kovo-16-meru --candidate-id gediminas-cepulis --allow-new-samples
 python -m scraper parse-anketa-samples 2025-kovo-16-meru
+```
+
+## Municipal mayor (`2017-balandzio-23-meru`) Workflow
+
+The 2017-04-23 new mayoral elections cover Jonavos and Šakių rajonai — eleven
+candidates, so the fixture set is the complete field. This is the oldest
+election in the repository and predates the 2024 page layout entirely:
+
+- the anketa is split across sibling tables with standalone record tables
+  between them, and sub-questions are numbered without a trailing dot
+  (`8.2 Ar nesate ...`), which the strict question-number pattern reads as
+  question `8`. Both are the 2019 EP shape, so that module's profile and anketa
+  parsers are reused;
+- Q9 quotes the statute it refers to in a row of its own and the answer is
+  rendered on that continuation row, not on the question row;
+- photos are base64 data URIs, the private-interest declaration uses the
+  `ID001x` section blocks, and the income summary is taken from the GPM308 form,
+  whose labels name their own field numbers — so the asset/income aliases are
+  local to this module;
+- candidate pages link every campaign participant through the treasurer page
+  (`savarankiskasIzdininkas_pkdId-...`), but party-represented participants have
+  no treasurer page and that link 404s upstream. The fetcher falls back to
+  `atstovaujamasis_pkdId-...`, which recovers the campaign data for four of the
+  eleven candidates.
+
+```bash
+python -m scraper fetch-sample 2017-balandzio-23-meru
+python -m scraper sitemap 2017-balandzio-23-meru
+python -m scraper fetch-candidate-samples 2017-balandzio-23-meru --candidate-id eugenijus-sabutis --allow-new-samples
+python -m scraper parse-anketa-samples 2017-balandzio-23-meru
 ```
 
 ## Helpful Checks

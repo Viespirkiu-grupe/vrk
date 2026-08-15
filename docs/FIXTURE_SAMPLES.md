@@ -128,6 +128,19 @@ This covers the two elected mayors, both campaign participant types, and the
 four Jonava candidates struck off by Seimas resolution — who carry a
 `candidateNote` and publish no campaign tab.
 
+For `2017-balandzio-23-meru` the allowlist
+(`tests/test_meru_2017_sample_allowlist.py`) is the complete eleven-candidate
+field:
+
+- Jonavos rajono: `alina-batuleviciene`, `bronislovas-liutkus`, `darius-mockus`,
+  `eugenijus-sabutis`, `remigijus-osauskas`, `rimantas-kiseliovas`
+- Šakių rajono: `dinara-gudaitiene`, `edgaras-pilypaitis`,
+  `raimondas-janusevicius`, `raminta-bastyte`, `vidas-cikana`
+
+This covers the two elected mayors, a candidate who left a declaration blank,
+candidates with prior-mandate record tables, and the four whose campaign data is
+only reachable through the fallback participant URL.
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:
