@@ -18,6 +18,7 @@ python -m scraper <command> [args]
 - `2019-prezidento` (Presidential)
 - `2024-prezidento` (Presidential)
 - `2023-spalio-8-kupiskio-mero` (2023-10-08 early Kupiškis district mayoral election)
+- `2023-rugsejo-3-seimo-raseiniai-kedainiai` (2023-09-03 early Seimo by-election in Raseiniai–Kėdainiai No. 42)
 
 ## Election Separation
 
@@ -202,6 +203,34 @@ python -m scraper fetch-sample 2023-spalio-8-kupiskio-mero
 python -m scraper sitemap 2023-spalio-8-kupiskio-mero
 python -m scraper fetch-candidate-samples 2023-spalio-8-kupiskio-mero --candidate-id algirdas-raslanas --allow-new-samples
 python -m scraper parse-anketa-samples 2023-spalio-8-kupiskio-mero
+```
+
+## Seimo by-election (`2023-rugsejo-3-seimo-raseiniai-kedainiai`) Workflow
+
+The 2023-09-03 early Seimo by-election in the single-member Raseiniai–Kėdainiai
+constituency (No. 42) fielded eight candidates, so the fixture set is the
+complete field. Unlike the 2023 mayoral pages, these carry none of that
+election's layout quirks: the listing is the `2024-seimo` full-list shape (stats
+tables `table1`/`table2` followed by the candidate table `table3`, name link in
+the first cell, winner marked with a `(V)` suffix), and tab bodies follow the tab
+navigation as siblings, so the 2024 page parsers apply directly.
+
+Two details differ from `2024-seimo`:
+
+- the biography questionnaire keeps the 2023 numbering (nationality is Q2, so
+  education and work history shift by one), shared with
+  `2023-spalio-8-kupiskio-mero`;
+- Q8 asks for a single membership and is answered inline rather than with a
+  membership table.
+
+Candidates run either their own campaign (`Savarankiškas`, publishing all five
+campaign tabs) or a party-represented one (`Atstovaujamasis`, donations only).
+
+```bash
+python -m scraper fetch-sample 2023-rugsejo-3-seimo-raseiniai-kedainiai
+python -m scraper sitemap 2023-rugsejo-3-seimo-raseiniai-kedainiai
+python -m scraper fetch-candidate-samples 2023-rugsejo-3-seimo-raseiniai-kedainiai --candidate-id matas-skamarakas --allow-new-samples
+python -m scraper parse-anketa-samples 2023-rugsejo-3-seimo-raseiniai-kedainiai
 ```
 
 ## Helpful Checks

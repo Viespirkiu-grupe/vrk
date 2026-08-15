@@ -95,6 +95,24 @@ questions both ways, an academic with a pedagogic title, and candidates with the
 extra `Ryšiai su juridiniais asmenimis` / `Ryšiai sudarius sandorius`
 private-interest sections.
 
+For `2023-rugsejo-3-seimo-raseiniai-kedainiai` the allowlist
+(`tests/test_seimo_raseiniu_kedainiu_2023_sample_allowlist.py`) is the complete
+eight-candidate field of this single-constituency by-election:
+
+- `algirdas-gricius`
+- `andrius-bautronis`
+- `antanas-tautkus`
+- `darius-ulickas`
+- `edvinas-demidavicius`
+- `matas-skamarakas`
+- `meida-sabuniene`
+- `sandra-barzdiene`
+
+This covers the elected candidate (elected note in the profile, second round), a
+candidate with conviction details (`13.1`-`13.4`), and both campaign participant
+types — self-standing (`Savarankiškas`, with treasurer, auditor, financing
+reports and contracts) and party-represented (`Atstovaujamasis`, donations only).
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:

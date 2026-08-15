@@ -311,3 +311,43 @@ Election-specific notes:
   handing it to the shared parsers.
 - `kita` is empty for every candidate in this election — no programme documents
   were published on that tab.
+
+## Appendix: 2023 Seimo by-election (`2023-rugsejo-3-seimo-raseiniai-kedainiai`)
+
+Records are written as
+`data/2023-rugsejo-3-seimo-raseiniai-kedainiai/<candidate-id>-2023-rugsejo-3-seimo-raseiniai-kedainiai.json`
+with the same top-level fields. Candidate pages carry the six-tab 2024 Seimo set,
+so the `normalized` section order is `profilis`, `anketa`, `biografija`,
+`turto-ir-pajamu-deklaracijos`, `privaciu-interesu-deklaracija`,
+`politines-kampanijos-dalyvio-duomenys`, `kita`.
+
+Election-specific notes:
+
+- `candidateName` drops the `(V)` winner suffix the listing appends.
+- `profilis.pastaba` holds the elected note for the winner only
+  (`Išrinktas vienmandatėje Raseinių–Kėdainių (Nr. 42) apygardoje II ture`).
+  Constituency fields land under `profilis.kita`: `vienmandate-apygarda`,
+  `iskele`, `turas` (`I`/`II`), `sarasas`, `numeris-sarase`,
+  `porinkiminis-eiles-numeris`.
+- `profilis.nuotrauka` is a URL to the candidate photo (`kandImg/...`).
+- `normalized.anketa` follows the 2024 question numbering: `adresas` (Q6) and
+  `einamos-pareigos` (Q7). Q8 is answered inline, so
+  `narystes-politinese-organizacijose` carries both `tekstas` and `irasai`
+  (empty unless a membership table appears), as in the 2023 mayoral module.
+- `normalized.anketa.pareiskimai` carries the Rinkimų kodekso 76 str.
+  declarations Q9–Q14 under the same keys as the 2024 modules, plus the Seimo
+  eligibility questions Q15 (`ar-esate-ar-buvote-kitos-valstybes-pilietis`) and
+  Q16 (`ar-susijes-priesaika-uzsienio-valstybei`), whose wording — and keys —
+  match the presidential module.
+- `teistumo-detales` holds the conditional Q13.1–Q13.4 conviction details; the
+  detail table uses the 2024 en dash separator.
+- `biografija` keeps the 2023 numbering shared with the mayoral module:
+  `gimimo-data`/`gimimo-vieta` (Q1), `tautybe` (Q2), `issilavinimas.irasai`
+  (Q3), `mokslo-laipsnis` (Q3.1), `pedagoginis-vardas` (Q3.2),
+  `uzsienio-kalbos` (Q4), `darbo-patirtis.irasai` (Q5), `visuomenine-veikla`
+  (Q6), `pomegiai` (Q7), `seimine-padetis` (Q8).
+- `politines-kampanijos-dalyvio-duomenys` covers both participant types:
+  `Savarankiškas` candidates publish all five campaign tabs (treasurer, auditor,
+  donations, financing reports, contracts), while `Atstovaujamasis` candidates —
+  whose campaign is run by their party — publish only donations.
+- `kita` is empty for every candidate in this election.
