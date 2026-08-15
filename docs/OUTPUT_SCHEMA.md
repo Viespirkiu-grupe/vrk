@@ -489,3 +489,17 @@ pages predate the 2024 layout, so the section shapes follow the 2016/2019 era:
 - `privaciu-interesu-deklaracija` hoists the declarant and keys each declaration
   block by its section id (`id001j`, `id001s`, …), as in 2019 EP.
 - `kita` is empty for every candidate in this election.
+
+## Appendix: 2017 Marijampolė mayor (`2017-rugsejo-10-marijampoles-mero`)
+
+Records are written as
+`data/2017-rugsejo-10-marijampoles-mero/<candidate-id>-2017-rugsejo-10-marijampoles-mero.json`.
+The pages are the same vintage as `2017-balandzio-23-meru`, so every section has
+the shape described in that appendix — the 2016-era anketa keys with the
+municipal `pareiskimai` block, free-text `biografija`, base64 `profilis.nuotrauka`,
+GPM308 asset/income aliases and `ID001x` private-interest sections.
+
+The one behavioural difference is in the campaign section: candidates whose
+campaign is run by their party publish a participant page with no tab navigation,
+so `politines-kampanijos-dalyvio-duomenys[]` carries the participant metadata
+with an empty `aukos-pagal-sekcija` and no financing reports or contracts.

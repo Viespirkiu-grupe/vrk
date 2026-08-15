@@ -21,6 +21,7 @@ python -m scraper <command> [args]
 - `2023-rugsejo-3-seimo-raseiniai-kedainiai` (2023-09-03 early Seimo by-election in Raseiniai–Kėdainiai No. 42)
 - `2025-kovo-16-meru` (2025-03-16 early mayoral elections in Jonava, Joniškis and Panevėžys)
 - `2017-balandzio-23-meru` (2017-04-23 new mayoral elections in Jonava and Šakiai districts)
+- `2017-rugsejo-10-marijampoles-mero` (2017-09-10 new Marijampolė municipality mayoral election)
 
 ## Election Separation
 
@@ -294,6 +295,27 @@ python -m scraper fetch-sample 2017-balandzio-23-meru
 python -m scraper sitemap 2017-balandzio-23-meru
 python -m scraper fetch-candidate-samples 2017-balandzio-23-meru --candidate-id eugenijus-sabutis --allow-new-samples
 python -m scraper parse-anketa-samples 2017-balandzio-23-meru
+```
+
+## Municipal mayor (`2017-rugsejo-10-marijampoles-mero`) Workflow
+
+The 2017-09-10 new Marijampolė municipality mayoral election fielded eight
+candidates, so the fixture set is the complete field. Its pages are the same
+vintage as `2017-balandzio-23-meru` — same question numbering, same Q9
+continuation row, same GPM308 income labels, same base64 photos — so this module
+reuses that one's parsing rules and only carries its own election id, listing URL
+and paths.
+
+One difference in the campaign data: candidates whose campaign is run by their
+party have a participant page with no tab navigation at all, so only the
+participant metadata is recorded and the donation sections stay empty. The
+treasurer-link fallback of the April election is reused for the rest.
+
+```bash
+python -m scraper fetch-sample 2017-rugsejo-10-marijampoles-mero
+python -m scraper sitemap 2017-rugsejo-10-marijampoles-mero
+python -m scraper fetch-candidate-samples 2017-rugsejo-10-marijampoles-mero --candidate-id irena-lunskiene --allow-new-samples
+python -m scraper parse-anketa-samples 2017-rugsejo-10-marijampoles-mero
 ```
 
 ## Helpful Checks

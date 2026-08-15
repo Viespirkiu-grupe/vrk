@@ -141,6 +141,24 @@ This covers the two elected mayors, a candidate who left a declaration blank,
 candidates with prior-mandate record tables, and the four whose campaign data is
 only reachable through the fallback participant URL.
 
+For `2017-rugsejo-10-marijampoles-mero` the allowlist
+(`tests/test_marijampoles_mero_2017_sample_allowlist.py`) is the complete
+eight-candidate field:
+
+- `algis-zvaliauskas`
+- `dobilas-sinkevicius`
+- `gediminas-akelaitis`
+- `gintaras-skamarocius`
+- `irena-lunskiene`
+- `karolis-dvylys`
+- `kestutis-traskevicius`
+- `saulius-skinkys`
+
+This covers the elected mayor, self-nominated and party-nominated candidates, a
+candidate with six prior mandates, one who answered "Nenurodė" to the education
+and prior-mandate questions, one who left a declaration blank, and both campaign
+participant types.
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:
