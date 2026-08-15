@@ -477,7 +477,11 @@ def _parse_anketa_table(table: Tag | None) -> dict[str, Any]:
     parsed_rows: list[dict[str, Any]] = []
     answered_count = 0
 
-    body = table.find("tbody")
+    # Only the table's own body counts. A recursive lookup would find the
+    # <tbody> of a nested detail table (a conviction block, say) whenever the
+    # outer table has none of its own, and the whole anketa would collapse to
+    # that nested table's rows.
+    body = table.find("tbody", recursive=False)
     if body is not None:
         tr_nodes = body.find_all("tr", recursive=False)
     else:

@@ -159,6 +159,20 @@ candidate with six prior mandates, one who answered "Nenurodė" to the education
 and prior-mandate questions, one who left a declaration blank, and both campaign
 participant types.
 
+For `2021-spalio-10-meru` the allowlist
+(`tests/test_meru_2021_sample_allowlist.py`) is the complete fourteen-candidate
+field:
+
+- Kelmės rajono: `algirdas-sakalauskas`, `dalia-viliuniene`, `egidijus-uksas`,
+  `ildefonsas-petkevicius`, `jolita-koryzniene`, `juozas-rimkus`,
+  `lina-samulyte`, `stasys-jokubauskas`
+- Trakų rajono: `adas-jakubauskas`, `andrius-satevicius`, `dainius-narkevicius`,
+  `jaroslav-narkevic`, `jonas-kietavicius`, `ramunas-ausrotas`
+
+This covers the two elected mayors, a self-nominated candidate, both campaign
+participant types, and the one candidate with a conviction record — whose nested
+detail table is what exposed the shared `<tbody>` lookup bug.
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:

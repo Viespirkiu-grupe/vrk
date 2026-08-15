@@ -22,6 +22,7 @@ python -m scraper <command> [args]
 - `2025-kovo-16-meru` (2025-03-16 early mayoral elections in Jonava, Joniškis and Panevėžys)
 - `2017-balandzio-23-meru` (2017-04-23 new mayoral elections in Jonava and Šakiai districts)
 - `2017-rugsejo-10-marijampoles-mero` (2017-09-10 new Marijampolė municipality mayoral election)
+- `2021-spalio-10-meru` (2021-10-10 new mayoral elections in Kelmė and Trakai districts)
 
 ## Election Separation
 
@@ -316,6 +317,33 @@ python -m scraper fetch-sample 2017-rugsejo-10-marijampoles-mero
 python -m scraper sitemap 2017-rugsejo-10-marijampoles-mero
 python -m scraper fetch-candidate-samples 2017-rugsejo-10-marijampoles-mero --candidate-id irena-lunskiene --allow-new-samples
 python -m scraper parse-anketa-samples 2017-rugsejo-10-marijampoles-mero
+```
+
+## Municipal mayor (`2021-spalio-10-meru`) Workflow
+
+The 2021-10-10 new mayoral elections cover Kelmės and Trakų rajonai — fourteen
+candidates, so the fixture set is the complete field. The pages sit between the
+two eras already in the repository: the profile card, the `<div>`-wrapped tab
+bodies and the biography questionnaire match `2023-spalio-8-kupiskio-mero`
+(whose helpers this module reuses), while the anketa is numbered like the 2020
+Seimo one — Q6.x contacts, Q7.x position and membership — with the municipal
+36 str. 11 d. declarations under Q8.x, the conviction questions under Q9.x and
+the former-USSR question as Q10.
+
+Two details are specific to this election:
+
+- Q7.1 is written without a trailing dot, which the strict question-number
+  pattern reads as question `7` — the position question — so numbers are
+  re-derived with the tolerant pattern;
+- the Q9.1 conviction table names its columns after the sub-question numbers
+  (`9.1.1. Apkaltinamojo nuosprendžio (sprendimo) data:`), which are mapped to
+  the field names the other elections use.
+
+```bash
+python -m scraper fetch-sample 2021-spalio-10-meru
+python -m scraper sitemap 2021-spalio-10-meru
+python -m scraper fetch-candidate-samples 2021-spalio-10-meru --candidate-id stasys-jokubauskas --allow-new-samples
+python -m scraper parse-anketa-samples 2021-spalio-10-meru
 ```
 
 ## Helpful Checks

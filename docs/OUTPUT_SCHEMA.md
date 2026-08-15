@@ -503,3 +503,27 @@ The one behavioural difference is in the campaign section: candidates whose
 campaign is run by their party publish a participant page with no tab navigation,
 so `politines-kampanijos-dalyvio-duomenys[]` carries the participant metadata
 with an empty `aukos-pagal-sekcija` and no financing reports or contracts.
+
+## Appendix: 2021 mayors (`2021-spalio-10-meru`)
+
+Records are written as
+`data/2021-spalio-10-meru/<candidate-id>-2021-spalio-10-meru.json`. The page
+shape matches `2023-spalio-8-kupiskio-mero` — same profile card,
+`<div>`-wrapped tab bodies, biography numbering with nationality as Q2, and
+`profilis.nuotrauka` as a URL — but the anketa follows the 2020 Seimo numbering:
+
+- `adresas` (Q6) and `kontaktai` — `telefonas` (Q6.1), `el-pastas` (Q6.2),
+  `socialiniu-tinklu-paskyros` (Q6.3)
+- `einamos-pareigos` (Q7) and `narystes-politinese-organizacijose.tekstas`
+  (Q7.1, answered inline). Q7.1 carries no dot after its number, so question
+  numbers are re-derived with the tolerant pattern; the strict one reads it as
+  Q7 and the membership answer is lost.
+- `pareiskimai` holds the savivaldybių tarybų rinkimų įstatymo 36 str. 11 d.
+  declarations (Q8.1–Q8.4), the 36 str. 12 d. conviction ones (Q9, Q9.2–Q9.4)
+  and the former-USSR question (Q10), under the keys shared with the other
+  modules.
+- `teistumo-detales.irasai` holds the Q9.1 conviction table, present only when
+  Q9 is answered "Taip". Its columns are named after the sub-question numbers
+  and are mapped to `nuosprendzio-data`, `nuosprendzio-valstybe`,
+  `nuosprendzio-institucija` and `nusikalstama-veika`.
+- `kita` is empty for every candidate in this election.
