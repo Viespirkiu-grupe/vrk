@@ -266,6 +266,34 @@ five-tab set of `2024-ep` — there is no trustees tab and no campaign tab (unli
   slugified title (`deklaruojancio-darbovietes`, `sutuoktinio-darbovietes`,
   `rysiai-su-juridiniais-asmenimis`, …), each a list of records.
 
+## Appendix: 2024 Seimo (`2024-seimo`)
+
+Records are written as `data/2024-seimo/<candidate-id>-2024-seimo.json` with the
+same top-level fields and the full seven-section `normalized` order (candidate
+pages carry a campaign tab).
+
+2024 Seimo-specific notes:
+
+- `profilis.pastaba` holds the elected note, which comes in two forms:
+  `Išrinktas vienmandatėje <apygarda> apygardoje II ture` for constituency
+  winners and `Išrinktas pagal sąrašą` for candidates elected from a party list.
+  Non-elected candidates have `null`. Constituency fields land under
+  `profilis.kita`: `vienmandate-apygarda`, `iskele`, `turas`, `sarasas`,
+  `numeris-sarase`, `porinkiminis-eiles-numeris`.
+- `profilis.nuotrauka` is a URL to the candidate photo (`kandImg/...`).
+- `normalized.anketa` uses the 2024 numbering: `adresas` (Q6),
+  `einamos-pareigos` (Q7) and `narystes-politinese-organizacijose.irasai` (the
+  Q8 membership table, as in 2024 EP).
+- `normalized.anketa.pareiskimai` carries the Rinkimų kodekso 76 str.
+  declarations Q9–Q14 under the same keys as the other 2024 modules, plus the
+  Seimo eligibility questions Q15 (`ar-esate-ar-buvote-kitos-valstybes-pilietis`)
+  and Q16 (`ar-susijes-priesaika-uzsienio-valstybei`).
+- `teistumo-detales` and `mandato-netekimo-detales` hold the conditional
+  Q13.1–Q13.4 and Q14.1 answers. No sampled candidate answered Q13/Q14 "Taip",
+  so they are null/empty in practice but are parsed defensively.
+- `biografija` keeps its own numbering (`issilavinimas` is Q2, `mokslo-laipsnis`
+  Q2.1, `darbo-patirtis` Q4), matching 2024 EP rather than the 2023 by-elections.
+
 ## Appendix: 2023 Kupiškis mayor (`2023-spalio-8-kupiskio-mero`)
 
 Records are written as

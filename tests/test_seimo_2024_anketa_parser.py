@@ -56,6 +56,85 @@ class Seimo2024AnketaParserTests(unittest.TestCase):
         self.assertGreater(len(raw["turtoIrPajamuDeklaracijos"]["sections"]), 0)
         self.assertGreater(len(raw["privaciuInteresuDeklaracija"]["sections"]), 0)
 
+    def test_profile_card_fields(self) -> None:
+        # The 2024 profile card is the table before the tab navigation, with the
+        # photo in the outer layout table. Reading it with the 2016-era selectors
+        # silently nulls the name and photo and turns the elected note into a
+        # stray "kita" entry.
+        profilis = self.algirdas["normalized"]["profilis"]
+        self.assertEqual(profilis["vardas-pavarde"], "Algirdas BUTKEVIČIUS")
+        self.assertIn("kandImg", profilis["nuotrauka"])
+
+        kita = profilis["kita"]
+        self.assertEqual(kita["vienmandate-apygarda"]["reiksme"], "Vilkaviškio Nr. 68")
+        self.assertEqual(kita["iskele"]["reiksme"], "Demokratų sąjunga „Vardan Lietuvos“")
+        self.assertEqual(kita["turas"]["reiksme"], "II")
+        self.assertEqual(kita["numeris-sarase"]["reiksme"], "5")
+        self.assertEqual(kita["porinkiminis-eiles-numeris"]["reiksme"], "3")
+
+    def test_elected_note_variants(self) -> None:
+        self.assertEqual(
+            self.algirdas["normalized"]["profilis"]["pastaba"],
+            "Išrinktas vienmandatėje Vilkaviškio (Nr. 68) apygardoje II ture",
+        )
+        self.assertEqual(
+            _parse("saulius-skvernelis")["normalized"]["profilis"]["pastaba"],
+            "Išrinktas pagal sąrašą",
+        )
+        # Non-elected candidates carry no note.
+        self.assertIsNone(self.vilma["normalized"]["profilis"]["pastaba"])
+
+    def test_anketa_core_fields(self) -> None:
+        anketa = self.algirdas["normalized"]["anketa"]
+        self.assertEqual(anketa["adresas"], "Vilnius")
+        self.assertEqual(anketa["einamos-pareigos"], "Lietuvos Respublikos Seimo narys")
+
+    def test_anketa_party_membership_table(self) -> None:
+        irasai = self.algirdas["normalized"]["anketa"]["narystes-politinese-organizacijose"]["irasai"]
+        self.assertEqual(len(irasai), 3)
+        self.assertEqual(irasai[0]["politine-organizacija"], "Demokratų sąjunga „Vardan Lietuvos“")
+        self.assertEqual(irasai[0]["nuo"], "2022")
+        self.assertEqual(irasai[0]["iki"], "Iki dabar")
+        self.assertEqual(irasai[2]["politine-organizacija"], "Tarybų Sąjungos komunistų partija")
+
+    def test_anketa_pareiskimai_keys(self) -> None:
+        # Q9-Q14 carry the Rinkimų kodekso 76 str. declarations and Q15-Q16 the
+        # Seimo eligibility questions. Mapping 2016 question numbers onto these
+        # pages leaves every declaration null while leaking the answers into
+        # unrelated keys, so both the key list and the values are asserted.
+        pareiskimai = self.algirdas["normalized"]["anketa"]["pareiskimai"]
+        self.assertEqual(
+            list(pareiskimai.keys()),
+            [
+                "ar-kitos-valstybes-institucijos-narys",
+                "ar-eina-nesuderinamas-pareigas",
+                "ar-bendradarbiavote-su-ssrs-tarnybomis",
+                "ar-nebaigta-teismo-paskirta-bausme",
+                "ar-buvote-pripazintas-kaltu",
+                "ar-veika-dekriminalizuota",
+                "ar-buvote-pripazintas-kaltu-uzsienyje",
+                "ar-buvote-pripazintas-kaltu-del-politinio-persekiojimo",
+                "ar-neteko-mandato-uz-pazeidimus",
+                "ar-esate-ar-buvote-kitos-valstybes-pilietis",
+                "ar-susijes-priesaika-uzsienio-valstybei",
+            ],
+        )
+        self.assertTrue(all(value == "Ne" for value in pareiskimai.values()))
+        self.assertTrue(
+            all(
+                value is not None
+                for value in self.vilma["normalized"]["anketa"]["pareiskimai"].values()
+            )
+        )
+
+    def test_anketa_conditional_blocks_absent(self) -> None:
+        # No sampled candidate answered Q13/Q14 "Taip", so the conditional
+        # detail blocks are null / empty but still parsed.
+        anketa = self.algirdas["normalized"]["anketa"]
+        self.assertIsNone(anketa["teistumo-detales"]["nuosprendzio-data"])
+        self.assertEqual(anketa["teistumo-detales"]["nusikalstamos-veikos"]["irasai"], [])
+        self.assertIsNone(anketa["mandato-netekimo-detales"])
+
     def test_biografija_birth_and_marital(self) -> None:
         biografija = self.algirdas["normalized"]["biografija"]
         self.assertEqual(biografija["gimimo-data"], "1958-11-19")

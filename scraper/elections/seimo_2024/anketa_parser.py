@@ -7,6 +7,14 @@ from typing import Any
 from bs4 import BeautifulSoup, Tag
 
 from scraper.elections.seimo_2024.sitemap import ELECTION_ID, resolve_candidate_url
+from scraper.elections.ep_2019.anketa_parser import (
+    _parse_profile_table,
+    _select_profile_table,
+)
+from scraper.elections.ep_2024.anketa_parser import (
+    _conviction_records,
+    _find_photo_src,
+)
 from scraper.elections.seimo_2016.anketa_parser import (
     _find_row_by_question_number,
     _load_candidate_meta,
@@ -16,13 +24,14 @@ from scraper.elections.seimo_2016.anketa_parser import (
     _normalize_profile_data,
     _normalize_table_records,
     _order_dict_keys,
+    _parse_anketa_table,
     _parse_eur_amount,
     _parse_kita_html,
     _parse_nested_campaign_samples,
     _parse_nested_table,
     _parse_politines_kampanijos_html,
+    _parse_tabnav,
     _row_answer_text,
-    parse_anketa_html,
     parse_question_number,
 )
 from scraper.shared.anomalies import build_anomaly_event
@@ -171,6 +180,80 @@ def _records_for_question(rows: list[dict[str, Any]], question_number: str) -> l
     for group in _record_groups_for_question(rows, question_number):
         records.extend(group)
     return records
+
+
+def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    def _answer(question_number: str) -> str | None:
+        return _normalize_text_value(
+            _row_answer_text(_find_row_by_question_number(rows, question_number))
+        )
+
+    return {
+        "adresas": _answer("6"),
+        "einamos-pareigos": _answer("7"),
+        "narystes-politinese-organizacijose": {
+            "irasai": _normalize_table_records(_records_for_question(rows, "8")),
+        },
+        "pareiskimai": {
+            # Q9-Q14 share the Rinkimų kodekso 76 str. wording — and therefore
+            # the keys — with the 2024 EP module. Q15-Q16 are the Seimo
+            # eligibility questions and repeat the presidential wording.
+            "ar-kitos-valstybes-institucijos-narys": _answer("9"),
+            "ar-eina-nesuderinamas-pareigas": _answer("10"),
+            "ar-bendradarbiavote-su-ssrs-tarnybomis": _answer("11"),
+            "ar-nebaigta-teismo-paskirta-bausme": _answer("12"),
+            "ar-buvote-pripazintas-kaltu": _answer("13"),
+            "ar-veika-dekriminalizuota": _answer("13.5"),
+            "ar-buvote-pripazintas-kaltu-uzsienyje": _answer("13.6"),
+            "ar-buvote-pripazintas-kaltu-del-politinio-persekiojimo": _answer("13.7"),
+            "ar-neteko-mandato-uz-pazeidimus": _answer("14"),
+            "ar-esate-ar-buvote-kitos-valstybes-pilietis": _answer("15"),
+            "ar-susijes-priesaika-uzsienio-valstybei": _answer("16"),
+        },
+        # 13.1-13.4 appear only when Q13 is answered "Taip".
+        "teistumo-detales": {
+            "nuosprendzio-data": _answer("13.1"),
+            "nuosprendzio-valstybe": _answer("13.2"),
+            "nuosprendzio-institucija": _answer("13.3"),
+            "nusikalstamos-veikos": {
+                "aprasas": _answer("13.4"),
+                "irasai": _conviction_records(rows),
+            },
+        },
+        # 14.1 appears only when Q14 is answered "Taip".
+        "mandato-netekimo-detales": _answer("14.1"),
+    }
+
+
+def parse_anketa_html(html: str) -> dict[str, Any]:
+    # The 2024 candidate page renders the profile card as a table that precedes
+    # the tab navigation and the anketa as the table that follows it, matching
+    # the 2024 EP and presidential pages. The 2016 parser this module used to
+    # borrow read neither correctly: it mapped 2016 question numbers onto the
+    # 2024 declarations and could not find the candidate name or photo.
+    soup = BeautifulSoup(html, "lxml")
+
+    tabnav = soup.select_one("ul#tabnav")
+    profile_table = _select_profile_table(soup, tabnav)
+    anketa_table = tabnav.find_next("table") if tabnav is not None else None
+
+    profile = _parse_profile_table(profile_table)
+    if not profile.get("photoSrc"):
+        profile["photoSrc"] = _find_photo_src(soup)
+    tabs = _parse_tabnav(tabnav)
+    anketa = _parse_anketa_table(anketa_table)
+    anketa["normalized"] = _normalize_anketa_rows(anketa["rows"])
+
+    return {
+        "profile": profile,
+        "tabs": tabs,
+        "anketa": anketa,
+        "diagnostics": {
+            "tabnavFound": tabnav is not None,
+            "profileTableFound": profile_table is not None,
+            "anketaTableFound": anketa_table is not None,
+        },
+    }
 
 
 def _parse_biografija_html(html: str) -> dict[str, Any]:
