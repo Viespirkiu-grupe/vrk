@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup, NavigableString, Tag
 
 from scraper.elections.seimo_2020.sitemap import ELECTION_ID, resolve_candidate_url
 from scraper.elections.seimo_2016.anketa_parser import (
+    _find_row_by_question_number,
     _load_candidate_meta,
     _normalize_campaigns,
     _normalize_kita_data,
@@ -18,11 +19,14 @@ from scraper.elections.seimo_2016.anketa_parser import (
     _normalize_table_records,
     _normalize_turto_ir_pajamu_data,
     _order_dict_keys,
+    _parse_anketa_table,
     _parse_kita_html,
     _parse_nested_campaign_samples,
     _parse_politines_kampanijos_html,
+    _parse_profile_table,
+    _parse_tabnav,
     _parse_turto_ir_pajamu_html,
-    parse_anketa_html,
+    _row_answer_text,
 )
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.files import slugify, write_json
@@ -211,6 +215,75 @@ def _first_table_rows(answers: list[Any]) -> list[dict[str, Any]]:
         if rows:
             return rows
     return []
+
+
+def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    def _answer(question_number: str) -> str | None:
+        return _normalize_text_value(
+            _row_answer_text(_find_row_by_question_number(rows, question_number))
+        )
+
+    return {
+        "adresas": _answer("6"),
+        "kontaktai": {
+            "telefonas": _answer("6.1"),
+            "el-pastas": _answer("6.2"),
+            "socialiniu-tinklu-paskyros": _answer("6.3"),
+        },
+        "einamos-pareigos": _answer("7"),
+        # Q7.1 is answered inline ("Lietuvos valstiečių ir žaliųjų sąjungos
+        # narė"), not with the membership table later elections use.
+        "narystes-politinese-organizacijose": {
+            "tekstas": _answer("7.1"),
+        },
+        "pareiskimai": {
+            # Q8.x are the Seimo rinkimų įstatymo 38 str. 3 d. declarations and
+            # Q9.x the 98 str. 1 ir 3 d. ones. Keys follow the 2016 module where
+            # the question matches; Q8.2.1 and Q9.3-Q9.5 have no 2016
+            # counterpart under the same number.
+            "ar-nebaigta-teismo-paskirta-bausme": _answer("8.1"),
+            "ar-atliekate-karo-tarnyba": _answer("8.2"),
+            "ar-savanoriskos-karo-tarnybos-karys": _answer("8.2.1"),
+            "ar-turite-kitos-valstybes-pilietybe": _answer("8.3"),
+            "ar-susijes-priesaika-uzsienio-valstybei": _answer("8.4"),
+            "ar-bendradarbiavote-su-uzsienio-tarnybomis": _answer("9.1"),
+            "ar-buvote-pripazintas-kaltu": _answer("9.2"),
+            "ar-veika-dekriminalizuota": _answer("9.3"),
+            "ar-buvote-pripazintas-kaltu-uzsienyje": _answer("9.4"),
+            "ar-buvote-pripazintas-kaltu-del-politinio-persekiojimo": _answer("9.5"),
+        },
+    }
+
+
+def parse_anketa_html(html: str) -> dict[str, Any]:
+    # The 2020 candidate page keeps the 2016-era layout, so the profile card is
+    # read with the 2016 parser. The questionnaire, however, is numbered for the
+    # 2020 Seimo rinkimų įstatymo: Q6.x contacts, Q7.x position and membership,
+    # and declarations under Q8.x / Q9.x. The 2016 normalizer this module used
+    # to borrow looked up 2016 numbers (9.3.1-9.3.4, 10-21), which dropped the
+    # position, membership, contact and three declaration answers and emitted a
+    # block of keys that can never be filled from a 2020 page.
+    soup = BeautifulSoup(html, "lxml")
+
+    tabnav = soup.select_one("ul#tabnav")
+    profile_table = tabnav.find_previous("table") if tabnav is not None else soup.find("table")
+    anketa_table = tabnav.find_next("table") if tabnav is not None else None
+
+    profile = _parse_profile_table(profile_table)
+    tabs = _parse_tabnav(tabnav)
+    anketa = _parse_anketa_table(anketa_table)
+    anketa["normalized"] = _normalize_anketa_rows(anketa["rows"])
+
+    return {
+        "profile": profile,
+        "tabs": tabs,
+        "anketa": anketa,
+        "diagnostics": {
+            "tabnavFound": tabnav is not None,
+            "profileTableFound": profile_table is not None,
+            "anketaTableFound": anketa_table is not None,
+        },
+    }
 
 
 def _parse_biografija_html(html: str) -> dict[str, Any]:

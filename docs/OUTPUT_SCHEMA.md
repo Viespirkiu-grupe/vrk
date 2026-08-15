@@ -266,6 +266,28 @@ five-tab set of `2024-ep` — there is no trustees tab and no campaign tab (unli
   slugified title (`deklaruojancio-darbovietes`, `sutuoktinio-darbovietes`,
   `rysiai-su-juridiniais-asmenimis`, …), each a list of records.
 
+## Appendix: 2020 Seimo (`2020-seimo`)
+
+Records are written as `data/2020-seimo/<candidate-id>-2020-seimo.json`. Pages
+keep the 2016-era layout, so `profilis` is read with the 2016 profile parser,
+but the questionnaire is numbered for the 2020 Seimo rinkimų įstatymas and has
+its own, much smaller, shape:
+
+- `adresas` (Q6) and `kontaktai` — `telefonas` (Q6.1), `el-pastas` (Q6.2),
+  `socialiniu-tinklu-paskyros` (Q6.3). The first three are usually
+  `Neskelbiamas`; the social-media row carries real values.
+- `einamos-pareigos` (Q7) and `narystes-politinese-organizacijose.tekstas`
+  (Q7.1), which is answered inline rather than with the membership table later
+  elections use.
+- `pareiskimai` holds the Seimo rinkimų įstatymo 38 str. 3 d. declarations
+  (Q8.1–Q8.4 plus `ar-savanoriskos-karo-tarnybos-karys` for Q8.2.1) and the
+  98 str. 1 ir 3 d. declarations (Q9.1–Q9.5). Answers are worded as
+  `Neturiu`/`Nesu`/`Nesu/nebuvau`/`Ne` rather than the `Taip`/`Ne` of later
+  elections.
+
+There are no birth, education, language, hobby or family questions on the 2020
+anketa — those live on the biography tab and are normalized under `biografija`.
+
 ## Appendix: 2024 Seimo (`2024-seimo`)
 
 Records are written as `data/2024-seimo/<candidate-id>-2024-seimo.json` with the
