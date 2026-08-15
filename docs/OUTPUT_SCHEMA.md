@@ -257,3 +257,49 @@ five-tab set of `2024-ep` — there is no trustees tab and no campaign tab (unli
   `sutuoktinis-sugyventinis-ar-partneris`) and keys each `h4` section by its
   slugified title (`deklaruojancio-darbovietes`, `sutuoktinio-darbovietes`,
   `rysiai-su-juridiniais-asmenimis`, …), each a list of records.
+
+## Appendix: 2023 Kupiškis mayor (`2023-spalio-8-kupiskio-mero`)
+
+Records are written as
+`data/2023-spalio-8-kupiskio-mero/<candidate-id>-2023-spalio-8-kupiskio-mero.json`
+with the same top-level fields. Candidate pages carry the six-tab set (the five
+of `2024-ep` plus a campaign tab), so the `normalized` section order is
+`profilis`, `anketa`, `biografija`, `turto-ir-pajamu-deklaracijos`,
+`privaciu-interesu-deklaracija`, `politines-kampanijos-dalyvio-duomenys`,
+`kita`.
+
+Election-specific notes:
+
+- `profilis.pastaba` holds the elected note for the winner only
+  (`Išrinktas Kupiškio rajono (Nr.23) savivaldybėje II ture`); the other
+  candidates have `null`. The municipal profile card fields land under
+  `profilis.kita`: `savivaldybe`, `iskele-i-savivaldybes-merus`, `turas`
+  (`I`/`II`, the round the candidate ran in), `sarasas`, `numeris-sarase`,
+  `porinkiminis-numeris-sarase`.
+- `profilis.nuotrauka` is a URL to the candidate photo (`kandImg/...`), as in
+  2024 EP.
+- `normalized.anketa` follows the 2024 question numbering: `adresas` (Q6) and
+  `einamos-pareigos` (Q7). Q8 asks for a single membership
+  ("Narystė politinėje partijoje, politiniame komitete, asociacijoje") and is
+  answered inline, so `narystes-politinese-organizacijose` carries both
+  `tekstas` (the answer) and `irasai` (empty unless a membership table appears).
+- `normalized.anketa.pareiskimai` carries the Rinkimų kodekso 76 str.
+  declarations Q9–Q14 (including the `13.5`–`13.7` sub-questions) under the same
+  keys as the 2024 modules. There are no further questions: the EP free-movement
+  and presidential eligibility questions have no municipal counterpart. Q10–Q12
+  are numbered `10 .` on these pages, so question numbers are re-derived with a
+  whitespace-tolerant pattern before normalization.
+- `teistumo-detales` holds the conditional Q13.1–Q13.4 conviction details and
+  `mandato-netekimo-detales` the conditional Q14.1 answer. The Q13.4 detail
+  table separates label from value with a plain hyphen rather than the 2024 en
+  dash.
+- `biografija` keeps the 2020 Seimo numbering: `gimimo-data`/`gimimo-vieta`
+  (Q1), `tautybe` (Q2), `issilavinimas.irasai` (Q3), `mokslo-laipsnis` (Q3.1),
+  `pedagoginis-vardas` (Q3.2), `uzsienio-kalbos` (Q4), `darbo-patirtis.irasai`
+  (Q5), `visuomenine-veikla` (Q6), `pomegiai` (Q7), `seimine-padetis` (Q8).
+- `turto-ir-pajamu-deklaracijos` and `privaciu-interesu-deklaracija` follow the
+  2024 shapes. Their page bodies are wrapped in a `<div>` instead of following
+  the tab navigation as siblings, so the module flattens the tab body before
+  handing it to the shared parsers.
+- `kita` is empty for every candidate in this election — no programme documents
+  were published on that tab.

@@ -78,6 +78,23 @@ text rather than a table (guards the empty-records path); an academic with a
 pedagogic title (guards the `2.1`/`2.2` biography numbering); and a candidate
 with an extra `Ryšiai su juridiniais asmenimis` private-interest section.
 
+For `2023-spalio-8-kupiskio-mero` the allowlist
+(`tests/test_kupiskio_mero_2023_sample_allowlist.py`) is the complete
+five-candidate field of this single-municipality race:
+
+- `algirdas-raslanas`
+- `edmundas-jonutis`
+- `egle-blazeviciene`
+- `vytautas-mockus`
+- `zilvinas-aukstikalnis`
+
+This covers the elected mayor (elected note in the profile, second round), a
+candidate with conviction details (`13.1`-`13.4`, whose detail table uses a
+plain hyphen separator), candidates answering the space-numbered `10 .`-`12 .`
+questions both ways, an academic with a pedagogic title, and candidates with the
+extra `Ryšiai su juridiniais asmenimis` / `Ryšiai sudarius sandorius`
+private-interest sections.
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:

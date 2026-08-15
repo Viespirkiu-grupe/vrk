@@ -17,6 +17,7 @@ python -m scraper <command> [args]
 - `2024-ep` (European Parliament)
 - `2019-prezidento` (Presidential)
 - `2024-prezidento` (Presidential)
+- `2023-spalio-8-kupiskio-mero` (2023-10-08 early Kupiškis district mayoral election)
 
 ## Election Separation
 
@@ -172,6 +173,35 @@ python -m scraper fetch-sample 2024-prezidento
 python -m scraper sitemap 2024-prezidento
 python -m scraper fetch-candidate-samples 2024-prezidento --candidate-id gitanas-nauseda --allow-new-samples
 python -m scraper parse-anketa-samples 2024-prezidento --candidate-id gitanas-nauseda
+```
+
+## Municipal mayor (`2023-spalio-8-kupiskio-mero`) Workflow
+
+The 2023-10-08 early Kupiškis district mayoral election is a five-candidate
+single-municipality race, so the fixture set is the complete field. Its pages
+mix layouts: the anketa follows the 2024 form (Q6–Q8 plus the Rinkimų kodekso
+76 str. declarations Q9–Q14, with no EP or presidential extras), while the
+biography keeps the 2020 Seimo numbering (nationality is Q2, so education and
+work history shift by one). Three page-level quirks are handled by this module
+only:
+
+- some anketa questions are numbered with a space before the dot (`10 .`), which
+  the shared strict question-number regex rejects;
+- the Q13.4 conviction detail table separates label from value with a plain
+  hyphen instead of the 2024 en dash;
+- declaration and "Kita" tab bodies are wrapped in their own `<div>` instead of
+  following the tab navigation as siblings.
+
+The listing keeps the mayoral shape: a stats table (`table1`) plus a candidate
+table (`table2`) whose municipality cell carries its own link, so the anketa
+anchor is selected by the `KandidatasAnketa` marker. Candidate pages do carry a
+campaign tab.
+
+```bash
+python -m scraper fetch-sample 2023-spalio-8-kupiskio-mero
+python -m scraper sitemap 2023-spalio-8-kupiskio-mero
+python -m scraper fetch-candidate-samples 2023-spalio-8-kupiskio-mero --candidate-id algirdas-raslanas --allow-new-samples
+python -m scraper parse-anketa-samples 2023-spalio-8-kupiskio-mero
 ```
 
 ## Helpful Checks
