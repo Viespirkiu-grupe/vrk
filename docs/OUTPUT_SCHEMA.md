@@ -424,3 +424,33 @@ Election-specific notes:
   donations, financing reports, contracts), while `Atstovaujamasis` candidates —
   whose campaign is run by their party — publish only donations.
 - `kita` is empty for every candidate in this election.
+
+## Appendix: 2025 mayors (`2025-kovo-16-meru`)
+
+Records are written as
+`data/2025-kovo-16-meru/<candidate-id>-2025-kovo-16-meru.json`. This is the only
+election whose record carries an extra top-level field:
+
+- `candidateNote` — the status note the listing appends to the name of a
+  candidate whose registration was revoked (`išbrauktas - Seimo nutarimu`),
+  `null` for everyone else. The candidate page leaves that line of the profile
+  card blank, so the listing is the only source for it.
+
+Candidate pages otherwise follow the 2024 layout:
+
+- `profilis.pastaba` holds the elected note for the two elected mayors
+  (`Išrinktas Joniškio rajono (Nr.11) savivaldybėje II ture`); the municipal
+  fields land under `profilis.kita` as `savivaldybe`,
+  `iskele-i-savivaldybes-merus`, `turas`, `sarasas`, `numeris-sarase`,
+  `porinkiminis-numeris-sarase`.
+- `normalized.anketa` is the mayoral question set: `adresas` (Q6),
+  `einamos-pareigos` (Q7), `narystes-politinese-organizacijose.irasai` (the Q8
+  membership table — unlike the 2023 mayoral pages, which answer Q8 inline), and
+  the Rinkimų kodekso 76 str. declarations Q9–Q14 under the keys shared with the
+  2024 modules. There are no Q15/Q16 eligibility questions.
+- `biografija` follows the 2024 EP numbering (no nationality question):
+  `issilavinimas` is Q2, `mokslo-laipsnis` Q2.1, `darbo-patirtis` Q4.
+- `politines-kampanijos-dalyvio-duomenys` is absent for struck-off candidates,
+  who publish five tabs instead of six. Both participant types appear among the
+  rest.
+- `kita` is empty for every candidate in this election.

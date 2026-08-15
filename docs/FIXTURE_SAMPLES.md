@@ -113,6 +113,21 @@ candidate with conviction details (`13.1`-`13.4`), and both campaign participant
 types — self-standing (`Savarankiškas`, with treasurer, auditor, financing
 reports and contracts) and party-represented (`Atstovaujamasis`, donations only).
 
+For `2025-kovo-16-meru` the allowlist
+(`tests/test_meru_2025_sample_allowlist.py`) is the complete fourteen-candidate
+field across the three municipalities that voted:
+
+- Jonavos rajono: `jolita-peleckiene`, `povilas-beisys`, `renata-sorakiene`,
+  `romanas-steponavicius`
+- Joniškio rajono: `benjaminas-rimdzius`, `gediminas-cepulis`,
+  `liudas-jonaitis`, `saulius-kuzmarskis`
+- Panevėžio miesto: `algimantas-kolpertas`, `ignas-gaiziunas`,
+  `julius-limantas`, `loreta-masiliuniene`, `saulius-raziunas`, `solveiga-dage`
+
+This covers the two elected mayors, both campaign participant types, and the
+four Jonava candidates struck off by Seimas resolution — who carry a
+`candidateNote` and publish no campaign tab.
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:

@@ -19,6 +19,7 @@ python -m scraper <command> [args]
 - `2024-prezidento` (Presidential)
 - `2023-spalio-8-kupiskio-mero` (2023-10-08 early Kupiškis district mayoral election)
 - `2023-rugsejo-3-seimo-raseiniai-kedainiai` (2023-09-03 early Seimo by-election in Raseiniai–Kėdainiai No. 42)
+- `2025-kovo-16-meru` (2025-03-16 early mayoral elections in Jonava, Joniškis and Panevėžys)
 
 ## Election Separation
 
@@ -231,6 +232,37 @@ python -m scraper fetch-sample 2023-rugsejo-3-seimo-raseiniai-kedainiai
 python -m scraper sitemap 2023-rugsejo-3-seimo-raseiniai-kedainiai
 python -m scraper fetch-candidate-samples 2023-rugsejo-3-seimo-raseiniai-kedainiai --candidate-id matas-skamarakas --allow-new-samples
 python -m scraper parse-anketa-samples 2023-rugsejo-3-seimo-raseiniai-kedainiai
+```
+
+## Municipal mayor (`2025-kovo-16-meru`) Workflow
+
+The 2025-03-16 early mayoral elections cover three municipalities — Jonavos
+rajono, Joniškio rajono and Panevėžio miesto — with fourteen candidates, so the
+fixture set is the complete field.
+
+The listing is the mayoral shape shared with `2023-spalio-8-kupiskio-mero`
+(stats table `table1` plus candidate table `table2`, anketa anchor picked by the
+`KandidatasAnketa` marker because the municipality cell carries its own link),
+but the candidate pages are pure 2024 layout: tab bodies follow the tab
+navigation as siblings, Q8 is answered with a membership table, and the biography
+questionnaire has no nationality question. The anketa itself is the mayoral
+Q6–Q14 set, with no EP or presidential eligibility questions.
+
+Two election-specific details:
+
+- The listing appends a status note to the name of a candidate whose
+  registration was revoked — `Povilas BEIŠYS(išbrauktas - Seimo nutarimu)`. The
+  note is split from the name into `candidateNote` rather than discarded; the
+  candidate page itself leaves that line blank. All four Jonava candidates
+  carry it.
+- Struck-off candidates publish five tabs instead of six (no campaign tab), so
+  the campaign tab is fetched when present but is not an expected tab.
+
+```bash
+python -m scraper fetch-sample 2025-kovo-16-meru
+python -m scraper sitemap 2025-kovo-16-meru
+python -m scraper fetch-candidate-samples 2025-kovo-16-meru --candidate-id gediminas-cepulis --allow-new-samples
+python -m scraper parse-anketa-samples 2025-kovo-16-meru
 ```
 
 ## Helpful Checks
