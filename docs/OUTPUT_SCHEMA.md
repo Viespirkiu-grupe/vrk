@@ -92,6 +92,14 @@ Notes:
 - Keys are source-close and often Lithuanian.
 - Placeholder strings like `Nenurode` are converted to null values by normalization logic.
 - Campaign section is omitted when candidate has no campaign participant tab.
+- Donation sections under `politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija`
+  carry `totals` plus a `records[]` list. Every record has the same keys —
+  `rowNumber`, `donor`, `municipality`, `date`, `incomeSourceCode`, `amount`,
+  `notes` — regardless of election. VRK publishes these tables in several
+  widths (the 2016 pages carry all seven columns; later pages drop the
+  municipality column, the income-source column, or both, and some rename
+  "Pastabos" to "VRK sprendimas, pastabos"), so columns are matched by heading
+  and any column the page omits is null.
 - Biography in 2020 is intentionally simplified: no raw `text`/`html` and no section-kind wrappers; normalized 2020 biography no longer stores `tekstas`/`sekcijos`.
 
 ## Anomalies JSONL

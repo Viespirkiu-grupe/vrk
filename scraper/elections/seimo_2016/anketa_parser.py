@@ -833,8 +833,64 @@ def _extract_heading_text(tag: Tag | NavigableString | None) -> str:
     return ""
 
 
+DONATION_RECORD_KEYS = [
+    "rowNumber",
+    "donor",
+    "municipality",
+    "date",
+    "incomeSourceCode",
+    "amount",
+    "notes",
+]
+
+
+def _donation_column_key(header: str) -> str:
+    # Donation tables come in several widths: the 2016 layout carries all seven
+    # columns, while later pages drop the municipality column, the income source
+    # column, or both, and rename "Pastabos" to "VRK sprendimas, pastabos".
+    # Columns are therefore matched by heading, not by position.
+    key = _source_key(header)
+    if not key:
+        return ""
+    if key.startswith("eil-nr"):
+        return "rowNumber"
+    if key.startswith("aukotojas"):
+        return "donor"
+    if key.startswith("savivaldybe"):
+        return "municipality"
+    if key.startswith("data"):
+        return "date"
+    if key.startswith("pajamu-saltinis"):
+        return "incomeSourceCode"
+    if key.startswith("aukos-suma"):
+        return "amount"
+    if "pastab" in key:
+        return "notes"
+    return ""
+
+
+def _donation_column_keys(table: Tag) -> list[str]:
+    return [_donation_column_key(_tag_text(th)) for th in table.find_all("th")]
+
+
+def _build_donation_record(values: list[str], column_keys: list[str]) -> dict[str, Any]:
+    # Absent columns stay in the record as empty values so every election keeps
+    # the same record shape.
+    record: dict[str, Any] = {key: "" for key in DONATION_RECORD_KEYS}
+    record["amount"] = None
+
+    for index, value in enumerate(values):
+        key = column_keys[index] if index < len(column_keys) else ""
+        if not key:
+            continue
+        record[key] = _parse_decimal_value(value) if key == "amount" else value
+
+    return record
+
+
 def _parse_donations_table(table: Tag) -> dict[str, Any]:
     records: list[dict[str, Any]] = []
+    column_keys = _donation_column_keys(table)
 
     for tr in table.find_all("tr"):
         cells = tr.find_all(["td", "th"], recursive=False)
@@ -849,7 +905,16 @@ def _parse_donations_table(table: Tag) -> dict[str, Any]:
             continue
 
         first_value = values[0]
-        if re.match(r"^\d+\.$", first_value) and len(values) >= 7:
+        if not re.match(r"^\d+\.$", first_value):
+            continue
+
+        if column_keys and len(values) == len(column_keys):
+            records.append(_build_donation_record(values, column_keys))
+            continue
+
+        # Fall back to the 2016 column order when the table has no usable
+        # headings (or a row does not line up with them).
+        if len(values) >= 7:
             records.append(
                 {
                     "rowNumber": first_value,

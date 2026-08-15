@@ -213,9 +213,31 @@ class KupiskioMero2023AnketaParserTests(unittest.TestCase):
         campaign = campaigns[0]
         self.assertEqual(campaign["statusas"], "Atstovaujamasis")
         self.assertEqual(campaign["registravimo-data"], "2023-08-24")
-        totals = campaign["aukos-pagal-sekcija"]["gautos-ir-priimtos-aukos"]["totals"]
+        donations = campaign["aukos-pagal-sekcija"]["gautos-ir-priimtos-aukos"]
+        totals = donations["totals"]
         self.assertEqual(totals["is-viso"], 3804.96)
         self.assertEqual(totals["kandidato-nuosavos-lesos"], 1000.0)
+
+        # The donation table has no municipality column here, so records are
+        # mapped by heading rather than by position.
+        self.assertEqual(len(donations["records"]), 5)
+        self.assertEqual(
+            donations["records"][0],
+            {
+                "rowNumber": "1.",
+                "donor": "ŽILVINAS AUKŠTIKALNIS",
+                "municipality": None,
+                "date": "2023-09-02",
+                "incomeSourceCode": "KL",
+                "amount": 1000.0,
+                "notes": "Piniginės lėšos, Priimtas",
+            },
+        )
+        self.assertEqual(donations["records"][-1]["amount"], 4.96)
+        self.assertEqual(
+            sum(record["amount"] for record in donations["records"]),
+            totals["is-viso"],
+        )
 
     def test_kita_tab_is_empty_for_every_candidate(self) -> None:
         # No candidate published programme documents on the "Kita" tab.
