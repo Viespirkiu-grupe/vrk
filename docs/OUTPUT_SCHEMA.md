@@ -102,6 +102,29 @@ Notes:
   and any column the page omits is null.
 - Biography in 2020 is intentionally simplified: no raw `text`/`html` and no section-kind wrappers; normalized 2020 biography no longer stores `tekstas`/`sekcijos`.
 
+### `normalized.anketa` (2016)
+
+The 2016 questionnaire is the largest of the elections: the biography questions
+are part of the anketa itself rather than a separate tab, so this section
+carries them.
+
+- `gimimo-data` (Q5), `adresas` (Q6)
+- `pareiskimai` — the Seimo rinkimų įstatymo 38 str. 4 d. declarations
+  (Q8.1–Q8.4) and the 98 str. 1 ir 3 d. ones (Q9.1, Q9.2, Q9.3.1–Q9.3.3), plus
+  `teisiniai-argumentai` (Q9.3.4), the free-text justification filled only when
+  Q9.2 is answered "Taip"
+- `gimimo-vieta` (Q10), `tautybe` (Q11), `issilavinimas` (Q12, `aprasas` plus an
+  `irasai` record table), `uzsienio-kalbos` (Q13, split into a list),
+  `politine-organizacija` (Q14), `anksciau-isrinktas` (Q15, same
+  `aprasas`/`irasai` shape), `pagrindine-darboviete` (Q16),
+  `visuomenine-veikla` (Q17), `pomegiai` (Q18), `seimine-padetis` (Q19),
+  `vaiku-vardai-pavardes` (Q20), `kita-apie-save` (Q21)
+- `pedagoginis-vardas` and `sutuoktinio-vardas-pavarde` are rendered as rows
+  without a question number, so they are matched on their prompt text
+  ("Jei turite, nurodykite pedagoginį vardą…", "vyro arba žmonos vardas…")
+
+Unanswered optional questions are published as `Nenurodė` and normalize to null.
+
 ## Anomalies JSONL
 
 Parser runs also produce anomalies JSONL (default path `data/2016-seimo/anomalies.jsonl`).
