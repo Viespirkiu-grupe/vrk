@@ -527,3 +527,19 @@ shape matches `2023-spalio-8-kupiskio-mero` — same profile card,
   and are mapped to `nuosprendzio-data`, `nuosprendzio-valstybe`,
   `nuosprendzio-institucija` and `nusikalstama-veika`.
 - `kita` is empty for every candidate in this election.
+
+## Appendix: 2021 Radviliškis mayor (`2021-balandzio-11-radviliskio-mero`)
+
+Records are written as
+`data/2021-balandzio-11-radviliskio-mero/<candidate-id>-2021-balandzio-11-radviliskio-mero.json`.
+The pages are the same vintage as `2021-spalio-10-meru`, so every section has the
+shape described in that appendix.
+
+Two election-specific notes:
+
+- every candidate answered "Nenurodė" to Q10, so
+  `pareiskimai.ar-bendradarbiavote-su-ssrs-tarnybomis` is null throughout while
+  the other eight declarations are answered;
+- `kita` is populated for one candidate — the only election in the repository
+  where that tab carries anything. It holds the document title under `tekstai`
+  and its download URL under `nuorodos`.

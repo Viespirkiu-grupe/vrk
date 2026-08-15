@@ -23,6 +23,7 @@ python -m scraper <command> [args]
 - `2017-balandzio-23-meru` (2017-04-23 new mayoral elections in Jonava and Šakiai districts)
 - `2017-rugsejo-10-marijampoles-mero` (2017-09-10 new Marijampolė municipality mayoral election)
 - `2021-spalio-10-meru` (2021-10-10 new mayoral elections in Kelmė and Trakai districts)
+- `2021-balandzio-11-radviliskio-mero` (2021-04-11 new Radviliškis district mayoral election)
 
 ## Election Separation
 
@@ -344,6 +345,27 @@ python -m scraper fetch-sample 2021-spalio-10-meru
 python -m scraper sitemap 2021-spalio-10-meru
 python -m scraper fetch-candidate-samples 2021-spalio-10-meru --candidate-id stasys-jokubauskas --allow-new-samples
 python -m scraper parse-anketa-samples 2021-spalio-10-meru
+```
+
+## Municipal mayor (`2021-balandzio-11-radviliskio-mero`) Workflow
+
+The 2021-04-11 new Radviliškis district mayoral election fielded seven
+candidates, so the fixture set is the complete field. The pages are the same
+vintage as `2021-spalio-10-meru` — same question numbering, the same dotless
+Q7.1, the same Q9.1 conviction table — so this module reuses that one's parsing
+rules and carries only its own election id, listing URL and paths.
+
+Two things to expect in the output: every candidate answered "Nenurodė" to Q10
+(the former-USSR question), which normalizes to null, and this is the first
+election in the repository whose "Kita" tab carries a document — one candidate
+published a signed pledge not to bribe voters, captured under
+`normalized.kita.nuorodos`.
+
+```bash
+python -m scraper fetch-sample 2021-balandzio-11-radviliskio-mero
+python -m scraper sitemap 2021-balandzio-11-radviliskio-mero
+python -m scraper fetch-candidate-samples 2021-balandzio-11-radviliskio-mero --candidate-id vytautas-simelis --allow-new-samples
+python -m scraper parse-anketa-samples 2021-balandzio-11-radviliskio-mero
 ```
 
 ## Helpful Checks

@@ -173,6 +173,22 @@ This covers the two elected mayors, a self-nominated candidate, both campaign
 participant types, and the one candidate with a conviction record — whose nested
 detail table is what exposed the shared `<tbody>` lookup bug.
 
+For `2021-balandzio-11-radviliskio-mero` the allowlist
+(`tests/test_radviliskio_mero_2021_sample_allowlist.py`) is the complete
+seven-candidate field:
+
+- `aurimas-gaidziunas`
+- `gediminas-lipnevicius`
+- `jolanta-margaitiene`
+- `jurgis-baublys`
+- `kazimieras-rackauskis`
+- `mantas-reutas`
+- `vytautas-simelis`
+
+This covers the elected mayor, a self-nominated candidate with both a conviction
+record and the only populated "Kita" tab in the repository, and both campaign
+participant types.
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:
