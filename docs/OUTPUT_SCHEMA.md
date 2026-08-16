@@ -543,3 +543,24 @@ Two election-specific notes:
 - `kita` is populated for one candidate — the only election in the repository
   where that tab carries anything. It holds the document title under `tekstai`
   and its download URL under `nuorodos`.
+
+## Appendix: 2017 Seimo by-election (`2017-balandzio-23-seimo-anyksciai-panevezys`)
+
+Records are written as
+`data/2017-balandzio-23-seimo-anyksciai-panevezys/<candidate-id>-2017-balandzio-23-seimo-anyksciai-panevezys.json`.
+The pages follow the 2016 Seimo layout, so `normalized.anketa` carries the 2016
+key set described under "`normalized.anketa` (2016)" — biography questions
+included — and `biografija` is free text, `profilis.nuotrauka` a base64 data URI
+and `privaciu-interesu-deklaracija` keyed by section id.
+
+Election-specific notes:
+
+- `candidateName` drops the `(V)` winner suffix the listing appends, and
+  `profilis.pastaba` holds the elected note, which is rendered inside the name
+  cell of the profile card rather than in a row of its own.
+- `profilis.kita` carries `vienmandate-apygarda`, `iskele`, `turas`, `sarasas`,
+  `numeris-sarase`, `porinkiminis-eiles-numeris`.
+- The education (Q12) and prior-mandate (Q15) record tables are rendered in a
+  row of their own, so `issilavinimas.irasai` and `anksciau-isrinktas.irasai`
+  are collected from the question row and the table row that follows it.
+- `kita` is empty for every candidate in this election.

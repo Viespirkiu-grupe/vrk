@@ -189,6 +189,19 @@ This covers the elected mayor, a self-nominated candidate with both a conviction
 record and the only populated "Kita" tab in the repository, and both campaign
 participant types.
 
+For `2017-balandzio-23-seimo-anyksciai-panevezys` the allowlist
+(`tests/test_seimo_anyksciu_panevezio_2017_sample_allowlist.py`) is the complete
+eleven-candidate field:
+
+- `antanas-baura`, `aukse-kontrimiene`, `edita-tamosiunaite`,
+  `egidijus-baltusis`, `kristupas-augustas-krivickas`, `lukas-pakeltis`,
+  `mindaugas-pauliukas`, `ricardas-sargunas`, `romualdas-gegznas`,
+  `valentinas-sapalas`, `valentinas-stundys`
+
+This covers the elected member (whose elected note shares the name cell),
+candidates with prior-mandate tables of several sizes, a candidate who declared
+neither education nor mandates, and both campaign participant types.
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:

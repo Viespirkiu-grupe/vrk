@@ -24,6 +24,7 @@ python -m scraper <command> [args]
 - `2017-rugsejo-10-marijampoles-mero` (2017-09-10 new Marijampolė municipality mayoral election)
 - `2021-spalio-10-meru` (2021-10-10 new mayoral elections in Kelmė and Trakai districts)
 - `2021-balandzio-11-radviliskio-mero` (2021-04-11 new Radviliškis district mayoral election)
+- `2017-balandzio-23-seimo-anyksciai-panevezys` (2017-04-23 new Seimo by-election in Anykščiai–Panevėžys No. 49)
 
 ## Election Separation
 
@@ -366,6 +367,33 @@ python -m scraper fetch-sample 2021-balandzio-11-radviliskio-mero
 python -m scraper sitemap 2021-balandzio-11-radviliskio-mero
 python -m scraper fetch-candidate-samples 2021-balandzio-11-radviliskio-mero --candidate-id vytautas-simelis --allow-new-samples
 python -m scraper parse-anketa-samples 2021-balandzio-11-radviliskio-mero
+```
+
+## Seimo by-election (`2017-balandzio-23-seimo-anyksciai-panevezys`) Workflow
+
+The 2017-04-23 new Seimo by-election in the single-member Anykščiai–Panevėžys
+constituency (No. 49) fielded eleven candidates, so the fixture set is the
+complete field. It was held the same day as `2017-balandzio-23-meru`, but the
+candidate pages follow the 2016 Seimo layout rather than the mayoral one: the
+whole Q5–Q21 question set sits in a single table, the profile card keeps the
+elected note inside the name cell, and the declarations use the 2016 GPM308
+income labels and `ID001x` sections. The 2016 Seimo parsers therefore apply.
+
+Three things differ from the mayoral elections of the same day:
+
+- the candidate table on the listing carries no id — the ids later elections use
+  for it belong to layout tables here — so it is identified as the `partydata`
+  table that actually holds candidate anketa links;
+- the private-interest tab is singular (`Privačių interesų deklaracija`);
+- the education (Q12) and prior-mandate (Q15) tables are rendered in a row of
+  their own, so the normalization reads the question row *and* the table row
+  that follows it.
+
+```bash
+python -m scraper fetch-sample 2017-balandzio-23-seimo-anyksciai-panevezys
+python -m scraper sitemap 2017-balandzio-23-seimo-anyksciai-panevezys
+python -m scraper fetch-candidate-samples 2017-balandzio-23-seimo-anyksciai-panevezys --candidate-id antanas-baura --allow-new-samples
+python -m scraper parse-anketa-samples 2017-balandzio-23-seimo-anyksciai-panevezys
 ```
 
 ## Helpful Checks
