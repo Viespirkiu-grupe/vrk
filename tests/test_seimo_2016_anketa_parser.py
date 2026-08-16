@@ -3,7 +3,10 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scraper.elections.seimo_2016.anketa_parser import parse_anketa_sample
+from scraper.elections.seimo_2016.anketa_parser import (
+    _question_record_rows,
+    parse_anketa_sample,
+)
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +21,35 @@ def _parse(candidate_id: str) -> dict:
             output_root=Path(tmp),
         )
         return json.loads(output_path.read_text(encoding="utf-8"))
+
+
+class QuestionRecordRowsTests(unittest.TestCase):
+    """A record table sits either inside its question's row or in the row after it."""
+
+    def test_table_inside_the_question_row(self) -> None:
+        rows = [
+            {"questionNumber": "12", "prompt": "12. Išsilavinimas", "answer": [{"a": "1"}]},
+            {"questionNumber": "13", "prompt": "13. Kalbos", "answer": "Anglų"},
+        ]
+        self.assertEqual(_question_record_rows(rows, "12"), [{"a": "1"}])
+
+    def test_table_in_the_row_after_the_question(self) -> None:
+        rows = [
+            {"questionNumber": "15", "prompt": "15. Ar buvote išrinktas", "answer": ""},
+            {"questionNumber": None, "prompt": "", "answer": [{"a": "1"}, {"a": "2"}]},
+            {"questionNumber": "16", "prompt": "16. Darbovietė", "answer": "X"},
+        ]
+        self.assertEqual(_question_record_rows(rows, "15"), [{"a": "1"}, {"a": "2"}])
+
+    def test_following_text_row_does_not_extend_the_table(self) -> None:
+        rows = [
+            {"questionNumber": "12", "prompt": "12. Išsilavinimas", "answer": ""},
+            {"questionNumber": None, "prompt": "Jei turite, nurodykite", "answer": "Nenurodė"},
+        ]
+        self.assertEqual(_question_record_rows(rows, "12"), [])
+
+    def test_missing_question_yields_nothing(self) -> None:
+        self.assertEqual(_question_record_rows([], "15"), [])
 
 
 class Seimo2016AnketaParserTests(unittest.TestCase):
@@ -137,6 +169,24 @@ class Seimo2016AnketaParserTests(unittest.TestCase):
         self.assertEqual(
             self.ingrida["normalized"]["anketa"]["issilavinimas"]["irasai"][0]["specialybe"],
             "ekonomika",
+        )
+
+    def test_prior_mandate_table_rendered_in_its_own_row(self) -> None:
+        # Landsbergis's mandate table is rendered after the Q15 row rather than
+        # inside it; reading only the question row drops it.
+        mandates = self.gabrielius["normalized"]["anketa"]["anksciau-isrinktas"]["irasai"]
+        self.assertEqual(
+            mandates,
+            [
+                {
+                    "institucijos-pavadinimas-pareigos": "Europos Parlamentas, narys",
+                    "laikotarpis": "2014 - 2016",
+                }
+            ],
+        )
+        # Candidates who answered "Nenurodė" still yield nothing.
+        self.assertEqual(
+            self.agne["normalized"]["anketa"]["anksciau-isrinktas"]["irasai"], []
         )
 
     def test_unnumbered_rows_matched_by_prompt(self) -> None:

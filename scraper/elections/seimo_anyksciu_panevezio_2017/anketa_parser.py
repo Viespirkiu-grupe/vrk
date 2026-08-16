@@ -33,12 +33,10 @@ from scraper.elections.seimo_2016.anketa_parser import (
     _parse_profile_table,
     _parse_tabnav,
     _parse_turto_ir_pajamu_html,
+    _question_record_rows,
     _row_answer_text,
     _split_list_value,
 )
-# A record table that follows its question in a separate row is reachable with
-# the 2024 EP helper; the 2016 normalization only looks at the question row.
-from scraper.elections.ep_2024.anketa_parser import _records_for_question
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.files import write_json
 
@@ -82,10 +80,10 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "gimimo-vieta": _answer("10"),
         "tautybe": _answer("11"),
         # The education and prior-mandate tables are rendered in a row of their
-        # own here rather than inside the question row.
+        # own on these pages; the shared helper collects both placements.
         "issilavinimas": {
             "aprasas": _answer("12"),
-            "irasai": _normalize_table_records(_records_for_question(rows, "12")),
+            "irasai": _normalize_table_records(_question_record_rows(rows, "12")),
         },
         "pedagoginis-vardas": _prompt_answer("jei turite, nurodykite pedagogin"),
         "uzsienio-kalbos": _split_list_value(
@@ -94,7 +92,7 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "politine-organizacija": _answer("14"),
         "anksciau-isrinktas": {
             "aprasas": _answer("15"),
-            "irasai": _normalize_table_records(_records_for_question(rows, "15")),
+            "irasai": _normalize_table_records(_question_record_rows(rows, "15")),
         },
         "pagrindine-darboviete": _answer("16"),
         "visuomenine-veikla": _answer("17"),

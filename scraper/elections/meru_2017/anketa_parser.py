@@ -22,7 +22,7 @@ from scraper.elections.seimo_2016.anketa_parser import (
     _find_main_content_after_tabnav,
     _find_row_by_prompt_prefix,
     _find_row_by_question_number,
-    _first_nested_table_rows,
+    _question_record_rows,
     _load_candidate_meta,
     _normalize_biografija_data,
     _normalize_campaigns,
@@ -101,8 +101,6 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     def _prompt_answer(prefix: str) -> str | None:
         return _normalize_text_value(_row_answer_text(_find_row_by_prompt_prefix(rows, prefix)))
 
-    q12 = _find_row_by_question_number(rows, "12")
-    q15 = _find_row_by_question_number(rows, "15")
 
     return {
         "gimimo-data": _answer("5"),
@@ -124,14 +122,14 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "tautybe": _answer("11"),
         "issilavinimas": {
             "aprasas": _answer("12"),
-            "irasai": _normalize_table_records(_first_nested_table_rows(q12)),
+            "irasai": _normalize_table_records(_question_record_rows(rows, "12")),
         },
         "pedagoginis-vardas": _prompt_answer("jei turite, nurodykite pedagogin"),
         "uzsienio-kalbos": _split_list_value(_row_answer_text(_find_row_by_question_number(rows, "13"))),
         "politine-organizacija": _answer("14"),
         "anksciau-isrinktas": {
             "aprasas": _answer("15"),
-            "irasai": _normalize_table_records(_first_nested_table_rows(q15)),
+            "irasai": _normalize_table_records(_question_record_rows(rows, "15")),
         },
         "pagrindine-darboviete": _answer("16"),
         "visuomenine-veikla": _answer("17"),

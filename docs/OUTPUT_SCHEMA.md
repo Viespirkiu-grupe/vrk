@@ -122,6 +122,10 @@ carries them.
 - `pedagoginis-vardas` and `sutuoktinio-vardas-pavarde` are rendered as rows
   without a question number, so they are matched on their prompt text
   ("Jei turite, nurodykite pedagoginį vardą…", "vyro arba žmonos vardas…")
+- the `issilavinimas` and `anksciau-isrinktas` record tables are rendered either
+  inside their question's row or in the row right after it, depending on the
+  candidate, and both placements are collected. This shape is shared with
+  `2019-ep`, `2019-prezidento` and the 2017 elections.
 
 Unanswered optional questions are published as `Nenurodė` and normalize to null.
 

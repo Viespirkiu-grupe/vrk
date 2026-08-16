@@ -15,7 +15,7 @@ from scraper.elections.seimo_2016.anketa_parser import (
     _extract_table_headers,
     _find_main_content_after_tabnav,
     _find_row_by_question_number,
-    _first_nested_table_rows,
+    _question_record_rows,
     _load_candidate_meta,
     _normalize_biografija_data,
     _normalize_campaigns,
@@ -330,7 +330,7 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "tautybe": _normalize_text_value(_row_answer_text(q11)),
         "issilavinimas": {
             "aprasas": _normalize_text_value(_row_answer_text(q12)),
-            "irasai": _normalize_table_records(_first_nested_table_rows(q12)),
+            "irasai": _normalize_table_records(_question_record_rows(rows, "12")),
         },
         "mokslo-laipsnis": _normalize_text_value(_row_answer_text(q12_1)),
         "pedagoginis-vardas": _normalize_text_value(_row_answer_text(q12_2)),
@@ -338,7 +338,7 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "politine-organizacija": _normalize_text_value(_row_answer_text(q14)),
         "anksciau-isrinktas": {
             "aprasas": _normalize_text_value(_row_answer_text(q15)),
-            "irasai": _normalize_table_records(_first_nested_table_rows(q15)),
+            "irasai": _normalize_table_records(_question_record_rows(rows, "15")),
         },
         "pagrindine-darboviete": _normalize_text_value(_row_answer_text(q16)),
         "visuomenine-veikla": _normalize_text_value(_row_answer_text(q17)),
