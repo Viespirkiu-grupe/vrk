@@ -92,6 +92,11 @@ Notes:
 - Keys are source-close and often Lithuanian.
 - Placeholder strings like `Nenurode` are converted to null values by normalization logic.
 - Campaign section is omitted when candidate has no campaign participant tab.
+- A candidate nominated by more than one nominator has each extra nominator on
+  its own profile row with an empty label cell. Those rows are folded into the
+  field above them, so `profilis.kita.iskele.reiksme` reads
+  `"Party A; Party B"`. Kept separate they would be dropped, because a field
+  without a key cannot be normalized.
 - Donation sections under `politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija`
   carry `totals` plus a `records[]` list. Every record has the same keys —
   `rowNumber`, `donor`, `municipality`, `date`, `incomeSourceCode`, `amount`,
@@ -568,3 +573,21 @@ Election-specific notes:
   row of their own, so `issilavinimas.irasai` and `anksciau-isrinktas.irasai`
   are collected from the question row and the table row that follows it.
 - `kita` is empty for every candidate in this election.
+
+## Appendix: 2018 and 2019 Seimo by-elections
+
+`2018-rugsejo-16-seimo-zanavykai` (Zanavykai No. 64) and `2019-rugsejo-8-seimo`
+(Žirmūnai No. 4, Gargždai No. 31, Žiemgala No. 46) both follow the 2016 Seimo
+layout, so `normalized.anketa` carries the 2016 key set described under
+"`normalized.anketa` (2016)", `biografija` is free text, `profilis.nuotrauka` is
+a base64 data URI and `privaciu-interesu-deklaracija` is keyed by section id.
+
+Election-specific notes:
+
+- `candidateName` drops the `(V)` winner suffix the listing appends;
+  `profilis.pastaba` holds the elected note, one per constituency.
+- `turto-ir-pajamu-deklaracijos` keeps the seven canonical keys, but the income
+  rows use the modern labels rather than the GPM308 field-number wording of the
+  2016 and April 2017 pages, despite the section heading still naming GPM308.
+- The 2019 election includes a candidate nominated by two parties; both appear
+  in `profilis.kita.iskele.reiksme`, separated by `; `.

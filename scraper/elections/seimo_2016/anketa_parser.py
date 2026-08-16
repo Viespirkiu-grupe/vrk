@@ -182,6 +182,20 @@ def _parse_profile_table(table: Tag | None) -> dict[str, Any]:
         key_text = _tag_text(key_cell).rstrip(":")
         value_text = _tag_text(value_cell)
 
+        # A candidate nominated by more than one nominator gets a row per extra
+        # nominator, with an empty label cell. Those rows belong to the field
+        # above them; kept separate they would normalize away, because a field
+        # without a key has nowhere to go.
+        if not key_text and value_text and fields:
+            previous = fields[-1]
+            previous["displayValue"] = "; ".join(
+                part for part in (previous["displayValue"], value_text) if part
+            )
+            previous["urls"] = previous["urls"] + [
+                url for url in _extract_links(value_cell) if url not in previous["urls"]
+            ]
+            continue
+
         fields.append(
             {
                 "key": key_text,

@@ -25,6 +25,8 @@ python -m scraper <command> [args]
 - `2021-spalio-10-meru` (2021-10-10 new mayoral elections in Kelmė and Trakai districts)
 - `2021-balandzio-11-radviliskio-mero` (2021-04-11 new Radviliškis district mayoral election)
 - `2017-balandzio-23-seimo-anyksciai-panevezys` (2017-04-23 new Seimo by-election in Anykščiai–Panevėžys No. 49)
+- `2018-rugsejo-16-seimo-zanavykai` (2018-09-16 new Seimo election in Zanavykai No. 64)
+- `2019-rugsejo-8-seimo` (2019-09-08 new Seimo elections in Žirmūnai No. 4, Gargždai No. 31 and Žiemgala No. 46)
 
 ## Election Separation
 
@@ -394,6 +396,32 @@ python -m scraper fetch-sample 2017-balandzio-23-seimo-anyksciai-panevezys
 python -m scraper sitemap 2017-balandzio-23-seimo-anyksciai-panevezys
 python -m scraper fetch-candidate-samples 2017-balandzio-23-seimo-anyksciai-panevezys --candidate-id antanas-baura --allow-new-samples
 python -m scraper parse-anketa-samples 2017-balandzio-23-seimo-anyksciai-panevezys
+```
+
+## Seimo by-elections (`2018-rugsejo-16-seimo-zanavykai`, `2019-rugsejo-8-seimo`) Workflow
+
+Both are the 2016 Seimo page layout, the same as
+`2017-balandzio-23-seimo-anyksciai-panevezys`, so both modules reuse that one's
+parsing rules and carry only their own election id, listing URL and paths. The
+2018 election ran in one constituency (6 candidates); the 2019 one ran in three
+at once (27 candidates, one winner each).
+
+One thing changed between April 2017 and these two: the asset rows keep the
+I.–V. labels, but the income rows switched to the modern wording (`Deklaruota
+apmokestinamųjų ir neapmokestinamųjų pajamų suma`) even though the section is
+still headed GPM308. Both modules therefore take the income aliases from the
+2024 EP module; with the 2016 aliases every income figure normalizes to null.
+
+The 2019 listing also has a candidate nominated by two parties. Her second
+nominator is a listing row of its own with no candidate link — correctly skipped
+by the sitemap — and a profile row with an empty label cell, which is folded
+into the field above it (see `docs/OUTPUT_SCHEMA.md`).
+
+```bash
+python -m scraper fetch-sample 2019-rugsejo-8-seimo
+python -m scraper sitemap 2019-rugsejo-8-seimo
+python -m scraper fetch-candidate-samples 2019-rugsejo-8-seimo --candidate-id liudas-jonaitis --allow-new-samples
+python -m scraper parse-anketa-samples 2019-rugsejo-8-seimo
 ```
 
 ## Helpful Checks

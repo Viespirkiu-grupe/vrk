@@ -202,6 +202,19 @@ This covers the elected member (whose elected note shares the name cell),
 candidates with prior-mandate tables of several sizes, a candidate who declared
 neither education nor mandates, and both campaign participant types.
 
+For `2018-rugsejo-16-seimo-zanavykai` the allowlist
+(`tests/test_seimo_zanavyku_2018_sample_allowlist.py`) is the complete
+six-candidate field: `giedrius-surplys`, `irena-haase`, `mindaugas-bastys`,
+`mindaugas-tarnauskas`, `paulius-visockas`, `vigilijus-jukna`. It covers the
+elected member, self-nominated candidates, and prior-mandate tables of three and
+five records.
+
+For `2019-rugsejo-8-seimo` the allowlist
+(`tests/test_seimo_2019_sample_allowlist.py`) is the complete twenty-seven
+candidate field across the three constituencies that voted. It covers one winner
+per constituency, both campaign participant types, and the candidate nominated by
+two parties whose second nominator would otherwise be dropped.
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:

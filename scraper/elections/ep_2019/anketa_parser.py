@@ -120,6 +120,18 @@ def _parse_profile_table(table: Tag | None) -> dict[str, Any]:
         if not key_text and not value_text:
             continue
 
+        # An extra nominator is rendered as a row with an empty label cell; it
+        # belongs to the field above it (see the 2016 profile parser).
+        if not key_text and fields:
+            previous = fields[-1]
+            previous["displayValue"] = "; ".join(
+                part for part in (previous["displayValue"], value_text) if part
+            )
+            previous["urls"] = previous["urls"] + [
+                url for url in _extract_links(value_cell) if url not in previous["urls"]
+            ]
+            continue
+
         fields.append(
             {
                 "key": key_text,
