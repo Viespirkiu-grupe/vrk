@@ -149,12 +149,31 @@ class SprendimaiTabNormalizationTests(unittest.TestCase):
         self.assertEqual(records[0]["number"], "Sp-242")
 
     def test_links_block_is_not_treated_as_a_decision(self) -> None:
-        # The links block carries no rows; its urls belong on every record.
+        # The links block carries no rows of its own; its urls belong to the
+        # decision rows, in row order.
         records = _normalize_sprendimai_tab(self._payload())
 
         self.assertEqual([record["urls"] for record in records], [[self.DECISION_URL]])
 
-    def test_shared_urls_are_copied_not_aliased(self) -> None:
+    def test_each_decision_keeps_only_its_own_document(self) -> None:
+        # Every decision row carries its own e-seimas link. Copying the whole
+        # links block onto every record cross-links each decision to the
+        # others' documents, which is what the first version of this handler
+        # did: 6 of 27 decision records in the fixture corpus were affected.
+        payload = self._payload()
+        payload["blocks"][0]["rows"].append(
+            ["2.", "Dėl politinės kampanijos finansavimo ataskaitos", "2023-11-02", "Sp-301", ""]
+        )
+        second_url = "https://e-seimas.lrs.lt/portal/legalAct/lt/TAD/second-decision"
+        payload["blocks"][2]["urls"].append(second_url)
+
+        records = _normalize_sprendimai_tab(payload)
+
+        self.assertEqual(len(records), 2)
+        self.assertEqual(records[0]["urls"], [self.DECISION_URL])
+        self.assertEqual(records[1]["urls"], [second_url])
+
+    def test_decision_without_a_document_gets_an_empty_list(self) -> None:
         payload = self._payload()
         payload["blocks"][0]["rows"].append(
             ["2.", "Dėl politinės kampanijos finansavimo ataskaitos", "2023-11-02", "Sp-301", ""]
@@ -162,9 +181,17 @@ class SprendimaiTabNormalizationTests(unittest.TestCase):
 
         records = _normalize_sprendimai_tab(payload)
 
-        self.assertEqual(len(records), 2)
-        records[0]["urls"].append("mutation")
-        self.assertEqual(records[1]["urls"], [self.DECISION_URL])
+        self.assertEqual(records[0]["urls"], [self.DECISION_URL])
+        self.assertEqual(records[1]["urls"], [])
+
+    def test_columns_beyond_the_fifth_are_kept(self) -> None:
+        # A wider table than VRK currently publishes must not lose data.
+        payload = self._payload()
+        payload["blocks"][0]["rows"][1].append("Papildomas stulpelis")
+
+        records = _normalize_sprendimai_tab(payload)
+
+        self.assertEqual(records[0]["extraColumns"], ["Papildomas stulpelis"])
 
     def test_malformed_payloads_are_ignored(self) -> None:
         self.assertEqual(_normalize_sprendimai_tab(None), [])
@@ -261,7 +288,10 @@ class PrivaciuInteresuFreeTextTests(unittest.TestCase):
             {"kiti-duomenys": [{"pastaba": "Reikšmė", "tekstas": "Laisvas tekstas"}]},
         )
 
-    def test_explicit_tekstas_key_wins_over_recovered_free_text(self) -> None:
+    def test_labelled_tekstas_key_does_not_swallow_recovered_free_text(self) -> None:
+        # A labelled field can itself slugify to "tekstas". Deferring to it
+        # would drop the unlabelled text and re-introduce exactly the silent
+        # loss this whole branch exists to fix, so both are kept.
         payload = {
             "sections": [
                 {
@@ -280,7 +310,10 @@ class PrivaciuInteresuFreeTextTests(unittest.TestCase):
 
         normalized = _normalize_privaciu_interesu_data(payload)
 
-        self.assertEqual(normalized, {"kiti-duomenys": [{"tekstas": "Pažymėta reikšmė"}]})
+        self.assertEqual(
+            normalized,
+            {"kiti-duomenys": [{"tekstas": "Pažymėta reikšmė Laisvas tekstas"}]},
+        )
 
     def test_multiple_unlabelled_items_are_joined(self) -> None:
         payload = {

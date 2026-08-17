@@ -50,6 +50,15 @@ LAST_BATCH_PATH="$STATE_DIR/last_batch_ids.txt"
 
 CLEANUP_SAMPLES=0
 if [[ -n "${SAMPLES_ROOT:-}" ]]; then
+  # The per-candidate cleanup below removes each candidate directory after it
+  # is parsed. Pointed at the committed fixtures that would delete them, so
+  # refuse rather than eat the test corpus.
+  case "$(cd "$(dirname "$SAMPLES_ROOT")" 2>/dev/null && pwd)/$(basename "$SAMPLES_ROOT")" in
+    "$ROOT_DIR/samples"|"$ROOT_DIR/samples/"*)
+      echo "Refusing to run with SAMPLES_ROOT inside $ROOT_DIR/samples — that is the fixture tree and this script deletes candidate directories as it goes." >&2
+      exit 1
+      ;;
+  esac
   mkdir -p "$SAMPLES_ROOT"
 else
   SAMPLES_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/vrk-${ELECTION_ID}-samples.XXXXXX")"
@@ -91,19 +100,44 @@ PY
 
 build_pending_ids() {
   local pending_path="$1"
+  local not_done="$STATE_DIR/not_done_ids.tmp"
 
-  awk 'NF' "$ALL_IDS_PATH" | while IFS= read -r candidate_id; do
-    if grep -qx "$candidate_id" "$DONE_IDS_PATH"; then
-      continue
+  # One grep over the whole id list rather than one grep per candidate: at
+  # 13,796 candidates the per-id loop costs ~965,000 subprocesses over a full
+  # run. grep -f with an empty pattern file matches nothing, so the first
+  # batch of a fresh run is handled separately.
+  if [[ -s "$DONE_IDS_PATH" || -s "$FAILED_IDS_PATH" ]]; then
+    cat "$DONE_IDS_PATH" "$FAILED_IDS_PATH" 2>/dev/null | awk 'NF' | sort -u > "$STATE_DIR/excluded_ids.tmp"
+    if [[ -s "$STATE_DIR/excluded_ids.tmp" ]]; then
+      grep -Fxv -f "$STATE_DIR/excluded_ids.tmp" "$ALL_IDS_PATH" | awk 'NF' > "$not_done" || true
+    else
+      awk 'NF' "$ALL_IDS_PATH" > "$not_done"
     fi
+    rm -f "$STATE_DIR/excluded_ids.tmp"
+  else
+    awk 'NF' "$ALL_IDS_PATH" > "$not_done"
+  fi
 
+  : > "$pending_path"
+  while IFS= read -r candidate_id; do
     if [[ -f "$OUTPUT_ROOT/${candidate_id}-${ELECTION_ID}.json" ]]; then
       echo "$candidate_id" >> "$DONE_IDS_PATH"
       continue
     fi
+    echo "$candidate_id" >> "$pending_path"
+  done < "$not_done"
+  rm -f "$not_done"
+}
 
-    echo "$candidate_id"
-  done > "$pending_path"
+report_failures() {
+  local failed_count
+  failed_count=$(awk 'NF' "$FAILED_IDS_PATH" 2>/dev/null | sort -u | wc -l | tr -d ' ')
+  if [[ "$failed_count" != "0" ]]; then
+    echo "[$ELECTION_ID] $failed_count candidate(s) failed and were not retried; see $FAILED_IDS_PATH"
+    echo "[$ELECTION_ID] retry them by emptying that file and re-running"
+    return 1
+  fi
+  return 0
 }
 
 fetch_candidate() {
@@ -140,7 +174,8 @@ while (( MAX_BATCHES == 0 || batch_counter < MAX_BATCHES )); do
   if [[ "$pending_count" == "0" ]]; then
     echo "[$ELECTION_ID] no pending candidates; scrape complete"
     rm -f "$tmp_pending"
-    exit 0
+    report_failures
+    exit $?
   fi
 
   tmp_batch="$STATE_DIR/current_batch_ids.tmp"
@@ -198,3 +233,4 @@ while (( MAX_BATCHES == 0 || batch_counter < MAX_BATCHES )); do
 done
 
 echo "[$ELECTION_ID] completed $batch_counter batch(es)"
+report_failures

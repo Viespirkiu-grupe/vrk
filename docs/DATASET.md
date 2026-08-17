@@ -64,6 +64,15 @@ The two listings overlap rather than nest: 406 people appear in both under the
 same VRK candidate id, and 27 mayoral candidates appear on no list, so
 433 + 13,769 − 406 = 13,796.
 
+A full run takes roughly 3 hours at the default throttle (~0.8s per candidate,
+measured over two 40-candidate batches). Reaching that needed a fix to
+`scripts/run_election_batches.sh`, whose pending-list rebuild ran one `grep`
+per candidate per batch — around 965,000 subprocesses over an election this
+size, and the dominant cost at 1.9s per candidate before the change. The same
+rebuild also re-queued permanently failing candidates forever, so a single
+unfetchable page would have made an unattended `MAX_BATCHES=0` run loop
+without end; failed ids are now excluded and reported at exit.
+
 Scraping it in full would take the corpus from 5,624 records to roughly 19,400 —
 about 3.5× its current size, and larger than every implemented election put
 together. Nothing here should be read as a record count: 13,796 is what the

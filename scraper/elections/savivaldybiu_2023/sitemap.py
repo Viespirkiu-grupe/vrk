@@ -134,6 +134,17 @@ def _is_elected(anchor: Any) -> bool:
     return "color: blue" in style or "color:blue" in style
 
 
+def _parse_int(value: str | None) -> int | None:
+    # str.isdigit() accepts characters int() rejects — superscripts and other
+    # numeric-but-not-decimal forms — so a footnote marker in a position cell
+    # would abort the whole build rather than degrade to None.
+    text = normalize_space(str(value or ""))
+    try:
+        return int(text)
+    except ValueError:
+        return None
+
+
 def _parse_numbered_name(text: str) -> tuple[int | None, str]:
     cleaned = normalize_space(text)
     match = NUMBERED_NAME_PATTERN.match(cleaned)
@@ -233,21 +244,41 @@ def _extract_list_page_links(lists_index_html: str) -> list[dict[str, Any]]:
             continue
 
         rpg_id, rorg_id = match.group(1), match.group(2)
+        # "Sąrašo numeris" is the cell immediately before the one holding the
+        # list link. It must be read positionally rather than by scanning for
+        # the first numeric cell: on the 60 municipality group-header rows the
+        # leading cells carry the municipality's own mandate and list counts,
+        # so a scan returns "Mandatų skaičius be merų" instead.
         list_number: int | None = None
-        for cell in cells:
-            text = normalize_space(cell.get_text(" ", strip=True))
-            if text.isdigit():
-                list_number = int(text)
-                break
+        anchor_cell = list_anchor.find_parent("td")
+        if anchor_cell is not None and anchor_cell in cells:
+            anchor_index = cells.index(anchor_cell)
+            if anchor_index > 0:
+                list_number = _parse_int(cells[anchor_index - 1].get_text(" ", strip=True))
+
+        # The municipality cell is blank on continuation rows, so it is carried
+        # forward — but the list URL names its own rpgId, so the carry-forward
+        # is checked rather than trusted. Without this, a single unparseable
+        # group-header cell would silently re-attribute every list beneath it
+        # to the previous municipality with all counts unchanged.
+        municipality = current_municipality
+        if rpg_id != municipality["id"]:
+            municipality = {"id": rpg_id, "number": None, "name": ""}
 
         entries.append(
             {
-                "municipality": current_municipality,
+                "municipality": municipality,
+                "municipalityCarryForwardOk": rpg_id == current_municipality["id"],
                 "partyList": {
                     "id": rorg_id,
                     "number": list_number,
                     "name": normalize_space(list_anchor.get_text(" ", strip=True)),
                 },
+                # "Kandidatų skaičius sąraše" — the count VRK publishes for this
+                # list, used to detect a truncated or partial sample page.
+                "expectedCandidates": _parse_int(cells[-2].get_text(" ", strip=True))
+                if len(cells) >= 2
+                else None,
                 "url": resolve_candidate_url(href),
                 "sampleName": _list_page_sample_name(rpg_id, rorg_id),
             }
@@ -376,10 +407,8 @@ def _parse_list_page(list_html: str, link: dict[str, Any]) -> list[dict[str, Any
                 "url": resolve_candidate_url(href),
                 "municipality": link["municipality"],
                 "partyList": link["partyList"],
-                "listPosition": int(list_position_text) if list_position_text.isdigit() else None,
-                "postElectionPosition": (
-                    int(post_position_text) if post_position_text.isdigit() else None
-                ),
+                "listPosition": _parse_int(list_position_text),
+                "postElectionPosition": _parse_int(post_position_text),
                 "elected": _is_elected(anchor),
                 "alsoMayoralCandidate": bool(MAYOR_MARKER_PATTERN.search(normalize_space(raw_name))),
             }
@@ -439,9 +468,34 @@ def build_sitemap_from_sample(
                     }
                 )
                 continue
-            council_records.extend(
-                _parse_list_page(list_page_path.read_text(encoding="utf-8"), link)
-            )
+
+            if not link["municipalityCarryForwardOk"]:
+                skipped.append(
+                    {
+                        "reason": "municipality-carry-forward-mismatch",
+                        "sampleName": link["sampleName"],
+                        "partyList": link["partyList"]["name"],
+                    }
+                )
+
+            page_records = _parse_list_page(list_page_path.read_text(encoding="utf-8"), link)
+            council_records.extend(page_records)
+
+            # A present-but-truncated sample parses without error and just
+            # yields fewer candidates, so the count VRK publishes for the list
+            # is the only thing that catches it.
+            expected = link["expectedCandidates"]
+            if expected is not None and expected != len(page_records):
+                skipped.append(
+                    {
+                        "reason": "list-candidate-count-mismatch",
+                        "sampleName": link["sampleName"],
+                        "municipality": link["municipality"]["name"],
+                        "partyList": link["partyList"]["name"],
+                        "expected": expected,
+                        "parsed": len(page_records),
+                    }
+                )
     else:
         skipped.append({"reason": "missing-lists-index", "path": str(lists_index_path)})
 

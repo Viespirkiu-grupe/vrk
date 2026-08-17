@@ -493,7 +493,14 @@ def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]
                     continue
                 normalized_record[item_key] = item_value
             if free_text:
-                normalized_record.setdefault("tekstas", " ".join(free_text))
+                joined = " ".join(free_text)
+                existing = normalized_record.get("tekstas")
+                # A labelled field can itself slugify to "tekstas". Appending
+                # rather than deferring keeps both, instead of re-introducing
+                # the silent loss this branch exists to fix.
+                normalized_record["tekstas"] = (
+                    f"{existing} {joined}".strip() if isinstance(existing, str) and existing else joined
+                )
             if normalized_record:
                 normalized_records.append(normalized_record)
 

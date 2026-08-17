@@ -1227,20 +1227,33 @@ def _normalize_sprendimai_tab(data: Any) -> list[dict[str, Any]]:
     for values in rows:
         if _is_sprendimai_header_row(values):
             continue
-        padded = values + [""] * (5 - len(values))
+        padded = list(values) + [""] * max(0, 5 - len(values))
         title = _normalize_text_value(padded[1])
         if title is None:
             continue
-        records.append(
-            {
-                "rowNumber": _normalize_text_value(padded[0]),
-                "title": title,
-                "date": _normalize_text_value(padded[2]),
-                "number": _normalize_text_value(padded[3]),
-                "note": _normalize_text_value(padded[4]),
-                "urls": list(urls),
-            }
-        )
+        record: dict[str, Any] = {
+            "rowNumber": _normalize_text_value(padded[0]),
+            "title": title,
+            "date": _normalize_text_value(padded[2]),
+            "number": _normalize_text_value(padded[3]),
+            "note": _normalize_text_value(padded[4]),
+            "urls": [],
+        }
+        # A wider table than VRK has ever published would otherwise lose its
+        # extra columns silently.
+        if len(values) > 5:
+            record["extraColumns"] = [
+                value for value in values[5:] if _normalize_text_value(value) is not None
+            ]
+        records.append(record)
+
+    # Each decision row carries its own document link, and the links block
+    # lists them in row order. Copying the whole list onto every record — as
+    # this first did — cross-links each decision to the others' documents.
+    for index, url in enumerate(urls):
+        if index < len(records):
+            records[index]["urls"] = [url]
+
     return records
 
 
