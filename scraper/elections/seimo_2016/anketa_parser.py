@@ -1161,6 +1161,71 @@ def _parse_campaign_tab_data(slug: str, html: str) -> dict[str, Any]:
     return _parse_campaign_generic_html(html)
 
 
+_SPRENDIMAI_HEADER_TOKENS = {"eil.", "nr.", "pavadinimas", "data", "numeris", "pastaba"}
+
+
+def _is_sprendimai_header_row(values: list[str]) -> bool:
+    compact = [normalize_space(v).lower() for v in values if isinstance(v, str) and v.strip()]
+    if not compact:
+        return True
+    if "sprendimas" in " ".join(compact) and len(compact) <= 3:
+        return True
+    return bool(_SPRENDIMAI_HEADER_TOKENS.intersection(compact))
+
+
+def _normalize_sprendimai_tab(data: Any) -> list[dict[str, Any]]:
+    """VRK decisions published on a campaign's "Sprendimai" tab.
+
+    The tab is fetched and kept in rawData but was never normalized, so every
+    decision VRK took about a campaign — unlawful political advertising,
+    accounting breaches — was dropped from the analysis-ready output. The
+    payload is the same block/row shape the 2024 Seimo module already handles.
+    """
+    if not isinstance(data, dict):
+        return []
+    blocks = data.get("blocks")
+    if not isinstance(blocks, list):
+        return []
+
+    urls: list[str] = []
+    rows: list[list[str]] = []
+    for block in blocks:
+        if not isinstance(block, dict):
+            continue
+        if normalize_space(str(block.get("title", ""))).lower() == "links":
+            for url in block.get("urls", []) or []:
+                value = normalize_space(str(url))
+                if value and value not in urls:
+                    urls.append(value)
+            continue
+        for row in block.get("rows", []) or []:
+            if not isinstance(row, list):
+                continue
+            values = [normalize_space(str(cell)) for cell in row]
+            if any(values):
+                rows.append(values)
+
+    records: list[dict[str, Any]] = []
+    for values in rows:
+        if _is_sprendimai_header_row(values):
+            continue
+        padded = values + [""] * (5 - len(values))
+        title = _normalize_text_value(padded[1])
+        if title is None:
+            continue
+        records.append(
+            {
+                "rowNumber": _normalize_text_value(padded[0]),
+                "title": title,
+                "date": _normalize_text_value(padded[2]),
+                "number": _normalize_text_value(padded[3]),
+                "note": _normalize_text_value(padded[4]),
+                "urls": list(urls),
+            }
+        )
+    return records
+
+
 def _normalize_campaigns(raw_campaign_data: dict[str, Any]) -> list[dict[str, Any]]:
     campaigns = raw_campaign_data.get("campaigns")
     if not isinstance(campaigns, list):
@@ -1175,6 +1240,7 @@ def _normalize_campaigns(raw_campaign_data: dict[str, Any]) -> list[dict[str, An
         donations: dict[str, Any] = {}
         financing_reports: list[dict[str, Any]] = []
         contracts: list[dict[str, Any]] = []
+        decisions: list[dict[str, Any]] = []
 
         if isinstance(tabs, list):
             for tab in tabs:
@@ -1198,6 +1264,8 @@ def _normalize_campaigns(raw_campaign_data: dict[str, Any]) -> list[dict[str, An
                     financing_reports = data.get("reports", []) if isinstance(data.get("reports"), list) else []
                 elif slug == "sutartys":
                     contracts = data.get("contracts", []) if isinstance(data.get("contracts"), list) else []
+                elif slug == "sprendimai":
+                    decisions = _normalize_sprendimai_tab(data)
 
         participant = campaign.get("participant") if isinstance(campaign.get("participant"), dict) else {}
         treasurer = campaign.get("treasurer") if isinstance(campaign.get("treasurer"), dict) else {}
@@ -1239,6 +1307,7 @@ def _normalize_campaigns(raw_campaign_data: dict[str, Any]) -> list[dict[str, An
                 "aukos-pagal-sekcija": normalized_donations,
                 "finansavimo-ataskaitos": financing_reports,
                 "sutartys": contracts,
+                "sprendimai": decisions,
             }
         )
 

@@ -477,13 +477,23 @@ def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]
             if not isinstance(record, dict):
                 continue
             normalized_record: dict[str, Any] = {}
+            # A declaration section can be free text rather than key/value
+            # pairs — "Kiti duomenys" is filled in as a sentence with no label.
+            # Those rows reach here with an empty key; dropping them for want
+            # of a key silently loses the whole declared text.
+            free_text: list[str] = []
             for item in record.get("items", []):
                 if not isinstance(item, dict):
                     continue
+                item_value = _normalize_text_value(item.get("value"))
                 item_key = _source_key(str(item.get("key", "")))
                 if not item_key:
+                    if item_value:
+                        free_text.append(str(item_value))
                     continue
-                normalized_record[item_key] = _normalize_text_value(item.get("value"))
+                normalized_record[item_key] = item_value
+            if free_text:
+                normalized_record.setdefault("tekstas", " ".join(free_text))
             if normalized_record:
                 normalized_records.append(normalized_record)
 
