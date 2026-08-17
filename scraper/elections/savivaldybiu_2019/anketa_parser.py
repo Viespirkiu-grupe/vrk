@@ -12,19 +12,22 @@ from scraper.elections.savivaldybiu_2019.sitemap import ELECTION_ID
 from scraper.elections.meru_2017.anketa_parser import (
     TURTO_PAJAMU_OUTPUT_ORDER,
     _parse_optional_subpages,
-    parse_anketa_html,
+    parse_anketa_html as _parse_anketa_html_2017,
 )
 from scraper.elections.ep_2019.anketa_parser import _normalize_privaciu_interesu_data
 from scraper.elections.seimo_2016.anketa_parser import (
+    _find_row_by_question_number,
     _load_candidate_meta,
     _normalize_biografija_data,
     _normalize_campaigns,
     _normalize_kita_data,
     _normalize_missing_values,
     _normalize_profile_data,
+    _normalize_text_value,
     _order_dict_keys,
     _parse_eur_amount,
     _parse_nested_campaign_samples,
+    _row_answer_text,
     _source_key,
 )
 from scraper.shared.anomalies import build_anomaly_event
@@ -51,6 +54,51 @@ TURTO_PAJAMU_KEY_ALIASES = {
     "deklaruota-apmokestinamuju-ir-neapmokestinamuju-pajamu-suma": "gautos-pajamos",
     "deklaruota-moketina-pajamu-mokescio-suma": "sumoketas-pajamu-mokestis",
 }
+
+
+def parse_anketa_html(html: str) -> dict[str, Any]:
+    """The 2017 anketa parse plus the questions 2019 asks and 2017 did not.
+
+    The April 2017 pages number their declarations 8.2–8.5 with no 8.1, carry
+    no 9.2–9.4 at all, and write Q21 with its number in brackets at the end so
+    the 2017 module matches that question on its prompt text. 2019 asks four
+    more declarations and numbers Q21 at the front, so inheriting the 2017
+    mapping unchanged drops all five answers into rawData and never normalizes
+    them — losing conviction-related declarations, and free text, for the whole
+    election. Keys match the 2021 mayoral module, which asks the same
+    questions under the same statute.
+    """
+    parsed = _parse_anketa_html_2017(html)
+
+    anketa = parsed.get("anketa")
+    if not isinstance(anketa, dict):
+        return parsed
+    rows = anketa.get("rows") or []
+    normalized = anketa.get("normalized")
+    if not isinstance(normalized, dict):
+        return parsed
+
+    def _answer(question_number: str) -> Any:
+        return _normalize_text_value(
+            _row_answer_text(_find_row_by_question_number(rows, question_number))
+        )
+
+    pareiskimai = normalized.get("pareiskimai")
+    if isinstance(pareiskimai, dict):
+        normalized["pareiskimai"] = {
+            "ar-nebaigta-teismo-paskirta-bausme": _answer("8.1"),
+            **pareiskimai,
+            "ar-veika-dekriminalizuota": _answer("9.2"),
+            "ar-buvote-pripazintas-kaltu-uzsienyje": _answer("9.3"),
+            "ar-buvote-pripazintas-kaltu-del-politinio-persekiojimo": _answer("9.4"),
+        }
+
+    # Q21 is "21. Be jau išvardintų atsakymų, ką dar norėtumėte parašyti apie
+    # save?". 2017 renders the number at the end of the prompt, so that module
+    # matches on the text; here the prompt starts with "21. " and the prefix
+    # match never fires, discarding whatever the candidate wrote.
+    normalized["kita-apie-save"] = _answer("21")
+    return parsed
 
 
 def _normalize_turto_ir_pajamu_data(payload: dict[str, Any]) -> dict[str, Any]:
