@@ -95,6 +95,53 @@ questions both ways, an academic with a pedagogic title, and candidates with the
 extra `Ryšiai su juridiniais asmenimis` / `Ryšiai sudarius sandorius`
 private-interest sections.
 
+For `2023-kovo-5-savivaldybiu-tarybu-ir-meru` the allowlist
+(`tests/test_savivaldybiu_2023_sample_allowlist.py`) is **nine candidates out of
+13,796** — the first election whose fixtures are a sample
+rather than the complete field, because the field is three times the size of the
+rest of the corpus combined. They were chosen to cover one of each archetype the
+record shape depends on:
+
+- `algimantas-rusteika-2423645` — council-only, coalition list, not elected
+- `algirdas-gudaitis-2420505` — council-only, party list, elected to the council
+  (the `Išrinktas pagal … sąrašą` note)
+- `algirdas-zebrauskas-2424292` — dual candidate, coalition list, elected to the
+  council but not as mayor, self-nominated for mayor. The only fixture that
+  exercises both recovered fields: a campaign `sprendimai` decision and a
+  `kiti-duomenys` private-interest free-text section
+- `ingrida-sakalauskiene-2425331` — council-only, party list, not elected, low
+  on the list
+- `linas-urmanavicius-2421676` — council-only, political committee list, elected
+  (guards the committee list name, which is neither a party nor a coalition)
+- `mykolas-majauskas-2420485` — mayor-only, self-nominated, not elected; the
+  largest campaign in the set (98 donation records, 19 contracts)
+- `rasa-vitkauskiene-2423015` — dual, elected mayor in round II, party-nominated,
+  `Atstovaujamasis` campaign participant. Her note is the feminine `Išrinkta …`
+- `skirmantas-mockevicius-2422343` — mayor-only, self-nominated, elected mayor in
+  round II
+- `vitalijus-mitrofanovas-2425352` — dual, elected mayor in round I, whose
+  `Atstovaujamasis` campaign publishes a donations tab with nothing in it
+
+Between them these cover all three `profilis.kita` key sets (council-only,
+mayor-only, dual), both nomination labels, both `pastaba` forms in both genders,
+role-dependent presence of the campaign tab, and both campaign participant
+types.
+
+Because the fixture set is a sample rather than the field, it pins nothing about
+coverage: an archetype not in the list above — a candidate with conviction
+details, say — is not exercised by any test in this election.
+
+Its samples directory also holds the listing fixtures, which are not candidate
+directories and are allowlisted separately by the same test:
+
+- `page.html` — the wrapper page
+- `list.html` — the mayoral listing (433 candidates)
+- `lists-index.html` — the index of 467 party, coalition and committee lists
+- `lists/` — one file per list, `rpgId-<municipality>_rorgId-<list>.html`, 467
+  files, and the test asserts that count. The sitemap needs all of them: a
+  missing file is reported as `missing-list-sample` and its candidates are
+  simply absent from the output.
+
 For `2023-rugsejo-3-seimo-raseiniai-kedainiai` the allowlist
 (`tests/test_seimo_raseiniu_kedainiu_2023_sample_allowlist.py`) is the complete
 eight-candidate field of this single-constituency by-election:

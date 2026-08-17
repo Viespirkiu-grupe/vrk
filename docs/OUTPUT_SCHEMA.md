@@ -434,6 +434,152 @@ Election-specific notes:
   whose campaign is run by their party — publish only donations.
 - `kita` is empty for every candidate in this election.
 
+## Appendix: 2023 municipal councils and mayors (`2023-kovo-5-savivaldybiu-tarybu-ir-meru`)
+
+Records are written as
+`data/2023-kovo-5-savivaldybiu-tarybu-ir-meru/<candidate-id>-2023-kovo-5-savivaldybiu-tarybu-ir-meru.json`.
+The candidate pages are the same vintage as `2023-spalio-8-kupiskio-mero` — same
+profile card, `<div>`-wrapped tab bodies, `10 .` question numbering, inline Q8
+membership answer, hyphen-separated conviction details — so every page-level
+shape described in that appendix applies here too. What is specific to this
+election is the record around them.
+
+`candidateId` is `<name-slug>-<vrkCandidateId>` (e.g.
+`raimundas-markauskas-2429873`), not the bare name slug the other modules use.
+244 of the 13,796 candidates share a name slug with someone else — four
+different people are called Mindaugas BALČIŪNAS — and the positional `-2`/`-3`
+suffix of the other modules would make an id depend on traversal order, which
+the batch runner uses as its resume marker.
+
+The record carries two top-level fields beyond the common set:
+
+- `candidateNote` — the status note the listing may append to a name, as in
+  `2025-kovo-16-meru`. Null for every fixture candidate.
+- `kandidatavimas` — the candidacy context described below.
+
+### `kandidatavimas`
+
+Which municipality a candidate stood in, on whose list, at which position and
+whether they won is published on the listing pages and nowhere on the candidate
+page, so it is carried in from the sitemap rather than parsed out of the anketa.
+It is the only block of its kind in the repository.
+
+- `vrkCandidateId` — VRK's own candidate id, the one in every candidate URL.
+- `savivaldybe` — `{id, number, name}`: VRK's `rpgId`, the municipality number
+  as printed on the listing (1–60), and the name with that number stripped
+  (`{"id": "22012", "number": 12, "name": "Jurbarko rajono"}`).
+- `roles` — a list holding `tarybos-narys`, `meras`, or both. 406 candidates
+  hold both; 13,363 are council-only and 27 mayor-only.
+- `tarybosNarys` — `null` for a mayor-only candidate, otherwise
+  `{partyList: {id, number, name}, listPosition, postElectionPosition, elected}`.
+  `listPosition` is the pre-election order on the list, `postElectionPosition`
+  the order after preference votes were counted; both are `null` if the cell is
+  not a plain number. `partyList.name` covers parties, coalitions and political
+  committees alike.
+- `meras` — `null` for a council-only candidate, otherwise
+  `{round, nominatedBy, elected}`. `round` is `I` or `II`; `nominatedBy` is
+  `išsikėlė pats` for a self-nominated candidate or the nominating
+  party/committee name.
+- `isrinktas` — true when either candidacy was won. A dual candidate can be
+  elected to the council while losing the mayoral race, and the reverse also
+  occurs, so this is not the same as `meras.elected`.
+
+`elected` on both sub-blocks comes from VRK colouring a winner's name link blue
+on the listing; there is no field of its own for it.
+
+### The campaign section is role-dependent
+
+`normalized` section order is the full seven-section order —
+`profilis`, `anketa`, `biografija`, `turto-ir-pajamu-deklaracijos`,
+`privaciu-interesu-deklaracija`, `politines-kampanijos-dalyvio-duomenys`,
+`kita` — for a candidate who stands for mayor, and the same order without
+`politines-kampanijos-dalyvio-duomenys` for a council-only candidate.
+
+This is a property of the role, not of the election: a council candidate's
+campaign is run by the party list, so only candidates who also stand for mayor
+register a campaign participant of their own. Measured over 30 sampled pages of
+each kind, 0/30 council-only pages carry the tab and 30/30 mayoral ones do.
+
+Both participant types appear among mayoral candidates. `Savarankiškas`
+participants publish the full five campaign tabs (treasurer, auditor,
+donations, financing reports, contracts); `Atstovaujamasis` ones publish only
+the donations tab, and that tab can itself be empty when the party campaign
+attributed nothing to the candidate.
+
+Campaign records carry the `sprendimai` key shared with the other elections —
+the VRK decisions taken about a campaign, each `{rowNumber, title, date,
+number, note, urls}`. One fixture candidate has one (a decision about unlawful
+outdoor political advertising).
+
+### `profilis.kita` keys vary by role
+
+The profile card publishes a different field set for each role, and the
+nomination field is published under **two different labels**:
+
+- council-only: `savivaldybe`, `sarasas`, `numeris-sarase`,
+  `porinkiminis-numeris-sarase`. There is no nomination row and no `turas`.
+- mayor-only: `savivaldybe`, `iskele-i-savivaldybes-merus`, `turas`, `sarasas`,
+  `numeris-sarase`, `porinkiminis-numeris-sarase`. The last three keys exist but
+  their `reiksme` is `null` — the candidate is on no list.
+- dual: `savivaldybe`, `iskele-i-tarybos-narius-ir-merus`, `turas`, `sarasas`,
+  `numeris-sarase`, `porinkiminis-numeris-sarase`, all populated.
+
+Reading only `iskele-i-savivaldybes-merus` therefore misses the nominator of
+every one of the 406 dual candidates. `kandidatavimas` is the stable place to
+read all of this from: it carries the same facts under one key set regardless of
+role.
+
+### `profilis.pastaba` forms
+
+`pastaba` is `null` for a candidate who won nothing, and otherwise takes one of
+two forms, in both of which the verb agrees with the candidate's gender:
+
+- list form, for the 1,498 elected council members —
+  `Išrinktas pagal Demokratų sąjungos „Vardan Lietuvos“ sąrašą`,
+  `Išrinkta pagal Lietuvos socialdemokratų partijos sąrašą`.
+- mayoral form, for the 60 elected mayors —
+  `Išrinktas Akmenės rajono (Nr.1) savivaldybėje I ture`,
+  `Išrinkta Alytaus rajono (Nr.3) savivaldybėje II ture`.
+
+A dual candidate elected to the council but not as mayor gets the list form.
+
+The list name inside the note is in the genitive, so it does **not** match
+`profilis.kita.sarasas.reiksme` or `kandidatavimas.tarybosNarys.partyList.name`
+verbatim — `Demokratų sąjunga „Vardan Lietuvos“` becomes `Demokratų sąjungos
+„Vardan Lietuvos“`, and a coalition inflects every member party
+(`Koalicija „Geriausias pasirinkimas“ (Partija „Laisvė ir teisingumas“, …)` →
+`Koalicijos „Geriausias pasirinkimas“ (Partijos „Laisvė ir teisingumas“, …)`).
+Join on `partyList.id`, not on the string.
+
+### `biografija` numbering
+
+The 2023 numbering shared with `2023-spalio-8-kupiskio-mero` and
+`2023-rugsejo-3-seimo-raseiniai-kedainiai`: `gimimo-data`/`gimimo-vieta` (Q1),
+`tautybe` (Q2), `issilavinimas.irasai` (Q3), `mokslo-laipsnis` (Q3.1),
+`pedagoginis-vardas` (Q3.2), `uzsienio-kalbos` (Q4), `darbo-patirtis.irasai`
+(Q5), `visuomenine-veikla` (Q6), `pomegiai` (Q7), `seimine-padetis` (Q8).
+Nationality being Q2 is what shifts education and work history by one relative
+to the 2024 modules.
+
+The Q3 and Q5 record tables are rendered either inside their question's row or
+in the row right after it, depending on the candidate; both placements are
+collected.
+
+### Other sections
+
+- `normalized.anketa` is the mayoral/municipal set of the 2023 pages:
+  `adresas` (Q6), `einamos-pareigos` (Q7),
+  `narystes-politinese-organizacijose` with both `tekstas` (Q8 is answered
+  inline) and `irasai` (empty unless a membership table appears), the Rinkimų
+  kodekso 76 str. declarations Q9–Q14 under `pareiskimai`, plus
+  `teistumo-detales` and `mandato-netekimo-detales`. No fixture candidate
+  answered Q13 or Q14 "Taip", so both are null/empty in the sampled output; with
+  13,796 candidates in the field the full run will not be.
+- `privaciu-interesu-deklaracija` follows the 2024 shape. Its `kiti-duomenys`
+  section is free text published without a label, so it lands under a `tekstas`
+  key inside the record rather than as a named field.
+- `kita` is empty for every fixture candidate.
+
 ## Appendix: 2025 mayors (`2025-kovo-16-meru`)
 
 Records are written as

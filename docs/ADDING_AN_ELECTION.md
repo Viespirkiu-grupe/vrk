@@ -28,7 +28,9 @@ it before writing anything. The layout families are:
   record tables between them, question numbers sometimes lacking the trailing dot.
 - **2020 era** (`seimo_2020`): Q6.x contacts, Q7.x position and membership.
 - **2023 mayoral** (`kupiskio_mero_2023`): tab bodies wrapped in their own
-  `<div>`, biography numbering with nationality as Q2.
+  `<div>`, biography numbering with nationality as Q2. The March 2023 municipal
+  general election (`savivaldybiu_2023`) is the same family and reuses these
+  parsers unchanged — 13,796 candidates and not one page-level difference.
 - **2024 era** (`ep_2024`, `seimo_2024`, `prezidento_2024`): tab bodies are
   siblings of the tab navigation, Q8 membership table, Rinkimų kodekso
   declarations.
@@ -50,6 +52,32 @@ Three files, mirroring the closest existing election:
 - `anketa_parser.py` — the question-to-key mapping, reusing shared helpers.
 
 Then wire five dispatch points in `scraper/cli.py`.
+
+### If the election has more than one listing structure
+
+`savivaldybiu_2023` is the case that exists: VRK publishes the mayoral
+candidates on one page and the council candidates one page below an index of 467
+party lists, and neither set contains the other — 406 people are in both, 27
+mayoral candidates are in neither list. What that costs:
+
+- `fetch_listing_sample` fetches every sub-page too, skips ones already saved so
+  an interrupted capture resumes, and paces itself so a one-off capture does not
+  hammer VRK. `build_sitemap_from_sample` reads them back from disk.
+- The structures merge on VRK's own candidate id, and one sitemap entry carries
+  both candidacies. Do not merge on name.
+- Cross-check the merged total against whatever summary page VRK publishes
+  (`savKandidataiSuvestine.html` here) before trusting anything downstream. Row
+  counts, per-structure counts and the overlap should all reconcile.
+- Facts that exist only on the listings — municipality, list, seat order, elected
+  flags — have to be carried through to the record. `savivaldybiu_2023` puts
+  them in a `kandidatavimas` top-level block.
+- At this scale name-slug ids collide (244 of 13,796 here), so the id needs a
+  stable suffix. The positional `-2`/`-3` of the other modules makes an id depend
+  on traversal order, and the batch runner uses the output filename as its resume
+  marker.
+- An expected tab may depend on the candidate's role rather than the election —
+  here only mayoral candidates publish a campaign tab, so `EXPECTED_TABS` is
+  computed per entry. Getting that wrong is 13,363 spurious warnings.
 
 ## 4. Verify against the whole field before trusting it
 

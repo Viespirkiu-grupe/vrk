@@ -17,6 +17,7 @@ python -m scraper <command> [args]
 - `2024-ep` (European Parliament)
 - `2019-prezidento` (Presidential)
 - `2024-prezidento` (Presidential)
+- `2023-kovo-5-savivaldybiu-tarybu-ir-meru` (2023-03-05 municipal council and mayoral elections, all 60 municipalities)
 - `2023-spalio-8-kupiskio-mero` (2023-10-08 early Kupiškis district mayoral election)
 - `2023-rugsejo-3-seimo-raseiniai-kedainiai` (2023-09-03 early Seimo by-election in Raseiniai–Kėdainiai No. 42)
 - `2025-kovo-16-meru` (2025-03-16 early mayoral elections in Jonava, Joniškis and Panevėžys)
@@ -47,6 +48,11 @@ python -m scraper fetch-sample 2016-seimo
 Output:
 
 - Updates the listing sample file under `samples/html/2016-seimo/`.
+
+One election downloads more than a listing file:
+`2023-kovo-5-savivaldybiu-tarybu-ir-meru` publishes its candidates in two
+structures and fetches 467 party-list pages as well. See its workflow section
+below.
 
 ### `sitemap`
 
@@ -182,6 +188,67 @@ python -m scraper fetch-sample 2024-prezidento
 python -m scraper sitemap 2024-prezidento
 python -m scraper fetch-candidate-samples 2024-prezidento --candidate-id gitanas-nauseda --allow-new-samples
 python -m scraper parse-anketa-samples 2024-prezidento --candidate-id gitanas-nauseda
+```
+
+## Municipal councils and mayors (`2023-kovo-5-savivaldybiu-tarybu-ir-meru`) Workflow
+
+The 2023-03-05 municipal elections are the largest election in the repository:
+13,796 candidates across all 60 municipalities. Candidate pages are the same
+vintage as `2023-spalio-8-kupiskio-mero` and reuse that module's parsers whole —
+the `10 .` question numbering, the hyphen-separated conviction table and the
+`<div>`-wrapped tab bodies are all the same. What differs is the listing side.
+
+This is the only election that publishes its candidates in **two structures**,
+and neither is a superset of the other:
+
+- `savKandidataiMerai.html` — 433 mayoral candidates, all 60 municipalities, on
+  one page;
+- `savKandidataiSarasai.html` — an index of 467 party, coalition and political
+  committee lists, whose 13,769 council candidates live one page deeper under
+  `savKandidataiTarNarApygardoje_rpgId-<municipality>_rorgId-<list>.html`.
+
+406 people run for both and appear in both structures under the same VRK
+candidate id; 27 mayoral candidates appear on no list. The union is 13,796,
+which is the total VRK publishes on `savKandidataiSuvestine.html`.
+
+`fetch-sample` therefore downloads more than the usual listing file. It saves
+the wrapper page as `page.html`, the mayoral listing as `list.html` (keeping the
+convention of the other elections), the list index as `lists-index.html`, and
+then **one file per party list — 467 of them — under `lists/`**, named
+`rpgId-<municipality>_rorgId-<list>.html`. A list page that is already saved and
+non-empty is skipped, so re-running the command after an interruption fetches
+only what is missing. Fetches are paced at 0.2 s apart and progress is printed
+every 50 pages.
+
+`sitemap` reads all of it back — `list.html`, `lists-index.html` and every file
+under `lists/` — and merges the two structures on VRK's candidate id, so one
+entry carries both candidacies for a dual candidate. A list page named in the
+index but missing from `lists/` is recorded in the sitemap's `skipped` list as
+`missing-list-sample` rather than failing the run. Expected stats:
+
+```
+rows 14202, extracted 13796, skipped 0, duplicateCandidateIds 0,
+partyLists 467, mayoralCandidates 433, councilCandidates 13769,
+dualCandidates 406, electedMayors 60, electedCouncilMembers 1498
+```
+
+Two further details specific to this module:
+
+- candidate ids are `<name-slug>-<vrkCandidateId>`, e.g.
+  `mykolas-majauskas-2420485`. 244 candidates share a name slug with someone
+  else, and the positional suffix the other modules use would make an id depend
+  on traversal order — which the resumable batch runner treats as its resume
+  marker;
+- the campaign tab is expected only for candidates standing for mayor. A council
+  candidate's campaign is run by the party list, so expecting the tab
+  unconditionally would raise a `MissingExpectedTab` warning for each of the
+  13,363 council-only candidates.
+
+```bash
+python -m scraper fetch-sample 2023-kovo-5-savivaldybiu-tarybu-ir-meru
+python -m scraper sitemap 2023-kovo-5-savivaldybiu-tarybu-ir-meru
+python -m scraper fetch-candidate-samples 2023-kovo-5-savivaldybiu-tarybu-ir-meru --candidate-id mykolas-majauskas-2420485 --allow-new-samples
+python -m scraper parse-anketa-samples 2023-kovo-5-savivaldybiu-tarybu-ir-meru
 ```
 
 ## Municipal mayor (`2023-spalio-8-kupiskio-mero`) Workflow

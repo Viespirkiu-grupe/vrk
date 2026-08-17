@@ -43,6 +43,32 @@ Records live under `data/<election-id>/` (~750 MB) and are **not** version
 controlled — `data/`, `sitemaps/` and `samples/` are gitignored, so the corpus is
 reproduced by running the scrapers rather than by cloning.
 
+### Not yet scraped: the 2023 municipal general election
+
+`2023-kovo-5-savivaldybiu-tarybu-ir-meru` has a module and a verified sitemap
+but no full run yet, so it is deliberately absent from the table above. Its
+sitemap totals, cross-checked against VRK's own `savKandidataiSuvestine.html`
+summary, are:
+
+| | count |
+|---|---:|
+| candidates (union of both listings) | 13,796 |
+| mayoral candidates | 433 |
+| council candidates | 13,769 |
+| standing for both | 406 |
+| party/committee lists | 467 |
+| elected mayors | 60 |
+| elected council members | 1,498 |
+
+The two listings overlap rather than nest: 406 people appear in both under the
+same VRK candidate id, and 27 mayoral candidates appear on no list, so
+433 + 13,769 − 406 = 13,796.
+
+Scraping it in full would take the corpus from 5,624 records to roughly 19,400 —
+about 3.5× its current size, and larger than every implemented election put
+together. Nothing here should be read as a record count: 13,796 is what the
+listings publish, not what has been parsed.
+
 ## Caveats for analysis
 
 ### Campaign donations are per campaign, not per candidate
@@ -99,9 +125,9 @@ key list itself is election-specific.
 
 ## Correctness fixes behind this corpus
 
-Six defects were found and fixed while building the newer modules. Each had been
-invisible because the affected elections had thin or no test coverage, and each
-was measured against live data after the fix:
+Eight defects were found and fixed while building the newer modules. Each had
+been invisible because the affected elections had thin or no test coverage, and
+each was measured against live data after the fix:
 
 | fix | effect on the corpus |
 |---|---|
@@ -111,14 +137,24 @@ was measured against live data after the fix:
 | record tables rendered in their own row | 525 of 1415 2016 Seimo candidates (37%) recovered their prior-mandate history: **+1,180 records** |
 | nested `<tbody>` lookup | a candidate whose conviction table nested inside the anketa had their entire questionnaire collapse to one row |
 | 2016 Seimo coverage audit | no defect found; the module gained the anketa tests it never had |
+| campaign "Sprendimai" tab never normalized | the VRK decisions taken about a campaign — unlawful political advertising and the like — were fetched and kept in `rawData` but never reached `normalized`. Recovering them added **26 decisions to 23 records across 9 elections**. `2024-seimo` was unaffected: it has its own handler |
+| private-interest items published without a label | free-text declaration sections such as "Kiti duomenys" are published as an unlabelled sentence, and any item without a key was dropped, so the whole declared text was lost from `normalized` while `rawData` kept it. It is now collected under a `tekstas` key |
 
 Every fix was verified by re-parsing all elections and confirming the diff was
 confined to the intended records.
+
+The two most recent fixes are measured over the **fixture corpora only** — the
+elections whose fixture set is the complete field are exact, the large elections
+are not, and no full re-run has been done since. The 23/26 figure is a floor for
+what a full re-run would recover, not the total.
 
 ## Known gaps
 
 - The corpus covers the elections implemented so far. VRK publishes further
   by-elections and older elections that have no module yet.
+- `2023-kovo-5-savivaldybiu-tarybu-ir-meru` is implemented and its sitemap is
+  verified, but only the nine fixture candidates have been parsed. Until a full
+  run lands, any cross-election total in this document excludes it.
 - `2024-ep` and `2024-prezidento` candidate pages carry no campaign tab, so
   those elections have no donation data at all — campaigns were run by the party
   lists and are published outside the candidate pages.
