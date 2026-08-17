@@ -17,8 +17,9 @@ never touched by a full run.
 
 ## Inventory
 
-5,624 candidate records across 15 elections, 2016–2025. The full run took
-~2h45m end to end, with **zero fetch failures and zero parse anomalies**.
+19,420 candidate records across 16 elections, 2016–2025, with **zero fetch
+failures and zero parse anomalies**. The 2023 municipal general election is
+larger than every other election combined; it was scraped separately in ~6h.
 
 | election | records | elected | declared a conviction | with campaign data |
 |---|---:|---:|---:|---:|
@@ -37,46 +38,48 @@ never touched by a full run.
 | `2024-prezidento` | 8 | 8 | 0 | 0 |
 | `2024-seimo` | 1740 | 141 | 62 | 699 |
 | `2025-kovo-16-meru` | 14 | 2 | 0 | 10 |
-| **total** | **5624** | **473** | **153** | **2491** |
+| `2023-kovo-5-savivaldybiu-tarybu-ir-meru` | 13796 | 1557 | 541 | 433 |
+| **total** | **19420** | **2030** | **694** | **2924** |
 
 Records live under `data/<election-id>/` (~750 MB) and are **not** version
 controlled — `data/`, `sitemaps/` and `samples/` are gitignored, so the corpus is
 reproduced by running the scrapers rather than by cloning.
 
-### Not yet scraped: the 2023 municipal general election
+### The 2023 municipal general election
 
-`2023-kovo-5-savivaldybiu-tarybu-ir-meru` has a module and a verified sitemap
-but no full run yet, so it is deliberately absent from the table above. Its
-sitemap totals, cross-checked against VRK's own `savKandidataiSuvestine.html`
-summary, are:
+`2023-kovo-5-savivaldybiu-tarybu-ir-meru` is on its own in the table above
+because it is bigger than every other election combined. Its counts reconcile
+exactly with VRK's own `savKandidataiSuvestine.html` summary:
 
-| | count |
-|---|---:|
-| candidates (union of both listings) | 13,796 |
-| mayoral candidates | 433 |
-| council candidates | 13,769 |
-| standing for both | 406 |
-| party/committee lists | 467 |
-| elected mayors | 60 |
-| elected council members | 1,498 |
+| | scraped | VRK publishes |
+|---|---:|---:|
+| candidates (union of both listings) | 13,796 | 13,796 |
+| mayoral candidates | 433 | 433 |
+| council candidates | 13,769 | 13,769 |
+| standing for both | 406 | — |
+| party/committee lists | 467 | 467 |
+| elected mayors | 60 | 60 |
+| elected council members | 1,498 | 1,498 |
 
 The two listings overlap rather than nest: 406 people appear in both under the
 same VRK candidate id, and 27 mayoral candidates appear on no list, so
-433 + 13,769 − 406 = 13,796.
+433 + 13,769 − 406 = 13,796. The elected total is 1,557 distinct people rather
+than the 1,558 mandates, because one person — Erlandas Galaguz in Visaginas —
+won a council seat and the mayoralty at once.
 
-A full run takes roughly 3 hours at the default throttle (~0.8s per candidate,
-measured over two 40-candidate batches). Reaching that needed a fix to
-`scripts/run_election_batches.sh`, whose pending-list rebuild ran one `grep`
+The full run took ~6h at the default 0.4s throttle (~1.6s per candidate) with
+zero fetch failures, zero failed candidates and zero parse anomalies. Getting
+there needed two fixes to `scripts/run_election_batches.sh`, which no earlier
+election was large enough to stress: the pending-list rebuild ran one `grep`
 per candidate per batch — around 965,000 subprocesses over an election this
-size, and the dominant cost at 1.9s per candidate before the change. The same
-rebuild also re-queued permanently failing candidates forever, so a single
-unfetchable page would have made an unattended `MAX_BATCHES=0` run loop
-without end; failed ids are now excluded and reported at exit.
+size — and it re-queued permanently failing candidates forever, so a single
+unfetchable page would have made an unattended `MAX_BATCHES=0` run loop without
+end.
 
-Scraping it in full would take the corpus from 5,624 records to roughly 19,400 —
-about 3.5× its current size, and larger than every implemented election put
-together. Nothing here should be read as a record count: 13,796 is what the
-listings publish, not what has been parsed.
+Two fields are null for a noticeable minority, and both are genuinely blank
+upstream rather than parser misses: `biografija.tautybe` for 471 candidates
+(3.4%), published as `Nenurodė`, and `anketa.einamos-pareigos` for 313 (2.3%),
+published as `-`.
 
 ## Caveats for analysis
 
@@ -91,6 +94,7 @@ therefore multiplies the same money:
 |---|---:|---:|---:|
 | `2019-ep` | 279 | 15 | one campaign across 22 candidates |
 | `2024-seimo` | 699 | 205 | one campaign across 70 candidates |
+| `2023-kovo-5-savivaldybiu-tarybu-ir-meru` | 433 | 58 | one campaign across 59 candidates |
 | `2020-seimo` | 758 | 298 | none shared |
 | `2016-seimo` | 672 | 324 | none shared |
 
@@ -98,6 +102,14 @@ The effect is large. For 2019 EP, naively adding donation amounts across
 candidate records gives €29.2M; de-duplicating by campaign gives **€1.44M** — a
 20× inflation. Always group by campaign identity (`sprendimo-numeris`, or the
 `campaignKey` in `rawData`) before summing.
+
+The 2023 municipal election is the sharpest illustration of *why* the sharing
+happens: only 11 of its 433 campaign participants are `Savarankiškas` (running
+their own campaign), and the other 422 are `Atstovaujamasis` — their party runs
+the campaign, so dozens of candidates share one participant record. Naive
+summing gives €495,154; de-duplicated it is **€295,300**, a 1.7× inflation.
+The factor is smaller than 2019 EP's only because most of those 422 candidates
+share campaigns that declared nothing at all.
 
 ### Conviction data has two different shapes
 
@@ -153,10 +165,19 @@ each was measured against live data after the fix:
 Every fix was verified by re-parsing all elections and confirming the diff was
 confined to the intended records.
 
-The three most recent fixes are measured over the **fixture corpora only** — the
-elections whose fixture set is the complete field are exact, the large elections
-are not, and no full re-run has been done since. The 23/26 and 6-section figures
-are floors for what a full re-run would recover, not totals.
+Those figures were measured over the **fixture corpora only**. The 2023
+municipal full run is the first real test of them, and it shows how badly a
+fixture sample can understate a fix: across its 13,796 records the private-
+interest fix recovered free text for **734 candidates** (the fixtures had
+suggested 2), and the empty-donations fix kept **344 sections** that would
+otherwise have vanished (the fixtures had suggested 6). The campaign-decisions
+fix went the other way — only 1 record in this election carries a decision,
+because just 433 of its candidates have a campaign at all; that fix matters
+more to the Seimas and EP elections, where most candidates do.
+
+The other elections have **not** been re-run since these fixes landed, so their
+rows in the inventory above still reflect the pre-fix parse. Re-running them is
+the outstanding work.
 
 All three were found the same way: by reading every field of every fixture
 candidate in a new module and treating each null or empty value as a question
@@ -167,9 +188,13 @@ each now has one.
 
 - The corpus covers the elections implemented so far. VRK publishes further
   by-elections and older elections that have no module yet.
-- `2023-kovo-5-savivaldybiu-tarybu-ir-meru` is implemented and its sitemap is
-  verified, but only the nine fixture candidates have been parsed. Until a full
-  run lands, any cross-election total in this document excludes it.
+- Every election except `2023-kovo-5-savivaldybiu-tarybu-ir-meru` was last
+  scraped before the campaign-decisions, private-interest free-text and
+  empty-donations fixes landed, so their records are stale in exactly the ways
+  those fixes address. Their inventory rows are pre-fix counts.
+- The repeat Visaginas mayoral vote of 2023 is a separate election with its own
+  VRK path (`/rinkimai/1344/rnk1664/`) and has no module; it is not part of the
+  13,796.
 - `2024-ep` and `2024-prezidento` candidate pages carry no campaign tab, so
   those elections have no donation data at all — campaigns were run by the party
   lists and are published outside the candidate pages.
