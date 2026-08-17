@@ -1225,6 +1225,13 @@ def _normalize_sprendimai_tab(data: Any) -> list[dict[str, Any]]:
 
     records: list[dict[str, Any]] = []
     for values in rows:
+        # Rows are swept from every non-links block, and on a page whose
+        # decisions table is missing the content selector falls back to the
+        # participant profile table. Its rows are one or two cells wide;
+        # every decision VRK publishes is five, so width separates them
+        # cleanly and keeps "Statusas: Savarankiškas" out of the output.
+        if len(values) < 4:
+            continue
         if _is_sprendimai_header_row(values):
             continue
         padded = list(values) + [""] * max(0, 5 - len(values))
