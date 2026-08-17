@@ -180,7 +180,13 @@ def _is_records_table(table: Tag) -> bool:
     classes = table.get("class") or []
     if "tableKand" in classes:
         return True
-    return table.find("th") is not None
+    # find() searches descendants, so a header belonging to a *nested* table
+    # used to count. VRK renders the conviction-detail table inside the anketa
+    # table for anyone who answers the conviction question "Taip", which made
+    # the whole anketa look like a records table: every question from birth
+    # date to nationality, and every declaration, was dropped without an
+    # anomaly. Only headers owned by this table decide.
+    return any(th.find_parent("table") is table for th in table.find_all("th"))
 
 
 def _parse_records_table(table: Tag) -> list[dict[str, Any]]:
