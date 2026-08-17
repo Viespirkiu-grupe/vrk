@@ -18,6 +18,7 @@ python -m scraper <command> [args]
 - `2019-prezidento` (Presidential)
 - `2024-prezidento` (Presidential)
 - `2023-kovo-5-savivaldybiu-tarybu-ir-meru` (2023-03-05 municipal council and mayoral elections, all 60 municipalities)
+- `2019-kovo-3-savivaldybiu-tarybu` (2019-03-03 municipal council elections, all 60 municipalities; mayors were elected as council members)
 - `2023-spalio-8-kupiskio-mero` (2023-10-08 early Kupiškis district mayoral election)
 - `2023-rugsejo-3-seimo-raseiniai-kedainiai` (2023-09-03 early Seimo by-election in Raseiniai–Kėdainiai No. 42)
 - `2025-kovo-16-meru` (2025-03-16 early mayoral elections in Jonava, Joniškis and Panevėžys)
@@ -49,10 +50,13 @@ Output:
 
 - Updates the listing sample file under `samples/html/2016-seimo/`.
 
-One election downloads more than a listing file:
-`2023-kovo-5-savivaldybiu-tarybu-ir-meru` publishes its candidates in two
-structures and fetches 467 party-list pages as well. See its workflow section
-below.
+Two elections download more than a listing file. The municipal general
+elections publish their candidates in two structures, so `fetch-sample` also
+fetches every party-list page: 467 of them for
+`2023-kovo-5-savivaldybiu-tarybu-ir-meru` and 465 for
+`2019-kovo-3-savivaldybiu-tarybu`. A list page already saved and non-empty is
+skipped, so an interrupted capture resumes and only fetches what is missing.
+See their workflow sections below.
 
 ### `sitemap`
 
@@ -251,6 +255,77 @@ python -m scraper fetch-candidate-samples 2023-kovo-5-savivaldybiu-tarybu-ir-mer
 python -m scraper parse-anketa-samples 2023-kovo-5-savivaldybiu-tarybu-ir-meru
 ```
 
+## Municipal councils (`2019-kovo-3-savivaldybiu-tarybu`) Workflow
+
+The 2019-03-03 municipal elections are the second-largest election in the
+repository: 13,666 candidates across all 60 municipalities. The listing side is
+the same two-structure shape as `2023-kovo-5-savivaldybiu-tarybu-ir-meru`, and
+since this module was added that machinery lives in
+`scraper/shared/municipal_sitemap.py` and is shared by both:
+
+- `savKandidataiMerai.html` — 410 mayoral candidates, all 60 municipalities, on
+  one page;
+- `savKandidataiSarasai.html` — an index of 465 party, coalition and
+  "visuomeninis rinkimų komitetas" lists, whose 13,635 council candidates live
+  one page deeper under
+  `savKandidataiTarNarApygardoje_rpgId-<municipality>_rorgId-<list>.html`.
+
+379 people run for both and appear in both structures under the same VRK
+candidate id; 31 mayoral candidates appear on no list. The union is 13,666,
+the total VRK publishes on `savKandidataiSuvestine.html`.
+
+`fetch-sample` saves the wrapper page as `page.html`, the mayoral listing as
+`list.html`, the list index as `lists-index.html`, and then **one file per party
+list — 465 of them — under `lists/`**, named
+`rpgId-<municipality>_rorgId-<list>.html`. A list page that is already saved and
+non-empty is skipped, so re-running after an interruption fetches only what is
+missing. Fetches are paced at 0.2 s apart and progress is printed every 50
+pages.
+
+`sitemap` reads all of it back and merges the two structures on VRK's candidate
+id. Expected stats:
+
+```
+rows 14045, extracted 13666, skipped 0, duplicateCandidateIds 0,
+partyLists 465, mayoralCandidates 410, councilCandidates 13635,
+dualCandidates 379, markerJoinMismatch 0, electedMayors 60,
+electedCouncilMembers 1442
+```
+
+Every one of those numbers reconciles with `savKandidataiSuvestine.html`.
+
+What differs from the 2023 module, each of which would break a copy-paste:
+
+- the candidate pages are **not** the 2023 vintage. They are the 2016 era, the
+  same as `2017-balandzio-23-meru`, whose parsers this module reuses: the whole
+  Q5–Q21 anketa with the biography questions inside it, five `pareiskimai`
+  under the savivaldybių tarybų rinkimų įstatymas rather than the nine of the
+  Rinkimų kodeksas, free-text biography, base64 photos, `ID001x`
+  private-interest sections;
+- candidate URLs use the `savKandidatasAnketa_rkndId-*` stem, with no `_2023`
+  in it;
+- the dual-candidacy marker on the listing reads `(kandidatas/kandidatė į
+  savivaldybės tarybos narius - merus)`, because mayors were elected as council
+  members under the rules of the time. The 2023 marker (`į savivaldybės merus`)
+  matches none of these rows, and both gender inflections are published;
+- the profile card labels the nomination row `Iškėlė į tarybos narius - merus`,
+  with no "ir";
+- the income rows of the GPM308 extract are worded in prose rather than by
+  field number, so the asset/income aliases are local to this module. Reusing
+  the 2017 ones leaves both income figures null.
+
+Unchanged from 2023: candidate ids are `<name-slug>-<vrkCandidateId>`, the
+campaign tab is expected only for candidates standing for mayor (expecting it
+unconditionally is 13,256 spurious warnings), and elected candidates are marked
+only by a blue-font name link on the listing.
+
+```bash
+python -m scraper fetch-sample 2019-kovo-3-savivaldybiu-tarybu
+python -m scraper sitemap 2019-kovo-3-savivaldybiu-tarybu
+python -m scraper fetch-candidate-samples 2019-kovo-3-savivaldybiu-tarybu --candidate-id nerijus-cesiulis-2406286 --allow-new-samples
+python -m scraper parse-anketa-samples 2019-kovo-3-savivaldybiu-tarybu
+```
+
 ## Municipal mayor (`2023-spalio-8-kupiskio-mero`) Workflow
 
 The 2023-10-08 early Kupiškis district mayoral election is a five-candidate
@@ -427,9 +502,10 @@ rules and carries only its own election id, listing URL and paths.
 
 Two things to expect in the output: every candidate answered "Nenurodė" to Q10
 (the former-USSR question), which normalizes to null, and this is the first
-election in the repository whose "Kita" tab carries a document — one candidate
-published a signed pledge not to bribe voters, captured under
-`normalized.kita.nuorodos`.
+election in the repository found to carry a document on its "Kita" tab — one
+candidate published a signed pledge not to bribe voters, captured under
+`normalized.kita.nuorodos`. A small minority of `2019-kovo-3-savivaldybiu-tarybu`
+candidates publish the same kind of pledge.
 
 ```bash
 python -m scraper fetch-sample 2021-balandzio-11-radviliskio-mero

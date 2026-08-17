@@ -24,6 +24,13 @@ it before writing anything. The layout families are:
 - **2016 era** (`seimo_2016`): one anketa table with the whole Q5–Q21 set,
   elected note inside the name cell, base64 photos, GPM308 income labels,
   `ID001x` private-interest sections.
+- **2017 mayoral** (`meru_2017`): the 2016 anketa narrowed to the savivaldybių
+  tarybų rinkimų įstatymas — five declarations instead of nine — with free-text
+  biography and base64 photos. The March 2019 municipal general election
+  (`savivaldybiu_2019`) is this family, not the 2023 one: despite being a
+  municipal general election like `savivaldybiu_2023`, its pages are four years
+  older and reuse these parsers. Only the income aliases had to be restated,
+  because the GPM308 rows were reworded between 2017 and 2019.
 - **2019 EP era** (`ep_2019`): anketa split across sibling tables with standalone
   record tables between them, question numbers sometimes lacking the trailing dot.
 - **2020 era** (`seimo_2020`): Q6.x contacts, Q7.x position and membership.
@@ -55,10 +62,20 @@ Then wire five dispatch points in `scraper/cli.py`.
 
 ### If the election has more than one listing structure
 
-`savivaldybiu_2023` is the case that exists: VRK publishes the mayoral
-candidates on one page and the council candidates one page below an index of 467
-party lists, and neither set contains the other — 406 people are in both, 27
-mayoral candidates are in neither list. What that costs:
+The municipal general elections are the case that exists: VRK publishes the
+mayoral candidates on one page and the council candidates one page below an
+index of party lists, and neither set contains the other — in 2023, 406 people
+are in both and 27 mayoral candidates are in neither list; in 2019, 379 and 31.
+
+This is **shared machinery, not per-module code**: it lives in
+`scraper/shared/municipal_sitemap.py`, extracted there when `savivaldybiu_2019`
+was added. `savivaldybiu_2023` and `savivaldybiu_2019` are both thin config
+plus wrappers — election id, listing URLs, paths, and the regex that marks a
+dual candidacy on the listing (2019 says `į savivaldybės tarybos narius -
+merus`, 2023 says `į savivaldybės merus`, and neither pattern matches the other
+election's rows). Each wrapper resolves its module constants at call time, so a
+test can monkeypatch the marker and see the effect. A third such election
+should add a config module, not a third copy. What the shared code handles:
 
 - `fetch_listing_sample` fetches every sub-page too, skips ones already saved so
   an interrupted capture resumes, and paces itself so a one-off capture does not
@@ -69,15 +86,21 @@ mayoral candidates are in neither list. What that costs:
   (`savKandidataiSuvestine.html` here) before trusting anything downstream. Row
   counts, per-structure counts and the overlap should all reconcile.
 - Facts that exist only on the listings — municipality, list, seat order, elected
-  flags — have to be carried through to the record. `savivaldybiu_2023` puts
-  them in a `kandidatavimas` top-level block.
-- At this scale name-slug ids collide (244 of 13,796 here), so the id needs a
+  flags — have to be carried through to the record. Both modules put them in a
+  `kandidatavimas` top-level block.
+- At this scale name-slug ids collide (244 of 13,796 in 2023), so the id needs a
   stable suffix. The positional `-2`/`-3` of the other modules makes an id depend
   on traversal order, and the batch runner uses the output filename as its resume
   marker.
 - An expected tab may depend on the candidate's role rather than the election —
-  here only mayoral candidates publish a campaign tab, so `EXPECTED_TABS` is
-  computed per entry. Getting that wrong is 13,363 spurious warnings.
+  in both elections only mayoral candidates publish a campaign tab, so
+  `EXPECTED_TABS` is computed per entry. Getting that wrong is 13,363 spurious
+  warnings in 2023 and 13,256 in 2019.
+
+What is *not* shared is the candidate page: the two elections belong to
+different page eras, so `savivaldybiu_2019` reuses `meru_2017`'s parsers while
+`savivaldybiu_2023` reuses `kupiskio_mero_2023`'s. Matching the listing
+structure says nothing about matching the pages.
 
 ## 4. Verify against the whole field before trusting it
 

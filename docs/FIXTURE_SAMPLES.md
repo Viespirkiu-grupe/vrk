@@ -142,6 +142,57 @@ directories and are allowlisted separately by the same test:
   missing file is reported as `missing-list-sample` and its candidates are
   simply absent from the output.
 
+For `2019-kovo-3-savivaldybiu-tarybu` the allowlist
+(`tests/test_savivaldybiu_2019_sample_allowlist.py`) is **nine candidates out of
+13,666** — a sample rather than the field, for the same reason as the 2023
+municipal election. The archetypes are the ones the record shape depends on:
+role (council-only, mayor-only, dual), list kind, nomination kind, and how the
+person did:
+
+- `agne-aleksejevaite-2409490` — council-only, party list, not elected. No
+  campaign section, no photo, empty biography
+- `gediminas-dauksys-2408494` — dual, `visuomeninis rinkimų komitetas` list,
+  won the council seat but **lost** the mayoralty in round II (so `isrinktas`
+  is true while `meras.elected` is false). The only fixture whose "Kita" tab
+  carries a document — a signed pledge not to bribe voters
+- `judita-ziliene-2409466` — council-only, party list, elected. Her note is the
+  feminine `Išrinkta pagal … sąrašą`
+- `kestutis-armonas-2404237` — council-only, **coalition** list, elected
+  (guards the coalition list name, and the genitive inflection of every member
+  party inside the elected note). Also the fixture that answered Q21, whose
+  answer the parser currently drops — see `docs/OUTPUT_SCHEMA.md`
+- `nerijus-cesiulis-2406286` — dual, elected mayor in **round II**
+- `ricardas-juska-2413847` — mayor-only, party-nominated, not elected; the
+  candidate who declared neither education, languages nor prior mandates
+- `skirmantas-mockevicius-2400117` — mayor-only, **self-nominated**
+  (`išsikėlė pats`), elected mayor. The only fixture with a `Savarankiškas`
+  campaign participant: treasurer, auditor, donation records, a financing
+  report and contracts
+- `vitalijus-mitrofanovas-2406746` — dual, elected mayor in **round I**
+- `vytas-jareckas-2404239` — dual, coalition list, elected mayor, and the only
+  fixture answering a declaration with `Einu` rather than `Neinu`
+
+Between them these cover all three `profilis.kita` key sets, both `pastaba`
+forms in both genders, both election rounds, all three list kinds (party,
+coalition, committee), self- and party-nomination, role-dependent presence of
+the campaign section, the photo and biography, and both campaign participant
+types. All nine parse with zero anomalies.
+
+Because the fixture set is a sample, it pins nothing about coverage: an
+archetype not listed above — a candidate who answered the conviction question
+"Taip", say — is exercised by no test in this election.
+
+Its samples directory also holds the listing fixtures, allowlisted separately
+by the same test:
+
+- `page.html` — the wrapper page
+- `list.html` — the mayoral listing (410 candidates)
+- `lists-index.html` — the index of 465 party, coalition and committee lists
+- `lists/` — one file per list, `rpgId-<municipality>_rorgId-<list>.html`, 465
+  files, and the test asserts that count. The sitemap needs all of them: a
+  missing file is reported as `missing-list-sample` and its candidates are
+  simply absent from the output.
+
 For `2023-rugsejo-3-seimo-raseiniai-kedainiai` the allowlist
 (`tests/test_seimo_raseiniu_kedainiu_2023_sample_allowlist.py`) is the complete
 eight-candidate field of this single-constituency by-election:

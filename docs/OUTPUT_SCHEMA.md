@@ -580,6 +580,174 @@ collected.
   key inside the record rather than as a named field.
 - `kita` is empty for every fixture candidate.
 
+## Appendix: 2019 municipal councils and mayors (`2019-kovo-3-savivaldybiu-tarybu`)
+
+Records are written as
+`data/2019-kovo-3-savivaldybiu-tarybu/<candidate-id>-2019-kovo-3-savivaldybiu-tarybu.json`.
+This is the March 2019 municipal general election: 13,666 candidates across all
+60 municipalities, the second-largest election in the repository.
+
+The record *around* the pages is the one
+`2023-kovo-5-savivaldybiu-tarybu-ir-meru` introduced — `candidateNote`,
+`kandidatavimas`, `candidateId` as `<name-slug>-<vrkCandidateId>` (e.g.
+`nerijus-cesiulis-2406286`), and a campaign section whose presence depends on
+the candidate's role. The pages themselves are four years older and belong to
+the 2016-era family of `2017-balandzio-23-meru`, whose parsers this module
+reuses: the whole Q5–Q21 anketa with the biography questions inside it,
+free-text `biografija`, base64 photos, `ID001x` private-interest sections. None
+of the 2023 page shapes apply.
+
+### `kandidatavimas`
+
+Same shape and same reason as in the 2023 module: municipality, list, seat
+order and elected flags are published on the listing pages and nowhere on the
+candidate page, so they are carried in from the sitemap.
+
+- `vrkCandidateId`, `savivaldybe` (`{id, number, name}`), `roles`
+  (`tarybos-narys`, `meras`, or both), `tarybosNarys`
+  (`{partyList: {id, number, name}, listPosition, postElectionPosition,
+  elected}` or `null`), `meras` (`{round, nominatedBy, elected}` or `null`),
+  and `isrinktas`, true when either candidacy was won.
+- The 2019 roles partition is 13,256 council-only, 379 dual and 31 mayor-only.
+  As in 2023, `isrinktas` is not `meras.elected`: a dual candidate can take the
+  council seat and lose the mayoralty, and one fixture candidate
+  (`gediminas-dauksys-2408494`) does exactly that.
+- `partyList.name` covers parties, coalitions and the 87 "visuomeniniai rinkimų
+  komitetai" of this election alike — there were no politiniai komitetai in
+  2019.
+
+### `normalized.anketa` is the 2016-era key set
+
+The questionnaire is the one described under "`normalized.anketa` (2016)" as
+narrowed by the April 2017 mayoral module: `gimimo-data` (Q5), `adresas` (Q6),
+`pareiskimai`, `gimimo-vieta` (Q10), `tautybe` (Q11), `issilavinimas` (Q12,
+`aprasas` plus `irasai`), `pedagoginis-vardas`, `uzsienio-kalbos` (Q13, split
+into a list), `politine-organizacija` (Q14), `anksciau-isrinktas` (Q15, same
+`aprasas`/`irasai` shape), `pagrindine-darboviete` (Q16), `visuomenine-veikla`
+(Q17), `pomegiai` (Q18), `seimine-padetis` (Q19),
+`sutuoktinio-vardas-pavarde`, `vaiku-vardai-pavardes` (Q20), `kita-apie-save`.
+`pedagoginis-vardas` and `sutuoktinio-vardas-pavarde` carry no question number
+and are matched on their prompt text.
+
+`pareiskimai` has **nine** keys. The election runs under the savivaldybių
+tarybų rinkimų įstatymas (36 str. 11–12 d.), not the Rinkimų kodeksas, but 2019
+asks four declarations the April 2017 mayoral pages do not, so the key set is
+wider than that module's:
+
+- `ar-nebaigta-teismo-paskirta-bausme` (Q8.1), `ar-atliekate-karo-tarnyba`
+  (Q8.2), `ar-eina-nesuderinamas-pareigas` (Q8.3),
+  `ar-kitos-valstybes-institucijos-narys` (Q8.4),
+  `ar-turite-kitos-valstybes-pilietybe` (Q8.5), `ar-buvote-pripazintas-kaltu`
+  (Q9), `ar-veika-dekriminalizuota` (Q9.2),
+  `ar-buvote-pripazintas-kaltu-uzsienyje` (Q9.3),
+  `ar-buvote-pripazintas-kaltu-del-politinio-persekiojimo` (Q9.4).
+- Answers are worded `Neturiu`/`Nesu`/`Neinu`/`Esu`/`Einu`/`Ne` rather than the
+  `Taip`/`Ne` of the Rinkimų kodeksas era.
+- Q9 is answered on the question row here, not on a continuation row quoting
+  the statute as in April 2017.
+- Q9.1 is the conviction *detail* table and has **no** normalized
+  representation — see the known gap in `docs/DATASET.md`. Everything else the
+  page publishes is normalized.
+
+A candidate who answers Q9 `Taip` is worth checking against when changing this
+module: VRK nests the conviction-detail table inside the anketa table for those
+pages, and a recursive header lookup used to classify the whole questionnaire
+as a record table and discard it. `gintas-orda-2400958` is the fixture that
+covers it.
+
+Three nulls to expect, all genuine:
+
+- `issilavinimas.aprasas` and `anksciau-isrinktas.aprasas` are null for every
+  candidate. Q12 and Q15 render as record tables with no free-text description.
+  The data is in `irasai`.
+- `kita-apie-save` is null for most candidates because Q21 is answered
+  `Nenurodė`, which normalizes to null. Candidates who did write something have
+  it: the fixture `kestutis-armonas-2404237` reads "Esu optimistas, realiai
+  žiūrintis į gyvenimą".
+
+### `biografija` and `profilis.nuotrauka` are role-dependent
+
+`biografija` is free text (`{"tekstas": ...}`) as in 2016 Seimo, and
+`profilis.nuotrauka` is a base64 data URI as in 2019 EP — but both are
+published only for candidates who stand for mayor. Measured over 158 records the
+split is exact: 149/149 council-only candidates have neither — their biography
+tab is an empty shell and the profile card carries no image — and 9/9 with a
+`meras` role have both. Since only 410 of the 13,666 candidates stand for mayor,
+roughly 97% of records will carry neither field. That is upstream behaviour, not
+a parse failure.
+
+### The campaign section is role-dependent
+
+`normalized` section order is the full seven-section order — `profilis`,
+`anketa`, `biografija`, `turto-ir-pajamu-deklaracijos`,
+`privaciu-interesu-deklaracija`, `politines-kampanijos-dalyvio-duomenys`,
+`kita` — for a candidate who stands for mayor, and the same order without
+`politines-kampanijos-dalyvio-duomenys` for a council-only candidate. As in
+2023 this follows from the role, not the election: a council candidate's
+campaign is run by the party list.
+
+Both participant types appear. `Savarankiškas` participants publish the full
+five campaign tabs (treasurer, auditor, donations, financing reports,
+contracts) with `registravimo-data` and `sprendimo-numeris` filled;
+`Atstovaujamasis` ones publish only donations, and that tab is frequently empty
+— five of the six fixture candidates with a campaign are `Atstovaujamasis` with
+no donation section at all. Campaign records carry the `sprendimai` key shared
+with the other elections; no fixture candidate has one.
+
+### `profilis.kita` keys vary by role
+
+Same three key sets as 2023, with one wording difference: the nomination row
+reads `iskele-i-tarybos-narius-merus` — "into council members - mayors", with
+no "ir" — because mayors were council members ex officio under the rules of the
+time.
+
+- council-only: `savivaldybe`, `sarasas`, `numeris-sarase`,
+  `porinkiminis-numeris-sarase`. No nomination row and no `turas`.
+- mayor-only: `savivaldybe`, `iskele-i-tarybos-narius-merus`, `turas`,
+  `sarasas`, `numeris-sarase`, `porinkiminis-numeris-sarase`, the last three
+  with a `null` `reiksme` — the candidate is on no list.
+- dual: the same six keys, all populated.
+
+`kandidatavimas` carries the same facts under one key set regardless of role
+and is the stable place to read them from.
+
+### `profilis.pastaba` forms
+
+`null` for a candidate who won nothing; otherwise the list form for elected
+council members (`Išrinktas pagal Visuomeninio rinkimų komiteto „Už Alytų“
+sąrašą`, `Išrinkta pagal Lietuvos valstiečių ir žaliųjų sąjungos sąrašą`) or
+the mayoral form for elected mayors (`Išrinktas Akmenės rajono (Nr.1)
+savivaldybėje I ture`). The verb agrees with the candidate's gender, and a dual
+candidate elected to the council but not as mayor gets the list form.
+
+As in 2023 the list name inside the note is in the genitive and does not match
+`profilis.kita.sarasas.reiksme` or
+`kandidatavimas.tarybosNarys.partyList.name` verbatim. Join on `partyList.id`.
+
+### Other sections
+
+- `turto-ir-pajamu-deklaracijos` keeps the seven canonical keys. The
+  asset/income aliases are **local to this module**: the asset rows keep the
+  Roman-numeral labels of 2017, but the income rows were reworded between the
+  two elections. April 2017 names the GPM308 field numbers (`Gautų pajamų suma
+  (GPM308 formos 12, 13, 14 … laukelių suma)`); 2019 states the same two
+  figures in prose (`Deklaruota apmokestinamųjų ir neapmokestinamųjų pajamų
+  suma`, `Deklaruota mokėtina pajamų mokesčio suma`). Reusing the 2017 aliases
+  leaves `gautos-pajamos` and `sumoketas-pajamu-mokestis` null for every
+  candidate while the values sit in `rawData`. The resulting table is the same
+  one `2024-ep` and the 2018/2019 Seimo by-election modules use, restated here
+  rather than imported. The rest of the GPM308 breakdown — individual-activity
+  income, asset-sale income and its acquisition cost — stays in `rawData`.
+- `privaciu-interesu-deklaracija` follows the 2019 EP shape: the declarant is
+  hoisted to `deklaruojantis-asmuo`, the spouse block is retained under
+  `deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris`, and each
+  declaration block is keyed by its section id (`id001j`, `id001s`, `id001i`,
+  `id001a`, `id001f`, …).
+- `kita` is empty for almost every candidate, but not all: one fixture
+  candidate published a signed pledge not to bribe voters, captured under
+  `kita.tekstai` and `kita.nuorodos`. 1 of the 232 records parsed at the time of
+  writing carries anything there.
+
 ## Appendix: 2025 mayors (`2025-kovo-16-meru`)
 
 Records are written as
@@ -695,9 +863,10 @@ Two election-specific notes:
 - every candidate answered "Nenurodė" to Q10, so
   `pareiskimai.ar-bendradarbiavote-su-ssrs-tarnybomis` is null throughout while
   the other eight declarations are answered;
-- `kita` is populated for one candidate — the only election in the repository
-  where that tab carries anything. It holds the document title under `tekstai`
-  and its download URL under `nuorodos`.
+- `kita` is populated for one candidate — the first election in the repository
+  found to carry anything on that tab (`2019-kovo-3-savivaldybiu-tarybu` also
+  does, for a small minority of its candidates). It holds the document title
+  under `tekstai` and its download URL under `nuorodos`.
 
 ## Appendix: 2017 Seimo by-election (`2017-balandzio-23-seimo-anyksciai-panevezys`)
 

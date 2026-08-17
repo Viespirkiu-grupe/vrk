@@ -81,6 +81,33 @@ upstream rather than parser misses: `biografija.tautybe` for 471 candidates
 (3.4%), published as `Nenurodė`, and `anketa.einamos-pareigos` for 313 (2.3%),
 published as `-`.
 
+### The 2019 municipal general election is still being scraped
+
+`2019-kovo-3-savivaldybiu-tarybu` has **no row in the inventory above**: its
+full run is in progress as this is written, so any record count here would be
+wrong by the time it is read. What is settled is the sitemap, every number of
+which reconciles with VRK's own `savKandidataiSuvestine.html`:
+
+| | in the sitemap | VRK publishes |
+|---|---:|---:|
+| candidates (union of both listings) | 13,666 | 13,666 |
+| mayoral candidates | 410 | 410 |
+| council candidates | 13,635 | 13,635 |
+| standing for both | 379 | — |
+| party/coalition/committee lists | 465 | 465 |
+| elected mayors | 60 | 60 |
+| elected council members | 1,442 | 1,442 |
+
+The two listings overlap rather than nest, as in 2023: 410 + 13,635 − 379 =
+13,666, with 31 mayoral candidates on no list at all. Roles partition as 13,256
+council-only, 379 dual and 31 mayor-only.
+
+When the run finishes, re-read the counts from `data/2019-kovo-3-savivaldybiu-tarybu/`
+rather than from this page, and note that two of its fields are role-dependent
+rather than sparse: the candidate photo and the free-text biography are
+published only for candidates standing for mayor, so ~97% of records will have
+neither. That is upstream behaviour, not a parse failure.
+
 ## Caveats for analysis
 
 ### Campaign donations are per campaign, not per candidate
@@ -146,7 +173,7 @@ key list itself is election-specific.
 
 ## Correctness fixes behind this corpus
 
-Nine defects were found and fixed while building the newer modules. Each had
+Twelve defects were found and fixed while building the newer modules. Each had
 been invisible because the affected elections had thin or no test coverage, and
 each was measured against live data after the fix:
 
@@ -160,6 +187,9 @@ each was measured against live data after the fix:
 | 2016 Seimo coverage audit | no defect found; the module gained the anketa tests it never had |
 | campaign "Sprendimai" tab never normalized | the VRK decisions taken about a campaign — unlawful political advertising and the like — were fetched and kept in `rawData` but never reached `normalized`. Recovering them added **26 decisions to 23 records across 9 elections**. `2024-seimo` was unaffected: it has its own handler |
 | private-interest items published without a label | free-text declaration sections such as "Kiti duomenys" are published as an unlabelled sentence, and any item without a key was dropped, so the whole declared text was lost from `normalized` while `rawData` kept it. It is now collected under a `tekstas` key |
+| income aliases reworded between 2017 and 2019 | the 2019 municipal module first reused `2017-balandzio-23-meru`'s asset/income aliases, which name GPM308 field numbers (`Gautų pajamų suma (GPM308 formos 12, 13, 14 … laukelių suma)`). 2019 states the same two figures in prose, so both income keys normalized to null while the values sat in `rawData`. With module-local aliases, `gautos-pajamos` and `sumoketas-pajamu-mokestis` went from **0/9 to 9/9 fixture candidates populated** |
+| a nested conviction table erasing the questionnaire | `_is_records_table` decided with `table.find("th")`, which searches descendants. VRK nests the conviction-detail table inside the anketa table for anyone who answers the conviction question "Taip", so the whole anketa was classified as a records table and dropped — birth date, address, every declaration, birthplace, nationality — with no anomaly and nothing left in `rawData`. Confirmed on a 2019 candidate: **13 parsed rows instead of 27, every field null, including the conviction declaration itself**. The helper is inherited by ten modules, so every election has been under-reporting exactly the people the field exists to identify |
+| declarations 2019 asks and 2017 does not | reusing the 2017 mayoral parser assumed the same question set. Q8.1 (unserved sentence), Q9.2 (decriminalised offence), Q9.3 (foreign court) and Q9.4 (political persecution) are published and answered on every 2019 page and were dropped from `normalized`; `pareiskimai` went from **five keys to nine**. Q21 free text was lost too — 2017 numbers that question at the end of the prompt and is matched on prompt text, 2019 numbers it at the front |
 | donations section whose heading carries its own empty-state marker | a campaign with nothing to declare renders `Gautos ir priimtos aukos: Duomenų nėra` inside the heading rather than as the text node that normally follows it. No table or text node follows, so the next heading overwrote the pending title and the section vanished — collapsing "declared no donations" into "section never published", and leaving the sections after it untitled. **6 sections recovered across 3 elections** in the fixture corpora |
 
 Every fix was verified by re-parsing all elections and confirming the diff was
@@ -192,6 +222,16 @@ each now has one.
   scraped before the campaign-decisions, private-interest free-text and
   empty-donations fixes landed, so their records are stale in exactly the ways
   those fixes address. Their inventory rows are pre-fix counts.
+- `2019-kovo-3-savivaldybiu-tarybu` does not normalize the Q9.1 conviction
+  *detail* table — date, country, court and offence per conviction. VRK renders
+  it in a row of its own inside the anketa, and the shared 2016-era row merging
+  consumes that row before the record-table lookup can attach it, so the detail
+  is absent from `rawData` too. The yes/no declaration
+  `ar-buvote-pripazintas-kaltu` is captured correctly, and that is the field to
+  count on; `2021-spalio-10-meru` normalizes the identical table as
+  `teistumo-detales.irasai`, so the shape to copy exists. Fixing it means
+  changing row-merging logic several elections share, which wants its own pass
+  with measured impact rather than a change made alongside a full scrape.
 - The repeat Visaginas mayoral vote of 2023 is a separate election with its own
   VRK path (`/rinkimai/1344/rnk1664/`) and has no module; it is not part of the
   13,796.
