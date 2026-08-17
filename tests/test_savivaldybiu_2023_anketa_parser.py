@@ -761,11 +761,23 @@ class Savivaldybiu2023AnketaParserTests(unittest.TestCase):
         )
         self.assertEqual(len(majauskas_sections["nepriimtos-aukos"]["records"]), 11)
 
-        # A registered participant that filed nothing at all.
+        # A registered participant that filed nothing at all. The donations
+        # section is still reported, carrying the empty state rather than
+        # disappearing — "declared no donations" and "section never published"
+        # have to stay distinguishable downstream.
         mitrofanovas = self.mitrofanovas["normalized"][
             "politines-kampanijos-dalyvio-duomenys"
         ][0]
-        self.assertEqual(mitrofanovas["aukos-pagal-sekcija"], {})
+        self.assertEqual(
+            mitrofanovas["aukos-pagal-sekcija"],
+            {
+                "gautos-ir-priimtos-aukos": {
+                    "title": "Gautos ir priimtos aukos",
+                    "status": "noData",
+                    "message": "Duomenų nėra",
+                }
+            },
+        )
         self.assertEqual(mitrofanovas["finansavimo-ataskaitos"], [])
 
     def test_sprendimai_tab_is_normalized(self) -> None:

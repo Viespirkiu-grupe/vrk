@@ -125,7 +125,7 @@ key list itself is election-specific.
 
 ## Correctness fixes behind this corpus
 
-Eight defects were found and fixed while building the newer modules. Each had
+Nine defects were found and fixed while building the newer modules. Each had
 been invisible because the affected elections had thin or no test coverage, and
 each was measured against live data after the fix:
 
@@ -139,14 +139,20 @@ each was measured against live data after the fix:
 | 2016 Seimo coverage audit | no defect found; the module gained the anketa tests it never had |
 | campaign "Sprendimai" tab never normalized | the VRK decisions taken about a campaign — unlawful political advertising and the like — were fetched and kept in `rawData` but never reached `normalized`. Recovering them added **26 decisions to 23 records across 9 elections**. `2024-seimo` was unaffected: it has its own handler |
 | private-interest items published without a label | free-text declaration sections such as "Kiti duomenys" are published as an unlabelled sentence, and any item without a key was dropped, so the whole declared text was lost from `normalized` while `rawData` kept it. It is now collected under a `tekstas` key |
+| donations section whose heading carries its own empty-state marker | a campaign with nothing to declare renders `Gautos ir priimtos aukos: Duomenų nėra` inside the heading rather than as the text node that normally follows it. No table or text node follows, so the next heading overwrote the pending title and the section vanished — collapsing "declared no donations" into "section never published", and leaving the sections after it untitled. **6 sections recovered across 3 elections** in the fixture corpora |
 
 Every fix was verified by re-parsing all elections and confirming the diff was
 confined to the intended records.
 
-The two most recent fixes are measured over the **fixture corpora only** — the
+The three most recent fixes are measured over the **fixture corpora only** — the
 elections whose fixture set is the complete field are exact, the large elections
-are not, and no full re-run has been done since. The 23/26 figure is a floor for
-what a full re-run would recover, not the total.
+are not, and no full re-run has been done since. The 23/26 and 6-section figures
+are floors for what a full re-run would recover, not totals.
+
+All three were found the same way: by reading every field of every fixture
+candidate in a new module and treating each null or empty value as a question
+rather than a result. All three sat in shared code with no test coverage, and
+each now has one.
 
 ## Known gaps
 

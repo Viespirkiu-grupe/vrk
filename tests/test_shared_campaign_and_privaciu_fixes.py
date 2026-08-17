@@ -12,6 +12,11 @@ modules. These tests pin the recovered fields at the unit level and end to end.
   B. seimo_2016._normalize_campaigns ignored the "Sprendimai" campaign tab, so
      VRK decisions about a campaign (unlawful political advertising, accounting
      breaches) were never normalized.
+  C. seimo_2016._parse_campaign_donations_html lost a donations section whose
+     heading carried the empty-state marker inline ("Gautos ir priimtos aukos:
+     Duomenų nėra"). No table or text node follows such a heading, so the next
+     heading overwrote the pending title and the section disappeared —
+     collapsing "declared no donations" into "section never published".
 """
 
 import json
@@ -26,7 +31,10 @@ from scraper.elections.prezidento_2019.anketa_parser import (
 from scraper.elections.savivaldybiu_2023.anketa_parser import (
     parse_anketa_sample as parse_savivaldybiu_2023_sample,
 )
-from scraper.elections.seimo_2016.anketa_parser import _normalize_sprendimai_tab
+from scraper.elections.seimo_2016.anketa_parser import (
+    _normalize_sprendimai_tab,
+    _parse_campaign_donations_html,
+)
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -36,6 +44,8 @@ DATA_ROOT = REPO_ROOT / "data"
 SAVIVALDYBIU_ELECTION_ID = "2023-kovo-5-savivaldybiu-tarybu-ir-meru"
 # The one fixture that exercises both recovered fields at once.
 ZEBRAUSKAS = "algirdas-zebrauskas-2424292"
+# A registered campaign participant that declared no donations at all.
+MITROFANOVAS = "vitalijus-mitrofanovas-2425352"
 
 
 def _parse(parse_fn, election_id: str, candidate_id: str) -> dict:
@@ -318,6 +328,72 @@ class PrivaciuInteresuFreeTextTests(unittest.TestCase):
         declaration = record["normalized"]["privaciu-interesu-deklaracija"]
 
         self.assertEqual(declaration["kiti-duomenys"], [{"tekstas": self.FREE_TEXT}])
+
+
+class EmptyDonationsSectionTests(unittest.TestCase):
+    """Fix C: an inline "Duomenų nėra" heading must still yield a section."""
+
+    INLINE_EMPTY = (
+        '<div class="picklist tabinc">'
+        "<h3>Gautos ir priimtos aukos: Duomenų nėra</h3>"
+        "<h3>Nepriimtos aukos:</h3>Duomenų nėra"
+        "</div>"
+    )
+    SEPARATE_EMPTY = (
+        '<div class="picklist tabinc">'
+        "<h3>Gautos ir priimtos aukos:</h3>Duomenų nėra"
+        "</div>"
+    )
+
+    def test_inline_marker_still_produces_a_titled_section(self) -> None:
+        sections = _parse_campaign_donations_html(self.INLINE_EMPTY)["sections"]
+
+        titled = [s for s in sections if s.get("title") == "Gautos ir priimtos aukos"]
+        self.assertEqual(len(titled), 1)
+        self.assertEqual(titled[0]["status"], "noData")
+        self.assertEqual(titled[0]["message"], "Duomenų nėra")
+
+    def test_following_section_is_not_swallowed(self) -> None:
+        # The bug dropped the first section because the second heading
+        # overwrote the pending title; both must survive.
+        sections = _parse_campaign_donations_html(self.INLINE_EMPTY)["sections"]
+
+        self.assertEqual(len(sections), 2)
+
+    def test_separately_rendered_marker_is_unchanged(self) -> None:
+        # The pre-existing shape must keep parsing exactly as before.
+        sections = _parse_campaign_donations_html(self.SEPARATE_EMPTY)["sections"]
+
+        self.assertEqual(
+            sections,
+            [
+                {
+                    "title": "Gautos ir priimtos aukos",
+                    "status": "noData",
+                    "message": "Duomenų nėra",
+                }
+            ],
+        )
+
+    def test_savivaldybiu_2023_fixture_reports_its_empty_donations(self) -> None:
+        record = _parse(
+            parse_savivaldybiu_2023_sample, SAVIVALDYBIU_ELECTION_ID, MITROFANOVAS
+        )
+
+        sections = record["normalized"]["politines-kampanijos-dalyvio-duomenys"][0][
+            "aukos-pagal-sekcija"
+        ]
+
+        self.assertEqual(
+            sections,
+            {
+                "gautos-ir-priimtos-aukos": {
+                    "title": "Gautos ir priimtos aukos",
+                    "status": "noData",
+                    "message": "Duomenų nėra",
+                }
+            },
+        )
 
 
 if __name__ == "__main__":

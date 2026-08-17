@@ -989,6 +989,9 @@ def _parse_donations_table(table: Tag) -> dict[str, Any]:
     }
 
 
+NO_DATA_HEADING_PATTERN = re.compile(r"Duomen[ųu]\s+n[ėe]ra\s*$", flags=re.IGNORECASE)
+
+
 def _parse_campaign_donations_html(html: str) -> dict[str, Any]:
     soup = BeautifulSoup(html, "lxml")
     content = _extract_content_picklist(soup)
@@ -1033,7 +1036,22 @@ def _parse_campaign_donations_html(html: str) -> dict[str, Any]:
             continue
 
         if child.name == "h3":
-            current_title = _tag_text(child).rstrip(":")
+            heading = _tag_text(child)
+            # A campaign with nothing to report folds the empty-state marker
+            # into the heading itself ("Gautos ir priimtos aukos: Duomenų
+            # nėra") rather than emitting it as the text node that follows a
+            # bare heading. Left unsplit, no table or text node follows, so the
+            # next h3 overwrites current_title and the whole section vanishes —
+            # silently turning "this candidate received no donations" into
+            # "this section was never published".
+            no_data = NO_DATA_HEADING_PATTERN.search(heading)
+            if no_data:
+                title = heading[: no_data.start()].strip().rstrip(":").strip()
+                if title:
+                    sections.append(_make_no_data_section(title, no_data.group(0).strip()))
+                    current_title = ""
+                    continue
+            current_title = heading.rstrip(":")
             continue
 
         if child.name == "table" and current_title:
