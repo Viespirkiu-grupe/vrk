@@ -133,7 +133,7 @@ Full CLI usage and examples are documented in `docs/CLI_REFERENCE.md`.
 
 Batch execution helper:
 
-- `scripts/run_seimo_2016_batches.sh` iterates sitemap IDs, fetches temporary samples, parses candidates, appends anomalies, and tracks run state under `.run-state/seimo-2016/`.
+- `scripts/run_election_batches.sh <election-id>` iterates sitemap IDs, fetches temporary samples, parses candidates, appends anomalies, and tracks run state under `.run-state/<election-id>/`.
 
 ## Testing
 
@@ -176,6 +176,6 @@ Current workflow supports:
 
 - one-off manual fixture capture and parsing
 - targeted candidate parsing by ID
-- resumable batch processing via `scripts/run_seimo_2016_batches.sh`
+- resumable batch processing via `scripts/run_election_batches.sh`
 
 As additional election modules are introduced, keep command semantics consistent while preserving per-election parsing schemas.
