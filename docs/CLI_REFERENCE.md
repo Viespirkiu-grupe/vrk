@@ -131,6 +131,11 @@ Options:
 - `--output-root <path>`: Defaults to `data/2016-seimo`.
 - `--anomalies-path <path>`: Optional. Defaults to `<output-root>/anomalies.jsonl`.
 
+The campaign tab paths recorded inside each candidate's `index.json` are
+re-anchored onto the samples root in use, so with an explicit `--samples-root`
+this command works from any directory. A listed tab file that cannot be found
+or read emits a `CampaignTabSampleMissing` anomaly.
+
 Output:
 
 - Writes one JSON file per parsed candidate in output root.

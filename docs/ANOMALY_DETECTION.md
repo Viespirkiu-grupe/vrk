@@ -50,10 +50,16 @@ Default parser output path:
 - `TabnavSelectorNotFound`
 - `AnketaTableNotFound`
 - `AnketaTableEmpty`
+- `CampaignTabSampleMissing` — a campaign tab file listed in `index.json` is
+  missing or unreadable at parse time. Recorded paths are re-anchored onto the
+  samples root in use, so this fires only when the file is genuinely absent
+  from the tree being parsed — absent inputs can no longer produce silently
+  empty campaign sections.
 
 Reference tests:
 
 - `tests/test_seimo_2016_anomaly_detection.py`
+- `tests/test_campaign_sample_path_resolution.py`
 
 ## Batch script integration
 

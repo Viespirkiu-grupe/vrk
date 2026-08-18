@@ -1,4 +1,5 @@
 import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -77,6 +78,33 @@ class Seimo2016CampaignParserTests(unittest.TestCase):
             20052.31,
         )
         self.assertEqual(len(normalized_campaign["sutartys"]), 4)
+
+    def test_campaign_tabs_parse_from_any_cwd(self) -> None:
+        # Regression: index.json records repo-root-relative tab paths, and
+        # parsing with --samples-root from another CWD silently dropped every
+        # campaign tab (and emitted no anomaly) until the paths were re-anchored
+        # onto the samples root in use.
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            output_root = Path(tmp_dir) / "out"
+            previous_cwd = os.getcwd()
+            os.chdir(tmp_dir)
+            try:
+                output_path, stats = parse_anketa_sample(
+                    candidate_id="gabrielius-landsbergis",
+                    samples_root=SAMPLES_ROOT,
+                    output_root=output_root,
+                )
+            finally:
+                os.chdir(previous_cwd)
+            payload = json.loads(output_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(
+            [a for a in stats["anomalies"] if a["eventType"] == "CampaignTabSampleMissing"],
+            [],
+        )
+        campaign = payload["rawData"]["politinesKampanijosDalyvioDuomenys"]["campaigns"][0]
+        self.assertEqual(len(campaign["tabs"]), 5)
+        self.assertEqual(campaign["auditor"]["companyCode"], "125515863")
 
     def test_regina_has_no_campaign_section(self) -> None:
         payload = self._parse_candidate("regina-ablom")

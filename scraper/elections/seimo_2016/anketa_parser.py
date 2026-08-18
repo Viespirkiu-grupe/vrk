@@ -1816,16 +1816,78 @@ def _parse_politines_kampanijos_html(html: str) -> dict[str, Any]:
     }
 
 
-def _parse_campaign_sample_entry(entry: dict[str, Any]) -> dict[str, Any] | None:
+def _resolve_sample_path(recorded_path: str, candidate_dir: Path | None) -> Path:
+    # index.json records paths as the fetch stage saw them — relative to the
+    # repo root at fetch time — so they only resolve from that same CWD.
+    # Re-anchor the part below the candidate directory onto the candidate
+    # directory being parsed, so --samples-root works from any CWD.
+    recorded = Path(recorded_path)
+    if candidate_dir is not None:
+        parts = recorded.parts
+        anchors = [i for i, part in enumerate(parts) if part == candidate_dir.name]
+        for i in reversed(anchors):
+            re_anchored = candidate_dir.joinpath(*parts[i + 1 :])
+            if re_anchored != candidate_dir and re_anchored.exists():
+                return re_anchored
+        if recorded.exists():
+            return recorded
+        if anchors:
+            return candidate_dir.joinpath(*parts[anchors[-1] + 1 :])
+    return recorded
+
+
+def _parse_campaign_sample_entry(
+    entry: dict[str, Any],
+    *,
+    candidate_dir: Path | None = None,
+    campaign: dict[str, Any] | None = None,
+    election_id: str = ELECTION_ID,
+    candidate_id: str = "",
+    source_url: str | None = None,
+    anomalies: list[dict[str, Any]] | None = None,
+) -> dict[str, Any] | None:
     path = entry.get("path")
     if not isinstance(path, str) or not path:
         return None
 
-    file_path = Path(path)
+    def _report_unusable(reason: str, error: str | None = None) -> None:
+        if anomalies is None:
+            return
+        detail: dict[str, Any] = {
+            "campaignKey": (campaign or {}).get("campaignKey", ""),
+            "campaignUrl": (campaign or {}).get("campaignUrl", ""),
+            "tabLabel": entry.get("label", ""),
+            "tabSlug": entry.get("slug", ""),
+            "tabUrl": entry.get("url", ""),
+            "fetched": entry.get("fetched"),
+            "recordedPath": path,
+            "resolvedPath": str(file_path),
+            "reason": reason,
+        }
+        if error is not None:
+            detail["error"] = error
+        anomalies.append(
+            build_anomaly_event(
+                event_type="CampaignTabSampleMissing",
+                severity="error",
+                stage="parse",
+                election_id=election_id,
+                candidate_id=candidate_id,
+                source_url=source_url,
+                detail=detail,
+            )
+        )
+
+    file_path = _resolve_sample_path(path, candidate_dir)
     if not file_path.exists():
+        _report_unusable("missing")
         return None
 
-    html = file_path.read_text(encoding="utf-8")
+    try:
+        html = file_path.read_text(encoding="utf-8")
+    except Exception as exc:
+        _report_unusable("unreadable", error=str(exc))
+        return None
     header = _parse_campaign_header(html)
     parsed = _parse_campaign_tab_data(str(entry.get("slug", "")), html)
     return {
@@ -1844,6 +1906,12 @@ def _parse_campaign_sample_entry(entry: dict[str, Any]) -> dict[str, Any] | None
 def _parse_nested_campaign_samples(
     candidate_meta: dict[str, Any] | None,
     root_campaign_data: dict[str, Any] | None = None,
+    *,
+    candidate_dir: Path | None = None,
+    election_id: str = ELECTION_ID,
+    candidate_id: str = "",
+    source_url: str | None = None,
+    anomalies: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     if not isinstance(candidate_meta, dict):
         return []
@@ -1859,12 +1927,20 @@ def _parse_nested_campaign_samples(
 
         tab_samples = campaign.get("tabSamples")
         nested_tabs: list[dict[str, Any]] = []
+        entry_context: dict[str, Any] = {
+            "candidate_dir": candidate_dir,
+            "campaign": campaign,
+            "election_id": election_id,
+            "candidate_id": candidate_id,
+            "source_url": source_url,
+            "anomalies": anomalies,
+        }
 
         if isinstance(tab_samples, list) and tab_samples:
             for tab in tab_samples:
                 if not isinstance(tab, dict):
                     continue
-                parsed_tab = _parse_campaign_sample_entry(tab)
+                parsed_tab = _parse_campaign_sample_entry(tab, **entry_context)
                 if parsed_tab is not None:
                     nested_tabs.append(parsed_tab)
         else:
@@ -1876,7 +1952,8 @@ def _parse_nested_campaign_samples(
                         "slug": "root",
                         "url": campaign.get("campaignUrl", ""),
                         "path": root_path,
-                    }
+                    },
+                    **entry_context,
                 )
                 if parsed_root is not None:
                     nested_tabs.append(parsed_root)
@@ -2079,6 +2156,11 @@ def parse_anketa_sample(
         nested_campaigns = _parse_nested_campaign_samples(
             meta if isinstance(meta, dict) else None,
             root_campaign_data if isinstance(root_campaign_data, dict) else None,
+            candidate_dir=candidate_dir,
+            election_id=ELECTION_ID,
+            candidate_id=candidate_id,
+            source_url=candidate_source_url,
+            anomalies=anomalies,
         )
     except Exception as exc:
         anomalies.append(
