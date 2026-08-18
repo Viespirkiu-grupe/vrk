@@ -1,7 +1,8 @@
 # Dataset Inventory and Review
 
-State of the scraped corpus after the full run of 2026-08-16, and the caveats
-worth knowing before analysing it.
+State of the scraped corpus after the full run of 2026-08-16 and the
+re-scrape of the five largest non-municipal elections on 2026-08-18, and the
+caveats worth knowing before analysing it.
 
 Regenerate any part of it with:
 
@@ -17,10 +18,12 @@ never touched by a full run.
 
 ## Inventory
 
-33,086 candidate records across 17 elections, 2016–2025, with **zero fetch
+33,119 candidate records across 19 elections, 2016–2025, with **zero fetch
 failures and zero parse anomalies**. The two municipal general elections are
 together larger than everything else in the corpus by a factor of three; each
-was scraped separately in ~6h.
+was scraped separately in ~6h. Every row now reflects the post-fix parse: the
+five largest non-municipal corpora were re-scraped on 2026-08-18 (run record
+below) and every other election was re-parsed offline the same day.
 
 | election | records | elected | declared a conviction | with campaign data |
 |---|---:|---:|---:|---:|
@@ -28,8 +31,10 @@ was scraped separately in ~6h.
 | `2017-balandzio-23-meru` | 11 | 2 | 0 | 11 |
 | `2017-balandzio-23-seimo-anyksciai-panevezys` | 11 | 1 | 0 | 11 |
 | `2017-rugsejo-10-marijampoles-mero` | 8 | 1 | 0 | 8 |
-| `2019-ep` | 301 | 11 | 0 | 279 |
+| `2018-rugsejo-16-seimo-zanavykai` | 6 | 1 | 0 | 6 |
+| `2019-ep` | 301 | 11 | 6 | 279 |
 | `2019-prezidento` | 9 | 9 | 0 | 9 |
+| `2019-rugsejo-8-seimo` | 27 | 3 | 2 | 27 |
 | `2020-seimo` | 1754 | 141 | 41 | 758 |
 | `2021-balandzio-11-radviliskio-mero` | 7 | 1 | 1 | 7 |
 | `2021-spalio-10-meru` | 14 | 2 | 1 | 14 |
@@ -41,11 +46,43 @@ was scraped separately in ~6h.
 | `2025-kovo-16-meru` | 14 | 2 | 0 | 10 |
 | `2023-kovo-5-savivaldybiu-tarybu-ir-meru` | 13796 | 1557 | 541 | 433 |
 | `2019-kovo-3-savivaldybiu-tarybu` | 13666 | 1502 | 244 | 410 |
-| **total** | **33086** | **3532** | **938** | **3334** |
+| **total** | **33119** | **3536** | **946** | **3367** |
 
-Records live under `data/<election-id>/` (~750 MB) and are **not** version
+Records live under `data/<election-id>/` (~1.6 GB) and are **not** version
 controlled — `data/`, `sitemaps/` and `samples/` are gitignored, so the corpus is
 reproduced by running the scrapers rather than by cloning.
+
+### The 2026-08-18 re-scrape of the five largest non-municipal elections
+
+`2016-seimo`, `2020-seimo`, `2024-seimo`, `2024-ep` and `2019-ep` were scraped
+on 2026-08-16, before the parser fixes listed below landed, and the batch
+runner discarded their raw HTML as it went — so the HTML-level fixes could
+only reach them through a re-scrape. The sitemaps were rebuilt from fresh
+listings first and came back identical to the old ones in candidate ids *and*
+order for all five, so candidate identity was stable across the refresh. The
+pre-fix corpus is archived at
+`/Volumes/Disk 1/IT/scraping/vrk-archive/20260818-big-five-prefix/`.
+
+The run took 1h22m for all five sequentially (1221s, 1542s, 1550s, 272s,
+331s) — roughly half the 2026-08-16 durations, the shared keep-alive session
+having replaced one TLS handshake per request — with zero fetch failures,
+zero failed candidates and zero parse anomalies. It ran with
+`KEEP_SAMPLES=1`, so the full raw HTML of all 5,529 candidates (1.9 GB under
+`samples-full/`) is retained and any future parser fix lands by offline
+re-parse. This should be the last re-scrape the corpus ever needs.
+
+Measured against the archived pre-fix outputs, 2,463 records changed:
+
+- **2019-ep's conviction count went from 0 to 6.** All six candidates carried
+  the erased-questionnaire signature the nested-table defect left behind;
+  their full questionnaires are recovered.
+- **329 records gained private-interest free text** (62 in 2016 Seimo, 93 in
+  2020, 145 in 2024, 29 in 2024 EP). The 146th predicted 2024 Seimo record
+  (Kęstutis Sidabras) held only the placeholder `-` behind its mangled label
+  — nothing to recover, and it now correctly normalizes to null.
+- **235 campaign decision records** now appear across the five (118 in
+  `2019-ep` alone), confirming the Sprendimai normalization matters most
+  where campaigns are dense.
 
 ### The 2023 municipal general election
 
@@ -242,9 +279,12 @@ fix went the other way — only 1 record in this election carries a decision,
 because just 433 of its candidates have a campaign at all; that fix matters
 more to the Seimas and EP elections, where most candidates do.
 
-The other elections have **not** been re-run since these fixes landed, so their
-rows in the inventory above still reflect the pre-fix parse. Re-running them is
-the outstanding work.
+Every election has now been re-run or re-parsed since these fixes landed: the
+small elections were re-parsed offline from their retained HTML on 2026-08-18,
+and the five large non-municipal corpora were re-scraped the same day (run
+record above). The inventory reflects the post-fix parse throughout, and the
+free-text figures above are confirmed at full scale — 339 of the predicted 340
+records gained text, the one exception holding only a `-` placeholder.
 
 All three were found the same way: by reading every field of every fixture
 candidate in a new module and treating each null or empty value as a question
