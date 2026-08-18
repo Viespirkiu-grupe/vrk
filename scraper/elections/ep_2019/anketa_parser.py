@@ -250,8 +250,17 @@ def _parse_anketa_content(content: Tag | None) -> dict[str, Any]:
             cell = tr.find("td", recursive=False)
             if cell is None:
                 continue
+            nested_tables = cell.find_all("table")
             prompt = _build_prompt_text(cell)
-            answer = _extract_answer_text(cell, [])
+            if nested_tables:
+                # VRK renders the conviction-detail table in a row of its own,
+                # nested inside that row's cell. Its cells carry no <b> text,
+                # so the bold-only extraction read nothing and the empty-row
+                # skip below dropped the row — the conviction details never
+                # reached rawData.
+                answer: Any = _parse_records_table(nested_tables[0])
+            else:
+                answer = _extract_answer_text(cell, nested_tables)
             if not prompt and not answer:
                 continue
             parsed_rows.append(

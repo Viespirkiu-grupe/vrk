@@ -27,6 +27,7 @@ from scraper.elections.seimo_2016.anketa_parser import (
     _order_dict_keys,
     _parse_eur_amount,
     _parse_nested_campaign_samples,
+    _question_record_rows,
     _row_answer_text,
     _source_key,
 )
@@ -54,6 +55,35 @@ TURTO_PAJAMU_KEY_ALIASES = {
     "deklaruota-apmokestinamuju-ir-neapmokestinamuju-pajamu-suma": "gautos-pajamos",
     "deklaruota-moketina-pajamu-mokescio-suma": "sumoketas-pajamu-mokestis",
 }
+
+# Q9.1 conviction columns, keyed by the sub-question number that starts each
+# column heading. Keys match meru_2021, which asks the same questions under
+# the same statute.
+CONVICTION_FIELD_KEYS = {
+    "9-1-1": "nuosprendzio-data",
+    "9-1-2": "nuosprendzio-valstybe",
+    "9-1-3": "nuosprendzio-institucija",
+    "9-1-4": "nusikalstama-veika",
+}
+
+
+def _conviction_records(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    # The Q9.1 table names its columns after the sub-question numbers
+    # ("9.1.1 Apkaltinamojo nuosprendžio (sprendimo) data"); map them to the
+    # field names the other elections use.
+    records: list[dict[str, Any]] = []
+    for record in _question_record_rows(rows, "9.1"):
+        if not isinstance(record, dict):
+            continue
+        mapped: dict[str, Any] = {}
+        for label, value in record.items():
+            key = CONVICTION_FIELD_KEYS.get(_source_key(str(label))[:5])
+            if key is None:
+                continue
+            mapped[key] = _normalize_text_value(value)
+        if mapped:
+            records.append({key: mapped.get(key) for key in CONVICTION_FIELD_KEYS.values()})
+    return records
 
 
 def parse_anketa_html(html: str) -> dict[str, Any]:
@@ -92,6 +122,13 @@ def parse_anketa_html(html: str) -> dict[str, Any]:
             "ar-buvote-pripazintas-kaltu-uzsienyje": _answer("9.3"),
             "ar-buvote-pripazintas-kaltu-del-politinio-persekiojimo": _answer("9.4"),
         }
+
+    # Q9.1 is a record table listing each conviction — date, country, court
+    # and offence — present only when Q9 is answered "Taip". The shared parse
+    # captures it as a records row; fold it into the meru_2021 shape.
+    normalized["teistumo-detales"] = {
+        "irasai": _conviction_records(rows),
+    }
 
     # Q21 is "21. Be jau išvardintų atsakymų, ką dar norėtumėte parašyti apie
     # save?". 2017 renders the number at the end of the prompt, so that module

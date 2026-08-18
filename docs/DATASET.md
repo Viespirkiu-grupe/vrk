@@ -208,23 +208,25 @@ Every election records the yes/no declaration under
 field to count on. Structured conviction *details* (date, court, offence) exist
 only where the page publishes them:
 
-- 2023 onward (Rinkimų kodekso era) and 2021: `anketa.teistumo-detales`
-- 2016/2020 Seimo: no detail block at all — 2016 offers only the free-text
-  `teisiniai-argumentai` justification
+- 2023 onward (Rinkimų kodekso era), 2021 and — since the nested-row capture
+  fix below — `2019-kovo-3-savivaldybiu-tarybu`: normalized
+  `anketa.teistumo-detales`
+- 2016/2020 Seimo and `2019-ep`: the same detail table sits in
+  `rawData.anketa.rows` as a prompt-less records row keyed by the column
+  headings — all 38 declarers in 2016 and all 41 in 2020 carry it, and after
+  the capture fix so do the six in `2019-ep` — with no normalized
+  representation
 - 2017 mayoral: the declaration answer is on a continuation row (see the module
-  docs), and there is no detail table
+  docs), and no 2017 or 2019-presidential page publishes a detail table
 
-Counting `teistumo-detales` alone therefore under-reports; it returns 0 for the
-2016 and 2020 Seimas elections, which record 38 and 41 declared convictions
-respectively.
+Counting normalized `teistumo-detales` alone therefore under-reports; it
+returns 0 for the 2016 and 2020 Seimas elections, which record 38 and 41
+declared convictions respectively.
 
-The conviction counts in the inventory above are themselves suspect for every
-election except the two municipal ones. Until the nested-table fix below
-landed, a candidate who answered the conviction question `Taip` had their whole
-questionnaire discarded — including that answer — so they were counted as
-having declared nothing. Only `2019-kovo-3-savivaldybiu-tarybu` (244) and
-`2023-kovo-5-savivaldybiu-tarybu-ir-meru` (541) were scraped after the fix. The
-rest are floors, and re-running them is the way to find out by how much.
+The conviction counts in the inventory above are post-fix throughout: the
+2026-08-18 re-scrape left the 2016/2020/2024 counts unchanged (their parser
+lineage always captured the detail row) and recovered the six 2019 EP
+declarers whose questionnaires the nested-table defect had erased.
 
 ### Placeholder answers normalize to null
 
@@ -265,6 +267,7 @@ each was measured against live data after the fix:
 | declarations 2019 asks and 2017 does not | reusing the 2017 mayoral parser assumed the same question set. Q8.1 (unserved sentence), Q9.2 (decriminalised offence), Q9.3 (foreign court) and Q9.4 (political persecution) are published and answered on every 2019 page and were dropped from `normalized`; `pareiskimai` went from **five keys to nine**. Q21 free text was lost too — 2017 numbers that question at the end of the prompt and is matched on prompt text, 2019 numbers it at the front |
 | donations section whose heading carries its own empty-state marker | a campaign with nothing to declare renders `Gautos ir priimtos aukos: Duomenų nėra` inside the heading rather than as the text node that normally follows it. No table or text node follows, so the next heading overwrote the pending title and the section vanished — collapsing "declared no donations" into "section never published", and leaving the sections after it untitled. **6 sections recovered across 3 elections** in the fixture corpora |
 | campaign tab paths resolved against the CWD | `index.json` records each campaign tab file at its fetch-time repo-root-relative path, and the parse stage resolved it against the current directory instead of the `--samples-root` that located the index. Run from anywhere but the repo root, every campaign tab file counted as absent and was silently skipped: tabs, auditor, donations, contracts and financing reports all parsed as empty, with **zero anomalies emitted**. Re-parsing the fixture corpora from a directory without a samples tree restored campaign data for **92 of 156 candidates across 15 of 17 elections** — 396 tab sections and 72 auditors that the broken run had dropped. Recorded paths are now re-anchored onto the samples root in use (repo-root runs are byte-identical before and after), and a listed tab file that is missing or unreadable emits a `CampaignTabSampleMissing` anomaly instead of vanishing |
+| conviction-detail table dropped by the 2019-era row loop | VRK nests the Q9.1 detail table — date, country, court and offence per conviction — inside an anketa row of its own. The 2019-era per-row extraction read only `<b>` text from the cell, found none (the detail cells carry plain or `<strong>` text), and the empty-row skip dropped the row, so the details reached neither `rawData` nor `normalized` anywhere in the ep_2019 parser family. A cell that hosts a nested table now parses as a records row — the same shape the standalone records path emits — and `2019-kovo-3-savivaldybiu-tarybu` folds it into `teistumo-detales.irasai` with meru_2021's keys, since both elections ask the same questions under the same statute. prezidento_2019's verbatim copy of the loop got the same capture. Measured: exactly the **six 2019 EP declarers** regain their conviction details, Gintas Orda's 1988 LTSR record lands in normalized, and the 2017 mayoral, Marijampolė and 2019 presidential corpora are byte-identical (no declarers) |
 
 Every fix was verified by re-parsing all elections and confirming the diff was
 confined to the intended records.
@@ -295,20 +298,12 @@ each now has one.
 
 - The corpus covers the elections implemented so far. VRK publishes further
   by-elections and older elections that have no module yet.
-- Every election except `2023-kovo-5-savivaldybiu-tarybu-ir-meru` was last
-  scraped before the campaign-decisions, private-interest free-text and
-  empty-donations fixes landed, so their records are stale in exactly the ways
-  those fixes address. Their inventory rows are pre-fix counts.
-- `2019-kovo-3-savivaldybiu-tarybu` does not normalize the Q9.1 conviction
-  *detail* table — date, country, court and offence per conviction. VRK renders
-  it in a row of its own inside the anketa, and the shared 2016-era row merging
-  consumes that row before the record-table lookup can attach it, so the detail
-  is absent from `rawData` too. The yes/no declaration
-  `ar-buvote-pripazintas-kaltu` is captured correctly, and that is the field to
-  count on; `2021-spalio-10-meru` normalizes the identical table as
-  `teistumo-detales.irasai`, so the shape to copy exists. Fixing it means
-  changing row-merging logic several elections share, which wants its own pass
-  with measured impact rather than a change made alongside a full scrape.
+- The Q9.1 conviction-detail capture (fixes table above) landed after the
+  2019 municipal full run, whose raw HTML was not retained, so that corpus
+  reflects it only where pages are re-fetched: re-fetching the 244 declarers
+  is the outstanding step, and the remaining records gain the (empty)
+  `teistumo-detales` key whenever the election is next re-parsed or
+  re-scraped. Every other corpus is post-fix in full.
 - The repeat Visaginas mayoral vote of 2023 is a separate election with its own
   VRK path (`/rinkimai/1344/rnk1664/`) and has no module; it is not part of the
   13,796.

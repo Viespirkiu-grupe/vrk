@@ -54,6 +54,7 @@ ANKETA_KEYS = [
     "sutuoktinio-vardas-pavarde",
     "vaiku-vardai-pavardes",
     "kita-apie-save",
+    "teistumo-detales",
 ]
 
 TURTO_PAJAMU_KEYS = [
@@ -876,10 +877,39 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
         self.assertEqual(anketa["gimimo-vieta"], "Kuršėnų m., Šiaulių raj.")
         self.assertEqual(anketa["tautybe"], "Lietuvis")
         self.assertEqual(anketa["adresas"], "Neskelbiamas")
-        # The block used to collapse to 13 rows; a full questionnaire has 27.
-        self.assertEqual(len(payload["rawData"]["anketa"]["rows"]), 27)
+        # The block used to collapse to 13 rows; a full questionnaire has 27,
+        # plus the captured Q9.1 conviction-detail records row.
+        self.assertEqual(len(payload["rawData"]["anketa"]["rows"]), 28)
         for value in anketa["pareiskimai"].values():
             self.assertIsNotNone(value)
+
+    def test_conviction_details_are_normalized(self) -> None:
+        # Q9.1 lists each conviction — date, country, court and offence — in a
+        # table VRK nests inside a row of its own. The shared 2019-era parse
+        # used to drop that row before anything could read it, so the details
+        # reached neither rawData nor normalized. The keys and the shape match
+        # meru_2021, which asks the same questions under the same statute.
+        payload = self.by_id["gintas-orda-2400958"]
+        self.assertEqual(
+            payload["normalized"]["anketa"]["teistumo-detales"],
+            {
+                "irasai": [
+                    {
+                        "nuosprendzio-data": "1988",
+                        "nuosprendzio-valstybe": "LTSR",
+                        "nuosprendzio-institucija": "LTSR Aukščiausiasis Teismas",
+                        "nusikalstama-veika": "Chuliganizmas",
+                    }
+                ]
+            },
+        )
+        # Every candidate carries the key; without a "Taip" answer it is empty.
+        for candidate in self.everyone:
+            with self.subTest(candidate=candidate["candidateId"]):
+                anketa = candidate["normalized"]["anketa"]
+                self.assertIn("teistumo-detales", anketa)
+                if anketa["pareiskimai"]["ar-buvote-pripazintas-kaltu"] != "Taip":
+                    self.assertEqual(anketa["teistumo-detales"], {"irasai": []})
 
     # ------------------------------------------------------------------
     # biografija
