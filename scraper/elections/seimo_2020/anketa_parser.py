@@ -449,6 +449,14 @@ def _parse_privaciu_interesu_html(html: str) -> dict[str, Any]:
                 value = values[1] if len(values) > 1 else ""
                 if key == title and not value:
                     continue
+                if len(values) == 1 and headers:
+                    # A one-cell row in a header-bearing table is a data row
+                    # of a single-column table (ID001A KITI DUOMENYS free
+                    # text), not a label. Keep it unlabelled so the normalizer
+                    # can collect it under "tekstas" instead of the whole
+                    # sentence becoming a key.
+                    items.append({"key": "", "value": values[0]})
+                    continue
                 items.append({"key": key, "value": value})
             section["items"] = items
         else:
@@ -480,13 +488,30 @@ def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]
 
         if isinstance(section.get("items"), list):
             item_values: dict[str, Any] = {}
+            # A declaration section can be free text rather than key/value
+            # pairs — ID001A KITI DUOMENYS is published as an unlabelled
+            # sentence. Those rows reach here with an empty key; dropping them
+            # for want of a key silently loses the whole declared text.
+            free_text: list[str] = []
             for item in section["items"]:
                 if not isinstance(item, dict):
                     continue
                 item_key = _source_key(str(item.get("key", "")))
                 item_value = _normalize_text_value(item.get("value"))
-                if item_key:
-                    item_values[item_key] = item_value
+                if not item_key:
+                    if item_value:
+                        free_text.append(str(item_value))
+                    continue
+                item_values[item_key] = item_value
+            if free_text:
+                joined = " ".join(free_text)
+                existing = item_values.get("tekstas")
+                # A labelled field can itself slugify to "tekstas". Appending
+                # rather than deferring keeps both, instead of re-introducing
+                # the silent loss this branch exists to fix.
+                item_values["tekstas"] = (
+                    f"{existing} {joined}".strip() if isinstance(existing, str) and existing else joined
+                )
             if item_values:
                 normalized_section = item_values
 

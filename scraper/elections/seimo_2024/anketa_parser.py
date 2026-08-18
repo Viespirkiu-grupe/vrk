@@ -425,6 +425,13 @@ def _parse_privaciu_record_table(table: Tag) -> dict[str, Any]:
         else:
             key = _build_prompt_text(cells[0]).rstrip(":")
             value = _extract_answer_text(cells[0], [])
+            if th is not None and key and not value:
+                # A one-cell row in a header-bearing table is a data row of a
+                # single-column table ("Kiti duomenys ar aplinkybės" free
+                # text), not a label. Keep it unlabelled so the normalizer
+                # can collect it under "tekstas" instead of the whole
+                # sentence becoming a key.
+                key, value = "", _tag_text(cells[0])
 
         if not key and not value:
             continue
@@ -482,13 +489,30 @@ def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]
             if not isinstance(record, dict):
                 continue
             normalized_record: dict[str, Any] = {}
+            # A declaration section can be free text rather than key/value
+            # pairs — "Kiti duomenys" is filled in as a sentence with no label.
+            # Those rows reach here with an empty key; dropping them for want
+            # of a key silently loses the whole declared text.
+            free_text: list[str] = []
             for item in record.get("items", []):
                 if not isinstance(item, dict):
                     continue
+                item_value = _normalize_text_value(item.get("value"))
                 item_key = _source_key(str(item.get("key", "")))
                 if not item_key:
+                    if item_value:
+                        free_text.append(str(item_value))
                     continue
-                normalized_record[item_key] = _normalize_text_value(item.get("value"))
+                normalized_record[item_key] = item_value
+            if free_text:
+                joined = " ".join(free_text)
+                existing = normalized_record.get("tekstas")
+                # A labelled field can itself slugify to "tekstas". Appending
+                # rather than deferring keeps both, instead of re-introducing
+                # the silent loss this branch exists to fix.
+                normalized_record["tekstas"] = (
+                    f"{existing} {joined}".strip() if isinstance(existing, str) and existing else joined
+                )
             if normalized_record:
                 normalized_records.append(normalized_record)
 

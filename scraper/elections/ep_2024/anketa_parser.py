@@ -420,6 +420,13 @@ def _parse_privaciu_record_table(table: Tag) -> dict[str, Any]:
         else:
             key = _build_prompt_text(cells[0]).rstrip(":")
             value = _extract_answer_text(cells[0], [])
+            if th is not None and key and not value:
+                # A one-cell row in a header-bearing table is a data row of a
+                # single-column table ("Kiti duomenys ar aplinkybės" free
+                # text), not a label. Keep it unlabelled so the normalizer
+                # can collect it under "tekstas" instead of the whole
+                # sentence becoming a key.
+                key, value = "", _tag_text(cells[0])
 
         if not key and not value:
             continue
