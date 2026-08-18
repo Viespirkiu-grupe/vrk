@@ -299,11 +299,13 @@ each now has one.
 - The corpus covers the elections implemented so far. VRK publishes further
   by-elections and older elections that have no module yet.
 - The Q9.1 conviction-detail capture (fixes table above) landed after the
-  2019 municipal full run, whose raw HTML was not retained, so that corpus
-  reflects it only where pages are re-fetched: re-fetching the 244 declarers
-  is the outstanding step, and the remaining records gain the (empty)
-  `teistumo-detales` key whenever the election is next re-parsed or
-  re-scraped. Every other corpus is post-fix in full.
+  2019 municipal full run, whose raw HTML was not retained. The 244 declarers
+  were re-fetched on 2026-08-18 with retention on: **all 244 now carry detail
+  records — 303 convictions in total, 49 candidates with more than one** —
+  with zero fetch failures and zero anomalies. The remaining 13,422
+  non-declarers gain the (empty) `teistumo-detales` key whenever the election
+  is next re-parsed or re-scraped; until then the key's absence on a record
+  implies Q9 was not answered `Taip`. Every other corpus is post-fix in full.
 - The repeat Visaginas mayoral vote of 2023 is a separate election with its own
   VRK path (`/rinkimai/1344/rnk1664/`) and has no module; it is not part of the
   13,796.
