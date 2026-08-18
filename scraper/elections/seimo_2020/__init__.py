@@ -1,0 +1,1 @@
+"""2020 Seimo election scraper modules."""

@@ -1,0 +1,28 @@
+import unittest
+from pathlib import Path
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+SAMPLES_ROOT = REPO_ROOT / "samples" / "html" / "2016-seimo"
+ALLOWED_CANDIDATE_DIRS = {
+    "agne-sirinskiene",
+    "ingrida-simonyte",
+    "regina-ablom",
+    "algirdas-butkevicius",
+    "gabrielius-landsbergis",
+}
+
+
+class Seimo2016SampleAllowlistTests(unittest.TestCase):
+    def test_samples_directory_contains_only_allowlisted_candidates(self) -> None:
+        actual_dirs = {
+            child.name
+            for child in SAMPLES_ROOT.iterdir()
+            if child.is_dir()
+        }
+
+        self.assertEqual(actual_dirs, ALLOWED_CANDIDATE_DIRS)
+
+
+if __name__ == "__main__":
+    unittest.main()
