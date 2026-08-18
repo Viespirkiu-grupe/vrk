@@ -64,6 +64,28 @@ class AnketaNestedTableTests(unittest.TestCase):
         )
         self.assertEqual(parsed["normalized"]["tautybe"], "Lietuvis")
 
+    def test_a_nested_table_is_captured_as_records(self) -> None:
+        # Beyond not erasing the questionnaire, the nested detail table's own
+        # content must survive: it used to die on the empty-row skip because
+        # its cells carry no <b> text. It parses into a prompt-less records
+        # row now, exactly as a standalone records table would.
+        content = BeautifulSoup(NESTED_DETAIL_TABLE_CONTENT, "lxml").find("div")
+        parsed = _parse_anketa_content(content)
+
+        record_rows = [
+            row for row in parsed["rows"] if isinstance(row["answer"], list)
+        ]
+        self.assertEqual(len(record_rows), 1)
+        self.assertEqual(
+            record_rows[0]["answer"],
+            [
+                {
+                    "nuosprendzio-data": "2010-01-06",
+                    "institucija": "Vilniaus apygardos teismas",
+                }
+            ],
+        )
+
 
 class Prezidento2019AnketaParserTests(unittest.TestCase):
     def setUp(self) -> None:

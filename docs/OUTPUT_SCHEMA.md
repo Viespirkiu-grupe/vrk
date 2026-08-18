@@ -655,15 +655,20 @@ wider than that module's:
   `Taip`/`Ne` of the Rinkimų kodeksas era.
 - Q9 is answered on the question row here, not on a continuation row quoting
   the statute as in April 2017.
-- Q9.1 is the conviction *detail* table and has **no** normalized
-  representation — see the known gap in `docs/DATASET.md`. Everything else the
+- Q9.1 is the conviction *detail* table, normalized as
+  `anketa.teistumo-detales` — `{"irasai": [...]}` with the meru_2021 keys
+  (`nuosprendzio-data`, `nuosprendzio-valstybe`, `nuosprendzio-institucija`,
+  `nusikalstama-veika`), one record per conviction and an empty list when Q9
+  is not answered `Taip`. It is the last top-level anketa key. Everything the
   page publishes is normalized.
 
 A candidate who answers Q9 `Taip` is worth checking against when changing this
-module: VRK nests the conviction-detail table inside the anketa table for those
-pages, and a recursive header lookup used to classify the whole questionnaire
-as a record table and discard it. `gintas-orda-2400958` is the fixture that
-covers it.
+module: VRK nests the conviction-detail table inside the anketa table for
+those pages, and that nesting has bitten twice — a recursive header lookup
+used to classify the whole questionnaire as a record table and discard it,
+and the row hosting the nested table used to die on the empty-row skip so the
+details reached neither `rawData` nor `normalized`. `gintas-orda-2400958` is
+the fixture that covers both.
 
 Three nulls to expect, all genuine:
 

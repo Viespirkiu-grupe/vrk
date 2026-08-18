@@ -3,11 +3,73 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scraper.elections.ep_2019.anketa_parser import parse_anketa_sample
+from bs4 import BeautifulSoup
+
+from scraper.elections.ep_2019.anketa_parser import (
+    _parse_anketa_content,
+    parse_anketa_sample,
+)
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SAMPLES_ROOT = REPO_ROOT / "samples" / "html" / "2019-ep"
+
+
+# The conviction-detail table as the 2019 EP pages render it for anyone
+# answering the conviction question "Taip" (six candidates in the full
+# corpus): nested inside a row of its own, cell values wrapped in <strong>,
+# columns numbered 9.2.1-9.2.4. Its cells carry no <b> text, so the bold-only
+# answer extraction read nothing and the row died on the empty-row skip —
+# the details reached neither rawData nor normalized. The committed fixture
+# set has no declarer, so the shape is guarded synthetically.
+NESTED_CONVICTION_TABLE_CONTENT = """
+<div>
+  <table border="0">
+    <tr><td>9. Ar buvote pripažintas kaltu? <b>Taip</b></td></tr>
+    <tr><td>
+      <table border="1" class="partydata tableKand" id="table_apkalta">
+        <thead><tr>
+          <th>9.2.1 Apkaltinamojo nuosprendžio (sprendimo) data</th>
+          <th>9.2.2 Apkaltinamojo nuosprendžio (sprendimo) priėmimo valstybė (vieta)</th>
+        </tr></thead>
+        <tbody><tr>
+          <td><strong>2008</strong></td>
+          <td><strong>LIETUVA</strong></td>
+        </tr></tbody>
+      </table>
+    </td></tr>
+    <tr><td>10. Tautybė <b>Lietuvis</b></td></tr>
+  </table>
+</div>
+"""
+
+
+class AnketaNestedConvictionTableTests(unittest.TestCase):
+    def test_nested_conviction_table_is_captured_as_records(self) -> None:
+        content = BeautifulSoup(NESTED_CONVICTION_TABLE_CONTENT, "lxml").find("div")
+        parsed = _parse_anketa_content(content)
+
+        record_rows = [
+            row for row in parsed["rows"] if isinstance(row["answer"], list)
+        ]
+        self.assertEqual(len(record_rows), 1)
+        self.assertEqual(
+            record_rows[0]["answer"],
+            [
+                {
+                    "9-2-1-apkaltinamojo-nuosprendzio-sprendimo-data": "2008",
+                    "9-2-2-apkaltinamojo-nuosprendzio-sprendimo-priemimo-valstybe-vieta": "LIETUVA",
+                }
+            ],
+        )
+        # The surrounding questionnaire is intact.
+        answers = {
+            row["questionNumber"]: row["answer"]
+            for row in parsed["rows"]
+            if row["questionNumber"]
+        }
+        self.assertEqual(answers["9"], "Taip")
+        self.assertEqual(answers["10"], "Lietuvis")
 
 
 def _parse(candidate_id: str) -> dict:

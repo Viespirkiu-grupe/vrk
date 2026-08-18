@@ -240,8 +240,18 @@ def _parse_anketa_content(content: Tag | None) -> dict[str, Any]:
             cell = tr.find("td", recursive=False)
             if cell is None:
                 continue
+            nested_tables = cell.find_all("table")
             prompt = _build_prompt_text(cell)
-            answer = _extract_answer_text(cell, [])
+            if nested_tables:
+                # Mirrors ep_2019: a table nested inside a row's cell is a
+                # records table (the conviction-detail block in this page era);
+                # the bold-only extraction reads nothing from it, so without
+                # this branch the row dies on the empty-row skip below. No 2019
+                # presidential page nests one, but the shape is the era's, not
+                # the election's.
+                answer: Any = _parse_records_table(nested_tables[0])
+            else:
+                answer = _extract_answer_text(cell, nested_tables)
             if not prompt and not answer:
                 continue
             parsed_rows.append(
