@@ -4,10 +4,10 @@
 #
 #   scripts/run_election_batches.sh <election-id>
 #
-# Mirrors the per-election batch scripts, but takes the election id as an
-# argument so the elections that never had a script of their own can be run the
-# same way. Candidate samples go to a temporary directory, so the test-protected
-# fixtures under samples/html/<election-id>/ are never touched.
+# The one batch runner for every election — it replaced the per-election
+# scripts that predated it. Candidate samples go to a temporary directory, so
+# the test-protected fixtures under samples/html/<election-id>/ are never
+# touched.
 #
 # Environment:
 #   BATCH_SIZE         candidates per batch (default 200)

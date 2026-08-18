@@ -63,8 +63,10 @@ Reference tests:
 
 ## Batch script integration
 
-`scripts/run_seimo_2016_batches.sh` parses candidates in batches, appends per-candidate anomaly files into:
+`scripts/run_election_batches.sh <election-id>` parses candidates in batches, appends per-candidate anomaly files into:
 
-- `data/2016-seimo/anomalies.jsonl`
+- `data/<election-id>/anomalies.jsonl`
 
-The script stops with exit code 2 when a batch introduces new anomalies.
+With `STOP_ON_ANOMALY=1` the script stops with exit code 2 when a batch
+introduces new anomalies; by default it records them and keeps going, so an
+unattended full run is reviewed from the anomalies file afterwards.

@@ -156,10 +156,10 @@ python -m scraper fetch-candidate-samples 2019-ep --candidate-id petras-austrevi
 python -m scraper parse-anketa-samples 2019-ep --candidate-id petras-austrevicius
 ```
 
-Resumable batch processing helper:
+Resumable batch processing:
 
-- `scripts/run_ep_2019_batches.sh` mirrors the Seimo batch scripts, tracking run
-  state under `.run-state/ep-2019/`.
+- `scripts/run_election_batches.sh 2019-ep`, tracking run state under
+  `.run-state/2019-ep/`.
 
 ## European Parliament (`2024-ep`) Workflow
 
@@ -176,10 +176,10 @@ python -m scraper fetch-candidate-samples 2024-ep --candidate-id vitalijus-mitro
 python -m scraper parse-anketa-samples 2024-ep --candidate-id vitalijus-mitrofanovas
 ```
 
-Resumable batch processing helper:
+Resumable batch processing:
 
-- `scripts/run_ep_2024_batches.sh` mirrors the other batch scripts, tracking
-  run state under `.run-state/ep-2024/`.
+- `scripts/run_election_batches.sh 2024-ep`, tracking run state under
+  `.run-state/2024-ep/`.
 
 ## Presidential (`2024-prezidento`) Workflow
 
