@@ -78,6 +78,29 @@ def elected_note_of(record: dict) -> str | None:
     return None
 
 
+# The three asset/income fields every election module normalizes under the
+# same keys. Carried into the index so the dashboard can chart and rank
+# without fetching 33k records.
+MONEY_FIELDS = ("privalomas-registruoti-turtas", "pinigines-lesos", "gautos-pajamos")
+
+
+def money_of(record: dict) -> list[float | None]:
+    declarations = (record.get("normalized") or {}).get("turto-ir-pajamu-deklaracijos")
+    values: list[float | None] = []
+    for field in MONEY_FIELDS:
+        raw = declarations.get(field) if isinstance(declarations, dict) else None
+        if isinstance(raw, (int, float)):
+            values.append(float(raw))
+        elif isinstance(raw, str):
+            try:
+                values.append(float(raw.replace(" ", "").replace(",", ".")))
+            except ValueError:
+                values.append(None)
+        else:
+            values.append(None)
+    return values
+
+
 def person_key(name: str | None, birth: str | None) -> str:
     return f"{name or '?'}|{birth or '?'}"
 
@@ -105,6 +128,7 @@ def build_index(data_root: Path) -> dict:
                     "candidateId": record.get("candidateId"),
                     "displayName": record.get("candidateName"),
                     "elected": elected_note_of(record),
+                    "money": money_of(record),
                 }
             )
 
@@ -116,12 +140,15 @@ def build_index(data_root: Path) -> dict:
             "k": key,
             "n": records[-1]["displayName"] or name,
             "b": None if birth == "?" else birth,
-            # The record file is derivable: data/<id>/<c>-<id>.json
+            # The record file is derivable: data/<id>/<c>-<id>.json.
+            # "m" is [privalomas-registruoti-turtas, pinigines-lesos,
+            # gautos-pajamos], nulls where not declared/published.
             "e": [
                 {
                     "id": r["election"],
                     "c": r["candidateId"],
                     **({"w": True} if r["elected"] else {}),
+                    **({"m": r["money"]} if any(v is not None for v in r["money"]) else {}),
                 }
                 for r in records
             ],
