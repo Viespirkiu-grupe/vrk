@@ -171,7 +171,12 @@ def _is_records_table(table: Tag) -> bool:
     classes = table.get("class") or []
     if "tableKand" in classes:
         return True
-    return table.find("th") is not None
+    # find() searches descendants, so a header belonging to a *nested* table
+    # used to count. VRK renders detail tables inside the anketa table on
+    # 2019-era pages (e.g. the conviction detail for a "Taip" answer), which
+    # made the whole anketa look like a records table: every question was
+    # dropped without an anomaly. Only headers owned by this table decide.
+    return any(th.find_parent("table") is table for th in table.find_all("th"))
 
 
 def _parse_records_table(table: Tag) -> list[dict[str, Any]]:
@@ -646,6 +651,11 @@ def parse_anketa_sample(
         nested_campaigns = _parse_nested_campaign_samples(
             meta if isinstance(meta, dict) else None,
             root_campaign_data if isinstance(root_campaign_data, dict) else None,
+            candidate_dir=candidate_dir,
+            election_id=ELECTION_ID,
+            candidate_id=candidate_id,
+            source_url=candidate_source_url,
+            anomalies=anomalies,
         )
     except Exception as exc:
         anomalies.append(

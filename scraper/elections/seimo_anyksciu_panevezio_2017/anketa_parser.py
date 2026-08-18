@@ -263,6 +263,11 @@ def parse_anketa_sample(
         nested_campaigns = _parse_nested_campaign_samples(
             meta if isinstance(meta, dict) else None,
             root_campaign_data if isinstance(root_campaign_data, dict) else None,
+            candidate_dir=candidate_dir,
+            election_id=ELECTION_ID,
+            candidate_id=candidate_id,
+            source_url=candidate_source_url,
+            anomalies=anomalies,
         )
     except Exception as exc:
         anomalies.append(

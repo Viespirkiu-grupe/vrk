@@ -97,6 +97,12 @@ Notes:
   field above them, so `profilis.kita.iskele.reiksme` reads
   `"Party A; Party B"`. Kept separate they would be dropped, because a field
   without a key cannot be normalized.
+- Free-text declaration sections — `ID001A KITI DUOMENYS` on the 2016-era
+  pages — publish an unlabelled sentence as the only row of a single-column
+  table, so they normalize to a `tekstas` key inside the section object
+  (`privaciu-interesu-deklaracija.id001a.tekstas`). Every election sharing the
+  2016-era private-interest parser behaves the same, 2020 Seimo and the
+  2018–2019 Seimo by-elections included.
 - Donation sections under `politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija`
   carry `totals` plus a `records[]` list. Every record has the same keys —
   `rowNumber`, `donor`, `municipality`, `date`, `incomeSourceCode`, `amount`,
@@ -213,7 +219,8 @@ the party lists), so the `normalized` section order is `profilis`, `anketa`,
   `sutuoktinis-sugyventinis-ar-partneris`) and keys each `h4` section by its
   slugified title (`deklaruojancio-darbovietes`, `sutuoktinio-darbovietes`,
   `rysiai-su-juridiniais-asmenimis`, `rysiai-sudarius-sandorius`, …), each a
-  list of records.
+  list of records. The `kiti-duomenys` section is free text published without
+  a label, so it lands under a `tekstas` key inside the record.
 - `profilis.nuotrauka` is a URL to the candidate photo (`kandImg/...`), not a
   base64 data URI as in 2019.
 
@@ -347,6 +354,9 @@ pages carry a campaign tab).
   so they are null/empty in practice but are parsed defensively.
 - `biografija` keeps its own numbering (`issilavinimas` is Q2, `mokslo-laipsnis`
   Q2.1, `darbo-patirtis` Q4), matching 2024 EP rather than the 2023 by-elections.
+- `privaciu-interesu-deklaracija` follows the 2024 EP shape, including the
+  free-text `kiti-duomenys` section landing under a `tekstas` key inside the
+  record.
 
 ## Appendix: 2023 Kupiškis mayor (`2023-spalio-8-kupiskio-mero`)
 

@@ -420,6 +420,13 @@ def _parse_privaciu_record_table(table: Tag) -> dict[str, Any]:
         else:
             key = _build_prompt_text(cells[0]).rstrip(":")
             value = _extract_answer_text(cells[0], [])
+            if th is not None and key and not value:
+                # A one-cell row in a header-bearing table is a data row of a
+                # single-column table ("Kiti duomenys ar aplinkybės" free
+                # text), not a label. Keep it unlabelled so the normalizer
+                # can collect it under "tekstas" instead of the whole
+                # sentence becoming a key.
+                key, value = "", _tag_text(cells[0])
 
         if not key and not value:
             continue
@@ -683,6 +690,11 @@ def parse_anketa_sample(
         nested_campaigns = _parse_nested_campaign_samples(
             meta if isinstance(meta, dict) else None,
             root_campaign_data if isinstance(root_campaign_data, dict) else None,
+            candidate_dir=candidate_dir,
+            election_id=ELECTION_ID,
+            candidate_id=candidate_id,
+            source_url=candidate_source_url,
+            anomalies=anomalies,
         )
     except Exception as exc:
         anomalies.append(
