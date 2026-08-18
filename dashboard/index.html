@@ -61,6 +61,7 @@
 <header>
   <h1>VRK Candidate Browser</h1>
   <span class="stats" id="topstats">loading index…</span>
+  <button id="moversBtn" style="margin-left:auto;padding:6px 12px;border:1px solid var(--line);background:var(--panel);border-radius:8px;cursor:pointer;font-size:13.5px">📈 Biggest movers</button>
 </header>
 <main>
   <div id="left">
@@ -147,7 +148,9 @@ const recordCache = new Map();
 const fold = (s) => (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase();
 
 async function boot() {
-  const res = await fetch("people.json");
+  // The index changes after every corpus update; a cached stale copy makes
+  // the app quietly disagree with the data on disk.
+  const res = await fetch("people.json", { cache: "no-store" });
   INDEX = await res.json();
   const s = INDEX.stats;
   document.getElementById("topstats").textContent =
@@ -156,6 +159,7 @@ async function boot() {
   for (const p of INDEX.people) p._f = fold(p.n);
   document.getElementById("search").addEventListener("input", renderList);
   document.getElementById("multiOnly").addEventListener("change", renderList);
+  document.getElementById("moversBtn").addEventListener("click", showMovers);
   renderList();
   const hashKey = decodeURIComponent(location.hash.slice(1));
   if (hashKey) { const p = INDEX.people.find(p => p.k === hashKey); if (p) showPerson(p); }
@@ -350,6 +354,66 @@ async function showPerson(p) {
   }
   tabs.children[0].className = "on";
   paneE.style.display = "";
+}
+
+function showMovers() {
+  location.hash = "";
+  for (const el of document.querySelectorAll(".row")) el.classList.remove("active");
+  const root = document.getElementById("person");
+  root.innerHTML = "";
+
+  const bar = document.createElement("div");
+  bar.style.cssText = "display:flex;gap:12px;align-items:center;margin-bottom:14px;flex-wrap:wrap";
+  bar.innerHTML = `<h2 style="margin:0;font-size:20px">Biggest movers</h2>
+    <select id="mvSeries" style="padding:6px 8px;border:1px solid var(--line);border-radius:6px">
+      ${MONEY_SERIES.map(([label], i) => `<option value="${i}">${label}</option>`).join("")}
+    </select>
+    <select id="mvDir" style="padding:6px 8px;border:1px solid var(--line);border-radius:6px">
+      <option value="desc">largest increase</option>
+      <option value="asc">largest decrease</option>
+    </select>
+    <span class="stats" style="color:var(--muted);font-size:13px">first vs latest declared value, people with the figure in 2+ elections</span>`;
+  root.appendChild(bar);
+  const holder = document.createElement("div");
+  root.appendChild(holder);
+
+  function render() {
+    const s = +document.getElementById("mvSeries").value;
+    const dir = document.getElementById("mvDir").value;
+    const rows = [];
+    for (const p of INDEX.people) {
+      const vals = p.e.filter(e => e.m && e.m[s] != null);
+      if (vals.length < 2) continue;
+      const first = vals[0], last = vals[vals.length - 1];
+      if (first.id === last.id) continue;
+      const delta = last.m[s] - first.m[s];
+      if (delta === 0) continue;
+      rows.push({ p, first, last, delta });
+    }
+    rows.sort((a, b) => dir === "desc" ? b.delta - a.delta : a.delta - b.delta);
+    const t = document.createElement("table"); t.className = "cmp";
+    t.innerHTML = `<thead><tr><th>#</th><th>Person</th><th>From</th><th>To</th><th>Δ</th></tr></thead><tbody></tbody>`;
+    rows.slice(0, 100).forEach((r, i) => {
+      const tr = t.tBodies[0].insertRow();
+      tr.insertCell().textContent = String(i + 1);
+      const nameCell = tr.insertCell();
+      const a = document.createElement("a");
+      a.href = "#" + encodeURIComponent(r.p.k);
+      a.textContent = `${r.p.n} · ${r.p.b || "?"}`;
+      a.addEventListener("click", (ev) => { ev.preventDefault(); showPerson(r.p); });
+      nameCell.appendChild(a);
+      tr.insertCell().textContent = `${fmtEUR(r.first.m[s])} (${SHORT_LABELS[r.first.id] || r.first.id})`;
+      tr.insertCell().textContent = `${fmtEUR(r.last.m[s])} (${SHORT_LABELS[r.last.id] || r.last.id})`;
+      const d = tr.insertCell();
+      d.textContent = (r.delta > 0 ? "+" : "−") + fmtEUR(Math.abs(r.delta));
+      d.style.color = r.delta > 0 ? "var(--win)" : "#a03325";
+      d.style.fontVariantNumeric = "tabular-nums";
+    });
+    holder.replaceChildren(t);
+  }
+  document.getElementById("mvSeries").addEventListener("change", render);
+  document.getElementById("mvDir").addEventListener("change", render);
+  render();
 }
 
 function parseMoney(v) {
