@@ -17,9 +17,10 @@ never touched by a full run.
 
 ## Inventory
 
-19,420 candidate records across 16 elections, 2016–2025, with **zero fetch
-failures and zero parse anomalies**. The 2023 municipal general election is
-larger than every other election combined; it was scraped separately in ~6h.
+33,086 candidate records across 17 elections, 2016–2025, with **zero fetch
+failures and zero parse anomalies**. The two municipal general elections are
+together larger than everything else in the corpus by a factor of three; each
+was scraped separately in ~6h.
 
 | election | records | elected | declared a conviction | with campaign data |
 |---|---:|---:|---:|---:|
@@ -39,7 +40,8 @@ larger than every other election combined; it was scraped separately in ~6h.
 | `2024-seimo` | 1740 | 141 | 62 | 699 |
 | `2025-kovo-16-meru` | 14 | 2 | 0 | 10 |
 | `2023-kovo-5-savivaldybiu-tarybu-ir-meru` | 13796 | 1557 | 541 | 433 |
-| **total** | **19420** | **2030** | **694** | **2924** |
+| `2019-kovo-3-savivaldybiu-tarybu` | 13666 | 1502 | 244 | 410 |
+| **total** | **33086** | **3532** | **938** | **3334** |
 
 Records live under `data/<election-id>/` (~750 MB) and are **not** version
 controlled — `data/`, `sitemaps/` and `samples/` are gitignored, so the corpus is
@@ -81,14 +83,12 @@ upstream rather than parser misses: `biografija.tautybe` for 471 candidates
 (3.4%), published as `Nenurodė`, and `anketa.einamos-pareigos` for 313 (2.3%),
 published as `-`.
 
-### The 2019 municipal general election is still being scraped
+### The 2019 municipal general election
 
-`2019-kovo-3-savivaldybiu-tarybu` has **no row in the inventory above**: its
-full run is in progress as this is written, so any record count here would be
-wrong by the time it is read. What is settled is the sitemap, every number of
-which reconciles with VRK's own `savKandidataiSuvestine.html`:
+`2019-kovo-3-savivaldybiu-tarybu` reconciles with VRK's own
+`savKandidataiSuvestine.html` on every count:
 
-| | in the sitemap | VRK publishes |
+| | scraped | VRK publishes |
 |---|---:|---:|
 | candidates (union of both listings) | 13,666 | 13,666 |
 | mayoral candidates | 410 | 410 |
@@ -98,15 +98,40 @@ which reconciles with VRK's own `savKandidataiSuvestine.html`:
 | elected mayors | 60 | 60 |
 | elected council members | 1,442 | 1,442 |
 
-The two listings overlap rather than nest, as in 2023: 410 + 13,635 − 379 =
-13,666, with 31 mayoral candidates on no list at all. Roles partition as 13,256
-council-only, 379 dual and 31 mayor-only.
+410 + 13,635 − 379 = 13,666, with 31 mayoral candidates on no list. Roles
+partition as 13,256 council-only, 379 dual and 31 mayor-only. Unlike 2023, the
+elected total is exactly 60 + 1,442 = 1,502 distinct people: VRK's mandate
+columns are headed *"be merų"* and an elected mayor takes no council seat, so
+no one appears in both counts.
 
-When the run finishes, re-read the counts from `data/2019-kovo-3-savivaldybiu-tarybu/`
-rather than from this page, and note that two of its fields are role-dependent
-rather than sparse: the candidate photo and the free-text biography are
-published only for candidates standing for mayor, so ~97% of records will have
-neither. That is upstream behaviour, not a parse failure.
+The run took ~6h with zero fetch failures, zero failed candidates and zero
+parse anomalies.
+
+**244 candidates declared a conviction.** Every one of them would have had
+their entire questionnaire discarded before the nested-table fix listed below
+— the defect erased exactly the records this field exists to surface.
+
+Three nulls to expect, all traced to the source and all genuine:
+
+- `anketa.pagrindine-darboviete` for 4,572 candidates (33.5%) and
+  `anketa.tautybe` for 2,992 (21.9%), both published as `Nenurodė`.
+- Q9.2–Q9.4 for 110 candidates, whose pages print those questions with no
+  answer between them.
+- `gautos-pajamos` for 10 candidates whose declared income VRK itself renders
+  malformed, with the integer part missing — `,35 EUR`, `,72 EUR` and so on.
+  Reading those as 0.35 would be inventing a figure, so they normalize to null
+  with the source text kept in `rawData`.
+
+Photo and free-text biography are role-dependent rather than sparse: measured
+across the corpus, they are published only for candidates standing for mayor,
+so ~97% of records carry neither. That is upstream behaviour, not a parse
+failure.
+
+Campaign data is thinner than 2023's: 395 of 410 participants are
+`Atstovaujamasis` and publish no donation figures at all, and the 15
+`Savarankiškas` ones do not share a campaign with anyone, so the
+per-campaign de-duplication that matters elsewhere is a no-op here —
+€251,959.63 either way.
 
 ## Caveats for analysis
 
@@ -122,6 +147,7 @@ therefore multiplies the same money:
 | `2019-ep` | 279 | 15 | one campaign across 22 candidates |
 | `2024-seimo` | 699 | 205 | one campaign across 70 candidates |
 | `2023-kovo-5-savivaldybiu-tarybu-ir-meru` | 433 | 58 | one campaign across 59 candidates |
+| `2019-kovo-3-savivaldybiu-tarybu` | 410 | 15 | none shared |
 | `2020-seimo` | 758 | 298 | none shared |
 | `2016-seimo` | 672 | 324 | none shared |
 
@@ -152,7 +178,16 @@ only where the page publishes them:
   docs), and there is no detail table
 
 Counting `teistumo-detales` alone therefore under-reports; it returns 0 for the
-two largest elections, which record 38 and 41 declared convictions respectively.
+2016 and 2020 Seimas elections, which record 38 and 41 declared convictions
+respectively.
+
+The conviction counts in the inventory above are themselves suspect for every
+election except the two municipal ones. Until the nested-table fix below
+landed, a candidate who answered the conviction question `Taip` had their whole
+questionnaire discarded — including that answer — so they were counted as
+having declared nothing. Only `2019-kovo-3-savivaldybiu-tarybu` (244) and
+`2023-kovo-5-savivaldybiu-tarybu-ir-meru` (541) were scraped after the fix. The
+rest are floors, and re-running them is the way to find out by how much.
 
 ### Placeholder answers normalize to null
 
