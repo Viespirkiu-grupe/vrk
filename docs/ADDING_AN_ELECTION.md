@@ -128,3 +128,10 @@ every defect listed in `docs/DATASET.md`.
 ```bash
 scripts/run_election_batches.sh <election-id>
 ```
+
+By default the runner deletes each candidate's fetched HTML after parsing it,
+so a later parser fix costs a full re-scrape. `KEEP_SAMPLES=1` retains the
+HTML under `samples-full/<election-id>/` instead, making every future fix an
+offline re-parse (`parse-anketa-samples` with `--samples-root` pointed there).
+The price is disk on the order of the election itself — pay it for the large
+elections, where a re-scrape costs hours of polite traffic to vrk.lt.

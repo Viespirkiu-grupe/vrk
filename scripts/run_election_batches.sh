@@ -18,6 +18,12 @@
 #                      run does not, because anomalies are recorded to
 #                      anomalies.jsonl for review either way.
 #   SAMPLES_ROOT       reuse a samples directory instead of a temporary one
+#   KEEP_SAMPLES       1 to keep every candidate's fetched HTML instead of
+#                      deleting it after parsing (default 0). Defaults
+#                      SAMPLES_ROOT to samples-full/<election-id> when none is
+#                      given. Retained HTML lets a later parser fix be applied
+#                      by offline re-parse instead of a full re-scrape; the
+#                      cost is disk on the order of the election itself.
 #   STATE_DIR          run-state directory (default .run-state/<election-id>)
 
 set -euo pipefail
@@ -41,6 +47,7 @@ BATCH_SIZE="${BATCH_SIZE:-200}"
 THROTTLE_SECONDS="${THROTTLE_SECONDS:-0.4}"
 MAX_BATCHES="${MAX_BATCHES:-0}"
 STOP_ON_ANOMALY="${STOP_ON_ANOMALY:-0}"
+KEEP_SAMPLES="${KEEP_SAMPLES:-0}"
 
 ALL_IDS_PATH="$STATE_DIR/all_ids.txt"
 DONE_IDS_PATH="$STATE_DIR/done_ids.txt"
@@ -59,6 +66,10 @@ if [[ -n "${SAMPLES_ROOT:-}" ]]; then
       exit 1
       ;;
   esac
+  mkdir -p "$SAMPLES_ROOT"
+elif [[ "$KEEP_SAMPLES" == "1" ]]; then
+  # Retained HTML has to outlive the run, so it cannot live in a mktemp dir.
+  SAMPLES_ROOT="$ROOT_DIR/samples-full/${ELECTION_ID}"
   mkdir -p "$SAMPLES_ROOT"
 else
   SAMPLES_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/vrk-${ELECTION_ID}-samples.XXXXXX")"
@@ -202,9 +213,11 @@ while (( MAX_BATCHES == 0 || batch_counter < MAX_BATCHES )); do
       echo "$candidate_id" >> "$FAILED_IDS_PATH"
       echo "[$ELECTION_ID] FAILED $candidate_id"
     fi
-    # Keep the temporary samples directory from growing to the size of the
-    # whole election while a long run is in flight.
-    rm -rf "${SAMPLES_ROOT:?}/${candidate_id}"
+    if [[ "$KEEP_SAMPLES" != "1" ]]; then
+      # Keep the temporary samples directory from growing to the size of the
+      # whole election while a long run is in flight.
+      rm -rf "${SAMPLES_ROOT:?}/${candidate_id}"
+    fi
     sleep "$THROTTLE_SECONDS"
   done < "$tmp_batch"
 
