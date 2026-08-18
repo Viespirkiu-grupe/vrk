@@ -98,6 +98,36 @@ const ELECTION_LABELS = {
   "2025-kovo-16-meru": "2025-03 mayoral by-elections",
 };
 
+const SHORT_LABELS = {
+  "2016-seimo": "2016 Seimas",
+  "2017-balandzio-23-meru": "2017-04 merai",
+  "2017-balandzio-23-seimo-anyksciai-panevezys": "2017-04 Seimas",
+  "2017-rugsejo-10-marijampoles-mero": "2017-09 Marijampolė",
+  "2018-rugsejo-16-seimo-zanavykai": "2018 Zanavykai",
+  "2019-kovo-3-savivaldybiu-tarybu": "2019 savivaldybės",
+  "2019-prezidento": "2019 prezidento",
+  "2019-ep": "2019 EP",
+  "2019-rugsejo-8-seimo": "2019-09 Seimas",
+  "2020-seimo": "2020 Seimas",
+  "2021-balandzio-11-radviliskio-mero": "2021 Radviliškis",
+  "2021-spalio-10-meru": "2021-10 merai",
+  "2023-kovo-5-savivaldybiu-tarybu-ir-meru": "2023 savivaldybės",
+  "2023-rugsejo-3-seimo-raseiniai-kedainiai": "2023-09 Seimas",
+  "2023-spalio-8-kupiskio-mero": "2023 Kupiškis",
+  "2024-prezidento": "2024 prezidento",
+  "2024-ep": "2024 EP",
+  "2024-seimo": "2024 Seimas",
+  "2025-kovo-16-meru": "2025 merai",
+};
+
+// Money series for the assets & income chart; aligned across all 19 elections
+// by the modules' key-reuse convention.
+const MONEY_SERIES = [
+  ["Privalomas registruoti turtas", "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas", "#2456a4"],
+  ["Piniginės lėšos", "turto-ir-pajamu-deklaracijos.pinigines-lesos", "#7fa8d9"],
+  ["Gautos pajamos", "turto-ir-pajamu-deklaracijos.gautos-pajamos", "#2c8a4b"],
+];
+
 // Comparison concepts: label -> normalized paths tried in order per election.
 const FIELD_MAP = [
   ["Einamos pareigos", ["anketa.einamos-pareigos"]],
@@ -162,10 +192,17 @@ function recordFile(e) {
   return `data/${e.id}/${e.c}-${e.id}.json`;
 }
 
+// A failed record must degrade to an error note on its card — never hang the
+// whole person page (one 404 used to reject the Promise.all silently).
 async function fetchRecord(e) {
   const file = recordFile(e);
   if (!recordCache.has(file)) {
-    recordCache.set(file, fetch("../" + file).then(r => r.json()));
+    recordCache.set(
+      file,
+      fetch("../" + file)
+        .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+        .catch(err => { recordCache.delete(file); return { _error: `${file}: ${err.message || err}` }; })
+    );
   }
   return recordCache.get(file);
 }
@@ -225,10 +262,19 @@ async function showPerson(p) {
   const root = document.getElementById("person");
   root.innerHTML = `<div class="loading">Loading ${p.e.length} record(s)…</div>`;
   const records = await Promise.all(p.e.map(e => fetchRecord(e).then(r => [e, r])));
+  const loaded = records.filter(([, r]) => !r._error);
+  const failed = records.filter(([, r]) => r._error);
 
   root.innerHTML = "";
+  if (failed.length) {
+    const warn = document.createElement("div");
+    warn.style.cssText = "background:#fdf0ee;border:1px solid #e5b8b0;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13.5px;";
+    warn.textContent = `${failed.length} record(s) failed to load — is the server running from the repo root next to data/? ` +
+      failed.map(([, r]) => r._error).join(" · ");
+    root.appendChild(warn);
+  }
   const head = document.createElement("div"); head.className = "phead";
-  for (const [, r] of records) {
+  for (const [, r] of loaded) {
     const photo = resolvePath(r, "normalized.profilis.nuotrauka");
     if (photo && photo.startsWith("data:")) { const img = document.createElement("img"); img.src = photo; head.appendChild(img); break; }
   }
@@ -240,9 +286,7 @@ async function showPerson(p) {
   hd.append(h2, meta); head.appendChild(hd); root.appendChild(head);
 
   const tabs = document.createElement("div"); tabs.className = "tabs";
-  const tabE = document.createElement("button"); tabE.textContent = "Elections & answers"; tabE.className = "on";
-  const tabC = document.createElement("button"); tabC.textContent = "Compare across elections";
-  tabs.append(tabE, tabC); root.appendChild(tabs);
+  root.appendChild(tabs);
 
   const paneE = document.createElement("div");
   for (const [e, r] of records) {
@@ -253,25 +297,29 @@ async function showPerson(p) {
     if (e.w) { const win = document.createElement("span"); win.className = "win"; win.textContent = "✓ elected"; sum.appendChild(win); }
     card.appendChild(sum);
     const body = document.createElement("div"); body.className = "body";
-    const normalized = r.normalized || {};
-    for (const [sec, val] of Object.entries(normalized)) {
-      const wrap = document.createElement("div"); wrap.className = "sec";
-      const h = document.createElement("h4"); h.textContent = sec;
-      wrap.appendChild(h); wrap.appendChild(renderValue(val));
-      body.appendChild(wrap);
+    if (r._error) {
+      const err = document.createElement("div"); err.className = "sec";
+      err.textContent = `Failed to load: ${r._error}`;
+      body.appendChild(err);
+    } else {
+      for (const [sec, val] of Object.entries(r.normalized || {})) {
+        const wrap = document.createElement("div"); wrap.className = "sec";
+        const h = document.createElement("h4"); h.textContent = sec;
+        wrap.appendChild(h); wrap.appendChild(renderValue(val));
+        body.appendChild(wrap);
+      }
     }
     card.appendChild(body); paneE.appendChild(card);
   }
-  root.appendChild(paneE);
 
-  const paneC = document.createElement("div"); paneC.style.display = "none";
+  const paneC = document.createElement("div");
   const cmp = document.createElement("table"); cmp.className = "cmp";
   cmp.innerHTML = "<thead><tr><th>Field</th></tr></thead><tbody></tbody>";
-  for (const [e] of records) { const th = document.createElement("th"); th.textContent = ELECTION_LABELS[e.id] || e.id; cmp.tHead.rows[0].appendChild(th); }
+  for (const [e] of loaded) { const th = document.createElement("th"); th.textContent = ELECTION_LABELS[e.id] || e.id; cmp.tHead.rows[0].appendChild(th); }
   for (const [label, paths] of FIELD_MAP) {
     const tr = cmp.tBodies[0].insertRow();
     const th = document.createElement("th"); th.textContent = label; tr.appendChild(th);
-    for (const [, r] of records) {
+    for (const [, r] of loaded) {
       let v = null;
       for (const path of paths) { v = resolvePath(r.normalized || {}, path); if (v != null && v !== "") break; }
       const td = tr.insertCell(); const c = compactValue(v);
@@ -279,10 +327,105 @@ async function showPerson(p) {
       if (c == null) td.className = "null";
     }
   }
-  paneC.appendChild(cmp); root.appendChild(paneC);
+  paneC.appendChild(cmp);
 
-  tabE.addEventListener("click", () => { tabE.className = "on"; tabC.className = ""; paneE.style.display = ""; paneC.style.display = "none"; });
-  tabC.addEventListener("click", () => { tabC.className = "on"; tabE.className = ""; paneC.style.display = ""; paneE.style.display = "none"; });
+  const paneA = buildAssetPane(loaded);
+
+  const panes = [
+    ["Elections & answers", paneE],
+    ["Assets & income", paneA],
+    ["Compare across elections", paneC],
+  ];
+  for (const [label, pane] of panes) {
+    const btn = document.createElement("button");
+    btn.textContent = label;
+    btn.addEventListener("click", () => {
+      for (const [, other] of panes) other.style.display = "none";
+      for (const b of tabs.children) b.className = "";
+      pane.style.display = ""; btn.className = "on";
+    });
+    tabs.appendChild(btn);
+    pane.style.display = "none";
+    root.appendChild(pane);
+  }
+  tabs.children[0].className = "on";
+  paneE.style.display = "";
+}
+
+function parseMoney(v) {
+  if (v == null) return null;
+  if (typeof v === "number") return Number.isFinite(v) ? v : null;
+  if (typeof v !== "string") return null;
+  const n = parseFloat(v.replace(/[€\s ]/g, "").replace(",", "."));
+  return Number.isFinite(n) ? n : null;
+}
+
+const fmtEUR = (n) => n.toLocaleString("lt-LT", { maximumFractionDigits: 0 }) + " €";
+
+function buildAssetPane(loaded) {
+  const pane = document.createElement("div");
+  const cols = loaded.map(([e, r]) => ({
+    label: SHORT_LABELS[e.id] || e.id,
+    values: MONEY_SERIES.map(([, path]) => parseMoney(resolvePath(r.normalized || {}, path))),
+  }));
+  const allValues = cols.flatMap(c => c.values.filter(v => v != null));
+  if (!allValues.length) {
+    pane.innerHTML = `<div class="loading">No declared asset or income figures in any of this person's elections.</div>`;
+    return pane;
+  }
+
+  const max = Math.max(...allValues, 1);
+  const W = Math.max(560, cols.length * 132 + 100), H = 340;
+  const mL = 84, mR = 12, mT = 16, mB = 64;
+  const plotW = W - mL - mR, plotH = H - mT - mB;
+  const y = (v) => mT + plotH - (v / max) * plotH;
+
+  // 4 round-number gridlines
+  const step = Math.pow(10, Math.floor(Math.log10(max / 4)));
+  const tick = Math.ceil(max / 4 / step) * step;
+  let svg = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" style="max-width:100%">`;
+  for (let t = 0; t <= max; t += tick) {
+    svg += `<line x1="${mL}" y1="${y(t)}" x2="${W - mR}" y2="${y(t)}" stroke="#e3e3de"/>` +
+      `<text x="${mL - 8}" y="${y(t) + 4}" text-anchor="end" font-size="11" fill="#6d6d68">${fmtEUR(t)}</text>`;
+  }
+  const groupW = plotW / cols.length, barW = Math.min(30, groupW * 0.24);
+  cols.forEach((col, i) => {
+    const cx = mL + groupW * (i + 0.5);
+    col.values.forEach((v, s) => {
+      const x = cx + (s - 1) * (barW + 3) - barW / 2;
+      if (v == null) return;
+      const h = Math.max(1.5, (v / max) * plotH);
+      svg += `<rect x="${x.toFixed(1)}" y="${(mT + plotH - h).toFixed(1)}" width="${barW.toFixed(1)}" height="${h.toFixed(1)}" fill="${MONEY_SERIES[s][2]}" rx="2"><title>${MONEY_SERIES[s][0]}: ${fmtEUR(v)}</title></rect>`;
+    });
+    svg += `<text x="${cx}" y="${mT + plotH + 14}" text-anchor="end" font-size="11.5" fill="#1c1c1a" transform="rotate(-24 ${cx} ${mT + plotH + 14})">${col.label}</text>`;
+  });
+  svg += `<line x1="${mL}" y1="${mT + plotH}" x2="${W - mR}" y2="${mT + plotH}" stroke="#6d6d68"/></svg>`;
+
+  const card = document.createElement("div"); card.className = "ecard";
+  card.style.padding = "16px";
+  card.innerHTML = svg +
+    `<div style="display:flex;gap:18px;margin-top:8px;font-size:13px;color:#6d6d68">` +
+    MONEY_SERIES.map(([label, , color]) =>
+      `<span><span style="display:inline-block;width:11px;height:11px;background:${color};border-radius:2px;margin-right:5px"></span>${label}</span>`
+    ).join("") +
+    `<span style="margin-left:auto">missing bar = not declared / not published · hover a bar for the value</span></div>`;
+  pane.appendChild(card);
+
+  // the numbers behind the bars
+  const t = document.createElement("table"); t.className = "cmp"; t.style.marginTop = "14px";
+  t.innerHTML = "<thead><tr><th>Series</th></tr></thead><tbody></tbody>";
+  for (const col of cols) { const th = document.createElement("th"); th.textContent = col.label; t.tHead.rows[0].appendChild(th); }
+  MONEY_SERIES.forEach(([label], s) => {
+    const tr = t.tBodies[0].insertRow();
+    const th = document.createElement("th"); th.textContent = label; tr.appendChild(th);
+    for (const col of cols) {
+      const td = tr.insertCell();
+      td.textContent = col.values[s] == null ? "—" : fmtEUR(col.values[s]);
+      if (col.values[s] == null) td.className = "null";
+    }
+  });
+  pane.appendChild(t);
+  return pane;
 }
 
 boot();
