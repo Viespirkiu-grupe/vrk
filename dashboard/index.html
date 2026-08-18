@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VRK Candidate Browser</title>
+<style>
+  :root {
+    --bg: #f6f6f4; --panel: #ffffff; --ink: #1c1c1a; --muted: #6d6d68;
+    --line: #e3e3de; --accent: #2456a4; --accent-soft: #eef2f9; --win: #22713c;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { margin: 0; font: 15px/1.5 -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--ink); overflow: hidden; display: flex; flex-direction: column; }
+  header { padding: 14px 22px; background: var(--panel); border-bottom: 1px solid var(--line); display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap; }
+  header h1 { font-size: 17px; margin: 0; }
+  header .stats { color: var(--muted); font-size: 13px; }
+  main { display: grid; grid-template-columns: 340px 1fr; gap: 0; flex: 1; min-height: 0; }
+  #left { border-right: 1px solid var(--line); background: var(--panel); display: flex; flex-direction: column; min-height: 0; }
+  #searchbox { padding: 12px; border-bottom: 1px solid var(--line); }
+  #search { width: 100%; padding: 9px 12px; font-size: 15px; border: 1px solid var(--line); border-radius: 8px; }
+  #filters { padding: 6px 12px 10px; font-size: 13px; color: var(--muted); display: flex; gap: 14px; border-bottom: 1px solid var(--line); }
+  #count { margin-left: auto; }
+  #results { overflow-y: auto; flex: 1; }
+  .row { padding: 8px 14px; border-bottom: 1px solid var(--line); cursor: pointer; display: flex; justify-content: space-between; gap: 8px; }
+  .row:hover, .row.active { background: var(--accent-soft); }
+  .row .nm { font-weight: 500; }
+  .row .bd { color: var(--muted); font-size: 12.5px; }
+  .row .cnt { color: var(--accent); font-size: 12.5px; white-space: nowrap; }
+  #person { padding: 22px 28px; overflow-y: auto; }
+  #person .placeholder { color: var(--muted); margin-top: 40px; text-align: center; }
+  .phead { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 18px; }
+  .phead img { width: 92px; border-radius: 8px; border: 1px solid var(--line); }
+  .phead h2 { margin: 0 0 4px; font-size: 22px; }
+  .phead .meta { color: var(--muted); }
+  .tabs { display: flex; gap: 6px; margin: 14px 0; }
+  .tabs button { padding: 7px 14px; border: 1px solid var(--line); background: var(--panel); border-radius: 8px; cursor: pointer; font-size: 14px; }
+  .tabs button.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .ecard { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; margin-bottom: 14px; overflow: hidden; }
+  .ecard > summary { padding: 12px 16px; cursor: pointer; font-weight: 600; list-style: none; display: flex; gap: 10px; align-items: baseline; }
+  .ecard > summary::-webkit-details-marker { display: none; }
+  .ecard .win { color: var(--win); font-size: 13px; font-weight: 500; }
+  .ecard .body { padding: 4px 16px 14px; border-top: 1px solid var(--line); }
+  .sec { margin: 12px 0; }
+  .sec h4 { margin: 0 0 6px; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+  dl { margin: 0; display: grid; grid-template-columns: 260px 1fr; gap: 3px 14px; }
+  dt { color: var(--muted); overflow-wrap: anywhere; }
+  dd { margin: 0; overflow-wrap: anywhere; white-space: pre-wrap; }
+  table.rec { border-collapse: collapse; font-size: 13.5px; margin: 4px 0; max-width: 100%; display: block; overflow-x: auto; }
+  table.rec th, table.rec td { border: 1px solid var(--line); padding: 4px 8px; text-align: left; vertical-align: top; min-width: 110px; }
+  table.rec th { background: var(--accent-soft); font-weight: 600; }
+  table.cmp { border-collapse: collapse; width: 100%; font-size: 13.5px; background: var(--panel); }
+  table.cmp th, table.cmp td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; }
+  table.cmp thead th { background: var(--accent-soft); position: sticky; top: 0; }
+  table.cmp td.null { color: var(--muted); }
+  .loading { color: var(--muted); padding: 20px; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; } #left { max-height: 45vh; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>VRK Candidate Browser</h1>
+  <span class="stats" id="topstats">loading index…</span>
+</header>
+<main>
+  <div id="left">
+    <div id="searchbox"><input id="search" type="search" placeholder="Search a person… (e.g. Puidokas)" autofocus></div>
+    <div id="filters">
+      <label><input type="checkbox" id="multiOnly"> 2+ elections</label>
+      <span id="count"></span>
+    </div>
+    <div id="results"></div>
+  </div>
+  <div id="person"><div class="placeholder">Select a person to see their elections and answers.</div></div>
+</main>
+<script>
+"use strict";
+
+const ELECTION_LABELS = {
+  "2016-seimo": "2016 Seimas",
+  "2017-balandzio-23-meru": "2017-04 mayoral by-elections",
+  "2017-balandzio-23-seimo-anyksciai-panevezys": "2017-04 Seimas by-election (Anykščiai–Panevėžys)",
+  "2017-rugsejo-10-marijampoles-mero": "2017-09 Marijampolė mayoral",
+  "2018-rugsejo-16-seimo-zanavykai": "2018-09 Seimas by-election (Zanavykai)",
+  "2019-kovo-3-savivaldybiu-tarybu": "2019 municipal councils",
+  "2019-prezidento": "2019 presidential",
+  "2019-ep": "2019 European Parliament",
+  "2019-rugsejo-8-seimo": "2019-09 Seimas by-elections",
+  "2020-seimo": "2020 Seimas",
+  "2021-balandzio-11-radviliskio-mero": "2021-04 Radviliškis mayoral",
+  "2021-spalio-10-meru": "2021-10 mayoral by-elections",
+  "2023-kovo-5-savivaldybiu-tarybu-ir-meru": "2023 municipal councils & mayors",
+  "2023-rugsejo-3-seimo-raseiniai-kedainiai": "2023-09 Seimas by-election (Raseiniai–Kėdainiai)",
+  "2023-spalio-8-kupiskio-mero": "2023-10 Kupiškis mayoral",
+  "2024-prezidento": "2024 presidential",
+  "2024-ep": "2024 European Parliament",
+  "2024-seimo": "2024 Seimas",
+  "2025-kovo-16-meru": "2025-03 mayoral by-elections",
+};
+
+// Comparison concepts: label -> normalized paths tried in order per election.
+const FIELD_MAP = [
+  ["Einamos pareigos", ["anketa.einamos-pareigos"]],
+  ["Pagrindinė darbovietė", ["anketa.pagrindine-darboviete"]],
+  ["Išsilavinimas", ["anketa.issilavinimas", "biografija.issilavinimas"]],
+  ["Šeiminė padėtis", ["anketa.seimine-padetis", "biografija.seimine-padetis"]],
+  ["Užsienio kalbos", ["anketa.uzsienio-kalbos", "biografija.uzsienio-kalbos"]],
+  ["Privalomas registruoti turtas", ["turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas"]],
+  ["Piniginės lėšos", ["turto-ir-pajamu-deklaracijos.pinigines-lesos"]],
+  ["Gautos pajamos", ["turto-ir-pajamu-deklaracijos.gautos-pajamos"]],
+  ["Teistumas (deklaracija)", ["anketa.pareiskimai.ar-buvote-pripazintas-kaltu"]],
+];
+
+let INDEX = null;
+const recordCache = new Map();
+
+const fold = (s) => (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase();
+
+async function boot() {
+  const res = await fetch("people.json");
+  INDEX = await res.json();
+  const s = INDEX.stats;
+  document.getElementById("topstats").textContent =
+    `${s.persons.toLocaleString()} people · ${s.records.toLocaleString()} candidacies · ` +
+    `${s.personsInMultipleElections.toLocaleString()} in 2+ elections`;
+  for (const p of INDEX.people) p._f = fold(p.n);
+  document.getElementById("search").addEventListener("input", renderList);
+  document.getElementById("multiOnly").addEventListener("change", renderList);
+  renderList();
+  const hashKey = decodeURIComponent(location.hash.slice(1));
+  if (hashKey) { const p = INDEX.people.find(p => p.k === hashKey); if (p) showPerson(p); }
+}
+
+function renderList() {
+  const q = fold(document.getElementById("search").value.trim());
+  const multiOnly = document.getElementById("multiOnly").checked;
+  const out = [];
+  for (const p of INDEX.people) {
+    if (multiOnly && p.e.length < 2) continue;
+    if (q && !p._f.includes(q)) continue;
+    out.push(p);
+    if (out.length >= 5000) break;
+  }
+  document.getElementById("count").textContent = `${out.length.toLocaleString()}${out.length >= 5000 ? "+" : ""} shown`;
+  const frag = document.createDocumentFragment();
+  for (const p of out.slice(0, 300)) {
+    const div = document.createElement("div");
+    div.className = "row";
+    div.dataset.key = p.k;
+    div.innerHTML = `<span><span class="nm"></span> <span class="bd"></span></span>` +
+      `<span class="cnt">${p.e.length} election${p.e.length > 1 ? "s" : ""}</span>`;
+    div.querySelector(".nm").textContent = p.n;
+    div.querySelector(".bd").textContent = p.b ? `· ${p.b}` : "· birth date unknown";
+    div.addEventListener("click", () => showPerson(p));
+    frag.appendChild(div);
+  }
+  const results = document.getElementById("results");
+  results.replaceChildren(frag);
+}
+
+function recordFile(e) {
+  return `data/${e.id}/${e.c}-${e.id}.json`;
+}
+
+async function fetchRecord(e) {
+  const file = recordFile(e);
+  if (!recordCache.has(file)) {
+    recordCache.set(file, fetch("../" + file).then(r => r.json()));
+  }
+  return recordCache.get(file);
+}
+
+function resolvePath(obj, path) {
+  let cur = obj;
+  for (const part of path.split(".")) {
+    if (cur == null || typeof cur !== "object") return null;
+    cur = cur[part];
+  }
+  return cur === undefined ? null : cur;
+}
+
+function compactValue(v) {
+  if (v == null || v === "") return null;
+  if (typeof v !== "object") return String(v);
+  if (Array.isArray(v)) {
+    const parts = v.map(compactValue).filter(Boolean);
+    return parts.length ? parts.join("; ") : null;
+  }
+  const parts = Object.entries(v)
+    .map(([k, x]) => { const c = compactValue(x); return c == null ? null : `${k}: ${c}`; })
+    .filter(Boolean);
+  return parts.length ? parts.join("; ") : null;
+}
+
+function renderValue(v) {
+  if (v == null || v === "") { const s = document.createElement("span"); s.textContent = "—"; s.style.color = "var(--muted)"; return s; }
+  if (typeof v !== "object") { const s = document.createElement("span"); s.textContent = String(v); return s; }
+  if (Array.isArray(v)) {
+    if (v.every(x => x == null || typeof x !== "object")) {
+      const s = document.createElement("span"); s.textContent = v.filter(x => x != null).join("; ") || "—"; return s;
+    }
+    const keys = [...new Set(v.flatMap(x => (x && typeof x === "object" && !Array.isArray(x)) ? Object.keys(x) : []))];
+    const t = document.createElement("table"); t.className = "rec";
+    t.innerHTML = "<thead><tr></tr></thead><tbody></tbody>";
+    for (const k of keys) { const th = document.createElement("th"); th.textContent = k; t.tHead.rows[0].appendChild(th); }
+    for (const item of v) {
+      const tr = t.tBodies[0].insertRow();
+      for (const k of keys) tr.insertCell().appendChild(renderValue(item && typeof item === "object" ? item[k] : item));
+    }
+    return t;
+  }
+  const dl = document.createElement("dl");
+  for (const [k, x] of Object.entries(v)) {
+    if (k === "nuotrauka") continue; // rendered as the header photo instead
+    const dt = document.createElement("dt"); dt.textContent = k;
+    const dd = document.createElement("dd"); dd.appendChild(renderValue(x));
+    dl.append(dt, dd);
+  }
+  return dl;
+}
+
+async function showPerson(p) {
+  location.hash = encodeURIComponent(p.k);
+  for (const el of document.querySelectorAll(".row")) el.classList.toggle("active", el.dataset.key === p.k);
+  const root = document.getElementById("person");
+  root.innerHTML = `<div class="loading">Loading ${p.e.length} record(s)…</div>`;
+  const records = await Promise.all(p.e.map(e => fetchRecord(e).then(r => [e, r])));
+
+  root.innerHTML = "";
+  const head = document.createElement("div"); head.className = "phead";
+  for (const [, r] of records) {
+    const photo = resolvePath(r, "normalized.profilis.nuotrauka");
+    if (photo && photo.startsWith("data:")) { const img = document.createElement("img"); img.src = photo; head.appendChild(img); break; }
+  }
+  const hd = document.createElement("div");
+  const h2 = document.createElement("h2"); h2.textContent = p.n;
+  const meta = document.createElement("div"); meta.className = "meta";
+  meta.textContent = (p.b ? `Born ${p.b} · ` : "Birth date unknown · ") +
+    `${p.e.length} election${p.e.length > 1 ? "s" : ""}, ${p.e.filter(e => e.w).length} won`;
+  hd.append(h2, meta); head.appendChild(hd); root.appendChild(head);
+
+  const tabs = document.createElement("div"); tabs.className = "tabs";
+  const tabE = document.createElement("button"); tabE.textContent = "Elections & answers"; tabE.className = "on";
+  const tabC = document.createElement("button"); tabC.textContent = "Compare across elections";
+  tabs.append(tabE, tabC); root.appendChild(tabs);
+
+  const paneE = document.createElement("div");
+  for (const [e, r] of records) {
+    const card = document.createElement("details"); card.className = "ecard";
+    if (records.length <= 3) card.open = true;
+    const sum = document.createElement("summary");
+    sum.textContent = ELECTION_LABELS[e.id] || e.id;
+    if (e.w) { const win = document.createElement("span"); win.className = "win"; win.textContent = "✓ elected"; sum.appendChild(win); }
+    card.appendChild(sum);
+    const body = document.createElement("div"); body.className = "body";
+    const normalized = r.normalized || {};
+    for (const [sec, val] of Object.entries(normalized)) {
+      const wrap = document.createElement("div"); wrap.className = "sec";
+      const h = document.createElement("h4"); h.textContent = sec;
+      wrap.appendChild(h); wrap.appendChild(renderValue(val));
+      body.appendChild(wrap);
+    }
+    card.appendChild(body); paneE.appendChild(card);
+  }
+  root.appendChild(paneE);
+
+  const paneC = document.createElement("div"); paneC.style.display = "none";
+  const cmp = document.createElement("table"); cmp.className = "cmp";
+  cmp.innerHTML = "<thead><tr><th>Field</th></tr></thead><tbody></tbody>";
+  for (const [e] of records) { const th = document.createElement("th"); th.textContent = ELECTION_LABELS[e.id] || e.id; cmp.tHead.rows[0].appendChild(th); }
+  for (const [label, paths] of FIELD_MAP) {
+    const tr = cmp.tBodies[0].insertRow();
+    const th = document.createElement("th"); th.textContent = label; tr.appendChild(th);
+    for (const [, r] of records) {
+      let v = null;
+      for (const path of paths) { v = resolvePath(r.normalized || {}, path); if (v != null && v !== "") break; }
+      const td = tr.insertCell(); const c = compactValue(v);
+      td.textContent = c == null ? "—" : c;
+      if (c == null) td.className = "null";
+    }
+  }
+  paneC.appendChild(cmp); root.appendChild(paneC);
+
+  tabE.addEventListener("click", () => { tabE.className = "on"; tabC.className = ""; paneE.style.display = ""; paneC.style.display = "none"; });
+  tabC.addEventListener("click", () => { tabC.className = "on"; tabE.className = ""; paneC.style.display = ""; paneE.style.display = "none"; });
+}
+
+boot();
+</script>
+</body>
+</html>
