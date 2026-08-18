@@ -33,3 +33,5 @@ data/
 sitemaps/
 samples/
 samples-full/
+# Dashboard-generated index
+dashboard/people.json
