@@ -3,7 +3,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scraper.elections.prezidento_2019.anketa_parser import parse_anketa_sample
+from bs4 import BeautifulSoup
+
+from scraper.elections.prezidento_2019.anketa_parser import (
+    _parse_anketa_content,
+    parse_anketa_sample,
+)
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +23,46 @@ def _parse(candidate_id: str) -> dict:
             output_root=Path(tmp),
         )
         return json.loads(output_path.read_text(encoding="utf-8"))
+
+
+# VRK renders detail tables (with their own <th> headers) inside the anketa
+# table on other 2019-era pages, e.g. the conviction-detail table for anyone
+# answering the conviction question "Taip". A recursive <th> lookup in
+# _is_records_table classified the whole anketa as a records table, so every
+# question was dropped without an anomaly. None of the nine 2019 presidential
+# candidates has such a page, so the shape is guarded synthetically here.
+NESTED_DETAIL_TABLE_CONTENT = """
+<div>
+  <table border="0">
+    <tr><td>5. Gimimo data <b>1964-05-19</b></td></tr>
+    <tr><td>8.1 Ar esate Lietuvos Respublikos pilietis pagal kilmę? <b>Taip</b></td></tr>
+    <tr><td>
+      <table class="partydata">
+        <thead><tr><th>Nuosprendžio data</th><th>Institucija</th></tr></thead>
+        <tbody><tr><td>2010-01-06</td><td>Vilniaus apygardos teismas</td></tr></tbody>
+      </table>
+    </td></tr>
+    <tr><td>11. Tautybė <b>Lietuvis</b></td></tr>
+  </table>
+</div>
+"""
+
+
+class AnketaNestedTableTests(unittest.TestCase):
+    def test_a_nested_table_does_not_erase_the_anketa(self) -> None:
+        content = BeautifulSoup(NESTED_DETAIL_TABLE_CONTENT, "lxml").find("div")
+        parsed = _parse_anketa_content(content)
+
+        rows_by_number = {
+            row["questionNumber"]: row for row in parsed["rows"] if row["questionNumber"]
+        }
+        self.assertEqual(list(rows_by_number), ["5", "8.1", "11"])
+        self.assertEqual(rows_by_number["8.1"]["answer"], "Taip")
+        self.assertEqual(parsed["normalized"]["gimimo-data"], "1964-05-19")
+        self.assertEqual(
+            parsed["normalized"]["pareiskimai"]["ar-esate-pilietis-pagal-kilme"], "Taip"
+        )
+        self.assertEqual(parsed["normalized"]["tautybe"], "Lietuvis")
 
 
 class Prezidento2019AnketaParserTests(unittest.TestCase):
