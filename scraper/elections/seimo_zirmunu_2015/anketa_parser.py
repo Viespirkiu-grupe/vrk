@@ -44,6 +44,17 @@ DEFAULT_OUTPUT_ROOT = Path("data/2015-kovo-1-seimo-zirmunai")
 QUESTION_START_PATTERN = re.compile(r"^\s*(\d{1,2}(?:\.\d{1,2})*)\.?\s+")
 MAX_QUESTION_NUMBER = 30
 
+# VRK publishes a candidate whose anketa it never received as a page whose
+# content is the single word "Rengiama" — the questionnaire is genuinely
+# absent upstream, not missed by the parser.
+ANKETA_PLACEHOLDER_TEXTS = {"rengiama"}
+
+# The municipal profile cards close with a standing notice to parties and
+# candidates. It is page furniture, not a field, and it is emphasised like a
+# value, so it is recognised and dropped rather than attached to whatever
+# label happens to precede it.
+PROFILE_NOTICE_PREFIX = "politinių partijų, visuomeninių rinkimų komitetų"
+
 # The 2015 pages publish declared amounts in litas; the GPM308 row wording is
 # also this era's own (the 2016 pages cite fields "…14, 20", these cite
 # "…14, 22" plus the V13 field in the singular), so the aliases are restated.
@@ -141,6 +152,16 @@ def _parse_profile_html(soup: BeautifulSoup) -> dict[str, Any]:
     fields: list[dict[str, Any]] = []
     pending_label = ""
 
+    # The municipal pages wrap the name in <p texttransform="uppercase">, so it
+    # is not a direct child of the cell. Reading it here first also keeps the
+    # unlabelled <b> further down — VRK's "kviečiame susipažinti su skelbiamais
+    # duomenimis" notice — from being promoted to the name instead.
+    name_paragraph = detail_cell.find("p")
+    if name_paragraph is not None:
+        name_node = name_paragraph.find("b")
+        if name_node is not None:
+            profile["candidateDisplayName"] = _tag_text(name_node)
+
     for node in detail_cell.children:
         if isinstance(node, NavigableString):
             text = normalize_space(str(node))
@@ -153,6 +174,21 @@ def _parse_profile_html(soup: BeautifulSoup) -> dict[str, Any]:
             continue
         if node.name == "b":
             value_text = _tag_text(node)
+            if value_text.lower().startswith(PROFILE_NOTICE_PREFIX):
+                # A label still pending here has no value of its own — the
+                # self-nomination flag ("Išsikėlęs kandidatas") is written
+                # that way — so it is kept as a valueless field rather than
+                # taking the notice as its value or vanishing with it.
+                if pending_label:
+                    fields.append(
+                        {
+                            "key": pending_label.rstrip(":"),
+                            "displayValue": "",
+                            "urls": [],
+                        }
+                    )
+                pending_label = ""
+                continue
             if not profile["candidateDisplayName"] and not pending_label:
                 profile["candidateDisplayName"] = value_text
                 continue
@@ -397,6 +433,12 @@ def parse_anketa_html(
     anketa = _parse_anketa_cell(anketa_cell)
     anketa["normalized"] = rows_normalizer(anketa["rows"])
 
+    placeholder = (
+        anketa_cell is None
+        and content is not None
+        and _tag_text(content).strip().lower() in ANKETA_PLACEHOLDER_TEXTS
+    )
+
     return {
         "profile": profile,
         "anketa": anketa,
@@ -404,6 +446,8 @@ def parse_anketa_html(
             "profileCardFound": _profile_div(soup) is not None,
             "contentDivFound": content is not None,
             "anketaTableFound": anketa_cell is not None,
+            "anketaPlaceholder": placeholder,
+            "placeholderText": _tag_text(content) if placeholder else "",
         },
     }
 
@@ -1075,7 +1119,22 @@ def parse_anketa_sample(
                 source_url=candidate_source_url,
             )
         )
-    if not diagnostics.get("anketaTableFound", False):
+    anketa_placeholder = bool(diagnostics.get("anketaPlaceholder", False))
+    if anketa_placeholder:
+        # An unpublished questionnaire is upstream data, not a parse failure;
+        # recording it as one would hide it among real breakage.
+        anomalies.append(
+            build_anomaly_event(
+                event_type="AnketaNotPublished",
+                severity="warning",
+                stage="parse",
+                election_id=election_id,
+                candidate_id=candidate_id,
+                source_url=candidate_source_url,
+                detail={"placeholderText": diagnostics.get("placeholderText", "")},
+            )
+        )
+    elif not diagnostics.get("anketaTableFound", False):
         anomalies.append(
             build_anomaly_event(
                 event_type="AnketaTableNotFound",
@@ -1088,7 +1147,7 @@ def parse_anketa_sample(
         )
 
     anketa_stats = parsed["anketa"]["stats"]
-    if anketa_stats["rowCount"] == 0:
+    if anketa_stats["rowCount"] == 0 and not anketa_placeholder:
         anomalies.append(
             build_anomaly_event(
                 event_type="AnketaTableEmpty",

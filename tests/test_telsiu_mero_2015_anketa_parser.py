@@ -60,6 +60,21 @@ class TelsiuMero2015AnketaParserTests(unittest.TestCase):
             "Einu",
         )
 
+    def test_candidate_name_comes_from_the_paragraph_wrapped_heading(self) -> None:
+        # The municipal cards wrap the name in <p texttransform="uppercase">,
+        # so a walker that only reads direct <b> children misses it and
+        # promotes the card's closing notice to the name instead. That put
+        # VRK's "kviečiame susipažinti su skelbiamais duomenimis" boilerplate
+        # in vardas-pavarde on every municipal record.
+        for record in (self.kuizinas, self.urbonas, self.bacevicius):
+            with self.subTest(candidate=record["candidateId"]):
+                name = record["normalized"]["profilis"]["vardas-pavarde"]
+                self.assertEqual(name, record["candidateName"])
+                self.assertNotIn("kviečiame susipažinti", name)
+        # The notice is dropped rather than attached to the label above it.
+        for field in self.bacevicius["normalized"]["profilis"]["kita"].values():
+            self.assertNotIn("kviečiame susipažinti", field["reiksme"] or "")
+
     def test_municipal_profile_card_fields(self) -> None:
         kita = self.kuizinas["normalized"]["profilis"]["kita"]
         self.assertEqual(kita["savivaldybe"]["reiksme"], "Telšių rajono (Nr. 51)")
