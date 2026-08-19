@@ -485,7 +485,7 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
                 self.assertIsNone(payload["normalized"]["profilis"]["nuotrauka"])
                 photo_src = payload["rawData"]["profile"]["photoSrc"]
                 self.assertTrue(photo_src.startswith("data:"), photo_src[:32])
-                self.assertIn("base64,", nuotrauka)
+                self.assertIn("base64,", photo_src)
 
         # The three council-only fixtures publish no portrait at all — their
         # pages carry no image element, not an image the parser missed.
