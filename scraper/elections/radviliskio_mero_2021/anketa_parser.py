@@ -31,7 +31,7 @@ from scraper.elections.seimo_2016.anketa_parser import (
     _parse_politines_kampanijos_html,
 )
 from scraper.shared.anomalies import build_anomaly_event
-from scraper.shared.files import write_json
+from scraper.shared.files import write_candidate_record, write_json
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2021-balandzio-11-radviliskio-mero")
 DEFAULT_OUTPUT_ROOT = Path("data/2021-balandzio-11-radviliskio-mero")
@@ -278,7 +278,7 @@ def parse_anketa_sample(
     }
 
     output_path = output_root / f"{candidate_id}-{ELECTION_ID}.json"
-    write_json(output_path, output_payload)
+    write_candidate_record(output_path, output_payload)
 
     stats = {
         "candidateId": candidate_id,

@@ -54,9 +54,10 @@ class MarijampolesMero2017AnketaParserTests(unittest.TestCase):
     def test_profile_card_fields(self) -> None:
         profilis = self.lunskiene["normalized"]["profilis"]
         self.assertEqual(profilis["vardas-pavarde"], "IRENA LUNSKIENĖ")
-        # The embedded base64 photo stays in rawData only; normalized keeps
-        # URL-form references, and this era embeds, so the field is null.
-        self.assertIsNone(profilis["nuotrauka"])
+        # The embedded photo is externalized to a sidecar file; both photo
+        # fields carry the relative path.
+        self.assertTrue(str(profilis["nuotrauka"]).startswith("photos/"))
+        self.assertTrue(str(profilis["nuotrauka"]).endswith(".jpg"))
 
         kita = profilis["kita"]
         self.assertEqual(kita["savivaldybe"]["reiksme"], "Marijampolės (25)")
