@@ -84,6 +84,30 @@ Measured against the archived pre-fix outputs, 2,463 records changed:
   `2019-ep` alone), confirming the Sprendimai normalization matters most
   where campaigns are dense.
 
+### The 2026-08-19 municipal re-scrape
+
+Both municipal general elections were re-scraped overnight with
+`KEEP_SAMPLES=1` — 2023 in 3h33m, 2019 in 3h29m, zero fetch failures, zero
+failed candidates, zero anomalies in either. This was the corpus's last
+planned scrape: with it, **every election's full raw HTML is retained**
+(`samples-full/` for the seven large elections, the fixture tree for the
+twelve small ones — 3.6 GB total), so any future parser fix lands by offline
+re-parse.
+
+Measured against the archived pre-scrape copies:
+
+- **2019**: all 13,666 records now carry `teistumo-detales` (244 non-empty
+  with the same 303 conviction rows the targeted re-fetch recovered); not a
+  single record changed beyond that key — a fresh scrape reproduced the
+  corpus byte-for-byte otherwise.
+- **2023**: 13,794 of 13,796 records byte-identical. The two that changed are
+  the last pre-fix remnants healing: both were written minutes before the
+  `partyList.number` sitemap fix landed on 2026-08-17 and still carried the
+  Akmenės group-header value (list 25); the fresh scrape corrected them to 5.
+- The artifact scan over the fresh corpora matches the review baseline — no
+  new artifact classes; the two known upstream quirks (one `&amp;`
+  double-escape, the non-NFC file names) reproduce verbatim from VRK.
+
 ### The 2023 municipal general election
 
 `2023-kovo-5-savivaldybiu-tarybu-ir-meru` is on its own in the table above
@@ -298,14 +322,10 @@ each now has one.
 
 - The corpus covers the elections implemented so far. VRK publishes further
   by-elections and older elections that have no module yet.
-- The Q9.1 conviction-detail capture (fixes table above) landed after the
-  2019 municipal full run, whose raw HTML was not retained. The 244 declarers
-  were re-fetched on 2026-08-18 with retention on: **all 244 now carry detail
-  records — 303 convictions in total, 49 candidates with more than one** —
-  with zero fetch failures and zero anomalies. The remaining 13,422
-  non-declarers gain the (empty) `teistumo-detales` key whenever the election
-  is next re-parsed or re-scraped; until then the key's absence on a record
-  implies Q9 was not answered `Taip`. Every other corpus is post-fix in full.
+- ~~The Q9.1 capture landed after the 2019 municipal full run~~ — resolved by
+  the 2026-08-19 municipal re-scrape (below): every record in every election
+  now reflects the post-fix parse in full, and `teistumo-detales` is present
+  on all 13,666 2019 municipal records (244 non-empty, 303 convictions).
 - The repeat Visaginas mayoral vote of 2023 is a separate election with its own
   VRK path (`/rinkimai/1344/rnk1664/`) and has no module; it is not part of the
   13,796.
