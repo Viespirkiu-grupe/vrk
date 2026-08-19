@@ -1,5 +1,30 @@
 # Plan: the six 2015 backlog elections (issues #48–#53)
 
+> **Status (2026-08-20).** Four of six modules are built, tested, wired and
+> documented: `seimo_zirmunu_2015` (#48), `seimo_varenos_eisiskiu_2015` (#50),
+> `telsiu_mero_2015` (#53) and `pakartotiniai_sirvintu_traku_2015` (#51).
+> Remaining: `pakartotiniai_silutes_2015` (#52), then `savivaldybiu_2015`
+> (#49). What the build settled, beyond §2 below:
+>
+> - The era machinery lives in `seimo_zirmunu_2015` with election id, listing
+>   URL, paths, expected tabs and the anketa-rows normalizer as call-time
+>   parameters; sibling modules are three files of constants and wrappers.
+> - The municipal question mapping lives in `telsiu_mero_2015`
+>   (`normalize_municipal_anketa_rows`) and is what #52 and #49 should reuse.
+> - #51's sitemap already does the two-structure walk and the id merge, so it
+>   is the closer model for #52 than the by-election modules are.
+> - Defect found and fixed mid-build: the municipal profile cards wrap the
+>   name in `<p texttransform>`, and the walker was putting VRK's boilerplate
+>   notice in `profilis.vardas-pavarde` on every municipal record. Any new
+>   municipal module inherits the fix; check names explicitly anyway.
+> - VRK can issue one person two candidate ids in one election (Marija Puč,
+>   #51). The id join is still right — do not merge on name — but the
+>   marker/join cross-check has to be read, not assumed zero.
+> - A candidacy can have no questionnaire at all (`Rengiama`); that is an
+>   `AnketaNotPublished` warning, not a parse failure.
+> - Full scrapes are still outstanding for #51 (10 of 327 parsed); the three
+>   small by-elections are complete fields already.
+
 Written 2026-08-19 from live-page research. All six `help wanted` / `missing-election`
 issues are 2015 elections, and all of them share **one page-layout family that the
 project has never parsed** — older than the 2016 era, with its own quirks. That makes
