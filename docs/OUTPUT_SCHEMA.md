@@ -1068,3 +1068,27 @@ repository — so several record shapes are this era's own:
   linking the party whose campaign covers them.
 - `kita` holds the "Kandidato programa" text with the program PDF URL in
   `nuorodos`; one candidate published no program (`Duomenų nėra`, no link).
+
+## Appendix: 2015 Telšiai mayor (`2015-lapkricio-8-telsiu-mero`)
+
+Records are written as
+`data/2015-lapkricio-8-telsiu-mero/<candidate-id>-2015-lapkricio-8-telsiu-mero.json`.
+The pages are the 2015 era described in the appendix above — every era shape
+there (no elected data, URL photos, litas amounts with `valiuta`/`pastaba`,
+retained spouse block, the campaign additions) applies here too. What differs
+is the municipal question set and the profile card:
+
+- `normalized.anketa.pareiskimai` carries the savivaldybių tarybų rinkimų
+  įstatymo declarations: `ar-nebaigta-teismo-paskirta-bausme` (Q8.1),
+  `ar-atliekate-karo-tarnyba` (Q8.2), `ar-eina-nesuderinamas-pareigas` (Q8.3),
+  `ar-kitos-valstybes-institucijos-narys` (Q8.4),
+  `ar-turite-kitos-valstybes-pilietybe` (Q8.5) and
+  `ar-buvote-pripazintas-kaltu` (the Q9 "anything to declare" question) —
+  keys shared with `meru_2017` where the questions match. Answers are the
+  era's verbose first person (`Neturiu`, `Nesu`, `Neinu`; one candidate
+  answers `Einu`).
+- `profilis.kita` holds `savivaldybe`, `iskele` and `numeris-sarase` for
+  party-nominated candidates; the self-nominated candidate instead carries an
+  `issikeles-kandidatas` entry and no list fields.
+- `kita` is `Duomenų nėra` for every candidate — no Telšiai candidate
+  published a program.

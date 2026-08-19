@@ -342,6 +342,18 @@ Seven candidates are represented by their nominating party's campaign
 (`root.html` card captures); the one self-nominated candidate is the only
 independent participant with the full five campaign tabs.
 
+For `2015-lapkricio-8-telsiu-mero` the allowlist
+(`tests/test_telsiu_mero_2015_sample_allowlist.py`) is the complete
+seven-candidate field:
+
+- `algirdas-bacevicius`, `petras-kuizinas`, `almantas-lukavicius`,
+  `deivydas-rubezius`, `jolanta-rupeikiene`, `mantas-serva`, `saulius-urbonas`
+
+This covers the municipal anketa variant, a self-nominated candidate whose
+card carries "Išsikėlęs kandidatas" instead of list fields, both campaign
+participant types, a candidate who answers the incompatible-duties question
+"Einu", and one who answered almost nothing ("Nenurodė" throughout).
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:

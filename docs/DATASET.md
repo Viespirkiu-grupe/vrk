@@ -18,7 +18,7 @@ never touched by a full run.
 
 ## Inventory
 
-33,139 candidate records across 21 elections, 2015–2025, with **zero fetch
+33,146 candidate records across 22 elections, 2015–2025, with **zero fetch
 failures and zero parse anomalies**. The two municipal general elections are
 together larger than everything else in the corpus by a factor of three; each
 was scraped separately in ~6h. Every row now reflects the post-fix parse: the
@@ -29,6 +29,7 @@ below) and every other election was re-parsed offline the same day.
 |---|---:|---:|---:|---:|
 | `2015-kovo-1-seimo-zirmunai` | 12 | 0 | 0 | 12 |
 | `2015-birzelio-7-seimo-varena-eisiskes` | 8 | 0 | 0 | 8 |
+| `2015-lapkricio-8-telsiu-mero` | 7 | 0 | 0 | 7 |
 | `2016-seimo` | 1415 | 141 | 38 | 672 |
 | `2017-balandzio-23-meru` | 11 | 2 | 0 | 11 |
 | `2017-balandzio-23-seimo-anyksciai-panevezys` | 11 | 1 | 0 | 11 |
@@ -48,7 +49,7 @@ below) and every other election was re-parsed offline the same day.
 | `2025-kovo-16-meru` | 14 | 2 | 0 | 10 |
 | `2023-kovo-5-savivaldybiu-tarybu-ir-meru` | 13796 | 1557 | 541 | 433 |
 | `2019-kovo-3-savivaldybiu-tarybu` | 13666 | 1502 | 244 | 410 |
-| **total** | **33139** | **3521** | **946** | **3387** |
+| **total** | **33146** | **3521** | **946** | **3394** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the

@@ -31,6 +31,7 @@ python -m scraper <command> [args]
 - `2019-rugsejo-8-seimo` (2019-09-08 new Seimo elections in Žirmūnai No. 4, Gargždai No. 31 and Žiemgala No. 46)
 - `2015-kovo-1-seimo-zirmunai` (2015-03-01 new Seimo by-election in Žirmūnai No. 4)
 - `2015-birzelio-7-seimo-varena-eisiskes` (2015-06-07 new Seimo by-election in Varėna–Eišiškės No. 70)
+- `2015-lapkricio-8-telsiu-mero` (2015-11-08 new Telšiai district council member-mayor election)
 
 ## Election Separation
 
@@ -604,6 +605,27 @@ python -m scraper sitemap 2015-kovo-1-seimo-zirmunai
 python -m scraper fetch-candidate-samples 2015-kovo-1-seimo-zirmunai --candidate-id sarunas-gustainis --allow-new-samples
 python -m scraper parse-anketa-samples 2015-kovo-1-seimo-zirmunai
 python -m scraper parse-anketa-samples 2015-birzelio-7-seimo-varena-eisiskes
+```
+
+## Telšiai mayor (`2015-lapkricio-8-telsiu-mero`) Workflow
+
+The 2015-11-08 new Telšiai district council member-mayor election is the same
+2015-era layout with the municipal anketa variant: the savivaldybių tarybų
+rinkimų įstatymo declarations (Q8.1–8.5 plus the Q9 conviction-declaration
+question) with verbose first-person answers ("Neturiu", "Nesu", "Neinu").
+Its module is thin wiring over the Žirmūnai machinery with the municipal
+question mapping plugged in — the mapping later 2015 municipal elections
+reuse. Two path quirks: the static pages live under
+`2015_4_savivaldybiu_tarybu_rinkimai/469_lt/` rather than `rinkimai/`, while
+the campaign participant pages sit under `rinkimai/469_lt/` anyway. Seven
+candidates, fixture set is the complete field, mayoral section only (the
+council-lists section of the district page is empty).
+
+```bash
+python -m scraper fetch-sample 2015-lapkricio-8-telsiu-mero
+python -m scraper sitemap 2015-lapkricio-8-telsiu-mero
+python -m scraper fetch-candidate-samples 2015-lapkricio-8-telsiu-mero --candidate-id petras-kuizinas --allow-new-samples
+python -m scraper parse-anketa-samples 2015-lapkricio-8-telsiu-mero
 ```
 
 ## Helpful Checks
