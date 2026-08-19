@@ -37,7 +37,7 @@ from scraper.elections.seimo_2016.anketa_parser import (
     parse_question_number,
 )
 from scraper.shared.anomalies import build_anomaly_event
-from scraper.shared.files import write_json
+from scraper.shared.files import write_candidate_record, write_json
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2024-ep")
 DEFAULT_OUTPUT_ROOT = Path("data/2024-ep")
@@ -838,7 +838,7 @@ def parse_anketa_sample(
     }
 
     output_path = output_root / f"{candidate_id}-{ELECTION_ID}.json"
-    write_json(output_path, output_payload)
+    write_candidate_record(output_path, output_payload)
 
     stats = {
         "candidateId": candidate_id,

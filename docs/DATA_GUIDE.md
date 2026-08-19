@@ -174,11 +174,16 @@ appears as two persons.
   `2019-ep`, `2019-prezidento`, `2020-seimo` and the 2021 mayoral
   elections. Coverage statistics on those fields are meaningless there;
   the 2023/2024 elections carry real city-level values instead.
-- **Photos.** `profilis.nuotrauka` is a base64 data URI in the 2016–2019
-  page eras and a URL from `2020-seimo` on. After the photo de-duplication
-  change, the base64 payload lives only in `rawData.profile.photoSrc` —
-  normalized keeps URL-form values only — so resolve embedded photos
-  through `rawData`.
+- **Photos are sidecar files.** `profilis.nuotrauka` (and
+  `rawData.profile.photoSrc`) is always a *reference*: a VRK URL from
+  `2020-seimo` on, and the relative path `photos/<candidateId>.<ext>` in the
+  2016–2019 page eras, whose file sits beside the records in
+  `data/<election-id>/photos/`. `rawData.profile.photoMeta` carries the
+  file's size and sha256, verifiable against the byte payload VRK served
+  (the raw HTML retains the original data URI). **If you copy records
+  elsewhere, bring the election's `photos/` folder along** — a record alone
+  no longer contains its portrait. One curiosity survives faithfully: one
+  candidate's "photo" is a ZIP archive, stored as `.zip`.
 
 ## Going deeper
 

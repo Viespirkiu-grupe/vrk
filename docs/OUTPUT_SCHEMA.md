@@ -53,7 +53,11 @@ Expected section order in current implementation:
 
 - `candidateDisplayName`
 - `electedNote`
-- `photoSrc`
+- `photoSrc` — a VRK URL (2020+ page eras) or, for the eras whose pages embed
+  the portrait as a base64 data URI, the relative sidecar path
+  `photos/<candidateId>.<ext>` written beside the records; `photoMeta`
+  (`mime`, `bytes`, `sha256`) then identifies the file against the bytes VRK
+  served. `normalized.profilis.nuotrauka` carries the same reference.
 - `fields[]` where each item contains:
   - `key`
   - `displayValue`

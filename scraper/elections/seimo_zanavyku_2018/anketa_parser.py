@@ -31,7 +31,7 @@ from scraper.elections.seimo_2016.anketa_parser import (
 # still headed GPM308. Those are the aliases the 2024 EP module carries.
 from scraper.elections.ep_2024.anketa_parser import _normalize_turto_ir_pajamu_data
 from scraper.shared.anomalies import build_anomaly_event
-from scraper.shared.files import write_json
+from scraper.shared.files import write_candidate_record, write_json
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2018-rugsejo-16-seimo-zanavykai")
 DEFAULT_OUTPUT_ROOT = Path("data/2018-rugsejo-16-seimo-zanavykai")
@@ -279,7 +279,7 @@ def parse_anketa_sample(
     }
 
     output_path = output_root / f"{candidate_id}-{ELECTION_ID}.json"
-    write_json(output_path, output_payload)
+    write_candidate_record(output_path, output_payload)
 
     stats = {
         "candidateId": candidate_id,

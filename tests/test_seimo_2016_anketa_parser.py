@@ -73,10 +73,11 @@ class Seimo2016AnketaParserTests(unittest.TestCase):
     def test_profile_card_fields(self) -> None:
         profilis = self.agne["normalized"]["profilis"]
         self.assertEqual(profilis["vardas-pavarde"], "AGNĖ ŠIRINSKIENĖ")
-        # The embedded base64 photo stays in rawData only; normalized keeps
-        # URL-form references, and this era embeds, so the field is null.
-        self.assertIsNone(profilis["nuotrauka"])
-        self.assertTrue(self.agne["rawData"]["profile"]["photoSrc"].startswith("data:"))
+        # The embedded photo is externalized to a sidecar file; both photo
+        # fields carry the relative path and photoMeta keeps the hash.
+        self.assertEqual(profilis["nuotrauka"], "photos/agne-sirinskiene.jpg")
+        self.assertEqual(self.agne["rawData"]["profile"]["photoSrc"], "photos/agne-sirinskiene.jpg")
+        self.assertGreater(self.agne["rawData"]["profile"]["photoMeta"]["bytes"], 0)
 
     def test_elected_note_variants(self) -> None:
         # List seat, single-member seat won in each round, and no seat at all.

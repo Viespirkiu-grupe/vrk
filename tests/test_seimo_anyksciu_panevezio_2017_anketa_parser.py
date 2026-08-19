@@ -63,9 +63,10 @@ class SeimoAnyksciuPanevezio2017AnketaParserTests(unittest.TestCase):
             profilis["pastaba"],
             "Išrinktas vienmandatėje Anykščių-Panevėžio (Nr.49) apygardoje II ture",
         )
-        # The embedded base64 photo stays in rawData only; normalized keeps
-        # URL-form references, and this era embeds, so the field is null.
-        self.assertIsNone(profilis["nuotrauka"])
+        # The embedded photo is externalized to a sidecar file; both photo
+        # fields carry the relative path.
+        self.assertTrue(str(profilis["nuotrauka"]).startswith("photos/"))
+        self.assertTrue(str(profilis["nuotrauka"]).endswith(".jpg"))
         self.assertIsNone(self.sargunas["normalized"]["profilis"]["pastaba"])
 
         kita = profilis["kita"]

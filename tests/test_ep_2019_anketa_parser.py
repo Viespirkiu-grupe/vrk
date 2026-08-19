@@ -114,10 +114,11 @@ class Ep2019AnketaParserTests(unittest.TestCase):
         profilis = self.daiva["normalized"]["profilis"]
         self.assertEqual(profilis["vardas-pavarde"], "Daiva ADUTAVIČIENĖ")
         self.assertIsNone(profilis["pastaba"])
-        # Base64 photos stay in rawData only (this era embeds ~1 MB each);
-        # normalized keeps URL-form references, so the field is null here.
-        self.assertIsNone(profilis["nuotrauka"])
-        self.assertTrue(self.daiva["rawData"]["profile"]["photoSrc"].startswith("data:"))
+        # The embedded photo is externalized to a sidecar file; both photo
+        # fields carry the relative path and photoMeta keeps the hash.
+        self.assertEqual(profilis["nuotrauka"], "photos/daiva-adutaviciene.jpg")
+        self.assertEqual(self.daiva["rawData"]["profile"]["photoSrc"], "photos/daiva-adutaviciene.jpg")
+        self.assertGreater(self.daiva["rawData"]["profile"]["photoMeta"]["bytes"], 0)
         self.assertEqual(profilis["kita"]["sarasas"]["reiksme"], "Lietuvos žaliųjų partija")
         self.assertEqual(profilis["kita"]["numeris-sarase"]["reiksme"], "15")
 

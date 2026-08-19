@@ -278,11 +278,15 @@ async function showPerson(p) {
     root.appendChild(warn);
   }
   const head = document.createElement("div"); head.className = "phead";
-  for (const [, r] of loaded) {
-    // Base64 photos live only in rawData since the photo de-duplication;
-    // normalized keeps URL-form references (not embeddable offline).
+  for (const [e, r] of loaded) {
+    // Photos are sidecar files since the externalization: both photo fields
+    // carry "photos/<candidateId>.<ext>", resolved against the election dir.
+    // Older corpora may still embed data: URIs; VRK URLs are not hotlinked.
     const photo = resolvePath(r, "rawData.profile.photoSrc") || resolvePath(r, "normalized.profilis.nuotrauka");
-    if (photo && photo.startsWith("data:")) { const img = document.createElement("img"); img.src = photo; head.appendChild(img); break; }
+    if (!photo) continue;
+    const img = document.createElement("img");
+    if (photo.startsWith("photos/")) { img.src = `../data/${e.id}/${photo}`; head.appendChild(img); break; }
+    if (photo.startsWith("data:")) { img.src = photo; head.appendChild(img); break; }
   }
   const hd = document.createElement("div");
   const h2 = document.createElement("h2"); h2.textContent = p.n;

@@ -477,15 +477,14 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
                 )
         self.assertEqual(self.dauksys["normalized"]["profilis"]["vardas-pavarde"], "GEDIMINAS DAUKŠYS")
 
-        # This vintage embeds the portrait rather than linking it. The base64
-        # bytes stay in rawData only; normalized keeps URL-form references,
-        # so the field is null for the embedded-photo mayoral candidates.
+        # This vintage embeds the portrait; it is externalized to a sidecar
+        # file and both photo fields carry the relative path.
         for payload in self.mayoral:
             with self.subTest(candidate=payload["candidateId"]):
-                self.assertIsNone(payload["normalized"]["profilis"]["nuotrauka"])
-                photo_src = payload["rawData"]["profile"]["photoSrc"]
-                self.assertTrue(photo_src.startswith("data:"), photo_src[:32])
-                self.assertIn("base64,", photo_src)
+                expected = f"photos/{payload['candidateId']}.jpg"
+                self.assertEqual(payload["normalized"]["profilis"]["nuotrauka"], expected)
+                self.assertEqual(payload["rawData"]["profile"]["photoSrc"], expected)
+                self.assertGreater(payload["rawData"]["profile"]["photoMeta"]["bytes"], 0)
 
         # The three council-only fixtures publish no portrait at all — their
         # pages carry no image element, not an image the parser missed.
