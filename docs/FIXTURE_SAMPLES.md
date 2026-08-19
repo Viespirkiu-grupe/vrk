@@ -313,6 +313,23 @@ candidate field across the three constituencies that voted. It covers one winner
 per constituency, both campaign participant types, and the candidate nominated by
 two parties whose second nominator would otherwise be dropped.
 
+For `2015-kovo-1-seimo-zirmunai` the allowlist
+(`tests/test_seimo_zirmunu_2015_sample_allowlist.py`) is the complete
+twelve-candidate field:
+
+- `anzela-andruskevic`, `lilijana-astra`, `renata-cytacka`, `algis-caplikas`,
+  `ricardas-garuolis`, `vanda-birute-gineviciene`, `sarunas-gustainis`,
+  `radvile-morkunaite-mikuleniene`, `zydrunas-plytnikas`, `algirdas-raslanas`,
+  `joana-tamkeviciute`, `gediminas-vagnorius`
+
+This covers the winner (Gustainis — though no 2015 page marks him as such),
+a self-nominated candidate, both campaign participant types (two candidates are
+represented by their party), candidates with and without prior-mandate tables,
+a `Nenurodė` marital status, a typed "Neturiu" child answer, and the one
+candidate without a program PDF. Candidate directories also hold a
+`campaigns/dalyvis-<id>/` capture of the participant's five campaign tabs (or
+`root.html` for represented participants).
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:

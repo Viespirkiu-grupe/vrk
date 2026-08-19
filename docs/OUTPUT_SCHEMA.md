@@ -218,15 +218,16 @@ Every entry of `politines-kampanijos-dalyvio-duomenys[]` has the same ten
 keys in all elections that publish campaigns: `statusas`,
 `registravimo-data`, `sprendimo-numeris`, `kontaktai`, `izdininkas`,
 `auditorius`, `aukos-pagal-sekcija`, `finansavimo-ataskaitos`, `sutartys`,
-`sprendimai`.
+`sprendimai`. The 2015 era adds to (never replaces) that set — see the
+`2015-kovo-1-seimo-zirmunai` appendix.
 
 ### The two `privaciu-interesu-deklaracija` families
 
 Declaration sections are keyed two different ways depending on the page era:
 
 - **Form-id sections** (`id001j`, `id001s`, `id001i`, `id001a`, `id001f`,
-  `id001p`, …) on the 2016/2019-era pages: 2016 Seimo, the 2017–2019 Seimo
-  by-elections, both 2017 mayoral elections, 2019 EP, 2019 presidential,
+  `id001p`, …) on the 2016/2019-era pages: 2016 Seimo, the 2015 and 2017–2019
+  Seimo by-elections, both 2017 mayoral elections, 2019 EP, 2019 presidential,
   the 2019 municipal general election and 2020 Seimo.
 - **Slugged sections** (`deklaruojancio-darbovietes`, `sutuoktinio-darbovietes`,
   `rysiai-su-juridiniais-asmenimis`, `rysiai-sudarius-sandorius`,
@@ -1022,3 +1023,46 @@ Election-specific notes:
   2016 and April 2017 pages, despite the section heading still naming GPM308.
 - The 2019 election includes a candidate nominated by two parties; both appear
   in `profilis.kita.iskele.reiksme`, separated by `; `.
+
+## Appendix: 2015 Seimo by-election (`2015-kovo-1-seimo-zirmunai`)
+
+Records are written as
+`data/2015-kovo-1-seimo-zirmunai/<candidate-id>-2015-kovo-1-seimo-zirmunai.json`
+with the same top-level fields and the corpus's section order (`profilis`,
+`anketa`, `biografija`, `turto-ir-pajamu-deklaracijos`,
+`privaciu-interesu-deklaracija`, `politines-kampanijos-dalyvio-duomenys`,
+`kita`). The pages are the pre-2016 static layout — the oldest family in the
+repository — so several record shapes are this era's own:
+
+- **No elected data anywhere.** The 2015 pages carry no `(V)` suffix, no blue
+  anchors and no elected note, so `profilis.pastaba` is null on every record,
+  the winner's included. Electedness for this era can only come from VRK's
+  results pages and is not part of the candidate record.
+- `profilis.nuotrauka` is a URL to an external JPG
+  (`Kandidato<ID>Foto.jpg`) — this era never embedded base64 photos.
+  `profilis.kita` holds `apygarda` and `iskele`, plus a
+  `savarankisko-`/`atstovaujamojo-politines-kampanijos-dalyvio-duomenys` entry
+  whose link is the campaign participant page.
+- `normalized.anketa` carries the 2015 Seimo question set: the 2016 keys minus
+  `pedagoginis-vardas`, and `pareiskimai` stops at `ar-buvote-pripazintas-kaltu`
+  (Q9.2) — the 9.3.x follow-ups do not exist yet. `kita-apie-save` (Q21) is
+  present but answered by a minority. A bare `","` in `pagrindine-darboviete`
+  is the template's empty workplace/position join and normalizes to null.
+- `turto-ir-pajamu-deklaracijos` keeps the seven canonical keys **but the
+  amounts are litas, not euros**. Two extra keys make that explicit:
+  `valiuta` (always `"Lt"`) and `pastaba` (the page's own note naming the
+  declaration period, e.g. 2013 for this election).
+- `privaciu-interesu-deklaracija` is form-id keyed and — unlike the 2016-era
+  Seimo family — retains the spouse block
+  (`deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris`).
+- `politines-kampanijos-dalyvio-duomenys` keeps the fixed ten keys with
+  `registravimo-data` and `sprendimo-numeris` always null (never published this
+  era) and four additions: donation records carry `amountEur` *and* `amountLt`
+  (the pages print both currencies), each donation section carries a
+  `suvestine` list (the totals block VRK prints under the records — totals by
+  source type, with the "juridinių asmenų aukos" prohibition note),
+  `auditorius.ataskaitos` lists the auditor's report PDFs, and represented
+  participants (`statusas: "Atstovaujamasis"`) carry `atstovauja` naming and
+  linking the party whose campaign covers them.
+- `kita` holds the "Kandidato programa" text with the program PDF URL in
+  `nuorodos`; one candidate published no program (`Duomenų nėra`, no link).
