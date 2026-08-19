@@ -330,6 +330,18 @@ candidate without a program PDF. Candidate directories also hold a
 `campaigns/dalyvis-<id>/` capture of the participant's five campaign tabs (or
 `root.html` for represented participants).
 
+For `2015-birzelio-7-seimo-varena-eisiskes` the allowlist
+(`tests/test_seimo_varenos_eisiskiu_2015_sample_allowlist.py`) is the complete
+eight-candidate field:
+
+- `andzej-andruskevic`, `juozas-baublys`, `vidmantas-bizokas`,
+  `marius-juskevicius`, `gitana-markoviciene`, `vidas-mikalauskas`,
+  `miroslavas-monkevicius`, `virginijus-varanavicius`
+
+Seven candidates are represented by their nominating party's campaign
+(`root.html` card captures); the one self-nominated candidate is the only
+independent participant with the full five campaign tabs.
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:

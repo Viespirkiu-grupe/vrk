@@ -30,6 +30,7 @@ python -m scraper <command> [args]
 - `2018-rugsejo-16-seimo-zanavykai` (2018-09-16 new Seimo election in Zanavykai No. 64)
 - `2019-rugsejo-8-seimo` (2019-09-08 new Seimo elections in Žirmūnai No. 4, Gargždai No. 31 and Žiemgala No. 46)
 - `2015-kovo-1-seimo-zirmunai` (2015-03-01 new Seimo by-election in Žirmūnai No. 4)
+- `2015-birzelio-7-seimo-varena-eisiskes` (2015-06-07 new Seimo by-election in Varėna–Eišiškės No. 70)
 
 ## Election Separation
 
@@ -573,13 +574,16 @@ python -m scraper fetch-candidate-samples 2019-rugsejo-8-seimo --candidate-id li
 python -m scraper parse-anketa-samples 2019-rugsejo-8-seimo
 ```
 
-## Seimo by-election (`2015-kovo-1-seimo-zirmunai`) Workflow
+## Seimo by-elections (`2015-kovo-1-seimo-zirmunai`, `2015-birzelio-7-seimo-varena-eisiskes`) Workflow
 
 The 2015-03-01 new Seimo by-election in Žirmūnai (No. 4) — the same
 constituency `2019-rugsejo-8-seimo` later voted in — is the first module of the
 pre-2016 static layout, older than every other family in the repository. Twelve
-candidates, fixture set is the complete field. Nothing about the pages matches
-the 2016 era:
+candidates, fixture set is the complete field. The 2015-06-07 Varėna–Eišiškės
+(No. 70) by-election is the same layout under election path `459_lt` — its
+module is thin wiring over the Žirmūnai one's parameterized machinery (8
+candidates, complete field, 7 of them represented by their nominating party's
+campaign). Nothing about the pages matches the 2016 era:
 
 - the listing is a bare static district page (no Liferay wrapper, no `srcUrl`),
   and candidate links use the genitive `Kandidato<ID>Anketa.html` stem that the
@@ -599,6 +603,7 @@ python -m scraper fetch-sample 2015-kovo-1-seimo-zirmunai
 python -m scraper sitemap 2015-kovo-1-seimo-zirmunai
 python -m scraper fetch-candidate-samples 2015-kovo-1-seimo-zirmunai --candidate-id sarunas-gustainis --allow-new-samples
 python -m scraper parse-anketa-samples 2015-kovo-1-seimo-zirmunai
+python -m scraper parse-anketa-samples 2015-birzelio-7-seimo-varena-eisiskes
 ```
 
 ## Helpful Checks

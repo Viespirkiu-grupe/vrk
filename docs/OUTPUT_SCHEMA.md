@@ -1024,10 +1024,12 @@ Election-specific notes:
 - The 2019 election includes a candidate nominated by two parties; both appear
   in `profilis.kita.iskele.reiksme`, separated by `; `.
 
-## Appendix: 2015 Seimo by-election (`2015-kovo-1-seimo-zirmunai`)
+## Appendix: 2015 Seimo by-elections (`2015-kovo-1-seimo-zirmunai`, `2015-birzelio-7-seimo-varena-eisiskes`)
 
-Records are written as
-`data/2015-kovo-1-seimo-zirmunai/<candidate-id>-2015-kovo-1-seimo-zirmunai.json`
+The March by-election in Žirmūnai (No. 4) defines the 2015-era parsers; the
+June one in Varėna–Eišiškės (No. 70) is thin wiring over the same machinery
+and shares every shape below. Records are written as
+`data/<election-id>/<candidate-id>-<election-id>.json`
 with the same top-level fields and the corpus's section order (`profilis`,
 `anketa`, `biografija`, `turto-ir-pajamu-deklaracijos`,
 `privaciu-interesu-deklaracija`, `politines-kampanijos-dalyvio-duomenys`,
