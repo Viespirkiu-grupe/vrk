@@ -75,7 +75,9 @@ class Meru2017AnketaParserTests(unittest.TestCase):
         profilis = self.sabutis["normalized"]["profilis"]
         self.assertEqual(profilis["vardas-pavarde"], "EUGENIJUS SABUTIS")
         # These pages embed the photo rather than linking it.
-        self.assertTrue(profilis["nuotrauka"].startswith("data:"))
+        # The embedded base64 photo stays in rawData only; normalized keeps
+        # URL-form references, and this era embeds, so the field is null.
+        self.assertIsNone(profilis["nuotrauka"])
 
         kita = profilis["kita"]
         self.assertEqual(kita["savivaldybe"]["reiksme"], "Jonavos rajono (10)")

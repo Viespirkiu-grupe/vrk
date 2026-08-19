@@ -279,7 +279,9 @@ async function showPerson(p) {
   }
   const head = document.createElement("div"); head.className = "phead";
   for (const [, r] of loaded) {
-    const photo = resolvePath(r, "normalized.profilis.nuotrauka");
+    // Base64 photos live only in rawData since the photo de-duplication;
+    // normalized keeps URL-form references (not embeddable offline).
+    const photo = resolvePath(r, "rawData.profile.photoSrc") || resolvePath(r, "normalized.profilis.nuotrauka");
     if (photo && photo.startsWith("data:")) { const img = document.createElement("img"); img.src = photo; head.appendChild(img); break; }
   }
   const hd = document.createElement("div");
