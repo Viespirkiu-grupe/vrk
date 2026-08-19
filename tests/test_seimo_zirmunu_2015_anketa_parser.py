@@ -47,6 +47,7 @@ class SeimoZirmunu2015AnketaParserTests(unittest.TestCase):
                 "biografija",
                 "turto-ir-pajamu-deklaracijos",
                 "privaciu-interesu-deklaracija",
+                "politines-kampanijos-dalyvio-duomenys",
                 "kita",
             ],
         )
@@ -210,6 +211,88 @@ class SeimoZirmunu2015AnketaParserTests(unittest.TestCase):
         self.assertTrue(
             self.morkunaite["normalized"]["biografija"]["tekstas"].startswith("Gimė 1984 m. Kaune")
         )
+
+    def test_campaign_entry_has_corpus_keys(self) -> None:
+        campaigns = self.gustainis["normalized"]["politines-kampanijos-dalyvio-duomenys"]
+        self.assertEqual(len(campaigns), 1)
+        entry = campaigns[0]
+        self.assertEqual(
+            list(entry.keys()),
+            [
+                "statusas",
+                "registravimo-data",
+                "sprendimo-numeris",
+                "kontaktai",
+                "izdininkas",
+                "auditorius",
+                "aukos-pagal-sekcija",
+                "finansavimo-ataskaitos",
+                "sutartys",
+                "sprendimai",
+            ],
+        )
+        self.assertEqual(entry["statusas"], "Savarankiškas")
+        # The 2015 participant pages publish neither field.
+        self.assertIsNone(entry["registravimo-data"])
+        self.assertIsNone(entry["sprendimo-numeris"])
+        self.assertEqual(entry["kontaktai"]["el-pastas"], "sarunas@gustainis.lt")
+        self.assertEqual(entry["izdininkas"]["vardas-pavarde"], "TATJANA ILJASEVIČIŪTĖ")
+        self.assertEqual(entry["auditorius"]["imones-pavadinimas"], 'UAB "LEXIN auditas"')
+        # The auditor's reports are a 2015 addition inside the auditorius block.
+        self.assertEqual(len(entry["auditorius"]["ataskaitos"]), 2)
+        self.assertEqual(entry["auditorius"]["ataskaitos"][0]["type"], "ataskaita")
+
+    def test_campaign_represented_participant_is_a_card(self) -> None:
+        entry = self.raslanas["normalized"]["politines-kampanijos-dalyvio-duomenys"][0]
+        self.assertEqual(entry["statusas"], "Atstovaujamasis")
+        self.assertEqual(entry["izdininkas"], {})
+        self.assertEqual(entry["finansavimo-ataskaitos"], [])
+        # The card names the party whose campaign covers the candidate.
+        self.assertEqual(
+            entry["atstovauja"]["pavadinimas"], "LIETUVOS SOCIALDEMOKRATŲ PARTIJA (S)"
+        )
+        self.assertIn("Dalyvio6717", self.raslanas["rawData"]["politinesKampanijosDalyvioDuomenys"]["campaigns"][0]["campaignUrl"])
+
+    def test_campaign_donations_split_records_from_totals(self) -> None:
+        aukos = self.gustainis["normalized"]["politines-kampanijos-dalyvio-duomenys"][0][
+            "aukos-pagal-sekcija"
+        ]
+        self.assertEqual(
+            set(aukos.keys()), {"gautos-ir-priimtos-aukos", "nepriimtinos-aukos"}
+        )
+        accepted = aukos["gautos-ir-priimtos-aukos"]
+        self.assertEqual(len(accepted["records"]), 11)
+        first = accepted["records"][0]
+        self.assertEqual(first["donor"], "MIKAS GUSTAINIS")
+        # Dual currency: the euro conversion and the litas original.
+        self.assertEqual(first["amountEur"], 2896.2)
+        self.assertEqual(first["amountLt"], 10000)
+        # The totals block parses into the summary, not into the records.
+        totals = {row["label"]: row for row in accepted["suvestine"]}
+        self.assertEqual(totals["Iš viso"]["amountEur"], 23726.9)
+        rejected = aukos["nepriimtinos-aukos"]["records"]
+        self.assertEqual(rejected[0]["notes"], "grąžinta aukotojui 2014-12-23")
+
+    def test_campaign_contracts(self) -> None:
+        caplikas = _parse("algis-caplikas")
+        sutartys = caplikas["normalized"]["politines-kampanijos-dalyvio-duomenys"][0]["sutartys"]
+        self.assertEqual(len(sutartys), 2)
+        self.assertEqual(sutartys[1]["counterparty"], 'UAB "Baltijos vaizdinė reklama"')
+        self.assertEqual(sutartys[1]["agreementNumber"], "12.14-479")
+        self.assertEqual(
+            self.gustainis["normalized"]["politines-kampanijos-dalyvio-duomenys"][0]["sutartys"],
+            [],
+        )
+
+    def test_campaign_financing_reports_link_pdfs(self) -> None:
+        reports = self.gustainis["normalized"]["politines-kampanijos-dalyvio-duomenys"][0][
+            "finansavimo-ataskaitos"
+        ]
+        self.assertEqual(len(reports), 1)
+        self.assertEqual(reports[0]["approvedDate"], "2015-04-16")
+        self.assertEqual(len(reports[0]["reportUrls"]), 1)
+        self.assertTrue(reports[0]["reportUrls"][0].endswith(".pdf"))
+        self.assertEqual(len(reports[0]["advertisingAppendixUrls"]), 1)
 
 
 if __name__ == "__main__":

@@ -579,6 +579,400 @@ def _parse_kita_html(html: str) -> dict[str, Any]:
     }
 
 
+# ---------------------------------------------------------------------------
+# Campaign participant pages
+# ---------------------------------------------------------------------------
+
+CAMPAIGN_STATUS_VALUES = {
+    "savarankiškas": "Savarankiškas",
+    "atstovaujamas": "Atstovaujamasis",
+}
+
+CAMPAIGN_CONTACT_KEY_ALIASES = {
+    "telefonas-pasiteirauti": "telefonas-pasiteirauti",
+    "elektroninio-pasto-adresas": "el-pastas",
+}
+
+CAMPAIGN_PERSON_KEY_ALIASES = {
+    "vardas-pavarde": "vardas-pavarde",
+    "telefonas": "telefonas",
+    "el-pastas": "el-pastas",
+    "imones-pavadinimas": "imones-pavadinimas",
+    "imones-kodas": "imones-kodas",
+}
+
+AUKOS_COLUMN_KEYS = {
+    "eil-nr": "rowNumber",
+    "aukotojas-fizinio-asmens-vardas-ir-pavarde-juridinio-asmens-pavadinimas": "donor",
+    "savivaldybes-pavadinimas": "municipality",
+    "data": "date",
+    "aukos-suma-eur": "amountEur",
+    "aukos-suma-lt": "amountLt",
+    "pastabos-nepinigine-auka-auka-grynais-kita": "notes",
+}
+
+
+def _kv_rows_from_table(table: Tag) -> list[tuple[str, str, Tag]]:
+    rows: list[tuple[str, str, Tag]] = []
+    for tr in table.find_all("tr"):
+        cells = tr.find_all("td")
+        if len(cells) < 2:
+            continue
+        rows.append((_tag_text(cells[0]).rstrip(":"), _tag_text(cells[1]), cells[1]))
+    return rows
+
+
+def _parse_campaign_card(html: str) -> dict[str, Any]:
+    # Every participant page repeats the header card: an h3 naming the
+    # participant, a Statusas/Telefonas/El. paštas table, and — on represented
+    # participants — a "Dalyvį atstovauja" line linking the party's own
+    # participant page.
+    soup = BeautifulSoup(html, "lxml")
+    card: dict[str, Any] = {
+        "title": "",
+        "statusas": "",
+        "kontaktai": {},
+        "atstovauja": None,
+    }
+
+    picklist = soup.select_one("div.picklist")
+    if picklist is None:
+        return card
+
+    card["title"] = _tag_text(picklist.find("h3"))
+
+    table = picklist.find("table")
+    if table is not None:
+        for key_text, value_text, _ in _kv_rows_from_table(table):
+            key = _source_key(key_text)
+            if key == "statusas":
+                raw_status = str(_normalize_text_value(value_text) or "")
+                card["statusas"] = CAMPAIGN_STATUS_VALUES.get(
+                    raw_status.lower(), raw_status.capitalize() if raw_status else ""
+                )
+                continue
+            alias = CAMPAIGN_CONTACT_KEY_ALIASES.get(key)
+            if alias is not None:
+                card["kontaktai"][alias] = _normalize_text_value(value_text)
+
+    picklist_text = _tag_text(picklist)
+    if "Dalyvį atstovauja" in picklist_text:
+        for anchor in picklist.find_all("a", href=True):
+            if "Dalyvi" in anchor["href"]:
+                card["atstovauja"] = {
+                    "pavadinimas": _tag_text(anchor),
+                    "nuoroda": resolve_candidate_url(normalize_space(anchor["href"])),
+                }
+                break
+
+    return card
+
+
+def _parse_campaign_person_html(html: str) -> dict[str, Any]:
+    # The iždininkas and auditorius tabs share one shape: a partydata table
+    # whose first row is the section heading and the rest key/value pairs.
+    # The auditorius page adds a second table listing the auditor's reports.
+    soup = BeautifulSoup(html, "lxml")
+    person: dict[str, Any] = {key: None for key in CAMPAIGN_PERSON_KEY_ALIASES.values()}
+    reports: list[dict[str, Any]] = []
+
+    tabnav = soup.select_one("ul#tabnav")
+    if tabnav is None:
+        return {"person": person, "reports": reports}
+
+    for table in tabnav.find_all_next("table"):
+        kv_rows = _kv_rows_from_table(table)
+        has_report_rows = any(
+            len(tr.find_all("td")) >= 4 for tr in table.find_all("tr")
+        )
+        if has_report_rows:
+            for tr in table.find_all("tr"):
+                cells = tr.find_all("td")
+                if len(cells) < 4:
+                    continue
+                values = [_tag_text(cell) for cell in cells]
+                urls: list[str] = []
+                for cell in cells:
+                    urls.extend(_extract_links(cell))
+                reports.append(
+                    {
+                        "rowNumber": _normalize_text_value(values[0]),
+                        "date": _normalize_text_value(values[1]),
+                        "status": _normalize_text_value(values[2]),
+                        "type": _normalize_text_value(values[3]),
+                        "urls": urls,
+                    }
+                )
+            continue
+        for key_text, value_text, _ in _kv_rows_from_table(table):
+            alias = CAMPAIGN_PERSON_KEY_ALIASES.get(_source_key(key_text))
+            if alias is not None:
+                person[alias] = _normalize_text_value(value_text)
+        if kv_rows:
+            continue
+
+    return {"person": person, "reports": reports}
+
+
+def _parse_aukos_html(html: str) -> dict[str, Any]:
+    # Donation sections are h3 headings followed by a th-headed table, all
+    # inside the picklist div after the tab navigation.
+    soup = BeautifulSoup(html, "lxml")
+    sections: list[dict[str, Any]] = []
+
+    tabnav = soup.select_one("ul#tabnav")
+    if tabnav is None:
+        return {"sections": sections}
+
+    for table in tabnav.find_all_next("table"):
+        headers = [_tag_text(th) for th in table.find_all("th")]
+        if not headers:
+            continue
+        heading = table.find_previous("h3")
+        title = _tag_text(heading).rstrip(":")
+
+        records: list[dict[str, Any]] = []
+        summary: list[dict[str, Any]] = []
+        for tr in table.find_all("tr"):
+            cells = tr.find_all("td")
+            if not cells:
+                continue
+            values = [_tag_text(cell) for cell in cells]
+            if len(cells) < len(headers):
+                # The totals block under the donations: a colspan label, the
+                # Eur and Lt sums, and an occasional note ("juridinių asmenų
+                # aukos — Nuo 2012-01-01 draudžiamos").
+                entry = {
+                    "label": _normalize_text_value(values[0].rstrip(":")) if values else None,
+                    "amountEur": _parse_lt_amount(values[1]) if len(values) > 1 else None,
+                    "amountLt": _parse_lt_amount(values[2]) if len(values) > 2 else None,
+                    "note": _normalize_text_value(values[3]) if len(values) > 3 else None,
+                }
+                if entry["label"] is not None:
+                    summary.append(entry)
+                continue
+            record: dict[str, Any] = {}
+            for index, cell in enumerate(cells):
+                header = headers[index] if index < len(headers) else ""
+                header_key = _source_key(header)
+                # The notes column's parenthetical varies per section
+                # ("Nepiniginė auka…" vs "grąžinta aukotojui…"); either way it
+                # is the notes column.
+                if header_key.startswith("pastabos"):
+                    header_key = "pastabos-nepinigine-auka-auka-grynais-kita"
+                key = AUKOS_COLUMN_KEYS.get(header_key) or header_key or f"stulpelis-{index + 1}"
+                value = _normalize_text_value(_tag_text(cell))
+                if key in ("amountEur", "amountLt"):
+                    record[key] = _parse_lt_amount(value)
+                else:
+                    record[key] = value
+            if any(value is not None for value in record.values()):
+                records.append(record)
+
+        sections.append({"title": title, "records": records, "summary": summary})
+
+    return {"sections": sections}
+
+
+def _parse_finansavimo_ataskaitos_html(html: str) -> list[dict[str, Any]]:
+    soup = BeautifulSoup(html, "lxml")
+    entries: list[dict[str, Any]] = []
+
+    tabnav = soup.select_one("ul#tabnav")
+    if tabnav is None:
+        return entries
+
+    for table in tabnav.find_all_next("table"):
+        if not table.find_all("th"):
+            continue
+        for tr in table.find_all("tr"):
+            cells = tr.find_all("td")
+            if len(cells) < 4:
+                continue
+            values = [_tag_text(cell) for cell in cells]
+            entries.append(
+                {
+                    "rowNumber": _normalize_text_value(values[0]),
+                    "approvedDate": _normalize_text_value(values[1]),
+                    "status": _normalize_text_value(values[2]),
+                    "reportUrls": _extract_links(cells[3]),
+                    "advertisingAppendixUrls": _extract_links(cells[4]) if len(cells) > 4 else [],
+                }
+            )
+
+    return entries
+
+
+def _parse_sutartys_html(html: str) -> list[dict[str, Any]]:
+    soup = BeautifulSoup(html, "lxml")
+    entries: list[dict[str, Any]] = []
+
+    tabnav = soup.select_one("ul#tabnav")
+    if tabnav is None:
+        return entries
+
+    for table in tabnav.find_all_next("table"):
+        if not table.find_all("th"):
+            continue
+        for tr in table.find_all("tr"):
+            cells = tr.find_all("td")
+            if len(cells) < 5:
+                continue
+            values = [_tag_text(cell) for cell in cells]
+            entries.append(
+                {
+                    "rowNumber": _normalize_text_value(values[0]),
+                    "counterparty": _normalize_text_value(values[1]),
+                    "agreementDate": _normalize_text_value(values[2]),
+                    "agreementNumber": _normalize_text_value(values[3]),
+                    "subject": _normalize_text_value(values[4]),
+                    "textAccessNote": _normalize_text_value(values[5]) if len(values) > 5 else None,
+                    "textUrls": _extract_links(cells[5]) if len(cells) > 5 else [],
+                }
+            )
+
+    return entries
+
+
+def _parse_campaign_sample(
+    campaign_meta: dict[str, Any],
+    candidate_dir: Path,
+) -> dict[str, Any] | None:
+    campaign_key = str(campaign_meta.get("campaignKey", ""))
+    campaign_dir = candidate_dir / "campaigns" / campaign_key
+    if not campaign_dir.exists():
+        return None
+
+    tab_files = {
+        str(tab.get("slug", "")): campaign_dir / f"{tab.get('slug', '')}.html"
+        for tab in campaign_meta.get("tabSamples", [])
+        if isinstance(tab, dict) and tab.get("slug")
+    }
+
+    # Independent participants carry the header card on every tab; represented
+    # participants have only the card, saved as root.html.
+    card_path = tab_files.get("izdininkas", campaign_dir / "root.html")
+    if not card_path.exists():
+        card_path = campaign_dir / "root.html"
+    if not card_path.exists():
+        return None
+
+    card = _parse_campaign_card(card_path.read_text(encoding="utf-8"))
+
+    raw: dict[str, Any] = {
+        "campaignKey": campaign_key,
+        "campaignLabel": str(campaign_meta.get("campaignLabel", "")),
+        "campaignUrl": str(campaign_meta.get("campaignUrl", "")),
+        "card": card,
+    }
+
+    entry: dict[str, Any] = {
+        "statusas": _normalize_text_value(card.get("statusas")),
+        # The 2015 participant pages publish neither a registration date nor a
+        # decision number.
+        "registravimo-data": None,
+        "sprendimo-numeris": None,
+        "kontaktai": card.get("kontaktai", {}),
+        "izdininkas": {},
+        "auditorius": {},
+        "aukos-pagal-sekcija": {},
+        "finansavimo-ataskaitos": [],
+        "sutartys": [],
+        "sprendimai": [],
+    }
+    if card.get("atstovauja"):
+        entry["atstovauja"] = card["atstovauja"]
+
+    izdininkas_path = tab_files.get("izdininkas")
+    if izdininkas_path is not None and izdininkas_path.exists():
+        parsed = _parse_campaign_person_html(izdininkas_path.read_text(encoding="utf-8"))
+        raw["izdininkas"] = parsed
+        entry["izdininkas"] = parsed["person"]
+
+    auditorius_path = tab_files.get("auditorius")
+    if auditorius_path is not None and auditorius_path.exists():
+        parsed = _parse_campaign_person_html(auditorius_path.read_text(encoding="utf-8"))
+        raw["auditorius"] = parsed
+        entry["auditorius"] = dict(parsed["person"])
+        if parsed["reports"]:
+            entry["auditorius"]["ataskaitos"] = parsed["reports"]
+
+    aukos_path = tab_files.get("auku-ir-aukotoju-sarasas")
+    if aukos_path is not None and aukos_path.exists():
+        parsed = _parse_aukos_html(aukos_path.read_text(encoding="utf-8"))
+        raw["aukos"] = parsed
+        by_section: dict[str, Any] = {}
+        for section in parsed["sections"]:
+            section_key = _source_key(str(section.get("title", "")))
+            if not section_key:
+                section_key = f"sekcija-{len(by_section) + 1}"
+            by_section[section_key] = {
+                "title": _normalize_text_value(section.get("title")),
+                "records": section.get("records", []),
+                "suvestine": section.get("summary", []),
+            }
+        entry["aukos-pagal-sekcija"] = by_section
+
+    ataskaitos_path = tab_files.get("finansavimo-ataskaitos")
+    if ataskaitos_path is not None and ataskaitos_path.exists():
+        parsed_reports = _parse_finansavimo_ataskaitos_html(
+            ataskaitos_path.read_text(encoding="utf-8")
+        )
+        raw["finansavimoAtaskaitos"] = parsed_reports
+        entry["finansavimo-ataskaitos"] = parsed_reports
+
+    sutartys_path = tab_files.get("sutartys")
+    if sutartys_path is not None and sutartys_path.exists():
+        parsed_contracts = _parse_sutartys_html(sutartys_path.read_text(encoding="utf-8"))
+        raw["sutartys"] = parsed_contracts
+        entry["sutartys"] = parsed_contracts
+
+    return {"raw": raw, "entry": entry}
+
+
+def _parse_campaign_samples(
+    meta: dict[str, Any],
+    candidate_dir: Path,
+    candidate_id: str,
+    source_url: str | None,
+    anomalies: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    raw_campaigns: list[dict[str, Any]] = []
+    entries: list[dict[str, Any]] = []
+
+    campaign_samples = meta.get("campaignSamples")
+    if not isinstance(campaign_samples, list):
+        return raw_campaigns, entries
+
+    for campaign_meta in campaign_samples:
+        if not isinstance(campaign_meta, dict):
+            continue
+        try:
+            parsed = _parse_campaign_sample(campaign_meta, candidate_dir)
+        except Exception as exc:
+            anomalies.append(
+                build_anomaly_event(
+                    event_type="CampaignParseError",
+                    severity="error",
+                    stage="parse",
+                    election_id=ELECTION_ID,
+                    candidate_id=candidate_id,
+                    source_url=source_url,
+                    detail={
+                        "campaignKey": str(campaign_meta.get("campaignKey", "")),
+                        "error": str(exc),
+                    },
+                )
+            )
+            continue
+        if parsed is None:
+            continue
+        raw_campaigns.append(parsed["raw"])
+        entries.append(parsed["entry"])
+
+    return raw_campaigns, entries
+
+
 def _parse_optional_subpages(
     candidate_dir: Path,
     candidate_id: str,
@@ -703,6 +1097,14 @@ def parse_anketa_sample(
         anomalies=anomalies,
     )
 
+    raw_campaigns, campaign_entries = _parse_campaign_samples(
+        meta=meta if isinstance(meta, dict) else {},
+        candidate_dir=candidate_dir,
+        candidate_id=candidate_id,
+        source_url=candidate_source_url,
+        anomalies=anomalies,
+    )
+
     candidate_name = ""
     if isinstance(candidate_meta, dict):
         candidate_name = str(candidate_meta.get("candidateName", "")).strip()
@@ -737,6 +1139,11 @@ def parse_anketa_sample(
         if key == "kita" and isinstance(data, dict):
             normalized["kita"] = _normalize_kita_data(data)
 
+    if raw_campaigns:
+        raw_data["politinesKampanijosDalyvioDuomenys"] = {"campaigns": raw_campaigns}
+    if campaign_entries:
+        normalized["politines-kampanijos-dalyvio-duomenys"] = campaign_entries
+
     raw_data = _order_dict_keys(
         raw_data,
         [
@@ -745,6 +1152,7 @@ def parse_anketa_sample(
             "biografija",
             "turtoIrPajamuDeklaracijos",
             "privaciuInteresuDeklaracija",
+            "politinesKampanijosDalyvioDuomenys",
             "kita",
         ],
     )
@@ -756,6 +1164,7 @@ def parse_anketa_sample(
             "biografija",
             "turto-ir-pajamu-deklaracijos",
             "privaciu-interesu-deklaracija",
+            "politines-kampanijos-dalyvio-duomenys",
             "kita",
         ],
     )
