@@ -536,7 +536,12 @@ def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]
                 for i, val in enumerate(row):
                     label = effective[i] if i < len(effective) else f"stulpelis-{i + 1}"
                     key = _source_key(label) or f"stulpelis-{i + 1}"
-                    row_obj[key] = _normalize_text_value(val)
+                    normalized_value = _normalize_text_value(val)
+                    # Mirrors seimo_2016: VRK prints the ID001F personal-code
+                    # column but never fills it. Skipped only when empty.
+                    if normalized_value is None and key == "asmens-kodas":
+                        continue
+                    row_obj[key] = normalized_value
                 if row_obj:
                     normalized_rows.append(row_obj)
             if normalized_rows:
