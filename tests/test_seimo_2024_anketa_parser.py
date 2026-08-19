@@ -131,8 +131,8 @@ class Seimo2024AnketaParserTests(unittest.TestCase):
         # No sampled candidate answered Q13/Q14 "Taip", so the conditional
         # detail blocks are null / empty but still parsed.
         anketa = self.algirdas["normalized"]["anketa"]
-        self.assertIsNone(anketa["teistumo-detales"]["nuosprendzio-data"])
-        self.assertEqual(anketa["teistumo-detales"]["nusikalstamos-veikos"]["irasai"], [])
+        # Uniform shape: no conviction block means an empty entry list.
+        self.assertEqual(anketa["teistumo-detales"], {"irasai": []})
         self.assertIsNone(anketa["mandato-netekimo-detales"])
 
     def test_biografija_birth_and_marital(self) -> None:

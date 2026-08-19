@@ -12,6 +12,7 @@ from scraper.elections.ep_2019.anketa_parser import (
     _select_profile_table,
 )
 from scraper.elections.ep_2024.anketa_parser import (
+    _conviction_entries,
     _find_photo_src,
     _normalize_privaciu_interesu_data,
     _normalize_turto_ir_pajamu_data,
@@ -144,13 +145,15 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         },
         # 13.1-13.4 appear only when Q13 is answered "Taip".
         "teistumo-detales": {
-            "nuosprendzio-data": _answer("13.1"),
-            "nuosprendzio-valstybe": _answer("13.2"),
-            "nuosprendzio-institucija": _answer("13.3"),
-            "nusikalstamos-veikos": {
-                "aprasas": _answer("13.4"),
-                "irasai": _conviction_records(rows),
-            },
+            # One entry per conviction; empty list when Q13 has no block. The
+            # always-null 13.4 free-text aprasas (the table carries the data)
+            # is retired with the old null-field skeleton.
+            "irasai": _conviction_entries(
+                _answer("13.1"),
+                _answer("13.2"),
+                _answer("13.3"),
+                _conviction_records(rows),
+            ),
         },
         # 14.1 appears only when Q14 is answered "Taip".
         "mandato-netekimo-detales": _answer("14.1"),

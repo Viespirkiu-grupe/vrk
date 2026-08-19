@@ -410,12 +410,12 @@ There are no birth, education, language, hobby or family questions on the 2020
 anketa — those live on the biography tab and are normalized under `biografija`,
 whose key set is: `gimimo-data`, `gimimo-vieta`, `tautybe`, `issilavinimas`,
 `mokslo-laipsnis`, `pedagoginis-vardas`, `uzsienio-kalbos`, `darbo-patirtis`,
-`moksline-pedagogine-visuomenine-veikla`, `pomegiai`, `seimine-padetis`,
+`visuomenine-veikla`, `pomegiai`, `seimine-padetis`,
 `sutuoktinio-vardas-pavarde`, `vaiku-vardai-pavardes`, `kita-apie-save`.
-`moksline-pedagogine-visuomenine-veikla` is this election's variant of the
-`visuomenine-veikla` key every other election uses — the 2020 form widens the
-question to scientific and pedagogical activity, so the key follows the
-prompt.
+`visuomenine-veikla` is the key every election uses; note the 2020 form widens
+that question's wording to scientific and pedagogical activity ("mokslinė,
+pedagoginė, visuomeninė veikla"), so this election's answers cover more ground
+than the shared key name suggests.
 
 Despite the pages keeping the 2016-era layout, `profilis.nuotrauka` is a URL
 to the candidate photo (`kandImg/...`) on all 1,754 records — not the base64

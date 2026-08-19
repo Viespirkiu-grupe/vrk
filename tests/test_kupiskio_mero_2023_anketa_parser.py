@@ -122,12 +122,14 @@ class KupiskioMero2023AnketaParserTests(unittest.TestCase):
     def test_conviction_details_split_on_hyphen(self) -> None:
         # Only Aukštikalnis answered Q13 "Taip"; the 13.4 detail table separates
         # label from value with a plain hyphen, not the 2024 en dash.
-        teistumas = self.aukstikalnis["normalized"]["anketa"]["teistumo-detales"]
+        entries = self.aukstikalnis["normalized"]["anketa"]["teistumo-detales"]["irasai"]
+        self.assertEqual(len(entries), 1)
+        teistumas = entries[0]
         self.assertEqual(teistumas["nuosprendzio-data"], "1992-06-19")
         self.assertEqual(teistumas["nuosprendzio-valstybe"], "Lietuva")
         self.assertEqual(teistumas["nuosprendzio-institucija"], "KUPIŠKIO R. APYLINKĖS TEISMAS")
 
-        irasai = teistumas["nusikalstamos-veikos"]["irasai"]
+        irasai = teistumas["nusikalstamos-veikos"]
         self.assertEqual(len(irasai), 1)
         self.assertEqual(
             irasai[0]["kesinimosi-objektas-baudziamojo-kodekso-skyriaus-ir-straipsnio-pavadinimas"],
@@ -135,12 +137,10 @@ class KupiskioMero2023AnketaParserTests(unittest.TestCase):
         )
         self.assertEqual(irasai[0]["teistumo-isnykimo-ar-panaikinimo-data"], "1993-12-04")
 
-        self.assertIsNone(
-            self.raslanas["normalized"]["anketa"]["teistumo-detales"]["nuosprendzio-data"]
-        )
+        # Uniform shape: no conviction block means an empty entry list.
         self.assertEqual(
-            self.raslanas["normalized"]["anketa"]["teistumo-detales"]["nusikalstamos-veikos"]["irasai"],
-            [],
+            self.raslanas["normalized"]["anketa"]["teistumo-detales"],
+            {"irasai": []},
         )
 
     def test_mandate_loss_details_absent(self) -> None:

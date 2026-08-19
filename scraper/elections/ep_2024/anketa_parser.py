@@ -144,6 +144,31 @@ def _conviction_records(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return records
 
 
+def _conviction_entries(
+    date: str | None,
+    country: str | None,
+    court: str | None,
+    veikos: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    # Every election publishes teistumo-detales as {"irasai": [...]} with one
+    # entry per conviction. The Rinkimų kodekso pages carry a single
+    # conviction block (dates and court as flat rows, offences in a nested
+    # table), so the list holds one entry there — and none when the block is
+    # empty, instead of the null-field skeleton this shape replaced. The
+    # 2019/2021 municipal-law elections list one four-field record per
+    # conviction in the same irasai list.
+    if date is None and country is None and court is None and not veikos:
+        return []
+    return [
+        {
+            "nuosprendzio-data": date,
+            "nuosprendzio-valstybe": country,
+            "nuosprendzio-institucija": court,
+            "nusikalstamos-veikos": veikos,
+        }
+    ]
+
+
 def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     def _answer(question_number: str) -> str | None:
         return _normalize_text_value(
@@ -171,13 +196,15 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         },
         # 13.1-13.4 appear only when Q13 is answered "Taip".
         "teistumo-detales": {
-            "nuosprendzio-data": _answer("13.1"),
-            "nuosprendzio-valstybe": _answer("13.2"),
-            "nuosprendzio-institucija": _answer("13.3"),
-            "nusikalstamos-veikos": {
-                "aprasas": _answer("13.4"),
-                "irasai": _conviction_records(rows),
-            },
+            # One entry per conviction; empty list when Q13 has no block. The
+            # always-null 13.4 free-text aprasas (the table carries the data)
+            # is retired with the old null-field skeleton.
+            "irasai": _conviction_entries(
+                _answer("13.1"),
+                _answer("13.2"),
+                _answer("13.3"),
+                _conviction_records(rows),
+            ),
         },
         # 14.1 appears only when Q14 is answered "Taip".
         "mandato-netekimo-detales": _answer("14.1"),
@@ -468,6 +495,13 @@ def _parse_privaciu_interesu_html(html: str) -> dict[str, Any]:
     }
 
 
+# Header columns the 2021+ private-interest pages print but never fill,
+# measured null in every occurrence across the corpus. "darboviete" is NOT
+# here although it is also always null: its null rows are the workplace
+# group-label dividers the free-text fix deliberately preserves.
+DEAD_WHEN_EMPTY_KEYS = {"rysys", "rysys-sudarius-sandori"}
+
+
 def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]:
     sections = payload.get("sections") if isinstance(payload.get("sections"), list) else []
     result: dict[str, Any] = {}
@@ -497,6 +531,13 @@ def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]
                 if not item_key:
                     if item_value:
                         free_text.append(str(item_value))
+                    continue
+                # Columns VRK prints but never fills — null in 100% of their
+                # occurrences corpus-wide; the real values live under sibling
+                # keys (pavadinimas/darbdavys, rysio-pobudis, sandorio-rusis).
+                # Skipped only when empty, so a page that ever fills one
+                # passes through.
+                if item_value is None and item_key in DEAD_WHEN_EMPTY_KEYS:
                     continue
                 normalized_record[item_key] = item_value
             if free_text:

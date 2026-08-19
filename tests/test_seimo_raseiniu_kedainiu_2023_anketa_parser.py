@@ -114,19 +114,23 @@ class SeimoRaseiniuKedainiu2023AnketaParserTests(unittest.TestCase):
 
     def test_conviction_details(self) -> None:
         # Only Tautkus answered Q13 "Taip".
-        teistumas = self.tautkus["normalized"]["anketa"]["teistumo-detales"]
+        entries = self.tautkus["normalized"]["anketa"]["teistumo-detales"]["irasai"]
+        self.assertEqual(len(entries), 1)
+        teistumas = entries[0]
         self.assertEqual(teistumas["nuosprendzio-data"], "2013-03-06")
         self.assertEqual(teistumas["nuosprendzio-valstybe"], "Lietuva")
         self.assertEqual(teistumas["nuosprendzio-institucija"], "RASEINIŲ R. APYLINKĖS TEISMAS")
 
-        irasai = teistumas["nusikalstamos-veikos"]["irasai"]
+        irasai = teistumas["nusikalstamos-veikos"]
         self.assertEqual(len(irasai), 1)
         self.assertEqual(irasai[0]["kaltes-forma"], "Tyčinis")
         self.assertEqual(irasai[0]["sunkumas"], "Nesunkus")
         self.assertEqual(irasai[0]["teistumo-isnykimo-ar-panaikinimo-data"], "2016-02-22")
 
-        self.assertIsNone(
-            self.skamarakas["normalized"]["anketa"]["teistumo-detales"]["nuosprendzio-data"]
+        # Uniform shape: no conviction block means an empty entry list.
+        self.assertEqual(
+            self.skamarakas["normalized"]["anketa"]["teistumo-detales"],
+            {"irasai": []},
         )
         self.assertIsNone(self.skamarakas["normalized"]["anketa"]["mandato-netekimo-detales"])
 

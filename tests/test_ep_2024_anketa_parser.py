@@ -102,11 +102,14 @@ class Ep2024AnketaParserTests(unittest.TestCase):
     def test_conviction_details_captured_when_q13_is_taip(self) -> None:
         anketa = self.petras["normalized"]["anketa"]
         self.assertEqual(anketa["pareiskimai"]["ar-buvote-pripazintas-kaltu"], "Taip")
-        detales = anketa["teistumo-detales"]
+        # Uniform shape: one entry per conviction under irasai.
+        irasai = anketa["teistumo-detales"]["irasai"]
+        self.assertEqual(len(irasai), 1)
+        detales = irasai[0]
         self.assertEqual(detales["nuosprendzio-data"], "2022-06-30")
         self.assertEqual(detales["nuosprendzio-valstybe"], "Lietuva")
         self.assertEqual(detales["nuosprendzio-institucija"], "VILNIAUS APYGARDOS TEISMAS")
-        veikos = detales["nusikalstamos-veikos"]["irasai"]
+        veikos = detales["nusikalstamos-veikos"]
         self.assertEqual(len(veikos), 1)
         self.assertEqual(
             veikos[0]["nusikalstamos-veikos-rusis-nusikaltimas-ar-baudziamasis-isakymas"],
@@ -120,9 +123,12 @@ class Ep2024AnketaParserTests(unittest.TestCase):
         self.assertEqual(anketa["mandato-netekimo-detales"], "LR Seimas 2023-12-18")
 
     def test_conviction_details_empty_when_q13_is_ne(self) -> None:
-        detales = self.vitalijus["normalized"]["anketa"]["teistumo-detales"]
-        self.assertIsNone(detales["nuosprendzio-data"])
-        self.assertEqual(detales["nusikalstamos-veikos"]["irasai"], [])
+        # No conviction block: the uniform shape is an empty list, not a
+        # skeleton of null fields.
+        self.assertEqual(
+            self.vitalijus["normalized"]["anketa"]["teistumo-detales"],
+            {"irasai": []},
+        )
 
     def test_biografija_birth_and_marital(self) -> None:
         biografija = self.vitalijus["normalized"]["biografija"]

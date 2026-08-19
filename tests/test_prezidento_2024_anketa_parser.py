@@ -133,8 +133,8 @@ class Prezidento2024AnketaParserTests(unittest.TestCase):
         # No 2024 presidential candidate answered Q13/Q14 "Taip", so the
         # conditional detail blocks are all null / empty.
         anketa = self.nauseda["normalized"]["anketa"]
-        self.assertEqual(anketa["teistumo-detales"]["nusikalstamos-veikos"]["irasai"], [])
-        self.assertIsNone(anketa["teistumo-detales"]["nuosprendzio-data"])
+        # Uniform shape: no conviction block means an empty entry list.
+        self.assertEqual(anketa["teistumo-detales"], {"irasai": []})
         self.assertIsNone(anketa["mandato-netekimo-detales"])
 
     def test_biografija_structured_questionnaire(self) -> None:
