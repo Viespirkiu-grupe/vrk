@@ -56,7 +56,10 @@ note (`Dalyvavo I ture`, `Dalyvavo II ture`, or `Išrinktas II ture` for the
 winner). Counting non-null `pastaba` there reports 9 and 8 "elected" for a
 race one person won; match on the `Išrink` prefix, not on presence.
 
-Records live under `data/<election-id>/` (~1.6 GB) and are **not** version
+Records live under `data/<election-id>/` (~0.66 GB of JSON plus 362 MB of
+photo sidecar files under `data/<election-id>/photos/` — 2,199 portraits from
+the embedded-photo eras, externalized 2026-08-19 and verified byte-identical
+to a pre-migration sha256 manifest, file for file) and are **not** version
 controlled — `data/`, `sitemaps/` and `samples/` are gitignored, so the corpus is
 reproduced by running the scrapers rather than by cloning.
 
