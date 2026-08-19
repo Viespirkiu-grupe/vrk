@@ -477,11 +477,14 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
                 )
         self.assertEqual(self.dauksys["normalized"]["profilis"]["vardas-pavarde"], "GEDIMINAS DAUKŠYS")
 
-        # This vintage embeds the portrait rather than linking it.
+        # This vintage embeds the portrait rather than linking it. The base64
+        # bytes stay in rawData only; normalized keeps URL-form references,
+        # so the field is null for the embedded-photo mayoral candidates.
         for payload in self.mayoral:
             with self.subTest(candidate=payload["candidateId"]):
-                nuotrauka = payload["normalized"]["profilis"]["nuotrauka"]
-                self.assertTrue(nuotrauka.startswith("data:"), nuotrauka[:32])
+                self.assertIsNone(payload["normalized"]["profilis"]["nuotrauka"])
+                photo_src = payload["rawData"]["profile"]["photoSrc"]
+                self.assertTrue(photo_src.startswith("data:"), photo_src[:32])
                 self.assertIn("base64,", nuotrauka)
 
         # The three council-only fixtures publish no portrait at all — their
