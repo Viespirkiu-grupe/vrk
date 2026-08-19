@@ -20,6 +20,7 @@ python -m scraper <command> [args]
 - `2023-kovo-5-savivaldybiu-tarybu-ir-meru` (2023-03-05 municipal council and mayoral elections, all 60 municipalities)
 - `2019-kovo-3-savivaldybiu-tarybu` (2019-03-03 municipal council elections, all 60 municipalities; mayors were elected as council members)
 - `2023-spalio-8-kupiskio-mero` (2023-10-08 early Kupiškis district mayoral election)
+- `2023-geguzes-7-visagino-mero` (2023-05-07 repeat Visaginas municipality mayoral vote)
 - `2023-rugsejo-3-seimo-raseiniai-kedainiai` (2023-09-03 early Seimo by-election in Raseiniai–Kėdainiai No. 42)
 - `2025-kovo-16-meru` (2025-03-16 early mayoral elections in Jonava, Joniškis and Panevėžys)
 - `2017-balandzio-23-meru` (2017-04-23 new mayoral elections in Jonava and Šakiai districts)
@@ -358,6 +359,32 @@ python -m scraper fetch-sample 2023-spalio-8-kupiskio-mero
 python -m scraper sitemap 2023-spalio-8-kupiskio-mero
 python -m scraper fetch-candidate-samples 2023-spalio-8-kupiskio-mero --candidate-id algirdas-raslanas --allow-new-samples
 python -m scraper parse-anketa-samples 2023-spalio-8-kupiskio-mero
+```
+
+## Municipal mayor repeat vote (`2023-geguzes-7-visagino-mero`) Workflow
+
+The 2023-05-07 repeat Visaginas mayoral vote re-ran the runoff of the March
+2023 municipal election after the Supreme Administrative Court set the original
+second-round result aside and ordered it re-run.
+It is a separate VRK election (`/rinkimai/1344/rnk1664/`) with two candidates —
+the March runoff pair — so the fixture set is the complete field. The pages
+are the `2023-spalio-8-kupiskio-mero` vintage throughout (same listing shape,
+`10 .` question numbering, 2020-numbered biography, `<div>`-wrapped tab
+bodies), so that module's parsers are reused whole.
+
+One difference: candidate pages publish five tabs, not six. There is no
+campaign tab — the candidates' campaign finance is published with the
+March election (`2023-kovo-5-savivaldybiu-tarybu-ir-meru`) — so, as in
+`2025-kovo-16-meru`, the campaign tab is not an expected tab but would still
+be fetched if present. Both profile cards carry `Turas: II`, and the list
+fields (`Sąrašas`, `Numeris sąraše`, `Porinkiminis numeris sąraše`) are
+published empty: this vote had no list component.
+
+```bash
+python -m scraper fetch-sample 2023-geguzes-7-visagino-mero
+python -m scraper sitemap 2023-geguzes-7-visagino-mero
+python -m scraper fetch-candidate-samples 2023-geguzes-7-visagino-mero --candidate-id erlandas-galaguz --allow-new-samples
+python -m scraper parse-anketa-samples 2023-geguzes-7-visagino-mero
 ```
 
 ## Seimo by-election (`2023-rugsejo-3-seimo-raseiniai-kedainiai`) Workflow

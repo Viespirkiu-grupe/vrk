@@ -40,7 +40,7 @@ pairs would be the starting point for a merge review if that ever matters.
 `dashboard/index.html` carries a curated field map (concept → normalized paths
 tried in order), built from a measured key×election matrix. The asset and
 income fields (`privalomas-registruoti-turtas`, `pinigines-lesos`,
-`gautos-pajamos`) are already aligned across all 19 elections by the module
+`gautos-pajamos`) are already aligned across all 20 elections by the module
 convention of reusing key names where questions match; biography-era splits
 (`anketa.*` up to 2019, `biografija.*` from 2020) are bridged per concept in
 the map. Extending the comparison is editing `FIELD_MAP` in the page.

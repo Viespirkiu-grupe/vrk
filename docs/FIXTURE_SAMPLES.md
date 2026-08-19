@@ -95,6 +95,18 @@ questions both ways, an academic with a pedagogic title, and candidates with the
 extra `Ryšiai su juridiniais asmenimis` / `Ryšiai sudarius sandorius`
 private-interest sections.
 
+For `2023-geguzes-7-visagino-mero` the allowlist
+(`tests/test_visagino_mero_2023_sample_allowlist.py`) is the complete
+two-candidate field of the repeat Visaginas mayoral runoff:
+
+- `dalia-straupaite`
+- `erlandas-galaguz`
+
+This covers the elected mayor (elected note in the profile) and the runner-up;
+the five-tab page set with no campaign tab; empty list fields on the profile
+card; and blank-upstream biography answers (`Nenurodė` nationality and work
+history, a birth date published without a birth place).
+
 For `2023-kovo-5-savivaldybiu-tarybu-ir-meru` the allowlist
 (`tests/test_savivaldybiu_2023_sample_allowlist.py`) is **nine candidates out of
 13,796** — the first election whose fixtures are a sample

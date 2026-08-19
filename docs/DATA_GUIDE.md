@@ -1,7 +1,7 @@
 # Data Guide
 
 The consumer entry point to the corpus: everything a third party needs to
-query 33,119 candidate records across 19 Lithuanian elections (2016–2025)
+query 33,121 candidate records across 20 Lithuanian elections (2016–2025)
 without reading the per-election schema appendices first. Every path and
 count on this page was verified against the full corpus on 2026-08-19.
 
@@ -38,7 +38,7 @@ per-role `elected` flags.
 ## Cross-election invariants
 
 **Money.** `turto-ir-pajamu-deklaracijos` carries the same seven keys in all
-19 elections, at 100% presence:
+20 elections, at 100% presence:
 
 - `privalomas-registruoti-turtas`
 - `vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai`
@@ -54,7 +54,7 @@ missing; the source text stays in `rawData`).
 
 **Conviction declaration.**
 `anketa.pareiskimai.ar-buvote-pripazintas-kaltu` is the yes/no field to
-count on, present in 18 of 19 elections — the 2019 presidential
+count on, present in 19 of 20 elections — the 2019 presidential
 questionnaire asks constitutional eligibility questions instead and has no
 conviction declaration. Structured conviction *details* are another matter;
 see the traps below.
@@ -91,8 +91,9 @@ The two era groups:
   `2017-rugsejo-10-marijampoles-mero`, `2018-rugsejo-16-seimo-zanavykai`,
   `2019-ep`, `2019-kovo-3-savivaldybiu-tarybu`, `2019-prezidento`,
   `2019-rugsejo-8-seimo`
-- **2020 era** (10): `2020-seimo`, `2021-balandzio-11-radviliskio-mero`,
-  `2021-spalio-10-meru`, `2023-kovo-5-savivaldybiu-tarybu-ir-meru`,
+- **2020 era** (11): `2020-seimo`, `2021-balandzio-11-radviliskio-mero`,
+  `2021-spalio-10-meru`, `2023-geguzes-7-visagino-mero`,
+  `2023-kovo-5-savivaldybiu-tarybu-ir-meru`,
   `2023-rugsejo-3-seimo-raseiniai-kedainiai`, `2023-spalio-8-kupiskio-mero`,
   `2024-ep`, `2024-prezidento`, `2024-seimo`, `2025-kovo-16-meru`
 
@@ -116,7 +117,7 @@ The two era groups:
 | post-election list number | `profilis.kita.porinkiminis-eiles-numeris.reiksme` (Seimo family) / `…porinkiminis-numeris-sarase.reiksme` (municipal/EP family) | same split | absent in the presidential elections |
 | conviction declaration | `anketa.pareiskimai.ar-buvote-pripazintas-kaltu` | same | absent in `2019-prezidento` |
 | conviction details | — | `anketa.teistumo-detales.irasai` (2019/2021 flat) / `anketa.teistumo-detales` (2023 on, nested) | see traps |
-| money (×7) | `turto-ir-pajamu-deklaracijos.<key>` | same | identical in all 19 |
+| money (×7) | `turto-ir-pajamu-deklaracijos.<key>` | same | identical in all 20 |
 
 The nominator's five key names, all under `profilis.kita`: `iskele` (Seimo
 family), `iskele-i-tarybos-narius-merus` (2017/2019/2021 municipal),
@@ -131,14 +132,14 @@ records in `2020-seimo` and `2024-seimo` (758/1754 and 699/1740).
 
 There is **no cross-election person id**. The `rkndId` in candidate URLs is
 a per-election registration id, and `candidateId` comes in two formats: a
-name slug with positional `-2`/`-3` suffixes for namesakes (17 elections)
+name slug with positional `-2`/`-3` suffixes for namesakes (18 elections)
 vs name-slug-plus-VRK-candidate-id (`ada-grakauskiene-2420696`) in the two
 municipal generals. Never join on it.
 
 The tested recipe (measured in [DASHBOARD.md](DASHBOARD.md)): **normalized
 name + birth date** — NFC-normalize, uppercase and whitespace-collapse the
 name, keep diacritics, pair it with `gimimo-data`. Birth date is present on
-33,118 of 33,119 records (the one exception groups by name alone); the pair
+33,120 of 33,121 records (the one exception groups by name alone); the pair
 collides for zero same-election record pairs, and 305 names are shared by
 distinct people that name-only grouping would merge wrongly. Known
 limitation: a person who changes surname between elections (marriage)

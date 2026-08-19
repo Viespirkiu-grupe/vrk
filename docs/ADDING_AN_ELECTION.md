@@ -37,7 +37,10 @@ it before writing anything. The layout families are:
 - **2023 mayoral** (`kupiskio_mero_2023`): tab bodies wrapped in their own
   `<div>`, biography numbering with nationality as Q2. The March 2023 municipal
   general election (`savivaldybiu_2023`) is the same family and reuses these
-  parsers unchanged — 13,796 candidates and not one page-level difference.
+  parsers unchanged — 13,796 candidates and not one page-level difference. So
+  is the May 2023 repeat Visaginas mayoral vote (`visagino_mero_2023`), whose
+  only difference is page-set, not page-level: no campaign tab (the repeat
+  runoff's campaign finance is published with the March election).
 - **2024 era** (`ep_2024`, `seimo_2024`, `prezidento_2024`): tab bodies are
   siblings of the tab navigation, Q8 membership table, Rinkimų kodekso
   declarations.

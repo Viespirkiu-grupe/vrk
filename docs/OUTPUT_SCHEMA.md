@@ -2,7 +2,7 @@
 
 This document is the record contract for the whole corpus. The body describes
 the common record envelope and the shared normalized shapes that hold across
-all nineteen elections; one appendix per election covers everything
+all twenty elections; one appendix per election covers everything
 election-specific, and the per-election appendices remain authoritative for
 those specifics. The body sections were written against the founding module:
 
@@ -183,7 +183,7 @@ See also:
 
 ## Shared normalized shapes
 
-These shapes are verified identical across all nineteen elections; the
+These shapes are verified identical across all twenty elections; the
 appendices never need to restate them.
 
 ### `turto-ir-pajamu-deklaracijos`
@@ -198,7 +198,7 @@ The "seven canonical keys" the appendices refer to are:
 - `gautos-pajamos`
 - `sumoketas-pajamu-mokestis`
 
-The key set is identical in 19/19 elections at 100% presence. Values are
+The key set is identical in 20/20 elections at 100% presence. Values are
 parsed EUR amounts as JSON numbers (int or float), never strings — and null
 when the source renders the figure malformed (VRK publishes a handful of
 incomes with the integer part missing, e.g. `,35 EUR`; inventing `0.35` would
@@ -501,6 +501,34 @@ Election-specific notes:
   handing it to the shared parsers.
 - `kita` is empty for every candidate in this election — no programme documents
   were published on that tab.
+
+## Appendix: 2023 Visaginas mayoral repeat vote (`2023-geguzes-7-visagino-mero`)
+
+Records are written as
+`data/2023-geguzes-7-visagino-mero/<candidate-id>-2023-geguzes-7-visagino-mero.json`
+with the same top-level fields. The pages are the `2023-spalio-8-kupiskio-mero`
+vintage throughout — same profile card, `<div>`-wrapped tab bodies, `10 .`
+question numbering, inline Q8 membership answer, 2020-numbered biography — so
+every page-level shape described in that appendix applies here too, except
+that candidate pages carry five tabs, not six: this repeat vote re-ran the
+March 2023 mayoral runoff, and neither candidate page publishes a campaign tab
+(their campaign finance is published with
+`2023-kovo-5-savivaldybiu-tarybu-ir-meru`). The `normalized` section order is
+therefore `profilis`, `anketa`, `biografija`, `turto-ir-pajamu-deklaracijos`,
+`privaciu-interesu-deklaracija`, `kita`, with no campaign section at all.
+
+Election-specific notes:
+
+- `profilis.pastaba` holds the elected note for the winner only
+  (`Išrinktas Visagino (Nr.59) savivaldybėje II ture`); the loser has `null`.
+- `profilis.kita.turas` is `II` for both candidates — only the runoff was
+  re-run, so there was no first round.
+- The list fields under `profilis.kita` (`sarasas`, `numeris-sarase`,
+  `porinkiminis-numeris-sarase`) are published empty for both candidates: the
+  repeat vote had no list component.
+- No candidate declared a conviction or a lost mandate, so `teistumo-detales`
+  is `{"irasai": []}` and `mandato-netekimo-detales` is `null` throughout.
+- `kita` is empty for both candidates.
 
 ## Appendix: 2023 Seimo by-election (`2023-rugsejo-3-seimo-raseiniai-kedainiai`)
 

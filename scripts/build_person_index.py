@@ -43,6 +43,7 @@ ELECTION_ORDER = [
     "2021-balandzio-11-radviliskio-mero",
     "2021-spalio-10-meru",
     "2023-kovo-5-savivaldybiu-tarybu-ir-meru",
+    "2023-geguzes-7-visagino-mero",
     "2023-rugsejo-3-seimo-raseiniai-kedainiai",
     "2023-spalio-8-kupiskio-mero",
     "2024-prezidento",
