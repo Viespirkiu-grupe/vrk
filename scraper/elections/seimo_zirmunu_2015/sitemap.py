@@ -69,11 +69,13 @@ def fetch_listing_sample(
 
 
 def _select_candidate_rows(soup: BeautifulSoup) -> list[Any]:
-    # The page has two "partydata" tables: the district-info card and the
-    # candidate listing. Only the listing holds candidate anketa links.
+    # The page has several tables — the district-info card, the candidate
+    # listing, and on municipal pages a class-less mayoral table and a
+    # party-list index. The listing is whichever table holds the most
+    # candidate anketa links.
     best_table = None
     best_count = 0
-    for candidate_table in soup.select("table.partydata"):
+    for candidate_table in soup.find_all("table"):
         count = sum(
             1
             for anchor in candidate_table.find_all("a", href=True)

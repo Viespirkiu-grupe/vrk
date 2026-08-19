@@ -376,7 +376,13 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
-def parse_anketa_html(html: str) -> dict[str, Any]:
+def parse_anketa_html(
+    html: str,
+    rows_normalizer: Any = None,
+) -> dict[str, Any]:
+    if rows_normalizer is None:
+        rows_normalizer = _normalize_anketa_rows
+
     soup = BeautifulSoup(html, "lxml")
 
     profile = _parse_profile_html(soup)
@@ -389,7 +395,7 @@ def parse_anketa_html(html: str) -> dict[str, Any]:
             anketa_cell = anketa_table.find("td")
 
     anketa = _parse_anketa_cell(anketa_cell)
-    anketa["normalized"] = _normalize_anketa_rows(anketa["rows"])
+    anketa["normalized"] = rows_normalizer(anketa["rows"])
 
     return {
         "profile": profile,
@@ -1043,6 +1049,7 @@ def parse_anketa_sample(
     samples_root: Path = DEFAULT_SAMPLES_ROOT,
     output_root: Path = DEFAULT_OUTPUT_ROOT,
     election_id: str = ELECTION_ID,
+    rows_normalizer: Any = None,
 ) -> tuple[Path, dict[str, Any]]:
     candidate_dir = samples_root / candidate_id
     anketa_path = candidate_dir / "anketa.html"
@@ -1050,7 +1057,7 @@ def parse_anketa_sample(
         raise FileNotFoundError(f"Missing anketa sample: {anketa_path}")
 
     html = anketa_path.read_text(encoding="utf-8")
-    parsed = parse_anketa_html(html)
+    parsed = parse_anketa_html(html, rows_normalizer=rows_normalizer)
     meta = _load_candidate_meta(candidate_dir)
     candidate_meta = meta.get("candidate", {}) if isinstance(meta, dict) else {}
     candidate_source_url = candidate_meta.get("url") if isinstance(candidate_meta, dict) else None
@@ -1204,6 +1211,7 @@ def parse_anketa_samples(
     samples_root: Path = DEFAULT_SAMPLES_ROOT,
     output_root: Path = DEFAULT_OUTPUT_ROOT,
     election_id: str = ELECTION_ID,
+    rows_normalizer: Any = None,
 ) -> list[dict[str, Any]]:
     if candidate_ids:
         target_ids = candidate_ids
@@ -1222,6 +1230,7 @@ def parse_anketa_samples(
             samples_root=samples_root,
             output_root=output_root,
             election_id=election_id,
+            rows_normalizer=rows_normalizer,
         )
         results.append(stats)
 
