@@ -1,13 +1,20 @@
-# Output Schema (2016 Seimo)
+# Output Schema
 
-This document describes the current output shape produced by:
+This document is the record contract for the whole corpus. The body describes
+the common record envelope and the shared normalized shapes that hold across
+all nineteen elections; one appendix per election covers everything
+election-specific, and the per-election appendices remain authoritative for
+those specifics. The body sections were written against the founding module:
 
 ```bash
 python -m scraper parse-anketa-samples 2016-seimo
 ```
 
-Scope note: this page is election-specific.
-`2016-seimo` and `2020-seimo` use separate scraper modules because their HTML differs, so schema details here should not be treated as a shared cross-election contract.
+Every election has its own scraper module because the HTML differs, so
+question numbering, key sets and section internals vary by election — read
+the appendix. The top-level record fields, the `normalized` section names and
+the shapes under "Shared normalized shapes" below are the cross-election
+contract `docs/DATASET.md` refers to.
 
 Records are written as:
 
@@ -90,7 +97,18 @@ Expected section order in current implementation:
 Notes:
 
 - Keys are source-close and often Lithuanian.
-- Placeholder strings like `Nenurode` are converted to null values by normalization logic.
+- Section order is fixed, but a section can be absent when the source page
+  never published its tab: `gintaras-binkauskas-2016-seimo` has no
+  `biografija`, and `jonas-korsakas-2020-seimo` has neither `biografija` nor
+  `turto-ir-pajamu-deklaracijos`. Those are the only two such records in the
+  corpus, but a consumer parser should treat every section as optional rather
+  than crash on the promised order.
+- Exactly three placeholder strings normalize to null: `Nenurodė`, `-` and the
+  empty string. Candidate-typed "none" variants survive verbatim by design —
+  an answered "none" is an answer, not an unanswered field. The variants that
+  survive: the `Nėra` case/diacritic family (`Nėra`/`nėra`/`NĖRA`/`nera`/
+  `Nera`/`NERA`, 1,942 values corpus-wide), `Nenurodyta` (35), `Nenurodoma`
+  (1), `Nenurodė.` (2, trailing dot), plus `--`, `.`, `–` and `N/A`.
 - Campaign section is omitted when candidate has no campaign participant tab.
 - A candidate nominated by more than one nominator has each extra nominator on
   its own profile row with an empty label cell. Those rows are folded into the
@@ -158,6 +176,70 @@ Each event row includes:
 See also:
 
 - `docs/ANOMALY_DETECTION.md`
+
+## Shared normalized shapes
+
+These shapes are verified identical across all nineteen elections; the
+appendices never need to restate them.
+
+### `turto-ir-pajamu-deklaracijos`
+
+The "seven canonical keys" the appendices refer to are:
+
+- `privalomas-registruoti-turtas`
+- `vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai`
+- `pinigines-lesos`
+- `suteiktos-paskolos`
+- `gautos-paskolos`
+- `gautos-pajamos`
+- `sumoketas-pajamu-mokestis`
+
+The key set is identical in 19/19 elections at 100% presence. Values are
+parsed EUR amounts as JSON numbers (int or float), never strings — and null
+when the source renders the figure malformed (VRK publishes a handful of
+incomes with the integer part missing, e.g. `,35 EUR`; inventing `0.35` would
+be making up a figure, so those normalize to null with the source text kept
+in `rawData`).
+
+### `profilis` and `kita`
+
+`profilis` has the same four keys everywhere: `vardas-pavarde`, `pastaba`,
+`nuotrauka`, `kita`. Every entry under `profilis.kita` is
+`{pavadinimas, reiksme, nuorodos}`. `normalized.kita` is
+`{tekstai, nuorodos}` in every election.
+
+### Campaign entries
+
+Every entry of `politines-kampanijos-dalyvio-duomenys[]` has the same ten
+keys in all elections that publish campaigns: `statusas`,
+`registravimo-data`, `sprendimo-numeris`, `kontaktai`, `izdininkas`,
+`auditorius`, `aukos-pagal-sekcija`, `finansavimo-ataskaitos`, `sutartys`,
+`sprendimai`.
+
+### The two `privaciu-interesu-deklaracija` families
+
+Declaration sections are keyed two different ways depending on the page era:
+
+- **Form-id sections** (`id001j`, `id001s`, `id001i`, `id001a`, `id001f`,
+  `id001p`, …) on the 2016/2019-era pages: 2016 Seimo, the 2017–2019 Seimo
+  by-elections, both 2017 mayoral elections, 2019 EP, 2019 presidential,
+  the 2019 municipal general election and 2020 Seimo.
+- **Slugged sections** (`deklaruojancio-darbovietes`, `sutuoktinio-darbovietes`,
+  `rysiai-su-juridiniais-asmenimis`, `rysiai-sudarius-sandorius`,
+  `kiti-duomenys`, …) on the 2021+ pages.
+
+The concept pairs across the split are `id001j` ≈
+`rysiai-su-juridiniais-asmenimis`, `id001s` ≈ `rysiai-sudarius-sandorius`
+and `id001a` ≈ `kiti-duomenys`.
+
+Within the form-id family the spouse block
+(`deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris`) is dropped by
+four elections — `2016-seimo` (0/1,415 records),
+`2017-balandzio-23-seimo-anyksciai-panevezys` (0/11),
+`2018-rugsejo-16-seimo-zanavykai` (0/6) and `2019-rugsejo-8-seimo` (0/27) —
+and retained by the rest of the family (2020 Seimo carries it on
+1,754/1,754 records; in 2019 EP and the 2019 municipal election it is absent
+only from candidates who filed no declaration at all).
 
 ## Appendix: 2019 European Parliament (`2019-ep`)
 
@@ -325,7 +407,19 @@ its own, much smaller, shape:
   elections.
 
 There are no birth, education, language, hobby or family questions on the 2020
-anketa — those live on the biography tab and are normalized under `biografija`.
+anketa — those live on the biography tab and are normalized under `biografija`,
+whose key set is: `gimimo-data`, `gimimo-vieta`, `tautybe`, `issilavinimas`,
+`mokslo-laipsnis`, `pedagoginis-vardas`, `uzsienio-kalbos`, `darbo-patirtis`,
+`moksline-pedagogine-visuomenine-veikla`, `pomegiai`, `seimine-padetis`,
+`sutuoktinio-vardas-pavarde`, `vaiku-vardai-pavardes`, `kita-apie-save`.
+`moksline-pedagogine-visuomenine-veikla` is this election's variant of the
+`visuomenine-veikla` key every other election uses — the 2020 form widens the
+question to scientific and pedagogical activity, so the key follows the
+prompt.
+
+Despite the pages keeping the 2016-era layout, `profilis.nuotrauka` is a URL
+to the candidate photo (`kandImg/...`) on all 1,754 records — not the base64
+data URI the other 2016-era-layout elections embed.
 
 ## Appendix: 2024 Seimo (`2024-seimo`)
 
@@ -766,8 +860,11 @@ As in 2023 the list name inside the note is in the genitive and does not match
 ## Appendix: 2025 mayors (`2025-kovo-16-meru`)
 
 Records are written as
-`data/2025-kovo-16-meru/<candidate-id>-2025-kovo-16-meru.json`. This is the only
-election whose record carries an extra top-level field:
+`data/2025-kovo-16-meru/<candidate-id>-2025-kovo-16-meru.json`. The record
+carries one field beyond the common top-level set. (It is not alone in that:
+both municipal general elections carry `candidateNote` on every record too,
+alongside `kandidatavimas` — see their appendices. No other election carries
+either.)
 
 - `candidateNote` — the status note the listing appends to the name of a
   candidate whose registration was revoked (`išbrauktas - Seimo nutarimu`),

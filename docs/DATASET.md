@@ -33,7 +33,7 @@ below) and every other election was re-parsed offline the same day.
 | `2017-rugsejo-10-marijampoles-mero` | 8 | 1 | 0 | 8 |
 | `2018-rugsejo-16-seimo-zanavykai` | 6 | 1 | 0 | 6 |
 | `2019-ep` | 301 | 11 | 6 | 279 |
-| `2019-prezidento` | 9 | 9 | 0 | 9 |
+| `2019-prezidento` | 9 | 1 | 0 | 9 |
 | `2019-rugsejo-8-seimo` | 27 | 3 | 2 | 27 |
 | `2020-seimo` | 1754 | 141 | 41 | 758 |
 | `2021-balandzio-11-radviliskio-mero` | 7 | 1 | 1 | 7 |
@@ -41,12 +41,20 @@ below) and every other election was re-parsed offline the same day.
 | `2023-rugsejo-3-seimo-raseiniai-kedainiai` | 8 | 1 | 1 | 8 |
 | `2023-spalio-8-kupiskio-mero` | 5 | 1 | 1 | 5 |
 | `2024-ep` | 319 | 11 | 7 | 0 |
-| `2024-prezidento` | 8 | 8 | 0 | 0 |
+| `2024-prezidento` | 8 | 1 | 0 | 0 |
 | `2024-seimo` | 1740 | 141 | 62 | 699 |
 | `2025-kovo-16-meru` | 14 | 2 | 0 | 10 |
 | `2023-kovo-5-savivaldybiu-tarybu-ir-meru` | 13796 | 1557 | 541 | 433 |
 | `2019-kovo-3-savivaldybiu-tarybu` | 13666 | 1502 | 244 | 410 |
-| **total** | **33119** | **3536** | **946** | **3367** |
+| **total** | **33119** | **3521** | **946** | **3367** |
+
+The elected column counts records whose `profilis.pastaba` starts with
+`Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
+candidate's gender) and is null for a candidate who won nothing, **except in
+the presidential elections**, where every candidate carries a participation
+note (`Dalyvavo I ture`, `Dalyvavo II ture`, or `Išrinktas II ture` for the
+winner). Counting non-null `pastaba` there reports 9 and 8 "elected" for a
+race one person won; match on the `Išrink` prefix, not on presence.
 
 Records live under `data/<election-id>/` (~1.6 GB) and are **not** version
 controlled — `data/`, `sitemaps/` and `samples/` are gitignored, so the corpus is
@@ -227,7 +235,8 @@ share campaigns that declared nothing at all.
 
 ### Conviction data has two different shapes
 
-Every election records the yes/no declaration under
+Every election except `2019-prezidento` — whose pages ask the constitutional
+eligibility questions instead — records the yes/no declaration under
 `normalized.anketa.pareiskimai.ar-buvote-pripazintas-kaltu`, and that is the
 field to count on. Structured conviction *details* (date, court, offence) exist
 only where the page publishes them:
@@ -252,13 +261,62 @@ The conviction counts in the inventory above are post-fix throughout: the
 lineage always captured the detail row) and recovered the six 2019 EP
 declarers whose questionnaires the nested-table defect had erased.
 
-### Placeholder answers normalize to null
+### Placeholder answers normalize to null — and the list is exact
 
-`Nenurodė` ("did not specify"), `-` and empty strings become `null`. A null
-means "not answered on the page", not "no data collected" — the source text is
-always preserved in `rawData`. Some declarations are genuinely blank upstream:
-every 2021 Radviliškis candidate left Q10 unanswered, and individual candidates
-elsewhere left single questions blank.
+Exactly three strings become `null`: `Nenurodė` ("did not specify"), `-` and
+the empty string. A null means "not answered on the page", not "no data
+collected" — the source text is always preserved in `rawData`. Some
+declarations are genuinely blank upstream: every 2021 Radviliškis candidate
+left Q10 unanswered, and individual candidates elsewhere left single questions
+blank.
+
+Candidate-typed variants survive as answers **by design** — an answered
+"none" is not an unanswered field. The variants in the corpus: the `Nėra`
+case/diacritic family (`Nėra`/`nėra`/`NĖRA`/`nera`/`Nera`/`NERA`, 1,942
+values, concentrated in membership, current-position and speciality fields),
+`Nenurodyta` (35 values), `Nenurodoma` (1), `Nenurodė.` (2, the trailing dot
+keeping it off the exact-match list), plus `--` (74), `.` (66), `–` (7) and
+`N/A`/`n/a` (6). Count nulls and these variants separately: a null is a blank
+form field, a surviving variant is a candidate stating they have none.
+
+### `Neskelbiamas` saturates contact fields in the 2019–2021 era
+
+`Neskelbiamas` is VRK's own "withheld" token, kept verbatim because it means
+"withheld by VRK", not "unanswered". It is not sporadic — it saturates
+`anketa.adresas` at **100%** in `2019-kovo-3-savivaldybiu-tarybu`
+(13,666/13,666), `2020-seimo` (1,754/1,754), `2019-ep` (301/301),
+`2019-prezidento` (9/9) and both 2021 mero elections (14/14 and 7/7). In the
+elections whose anketa carries `kontaktai` — `2020-seimo` and the two 2021
+mero elections — `telefonas` and `el-pastas` are 100% `Neskelbiamas` as well.
+Any "has address/phone/email" coverage stat is therefore meaningless in those
+elections: the field is a constant privacy token. VRK changed publication
+policy later — the 2023/2024-era elections carry real city-level address
+values and zero `Neskelbiamas`.
+
+### Known upstream quirks
+
+All of these are verbatim from VRK's own pages (verified present in
+`rawData`), so they are documented rather than fixed:
+
+- ~140 records carry a birth **date** in `gimimo-vieta` (birth *place*) —
+  candidates typed the date into the wrong form field
+  (`ramute-nalivaikiene-2016-seimo` has `gimimo-vieta` = `1963-06-14`, equal
+  to her `gimimo-data`). The parser is faithful; don't read it as a
+  field-shift bug.
+- Campaign contract `agreementNumber` mixes five formats — VRK's contract
+  registry lets filers type anything: bare numbers (1,517), ISO dates (286),
+  space-separated dates (333), dotted dates (75), and free text — registry
+  codes like `BK-16` or `P19/386` alongside "no number" markers (`be Nr.`,
+  `nėra`, `ND`, `b/n`).
+- `nuosprendzio-data` (conviction date) is year-only for 272 values against
+  642 full ISO dates — year-only is what VRK publishes.
+- One control character: the fourth campaign contract subject of
+  `kestutis-masiulis-2016-seimo` carries `\x06` where `Ė` belongs
+  (`PIRK\x06JO ir PARDAV\x06JO`) — mangled in VRK's contract registry itself.
+- One double-escaped entity: `algis-cepulis-2425844` (2023 municipal) has the
+  employer `If P&amp;C Insurance AS` in `biografija.darbo-patirtis` — the
+  source HTML carried `&amp;amp;`, an upstream double-encoding, not a parser
+  unescape miss.
 
 ### Per-election schemas are deliberately not identical
 

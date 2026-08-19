@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 import re
+import unicodedata
 from typing import Any
 
 from bs4 import BeautifulSoup, NavigableString, Tag
@@ -51,10 +52,22 @@ def _normalize_text_value(value: Any) -> str | None:
     if not isinstance(value, str):
         return str(value)
 
-    normalized = normalize_space(value)
+    # VRK pages and candidate-pasted text mix unicode normalization forms;
+    # an NFD "ė" does not string-match its NFC form, so values are folded to
+    # NFC. Lossless for Lithuanian text; rawData keeps the original bytes.
+    normalized = normalize_space(unicodedata.normalize("NFC", value))
     if normalized.lower() in MISSING_TEXT_VALUES:
         return None
     return normalized
+
+
+def _normalize_photo_reference(value: Any) -> str | None:
+    # Embedded base64 photos used to be copied into normalized verbatim —
+    # 483 MB of byte-identical duplication corpus-wide. The bytes stay in
+    # rawData.profile.photoSrc; normalized keeps URL-form references only.
+    if isinstance(value, str) and value.strip().startswith("data:"):
+        return None
+    return _normalize_text_value(value)
 
 
 def _source_key(label: str) -> str:
@@ -246,13 +259,20 @@ def _parse_nested_table(table: Tag) -> dict[str, Any]:
         if not cells:
             continue
 
-        values = [_tag_text(cell) for cell in cells]
-        values = [value for value in values if value]
+        positional = [_tag_text(cell) for cell in cells]
+        values = [value for value in positional if value]
         if not values:
             continue
 
         if headers and len(values) == len(headers):
             rows.append({headers[i]: values[i] for i in range(len(headers))})
+        elif headers and len(positional) == len(headers):
+            # A row with an empty cell keeps its column alignment. Filtering
+            # the empties out first used to shift values across columns or,
+            # on the count mismatch, drop to a raw value list — the education
+            # row with a blank first cell was the only shape in the corpus
+            # that survived as a bare array.
+            rows.append({headers[i]: (positional[i] or None) for i in range(len(headers))})
         elif len(values) == 1:
             rows.append(values[0])
         else:
@@ -1410,7 +1430,7 @@ def _normalize_profile_data(profile: dict[str, Any]) -> dict[str, Any]:
     return {
         "vardas-pavarde": _normalize_text_value(profile.get("candidateDisplayName")),
         "pastaba": _normalize_text_value(profile.get("electedNote")),
-        "nuotrauka": _normalize_text_value(profile.get("photoSrc")),
+        "nuotrauka": _normalize_photo_reference(profile.get("photoSrc")),
         "kita": normalized_fields,
     }
 
@@ -1419,6 +1439,21 @@ def _normalize_biografija_data(payload: dict[str, Any]) -> dict[str, Any]:
     return {
         "tekstas": _normalize_text_value(payload.get("text")),
     }
+
+
+# The 2019-era pages publish the ID001P table with six of its seven column
+# headers empty, so header extraction can only ever see the first name. The
+# 2016 pages name the same seven columns; supplying them by position keeps
+# the record keys semantic instead of the stulpelis-N fallback.
+ID001P_COLUMN_KEYS = [
+    "asmuo-kurio-rysys-toliau-bus-nurodomas",
+    "valstybe",
+    "rysys",
+    "rysio-data",
+    "juridinio-asmens-kodas",
+    "juridinio-asmens-pavadinimas-fizinio-asmens-vardas-pavarde",
+    "pastabos-pildoma-kai-rysys-laukelyje-pasirenkama-kita-arba-asmuo-nori-detalizuoti-rysi",
+]
 
 
 def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]:
@@ -1470,7 +1505,23 @@ def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]
         else:
             normalized_columns = []
 
-        if isinstance(section.get("rows"), list):
+        if section_id.lower() == "id001a" and isinstance(section.get("rows"), list):
+            # The 2019-era pages render ID001A KITI DUOMENYS as a one-column
+            # table whose only header is the whole form sentence, which used
+            # to normalize into a list of rows keyed by a 140-character slug.
+            # The 2016-era pages publish the same section as free text that
+            # normalizes to {tekstas}; fold the table form to the same shape.
+            texts = [
+                str(text)
+                for row in section["rows"]
+                if isinstance(row, list)
+                for text in (_normalize_text_value(value) for value in row)
+                if text
+            ]
+            if texts:
+                normalized_section = {"tekstas": " ".join(texts)}
+        elif isinstance(section.get("rows"), list):
+            canonical_columns = ID001P_COLUMN_KEYS if section_id.lower() == "id001p" else []
             normalized_rows: list[dict[str, Any]] = []
             for row in section.get("rows", []):
                 if not isinstance(row, list):
@@ -1485,9 +1536,13 @@ def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]
                     label = (
                         effective_columns[column_index]
                         if column_index < len(effective_columns)
-                        else f"stulpelis-{column_index + 1}"
+                        else ""
                     )
-                    key = _source_key(label) or f"stulpelis-{column_index + 1}"
+                    key = _source_key(label)
+                    if not key and column_index < len(canonical_columns):
+                        key = canonical_columns[column_index]
+                    if not key:
+                        key = f"stulpelis-{column_index + 1}"
                     row_object[key] = _normalize_text_value(value)
 
                 if row_object:

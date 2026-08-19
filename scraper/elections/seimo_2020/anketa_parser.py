@@ -3,6 +3,7 @@ from __future__ import annotations
 from copy import deepcopy
 import json
 import re
+import unicodedata
 from pathlib import Path
 from typing import Any
 
@@ -55,7 +56,9 @@ def _normalize_text_value(value: Any) -> str | None:
     if not isinstance(value, str):
         value = str(value)
 
-    normalized = normalize_space(value)
+    # Mirrors seimo_2016: fold mixed unicode normalization forms to NFC so an
+    # NFD "ė" string-matches its NFC form; rawData keeps the original bytes.
+    normalized = normalize_space(unicodedata.normalize("NFC", value))
     if normalized.lower() in MISSING_TEXT_VALUES:
         return None
     return normalized
