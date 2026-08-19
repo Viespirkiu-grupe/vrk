@@ -65,13 +65,17 @@ def _load_sitemap_entries(sitemap_path: Path) -> list[dict[str, str]]:
         url = str(raw_entry.get("url", "")).strip()
         if not candidate_id or not url:
             continue
-        normalized_entries.append(
-            {
-                "candidateId": candidate_id,
-                "candidateName": str(raw_entry.get("candidateName", "")).strip(),
-                "url": url,
-            }
-        )
+        entry = {
+            "candidateId": candidate_id,
+            "candidateName": str(raw_entry.get("candidateName", "")).strip(),
+            "url": url,
+        }
+        # Elections whose expected tabs depend on the candidate's role need
+        # the roles the sitemap recorded; harmless where absent.
+        roles = raw_entry.get("roles")
+        if isinstance(roles, list) and roles:
+            entry["roles"] = [str(role) for role in roles]
+        normalized_entries.append(entry)
 
     if not normalized_entries:
         raise ValueError(f"No usable sitemap entries found in {sitemap_path}")
@@ -287,6 +291,7 @@ def _fetch_candidate_tabs(
     samples_root: Path,
     allow_new_candidate_dir: bool,
     election_id: str,
+    expected_tabs: set[str] | Any,
 ) -> dict[str, Any]:
     candidate_dir = samples_root / entry["candidateId"]
     if not candidate_dir.exists() and not allow_new_candidate_dir:
@@ -316,7 +321,8 @@ def _fetch_candidate_tabs(
         )
 
     found_tab_slugs = {tab["slug"] for tab in tab_links if tab["slug"]}
-    missing_expected_tabs = sorted(EXPECTED_TABS - found_tab_slugs)
+    required_tabs = expected_tabs(entry) if callable(expected_tabs) else expected_tabs
+    missing_expected_tabs = sorted(required_tabs - found_tab_slugs)
     if missing_expected_tabs:
         anomalies.append(
             build_anomaly_event(
@@ -443,6 +449,7 @@ def fetch_first_candidate_with_tabs(
     samples_root: Path = DEFAULT_SAMPLES_ROOT,
     allow_new_candidate_dir: bool = False,
     election_id: str = ELECTION_ID,
+    expected_tabs: set[str] | Any | None = None,
 ) -> dict[str, Any]:
     entry = _load_first_sitemap_entry(sitemap_path)
     return _fetch_candidate_tabs(
@@ -450,6 +457,7 @@ def fetch_first_candidate_with_tabs(
         samples_root=samples_root,
         allow_new_candidate_dir=allow_new_candidate_dir,
         election_id=election_id,
+        expected_tabs=expected_tabs if expected_tabs is not None else EXPECTED_TABS,
     )
 
 
@@ -459,6 +467,7 @@ def fetch_candidates_with_tabs(
     samples_root: Path = DEFAULT_SAMPLES_ROOT,
     allow_new_candidate_dir: bool = False,
     election_id: str = ELECTION_ID,
+    expected_tabs: set[str] | Any | None = None,
 ) -> dict[str, Any]:
     if not candidate_ids:
         raise ValueError("At least one candidate id must be provided")
@@ -479,6 +488,7 @@ def fetch_candidates_with_tabs(
                 samples_root=samples_root,
                 allow_new_candidate_dir=allow_new_candidate_dir,
                 election_id=election_id,
+                expected_tabs=expected_tabs if expected_tabs is not None else EXPECTED_TABS,
             )
         )
 
