@@ -32,6 +32,7 @@ python -m scraper <command> [args]
 - `2015-kovo-1-seimo-zirmunai` (2015-03-01 new Seimo by-election in Žirmūnai No. 4)
 - `2015-birzelio-7-seimo-varena-eisiskes` (2015-06-07 new Seimo by-election in Varėna–Eišiškės No. 70)
 - `2015-lapkricio-8-telsiu-mero` (2015-11-08 new Telšiai district council member-mayor election)
+- `2015-birzelio-7-pakartotiniai-sirvintos-trakai` (2015-06-07 repeat Širvintos member-mayor and Trakai council/mayor elections)
 
 ## Election Separation
 
@@ -626,6 +627,38 @@ python -m scraper fetch-sample 2015-lapkricio-8-telsiu-mero
 python -m scraper sitemap 2015-lapkricio-8-telsiu-mero
 python -m scraper fetch-candidate-samples 2015-lapkricio-8-telsiu-mero --candidate-id petras-kuizinas --allow-new-samples
 python -m scraper parse-anketa-samples 2015-lapkricio-8-telsiu-mero
+```
+
+## Repeat municipal elections (`2015-birzelio-7-pakartotiniai-sirvintos-trakai`) Workflow
+
+One VRK election (452) covering two districts that repeated different votes:
+Širvintos only the member-mayor election (7 candidates, no party lists),
+Trakai both the mayor and the council (8 mayoral, 319 council across 9 lists).
+The anketa is the municipal variant, same mapping as Telšiai. What is specific
+here is the listing:
+
+- the district ids read backwards against the election title —
+  `Apygarda7921` is **Širvintos** and `Apygarda7911` is **Trakai**;
+- `fetch-sample` walks both district pages and every party-list page under
+  them, skipping files already on disk so an interrupted capture resumes;
+- the two structures merge on VRK's candidate id, giving one entry with both
+  candidacies for the 7 people who ran for both seats, and the listing's own
+  prose marker cross-checks that join;
+- **one person has two candidate ids.** Marija Puč is 87693 as a mayoral
+  candidate and 87694 on the council list, so the id join cannot merge her.
+  Both entries are kept and `stats.markerJoinMismatch` reports 1 rather than
+  the mismatch passing silently. Do not "fix" this by merging on name — the
+  rule against that is what keeps 244 same-name people apart in 2023;
+- her council page is a `Rengiama` placeholder with no questionnaire, which
+  parses to an `AnketaNotPublished` warning, not a parse error;
+- Biografija is a mayoral-only tab, so expected tabs are computed per
+  candidate from the sitemap role.
+
+```bash
+python -m scraper fetch-sample 2015-birzelio-7-pakartotiniai-sirvintos-trakai
+python -m scraper sitemap 2015-birzelio-7-pakartotiniai-sirvintos-trakai
+python -m scraper fetch-candidate-samples 2015-birzelio-7-pakartotiniai-sirvintos-trakai --candidate-id zivile-pinskuviene --allow-new-samples
+python -m scraper parse-anketa-samples 2015-birzelio-7-pakartotiniai-sirvintos-trakai
 ```
 
 ## Helpful Checks

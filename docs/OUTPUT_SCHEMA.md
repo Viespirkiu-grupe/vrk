@@ -1092,3 +1092,33 @@ is the municipal question set and the profile card:
   `issikeles-kandidatas` entry and no list fields.
 - `kita` is `Duomenų nėra` for every candidate — no Telšiai candidate
   published a program.
+
+## Appendix: 2015 repeat municipal elections (`2015-birzelio-7-pakartotiniai-sirvintos-trakai`)
+
+Records are written as
+`data/2015-birzelio-7-pakartotiniai-sirvintos-trakai/<candidate-id>-2015-birzelio-7-pakartotiniai-sirvintos-trakai.json`.
+Pages are the 2015 era with the municipal question set, so the Telšiai
+appendix describes the record; this election adds a two-structure listing and
+two data facts a consumer has to know about:
+
+- The sitemap merges the mayoral listing and the party lists on VRK's
+  candidate id, so one entry carries `roles` (`meras`, `tarybos-narys`, or
+  both) plus a `mayoralCandidacy` (`nominatedBy`) and/or `councilCandidacy`
+  (`partyList`, `listNumber`, `listPosition`) block. Neither block carries an
+  `elected` key: the 2015 pages publish no elected markers, so the flag is
+  absent rather than false.
+- **One person holds two candidate ids.** Marija Puč is 87693 as a mayoral
+  candidate and 87694 on the council list, so she appears as two entries
+  (`marija-puc`, `marija-puc-2`) that the id join cannot merge, while the
+  other seven dual candidates merge into one entry each. The sitemap's
+  `stats.markerJoinMismatch` is 1 for exactly this reason — the listing's
+  prose marker says she ran for both seats and the id join disagrees. Anyone
+  counting distinct people in this election has to treat that pair as one
+  person; anyone counting candidacies must not.
+- A candidacy whose questionnaire VRK never published (her council one) has a
+  page reading only `Rengiama`. The record keeps the profile card — name,
+  municipality, list and position — with every `anketa` field null, and the
+  parse records one `AnketaNotPublished` warning rather than the
+  `AnketaTableNotFound`/`AnketaTableEmpty` pair that signals real breakage.
+- `biografija` is present only for mayoral candidates; council-only records
+  have no `biografija` section at all.

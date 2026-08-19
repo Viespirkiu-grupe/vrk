@@ -354,6 +354,22 @@ card carries "Išsikėlęs kandidatas" instead of list fields, both campaign
 participant types, a candidate who answers the incompatible-duties question
 "Einu", and one who answered almost nothing ("Nenurodė" throughout).
 
+For `2015-birzelio-7-pakartotiniai-sirvintos-trakai` the allowlist
+(`tests/test_pakartotiniai_sirvintu_traku_2015_sample_allowlist.py`) is a
+curated ten of the 327 candidates, the municipal-general pattern rather than
+the whole-field one the small by-elections use:
+
+- `zivile-pinskuviene`, `rita-tamasuniene`, `marija-puc`, `marija-puc-2`,
+  `dangute-mikutiene`, `vytautas-zalieckas`, `kestutis-vilkauskas`,
+  `kestutis-mikulskas`, `julija-meskauskiene`, `albertas-malasauskas`
+
+This covers both municipalities, mayoral-only, council-only and dual
+candidacies, both campaign participant types, and the two ids VRK issued to
+Marija Puč — including the `Rengiama` placeholder page whose questionnaire was
+never published. The samples tree also carries the two district listing pages
+and a `lists/` directory with all nine party-list pages, because the sitemap
+is rebuilt from them offline.
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:

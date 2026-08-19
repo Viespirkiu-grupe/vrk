@@ -18,8 +18,11 @@ never touched by a full run.
 
 ## Inventory
 
-33,146 candidate records across 22 elections, 2015–2025, with **zero fetch
-failures and zero parse anomalies**. The two municipal general elections are
+33,156 candidate records across 23 elections, 2015–2025, with **zero fetch
+failures and one parse warning** — the single 2015 candidacy whose
+questionnaire VRK never published (see Known gaps). The 2015 repeat municipal
+election is the one row not yet fully scraped: its module and fixtures exist,
+but only the 10 fixture candidates of 327 have been parsed so far. The two municipal general elections are
 together larger than everything else in the corpus by a factor of three; each
 was scraped separately in ~6h. Every row now reflects the post-fix parse: the
 five largest non-municipal corpora were re-scraped on 2026-08-18 (run record
@@ -30,6 +33,7 @@ below) and every other election was re-parsed offline the same day.
 | `2015-kovo-1-seimo-zirmunai` | 12 | 0 | 0 | 12 |
 | `2015-birzelio-7-seimo-varena-eisiskes` | 8 | 0 | 0 | 8 |
 | `2015-lapkricio-8-telsiu-mero` | 7 | 0 | 0 | 7 |
+| `2015-birzelio-7-pakartotiniai-sirvintos-trakai` | 10 of 327 | 0 | 0 | 10 |
 | `2016-seimo` | 1415 | 141 | 38 | 672 |
 | `2017-balandzio-23-meru` | 11 | 2 | 0 | 11 |
 | `2017-balandzio-23-seimo-anyksciai-panevezys` | 11 | 1 | 0 | 11 |
@@ -49,7 +53,7 @@ below) and every other election was re-parsed offline the same day.
 | `2025-kovo-16-meru` | 14 | 2 | 0 | 10 |
 | `2023-kovo-5-savivaldybiu-tarybu-ir-meru` | 13796 | 1557 | 541 | 433 |
 | `2019-kovo-3-savivaldybiu-tarybu` | 13666 | 1502 | 244 | 410 |
-| **total** | **33146** | **3521** | **946** | **3394** |
+| **total** | **33156** | **3521** | **946** | **3404** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
@@ -393,6 +397,13 @@ each now has one.
   null `profilis.pastaba` — the winners' included. Electedness for that era
   lives only in VRK's results pages and would need a separate join
   (`docs/PLAN_2015_ELECTIONS.md` §4).
+- One 2015 candidacy has no questionnaire at all: VRK published Marija Puč's
+  Trakai council page as `Rengiama`. Its record keeps the profile card and
+  carries the corpus's only `AnketaNotPublished` warning. The same person's
+  mayoral candidacy, under a second VRK candidate id, is complete.
+- `2015-birzelio-7-pakartotiniai-sirvintos-trakai` has not had its full scrape
+  yet — 10 of 327 candidates are parsed, the fixture set. The remaining
+  candidates need `scripts/run_election_batches.sh`.
 - ~~The Q9.1 capture landed after the 2019 municipal full run~~ — resolved by
   the 2026-08-19 municipal re-scrape (below): every record in every election
   now reflects the post-fix parse in full, and `teistumo-detales` is present
