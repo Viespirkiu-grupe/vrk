@@ -936,6 +936,7 @@ def _parse_campaign_samples(
     candidate_id: str,
     source_url: str | None,
     anomalies: list[dict[str, Any]],
+    election_id: str,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     raw_campaigns: list[dict[str, Any]] = []
     entries: list[dict[str, Any]] = []
@@ -955,7 +956,7 @@ def _parse_campaign_samples(
                     event_type="CampaignParseError",
                     severity="error",
                     stage="parse",
-                    election_id=ELECTION_ID,
+                    election_id=election_id,
                     candidate_id=candidate_id,
                     source_url=source_url,
                     detail={
@@ -978,6 +979,7 @@ def _parse_optional_subpages(
     candidate_id: str,
     candidate_source_url: str | None,
     anomalies: list[dict[str, Any]],
+    election_id: str,
 ) -> dict[str, Any]:
     pages: dict[str, Any] = {}
     parser_map: dict[str, Any] = {
@@ -1003,7 +1005,7 @@ def _parse_optional_subpages(
                     event_type="SubpageParseError",
                     severity="error",
                     stage="parse",
-                    election_id=ELECTION_ID,
+                    election_id=election_id,
                     candidate_id=candidate_id,
                     source_url=candidate_source_url,
                     detail={
@@ -1040,6 +1042,7 @@ def parse_anketa_sample(
     candidate_id: str,
     samples_root: Path = DEFAULT_SAMPLES_ROOT,
     output_root: Path = DEFAULT_OUTPUT_ROOT,
+    election_id: str = ELECTION_ID,
 ) -> tuple[Path, dict[str, Any]]:
     candidate_dir = samples_root / candidate_id
     anketa_path = candidate_dir / "anketa.html"
@@ -1060,7 +1063,7 @@ def parse_anketa_sample(
                 event_type="ProfileCardMissing",
                 severity="error",
                 stage="parse",
-                election_id=ELECTION_ID,
+                election_id=election_id,
                 candidate_id=candidate_id,
                 source_url=candidate_source_url,
             )
@@ -1071,7 +1074,7 @@ def parse_anketa_sample(
                 event_type="AnketaTableNotFound",
                 severity="critical",
                 stage="parse",
-                election_id=ELECTION_ID,
+                election_id=election_id,
                 candidate_id=candidate_id,
                 source_url=candidate_source_url,
             )
@@ -1084,7 +1087,7 @@ def parse_anketa_sample(
                 event_type="AnketaTableEmpty",
                 severity="error",
                 stage="parse",
-                election_id=ELECTION_ID,
+                election_id=election_id,
                 candidate_id=candidate_id,
                 source_url=candidate_source_url,
             )
@@ -1095,6 +1098,7 @@ def parse_anketa_sample(
         candidate_id=candidate_id,
         candidate_source_url=candidate_source_url,
         anomalies=anomalies,
+        election_id=election_id,
     )
 
     raw_campaigns, campaign_entries = _parse_campaign_samples(
@@ -1103,6 +1107,7 @@ def parse_anketa_sample(
         candidate_id=candidate_id,
         source_url=candidate_source_url,
         anomalies=anomalies,
+        election_id=election_id,
     )
 
     candidate_name = ""
@@ -1170,7 +1175,7 @@ def parse_anketa_sample(
     )
 
     output_payload = {
-        "electionId": ELECTION_ID,
+        "electionId": election_id,
         "candidateId": candidate_id,
         "candidateName": candidate_name,
         "source": {
@@ -1180,7 +1185,7 @@ def parse_anketa_sample(
         "normalized": _normalize_missing_values(normalized),
     }
 
-    output_path = output_root / f"{candidate_id}-{ELECTION_ID}.json"
+    output_path = output_root / f"{candidate_id}-{election_id}.json"
     write_candidate_record(output_path, output_payload)
 
     stats = {
@@ -1198,6 +1203,7 @@ def parse_anketa_samples(
     candidate_ids: list[str] | None,
     samples_root: Path = DEFAULT_SAMPLES_ROOT,
     output_root: Path = DEFAULT_OUTPUT_ROOT,
+    election_id: str = ELECTION_ID,
 ) -> list[dict[str, Any]]:
     if candidate_ids:
         target_ids = candidate_ids
@@ -1215,6 +1221,7 @@ def parse_anketa_samples(
             candidate_id=candidate_id,
             samples_root=samples_root,
             output_root=output_root,
+            election_id=election_id,
         )
         results.append(stats)
 

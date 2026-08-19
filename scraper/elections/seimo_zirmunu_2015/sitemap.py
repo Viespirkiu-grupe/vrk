@@ -58,8 +58,11 @@ def resolve_candidate_url(href: str) -> str:
     return urljoin(VRK_BASE, href)
 
 
-def fetch_listing_sample(sample_path: Path = DEFAULT_SAMPLE_PATH) -> Path:
-    html = fetch_text(LISTING_URL)
+def fetch_listing_sample(
+    sample_path: Path = DEFAULT_SAMPLE_PATH,
+    listing_url: str = LISTING_URL,
+) -> Path:
+    html = fetch_text(listing_url)
     sample_path.parent.mkdir(parents=True, exist_ok=True)
     sample_path.write_text(html, encoding="utf-8")
     return sample_path
@@ -101,6 +104,8 @@ def _select_candidate_link(row: Any) -> Any | None:
 def build_sitemap_from_sample(
     sample_path: Path | None = None,
     output_path: Path = DEFAULT_SITEMAP_PATH,
+    election_id: str = ELECTION_ID,
+    listing_url: str = LISTING_URL,
 ) -> tuple[Path, dict[str, int]]:
     if sample_path is None:
         sample_path = DEFAULT_SAMPLE_PATH
@@ -174,8 +179,8 @@ def build_sitemap_from_sample(
     duplicate_candidate_ids = sum(1 for _, count in base_id_counter.items() if count > 1)
 
     payload = {
-        "electionId": ELECTION_ID,
-        "sourceUrl": LISTING_URL,
+        "electionId": election_id,
+        "sourceUrl": listing_url,
         "generatedAt": utc_now_iso(),
         "stats": {
             "rows": len(rows),

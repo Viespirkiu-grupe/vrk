@@ -155,6 +155,7 @@ def _fetch_campaign_tabs(
     anomalies: list[dict[str, Any]],
     candidate_id: str,
     candidate_url: str,
+    election_id: str,
 ) -> dict[str, Any]:
     campaign_url = campaign_link["url"]
     campaign_key = campaign_link["campaignKey"]
@@ -170,7 +171,7 @@ def _fetch_campaign_tabs(
                 event_type="CampaignRootFetchFailed",
                 severity="error",
                 stage="fetch",
-                election_id=ELECTION_ID,
+                election_id=election_id,
                 candidate_id=candidate_id,
                 source_url=candidate_url,
                 detail={
@@ -197,7 +198,7 @@ def _fetch_campaign_tabs(
                 event_type="CampaignTabLinkExtractionEmpty",
                 severity="warning",
                 stage="fetch",
-                election_id=ELECTION_ID,
+                election_id=election_id,
                 candidate_id=candidate_id,
                 source_url=candidate_url,
                 detail={
@@ -226,7 +227,7 @@ def _fetch_campaign_tabs(
                         event_type="CampaignTabDownloadFailed",
                         severity="error",
                         stage="fetch",
-                        election_id=ELECTION_ID,
+                        election_id=election_id,
                         candidate_id=candidate_id,
                         source_url=candidate_url,
                         detail={
@@ -285,6 +286,7 @@ def _fetch_candidate_tabs(
     entry: dict[str, str],
     samples_root: Path,
     allow_new_candidate_dir: bool,
+    election_id: str,
 ) -> dict[str, Any]:
     candidate_dir = samples_root / entry["candidateId"]
     if not candidate_dir.exists() and not allow_new_candidate_dir:
@@ -307,7 +309,7 @@ def _fetch_candidate_tabs(
                 event_type="TabLinkExtractionEmpty",
                 severity="error",
                 stage="fetch",
-                election_id=ELECTION_ID,
+                election_id=election_id,
                 candidate_id=entry["candidateId"],
                 source_url=entry["url"],
             )
@@ -321,7 +323,7 @@ def _fetch_candidate_tabs(
                 event_type="MissingExpectedTab",
                 severity="warning",
                 stage="fetch",
-                election_id=ELECTION_ID,
+                election_id=election_id,
                 candidate_id=entry["candidateId"],
                 source_url=entry["url"],
                 detail={"missingTabs": missing_expected_tabs},
@@ -347,7 +349,7 @@ def _fetch_candidate_tabs(
                         event_type="TabDownloadFailed",
                         severity="error",
                         stage="fetch",
-                        election_id=ELECTION_ID,
+                        election_id=election_id,
                         candidate_id=entry["candidateId"],
                         source_url=entry["url"],
                         detail={
@@ -386,6 +388,7 @@ def _fetch_candidate_tabs(
                 anomalies,
                 candidate_id=entry["candidateId"],
                 candidate_url=entry["url"],
+                election_id=election_id,
             )
         )
 
@@ -395,7 +398,7 @@ def _fetch_candidate_tabs(
                 event_type="TabDownloadPartial",
                 severity="error",
                 stage="fetch",
-                election_id=ELECTION_ID,
+                election_id=election_id,
                 candidate_id=entry["candidateId"],
                 source_url=entry["url"],
                 detail={
@@ -407,7 +410,7 @@ def _fetch_candidate_tabs(
 
     index_path = candidate_dir / "index.json"
     index_payload = {
-        "electionId": ELECTION_ID,
+        "electionId": election_id,
         "candidate": entry,
         "anketaPath": str(anketa_path),
         "tabCount": len(tab_links),
@@ -422,7 +425,7 @@ def _fetch_candidate_tabs(
     )
 
     return {
-        "election_id": ELECTION_ID,
+        "election_id": election_id,
         "candidate": entry,
         "candidate_dir": candidate_dir,
         "anketa_path": anketa_path,
@@ -439,12 +442,14 @@ def fetch_first_candidate_with_tabs(
     sitemap_path: Path = DEFAULT_SITEMAP_PATH,
     samples_root: Path = DEFAULT_SAMPLES_ROOT,
     allow_new_candidate_dir: bool = False,
+    election_id: str = ELECTION_ID,
 ) -> dict[str, Any]:
     entry = _load_first_sitemap_entry(sitemap_path)
     return _fetch_candidate_tabs(
         entry=entry,
         samples_root=samples_root,
         allow_new_candidate_dir=allow_new_candidate_dir,
+        election_id=election_id,
     )
 
 
@@ -453,6 +458,7 @@ def fetch_candidates_with_tabs(
     sitemap_path: Path = DEFAULT_SITEMAP_PATH,
     samples_root: Path = DEFAULT_SAMPLES_ROOT,
     allow_new_candidate_dir: bool = False,
+    election_id: str = ELECTION_ID,
 ) -> dict[str, Any]:
     if not candidate_ids:
         raise ValueError("At least one candidate id must be provided")
@@ -472,11 +478,12 @@ def fetch_candidates_with_tabs(
                 entry=entry,
                 samples_root=samples_root,
                 allow_new_candidate_dir=allow_new_candidate_dir,
+                election_id=election_id,
             )
         )
 
     return {
-        "election_id": ELECTION_ID,
+        "election_id": election_id,
         "count": len(results),
         "results": results,
     }
