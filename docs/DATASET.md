@@ -18,7 +18,7 @@ never touched by a full run.
 
 ## Inventory
 
-33,119 candidate records across 19 elections, 2016–2025, with **zero fetch
+33,121 candidate records across 20 elections, 2016–2025, with **zero fetch
 failures and zero parse anomalies**. The two municipal general elections are
 together larger than everything else in the corpus by a factor of three; each
 was scraped separately in ~6h. Every row now reflects the post-fix parse: the
@@ -39,6 +39,7 @@ below) and every other election was re-parsed offline the same day.
 | `2021-balandzio-11-radviliskio-mero` | 7 | 1 | 1 | 7 |
 | `2021-spalio-10-meru` | 14 | 2 | 1 | 14 |
 | `2023-rugsejo-3-seimo-raseiniai-kedainiai` | 8 | 1 | 1 | 8 |
+| `2023-geguzes-7-visagino-mero` | 2 | 1 | 0 | 0 |
 | `2023-spalio-8-kupiskio-mero` | 5 | 1 | 1 | 5 |
 | `2024-ep` | 319 | 11 | 7 | 0 |
 | `2024-prezidento` | 8 | 1 | 0 | 0 |
@@ -46,7 +47,7 @@ below) and every other election was re-parsed offline the same day.
 | `2025-kovo-16-meru` | 14 | 2 | 0 | 10 |
 | `2023-kovo-5-savivaldybiu-tarybu-ir-meru` | 13796 | 1557 | 541 | 433 |
 | `2019-kovo-3-savivaldybiu-tarybu` | 13666 | 1502 | 244 | 410 |
-| **total** | **33119** | **3521** | **946** | **3367** |
+| **total** | **33121** | **3522** | **945** | **3367** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
@@ -387,9 +388,11 @@ each now has one.
   the 2026-08-19 municipal re-scrape (below): every record in every election
   now reflects the post-fix parse in full, and `teistumo-detales` is present
   on all 13,666 2019 municipal records (244 non-empty, 303 convictions).
-- The repeat Visaginas mayoral vote of 2023 is a separate election with its own
-  VRK path (`/rinkimai/1344/rnk1664/`) and has no module; it is not part of the
-  13,796.
+- ~~The repeat Visaginas mayoral vote of 2023 has no module~~ — implemented as
+  `2023-geguzes-7-visagino-mero` (2026-08-19): both runoff candidates scraped,
+  zero anomalies. It is a separate two-record election, still not part of the
+  13,796; its candidates' campaign finance is published with the March
+  election, so it carries no campaign data of its own.
 - `2024-ep` and `2024-prezidento` candidate pages carry no campaign tab, so
   those elections have no donation data at all — campaigns were run by the party
   lists and are published outside the candidate pages.
