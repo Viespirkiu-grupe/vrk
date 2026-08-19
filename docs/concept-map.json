@@ -263,7 +263,7 @@
         "2019-kovo-3-savivaldybiu-tarybu": "anketa.visuomenine-veikla",
         "2019-prezidento": "anketa.visuomenine-veikla",
         "2019-rugsejo-8-seimo": "anketa.visuomenine-veikla",
-        "2020-seimo": "biografija.moksline-pedagogine-visuomenine-veikla",
+        "2020-seimo": "biografija.visuomenine-veikla",
         "2021-balandzio-11-radviliskio-mero": "biografija.visuomenine-veikla",
         "2021-spalio-10-meru": "biografija.visuomenine-veikla",
         "2023-kovo-5-savivaldybiu-tarybu-ir-meru": "biografija.visuomenine-veikla",
@@ -274,7 +274,7 @@
         "2024-seimo": "biografija.visuomenine-veikla",
         "2025-kovo-16-meru": "biografija.visuomenine-veikla"
       },
-      "note": "2020-seimo alone names it moksline-pedagogine-visuomenine-veikla."
+      "note": "2020-seimo's question wording is wider (scientific + pedagogical activity); the key is shared."
     },
     "kita-apie-save": {
       "label-lt": "Kita apie save",
@@ -395,15 +395,15 @@
         "2019-kovo-3-savivaldybiu-tarybu": "anketa.teistumo-detales.irasai",
         "2021-balandzio-11-radviliskio-mero": "anketa.teistumo-detales.irasai",
         "2021-spalio-10-meru": "anketa.teistumo-detales.irasai",
-        "2023-kovo-5-savivaldybiu-tarybu-ir-meru": "anketa.teistumo-detales",
-        "2023-rugsejo-3-seimo-raseiniai-kedainiai": "anketa.teistumo-detales",
-        "2023-spalio-8-kupiskio-mero": "anketa.teistumo-detales",
-        "2024-ep": "anketa.teistumo-detales",
-        "2024-prezidento": "anketa.teistumo-detales",
-        "2024-seimo": "anketa.teistumo-detales",
-        "2025-kovo-16-meru": "anketa.teistumo-detales"
+        "2023-kovo-5-savivaldybiu-tarybu-ir-meru": "anketa.teistumo-detales.irasai",
+        "2023-rugsejo-3-seimo-raseiniai-kedainiai": "anketa.teistumo-detales.irasai",
+        "2023-spalio-8-kupiskio-mero": "anketa.teistumo-detales.irasai",
+        "2024-ep": "anketa.teistumo-detales.irasai",
+        "2024-prezidento": "anketa.teistumo-detales.irasai",
+        "2024-seimo": "anketa.teistumo-detales.irasai",
+        "2025-kovo-16-meru": "anketa.teistumo-detales.irasai"
       },
-      "note": "Two shapes: a flat irasai record list (2019/2021) vs a nested object whose nusikalstamos-veikos.irasai carries the offences (2023 on). No normalized representation in the 2016-era Seimo/EP/presidential elections or 2020-seimo — their detail tables sit in rawData.anketa.rows."
+      "note": "Uniform: one entry per conviction. Entries carry nuosprendzio-data/-valstybe/-institucija everywhere; the 2019/2021 municipal-law entries add the free-text nusikalstama-veika, the Rinkimu kodekso era (2023+) entries add a nusikalstamos-veikos list of structured offence records."
     },
     "privalomas-registruoti-turtas": {
       "label-lt": "Privalomas registruoti turtas",

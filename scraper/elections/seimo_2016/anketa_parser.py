@@ -1543,7 +1543,13 @@ def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]
                         key = canonical_columns[column_index]
                     if not key:
                         key = f"stulpelis-{column_index + 1}"
-                    row_object[key] = _normalize_text_value(value)
+                    normalized_value = _normalize_text_value(value)
+                    # VRK prints the ID001F personal-code column but never
+                    # fills it — null in every occurrence across ten
+                    # elections. Skipped only when empty.
+                    if normalized_value is None and key == "asmens-kodas":
+                        continue
+                    row_object[key] = normalized_value
 
                 if row_object:
                     normalized_rows.append(row_object)

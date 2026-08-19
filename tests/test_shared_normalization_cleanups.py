@@ -142,5 +142,73 @@ class NfcNormalizationTests(unittest.TestCase):
         self.assertEqual(_normalize_text_value(nfd), "Šimonytė ė")
 
 
+
+
+class ConvictionEntriesTests(unittest.TestCase):
+    def test_empty_block_is_an_empty_list(self) -> None:
+        from scraper.elections.ep_2024.anketa_parser import _conviction_entries
+
+        self.assertEqual(_conviction_entries(None, None, None, []), [])
+
+    def test_populated_block_is_one_entry(self) -> None:
+        from scraper.elections.ep_2024.anketa_parser import _conviction_entries
+
+        entries = _conviction_entries(
+            "2022-06-30", "Lietuva", "TEISMAS", [{"kaltes-forma": "Tyčinis"}]
+        )
+        self.assertEqual(
+            entries,
+            [
+                {
+                    "nuosprendzio-data": "2022-06-30",
+                    "nuosprendzio-valstybe": "Lietuva",
+                    "nuosprendzio-institucija": "TEISMAS",
+                    "nusikalstamos-veikos": [{"kaltes-forma": "Tyčinis"}],
+                }
+            ],
+        )
+
+
+class DeadColumnSkipTests(unittest.TestCase):
+    def test_id001f_personal_code_skipped_only_when_empty(self) -> None:
+        payload = {
+            "sections": [
+                {
+                    "title": "ID001F",
+                    "sectionId": "id001f",
+                    "columns": ["Vardas ir pavardė", "Asmens kodas"],
+                    "rows": [["JONAS JONAITIS", ""]],
+                }
+            ]
+        }
+        record = _normalize_privaciu_interesu_data(payload)["id001f"][0]
+        self.assertNotIn("asmens-kodas", record)
+        self.assertEqual(record["vardas-ir-pavarde"], "JONAS JONAITIS")
+
+    def test_2024_era_dead_columns_skipped_only_when_empty(self) -> None:
+        from scraper.elections.ep_2024.anketa_parser import (
+            _normalize_privaciu_interesu_data as normalize_2024,
+        )
+
+        payload = {
+            "sections": [
+                {
+                    "title": "Ryšiai su juridiniais asmenimis",
+                    "records": [
+                        {
+                            "items": [
+                                {"key": "Ryšys", "value": ""},
+                                {"key": "Ryšio pobūdis", "value": "Narys"},
+                            ]
+                        }
+                    ],
+                }
+            ]
+        }
+        section = normalize_2024(payload)["rysiai-su-juridiniais-asmenimis"][0]
+        self.assertNotIn("rysys", section)
+        self.assertEqual(section["rysio-pobudis"], "Narys")
+
+
 if __name__ == "__main__":
     unittest.main()

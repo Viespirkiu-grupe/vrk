@@ -499,15 +499,9 @@ class Savivaldybiu2023AnketaParserTests(unittest.TestCase):
         for payload in self.everyone:
             with self.subTest(candidate=payload["candidateId"]):
                 anketa = payload["normalized"]["anketa"]
-                self.assertEqual(
-                    anketa["teistumo-detales"],
-                    {
-                        "nuosprendzio-data": None,
-                        "nuosprendzio-valstybe": None,
-                        "nuosprendzio-institucija": None,
-                        "nusikalstamos-veikos": {"aprasas": None, "irasai": []},
-                    },
-                )
+                # Uniform shape: no conviction block means an empty entry
+                # list, not the old skeleton of null fields.
+                self.assertEqual(anketa["teistumo-detales"], {"irasai": []})
                 self.assertIsNone(anketa["mandato-netekimo-detales"])
 
     # ------------------------------------------------------------------

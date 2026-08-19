@@ -109,7 +109,7 @@ The two era groups:
 | hobbies | `anketa.pomegiai` | `biografija.pomegiai` | |
 | current position | — | `anketa.einamos-pareigos` | 2020-era question |
 | main workplace | `anketa.pagrindine-darboviete` | — | 2016-era question; near- but not exact equivalent of the above |
-| public activity | `anketa.visuomenine-veikla` | `biografija.visuomenine-veikla` | `2020-seimo` alone: `biografija.moksline-pedagogine-visuomenine-veikla` |
+| public activity | `anketa.visuomenine-veikla` | `biografija.visuomenine-veikla` | `2020-seimo`'s question wording is wider (scientific + pedagogical activity) |
 | other about self | `anketa.kita-apie-save` | `biografija.kita-apie-save` | 2020 era: `2020-seimo` only |
 | party membership | `anketa.politine-organizacija` (string) | `anketa.narystes-politinese-organizacijose.tekstas` (2020–2023) / `.irasai` (2024 on) | three value shapes |
 | nominator | `profilis.kita.<iskele-variant>.reiksme` | same | five key names — see below |

@@ -393,7 +393,7 @@ def _normalize_biografija_data(payload: dict[str, Any]) -> dict[str, Any]:
         "darbo-patirtis": {
             "irasai": work_rows,
         },
-        "moksline-pedagogine-visuomenine-veikla": _first_scalar_answer(by_question.get("6", [])),
+        "visuomenine-veikla": _first_scalar_answer(by_question.get("6", [])),
         "pomegiai": _first_scalar_answer(by_question.get("7", [])),
         "seimine-padetis": _first_scalar_answer(by_question.get("8", [])),
         "sutuoktinio-vardas-pavarde": _first_scalar_answer(by_question.get("8.1", [])),

@@ -156,8 +156,8 @@ class Meru2025AnketaParserTests(unittest.TestCase):
 
     def test_conditional_blocks_absent(self) -> None:
         anketa = self.cepulis["normalized"]["anketa"]
-        self.assertIsNone(anketa["teistumo-detales"]["nuosprendzio-data"])
-        self.assertEqual(anketa["teistumo-detales"]["nusikalstamos-veikos"]["irasai"], [])
+        # Uniform shape: no conviction block means an empty entry list.
+        self.assertEqual(anketa["teistumo-detales"], {"irasai": []})
         self.assertIsNone(anketa["mandato-netekimo-detales"])
 
     def test_biografija_uses_2024_question_numbering(self) -> None:
