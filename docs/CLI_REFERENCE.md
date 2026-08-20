@@ -33,6 +33,7 @@ python -m scraper <command> [args]
 - `2015-birzelio-7-seimo-varena-eisiskes` (2015-06-07 new Seimo by-election in Varėna–Eišiškės No. 70)
 - `2015-lapkricio-8-telsiu-mero` (2015-11-08 new Telšiai district council member-mayor election)
 - `2015-birzelio-7-pakartotiniai-sirvintos-trakai` (2015-06-07 repeat Širvintos member-mayor and Trakai council/mayor elections)
+- `2015-birzelio-21-pakartotiniai-silutes` (2015-06-21 repeat Šilutė district council election)
 
 ## Election Separation
 
@@ -659,6 +660,28 @@ python -m scraper fetch-sample 2015-birzelio-7-pakartotiniai-sirvintos-trakai
 python -m scraper sitemap 2015-birzelio-7-pakartotiniai-sirvintos-trakai
 python -m scraper fetch-candidate-samples 2015-birzelio-7-pakartotiniai-sirvintos-trakai --candidate-id zivile-pinskuviene --allow-new-samples
 python -m scraper parse-anketa-samples 2015-birzelio-7-pakartotiniai-sirvintos-trakai
+```
+
+## Repeat municipal election (`2015-birzelio-21-pakartotiniai-silutes`) Workflow
+
+The 2015-06-21 repeat Šilutė council election (457) is the same two-structure
+listing in a single district, so its module is wiring over the June 7th one's
+walk and id merge plus the municipal anketa mapping. 366 candidates across 8
+party lists — one of them a `Visuomeninis rinkimų komitetas`, this era's other
+nominator type.
+
+It is the clean counterpart to the June 7th election: every one of the 8
+mayoral candidates also stands for the council, so the prose marker and the id
+join agree exactly (`markerJoinMismatch` 0). The one duplicate candidate id is
+a genuine name collision — two different people called Jonas Šakurskis, born
+1953 and 1957, on different lists — so the positional `-2` suffix is right
+here, unlike Marija Puč in the June election.
+
+```bash
+python -m scraper fetch-sample 2015-birzelio-21-pakartotiniai-silutes
+python -m scraper sitemap 2015-birzelio-21-pakartotiniai-silutes
+python -m scraper fetch-candidate-samples 2015-birzelio-21-pakartotiniai-silutes --candidate-id alfredas-stasys-nauseda --allow-new-samples
+python -m scraper parse-anketa-samples 2015-birzelio-21-pakartotiniai-silutes
 ```
 
 ## Helpful Checks

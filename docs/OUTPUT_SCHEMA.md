@@ -1093,13 +1093,24 @@ is the municipal question set and the profile card:
 - `kita` is `Duomenų nėra` for every candidate — no Telšiai candidate
   published a program.
 
-## Appendix: 2015 repeat municipal elections (`2015-birzelio-7-pakartotiniai-sirvintos-trakai`)
+## Appendix: 2015 repeat municipal elections (`2015-birzelio-7-pakartotiniai-sirvintos-trakai`, `2015-birzelio-21-pakartotiniai-silutes`)
 
 Records are written as
 `data/2015-birzelio-7-pakartotiniai-sirvintos-trakai/<candidate-id>-2015-birzelio-7-pakartotiniai-sirvintos-trakai.json`.
+Both are one VRK election published through two listing structures — a
+district page whose mayoral section and party-list index each hold candidates.
 Pages are the 2015 era with the municipal question set, so the Telšiai
-appendix describes the record; this election adds a two-structure listing and
-two data facts a consumer has to know about:
+appendix describes the record; these elections add the listing block and some
+data facts a consumer has to know about:
+
+- Records carry a top-level `kandidatavimas` block — the same shape the
+  municipal general elections write — holding what only the listings publish:
+  `vrkCandidateId`, `savivaldybe`, `roles` (`meras`, `tarybos-narys` or both),
+  `tarybosNarys` (`partyList`, `listNumber`, `listPosition`) and `meras`
+  (`nominatedBy`). For a dual candidate this is the only place the list
+  position appears at all — the mayoral profile card prints none.
+  **`isrinktas` is `null`, not `false`**: the 2015 pages publish no elected
+  markers, so electedness is unknown rather than negative.
 
 - The sitemap merges the mayoral listing and the party lists on VRK's
   candidate id, so one entry carries `roles` (`meras`, `tarybos-narys`, or
@@ -1122,3 +1133,13 @@ two data facts a consumer has to know about:
   `AnketaTableNotFound`/`AnketaTableEmpty` pair that signals real breakage.
 - `biografija` is present only for mayoral candidates; council-only records
   have no `biografija` section at all.
+- A council candidate may have no campaign participant link at all, in which
+  case the record has no `politines-kampanijos-dalyvio-duomenys` section
+  (`jonas-sakurskis-2` in Šilutė).
+- Šilutė is the clean counterpart to the June 7th election: all 8 of its
+  mayoral candidates also stand for the council, so its `markerJoinMismatch`
+  is 0. Its one duplicate candidate id is a real name collision — two
+  different people called Jonas Šakurskis, born 1953 and 1957, on different
+  lists — where the positional `-2` suffix is the correct treatment. Telling
+  the two situations apart matters: Šilutė's pair are two people, Trakai's
+  are one.

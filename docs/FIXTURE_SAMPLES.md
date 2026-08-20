@@ -370,6 +370,20 @@ never published. The samples tree also carries the two district listing pages
 and a `lists/` directory with all nine party-list pages, because the sitemap
 is rebuilt from them offline.
 
+For `2015-birzelio-21-pakartotiniai-silutes` the allowlist
+(`tests/test_pakartotiniai_silutes_2015_sample_allowlist.py`) is a curated ten
+of the 366 candidates:
+
+- `alfredas-stasys-nauseda`, `sandra-tamasauskiene`, `arvydas-jakas`,
+  `virgilijus-pozingis`, `tomas-budrikis`, `vytautas-laurinaitis`,
+  `jonas-jatautas`, `daiva-zebeliene`, `jonas-sakurskis`, `jonas-sakurskis-2`
+
+The first eight are this election's dual candidates, who between them stand on
+all eight party lists including the `Visuomeninis rinkimų komitetas`. The last
+two are different people who share a name, one of whom has no campaign
+participant link at all. The district page and all eight list pages are
+captured alongside them.
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:
