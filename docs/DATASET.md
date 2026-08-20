@@ -57,7 +57,7 @@ below) and every other election was re-parsed offline the same day.
 | `2025-kovo-16-meru` | 14 | 2 | 0 | 10 |
 | `2023-kovo-5-savivaldybiu-tarybu-ir-meru` | 13796 | 1557 | 541 | 433 |
 | `2019-kovo-3-savivaldybiu-tarybu` | 13666 | 1502 | 244 | 410 |
-| `1996-spalio-20-seimo` | 5 of 879 | 0 | 0 | 0 |
+| `1996-spalio-20-seimo` | 879 | 0 | 0 | 0 |
 | `1997-kovo-23-seimo-pakartotiniai` | 23 | 0 | 0 | 0 |
 | `1997-gruodzio-21-seimo-pakartotiniai` | 4 | 0 | 0 | 0 |
 | `1997-kovo-23-savivaldybiu-tarybu` | 6 of 6,276 | 0 | 0 | 0 |
@@ -445,12 +445,13 @@ each now has one.
   `1997-birzelio-29-svenciniu-tarybos-pakartotiniai`) does publish birth date
   and resolves the same identity risk 2015 and later eras do; see
   `docs/OUTPUT_SCHEMA.md`'s appendices for both families.
-- `1996-spalio-20-seimo` (879 candidates) and `1997-kovo-23-savivaldybiu-tarybu`
-  (6,276 candidates) have not had their full scrapes finish as of this
-  writing — only their fixture sets were parsed when this note was written;
-  see the run record below once it lands. Their listings and sitemaps are
-  complete: 879 candidates across 71 constituencies, and 6,276 candidates
-  across 449 party lists in all 56 municipalities respectively, with zero
-  duplicate-candidate-id collisions for the former and 46 for the latter (all
-  confirmed genuine name collisions between different VRK candidate ids, not
-  parser artifacts — see `docs/CLI_REFERENCE.md`).
+- `1996-spalio-20-seimo`'s full scrape is done: 879/879 candidates across 71
+  constituencies, one `ResidenceMissing` warning
+  (`andrikiene-laima-liucija`, a genuinely blank field on the source page),
+  zero duplicate-candidate-id collisions.
+  `1997-kovo-23-savivaldybiu-tarybu`'s full scrape (6,276 candidates across
+  449 party lists in all 56 municipalities, 46 duplicate-candidate-id
+  collisions — all confirmed genuine name collisions between different VRK
+  candidate ids, not parser artifacts, see `docs/CLI_REFERENCE.md`) was still
+  running as of this writing; its row above will read the fixture-only count
+  until it lands.
