@@ -6,7 +6,13 @@ resolved by normalized name + birth date. Measured over the 33,119-record
 corpus: birth date is present on 33,118 records, the pair collides for zero
 same-election record pairs, and 305 names are shared by people with distinct
 birth dates, which name-only matching would have wrongly merged. A record
-without a birth date (one in the corpus) groups by name alone and is flagged.
+without a birth date groups by name alone and is flagged; there are two, and
+the second is a known duplicate rather than a second person. VRK issued Marija
+Puč two candidate ids in the 2015 Trakai repeat election and published the
+council one as an unfilled "Rengiama" page, so that record has a name and no
+birth date and splits off from her real entry. Merging it on name alone is
+exactly what the birth-date key exists to prevent, so it is left split and
+recorded here instead — see docs/DATASET.md.
 
 Run from the repo root:
 
@@ -30,6 +36,12 @@ OUTPUT_PATH = Path("dashboard/people.json")
 # Chronological order; the dashboard renders whatever appears here and sorts
 # unknown election ids after these.
 ELECTION_ORDER = [
+    "2015-kovo-1-savivaldybiu",
+    "2015-kovo-1-seimo-zirmunai",
+    "2015-birzelio-7-seimo-varena-eisiskes",
+    "2015-birzelio-7-pakartotiniai-sirvintos-trakai",
+    "2015-birzelio-21-pakartotiniai-silutes",
+    "2015-lapkricio-8-telsiu-mero",
     "2016-seimo",
     "2017-balandzio-23-meru",
     "2017-balandzio-23-seimo-anyksciai-panevezys",
