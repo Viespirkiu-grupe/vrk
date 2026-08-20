@@ -232,6 +232,78 @@ from scraper.elections.savivaldybiu_2019.sitemap import (
     build_sitemap_from_sample as build_savivaldybiu_2019_sitemap_from_sample,
     fetch_listing_sample as fetch_savivaldybiu_2019_listing_sample,
 )
+from scraper.elections.seimo_zirmunu_2015.anketa_parser import (
+    parse_anketa_samples as parse_seimo_zirmunu_2015_anketa_samples,
+)
+from scraper.elections.seimo_zirmunu_2015.candidate_samples import (
+    fetch_candidates_with_tabs as fetch_seimo_zirmunu_2015_candidates_with_tabs,
+    fetch_first_candidate_with_tabs as fetch_seimo_zirmunu_2015_first_candidate_with_tabs,
+)
+from scraper.elections.seimo_zirmunu_2015.sitemap import (
+    ELECTION_ID as SEIMO_ZIRMUNU_2015_ELECTION_ID,
+    build_sitemap_from_sample as build_seimo_zirmunu_2015_sitemap_from_sample,
+    fetch_listing_sample as fetch_seimo_zirmunu_2015_listing_sample,
+)
+from scraper.elections.seimo_varenos_eisiskiu_2015.anketa_parser import (
+    parse_anketa_samples as parse_seimo_varenos_eisiskiu_2015_anketa_samples,
+)
+from scraper.elections.seimo_varenos_eisiskiu_2015.candidate_samples import (
+    fetch_candidates_with_tabs as fetch_seimo_varenos_eisiskiu_2015_candidates_with_tabs,
+    fetch_first_candidate_with_tabs as fetch_seimo_varenos_eisiskiu_2015_first_candidate_with_tabs,
+)
+from scraper.elections.seimo_varenos_eisiskiu_2015.sitemap import (
+    ELECTION_ID as SEIMO_VARENOS_EISISKIU_2015_ELECTION_ID,
+    build_sitemap_from_sample as build_seimo_varenos_eisiskiu_2015_sitemap_from_sample,
+    fetch_listing_sample as fetch_seimo_varenos_eisiskiu_2015_listing_sample,
+)
+from scraper.elections.telsiu_mero_2015.anketa_parser import (
+    parse_anketa_samples as parse_telsiu_mero_2015_anketa_samples,
+)
+from scraper.elections.telsiu_mero_2015.candidate_samples import (
+    fetch_candidates_with_tabs as fetch_telsiu_mero_2015_candidates_with_tabs,
+    fetch_first_candidate_with_tabs as fetch_telsiu_mero_2015_first_candidate_with_tabs,
+)
+from scraper.elections.telsiu_mero_2015.sitemap import (
+    ELECTION_ID as TELSIU_MERO_2015_ELECTION_ID,
+    build_sitemap_from_sample as build_telsiu_mero_2015_sitemap_from_sample,
+    fetch_listing_sample as fetch_telsiu_mero_2015_listing_sample,
+)
+from scraper.elections.pakartotiniai_sirvintu_traku_2015.anketa_parser import (
+    parse_anketa_samples as parse_pakartotiniai_sirvintu_traku_2015_anketa_samples,
+)
+from scraper.elections.pakartotiniai_sirvintu_traku_2015.candidate_samples import (
+    fetch_candidates_with_tabs as fetch_pakartotiniai_sirvintu_traku_2015_candidates_with_tabs,
+    fetch_first_candidate_with_tabs as fetch_pakartotiniai_sirvintu_traku_2015_first_candidate_with_tabs,
+)
+from scraper.elections.pakartotiniai_sirvintu_traku_2015.sitemap import (
+    ELECTION_ID as PAKARTOTINIAI_SIRVINTU_TRAKU_2015_ELECTION_ID,
+    build_sitemap_from_sample as build_pakartotiniai_sirvintu_traku_2015_sitemap_from_sample,
+    fetch_listing_sample as fetch_pakartotiniai_sirvintu_traku_2015_listing_sample,
+)
+from scraper.elections.pakartotiniai_silutes_2015.anketa_parser import (
+    parse_anketa_samples as parse_pakartotiniai_silutes_2015_anketa_samples,
+)
+from scraper.elections.pakartotiniai_silutes_2015.candidate_samples import (
+    fetch_candidates_with_tabs as fetch_pakartotiniai_silutes_2015_candidates_with_tabs,
+    fetch_first_candidate_with_tabs as fetch_pakartotiniai_silutes_2015_first_candidate_with_tabs,
+)
+from scraper.elections.pakartotiniai_silutes_2015.sitemap import (
+    ELECTION_ID as PAKARTOTINIAI_SILUTES_2015_ELECTION_ID,
+    build_sitemap_from_sample as build_pakartotiniai_silutes_2015_sitemap_from_sample,
+    fetch_listing_sample as fetch_pakartotiniai_silutes_2015_listing_sample,
+)
+from scraper.elections.savivaldybiu_2015.anketa_parser import (
+    parse_anketa_samples as parse_savivaldybiu_2015_anketa_samples,
+)
+from scraper.elections.savivaldybiu_2015.candidate_samples import (
+    fetch_candidates_with_tabs as fetch_savivaldybiu_2015_candidates_with_tabs,
+    fetch_first_candidate_with_tabs as fetch_savivaldybiu_2015_first_candidate_with_tabs,
+)
+from scraper.elections.savivaldybiu_2015.sitemap import (
+    ELECTION_ID as SAVIVALDYBIU_2015_ELECTION_ID,
+    build_sitemap_from_sample as build_savivaldybiu_2015_sitemap_from_sample,
+    fetch_listing_sample as fetch_savivaldybiu_2015_listing_sample,
+)
 from scraper.shared.anomalies import write_jsonl
 
 FETCHABLE_ELECTION_IDS = [
@@ -255,6 +327,12 @@ FETCHABLE_ELECTION_IDS = [
     SEIMO_2019_ELECTION_ID,
     SAVIVALDYBIU_2023_ELECTION_ID,
     SAVIVALDYBIU_2019_ELECTION_ID,
+    SEIMO_ZIRMUNU_2015_ELECTION_ID,
+    SEIMO_VARENOS_EISISKIU_2015_ELECTION_ID,
+    TELSIU_MERO_2015_ELECTION_ID,
+    PAKARTOTINIAI_SIRVINTU_TRAKU_2015_ELECTION_ID,
+    PAKARTOTINIAI_SILUTES_2015_ELECTION_ID,
+    SAVIVALDYBIU_2015_ELECTION_ID,
 ]
 PARSABLE_ELECTION_IDS = [
     SEIMO_2016_ELECTION_ID,
@@ -277,6 +355,12 @@ PARSABLE_ELECTION_IDS = [
     SEIMO_2019_ELECTION_ID,
     SAVIVALDYBIU_2023_ELECTION_ID,
     SAVIVALDYBIU_2019_ELECTION_ID,
+    SEIMO_ZIRMUNU_2015_ELECTION_ID,
+    SEIMO_VARENOS_EISISKIU_2015_ELECTION_ID,
+    TELSIU_MERO_2015_ELECTION_ID,
+    PAKARTOTINIAI_SIRVINTU_TRAKU_2015_ELECTION_ID,
+    PAKARTOTINIAI_SILUTES_2015_ELECTION_ID,
+    SAVIVALDYBIU_2015_ELECTION_ID,
 ]
 
 
@@ -321,6 +405,18 @@ def _fetch_listing_sample_for_election(election_id: str) -> Path:
         return fetch_savivaldybiu_2023_listing_sample()
     if election_id == SAVIVALDYBIU_2019_ELECTION_ID:
         return fetch_savivaldybiu_2019_listing_sample()
+    if election_id == SEIMO_ZIRMUNU_2015_ELECTION_ID:
+        return fetch_seimo_zirmunu_2015_listing_sample()
+    if election_id == SEIMO_VARENOS_EISISKIU_2015_ELECTION_ID:
+        return fetch_seimo_varenos_eisiskiu_2015_listing_sample()
+    if election_id == TELSIU_MERO_2015_ELECTION_ID:
+        return fetch_telsiu_mero_2015_listing_sample()
+    if election_id == PAKARTOTINIAI_SIRVINTU_TRAKU_2015_ELECTION_ID:
+        return fetch_pakartotiniai_sirvintu_traku_2015_listing_sample()
+    if election_id == PAKARTOTINIAI_SILUTES_2015_ELECTION_ID:
+        return fetch_pakartotiniai_silutes_2015_listing_sample()
+    if election_id == SAVIVALDYBIU_2015_ELECTION_ID:
+        return fetch_savivaldybiu_2015_listing_sample()
     raise ValueError(f"Unsupported election id: {election_id}")
 
 
@@ -365,6 +461,18 @@ def _build_sitemap_from_sample_for_election(election_id: str, sample_path: Path 
         return build_savivaldybiu_2023_sitemap_from_sample(sample_path=sample_path)
     if election_id == SAVIVALDYBIU_2019_ELECTION_ID:
         return build_savivaldybiu_2019_sitemap_from_sample(sample_path=sample_path)
+    if election_id == SEIMO_ZIRMUNU_2015_ELECTION_ID:
+        return build_seimo_zirmunu_2015_sitemap_from_sample(sample_path=sample_path)
+    if election_id == SEIMO_VARENOS_EISISKIU_2015_ELECTION_ID:
+        return build_seimo_varenos_eisiskiu_2015_sitemap_from_sample(sample_path=sample_path)
+    if election_id == TELSIU_MERO_2015_ELECTION_ID:
+        return build_telsiu_mero_2015_sitemap_from_sample(sample_path=sample_path)
+    if election_id == PAKARTOTINIAI_SIRVINTU_TRAKU_2015_ELECTION_ID:
+        return build_pakartotiniai_sirvintu_traku_2015_sitemap_from_sample(sample_path=sample_path)
+    if election_id == PAKARTOTINIAI_SILUTES_2015_ELECTION_ID:
+        return build_pakartotiniai_silutes_2015_sitemap_from_sample(sample_path=sample_path)
+    if election_id == SAVIVALDYBIU_2015_ELECTION_ID:
+        return build_savivaldybiu_2015_sitemap_from_sample(sample_path=sample_path)
     raise ValueError(f"Unsupported election id: {election_id}")
 
 
@@ -490,6 +598,42 @@ def _fetch_first_candidate_with_tabs_for_election(
         )
     if election_id == SAVIVALDYBIU_2019_ELECTION_ID:
         return fetch_savivaldybiu_2019_first_candidate_with_tabs(
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
+    if election_id == SEIMO_ZIRMUNU_2015_ELECTION_ID:
+        return fetch_seimo_zirmunu_2015_first_candidate_with_tabs(
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
+    if election_id == SEIMO_VARENOS_EISISKIU_2015_ELECTION_ID:
+        return fetch_seimo_varenos_eisiskiu_2015_first_candidate_with_tabs(
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
+    if election_id == TELSIU_MERO_2015_ELECTION_ID:
+        return fetch_telsiu_mero_2015_first_candidate_with_tabs(
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
+    if election_id == PAKARTOTINIAI_SIRVINTU_TRAKU_2015_ELECTION_ID:
+        return fetch_pakartotiniai_sirvintu_traku_2015_first_candidate_with_tabs(
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
+    if election_id == PAKARTOTINIAI_SILUTES_2015_ELECTION_ID:
+        return fetch_pakartotiniai_silutes_2015_first_candidate_with_tabs(
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
+    if election_id == SAVIVALDYBIU_2015_ELECTION_ID:
+        return fetch_savivaldybiu_2015_first_candidate_with_tabs(
             sitemap_path=sitemap_path,
             samples_root=samples_root,
             allow_new_candidate_dir=allow_new_samples,
@@ -644,6 +788,48 @@ def _fetch_candidates_with_tabs_for_election(
             samples_root=samples_root,
             allow_new_candidate_dir=allow_new_samples,
         )
+    if election_id == SEIMO_ZIRMUNU_2015_ELECTION_ID:
+        return fetch_seimo_zirmunu_2015_candidates_with_tabs(
+            candidate_ids=candidate_ids,
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
+    if election_id == SEIMO_VARENOS_EISISKIU_2015_ELECTION_ID:
+        return fetch_seimo_varenos_eisiskiu_2015_candidates_with_tabs(
+            candidate_ids=candidate_ids,
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
+    if election_id == TELSIU_MERO_2015_ELECTION_ID:
+        return fetch_telsiu_mero_2015_candidates_with_tabs(
+            candidate_ids=candidate_ids,
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
+    if election_id == PAKARTOTINIAI_SIRVINTU_TRAKU_2015_ELECTION_ID:
+        return fetch_pakartotiniai_sirvintu_traku_2015_candidates_with_tabs(
+            candidate_ids=candidate_ids,
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
+    if election_id == PAKARTOTINIAI_SILUTES_2015_ELECTION_ID:
+        return fetch_pakartotiniai_silutes_2015_candidates_with_tabs(
+            candidate_ids=candidate_ids,
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
+    if election_id == SAVIVALDYBIU_2015_ELECTION_ID:
+        return fetch_savivaldybiu_2015_candidates_with_tabs(
+            candidate_ids=candidate_ids,
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
     raise ValueError(f"Unsupported election id: {election_id}")
 
 
@@ -769,6 +955,42 @@ def _parse_anketa_samples_for_election(
         )
     if election_id == SAVIVALDYBIU_2019_ELECTION_ID:
         return parse_savivaldybiu_2019_anketa_samples(
+            candidate_ids=candidate_ids,
+            samples_root=samples_root,
+            output_root=output_root,
+        )
+    if election_id == SEIMO_ZIRMUNU_2015_ELECTION_ID:
+        return parse_seimo_zirmunu_2015_anketa_samples(
+            candidate_ids=candidate_ids,
+            samples_root=samples_root,
+            output_root=output_root,
+        )
+    if election_id == SEIMO_VARENOS_EISISKIU_2015_ELECTION_ID:
+        return parse_seimo_varenos_eisiskiu_2015_anketa_samples(
+            candidate_ids=candidate_ids,
+            samples_root=samples_root,
+            output_root=output_root,
+        )
+    if election_id == TELSIU_MERO_2015_ELECTION_ID:
+        return parse_telsiu_mero_2015_anketa_samples(
+            candidate_ids=candidate_ids,
+            samples_root=samples_root,
+            output_root=output_root,
+        )
+    if election_id == PAKARTOTINIAI_SIRVINTU_TRAKU_2015_ELECTION_ID:
+        return parse_pakartotiniai_sirvintu_traku_2015_anketa_samples(
+            candidate_ids=candidate_ids,
+            samples_root=samples_root,
+            output_root=output_root,
+        )
+    if election_id == PAKARTOTINIAI_SILUTES_2015_ELECTION_ID:
+        return parse_pakartotiniai_silutes_2015_anketa_samples(
+            candidate_ids=candidate_ids,
+            samples_root=samples_root,
+            output_root=output_root,
+        )
+    if election_id == SAVIVALDYBIU_2015_ELECTION_ID:
+        return parse_savivaldybiu_2015_anketa_samples(
             candidate_ids=candidate_ids,
             samples_root=samples_root,
             output_root=output_root,

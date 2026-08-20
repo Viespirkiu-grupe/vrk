@@ -2,7 +2,7 @@
 
 ## Goal
 
-Collect structured election and candidate data from VRK election pages, starting with the 2016 Seimo election, while keeping the workflow reliable and easy to extend election-by-election.
+Collect structured election and candidate data from VRK election pages, while keeping the workflow reliable and easy to extend election-by-election. The corpus began with the 2016 Seimo election and now reaches back to 2015 — the pre-2016 pages are their own layout family, documented in `docs/PLAN_2015_ELECTIONS.md`.
 
 The current implementation is intentionally focused on one election module and fixture-driven parser development.
 

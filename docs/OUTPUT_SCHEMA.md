@@ -218,15 +218,16 @@ Every entry of `politines-kampanijos-dalyvio-duomenys[]` has the same ten
 keys in all elections that publish campaigns: `statusas`,
 `registravimo-data`, `sprendimo-numeris`, `kontaktai`, `izdininkas`,
 `auditorius`, `aukos-pagal-sekcija`, `finansavimo-ataskaitos`, `sutartys`,
-`sprendimai`.
+`sprendimai`. The 2015 era adds to (never replaces) that set — see the
+`2015-kovo-1-seimo-zirmunai` appendix.
 
 ### The two `privaciu-interesu-deklaracija` families
 
 Declaration sections are keyed two different ways depending on the page era:
 
 - **Form-id sections** (`id001j`, `id001s`, `id001i`, `id001a`, `id001f`,
-  `id001p`, …) on the 2016/2019-era pages: 2016 Seimo, the 2017–2019 Seimo
-  by-elections, both 2017 mayoral elections, 2019 EP, 2019 presidential,
+  `id001p`, …) on the 2016/2019-era pages: 2016 Seimo, the 2015 and 2017–2019
+  Seimo by-elections, both 2017 mayoral elections, 2019 EP, 2019 presidential,
   the 2019 municipal general election and 2020 Seimo.
 - **Slugged sections** (`deklaruojancio-darbovietes`, `sutuoktinio-darbovietes`,
   `rysiai-su-juridiniais-asmenimis`, `rysiai-sudarius-sandorius`,
@@ -1050,3 +1051,148 @@ Election-specific notes:
   2016 and April 2017 pages, despite the section heading still naming GPM308.
 - The 2019 election includes a candidate nominated by two parties; both appear
   in `profilis.kita.iskele.reiksme`, separated by `; `.
+
+## Appendix: 2015 Seimo by-elections (`2015-kovo-1-seimo-zirmunai`, `2015-birzelio-7-seimo-varena-eisiskes`)
+
+The March by-election in Žirmūnai (No. 4) defines the 2015-era parsers; the
+June one in Varėna–Eišiškės (No. 70) is thin wiring over the same machinery
+and shares every shape below. Records are written as
+`data/<election-id>/<candidate-id>-<election-id>.json`
+with the same top-level fields and the corpus's section order (`profilis`,
+`anketa`, `biografija`, `turto-ir-pajamu-deklaracijos`,
+`privaciu-interesu-deklaracija`, `politines-kampanijos-dalyvio-duomenys`,
+`kita`). The pages are the pre-2016 static layout — the oldest family in the
+repository — so several record shapes are this era's own:
+
+- **No elected data anywhere.** The 2015 pages carry no `(V)` suffix, no blue
+  anchors and no elected note, so `profilis.pastaba` is null on every record,
+  the winner's included. Electedness for this era can only come from VRK's
+  results pages and is not part of the candidate record.
+- `profilis.nuotrauka` is a URL to an external JPG
+  (`Kandidato<ID>Foto.jpg`) — this era never embedded base64 photos.
+  `profilis.kita` holds `apygarda` and `iskele`, plus a
+  `savarankisko-`/`atstovaujamojo-politines-kampanijos-dalyvio-duomenys` entry
+  whose link is the campaign participant page.
+- `normalized.anketa` carries the 2015 Seimo question set: the 2016 keys minus
+  `pedagoginis-vardas`, and `pareiskimai` stops at `ar-buvote-pripazintas-kaltu`
+  (Q9.2) — the 9.3.x follow-ups do not exist yet. `kita-apie-save` (Q21) is
+  present but answered by a minority. A bare `","` in `pagrindine-darboviete`
+  is the template's empty workplace/position join and normalizes to null.
+- `turto-ir-pajamu-deklaracijos` keeps the seven canonical keys **but the
+  amounts are litas, not euros**. Two extra keys make that explicit:
+  `valiuta` (always `"Lt"`) and `pastaba` (the page's own note naming the
+  declaration period, e.g. 2013 for this election).
+- `privaciu-interesu-deklaracija` is form-id keyed and — unlike the 2016-era
+  Seimo family — retains the spouse block
+  (`deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris`).
+- `politines-kampanijos-dalyvio-duomenys` keeps the fixed ten keys with
+  `registravimo-data` and `sprendimo-numeris` always null (never published this
+  era) and four additions: donation records carry `amountEur` *and* `amountLt`
+  (the pages print both currencies), each donation section carries a
+  `suvestine` list (the totals block VRK prints under the records — totals by
+  source type, with the "juridinių asmenų aukos" prohibition note),
+  `auditorius.ataskaitos` lists the auditor's report PDFs, and represented
+  participants (`statusas: "Atstovaujamasis"`) carry `atstovauja` naming and
+  linking the party whose campaign covers them.
+- `kita` holds the "Kandidato programa" text with the program PDF URL in
+  `nuorodos`; one candidate published no program (`Duomenų nėra`, no link).
+
+## Appendix: 2015 Telšiai mayor (`2015-lapkricio-8-telsiu-mero`)
+
+Records are written as
+`data/2015-lapkricio-8-telsiu-mero/<candidate-id>-2015-lapkricio-8-telsiu-mero.json`.
+The pages are the 2015 era described in the appendix above — every era shape
+there (no elected data, URL photos, litas amounts with `valiuta`/`pastaba`,
+retained spouse block, the campaign additions) applies here too. What differs
+is the municipal question set and the profile card:
+
+- `normalized.anketa.pareiskimai` carries the savivaldybių tarybų rinkimų
+  įstatymo declarations: `ar-nebaigta-teismo-paskirta-bausme` (Q8.1),
+  `ar-atliekate-karo-tarnyba` (Q8.2), `ar-eina-nesuderinamas-pareigas` (Q8.3),
+  `ar-kitos-valstybes-institucijos-narys` (Q8.4),
+  `ar-turite-kitos-valstybes-pilietybe` (Q8.5) and
+  `ar-buvote-pripazintas-kaltu` (the Q9 "anything to declare" question) —
+  keys shared with `meru_2017` where the questions match. Answers are the
+  era's verbose first person (`Neturiu`, `Nesu`, `Neinu`; one candidate
+  answers `Einu`).
+- `profilis.kita` holds `savivaldybe`, `iskele` and `numeris-sarase` for
+  party-nominated candidates; the self-nominated candidate instead carries an
+  `issikeles-kandidatas` entry and no list fields.
+- `kita` is `Duomenų nėra` for every candidate — no Telšiai candidate
+  published a program.
+
+## Appendix: 2015 repeat municipal elections (`2015-birzelio-7-pakartotiniai-sirvintos-trakai`, `2015-birzelio-21-pakartotiniai-silutes`)
+
+Records are written as
+`data/2015-birzelio-7-pakartotiniai-sirvintos-trakai/<candidate-id>-2015-birzelio-7-pakartotiniai-sirvintos-trakai.json`.
+Both are one VRK election published through two listing structures — a
+district page whose mayoral section and party-list index each hold candidates.
+Pages are the 2015 era with the municipal question set, so the Telšiai
+appendix describes the record; these elections add the listing block and some
+data facts a consumer has to know about:
+
+- Records carry a top-level `kandidatavimas` block — the same shape the
+  municipal general elections write — holding what only the listings publish:
+  `vrkCandidateId`, `savivaldybe`, `roles` (`meras`, `tarybos-narys` or both),
+  `tarybosNarys` (`partyList`, `listNumber`, `listPosition`) and `meras`
+  (`nominatedBy`). For a dual candidate this is the only place the list
+  position appears at all — the mayoral profile card prints none.
+  **`isrinktas` is `null`, not `false`**: the 2015 pages publish no elected
+  markers, so electedness is unknown rather than negative.
+
+- The sitemap merges the mayoral listing and the party lists on VRK's
+  candidate id, so one entry carries `roles` (`meras`, `tarybos-narys`, or
+  both) plus a `mayoralCandidacy` (`nominatedBy`) and/or `councilCandidacy`
+  (`partyList`, `listNumber`, `listPosition`) block. Neither block carries an
+  `elected` key: the 2015 pages publish no elected markers, so the flag is
+  absent rather than false.
+- **One person holds two candidate ids.** Marija Puč is 87693 as a mayoral
+  candidate and 87694 on the council list, so she appears as two entries
+  (`marija-puc`, `marija-puc-2`) that the id join cannot merge, while the
+  other seven dual candidates merge into one entry each. The sitemap's
+  `stats.markerJoinMismatch` is 1 for exactly this reason — the listing's
+  prose marker says she ran for both seats and the id join disagrees. Anyone
+  counting distinct people in this election has to treat that pair as one
+  person; anyone counting candidacies must not.
+- A candidacy whose questionnaire VRK never published (her council one) has a
+  page reading only `Rengiama`. The record keeps the profile card — name,
+  municipality, list and position — with every `anketa` field null, and the
+  parse records one `AnketaNotPublished` warning rather than the
+  `AnketaTableNotFound`/`AnketaTableEmpty` pair that signals real breakage.
+- `biografija` is present only for mayoral candidates; council-only records
+  have no `biografija` section at all.
+- A council candidate may have no campaign participant link at all, in which
+  case the record has no `politines-kampanijos-dalyvio-duomenys` section
+  (`jonas-sakurskis-2` in Šilutė).
+- Šilutė is the clean counterpart to the June 7th election: all 8 of its
+  mayoral candidates also stand for the council, so its `markerJoinMismatch`
+  is 0. Its one duplicate candidate id is a real name collision — two
+  different people called Jonas Šakurskis, born 1953 and 1957, on different
+  lists — where the positional `-2` suffix is the correct treatment. Telling
+  the two situations apart matters: Šilutė's pair are two people, Trakai's
+  are one.
+
+## Appendix: 2015 municipal general (`2015-kovo-1-savivaldybiu`)
+
+Records are written as
+`data/2015-kovo-1-savivaldybiu/<candidate-id>-2015-kovo-1-savivaldybiu.json`.
+The pages are the 2015 era with the municipal question set, and the record
+carries the same `kandidatavimas` block as the 2015 repeat elections, so those
+two appendices describe the shape. What is specific to this election:
+
+- `candidateId` is `<name-slug>-<vrkCandidateId>` (e.g. `valius-azuolas-77601`),
+  not the bare name slug the small 2015 modules use. 140 of the 15,149
+  candidates share a name slug — two different Albinas Klimas stood in Plungė
+  and Akmenė — and the positional `-2`/`-3` suffix would make an id depend on
+  traversal order, which the batch runner uses as its resume marker.
+- `kandidatavimas.roles` is `["tarybos-narys"]` for 14,715 candidates,
+  `["meras", "tarybos-narys"]` for 412 and `["meras"]` for 22. As in every
+  2015 election `isrinktas` is `null`: no page marks a winner, so even the 60
+  people who became mayors carry an unknown rather than a false.
+- `kandidatavimas.meras.nominatedBy` is `null` for twelve mayoral candidates.
+  VRK published those rows as the bare name, with no "- iškėlė …" clause, so
+  the nominator is genuinely absent rather than dropped.
+- Counts reconcile with VRK's own `KandidataiMerai.html` roll-up: 434 mayoral
+  candidates by the district walk, 434 on the roll-up, none in only one of
+  them. The list pages' dual-candidacy marker agrees with the candidate-id
+  join on all 412 dual candidates.

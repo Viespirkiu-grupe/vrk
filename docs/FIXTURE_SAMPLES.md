@@ -325,6 +325,100 @@ candidate field across the three constituencies that voted. It covers one winner
 per constituency, both campaign participant types, and the candidate nominated by
 two parties whose second nominator would otherwise be dropped.
 
+For `2015-kovo-1-seimo-zirmunai` the allowlist
+(`tests/test_seimo_zirmunu_2015_sample_allowlist.py`) is the complete
+twelve-candidate field:
+
+- `anzela-andruskevic`, `lilijana-astra`, `renata-cytacka`, `algis-caplikas`,
+  `ricardas-garuolis`, `vanda-birute-gineviciene`, `sarunas-gustainis`,
+  `radvile-morkunaite-mikuleniene`, `zydrunas-plytnikas`, `algirdas-raslanas`,
+  `joana-tamkeviciute`, `gediminas-vagnorius`
+
+This covers the winner (Gustainis — though no 2015 page marks him as such),
+a self-nominated candidate, both campaign participant types (two candidates are
+represented by their party), candidates with and without prior-mandate tables,
+a `Nenurodė` marital status, a typed "Neturiu" child answer, and the one
+candidate without a program PDF. Candidate directories also hold a
+`campaigns/dalyvis-<id>/` capture of the participant's five campaign tabs (or
+`root.html` for represented participants).
+
+For `2015-birzelio-7-seimo-varena-eisiskes` the allowlist
+(`tests/test_seimo_varenos_eisiskiu_2015_sample_allowlist.py`) is the complete
+eight-candidate field:
+
+- `andzej-andruskevic`, `juozas-baublys`, `vidmantas-bizokas`,
+  `marius-juskevicius`, `gitana-markoviciene`, `vidas-mikalauskas`,
+  `miroslavas-monkevicius`, `virginijus-varanavicius`
+
+Seven candidates are represented by their nominating party's campaign
+(`root.html` card captures); the one self-nominated candidate is the only
+independent participant with the full five campaign tabs.
+
+For `2015-lapkricio-8-telsiu-mero` the allowlist
+(`tests/test_telsiu_mero_2015_sample_allowlist.py`) is the complete
+seven-candidate field:
+
+- `algirdas-bacevicius`, `petras-kuizinas`, `almantas-lukavicius`,
+  `deivydas-rubezius`, `jolanta-rupeikiene`, `mantas-serva`, `saulius-urbonas`
+
+This covers the municipal anketa variant, a self-nominated candidate whose
+card carries "Išsikėlęs kandidatas" instead of list fields, both campaign
+participant types, a candidate who answers the incompatible-duties question
+"Einu", and one who answered almost nothing ("Nenurodė" throughout).
+
+For `2015-birzelio-7-pakartotiniai-sirvintos-trakai` the allowlist
+(`tests/test_pakartotiniai_sirvintu_traku_2015_sample_allowlist.py`) is a
+curated ten of the 327 candidates, the municipal-general pattern rather than
+the whole-field one the small by-elections use:
+
+- `zivile-pinskuviene`, `rita-tamasuniene`, `marija-puc`, `marija-puc-2`,
+  `dangute-mikutiene`, `vytautas-zalieckas`, `kestutis-vilkauskas`,
+  `kestutis-mikulskas`, `julija-meskauskiene`, `albertas-malasauskas`
+
+This covers both municipalities, mayoral-only, council-only and dual
+candidacies, both campaign participant types, and the two ids VRK issued to
+Marija Puč — including the `Rengiama` placeholder page whose questionnaire was
+never published. The samples tree also carries the two district listing pages
+and a `lists/` directory with all nine party-list pages, because the sitemap
+is rebuilt from them offline.
+
+For `2015-birzelio-21-pakartotiniai-silutes` the allowlist
+(`tests/test_pakartotiniai_silutes_2015_sample_allowlist.py`) is a curated ten
+of the 366 candidates:
+
+- `alfredas-stasys-nauseda`, `sandra-tamasauskiene`, `arvydas-jakas`,
+  `virgilijus-pozingis`, `tomas-budrikis`, `vytautas-laurinaitis`,
+  `jonas-jatautas`, `daiva-zebeliene`, `jonas-sakurskis`, `jonas-sakurskis-2`
+
+The first eight are this election's dual candidates, who between them stand on
+all eight party lists including the `Visuomeninis rinkimų komitetas`. The last
+two are different people who share a name, one of whom has no campaign
+participant link at all. The district page and all eight list pages are
+captured alongside them.
+
+For `2015-kovo-1-savivaldybiu` the allowlist
+(`tests/test_savivaldybiu_2015_sample_allowlist.py`) is **nine candidates out
+of 15,149** — a sample rather than the field, as with the 2019 and 2023
+municipal generals:
+
+- `skirmantas-mockevicius-71130`, `mindaugas-filipavicius-71111` — mayor-only,
+  both published as a bare name with no nominator clause
+- `adele-dimsiene-85873` — dual, committee list, list head
+- `irina-rozova-80134` — dual, coalition list
+- `albinas-klimas-79174` / `albinas-klimas-85125` — two different people who
+  share a name, in Plungė and Akmenė, born a year apart; the pair that shows
+  why the id carries VRK's own candidate id
+- `jelena-berezina-74643` — council-only, position 61 on its list
+- `valius-micevicius-85875` — council-only, committee list, and the fixture
+  with no campaign participant at all
+- `antanas-gasparavicius-86679` — council-only, list head
+
+Its samples directory also holds the listing tree, allowlisted separately:
+`index.html` (VRK's municipality index), `merai.html` (the mayoral roll-up
+used as the sitemap's cross-check), 60 `district-<id>.html` pages and a
+`lists/` directory of 478 list pages. The tests assert both counts, because a
+missing list page silently drops its candidates from the sitemap.
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:

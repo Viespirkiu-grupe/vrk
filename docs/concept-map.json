@@ -1,7 +1,13 @@
 {
   "description": "Concept-to-path bridge for the normalized layer of the VRK election corpus. For each concept, the normalized dotted path per election id. An election missing from a concept's paths does not publish (or does not normalize) that concept — see docs/DATA_GUIDE.md.",
-  "verified": "2026-08-19, against every record of all 20 elections under data/",
+  "verified": "2026-08-19 against every record of the 20 elections then under data/; 2026-08-21 for the six 2015 elections added since, against their parsed records (complete fields for the three small ones, fixture sets for the three large ones).",
   "elections": [
+    "2015-kovo-1-seimo-zirmunai",
+    "2015-birzelio-7-seimo-varena-eisiskes",
+    "2015-kovo-1-savivaldybiu",
+    "2015-birzelio-7-pakartotiniai-sirvintos-trakai",
+    "2015-birzelio-21-pakartotiniai-silutes",
+    "2015-lapkricio-8-telsiu-mero",
     "2016-seimo",
     "2017-balandzio-23-meru",
     "2017-balandzio-23-seimo-anyksciai-panevezys",
@@ -46,7 +52,13 @@
         "2024-ep": "biografija.gimimo-data",
         "2024-prezidento": "biografija.gimimo-data",
         "2024-seimo": "biografija.gimimo-data",
-        "2025-kovo-16-meru": "biografija.gimimo-data"
+        "2025-kovo-16-meru": "biografija.gimimo-data",
+        "2015-kovo-1-seimo-zirmunai": "anketa.gimimo-data",
+        "2015-birzelio-7-seimo-varena-eisiskes": "anketa.gimimo-data",
+        "2015-kovo-1-savivaldybiu": "anketa.gimimo-data",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.gimimo-data",
+        "2015-birzelio-21-pakartotiniai-silutes": "anketa.gimimo-data",
+        "2015-lapkricio-8-telsiu-mero": "anketa.gimimo-data"
       }
     },
     "gimimo-vieta": {
@@ -71,7 +83,13 @@
         "2024-ep": "biografija.gimimo-vieta",
         "2024-prezidento": "biografija.gimimo-vieta",
         "2024-seimo": "biografija.gimimo-vieta",
-        "2025-kovo-16-meru": "biografija.gimimo-vieta"
+        "2025-kovo-16-meru": "biografija.gimimo-vieta",
+        "2015-kovo-1-seimo-zirmunai": "anketa.gimimo-vieta",
+        "2015-birzelio-7-seimo-varena-eisiskes": "anketa.gimimo-vieta",
+        "2015-kovo-1-savivaldybiu": "anketa.gimimo-vieta",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.gimimo-vieta",
+        "2015-birzelio-21-pakartotiniai-silutes": "anketa.gimimo-vieta",
+        "2015-lapkricio-8-telsiu-mero": "anketa.gimimo-vieta"
       }
     },
     "tautybe": {
@@ -92,7 +110,13 @@
         "2023-geguzes-7-visagino-mero": "biografija.tautybe",
         "2023-kovo-5-savivaldybiu-tarybu-ir-meru": "biografija.tautybe",
         "2023-rugsejo-3-seimo-raseiniai-kedainiai": "biografija.tautybe",
-        "2023-spalio-8-kupiskio-mero": "biografija.tautybe"
+        "2023-spalio-8-kupiskio-mero": "biografija.tautybe",
+        "2015-kovo-1-seimo-zirmunai": "anketa.tautybe",
+        "2015-birzelio-7-seimo-varena-eisiskes": "anketa.tautybe",
+        "2015-kovo-1-savivaldybiu": "anketa.tautybe",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.tautybe",
+        "2015-birzelio-21-pakartotiniai-silutes": "anketa.tautybe",
+        "2015-lapkricio-8-telsiu-mero": "anketa.tautybe"
       },
       "note": "Not published in the 2024 and 2025 elections."
     },
@@ -118,7 +142,13 @@
         "2024-ep": "biografija.issilavinimas.irasai",
         "2024-prezidento": "biografija.issilavinimas.irasai",
         "2024-seimo": "biografija.issilavinimas.irasai",
-        "2025-kovo-16-meru": "biografija.issilavinimas.irasai"
+        "2025-kovo-16-meru": "biografija.issilavinimas.irasai",
+        "2015-kovo-1-seimo-zirmunai": "anketa.issilavinimas.irasai",
+        "2015-birzelio-7-seimo-varena-eisiskes": "anketa.issilavinimas.irasai",
+        "2015-kovo-1-savivaldybiu": "anketa.issilavinimas.irasai",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.issilavinimas.irasai",
+        "2015-birzelio-21-pakartotiniai-silutes": "anketa.issilavinimas.irasai",
+        "2015-lapkricio-8-telsiu-mero": "anketa.issilavinimas.irasai"
       }
     },
     "uzsienio-kalbos": {
@@ -143,7 +173,13 @@
         "2024-ep": "biografija.uzsienio-kalbos",
         "2024-prezidento": "biografija.uzsienio-kalbos",
         "2024-seimo": "biografija.uzsienio-kalbos",
-        "2025-kovo-16-meru": "biografija.uzsienio-kalbos"
+        "2025-kovo-16-meru": "biografija.uzsienio-kalbos",
+        "2015-kovo-1-seimo-zirmunai": "anketa.uzsienio-kalbos",
+        "2015-birzelio-7-seimo-varena-eisiskes": "anketa.uzsienio-kalbos",
+        "2015-kovo-1-savivaldybiu": "anketa.uzsienio-kalbos",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.uzsienio-kalbos",
+        "2015-birzelio-21-pakartotiniai-silutes": "anketa.uzsienio-kalbos",
+        "2015-lapkricio-8-telsiu-mero": "anketa.uzsienio-kalbos"
       }
     },
     "seimine-padetis": {
@@ -168,7 +204,13 @@
         "2024-ep": "biografija.seimine-padetis",
         "2024-prezidento": "biografija.seimine-padetis",
         "2024-seimo": "biografija.seimine-padetis",
-        "2025-kovo-16-meru": "biografija.seimine-padetis"
+        "2025-kovo-16-meru": "biografija.seimine-padetis",
+        "2015-kovo-1-seimo-zirmunai": "anketa.seimine-padetis",
+        "2015-birzelio-7-seimo-varena-eisiskes": "anketa.seimine-padetis",
+        "2015-kovo-1-savivaldybiu": "anketa.seimine-padetis",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.seimine-padetis",
+        "2015-birzelio-21-pakartotiniai-silutes": "anketa.seimine-padetis",
+        "2015-lapkricio-8-telsiu-mero": "anketa.seimine-padetis"
       }
     },
     "sutuoktinio-vardas-pavarde": {
@@ -183,7 +225,13 @@
         "2019-kovo-3-savivaldybiu-tarybu": "anketa.sutuoktinio-vardas-pavarde",
         "2019-prezidento": "anketa.sutuoktinio-vardas-pavarde",
         "2019-rugsejo-8-seimo": "anketa.sutuoktinio-vardas-pavarde",
-        "2020-seimo": "biografija.sutuoktinio-vardas-pavarde"
+        "2020-seimo": "biografija.sutuoktinio-vardas-pavarde",
+        "2015-kovo-1-seimo-zirmunai": "anketa.sutuoktinio-vardas-pavarde",
+        "2015-birzelio-7-seimo-varena-eisiskes": "anketa.sutuoktinio-vardas-pavarde",
+        "2015-kovo-1-savivaldybiu": "anketa.sutuoktinio-vardas-pavarde",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.sutuoktinio-vardas-pavarde",
+        "2015-birzelio-21-pakartotiniai-silutes": "anketa.sutuoktinio-vardas-pavarde",
+        "2015-lapkricio-8-telsiu-mero": "anketa.sutuoktinio-vardas-pavarde"
       },
       "note": "Not published from 2021 on."
     },
@@ -199,7 +247,13 @@
         "2019-kovo-3-savivaldybiu-tarybu": "anketa.vaiku-vardai-pavardes",
         "2019-prezidento": "anketa.vaiku-vardai-pavardes",
         "2019-rugsejo-8-seimo": "anketa.vaiku-vardai-pavardes",
-        "2020-seimo": "biografija.vaiku-vardai-pavardes"
+        "2020-seimo": "biografija.vaiku-vardai-pavardes",
+        "2015-kovo-1-seimo-zirmunai": "anketa.vaiku-vardai-pavardes",
+        "2015-birzelio-7-seimo-varena-eisiskes": "anketa.vaiku-vardai-pavardes",
+        "2015-kovo-1-savivaldybiu": "anketa.vaiku-vardai-pavardes",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.vaiku-vardai-pavardes",
+        "2015-birzelio-21-pakartotiniai-silutes": "anketa.vaiku-vardai-pavardes",
+        "2015-lapkricio-8-telsiu-mero": "anketa.vaiku-vardai-pavardes"
       },
       "note": "Not published from 2021 on."
     },
@@ -225,7 +279,13 @@
         "2024-ep": "biografija.pomegiai",
         "2024-prezidento": "biografija.pomegiai",
         "2024-seimo": "biografija.pomegiai",
-        "2025-kovo-16-meru": "biografija.pomegiai"
+        "2025-kovo-16-meru": "biografija.pomegiai",
+        "2015-kovo-1-seimo-zirmunai": "anketa.pomegiai",
+        "2015-birzelio-7-seimo-varena-eisiskes": "anketa.pomegiai",
+        "2015-kovo-1-savivaldybiu": "anketa.pomegiai",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.pomegiai",
+        "2015-birzelio-21-pakartotiniai-silutes": "anketa.pomegiai",
+        "2015-lapkricio-8-telsiu-mero": "anketa.pomegiai"
       }
     },
     "einamos-pareigos": {
@@ -256,7 +316,13 @@
         "2019-ep": "anketa.pagrindine-darboviete",
         "2019-kovo-3-savivaldybiu-tarybu": "anketa.pagrindine-darboviete",
         "2019-prezidento": "anketa.pagrindine-darboviete",
-        "2019-rugsejo-8-seimo": "anketa.pagrindine-darboviete"
+        "2019-rugsejo-8-seimo": "anketa.pagrindine-darboviete",
+        "2015-kovo-1-seimo-zirmunai": "anketa.pagrindine-darboviete",
+        "2015-birzelio-7-seimo-varena-eisiskes": "anketa.pagrindine-darboviete",
+        "2015-kovo-1-savivaldybiu": "anketa.pagrindine-darboviete",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.pagrindine-darboviete",
+        "2015-birzelio-21-pakartotiniai-silutes": "anketa.pagrindine-darboviete",
+        "2015-lapkricio-8-telsiu-mero": "anketa.pagrindine-darboviete"
       },
       "note": "2016-era question; the 2020-on near-equivalent is einamos-pareigos."
     },
@@ -282,7 +348,13 @@
         "2024-ep": "biografija.visuomenine-veikla",
         "2024-prezidento": "biografija.visuomenine-veikla",
         "2024-seimo": "biografija.visuomenine-veikla",
-        "2025-kovo-16-meru": "biografija.visuomenine-veikla"
+        "2025-kovo-16-meru": "biografija.visuomenine-veikla",
+        "2015-kovo-1-seimo-zirmunai": "anketa.visuomenine-veikla",
+        "2015-birzelio-7-seimo-varena-eisiskes": "anketa.visuomenine-veikla",
+        "2015-kovo-1-savivaldybiu": "anketa.visuomenine-veikla",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.visuomenine-veikla",
+        "2015-birzelio-21-pakartotiniai-silutes": "anketa.visuomenine-veikla",
+        "2015-lapkricio-8-telsiu-mero": "anketa.visuomenine-veikla"
       },
       "note": "2020-seimo's question wording is wider (scientific + pedagogical activity); the key is shared."
     },
@@ -298,7 +370,13 @@
         "2019-kovo-3-savivaldybiu-tarybu": "anketa.kita-apie-save",
         "2019-prezidento": "anketa.kita-apie-save",
         "2019-rugsejo-8-seimo": "anketa.kita-apie-save",
-        "2020-seimo": "biografija.kita-apie-save"
+        "2020-seimo": "biografija.kita-apie-save",
+        "2015-kovo-1-seimo-zirmunai": "anketa.kita-apie-save",
+        "2015-birzelio-7-seimo-varena-eisiskes": "anketa.kita-apie-save",
+        "2015-kovo-1-savivaldybiu": "anketa.kita-apie-save",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.kita-apie-save",
+        "2015-birzelio-21-pakartotiniai-silutes": "anketa.kita-apie-save",
+        "2015-lapkricio-8-telsiu-mero": "anketa.kita-apie-save"
       },
       "note": "Not published from 2021 on."
     },
@@ -324,7 +402,13 @@
         "2024-ep": "anketa.narystes-politinese-organizacijose.irasai",
         "2024-prezidento": "anketa.narystes-politinese-organizacijose.irasai",
         "2024-seimo": "anketa.narystes-politinese-organizacijose.irasai",
-        "2025-kovo-16-meru": "anketa.narystes-politinese-organizacijose.irasai"
+        "2025-kovo-16-meru": "anketa.narystes-politinese-organizacijose.irasai",
+        "2015-kovo-1-seimo-zirmunai": "anketa.politine-organizacija",
+        "2015-birzelio-7-seimo-varena-eisiskes": "anketa.politine-organizacija",
+        "2015-kovo-1-savivaldybiu": "anketa.politine-organizacija",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.politine-organizacija",
+        "2015-birzelio-21-pakartotiniai-silutes": "anketa.politine-organizacija",
+        "2015-lapkricio-8-telsiu-mero": "anketa.politine-organizacija"
       },
       "note": "Three value shapes: plain string (2016 era), free text under .tekstas (2020–2023), record list under .irasai with politine-organizacija/nuo/iki items (2024 on)."
     },
@@ -350,7 +434,13 @@
         "2023-spalio-8-kupiskio-mero": "profilis.kita.iskele-i-savivaldybes-merus.reiksme",
         "2024-prezidento": "profilis.kita.kandidata-iskele.reiksme",
         "2024-seimo": "profilis.kita.iskele.reiksme",
-        "2025-kovo-16-meru": "profilis.kita.iskele-i-savivaldybes-merus.reiksme"
+        "2025-kovo-16-meru": "profilis.kita.iskele-i-savivaldybes-merus.reiksme",
+        "2015-kovo-1-seimo-zirmunai": "profilis.kita.iskele.reiksme",
+        "2015-birzelio-7-seimo-varena-eisiskes": "profilis.kita.iskele.reiksme",
+        "2015-kovo-1-savivaldybiu": "profilis.kita.iskele.reiksme",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "profilis.kita.iskele.reiksme",
+        "2015-birzelio-21-pakartotiniai-silutes": "profilis.kita.iskele.reiksme",
+        "2015-lapkricio-8-telsiu-mero": "profilis.kita.iskele.reiksme"
       },
       "note": "Absent from 2019-ep, 2019-prezidento and 2024-ep. On the profile card only for mayoral candidacies in the municipal general elections, and only on a subset of records in 2020-seimo and 2024-seimo (758/1754 and 699/1740); 2023-kovo-5 splits it by role across two keys."
     },
@@ -399,7 +489,13 @@
         "2024-ep": "anketa.pareiskimai.ar-buvote-pripazintas-kaltu",
         "2024-prezidento": "anketa.pareiskimai.ar-buvote-pripazintas-kaltu",
         "2024-seimo": "anketa.pareiskimai.ar-buvote-pripazintas-kaltu",
-        "2025-kovo-16-meru": "anketa.pareiskimai.ar-buvote-pripazintas-kaltu"
+        "2025-kovo-16-meru": "anketa.pareiskimai.ar-buvote-pripazintas-kaltu",
+        "2015-kovo-1-seimo-zirmunai": "anketa.pareiskimai.ar-buvote-pripazintas-kaltu",
+        "2015-birzelio-7-seimo-varena-eisiskes": "anketa.pareiskimai.ar-buvote-pripazintas-kaltu",
+        "2015-kovo-1-savivaldybiu": "anketa.pareiskimai.ar-buvote-pripazintas-kaltu",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.pareiskimai.ar-buvote-pripazintas-kaltu",
+        "2015-birzelio-21-pakartotiniai-silutes": "anketa.pareiskimai.ar-buvote-pripazintas-kaltu",
+        "2015-lapkricio-8-telsiu-mero": "anketa.pareiskimai.ar-buvote-pripazintas-kaltu"
       },
       "note": "19 of 20 elections; the 2019 presidential questionnaire asks constitutional eligibility questions instead and has no conviction declaration."
     },
@@ -442,7 +538,13 @@
         "2024-ep": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas",
         "2024-prezidento": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas",
         "2024-seimo": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas",
-        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas"
+        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas",
+        "2015-kovo-1-seimo-zirmunai": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas",
+        "2015-birzelio-7-seimo-varena-eisiskes": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas",
+        "2015-kovo-1-savivaldybiu": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas",
+        "2015-birzelio-21-pakartotiniai-silutes": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas",
+        "2015-lapkricio-8-telsiu-mero": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas"
       }
     },
     "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": {
@@ -467,7 +569,13 @@
         "2024-ep": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
         "2024-prezidento": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
         "2024-seimo": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
-        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai"
+        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
+        "2015-kovo-1-seimo-zirmunai": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
+        "2015-birzelio-7-seimo-varena-eisiskes": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
+        "2015-kovo-1-savivaldybiu": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
+        "2015-birzelio-21-pakartotiniai-silutes": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
+        "2015-lapkricio-8-telsiu-mero": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai"
       }
     },
     "pinigines-lesos": {
@@ -492,7 +600,13 @@
         "2024-ep": "turto-ir-pajamu-deklaracijos.pinigines-lesos",
         "2024-prezidento": "turto-ir-pajamu-deklaracijos.pinigines-lesos",
         "2024-seimo": "turto-ir-pajamu-deklaracijos.pinigines-lesos",
-        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.pinigines-lesos"
+        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.pinigines-lesos",
+        "2015-kovo-1-seimo-zirmunai": "turto-ir-pajamu-deklaracijos.pinigines-lesos",
+        "2015-birzelio-7-seimo-varena-eisiskes": "turto-ir-pajamu-deklaracijos.pinigines-lesos",
+        "2015-kovo-1-savivaldybiu": "turto-ir-pajamu-deklaracijos.pinigines-lesos",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "turto-ir-pajamu-deklaracijos.pinigines-lesos",
+        "2015-birzelio-21-pakartotiniai-silutes": "turto-ir-pajamu-deklaracijos.pinigines-lesos",
+        "2015-lapkricio-8-telsiu-mero": "turto-ir-pajamu-deklaracijos.pinigines-lesos"
       }
     },
     "suteiktos-paskolos": {
@@ -517,7 +631,13 @@
         "2024-ep": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos",
         "2024-prezidento": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos",
         "2024-seimo": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos",
-        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos"
+        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos",
+        "2015-kovo-1-seimo-zirmunai": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos",
+        "2015-birzelio-7-seimo-varena-eisiskes": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos",
+        "2015-kovo-1-savivaldybiu": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos",
+        "2015-birzelio-21-pakartotiniai-silutes": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos",
+        "2015-lapkricio-8-telsiu-mero": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos"
       }
     },
     "gautos-paskolos": {
@@ -542,7 +662,13 @@
         "2024-ep": "turto-ir-pajamu-deklaracijos.gautos-paskolos",
         "2024-prezidento": "turto-ir-pajamu-deklaracijos.gautos-paskolos",
         "2024-seimo": "turto-ir-pajamu-deklaracijos.gautos-paskolos",
-        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.gautos-paskolos"
+        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.gautos-paskolos",
+        "2015-kovo-1-seimo-zirmunai": "turto-ir-pajamu-deklaracijos.gautos-paskolos",
+        "2015-birzelio-7-seimo-varena-eisiskes": "turto-ir-pajamu-deklaracijos.gautos-paskolos",
+        "2015-kovo-1-savivaldybiu": "turto-ir-pajamu-deklaracijos.gautos-paskolos",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "turto-ir-pajamu-deklaracijos.gautos-paskolos",
+        "2015-birzelio-21-pakartotiniai-silutes": "turto-ir-pajamu-deklaracijos.gautos-paskolos",
+        "2015-lapkricio-8-telsiu-mero": "turto-ir-pajamu-deklaracijos.gautos-paskolos"
       }
     },
     "gautos-pajamos": {
@@ -567,7 +693,13 @@
         "2024-ep": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
         "2024-prezidento": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
         "2024-seimo": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
-        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.gautos-pajamos"
+        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
+        "2015-kovo-1-seimo-zirmunai": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
+        "2015-birzelio-7-seimo-varena-eisiskes": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
+        "2015-kovo-1-savivaldybiu": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
+        "2015-birzelio-21-pakartotiniai-silutes": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
+        "2015-lapkricio-8-telsiu-mero": "turto-ir-pajamu-deklaracijos.gautos-pajamos"
       }
     },
     "sumoketas-pajamu-mokestis": {
@@ -592,7 +724,44 @@
         "2024-ep": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis",
         "2024-prezidento": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis",
         "2024-seimo": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis",
-        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis"
+        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis",
+        "2015-kovo-1-seimo-zirmunai": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis",
+        "2015-birzelio-7-seimo-varena-eisiskes": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis",
+        "2015-kovo-1-savivaldybiu": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis",
+        "2015-birzelio-21-pakartotiniai-silutes": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis",
+        "2015-lapkricio-8-telsiu-mero": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis"
+      }
+    },
+    "deklaraciju-valiuta": {
+      "label-lt": "Deklaracijų valiuta",
+      "paths": {
+        "2015-kovo-1-seimo-zirmunai": "turto-ir-pajamu-deklaracijos.valiuta",
+        "2015-birzelio-7-seimo-varena-eisiskes": "turto-ir-pajamu-deklaracijos.valiuta",
+        "2015-kovo-1-savivaldybiu": "turto-ir-pajamu-deklaracijos.valiuta",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "turto-ir-pajamu-deklaracijos.valiuta",
+        "2015-birzelio-21-pakartotiniai-silutes": "turto-ir-pajamu-deklaracijos.valiuta",
+        "2015-lapkricio-8-telsiu-mero": "turto-ir-pajamu-deklaracijos.valiuta"
+      }
+    },
+    "deklaraciju-laikotarpis": {
+      "label-lt": "Deklaracijų laikotarpio pastaba",
+      "paths": {
+        "2015-kovo-1-seimo-zirmunai": "turto-ir-pajamu-deklaracijos.pastaba",
+        "2015-birzelio-7-seimo-varena-eisiskes": "turto-ir-pajamu-deklaracijos.pastaba",
+        "2015-kovo-1-savivaldybiu": "turto-ir-pajamu-deklaracijos.pastaba",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "turto-ir-pajamu-deklaracijos.pastaba",
+        "2015-birzelio-21-pakartotiniai-silutes": "turto-ir-pajamu-deklaracijos.pastaba",
+        "2015-lapkricio-8-telsiu-mero": "turto-ir-pajamu-deklaracijos.pastaba"
+      }
+    },
+    "savivaldybe": {
+      "label-lt": "Savivaldybė",
+      "paths": {
+        "2015-kovo-1-savivaldybiu": "profilis.kita.savivaldybe.reiksme",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "profilis.kita.savivaldybe.reiksme",
+        "2015-birzelio-21-pakartotiniai-silutes": "profilis.kita.savivaldybe.reiksme",
+        "2015-lapkricio-8-telsiu-mero": "profilis.kita.savivaldybe.reiksme"
       }
     }
   }

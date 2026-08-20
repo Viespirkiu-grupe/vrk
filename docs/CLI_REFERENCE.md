@@ -30,6 +30,12 @@ python -m scraper <command> [args]
 - `2017-balandzio-23-seimo-anyksciai-panevezys` (2017-04-23 new Seimo by-election in Anykščiai–Panevėžys No. 49)
 - `2018-rugsejo-16-seimo-zanavykai` (2018-09-16 new Seimo election in Zanavykai No. 64)
 - `2019-rugsejo-8-seimo` (2019-09-08 new Seimo elections in Žirmūnai No. 4, Gargždai No. 31 and Žiemgala No. 46)
+- `2015-kovo-1-seimo-zirmunai` (2015-03-01 new Seimo by-election in Žirmūnai No. 4)
+- `2015-birzelio-7-seimo-varena-eisiskes` (2015-06-07 new Seimo by-election in Varėna–Eišiškės No. 70)
+- `2015-lapkricio-8-telsiu-mero` (2015-11-08 new Telšiai district council member-mayor election)
+- `2015-birzelio-7-pakartotiniai-sirvintos-trakai` (2015-06-07 repeat Širvintos member-mayor and Trakai council/mayor elections)
+- `2015-birzelio-21-pakartotiniai-silutes` (2015-06-21 repeat Šilutė district council election)
+- `2015-kovo-1-savivaldybiu` (2015-03-01 municipal council elections and the first direct mayoral elections, all 60 municipalities)
 
 ## Election Separation
 
@@ -598,6 +604,151 @@ python -m scraper sitemap 2019-rugsejo-8-seimo
 python -m scraper fetch-candidate-samples 2019-rugsejo-8-seimo --candidate-id liudas-jonaitis --allow-new-samples
 python -m scraper parse-anketa-samples 2019-rugsejo-8-seimo
 ```
+
+## Seimo by-elections (`2015-kovo-1-seimo-zirmunai`, `2015-birzelio-7-seimo-varena-eisiskes`) Workflow
+
+The 2015-03-01 new Seimo by-election in Žirmūnai (No. 4) — the same
+constituency `2019-rugsejo-8-seimo` later voted in — is the first module of the
+pre-2016 static layout, older than every other family in the repository. Twelve
+candidates, fixture set is the complete field. The 2015-06-07 Varėna–Eišiškės
+(No. 70) by-election is the same layout under election path `459_lt` — its
+module is thin wiring over the Žirmūnai one's parameterized machinery (8
+candidates, complete field, 7 of them represented by their nominating party's
+campaign). Nothing about the pages matches the 2016 era:
+
+- the listing is a bare static district page (no Liferay wrapper, no `srcUrl`),
+  and candidate links use the genitive `Kandidato<ID>Anketa.html` stem that the
+  other eras' `KandidatasAnketa` marker cannot match;
+- the candidate "tabs" are five separate static files
+  (`Anketa`/`Biografija`/`Deklaracijos`/`InteresuDeklaracija`/`Kita`) linked
+  from bare `<li>` siblings — there is no `ul#tabnav` on candidate pages;
+- the anketa is one table cell of inline numbered questions with answers in
+  `<b>`, with self-labeled nested tables for Q12/Q15;
+- photos are external JPGs, declared amounts are litas, and no page anywhere
+  marks the winner;
+- the campaign participant link sits in the profile card and leads to
+  `PolitiniuKampanijuFinansavimas/Dalyvis<ID>/` pages.
+
+```bash
+python -m scraper fetch-sample 2015-kovo-1-seimo-zirmunai
+python -m scraper sitemap 2015-kovo-1-seimo-zirmunai
+python -m scraper fetch-candidate-samples 2015-kovo-1-seimo-zirmunai --candidate-id sarunas-gustainis --allow-new-samples
+python -m scraper parse-anketa-samples 2015-kovo-1-seimo-zirmunai
+python -m scraper parse-anketa-samples 2015-birzelio-7-seimo-varena-eisiskes
+```
+
+## Telšiai mayor (`2015-lapkricio-8-telsiu-mero`) Workflow
+
+The 2015-11-08 new Telšiai district council member-mayor election is the same
+2015-era layout with the municipal anketa variant: the savivaldybių tarybų
+rinkimų įstatymo declarations (Q8.1–8.5 plus the Q9 conviction-declaration
+question) with verbose first-person answers ("Neturiu", "Nesu", "Neinu").
+Its module is thin wiring over the Žirmūnai machinery with the municipal
+question mapping plugged in — the mapping later 2015 municipal elections
+reuse. Two path quirks: the static pages live under
+`2015_4_savivaldybiu_tarybu_rinkimai/469_lt/` rather than `rinkimai/`, while
+the campaign participant pages sit under `rinkimai/469_lt/` anyway. Seven
+candidates, fixture set is the complete field, mayoral section only (the
+council-lists section of the district page is empty).
+
+```bash
+python -m scraper fetch-sample 2015-lapkricio-8-telsiu-mero
+python -m scraper sitemap 2015-lapkricio-8-telsiu-mero
+python -m scraper fetch-candidate-samples 2015-lapkricio-8-telsiu-mero --candidate-id petras-kuizinas --allow-new-samples
+python -m scraper parse-anketa-samples 2015-lapkricio-8-telsiu-mero
+```
+
+## Repeat municipal elections (`2015-birzelio-7-pakartotiniai-sirvintos-trakai`) Workflow
+
+One VRK election (452) covering two districts that repeated different votes:
+Širvintos only the member-mayor election (7 candidates, no party lists),
+Trakai both the mayor and the council (8 mayoral, 319 council across 9 lists).
+The anketa is the municipal variant, same mapping as Telšiai. What is specific
+here is the listing:
+
+- the district ids read backwards against the election title —
+  `Apygarda7921` is **Širvintos** and `Apygarda7911` is **Trakai**;
+- `fetch-sample` walks both district pages and every party-list page under
+  them, skipping files already on disk so an interrupted capture resumes;
+- the two structures merge on VRK's candidate id, giving one entry with both
+  candidacies for the 7 people who ran for both seats, and the listing's own
+  prose marker cross-checks that join;
+- **one person has two candidate ids.** Marija Puč is 87693 as a mayoral
+  candidate and 87694 on the council list, so the id join cannot merge her.
+  Both entries are kept and `stats.markerJoinMismatch` reports 1 rather than
+  the mismatch passing silently. Do not "fix" this by merging on name — the
+  rule against that is what keeps 244 same-name people apart in 2023;
+- her council page is a `Rengiama` placeholder with no questionnaire, which
+  parses to an `AnketaNotPublished` warning, not a parse error;
+- Biografija is a mayoral-only tab, so expected tabs are computed per
+  candidate from the sitemap role.
+
+```bash
+python -m scraper fetch-sample 2015-birzelio-7-pakartotiniai-sirvintos-trakai
+python -m scraper sitemap 2015-birzelio-7-pakartotiniai-sirvintos-trakai
+python -m scraper fetch-candidate-samples 2015-birzelio-7-pakartotiniai-sirvintos-trakai --candidate-id zivile-pinskuviene --allow-new-samples
+python -m scraper parse-anketa-samples 2015-birzelio-7-pakartotiniai-sirvintos-trakai
+```
+
+## Repeat municipal election (`2015-birzelio-21-pakartotiniai-silutes`) Workflow
+
+The 2015-06-21 repeat Šilutė council election (457) is the same two-structure
+listing in a single district, so its module is wiring over the June 7th one's
+walk and id merge plus the municipal anketa mapping. 366 candidates across 8
+party lists — one of them a `Visuomeninis rinkimų komitetas`, this era's other
+nominator type.
+
+It is the clean counterpart to the June 7th election: every one of the 8
+mayoral candidates also stands for the council, so the prose marker and the id
+join agree exactly (`markerJoinMismatch` 0). The one duplicate candidate id is
+a genuine name collision — two different people called Jonas Šakurskis, born
+1953 and 1957, on different lists — so the positional `-2` suffix is right
+here, unlike Marija Puč in the June election.
+
+```bash
+python -m scraper fetch-sample 2015-birzelio-21-pakartotiniai-silutes
+python -m scraper sitemap 2015-birzelio-21-pakartotiniai-silutes
+python -m scraper fetch-candidate-samples 2015-birzelio-21-pakartotiniai-silutes --candidate-id alfredas-stasys-nauseda --allow-new-samples
+python -m scraper parse-anketa-samples 2015-birzelio-21-pakartotiniai-silutes
+```
+
+## Municipal general election (`2015-kovo-1-savivaldybiu`) Workflow
+
+The 2015-03-01 municipal general — 15,149 candidates in all 60 municipalities,
+and Lithuania's first direct mayoral election, held on the same ballot.
+
+It deliberately does **not** use `scraper/shared/municipal_sitemap.py`. That
+module is built for the 2019/2023 listing: one flat index of party lists,
+`table3` table ids, `rpgId`/`rorgId` URLs and blue-anchor elected markers. The
+2015 pages have none of them — they publish a district page per municipality
+with the lists hanging off it, which is the shape the 2015 repeat elections
+already walk. So this module discovers the 60 district pages from VRK's
+municipality index and reuses that walk with a stable id builder.
+
+- `fetch-sample` saves the municipality index, VRK's mayoral roll-up, all 60
+  district pages and all 478 list pages, skipping what is already on disk so
+  an interrupted capture resumes. Expect roughly 540 requests on a cold run.
+- `sitemap` merges the mayoral and council structures on VRK's candidate id
+  (412 people stand for both) and cross-checks the result against the mayoral
+  roll-up: `mayoralOnlyInListing` and `mayoralOnlyInDistrictWalk` must both be
+  0, as they are — 434 mayoral candidates either way.
+- **Candidate ids carry VRK's own id** — `valius-azuolas-77601` — because 140
+  candidates share a name slug. A positional suffix would make an id depend on
+  traversal order, and the batch runner uses the output filename as its resume
+  marker.
+
+```bash
+python -m scraper fetch-sample 2015-kovo-1-savivaldybiu
+python -m scraper sitemap 2015-kovo-1-savivaldybiu
+python -m scraper fetch-candidate-samples 2015-kovo-1-savivaldybiu --candidate-id adele-dimsiene-85873 --allow-new-samples
+python -m scraper parse-anketa-samples 2015-kovo-1-savivaldybiu
+```
+
+Resumable full scrape:
+
+- `scripts/run_election_batches.sh 2015-kovo-1-savivaldybiu`, with
+  `KEEP_SAMPLES=1` — at this size a later parser fix should be an offline
+  re-parse, not hours of repeat traffic to vrk.lt.
 
 ## Helpful Checks
 
