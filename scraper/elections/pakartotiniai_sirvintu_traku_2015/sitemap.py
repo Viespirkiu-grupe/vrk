@@ -177,16 +177,29 @@ def _council_records(
     return records
 
 
+def positional_candidate_id(candidate_name: str, vrk_candidate_id: str) -> str:
+    """Name slug, disambiguated after the fact by traversal position.
+
+    Fine for a few hundred candidates, where collisions are rare and a full
+    re-scrape is cheap. An election large enough for collisions to be routine
+    should pass a stable id builder instead — see savivaldybiu_2015.
+    """
+    return slugify(candidate_name)
+
+
 def build_sitemap_from_sample(
     sample_path: Path | None = None,
     output_path: Path = DEFAULT_SITEMAP_PATH,
     election_id: str = ELECTION_ID,
     district_urls: list[str] | None = None,
+    candidate_id_builder: Any = None,
 ) -> tuple[Path, dict[str, int]]:
     # sample_path keeps the CLI's signature; it names the samples directory.
     samples_dir = sample_path if sample_path is not None else DEFAULT_SAMPLES_DIR
     if district_urls is None:
         district_urls = DISTRICT_URLS
+    if candidate_id_builder is None:
+        candidate_id_builder = positional_candidate_id
 
     mayor_records: list[dict[str, Any]] = []
     council_records: list[dict[str, Any]] = []
@@ -216,7 +229,7 @@ def build_sitemap_from_sample(
         if entry is None:
             entry = {
                 "candidateName": record["candidateName"],
-                "candidateId": slugify(record["candidateName"]),
+                "candidateId": candidate_id_builder(record["candidateName"], vrk_id),
                 "url": record["url"],
                 "vrkCandidateId": vrk_id,
                 "municipality": record["municipality"],
@@ -247,8 +260,9 @@ def build_sitemap_from_sample(
 
     entries = [entries_by_vrk_id[vrk_id] for vrk_id in order]
 
-    # Name-slug ids stay unique at this scale; a duplicate gets the positional
-    # suffix the small by-election modules use.
+    # A duplicate id gets the positional suffix the small by-election modules
+    # use. An id builder that is already collision-free — one keyed on VRK's
+    # own candidate id — produces no duplicates, so this is a no-op there.
     base_counter: Counter[str] = Counter(entry["candidateId"] for entry in entries)
     seen_counter: Counter[str] = Counter()
     for entry in entries:
