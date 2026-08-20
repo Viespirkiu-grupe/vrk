@@ -22,8 +22,11 @@
 >   marker/join cross-check has to be read, not assumed zero.
 > - A candidacy can have no questionnaire at all (`Rengiama`); that is an
 >   `AnketaNotPublished` warning, not a parse failure.
-> - Full scrapes are still outstanding for #51 (10 of 327 parsed); the three
->   small by-elections are complete fields already.
+> - Full scrapes are still outstanding for #51, #52 and #49 (fixture sets
+>   only); the three small by-elections are complete fields already.
+> - Downstream registration is done: person-index order, dashboard labels,
+>   concept map and `goal.md` scope all know about the 2015 elections.
+> - Elected status is **still not shipped** — see the rewritten §4 below.
 
 Written 2026-08-19 from live-page research. All six `help wanted` / `missing-election`
 issues are 2015 elections, and all of them share **one page-layout family that the
@@ -163,29 +166,59 @@ status must come from the results pages — see §4.
     counts and the mayoral/council overlap must reconcile, per the shared-machinery
     doctrine.
 
-## 4. Elected status: join from results pages
+## 4. Elected status: investigated, not shipped
 
-The only source of electedness for this era. Confirmed structure for the municipal
-elections (base varies per election: `2015_savivaldybiu_tarybu_rinkimai` for 440,
-`2015_2_…` for 452, `2015_3_…` for 457, `2015_4_…` for 469):
+Every 2015 record carries `isrinktas: null` / `profilis.pastaba: null`. The
+candidate pages mark no winner anywhere, so electedness can only come from
+VRK's results tree — and that tree turns out to be harder to read than it
+looks. What was established on 2026-08-21, with the traps that make a naive
+join wrong:
 
-- `output_lt/savivaldybiu_tarybu_sudetis/merai_apygarda_ordered.html` — all elected
-  mayors, **each linked by candidate-id anketa URL** (verified: 60 links).
-- `output_lt/savivaldybiu_tarybu_sudetis/rapg_<apygardaId>.html` — per-municipality
-  elected council members, also id-linked (verified for Birštonas: 18 links).
+**The mayoral roll-up is *current* mayors, not election winners.**
+`2015_savivaldybiu_tarybu_rinkimai/output_lt/savivaldybiu_tarybu_sudetis/merai_apygarda_ordered.html`
+lists 60 mayors as of its 2016-03-08 update. Four of those ids are not even
+March 2015 candidates — among them Živilė Pinskuvienė (Širvintos) and Petras
+Kuizinas (Telšiai), who won the June and November *repeat* elections this
+backlog also covers. Joining on that page would attribute to the March
+election people who won a different one.
 
-So: fetch composition pages as part of the sitemap sample, extract candidate ids,
-set `elected` on the matching sitemap entries. The composition pages reflect final
-(post-runoff) outcomes, so the mayoral second rounds (2015-03-15 etc.) need no
-separate handling. Beware absolute links on these pages pointing at the
-`www.2013.vrk.lt` mirror — normalize to the id, not the URL.
+**The per-municipality pages are the council over the whole term.**
+`savivaldybiu_tarybu_sudetis/rapg_<apygardaId>.html` (60 pages, one per
+municipality, candidates linked by anketa URL so the join is on VRK's id)
+carries the composition *and* a second table of members whose mandate ended
+early. Both tables give the date each mandate was recognized. Members seated
+on the earliest date on the page are the ones the election returned; anyone
+dated later took a vacated seat and was not elected. Each page also states
+`Mandatų skaičius, įskaitant merą: N`, which the derived set can be checked
+against — a per-municipality invariant, not just a national total.
 
-For the two Seimo by-elections (448, 459) no results page has been located yet
-(both went to runoffs). Options, in preference order: (a) find the analogous
-`output_lt` results tree for those election ids; (b) ship without elected flags and
-record the gap in `docs/DATASET.md`. Winners are publicly known (Žirmūnai: Šarūnas
-Gustainis; Varėna–Eišiškės: decided in the 2015-06-21 runoff) — do not hardcode
-them; use them only to sanity-check whatever source is found.
+**Two municipalities legitimately break that invariant, and it is this
+backlog's own doing.** Širvintos and Telšiai come out one short (20 of 21, 26
+of 27) because neither elected a mayor in March — which is exactly why they
+voted again in June and November. Do not "fix" this; assert it.
+
+**Repeat elections also replaced two whole councils.** Trakai's and Šilutė's
+March council results were re-run, so their `rapg` pages describe councils
+elected in June, not March. Those two municipalities must be excluded from
+the March election's elected set and attributed to `#51`/`#52` instead. A
+national total that lands near 1,524 without excluding them is wrong in both
+directions at once.
+
+**The three small municipal elections state their winner in prose only** —
+`.../output_lt/rezultatai_vienmand_apygardose2/apygardos_rezultatai<id>.html`
+reads "Meru išrinktas Petras KUIZINAS" with no candidate link — so joining
+them means name matching inside a field of 7–8, which is safe but is a second
+mechanism, deliberately not mixed in here.
+
+**No results source has been located for the two Seimo by-elections** (448,
+459): `Rezultatai/` 404s under both.
+
+Recommended shape when this is picked up: derive from the `rapg` pages only,
+per municipality, keyed on the earliest recognition date; assert the mandate
+count per municipality; exclude Trakai, Šilutė (councils) and treat Širvintos
+and Telšiai as mayor-less; then reconcile the national total. Ship the mayoral
+flag from the same pages' `(MERAS)`/`(MERĖ)` marker rather than from the
+roll-up.
 
 ## 5. Build order and module layout
 
