@@ -384,6 +384,29 @@ two are different people who share a name, one of whom has no campaign
 participant link at all. The district page and all eight list pages are
 captured alongside them.
 
+For `2015-kovo-1-savivaldybiu` the allowlist
+(`tests/test_savivaldybiu_2015_sample_allowlist.py`) is **nine candidates out
+of 15,149** — a sample rather than the field, as with the 2019 and 2023
+municipal generals:
+
+- `skirmantas-mockevicius-71130`, `mindaugas-filipavicius-71111` — mayor-only,
+  both published as a bare name with no nominator clause
+- `adele-dimsiene-85873` — dual, committee list, list head
+- `irina-rozova-80134` — dual, coalition list
+- `albinas-klimas-79174` / `albinas-klimas-85125` — two different people who
+  share a name, in Plungė and Akmenė, born a year apart; the pair that shows
+  why the id carries VRK's own candidate id
+- `jelena-berezina-74643` — council-only, position 61 on its list
+- `valius-micevicius-85875` — council-only, committee list, and the fixture
+  with no campaign participant at all
+- `antanas-gasparavicius-86679` — council-only, list head
+
+Its samples directory also holds the listing tree, allowlisted separately:
+`index.html` (VRK's municipality index), `merai.html` (the mayoral roll-up
+used as the sitemap's cross-check), 60 `district-<id>.html` pages and a
+`lists/` directory of 478 list pages. The tests assert both counts, because a
+missing list page silently drops its candidates from the sitemap.
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:

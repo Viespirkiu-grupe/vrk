@@ -34,6 +34,7 @@ python -m scraper <command> [args]
 - `2015-lapkricio-8-telsiu-mero` (2015-11-08 new Telšiai district council member-mayor election)
 - `2015-birzelio-7-pakartotiniai-sirvintos-trakai` (2015-06-07 repeat Širvintos member-mayor and Trakai council/mayor elections)
 - `2015-birzelio-21-pakartotiniai-silutes` (2015-06-21 repeat Šilutė district council election)
+- `2015-kovo-1-savivaldybiu` (2015-03-01 municipal council elections and the first direct mayoral elections, all 60 municipalities)
 
 ## Election Separation
 
@@ -683,6 +684,44 @@ python -m scraper sitemap 2015-birzelio-21-pakartotiniai-silutes
 python -m scraper fetch-candidate-samples 2015-birzelio-21-pakartotiniai-silutes --candidate-id alfredas-stasys-nauseda --allow-new-samples
 python -m scraper parse-anketa-samples 2015-birzelio-21-pakartotiniai-silutes
 ```
+
+## Municipal general election (`2015-kovo-1-savivaldybiu`) Workflow
+
+The 2015-03-01 municipal general — 15,149 candidates in all 60 municipalities,
+and Lithuania's first direct mayoral election, held on the same ballot.
+
+It deliberately does **not** use `scraper/shared/municipal_sitemap.py`. That
+module is built for the 2019/2023 listing: one flat index of party lists,
+`table3` table ids, `rpgId`/`rorgId` URLs and blue-anchor elected markers. The
+2015 pages have none of them — they publish a district page per municipality
+with the lists hanging off it, which is the shape the 2015 repeat elections
+already walk. So this module discovers the 60 district pages from VRK's
+municipality index and reuses that walk with a stable id builder.
+
+- `fetch-sample` saves the municipality index, VRK's mayoral roll-up, all 60
+  district pages and all 478 list pages, skipping what is already on disk so
+  an interrupted capture resumes. Expect roughly 540 requests on a cold run.
+- `sitemap` merges the mayoral and council structures on VRK's candidate id
+  (412 people stand for both) and cross-checks the result against the mayoral
+  roll-up: `mayoralOnlyInListing` and `mayoralOnlyInDistrictWalk` must both be
+  0, as they are — 434 mayoral candidates either way.
+- **Candidate ids carry VRK's own id** — `valius-azuolas-77601` — because 140
+  candidates share a name slug. A positional suffix would make an id depend on
+  traversal order, and the batch runner uses the output filename as its resume
+  marker.
+
+```bash
+python -m scraper fetch-sample 2015-kovo-1-savivaldybiu
+python -m scraper sitemap 2015-kovo-1-savivaldybiu
+python -m scraper fetch-candidate-samples 2015-kovo-1-savivaldybiu --candidate-id adele-dimsiene-85873 --allow-new-samples
+python -m scraper parse-anketa-samples 2015-kovo-1-savivaldybiu
+```
+
+Resumable full scrape:
+
+- `scripts/run_election_batches.sh 2015-kovo-1-savivaldybiu`, with
+  `KEEP_SAMPLES=1` — at this size a later parser fix should be an offline
+  re-parse, not hours of repeat traffic to vrk.lt.
 
 ## Helpful Checks
 

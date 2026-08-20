@@ -1143,3 +1143,28 @@ data facts a consumer has to know about:
   lists — where the positional `-2` suffix is the correct treatment. Telling
   the two situations apart matters: Šilutė's pair are two people, Trakai's
   are one.
+
+## Appendix: 2015 municipal general (`2015-kovo-1-savivaldybiu`)
+
+Records are written as
+`data/2015-kovo-1-savivaldybiu/<candidate-id>-2015-kovo-1-savivaldybiu.json`.
+The pages are the 2015 era with the municipal question set, and the record
+carries the same `kandidatavimas` block as the 2015 repeat elections, so those
+two appendices describe the shape. What is specific to this election:
+
+- `candidateId` is `<name-slug>-<vrkCandidateId>` (e.g. `valius-azuolas-77601`),
+  not the bare name slug the small 2015 modules use. 140 of the 15,149
+  candidates share a name slug — two different Albinas Klimas stood in Plungė
+  and Akmenė — and the positional `-2`/`-3` suffix would make an id depend on
+  traversal order, which the batch runner uses as its resume marker.
+- `kandidatavimas.roles` is `["tarybos-narys"]` for 14,715 candidates,
+  `["meras", "tarybos-narys"]` for 412 and `["meras"]` for 22. As in every
+  2015 election `isrinktas` is `null`: no page marks a winner, so even the 60
+  people who became mayors carry an unknown rather than a false.
+- `kandidatavimas.meras.nominatedBy` is `null` for twelve mayoral candidates.
+  VRK published those rows as the bare name, with no "- iškėlė …" clause, so
+  the nominator is genuinely absent rather than dropped.
+- Counts reconcile with VRK's own `KandidataiMerai.html` roll-up: 434 mayoral
+  candidates by the district walk, 434 on the roll-up, none in only one of
+  them. The list pages' dual-candidacy marker agrees with the candidate-id
+  join on all 412 dual candidates.
