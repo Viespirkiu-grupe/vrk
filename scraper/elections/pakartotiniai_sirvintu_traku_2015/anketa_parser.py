@@ -19,6 +19,32 @@ DEFAULT_SAMPLES_ROOT = Path(f"samples/html/{ELECTION_ID}")
 DEFAULT_OUTPUT_ROOT = Path(f"data/{ELECTION_ID}")
 
 
+def build_candidacy(candidate_meta: dict[str, Any]) -> dict[str, Any]:
+    """The listing-only context for one candidate.
+
+    Which municipality someone stood in, on whose list, at which position and
+    in which roles is published on the listing pages and nowhere on the
+    candidate page, so it is carried in from the sitemap — the same block the
+    municipal general elections write.
+
+    `isrinktas` is None rather than False: the 2015 pages publish no elected
+    markers at all, so electedness is unknown here, and a False would assert
+    something the source never said.
+    """
+    roles = candidate_meta.get("roles")
+    council = candidate_meta.get("councilCandidacy")
+    mayoral = candidate_meta.get("mayoralCandidacy")
+
+    return {
+        "vrkCandidateId": str(candidate_meta.get("vrkCandidateId", "")).strip() or None,
+        "savivaldybe": candidate_meta.get("municipality") or None,
+        "roles": list(roles) if isinstance(roles, list) else [],
+        "tarybosNarys": council if isinstance(council, dict) else None,
+        "meras": mayoral if isinstance(mayoral, dict) else None,
+        "isrinktas": None,
+    }
+
+
 def parse_anketa_sample(
     candidate_id: str,
     samples_root: Path = DEFAULT_SAMPLES_ROOT,
@@ -30,6 +56,7 @@ def parse_anketa_sample(
         output_root=output_root,
         election_id=ELECTION_ID,
         rows_normalizer=normalize_municipal_anketa_rows,
+        candidacy_builder=build_candidacy,
     )
 
 
@@ -44,4 +71,5 @@ def parse_anketa_samples(
         output_root=output_root,
         election_id=ELECTION_ID,
         rows_normalizer=normalize_municipal_anketa_rows,
+        candidacy_builder=build_candidacy,
     )

@@ -1094,6 +1094,7 @@ def parse_anketa_sample(
     output_root: Path = DEFAULT_OUTPUT_ROOT,
     election_id: str = ELECTION_ID,
     rows_normalizer: Any = None,
+    candidacy_builder: Any = None,
 ) -> tuple[Path, dict[str, Any]]:
     candidate_dir = samples_root / candidate_id
     anketa_path = candidate_dir / "anketa.html"
@@ -1240,10 +1241,19 @@ def parse_anketa_sample(
         ],
     )
 
-    output_payload = {
+    output_payload: dict[str, Any] = {
         "electionId": election_id,
         "candidateId": candidate_id,
         "candidateName": candidate_name,
+    }
+    if candidacy_builder is not None:
+        # Elections published through two listing structures carry facts that
+        # appear on no candidate page — which municipality, which list, which
+        # seat order, which roles.
+        output_payload["kandidatavimas"] = candidacy_builder(
+            candidate_meta if isinstance(candidate_meta, dict) else {}
+        )
+    output_payload |= {
         "source": {
             "candidateSourceUrl": candidate_source_url,
         },
@@ -1271,6 +1281,7 @@ def parse_anketa_samples(
     output_root: Path = DEFAULT_OUTPUT_ROOT,
     election_id: str = ELECTION_ID,
     rows_normalizer: Any = None,
+    candidacy_builder: Any = None,
 ) -> list[dict[str, Any]]:
     if candidate_ids:
         target_ids = candidate_ids
@@ -1290,6 +1301,7 @@ def parse_anketa_samples(
             output_root=output_root,
             election_id=election_id,
             rows_normalizer=rows_normalizer,
+            candidacy_builder=candidacy_builder,
         )
         results.append(stats)
 

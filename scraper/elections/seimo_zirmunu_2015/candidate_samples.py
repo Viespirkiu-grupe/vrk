@@ -65,16 +65,15 @@ def _load_sitemap_entries(sitemap_path: Path) -> list[dict[str, str]]:
         url = str(raw_entry.get("url", "")).strip()
         if not candidate_id or not url:
             continue
-        entry = {
-            "candidateId": candidate_id,
-            "candidateName": str(raw_entry.get("candidateName", "")).strip(),
-            "url": url,
-        }
-        # Elections whose expected tabs depend on the candidate's role need
-        # the roles the sitemap recorded; harmless where absent.
-        roles = raw_entry.get("roles")
-        if isinstance(roles, list) and roles:
-            entry["roles"] = [str(role) for role in roles]
+        # Everything the sitemap recorded is carried through: the listing-only
+        # facts (municipality, list, seat order, roles, VRK's own candidate id)
+        # exist nowhere on the candidate page, and both the fetch stage (which
+        # tabs to expect) and the parse stage (the kandidatavimas block) need
+        # them.
+        entry = dict(raw_entry)
+        entry["candidateId"] = candidate_id
+        entry["candidateName"] = str(raw_entry.get("candidateName", "")).strip()
+        entry["url"] = url
         normalized_entries.append(entry)
 
     if not normalized_entries:

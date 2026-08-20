@@ -81,6 +81,23 @@ class PakartotiniaiSirvintuTraku2015AnketaParserTests(unittest.TestCase):
         self.assertIn("biografija", expected_tabs_for_entry({"roles": ["meras"]}))
         self.assertIn("biografija", expected_tabs_for_entry({"roles": ["meras", "tarybos-narys"]}))
 
+    def test_kandidatavimas_carries_the_listing_only_facts(self) -> None:
+        # The two structures' facts — municipality, roles, list and seat
+        # order — exist on the listing pages and nowhere on the candidate
+        # page, so they are carried into the record.
+        mayoral = self.pinskuviene["kandidatavimas"]
+        self.assertEqual(mayoral["savivaldybe"], "Širvintų rajono savivaldybė")
+        self.assertEqual(mayoral["roles"], ["meras"])
+        self.assertIsNone(mayoral["tarybosNarys"])
+        # No 2015 page marks a winner, so electedness is unknown, not false.
+        self.assertIsNone(mayoral["isrinktas"])
+
+        council = self.vilkauskas["kandidatavimas"]
+        self.assertEqual(council["roles"], ["tarybos-narys"])
+        self.assertEqual(council["tarybosNarys"]["partyList"], "Lietuvos socialdemokratų partija")
+        self.assertEqual(council["tarybosNarys"]["listPosition"], 2)
+        self.assertIsNone(council["meras"])
+
     def test_unpublished_anketa_is_reported_as_data_not_breakage(self) -> None:
         # VRK published this candidacy's page with the single word "Rengiama"
         # and no questionnaire at all. That is an upstream gap: it earns one
@@ -97,6 +114,7 @@ class PakartotiniaiSirvintuTraku2015AnketaParserTests(unittest.TestCase):
         profilis = self.puc_council["normalized"]["profilis"]
         self.assertEqual(profilis["vardas-pavarde"], "Marija Puč")
         self.assertEqual(profilis["kita"]["numeris-sarase"]["reiksme"], "1")
+        self.assertEqual(self.puc_council["kandidatavimas"]["vrkCandidateId"], "87694")
         self.assertIsNone(self.puc_council["normalized"]["anketa"]["gimimo-data"])
 
 
