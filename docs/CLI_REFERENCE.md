@@ -36,6 +36,11 @@ python -m scraper <command> [args]
 - `2015-birzelio-7-pakartotiniai-sirvintos-trakai` (2015-06-07 repeat Širvintos member-mayor and Trakai council/mayor elections)
 - `2015-birzelio-21-pakartotiniai-silutes` (2015-06-21 repeat Šilutė district council election)
 - `2015-kovo-1-savivaldybiu` (2015-03-01 municipal council elections and the first direct mayoral elections, all 60 municipalities)
+- `1996-spalio-20-seimo` (1996-10-20 Seimas general election, 71 single-member constituencies)
+- `1997-kovo-23-seimo-pakartotiniai` (1997-03-23 Seimo repeat election in four Vilnius-region constituencies)
+- `1997-gruodzio-21-seimo-pakartotiniai` (1997-12-21 Seimo repeat election in Aukštaitijos No. 28)
+- `1997-kovo-23-savivaldybiu-tarybu` (1997-03-23 municipal council general election, all 56 municipalities)
+- `1997-birzelio-29-svenciniu-tarybos-pakartotiniai` (1997-06-29 Švenčionys district council repeat election)
 
 ## Election Separation
 
@@ -747,6 +752,117 @@ python -m scraper parse-anketa-samples 2015-kovo-1-savivaldybiu
 Resumable full scrape:
 
 - `scripts/run_election_batches.sh 2015-kovo-1-savivaldybiu`, with
+  `KEEP_SAMPLES=1` — at this size a later parser fix should be an offline
+  re-parse, not hours of repeat traffic to vrk.lt.
+
+## Seimas archive (`1996-spalio-20-seimo`, `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`) Workflow
+
+The 1996-10-20 Seimas general election and its two 1997 repeat votes are the
+oldest family in the repository — static pages captured by Teleport Pro from
+`lrs.lt/cgi-bin/ora7dbcgi/...`, older than the 2015 family and shaped nothing
+like it. The shared parser lives in `scraper/shared/seimo_archive_1990s.py`;
+these three modules differ only in which directory (`seim96` vs `seimpk`),
+"phase" prefix and constituency numbers they target.
+
+- The listing is a two-level walk: a directory page (`apgseiml.htm-1.htm` for
+  1996's 71 constituencies) links to `apgtl.htm-<phase>+<constituency>.htm`
+  pages, each holding a plain two-column table (name, nominator) with no
+  party-list hop — the constituency page *is* the candidate list. The two
+  by-elections skip the directory: VRK names their handful of constituencies
+  directly on `seimpk/index.html#1997`, so `TARGETS` in each module's
+  `sitemap.py` hardcodes them instead of crawling for them.
+- The candidate page (`kandvl.htm`) carries a data-corrupting quirk: a
+  malformed `<!--sql format>` comment, left by a failed backend query, opens
+  after the real candidacy paragraphs and swallows the "Gyvenamoji vieta"
+  (residence) line along with a block of boilerplate eligibility Q&A that
+  always reads the same "Neturi"/"Nėra" — not real per-candidate data. A
+  normal HTML parser drops comment contents entirely, so residence is
+  recovered with a targeted regex over the raw HTML instead; the eligibility
+  junk is discarded on purpose. `tests/test_seimo_1996_anketa_parser.py`
+  guards this against regression.
+- A candidate can carry two candidacies — their single-member constituency
+  and, optionally, a `Daugiamandatė` (multi-mandate party list) entry with its
+  own list number — both are kept as separate objects in
+  `rawData.candidacies`/`normalized.kandidatavimas` rather than merged.
+- No income declaration parsing: `kpdl.htm` is captured only as a raw URL
+  (`incomeDeclarationUrl`), out of scope for this family's fixture-sized
+  ambition, same call as the elected-status gap recorded in `docs/DATASET.md`.
+  The free-text biography page (`biogr.htm`), when linked, is captured
+  verbatim as `rawData.biography.text`.
+- 1996 is the only general election of the three (879 candidates, 71
+  constituencies); the March 1997 repeat covers four constituencies (Naujosios
+  Vilnios, Vilniaus-Šalčininkų, Vilniaus-Trakų, Trakų — 23 candidates,
+  complete field); the December 1997 repeat is one constituency, Aukštaitijos
+  No. 28 (4 candidates, complete field).
+
+```bash
+python -m scraper fetch-sample 1996-spalio-20-seimo
+python -m scraper sitemap 1996-spalio-20-seimo
+python -m scraper fetch-candidate-samples 1996-spalio-20-seimo --candidate-id asmolkov-vasilij --allow-new-samples
+python -m scraper parse-anketa-samples 1996-spalio-20-seimo
+
+python -m scraper fetch-sample 1997-kovo-23-seimo-pakartotiniai
+python -m scraper sitemap 1997-kovo-23-seimo-pakartotiniai
+python -m scraper parse-anketa-samples 1997-kovo-23-seimo-pakartotiniai
+
+python -m scraper fetch-sample 1997-gruodzio-21-seimo-pakartotiniai
+python -m scraper sitemap 1997-gruodzio-21-seimo-pakartotiniai
+python -m scraper parse-anketa-samples 1997-gruodzio-21-seimo-pakartotiniai
+```
+
+Resumable full scrape (1996 general election only — the two by-elections are
+already small enough that `fetch-candidate-samples` covers the complete
+field in one call):
+
+- `scripts/run_election_batches.sh 1996-spalio-20-seimo`
+
+## Municipal archive (`1997-kovo-23-savivaldybiu-tarybu`, `1997-birzelio-29-svenciniu-tarybos-pakartotiniai`) Workflow
+
+The 1997-03-23 municipal council general election and the 1997-06-29
+Švenčionys repeat share the `19970323` directory and the shared parser in
+`scraper/shared/savivaldybiu_archive_1997.py`. Unlike the Seimas archive
+above, listing candidates here is a **three**-hop crawl and richer once you
+reach a candidate:
+
+- `apgtl.htm-<phase>+<municipality>.htm` (municipality) → table of
+  parties/coalitions, each linking to `pkal.htm-<...>.htm` (that party's
+  numbered candidate list in that municipality) → `kandvl.htm` (candidate).
+  A directory page (`apgsavl.htm-3.htm`) enumerates all 56 municipalities for
+  the general election; the Švenčionys repeat hardcodes its one municipality
+  (No. 47) instead, the same way the Seimas by-elections hardcode theirs.
+- The general election's phase prefix is `3` (filed 1997-05, before the
+  1997-03-23 vote); the Švenčionys repeat's is `5` (filed 1997-05-20/23,
+  after VRK invalidated the original result there and re-ran it 1997-06-29) —
+  confirmed by diffing the two municipality pages, which differ only in
+  filing dates and candidate rosters, not in page shape.
+- The candidate page has no comment-corruption quirk (unlike the Seimas
+  family) and is considerably richer: birth date/place, residence,
+  nationality, education, foreign languages, main workplace, public activity,
+  family status and family members are all plain labelled paragraphs, carried
+  into `rawData.personal`/`normalized.asmeniniaiDuomenys`. As with the Seimas
+  archive, `kpdl.htm` (income declaration) is captured only as a raw URL.
+- 46 candidate name collisions across the 6,276-candidate general election
+  resolve with the same positional `-2` suffix the other families use — e.g.
+  two different people named `Tamulevičius Kęstutis` (VRK ids 37862 and
+  37809) become `tamulevicius-kestutis` and `tamulevicius-kestutis-2`; see
+  `tests/test_savivaldybiu_1997_anketa_parser.py`.
+
+```bash
+python -m scraper fetch-sample 1997-kovo-23-savivaldybiu-tarybu
+python -m scraper sitemap 1997-kovo-23-savivaldybiu-tarybu
+python -m scraper fetch-candidate-samples 1997-kovo-23-savivaldybiu-tarybu --candidate-id pilvelis-algirdas --allow-new-samples
+python -m scraper parse-anketa-samples 1997-kovo-23-savivaldybiu-tarybu
+
+python -m scraper fetch-sample 1997-birzelio-29-svenciniu-tarybos-pakartotiniai
+python -m scraper sitemap 1997-birzelio-29-svenciniu-tarybos-pakartotiniai
+python -m scraper parse-anketa-samples 1997-birzelio-29-svenciniu-tarybos-pakartotiniai
+```
+
+Resumable full scrape (the general election only — 449 party lists, 6,276
+candidates across all 56 municipalities; the Švenčionys repeat's 110
+candidates are the complete field already covered above):
+
+- `scripts/run_election_batches.sh 1997-kovo-23-savivaldybiu-tarybu`, with
   `KEEP_SAMPLES=1` — at this size a later parser fix should be an offline
   re-parse, not hours of repeat traffic to vrk.lt.
 

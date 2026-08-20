@@ -57,6 +57,11 @@ below) and every other election was re-parsed offline the same day.
 | `2025-kovo-16-meru` | 14 | 2 | 0 | 10 |
 | `2023-kovo-5-savivaldybiu-tarybu-ir-meru` | 13796 | 1557 | 541 | 433 |
 | `2019-kovo-3-savivaldybiu-tarybu` | 13666 | 1502 | 244 | 410 |
+| `1996-spalio-20-seimo` | 5 of 879 | 0 | 0 | 0 |
+| `1997-kovo-23-seimo-pakartotiniai` | 23 | 0 | 0 | 0 |
+| `1997-gruodzio-21-seimo-pakartotiniai` | 4 | 0 | 0 | 0 |
+| `1997-kovo-23-savivaldybiu-tarybu` | 6 of 6,276 | 0 | 0 | 0 |
+| `1997-birzelio-29-svenciniu-tarybos-pakartotiniai` | 110 | 0 | 0 | 0 |
 | **total** | **33177** | **3522** | **945** | **3421** |
 
 The elected column counts records whose `profilis.pastaba` starts with
@@ -427,3 +432,25 @@ each now has one.
   lists and are published outside the candidate pages.
 - Donation *records* were historically dropped by the shared parser; the totals
   in older analyses of this repo predate that fix and should be recomputed.
+- The 1996-1998 Seimas archive pages (`1996-spalio-20-seimo`,
+  `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`)
+  publish no elected markers, no income/private-interest declarations in a
+  form worth parsing (the linked `kpdl.htm` declaration is captured only as a
+  raw URL), and — unlike every other era, including 2015 — **no birth date at
+  all**. Every record in these three elections groups by name alone in
+  `scripts/build_person_index.py`'s cross-election identity index; a
+  same-named person appearing only in this family cannot be told apart from a
+  namesake there. The 1997 municipal archive
+  (`1997-kovo-23-savivaldybiu-tarybu`,
+  `1997-birzelio-29-svenciniu-tarybos-pakartotiniai`) does publish birth date
+  and resolves the same identity risk 2015 and later eras do; see
+  `docs/OUTPUT_SCHEMA.md`'s appendices for both families.
+- `1996-spalio-20-seimo` (879 candidates) and `1997-kovo-23-savivaldybiu-tarybu`
+  (6,276 candidates) have not had their full scrapes finish as of this
+  writing — only their fixture sets were parsed when this note was written;
+  see the run record below once it lands. Their listings and sitemaps are
+  complete: 879 candidates across 71 constituencies, and 6,276 candidates
+  across 449 party lists in all 56 municipalities respectively, with zero
+  duplicate-candidate-id collisions for the former and 46 for the latter (all
+  confirmed genuine name collisions between different VRK candidate ids, not
+  parser artifacts — see `docs/CLI_REFERENCE.md`).
