@@ -1,18 +1,22 @@
 # Plan: the six 2015 backlog elections (issues #48–#53)
 
-> **Status (2026-08-20).** Four of six modules are built, tested, wired and
-> documented: `seimo_zirmunu_2015` (#48), `seimo_varenos_eisiskiu_2015` (#50),
-> `telsiu_mero_2015` (#53) and `pakartotiniai_sirvintu_traku_2015` (#51).
-> Remaining: `pakartotiniai_silutes_2015` (#52), then `savivaldybiu_2015`
-> (#49). What the build settled, beyond §2 below:
+> **Status (2026-08-21).** All six modules are built, tested, wired and
+> documented — `seimo_zirmunu_2015` (#48), `seimo_varenos_eisiskiu_2015`
+> (#50), `telsiu_mero_2015` (#53), `pakartotiniai_sirvintu_traku_2015` (#51),
+> `pakartotiniai_silutes_2015` (#52) and `savivaldybiu_2015` (#49). What the
+> build settled, beyond §2 below:
 >
 > - The era machinery lives in `seimo_zirmunu_2015` with election id, listing
 >   URL, paths, expected tabs and the anketa-rows normalizer as call-time
 >   parameters; sibling modules are three files of constants and wrappers.
 > - The municipal question mapping lives in `telsiu_mero_2015`
 >   (`normalize_municipal_anketa_rows`) and is what #52 and #49 should reuse.
-> - #51's sitemap already does the two-structure walk and the id merge, so it
->   is the closer model for #52 than the by-election modules are.
+> - #51's sitemap does the two-structure walk and the id merge; #52 and #49
+>   are wiring over it. #49 deliberately does not use
+>   `scraper/shared/municipal_sitemap.py` — that module's URL grammar, table
+>   ids and blue-anchor elected detection are all 2019/2023-specific.
+> - Ids: name slug for the small elections, `<slug>-<vrkCandidateId>` for #49,
+>   where 140 candidates share a slug and the batch runner keys on filenames.
 > - Defect found and fixed mid-build: the municipal profile cards wrap the
 >   name in `<p texttransform>`, and the walker was putting VRK's boilerplate
 >   notice in `profilis.vardas-pavarde` on every municipal record. Any new
@@ -32,7 +36,8 @@ Written 2026-08-19 from live-page research. All six `help wanted` / `missing-ele
 issues are 2015 elections, and all of them share **one page-layout family that the
 project has never parsed** — older than the 2016 era, with its own quirks. That makes
 them one coherent project: build the era's parsers once against the smallest election,
-then reuse them five times. Implementation has not started; this document is the map.
+then reuse them five times. This document is the map; the status block above records where the build
+actually landed.
 
 ## 1. Inventory
 
