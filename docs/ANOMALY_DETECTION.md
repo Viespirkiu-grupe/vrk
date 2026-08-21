@@ -50,6 +50,12 @@ Default parser output path:
 - `TabnavSelectorNotFound`
 - `AnketaTableNotFound`
 - `AnketaTableEmpty`
+- `CampaignRootMissing` — a campaign the candidate page linked whose root
+  page never fetched (the fetch stage left a `CampaignRootFetchFailed` in
+  the candidate's `index.json` and an empty campaign directory). A
+  parse-stage warning, so a dead campaign link reaches `anomalies.jsonl`
+  instead of only the per-candidate index; the record simply has no
+  campaign section. Two 2009 EP candidates are the corpus's cases.
 - `CampaignTabSampleMissing` — a campaign tab file listed in `index.json` is
   missing or unreadable at parse time. Recorded paths are re-anchored onto the
   samples root in use, so this fires only when the file is genuinely absent

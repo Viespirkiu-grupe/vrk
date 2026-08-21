@@ -1382,21 +1382,21 @@ field map all resolve them with no election-specific case.
   resolve with the corpus's standard positional `-2` suffix; see
   `docs/CLI_REFERENCE.md`'s municipal archive section for the concrete pair.
 
-## Appendix: 2009–2014 national elections (`2009-prezidento`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`)
+## Appendix: 2009–2014 national elections (`2009-prezidento`, `2009-ep`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`)
 
-All five are the 2015-era static layout described in the 2015 Seimo
+All six are the 2015-era static layout described in the 2015 Seimo
 by-elections appendix, and every era shape there applies: no elected markers
 on the pages (`profilis.pastaba` is null on every record; `isrinktas` is the
 results join — 139 Seimas members in 2012 from VRK's elected-members page,
 70 list and 69 constituency seats, the 3 constituency winners of 2013, the
-11 MEPs, the two presidents), URL photos, litas amounts with
+12 MEPs of 2009 and 11 of 2014, the two presidents), URL photos, litas amounts with
 `valiuta`/`pastaba`, the retained spouse block, the campaign additions.
 Records are written as `data/<election-id>/<candidate-id>-<election-id>.json`
 in the corpus's section order, with one insertion for the 2014 presidential
 election (`patiketiniai` between `privaciu-interesu-deklaracija` and the
 campaign section). What is this group's own:
 
-### `kandidatavimas` (2012, 2013, 2014 EP)
+### `kandidatavimas` (2012, 2013, 2009 and 2014 EP)
 
 The listing-only facts, under one shape for all three:
 
@@ -1456,6 +1456,9 @@ The listing-only facts, under one shape for all three:
   `nuorodos` the URL). The only cards in the corpus that carry one.
 - **2014 EP**: `iskele` (linking the list page), `numeris-sarase`, the
   campaign link; the coalition nominee adds `iskele-2` / `numeris-sarase-2`.
+- **2009 EP**: `iskele` (linking the list page), `numeris-sarase`, the
+  campaign link — the party's participant page, the same one on every
+  candidate of a list.
 
 ### `normalized.anketa` per election type
 
@@ -1481,6 +1484,16 @@ The listing-only facts, under one shape for all three:
   all answer `Nenurodė`), `ar-atimta-balsavimo-teise-kitoje-valstybeje`
   (Q8.3.2) and `ar-buvote-pripazintas-kaltu-del-sunkaus-nusikaltimo` (Q9.3);
   there is no `kita-apie-save` (no Q21).
+- **European Parliament (2009)**: the 2014 EP key set with `gimimo-data`
+  back at Q5, plus `mokslo-laipsnis` and `pedagoginis-vardas` (one line on
+  the page, "…mokslo laipsnį …, vardą …"), `kita-apie-save` (Q21, which
+  2014 dropped) and `pareiskimai.teisiniai-argumentai` — the Q9 block's
+  free-text line for anyone who answered "Taip" ("Tuo atveju, jei bent į
+  vieną 9 punkto klausimą atsakėte Taip … paaiškinimą įrašykite čia"),
+  under the 2016 Seimo key for the same slot. The 2012 Seimo pages carry
+  that line too (24 candidates wrote into it; the key is null on every
+  2013 record, whose form no longer asks), so `normalize_seimo_2012_anketa_rows`
+  reads it as well.
 - **Presidential (2009)**: the 2014 form one revision earlier.
   `pareiskimai` is `ar-nebaigta-teismo-paskirta-bausme`,
   `ar-atliekate-karo-tarnyba`, `ar-turite-kitos-valstybes-pilietybe`,
@@ -1512,14 +1525,18 @@ fixture's `index.json`.
 
 ### `privaciu-interesu-deklaracija` (2009: the roman-numbered form)
 
-The 2009 interest declaration predates the `ID001x` sections: after the
-declarant and spouse cards it has `ii-dalyvavimas-juridiniuose-asmenyse`,
-`iv-naryste-pareigos-imonese-istaigose-asociacijose-ar-fonduose` and
-`vii-sandoriai`, each a list of records keyed by the section's column
-headings and present only when the candidate filed something under it.
-Transactions carry a `sandorio-vertes-litais-kodas` value-band code
-("001"–"012") where the later form has sums; `suma-skaiciais` and
-`suma-zodziais` are blank on every row. Unique to this election.
+The 2009 interest declaration (both elections) predates the `ID001x`
+sections: after the declarant and spouse cards come roman-numbered
+sections — `ii-dalyvavimas-juridiniuose-asmenyse`, `iii-individuali-veikla`,
+`iv-naryste-pareigos-imonese-istaigose-asociacijose-ar-fonduose`,
+`v-gautos-dovanos`, `vii-sandoriai`,
+`viii-fiziniai-ar-juridiniai-asmenys-del-kuriu-gali-kilti-interesu-konfliktas`
+— each a list of records keyed by the section's column headings and
+present only when the candidate filed something under it (the presidential
+seven use II, IV and VII only). Transactions and gifts carry a
+`sandorio-vertes-litais-kodas` value-band code ("001"–"012") where the
+later form has sums; `suma-skaiciais` and `suma-zodziais` are blank on
+every row. Unique to 2009.
 
 ### Declarations
 
@@ -1536,7 +1553,9 @@ laukelių suma" / "…27,28,30 laukelių suma"). All three resolve to
 
 ### Campaign pages (2009)
 
-The 2009 participant pages are one revision older than 2012's. Their
+The 2009 participant pages (both elections) are one revision older than
+2012's. In the EP election the participant is the party, linked from every
+candidate of its list, so 24 candidates share one campaign record. Their
 tables head columns with `<td><strong>` rather than `<th>`; the donor list
 is a single "Aukotojų sąrašas" section (`aukos-pagal-sekcija.aukotoju-sarasas`,
 columns `rowNumber`, `donor`, `municipality`, `amountLt`, `date`) with no
@@ -1548,8 +1567,9 @@ the full column count, label in an inner cell. Financing reports have a
 kind instead of a verification status: `reportType` ("Pradinė"/"Galutinė")
 alongside a null `status`, the key present on 2009 rows only. A company
 auditor is labelled "Pavadinimas"/"Kodas" (→ `imones-pavadinimas`/
-`imones-kodas`); two of the seven have one, the other five an empty auditor
-table. No contracts tab content for any of the seven.
+`imones-kodas`); two of the seven presidential candidates have one, the
+other five an empty auditor table. No contracts tab content in either
+election.
 
 In the totals (`suvestine`) of every election in this family the sums are
 now keyed by the table's own amount columns — `amountLt` on the litas-only
@@ -1581,5 +1601,5 @@ index before the merge was trusted; read them rather than assuming zero:
 
 Name slugs with the 2016 Seimo module's positional `-2` suffix for
 collisions (one in 2012: two Arūnas MARKŪNAS on different lists; none in
-the other four). The listing pages are static archives, so traversal order
+the other five). The listing pages are static archives, so traversal order
 — lists in index order, then constituencies in index order — is stable.

@@ -224,6 +224,7 @@ class Seimo2012AnketaParserTests(unittest.TestCase):
                 "ar-bendradarbiavote-su-uzsienio-tarnybomis": "Ne",
                 "ar-buvote-pripazintas-kaltu": "Ne",
                 "ar-buvote-pripazintas-kaltu-del-sunkaus-nusikaltimo": "Ne",
+                "teisiniai-argumentai": None,
             },
         )
         self.assertEqual(anketa["gimimo-vieta"], "Radviliškio rajonas")

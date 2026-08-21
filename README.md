@@ -1,8 +1,8 @@
 # VRK election corpus
 
 A scraper for the candidate pages of the Lithuanian Central Electoral
-Commission (VRK), and the corpus it produces: **58,475 candidate records
-across 36 elections, 1996–2025** — questionnaires, asset and income
+Commission (VRK), and the corpus it produces: **58,737 candidate records
+across 37 elections, 1996–2025** — questionnaires, asset and income
 declarations, private-interest declarations and campaign finance data, one
 JSON file per candidacy.
 

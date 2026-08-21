@@ -486,6 +486,22 @@ empty-list case; Balčytis is also the one candidate whose `Kita` tab links a
 program PDF. Grybauskaitė's campaign link points at election path `423_lt`,
 not the candidate pages' `424_lt`.
 
+For `2009-ep` the allowlist (`tests/test_ep_2009_sample_allowlist.py`) is
+**fifteen candidates out of 262** — the leader of each of the fifteen lists,
+the same rule as `2014-ep`: `saulius-stoma`, `algirdas-paleckis`,
+`rolandas-paksas`, `vilija-blinkeviciute`, `egidijus-skarbalius`,
+`ona-jukneviciene`, `leonidas-donskis`, `valdemar-tomasevski`,
+`eugenijus-maldeikis`, `gediminas-vagnorius`, `vytautas-landsbergis`,
+`viktor-uspaskich`, `jonas-viesulas`, `arturas-zuokas`, `gintaras-didziokas`.
+Six of them were elected. The set covers the shapes the full field has:
+Zuokas's Q9.2 "Taip" with the free-text explanation, Landsbergis's and
+Maldeikis's two-answer degree line (degree and pedagogical title),
+Tomaševski's dead campaign link (his presidential participant id under the
+EP path — the fixture's `index.json` carries the one `CampaignRootFetchFailed`),
+and the roman-numbered interest sections II–VIII across the fifteen. The
+samples directory holds the list index (`list.html`) and the fifteen list
+pages under `lists/`.
+
 For `2009-prezidento` the allowlist
 (`tests/test_prezidento_2009_sample_allowlist.py`) is likewise the complete
 seven-candidate field:
