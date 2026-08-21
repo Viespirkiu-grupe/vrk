@@ -70,11 +70,14 @@ def extract_district_links(index_html: str) -> list[dict[str, Any]]:
 def fetch_listing_sample(
     samples_dir: Path = DEFAULT_SAMPLES_DIR,
     listing_url: str = LISTING_URL,
+    index_name: str = "list.html",
 ) -> Path:
     # Fetches the constituency index and every constituency's candidate page,
-    # skipping files already on disk so an interrupted capture resumes.
+    # skipping files already on disk so an interrupted capture resumes. The
+    # index file name is a parameter because the 2012 general election keeps
+    # two indexes (lists and constituencies) in one samples directory.
     samples_dir.mkdir(parents=True, exist_ok=True)
-    index_path = samples_dir / "list.html"
+    index_path = samples_dir / index_name
     if index_path.exists():
         index_html = index_path.read_text(encoding="utf-8")
     else:
@@ -148,8 +151,10 @@ def district_records(district_html: str, district: dict[str, Any]) -> list[dict[
     return records
 
 
-def collect_district_records(samples_dir: Path) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
-    index_html = (samples_dir / "list.html").read_text(encoding="utf-8")
+def collect_district_records(
+    samples_dir: Path, index_name: str = "list.html"
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    index_html = (samples_dir / index_name).read_text(encoding="utf-8")
     districts = extract_district_links(index_html)
     records: list[dict[str, Any]] = []
     for district in districts:
