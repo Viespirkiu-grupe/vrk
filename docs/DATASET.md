@@ -18,7 +18,7 @@ never touched by a full run.
 
 ## Inventory
 
-40,469 candidate records across 31 elections, 1996–2025, with **zero fetch
+42,655 candidate records across 35 elections, 1996–2025, with **zero fetch
 failures**.
 
 **The table below is an aggregate, not an inventory of any one directory.**
@@ -28,7 +28,7 @@ different times. A given clone holds whatever was scraped *there*; the counts
 here are the union. Before trusting a local `data/` for analysis, count it
 (`ls data/*/ | wc -l` per election) rather than assuming this table describes
 it, and re-run `scripts/run_election_batches.sh <id>` for anything missing.
-The six rows written `N of total` are a second, different caveat: those
+The three rows written `N of total` are a second, different caveat: those
 elections are fixture-only *everywhere* — their modules, listings and sitemaps
 are complete, but the full candidate scrape has never been run.
 
@@ -84,7 +84,11 @@ election was re-parsed offline the same day.
 | `1997-gruodzio-21-seimo-pakartotiniai` | 4 | 0 | 0 | 0 |
 | `1997-kovo-23-savivaldybiu-tarybu` | 6276 | 0 | 0 | 0 |
 | `1997-birzelio-29-svenciniu-tarybos-pakartotiniai` | 110 | 0 | 0 | 0 |
-| **total** | **40469** | **3522** | **945** | **3421** |
+| `2012-seimo` | 1927 | 0 | 45 | 1927 |
+| `2013-kovo-3-seimo-birzai-zarasai-ukmerge` | 37 | 0 | 2 | 37 |
+| `2014-prezidento` | 7 | 0 | 0 | 7 |
+| `2014-ep` | 215 | 0 | 4 | 215 |
+| **total** | **42655** | **3522** | **996** | **5607** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
@@ -134,6 +138,24 @@ Measured against the archived pre-fix outputs, 2,463 records changed:
 - **235 campaign decision records** now appear across the five (118 in
   `2019-ep` alone), confirming the Sprendimai normalization matters most
   where campaigns are dense.
+
+### The 2026-08-21 scrapes of the 2012-2014 national elections
+
+The four elections between the 1990s archive and the 2015 backlog (GitHub
+issues #44-#47) were built on the 2015-era parsers and scraped the same day,
+both with `KEEP_SAMPLES=1` so their raw HTML sits under `samples-full/`:
+`2014-ep` (215 candidates, 0 fetch failures, 0 anomalies) and `2012-seimo`
+(1,927 candidates, 0 fetch failures, 0 anomalies). The two small ones —
+`2014-prezidento` (7) and `2013-kovo-3-seimo-birzai-zarasai-ukmerge` (37) —
+are complete fields as fixtures. Before any candidate page was fetched, the
+2012 sitemap was reconciled against VRK's own list index: 1,878 list
+candidacies exactly as declared, every list row's constituency agreeing with
+the constituency page, and the 49 constituency-only candidates equal to the
+52 distinct people on VRK's "tik vienmandatėse" pages less the 3 who also
+hold a list seat (the index's declared 58 still counts five withdrawn
+self-nominations). The `stats` block of `sitemaps/2012-seimo.json` records
+each of these. Every null in the fixture records was traced to a genuinely
+blank or omitted source line before the full runs started.
 
 ### The 2026-08-19 municipal re-scrape
 
@@ -393,6 +415,7 @@ each was measured against live data after the fix:
 | donations section whose heading carries its own empty-state marker | a campaign with nothing to declare renders `Gautos ir priimtos aukos: Duomenų nėra` inside the heading rather than as the text node that normally follows it. No table or text node follows, so the next heading overwrote the pending title and the section vanished — collapsing "declared no donations" into "section never published", and leaving the sections after it untitled. **6 sections recovered across 3 elections** in the fixture corpora |
 | campaign tab paths resolved against the CWD | `index.json` records each campaign tab file at its fetch-time repo-root-relative path, and the parse stage resolved it against the current directory instead of the `--samples-root` that located the index. Run from anywhere but the repo root, every campaign tab file counted as absent and was silently skipped: tabs, auditor, donations, contracts and financing reports all parsed as empty, with **zero anomalies emitted**. Re-parsing the fixture corpora from a directory without a samples tree restored campaign data for **92 of 156 candidates across 15 of 17 elections** — 396 tab sections and 72 auditors that the broken run had dropped. Recorded paths are now re-anchored onto the samples root in use (repo-root runs are byte-identical before and after), and a listed tab file that is missing or unreadable emits a `CampaignTabSampleMissing` anomaly instead of vanishing |
 | conviction-detail table dropped by the 2019-era row loop | VRK nests the Q9.1 detail table — date, country, court and offence per conviction — inside an anketa row of its own. The 2019-era per-row extraction read only `<b>` text from the cell, found none (the detail cells carry plain or `<strong>` text), and the empty-row skip dropped the row, so the details reached neither `rawData` nor `normalized` anywhere in the ep_2019 parser family. A cell that hosts a nested table now parses as a records row — the same shape the standalone records path emits — and `2019-kovo-3-savivaldybiu-tarybu` folds it into `teistumo-detales.irasai` with meru_2021's keys, since both elections ask the same questions under the same statute. prezidento_2019's verbatim copy of the loop got the same capture. Measured: exactly the **six 2019 EP declarers** regain their conviction details, Gintas Orda's 1988 LTSR record lands in normalized, and the 2017 mayoral, Marijampolė and 2019 presidential corpora are byte-identical (no declarers) |
+| a recurring profile-card label overwrote its first value | `_normalize_profile_data` keyed `profilis.kita` by label slug, so the second `Iškėlė` on a card replaced the first. Measured over all 40,469 records when the 2012 Seimo cards (one `Apygarda`/`Iškėlė` pair per candidacy) made it routine: exactly one existing record was affected — Marija Puč, 2015 Trakai, whose `iskele` named the parenthetical member party instead of the coalition that nominated her. Later occurrences now land under `-2`, `-3` suffixes; the one record was re-parsed |
 
 Every fix was verified by re-parsing all elections and confirming the diff was
 confined to the intended records.
@@ -427,7 +450,11 @@ each now has one.
   blue anchors, no elected note), so the 2015 elections' records all have a
   null `profilis.pastaba` — the winners' included. Electedness for that era
   lives only in VRK's results pages and would need a separate join
-  (`docs/PLAN_2015_ELECTIONS.md` §4).
+  (`docs/PLAN_2015_ELECTIONS.md` §4). The 2012–2014 elections are the same
+  page family and have the same gap (`kandidatavimas.isrinktas` is null on
+  every 2012, 2013 and 2014 EP record); their cards do link the results
+  pages — `profilis.kita.i-turas` / `ii-turas` / `daugiamandateje-apygardoje`
+  on the 2012 and 2013 records — so a join has a URL to start from.
 - One 2015 candidacy has no questionnaire at all: VRK published Marija Puč's
   Trakai council page as `Rengiama`. Its record keeps the profile card and
   carries the corpus's only `AnketaNotPublished` warning. The same person's

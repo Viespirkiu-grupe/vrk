@@ -1,9 +1,11 @@
 # Data Guide
 
 The consumer entry point to the corpus: everything a third party needs to
-query 33,121 candidate records across 20 Lithuanian elections (2016–2025)
+query 42,655 candidate records across 35 Lithuanian elections (1996–2025)
 without reading the per-election schema appendices first. Every path and
-count on this page was verified against the full corpus on 2026-08-19.
+count on this page was verified against the full corpus on 2026-08-19; the
+election and record totals were refreshed on 2026-08-21 when the 2012–2014
+elections joined (see DATASET.md).
 
 Records live at `data/<election-id>/<candidateId>-<electionId>.json`, one
 file per candidacy. `data/` is not version controlled; see
@@ -84,13 +86,13 @@ under different paths. The machine-readable bridge is
 [concept-map.json](concept-map.json) — per concept, the exact normalized
 path for each election id.
 
-**The table below covers the two modern eras only — 20 of the corpus's 31
+**The table below covers the two modern eras only — 20 of the corpus's 35
 elections.** `concept-map.json` is the authority and is the thing to read
 programmatically; this table is a human summary of the 2016 and 2020 eras.
-The eleven pre-2016 elections (six 2015, five 1996-1998) are mapped in
-`concept-map.json` but not summarized here: the 2015 family and the 1997
-municipal archive both resolve most concepts under `anketa.*` with the same
-kebab-case keys as the 2016 era, while the 1996-1998 Seimas archive publishes
+The fifteen pre-2016 elections (four 2012–2014, six 2015, five 1996-1998)
+are mapped in `concept-map.json` but not summarized here: the 2012–2015
+family and the 1997 municipal archive both resolve most concepts under
+`anketa.*` with the same kebab-case keys as the 2016 era, while the 1996-1998 Seimas archive publishes
 almost none of these concepts at all (see its `docs/OUTPUT_SCHEMA.md`
 appendix).
 
@@ -185,6 +187,11 @@ appears as two persons.
   `2019-ep`, `2019-prezidento`, `2020-seimo` and the 2021 mayoral
   elections. Coverage statistics on those fields are meaningless there;
   the 2023/2024 elections carry real city-level values instead.
+- **Pre-2016 money is in litas.** Every 2012–2015 record declares assets and
+  income in litas, not euro — `turto-ir-pajamu-deklaracijos.valiuta` is
+  `"Lt"` there and absent from 2016 on. Divide by 3.4528 (the irrevocable
+  changeover rate) before comparing across 2015→2016; the dashboard's index
+  builder does this and flags the converted candidacies.
 - **Photos are sidecar files.** `profilis.nuotrauka` (and
   `rawData.profile.photoSrc`) is always a *reference*: a VRK URL from
   `2020-seimo` on, and the relative path `photos/<candidateId>.<ext>` in the

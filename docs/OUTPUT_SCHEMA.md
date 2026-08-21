@@ -1379,7 +1379,9 @@ The listing-only facts, under one shape for all three:
   the member party the coalition's list page names on the row; every other
   list row has no such key.
 - `sarasoId` is the list page's `RinkimuOrganizacija` id (2012 ids carry
-  the page's `_1`/`_2` suffix, `"4136-1"`).
+  the page's `_1`/`_2` suffix, `"4136-1"`). `numerisSarase` is null where
+  the list page prints an empty position cell — six 2012 rows, candidates
+  VRK kept on the page (and in the declared count) without a number.
 - The presidential election has no block: a single listing, nothing on it
   that the candidate page lacks.
 
