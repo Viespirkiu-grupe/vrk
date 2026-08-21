@@ -198,14 +198,50 @@ def parse_party_candidates_page(html: str, source_url: str) -> list[dict[str, An
     return candidates
 
 
-def _field(plain: str, label: str, next_labels: list[str]) -> str:
-    stop_pattern = "|".join(re.escape(next_label) for next_label in next_labels)
-    if stop_pattern:
-        pattern = rf"{re.escape(label)}:\s*(.*?)(?:\s*(?:{stop_pattern}):|$)"
-    else:
-        pattern = rf"{re.escape(label)}:\s*(.*)$"
+# Every labelled field these pages can print, in any paragraph. `_field` stops
+# at whichever of these comes next rather than at a caller-named successor:
+# most candidates omit some labels (only 582 of 6,276 in the 1997 general
+# election print "Gimimo vieta", for instance), and a stop list naming just
+# the expected next label silently ran to the end of the paragraph whenever
+# that label was absent -- which put "1945 04 17 Gyvenamoji vieta: Kaunas
+# Tautybė: Lietuvis (-ė)" into 91% of birth-date values.
+FIELD_LABELS = (
+    "Gimimo data",
+    "Gimimo vieta",
+    "Gyvenamoji vieta",
+    "Tautybė",
+    "Išsilavinimas",
+    "Užsienio kalbos",
+    "Pagrindinė darbovietė",
+    "Visuomeninė veikla",
+    "Šeimyninė padėtis",
+    "Šeimos nariai",
+    "Apygarda",
+    "Iškėlė",
+    "Numeris sąraše",
+)
+
+BIRTH_DATE_PATTERN = re.compile(r"^(\d{4})[\s.\-/](\d{1,2})[\s.\-/](\d{1,2})$")
+
+
+def _field(plain: str, label: str) -> str:
+    others = "|".join(re.escape(other) for other in FIELD_LABELS if other != label)
+    pattern = rf"{re.escape(label)}:\s*(.*?)(?:\s*(?:{others}):|$)"
     match = re.search(pattern, plain)
     return match.group(1).strip() if match else ""
+
+
+def normalize_birth_date(value: str) -> str:
+    """`1945 04 17` -> `1945-04-17`, the ISO-ish form every era from 2015 on
+    writes into `anketa.gimimo-data`. Without this the cross-election person
+    index keys on `NAME|1945 04 17` and can never match `NAME|1945-04-17`,
+    so a person appearing here and in a later election stays split in two.
+    Anything that is not a plain Y/M/D triple is returned unchanged."""
+    match = BIRTH_DATE_PATTERN.match(value.strip())
+    if not match:
+        return value.strip()
+    year, month, day = match.groups()
+    return f"{year}-{int(month):02d}-{int(day):02d}"
 
 
 def parse_candidate_detail(html: str, source_url: str) -> dict[str, Any]:
@@ -257,7 +293,7 @@ def parse_candidate_detail(html: str, source_url: str) -> dict[str, Any]:
             candidacy["municipalityName"] = re.sub(
                 r"\s*\(Nr\.\s*\d+\)\s*$", "", municipality_full
             ).strip()
-            candidacy["nominator"] = _field(plain, "Iškėlė", ["Numeris sąraše"])
+            candidacy["nominator"] = _field(plain, "Iškėlė")
             list_match = re.search(r"Numeris sąraše:\s*(\d+)", plain)
             candidacy["listNumber"] = int(list_match.group(1)) if list_match else None
 
@@ -272,13 +308,13 @@ def parse_candidate_detail(html: str, source_url: str) -> dict[str, Any]:
                 candidacy["nominatorUrl"] = urljoin(source_url, match.group(1))
 
         elif plain.startswith("Gimimo data:"):
-            personal["birthDate"] = _field(plain, "Gimimo data", ["Gimimo vieta"])
-            personal["birthPlace"] = _field(plain, "Gimimo vieta", ["Gyvenamoji vieta"])
-            personal["residence"] = _field(plain, "Gyvenamoji vieta", ["Tautybė"])
-            personal["nationality"] = _field(plain, "Tautybė", [])
+            personal["birthDate"] = normalize_birth_date(_field(plain, "Gimimo data"))
+            personal["birthPlace"] = _field(plain, "Gimimo vieta")
+            personal["residence"] = _field(plain, "Gyvenamoji vieta")
+            personal["nationality"] = _field(plain, "Tautybė")
 
         elif plain.startswith("Išsilavinimas:"):
-            personal["education"] = _field(plain, "Išsilavinimas", [])
+            personal["education"] = _field(plain, "Išsilavinimas")
 
         elif plain.startswith("Užsienio kalbos:"):
             personal["foreignLanguages"] = [
@@ -286,13 +322,13 @@ def parse_candidate_detail(html: str, source_url: str) -> dict[str, Any]:
             ]
 
         elif plain.startswith("Pagrindinė darbovietė:"):
-            personal["mainWorkplace"] = _field(plain, "Pagrindinė darbovietė", [])
+            personal["mainWorkplace"] = _field(plain, "Pagrindinė darbovietė")
 
         elif plain.startswith("Visuomeninė veikla:"):
-            personal["publicActivity"] = _field(plain, "Visuomeninė veikla", [])
+            personal["publicActivity"] = _field(plain, "Visuomeninė veikla")
 
         elif plain.startswith("Šeimyninė padėtis:"):
-            personal["familyStatus"] = _field(plain, "Šeimyninė padėtis", [])
+            personal["familyStatus"] = _field(plain, "Šeimyninė padėtis")
 
         elif plain.startswith("Šeimos nariai:"):
             members = []

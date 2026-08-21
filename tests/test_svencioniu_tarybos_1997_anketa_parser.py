@@ -47,7 +47,7 @@ class SvencioniuTarybos1997AnketaParserTests(unittest.TestCase):
         # education, languages, workplace, public activity, family status and
         # family members directly as labelled paragraphs.
         personal = self.lauzadis["rawData"]["personal"]
-        self.assertEqual(personal["birthDate"], "1951 09 27")
+        self.assertEqual(personal["birthDate"], "1951-09-27")
         self.assertEqual(personal["birthPlace"], "Švenčionys , Švenčionių raj.")
         self.assertEqual(personal["residence"], "Buivydiškių k. , Vilniaus raj.")
         self.assertEqual(personal["nationality"], "Lietuvis (-ė)")

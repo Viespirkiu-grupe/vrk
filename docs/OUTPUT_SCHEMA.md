@@ -1267,7 +1267,17 @@ field map all resolve them with no election-specific case.
 - `normalized.anketa` carries `gimimo-data`, `gimimo-vieta`,
   `gyvenamoji-vieta`, `tautybe`, `issilavinimas`, `uzsienio-kalbos`,
   `pagrindine-darboviete`, `visuomenine-veikla`, `seimine-padetis` and
-  `seimos-nariai`. Note the last two: the source label reads *Šeimyninė
+  `seimos-nariai`. **`gimimo-data` is normalized from the source's
+  `1944 03 04` to the corpus's `1944-03-04`** (in `rawData.personal` too):
+  every era from 2015 on writes the hyphenated form, and
+  `scripts/build_person_index.py` keys identity on the literal string, so the
+  un-normalized form silently prevented all cross-era matching — 949 people
+  who stood here and in a later election were split in two until this landed.
+- Most candidates omit some labels — only 582 of the 6,276 in the general
+  election print `Gimimo vieta`, for instance — so a field's value ends at
+  whichever label comes next, not at a fixed successor. Getting that wrong
+  put `1945 04 17 Gyvenamoji vieta: Kaunas Tautybė: Lietuvis (-ė)` into 91%
+  of birth dates; `abariunas-bronius` is the fixture that guards it. Note the last two: the source label reads *Šeimyninė
   padėtis*, but the key is the corpus's `seimine-padetis`, and
   `seimos-nariai` is a list of `{name, relation}` rather than the
   `sutuoktinio-vardas-pavarde`/`vaiku-vardai-pavardes` split later eras use.

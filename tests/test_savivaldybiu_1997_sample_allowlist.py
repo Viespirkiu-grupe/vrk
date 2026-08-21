@@ -5,6 +5,10 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SAMPLES_ROOT = REPO_ROOT / "samples" / "html" / "1997-kovo-23-savivaldybiu-tarybu"
 ALLOWED_CANDIDATE_DIRS = {
+    # Page omits the "Gimimo vieta" label entirely — the shape that made the
+    # birth date swallow the following labels on 91% of this election's
+    # records until _field learned to stop at any known label.
+    "abariunas-bronius",
     "pilvelis-algirdas",
     "kizelavicius-stasys",
     "dapkus-ramualdas",

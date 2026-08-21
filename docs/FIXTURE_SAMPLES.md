@@ -452,6 +452,12 @@ generals:
 - `tamulevicius-kestutis` / `tamulevicius-kestutis-2` — two different people
   (VRK ids 37862 and 37809) who share a name, in Alytus and Druskininkai; the
   pair that guards the positional `-2` suffix against a false merge
+- `abariunas-bronius` — a page that prints **no** `Gimimo vieta` label. Every
+  other fixture happens to carry the full label set, which is why all six
+  passed while 91% of the election's real records had a birth date that had
+  swallowed the following labels. Added as the regression guard once the full
+  corpus was reconciled; the lesson is that a fixture set chosen for
+  *content* variety can still be uniform in *structure*.
 
 Its samples directory also holds the listing tree: `municipalities/` (56
 `apgtl.htm` pages) and `lists/` (449 `pkal.htm` party-list pages), since the
