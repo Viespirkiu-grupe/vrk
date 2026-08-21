@@ -58,7 +58,11 @@ Three files, mirroring the closest existing election:
   other than the candidate.
 - `candidate_samples.py` — `EXPECTED_TABS` for this election. Tab slugs vary
   (`privaciu-interesu-deklaracija` vs `...deklaracijos`), and the campaign tab is
-  absent for some elections and some candidates.
+  absent for some elections and some candidates. A tab the pages link but
+  VRK never published (probe every candidate's URL — the 2009 presidential
+  trustees tab is a 404 for all seven) goes in the 2015-era fetcher's
+  `unpublished_tabs` (`prezidento_2009` names it in `UNPUBLISHED_TABS`):
+  recorded in `index.json`, neither fetched nor reported missing.
 - `anketa_parser.py` — the question-to-key mapping, reusing shared helpers.
 
 Then wire five dispatch points in `scraper/cli.py`.
@@ -120,7 +124,7 @@ every defect listed in `docs/DATASET.md`.
 
 ### If the pages mark no winner
 
-The 2012–2015 static layout carries no elected marker of any kind. For those
+The 2009–2015 static layout carries no elected marker of any kind. For those
 elections electedness is a separate join: a `results.py` in the module
 configures which VRK results tree to walk (`scraper/shared/election_results.py`
 has walkers for the Seimas elected-members page, constituency pages with

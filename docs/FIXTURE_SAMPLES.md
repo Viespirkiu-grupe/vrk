@@ -486,6 +486,26 @@ empty-list case; Balčytis is also the one candidate whose `Kita` tab links a
 program PDF. Grybauskaitė's campaign link points at election path `423_lt`,
 not the candidate pages' `424_lt`.
 
+For `2009-prezidento` the allowlist
+(`tests/test_prezidento_2009_sample_allowlist.py`) is likewise the complete
+seven-candidate field:
+
+- `algirdas-butkevicius`, `loreta-grauziniene`, `dalia-grybauskaite`,
+  `ceslovas-jezerskas`, `valentinas-mazuronis`,
+  `kazimira-danute-prunskiene`, `valdemar-tomasevski`
+
+All seven are independent campaign participants with five campaign tabs
+(`izdininkas`, `auditorius`, `aukotoju-sarasas`, `finansavimo-ataskaitos`,
+`sutartys`). No directory holds `patiketiniai.html`: the tab is linked on
+every page but VRK never published the file (all seven are 404s), and each
+`index.json` records the link under `unpublishedTabs`. Grybauskaitė's
+donor list is the largest (141 rows, eight flagged unacceptable inline);
+Jezerskas's is the smallest (3) and his is one of the five empty auditor
+pages. Butkevičius's `Kita` tab links three PDFs (the foreign-services
+questionnaire, a health certificate, the party's nomination decision);
+Grybauskaitė's and Prunskienė's anketa carry the academic-degree line,
+which the other five omit.
+
 For `2013-kovo-3-seimo-birzai-zarasai-ukmerge` the allowlist
 (`tests/test_seimo_birzu_zarasu_ukmerges_2013_sample_allowlist.py`) is the
 complete 37-candidate field across the three constituencies (11 in
