@@ -18,16 +18,24 @@ never touched by a full run.
 
 ## Inventory
 
-33,177 candidate records across 26 elections, 2015–2025, with **zero fetch
-failures and one parse warning** — the single 2015 candidacy whose
-questionnaire VRK never published (see Known gaps). The three largest 2015
-elections are the rows not yet fully scraped: their modules, listings and
-fixtures exist, but only the fixture candidates have been parsed so far. The
-two municipal general elections are
-together larger than everything else in the corpus by a factor of three; each
-was scraped separately in ~6h. Every row now reflects the post-fix parse: the
-five largest non-municipal corpora were re-scraped on 2026-08-18 (run record
-below) and every other election was re-parsed offline the same day.
+40,469 candidate records across 31 elections, 1996–2025, with **zero fetch
+failures**. Two named parse-time flags are worth distinguishing: the single
+2015 candidacy whose questionnaire VRK never published (`AnketaNotPublished`,
+see Known gaps), and nine `ResidenceMissing` warnings across the two new
+1996-1998 archive general elections (one 1996 Seimo candidate, eight 1997
+municipal candidates) — each confirmed a genuinely blank field on the source
+page, not a parser fault. The three largest 2015 elections are the rows not
+yet fully scraped: their modules, listings and fixtures exist, but only the
+fixture candidates have been parsed so far. The two municipal general
+elections from the modern eras are together larger than everything else in
+the corpus by a factor of three; each was scraped separately in ~6h. The
+1996-1998 archive family's two general elections (`1996-spalio-20-seimo`,
+`1997-kovo-23-savivaldybiu-tarybu`) were scraped in full the same night they
+were built — 879 and 6,276 candidates respectively, in under two hours
+combined, since neither approaches the modern municipal generals' scale.
+Every row now reflects the post-fix parse: the five largest non-municipal
+corpora were re-scraped on 2026-08-18 (run record below) and every other
+election was re-parsed offline the same day.
 
 | election | records | elected | declared a conviction | with campaign data |
 |---|---:|---:|---:|---:|
@@ -60,9 +68,9 @@ below) and every other election was re-parsed offline the same day.
 | `1996-spalio-20-seimo` | 879 | 0 | 0 | 0 |
 | `1997-kovo-23-seimo-pakartotiniai` | 23 | 0 | 0 | 0 |
 | `1997-gruodzio-21-seimo-pakartotiniai` | 4 | 0 | 0 | 0 |
-| `1997-kovo-23-savivaldybiu-tarybu` | 6 of 6,276 | 0 | 0 | 0 |
+| `1997-kovo-23-savivaldybiu-tarybu` | 6276 | 0 | 0 | 0 |
 | `1997-birzelio-29-svenciniu-tarybos-pakartotiniai` | 110 | 0 | 0 | 0 |
-| **total** | **33177** | **3522** | **945** | **3421** |
+| **total** | **40469** | **3522** | **945** | **3421** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
@@ -445,13 +453,15 @@ each now has one.
   `1997-birzelio-29-svenciniu-tarybos-pakartotiniai`) does publish birth date
   and resolves the same identity risk 2015 and later eras do; see
   `docs/OUTPUT_SCHEMA.md`'s appendices for both families.
-- `1996-spalio-20-seimo`'s full scrape is done: 879/879 candidates across 71
-  constituencies, one `ResidenceMissing` warning
-  (`andrikiene-laima-liucija`, a genuinely blank field on the source page),
-  zero duplicate-candidate-id collisions.
-  `1997-kovo-23-savivaldybiu-tarybu`'s full scrape (6,276 candidates across
-  449 party lists in all 56 municipalities, 46 duplicate-candidate-id
-  collisions — all confirmed genuine name collisions between different VRK
-  candidate ids, not parser artifacts, see `docs/CLI_REFERENCE.md`) was still
-  running as of this writing; its row above will read the fixture-only count
-  until it lands.
+- Both `1996-spalio-20-seimo` and `1997-kovo-23-savivaldybiu-tarybu` have
+  completed their full scrapes: 879/879 candidates across 71 constituencies
+  (one `ResidenceMissing` warning — `andrikiene-laima-liucija`, a genuinely
+  blank field on the source page — zero duplicate-candidate-id collisions),
+  and 6,276/6,276 candidates across 449 party lists in all 56 municipalities
+  (eight `ResidenceMissing` warnings, 46 duplicate-candidate-id collisions —
+  all confirmed genuine name collisions between different VRK candidate ids,
+  not parser artifacts, see `docs/CLI_REFERENCE.md`), respectively. Zero fetch
+  errors on either run. `1997-kovo-23-savivaldybiu-tarybu`'s fetched HTML was
+  kept (`KEEP_SAMPLES=1`, `samples-full/1997-kovo-23-savivaldybiu-tarybu/`,
+  ~49 MB) so a later parser fix is an offline re-parse rather than a second
+  full crawl of vrk.lt.
