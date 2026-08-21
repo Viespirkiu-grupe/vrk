@@ -20,8 +20,11 @@ DEFAULT_SAMPLES_ROOT = Path("samples/html/2015-kovo-1-seimo-zirmunai")
 # their links are bare <li> siblings in the page body — there is no ul#tabnav
 # on candidate pages (district pages have one, candidate pages do not), so the
 # links are recognized by their file stems instead of a nav container.
+# Patiketiniai is the presidential elections' sixth tab (the candidate's
+# trustees); the 2014 presidential module is its only user, and the stem is
+# simply absent from every other election's pages.
 CANDIDATE_TAB_LINK_PATTERN = re.compile(
-    r"Kandidato\d+(?:Anketa|Biografija|Deklaracijos|InteresuDeklaracija|Kita)\.html$"
+    r"Kandidato\d+(?:Anketa|Biografija|Deklaracijos|InteresuDeklaracija|Patiketiniai|Kita)\.html$"
 )
 
 EXPECTED_TABS = {

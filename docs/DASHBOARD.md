@@ -45,6 +45,15 @@ convention of reusing key names where questions match; biography-era splits
 (`anketa.*` up to 2019, `biografija.*` from 2020) are bridged per concept in
 the map. Extending the comparison is editing `FIELD_MAP` in the page.
 
+**Currency.** The 2012–2015 pages declare assets and income in litas
+(`turto-ir-pajamu-deklaracijos.valiuta` is `"Lt"` on those records); 2016 on
+is euro. Both the index builder (`money_of`) and the page (`moneyEUR`)
+convert litas at the irrevocable changeover rate, 3.4528 Lt/€, so one
+person's series is comparable across 2015→2016, and a converted candidacy is
+flagged (`"lt": true` in `people.json`; "(Lt→€)" on the chart's column label
+and in the Biggest-movers table). The records themselves keep the litas
+figures as published.
+
 ## Files
 
 - `scripts/build_person_index.py` — builds `dashboard/people.json`

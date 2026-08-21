@@ -472,6 +472,69 @@ the full field is a stronger regression guard. Its samples directory holds the
 same `municipalities/`/`lists/` scaffolding as the general election, scoped to
 the one municipality.
 
+For `2014-prezidento` the allowlist
+(`tests/test_prezidento_2014_sample_allowlist.py`) is the complete
+seven-candidate field:
+
+- `zigmantas-balcytis`, `dalia-grybauskaite`, `arturas-paulauskas`,
+  `naglis-puteikis`, `bronis-rope`, `valdemar-tomasevski`, `arturas-zuokas`
+
+All seven are independent campaign participants with the five campaign tabs.
+Every candidate directory also holds `patiketiniai.html`, the presidential
+elections' sixth tab (trustees) — Balčytis's is a "Duomenų nėra" page, the
+empty-list case; Balčytis is also the one candidate whose `Kita` tab links a
+program PDF. Grybauskaitė's campaign link points at election path `423_lt`,
+not the candidate pages' `424_lt`.
+
+For `2013-kovo-3-seimo-birzai-zarasai-ukmerge` the allowlist
+(`tests/test_seimo_birzu_zarasu_ukmerges_2013_sample_allowlist.py`) is the
+complete 37-candidate field across the three constituencies (11 in
+Biržų–Kupiškio, 12 in Zarasų–Visagino, 14 in Ukmergės). It spans both
+campaign participant types (24 represented, 13 independent), three
+self-nominations, six candidates with a second-round results link, and the
+sparse forms that omit Q12–Q15 entirely (`algimantas-dumbrava`). The samples
+directory holds the constituency index (`list.html`) and the three
+constituency pages under `districts/`.
+
+For `2014-ep` the allowlist (`tests/test_ep_2014_sample_allowlist.py`) is
+**ten candidates out of 215** — the leader of each of the ten lists:
+
+- `gintaras-steponavicius`, `algirdas-saudargas`, `valdemar-tomasevski`,
+  `viktor-uspaskich`, `rolandas-paksas`, `linas-balsys`, `julius-panka`,
+  `arturas-melianas`, `ramunas-karbauskis`, `zigmantas-balcytis`
+
+One per list pins list name, number and position for every list;
+`valdemar-tomasevski` is the coalition nominee whose card repeats `Iškėlė`
+for the member party. The samples directory holds the list index
+(`list.html`) and the ten list pages under `lists/`. The field is scraped by
+`scripts/run_election_batches.sh`.
+
+For `2012-seimo` the allowlist (`tests/test_seimo_2012_sample_allowlist.py`)
+is **nine candidates out of 1,927**, chosen for listing shape rather than
+content:
+
+- `algirdas-butkevicius` — list leader who also stood in a constituency
+  (both candidacies, both results links)
+- `alvydas-medalinskas` — coalition list nominee (member party on the list
+  row and, in parentheses, on the card — the card's third `Iškėlė`)
+- `naglis-puteikis` — party list candidate whom the constituency listing
+  records as nominated by the party *and* self-nominated
+- `gediminas-navaitis` — self-nominated in a constituency, on a coalition
+  list; one of the three "tik vienmandatėse" page entries who also hold a
+  list seat
+- `vilija-blinkeviciute` — list only (the list page's empty `Apygardanull`
+  constituency link)
+- `linas-balsys` — self-nominated, constituency only, both rounds
+- `tirkisas-amanovas` — nominee of a party that ran in constituencies only
+- `arunas-markunas` / `arunas-markunas-2` — two different people who share a
+  name, on two different lists; the one positional `-2` in the election
+
+The samples directory holds both indexes (`list.html` for the lists,
+`districts.html` for the constituencies), the 18 list pages plus the 11 side
+pages (coalition members, single-member-only parties, the self-nominated)
+under `lists/`, and the 71 constituency pages under `districts/`. The field
+is scraped by `scripts/run_election_batches.sh`.
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:

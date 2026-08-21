@@ -41,6 +41,10 @@ python -m scraper <command> [args]
 - `1997-gruodzio-21-seimo-pakartotiniai` (1997-12-21 Seimo repeat election in Aukštaitijos No. 28)
 - `1997-kovo-23-savivaldybiu-tarybu` (1997-03-23 municipal council general election, all 56 municipalities)
 - `1997-birzelio-29-svenciniu-tarybos-pakartotiniai` (1997-06-29 Švenčionys district council repeat election)
+- `2012-seimo` (2012-10-14 Seimas general election, 18 party lists and 71 single-member constituencies)
+- `2013-kovo-3-seimo-birzai-zarasai-ukmerge` (2013-03-03 Seimo repeat elections in Biržų–Kupiškio No. 48 and Zarasų–Visagino No. 52 and new election in Ukmergės No. 61)
+- `2014-prezidento` (2014-05-11 presidential election)
+- `2014-ep` (2014-05-25 European Parliament election)
 
 ## Election Separation
 
@@ -865,6 +869,76 @@ candidates are the complete field already covered above):
 - `scripts/run_election_batches.sh 1997-kovo-23-savivaldybiu-tarybu`, with
   `KEEP_SAMPLES=1` — at this size a later parser fix should be an offline
   re-parse, not hours of repeat traffic to vrk.lt.
+
+## 2012–2014 national elections (`2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`) Workflow
+
+The four elections between the 1990s archive and the 2015 backlog are the
+same pre-2016 static layout family as the 2015 elections — separate static
+files per candidate tab, the `Kandidato<ID>Anketa.html` stem, JPG photos,
+litas declarations, campaign participant pages under
+`PolitiniuKampanijuFinansavimas/Dalyvis<ID>/`, no winner marked anywhere —
+so every module is wiring over `seimo_zirmunu_2015`'s parameterized
+machinery with its own question mapping and listing walk. Three things
+differ from 2015 and were added to the era code: the 2014 pages put the
+tab links inside `ul#tabnav` (the era's `li a[href]` selector covers both
+shapes), the presidential pages add a sixth tab (`Patiketiniai`, the
+candidate's trustees), and the GPM308 income row cites "…14, 20 laukelių"
+where 2015 cites "…14, 22" (both aliases resolve to `gautos-pajamos`).
+
+Question sets, one per election type:
+
+- **Seimo (2012, 2013)** — `seimo_birzu_zarasu_ukmerges_2013.normalize_seimo_2012_anketa_rows`:
+  the 2015 Seimo variant plus Q9.3 (grave/very grave crime conviction),
+  which the 2015 pages no longer carry. Every 2013 form holds VRK's
+  "Nenurodė" default for it.
+- **Presidential (2014)** — `prezidento_2014.normalize_presidential_anketa_rows`:
+  Q8.1–8.7 are the Prezidento rinkimų įstatymo 2 str. eligibility
+  questions (citizenship by origin, three years' residence, eligibility for
+  the Seimas, then the four Seimo ones), so birthplace, nationality and
+  education shift to Q9–Q11; an unnumbered academic-title line follows the
+  education table; there is no Q15.
+- **European Parliament (2014)** — `ep_2014.normalize_ep_anketa_rows`: the
+  birth date is numbered Q3 (nowhere else in the corpus), Q8.3.1/8.3.2 ask
+  about another member state's citizenship and voting rights, Q9.3 as for
+  the Seimas, no Q21.
+
+Listings, one walk per structure:
+
+- `2014-prezidento`: one table of seven candidates (each row links the
+  anketa twice; the era's row walker takes the first). Fixtures are the
+  whole field.
+- `2013-kovo-3-seimo-birzai-zarasai-ukmerge`: a constituency index
+  (`Kandidatai/index.html`) linking three constituency pages. The module's
+  index-driven walk saves the index as `list.html` and the pages under
+  `districts/district-<id>.html`; the 2012 module reuses it. 37 candidates,
+  fixtures are the whole field.
+- `2014-ep`: an index of ten party lists with declared sizes
+  (`KandidatuSarasai/index.html`), each a page of candidates in list order
+  (`lists/list-<id>.html`). The sitemap reconciles every walked list
+  against its declared size (215/215). Fixtures are the ten list leaders.
+- `2012-seimo`: both structures at once — 18 numbered lists
+  (`list.html`, the EP walker) and 71 constituencies (`districts.html`, the
+  2013 walker), merged on VRK's candidate id into 1,927 entries (929 in
+  both, 949 list-only, 49 constituency-only). The list index also rows the
+  coalition's four member parties and seven "tik vienmandatėse" pages;
+  the sitemap fetches those too and uses them as cross-checks
+  (`stats.districtOnlyReconciled`, `stats.listDistrictJoinMismatch`) — see
+  the `2012-seimo` appendix in `OUTPUT_SCHEMA.md` for what each stat
+  asserts. Fixtures are nine shape-chosen candidates.
+
+Listing-only facts (constituency, nominator, list, list number, position,
+coalition member party) travel in the `kandidatavimas` block on every 2012,
+2013 and EP record.
+
+```bash
+python -m scraper fetch-sample 2014-prezidento
+python -m scraper sitemap 2014-prezidento
+python -m scraper fetch-candidate-samples 2014-prezidento --candidate-id dalia-grybauskaite --allow-new-samples
+python -m scraper parse-anketa-samples 2014-prezidento
+python -m scraper fetch-sample 2012-seimo
+python -m scraper sitemap 2012-seimo
+KEEP_SAMPLES=1 scripts/run_election_batches.sh 2012-seimo
+```
 
 ## Helpful Checks
 

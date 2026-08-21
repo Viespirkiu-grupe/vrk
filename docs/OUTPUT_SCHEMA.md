@@ -212,6 +212,15 @@ in `rawData`).
 `{pavadinimas, reiksme, nuorodos}`. `normalized.kita` is
 `{tekstai, nuorodos}` in every election.
 
+A label that recurs on one profile card keeps its first value under the
+plain key and lands the later ones under `-2`, `-3` suffixes (`iskele`,
+`iskele-2`). Two shapes produce this: the 2012 Seimo cards, which carry one
+`Apygarda`/`Iškėlė` pair per candidacy, and coalition nominees in any
+2012–2015 election, whose card repeats `Iškėlė` for the member party in
+parentheses (the suffixed entry's `pavadinimas` is then the literal
+`"(Iškėlė"`). Measured over the whole corpus when the rule was introduced
+(2026-08-21), exactly one pre-existing record had a recurring label.
+
 ### Campaign entries
 
 Every entry of `politines-kampanijos-dalyvio-duomenys[]` has the same ten
@@ -1330,3 +1339,135 @@ field map all resolve them with no election-specific case.
 - 46 candidate name collisions in the 6,276-candidate general election
   resolve with the corpus's standard positional `-2` suffix; see
   `docs/CLI_REFERENCE.md`'s municipal archive section for the concrete pair.
+
+## Appendix: 2012–2014 national elections (`2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`)
+
+All four are the 2015-era static layout described in the 2015 Seimo
+by-elections appendix, and every era shape there applies: no elected data
+anywhere (`profilis.pastaba` and `kandidatavimas.isrinktas` are null on
+every record, the winners' included — the 2012 and 2013 cards link VRK's
+results pages instead, see below), URL photos, litas amounts with
+`valiuta`/`pastaba`, the retained spouse block, the campaign additions.
+Records are written as `data/<election-id>/<candidate-id>-<election-id>.json`
+in the corpus's section order, with one insertion for the presidential
+election (`patiketiniai` between `privaciu-interesu-deklaracija` and the
+campaign section). What is this group's own:
+
+### `kandidatavimas` (2012, 2013, 2014 EP)
+
+The listing-only facts, under one shape for all three:
+
+```json
+{
+  "vrkCandidateId": "66814",
+  "roles": ["daugiamandate", "vienmandate"],
+  "vienmandate": {"apygarda": "Vilkaviškio", "apygardosNumeris": 68, "apygardosId": "7277", "iskele": "Lietuvos socialdemokratų partija"},
+  "daugiamandate": {"sarasas": "Lietuvos socialdemokratų partija", "sarasoNumeris": 8, "sarasoId": "4136-1", "numerisSarase": 1},
+  "isrinktas": null
+}
+```
+
+- `roles` is in first-seen order (lists are walked before constituencies).
+  The 2013 election has `vienmandate` only, the EP election `daugiamandate`
+  only, and the respective other slot is null. 2012 has all three
+  combinations: 929 dual, 949 list-only, 49 constituency-only.
+- `vienmandate.iskele` is the constituency listing's "Iškėlė" column
+  verbatim: a party, `Išsikėlė pats`, or both in one cell
+  (`"…demokratai, išsikėlė pats"`) when a party nominated someone who had
+  also self-nominated.
+- 2012 coalition-list candidates carry `daugiamandate.koalicijosPartija`,
+  the member party the coalition's list page names on the row; every other
+  list row has no such key.
+- `sarasoId` is the list page's `RinkimuOrganizacija` id (2012 ids carry
+  the page's `_1`/`_2` suffix, `"4136-1"`). `numerisSarase` is null where
+  the list page prints an empty position cell — six 2012 rows, candidates
+  VRK kept on the page (and in the declared count) without a number.
+- The presidential election has no block: a single listing, nothing on it
+  that the candidate page lacks.
+
+### `profilis.kita` per election
+
+- **2012 Seimo**: one `apygarda`/`iskele` pair per candidacy in card order
+  — single-member first (`apygarda` = `"Vilkaviškio (Nr.68)"` with the
+  constituency link), then `apygarda-2` = `"Daugiamandatė"`, `iskele-2`
+  linking the list page, `numeris-sarase`. A list-only card has the
+  multi-member block alone, so there `apygarda` is `"Daugiamandatė"`. The
+  results links are standalone anchors keyed by their label:
+  `daugiamandateje-apygardoje` (the list's preference votes page),
+  `i-turas` and, where a second round was held, `ii-turas` (the
+  constituency results pages). Coalition nominees add `iskele-3` =
+  `"(Iškėlė"` for the member party.
+- **2013**: `apygarda`, `iskele`, the campaign link, `i-turas`, and
+  `ii-turas` for the six candidates who went to a second round.
+- **2014 presidential**: only the campaign link — presidential candidates
+  are self-nominated and the card states no constituency or list. Note the
+  link targets election path `423_lt`, VRK's id for the campaign, not the
+  candidate pages' `424_lt`.
+- **2014 EP**: `iskele` (linking the list page), `numeris-sarase`, the
+  campaign link; the coalition nominee adds `iskele-2` / `numeris-sarase-2`.
+
+### `normalized.anketa` per election type
+
+- **Seimo (2012, 2013)**: the 2015 Seimo key set with one addition in
+  `pareiskimai`, `ar-buvote-pripazintas-kaltu-del-sunkaus-nusikaltimo`
+  (Q9.3, conviction for a grave or very grave crime). Every 2013 form holds
+  VRK's `Nenurodė` default for it (null normalized, literal in the raw row);
+  2012 forms answer it. Q16 and Q17 share one text run on these pages and
+  split correctly at the question number. Sparse forms omit unanswered
+  lines altogether (Q12–Q15 can be absent), which is what a null
+  `issilavinimas.irasai`/`uzsienio-kalbos` means.
+- **Presidential (2014)**: `pareiskimai` is the Prezidento rinkimų
+  įstatymo 2 str. set — `ar-esate-pilietis-pagal-kilme`,
+  `ar-gyvenate-lietuvoje-trejus-metus`, `ar-galite-buti-renkamas-seimo-nariu`
+  (this election's own), then `ar-nebaigta-teismo-paskirta-bausme`,
+  `ar-atliekate-karo-tarnyba`, `ar-turite-kitos-valstybes-pilietybe`,
+  `ar-susijes-priesaika-uzsienio-valstybei`. Birthplace, nationality and
+  education are Q9–Q11; `pedagoginis-vardas` is the unnumbered combined
+  academic-title line, under the key the 2016 Seimo pages use for the same
+  line; there is no `anksciau-isrinktas`.
+- **European Parliament (2014)**: `gimimo-data` is Q3. `pareiskimai` adds
+  `kitos-valstybes-pilietybe-valstybe` (Q8.3.1, null on every fixture —
+  all answer `Nenurodė`), `ar-atimta-balsavimo-teise-kitoje-valstybeje`
+  (Q8.3.2) and `ar-buvote-pripazintas-kaltu-del-sunkaus-nusikaltimo` (Q9.3);
+  there is no `kita-apie-save` (no Q21).
+
+### `patiketiniai` (2014 presidential only)
+
+The trustees tab, a list of `{numeris, vardas-pavarde}` in the page's order
+(7 to 114 per candidate); a `Duomenų nėra` page is an empty list, and the
+key is absent from every other election's records.
+
+### Declarations
+
+`turto-ir-pajamu-deklaracijos` keeps the seven keys plus `valiuta: "Lt"`.
+`pastaba` names the period on the 2012 and 2013 pages ("nuo 2011-01-01 iki
+2011-12-31" for both — the 2013 repeat reused the 2012 declarations) and is
+null on the 2014 pages, whose note paragraph is empty. The income row cites
+"GPM308 formos 12, 13, 13A, 14, 20 laukelių … V13 laukelių suma" here
+(2015: "…14, 22 … V13 laukelio"); both spellings resolve to `gautos-pajamos`.
+
+### Sitemap cross-checks (`sitemaps/2012-seimo.json`)
+
+The 2012 sitemap's `stats` record what was reconciled against VRK's own
+index before the merge was trusted; read them rather than assuming zero:
+
+- `listCandidacies` = `declaredListCandidates` (1,878) and
+  `listCountMismatches` = 0: every list page holds exactly as many
+  candidates as the index declares for it.
+- `listDistrictJoinMismatch` = 0 over the rows that have a constituency
+  column; `listRowsWithoutDistrictColumn` = 135 is the coalition list page,
+  which shows the member party in that column's place.
+- `districtOnlyReconciled`: the "tik vienmandatėse" side pages hold
+  `sidePageDistrictOnlyIds` (52) distinct people, `sidePageIdsAlsoOnLists`
+  (3) of whom also hold a list seat, and the difference equals
+  `districtOnlyCandidates` (49). `sidePageDistrictOnlyDeclared` (58) is the
+  index's figure and is *not* expected to match: the self-nominated page
+  declares 36 but lists 31, the withdrawn having left the page but not the
+  count.
+
+### Ids
+
+Name slugs with the 2016 Seimo module's positional `-2` suffix for
+collisions (one in 2012: two Arūnas MARKŪNAS on different lists; none in
+the other three). The listing pages are static archives, so traversal order
+— lists in index order, then constituencies in index order — is stable.
