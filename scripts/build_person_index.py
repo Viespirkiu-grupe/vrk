@@ -114,6 +114,14 @@ def elected_note_of(record: dict) -> str | None:
         note = profilis.get("pastaba")
         if isinstance(note, str) and note.startswith("Išrink"):
             return note
+    # The 2012-2015 pages mark no winner; their electedness is joined in from
+    # VRK's results tree as kandidatavimas.isrinktas (true/false, or null
+    # when no results file was built). The 2019/2023 municipal modules set
+    # the same flag from their listings, alongside the page's own note.
+    candidacy = record.get("kandidatavimas")
+    if isinstance(candidacy, dict) and candidacy.get("isrinktas") is True:
+        seat = candidacy.get("isrinktasKaip")
+        return f"Išrinktas ({seat})" if seat else "Išrinktas"
     return None
 
 

@@ -412,6 +412,16 @@ from scraper.elections.seimo_2012.sitemap import (
     build_sitemap_from_sample as build_seimo_2012_sitemap_from_sample,
     fetch_listing_sample as fetch_seimo_2012_listing_sample,
 )
+from scraper.elections.seimo_2012.results import build_results as build_seimo_2012_results
+from scraper.elections.seimo_birzu_zarasu_ukmerges_2013.results import build_results as build_seimo_birzu_zarasu_ukmerges_2013_results
+from scraper.elections.prezidento_2014.results import build_results as build_prezidento_2014_results
+from scraper.elections.ep_2014.results import build_results as build_ep_2014_results
+from scraper.elections.seimo_zirmunu_2015.results import build_results as build_seimo_zirmunu_2015_results
+from scraper.elections.seimo_varenos_eisiskiu_2015.results import build_results as build_seimo_varenos_eisiskiu_2015_results
+from scraper.elections.telsiu_mero_2015.results import build_results as build_telsiu_mero_2015_results
+from scraper.elections.pakartotiniai_sirvintu_traku_2015.results import build_results as build_pakartotiniai_sirvintu_traku_2015_results
+from scraper.elections.pakartotiniai_silutes_2015.results import build_results as build_pakartotiniai_silutes_2015_results
+from scraper.elections.savivaldybiu_2015.results import build_results as build_savivaldybiu_2015_results
 from scraper.shared.anomalies import write_jsonl
 
 FETCHABLE_ELECTION_IDS = [
@@ -488,6 +498,41 @@ PARSABLE_ELECTION_IDS = [
     EP_2014_ELECTION_ID,
     SEIMO_2012_ELECTION_ID,
 ]
+
+# Elections whose pages mark no winner and whose elected status is joined in
+# from VRK's results tree (scraper/shared/election_results.py).
+RESULTS_ELECTION_IDS = [
+    SEIMO_2012_ELECTION_ID,
+    SEIMO_BIRZU_ZARASU_UKMERGES_2013_ELECTION_ID,
+    PREZIDENTO_2014_ELECTION_ID,
+    EP_2014_ELECTION_ID,
+    SEIMO_ZIRMUNU_2015_ELECTION_ID,
+    SEIMO_VARENOS_EISISKIU_2015_ELECTION_ID,
+    TELSIU_MERO_2015_ELECTION_ID,
+    PAKARTOTINIAI_SIRVINTU_TRAKU_2015_ELECTION_ID,
+    PAKARTOTINIAI_SILUTES_2015_ELECTION_ID,
+    SAVIVALDYBIU_2015_ELECTION_ID,
+]
+
+_RESULTS_BUILDERS = {
+    SEIMO_2012_ELECTION_ID: build_seimo_2012_results,
+    SEIMO_BIRZU_ZARASU_UKMERGES_2013_ELECTION_ID: build_seimo_birzu_zarasu_ukmerges_2013_results,
+    PREZIDENTO_2014_ELECTION_ID: build_prezidento_2014_results,
+    EP_2014_ELECTION_ID: build_ep_2014_results,
+    SEIMO_ZIRMUNU_2015_ELECTION_ID: build_seimo_zirmunu_2015_results,
+    SEIMO_VARENOS_EISISKIU_2015_ELECTION_ID: build_seimo_varenos_eisiskiu_2015_results,
+    TELSIU_MERO_2015_ELECTION_ID: build_telsiu_mero_2015_results,
+    PAKARTOTINIAI_SIRVINTU_TRAKU_2015_ELECTION_ID: build_pakartotiniai_sirvintu_traku_2015_results,
+    PAKARTOTINIAI_SILUTES_2015_ELECTION_ID: build_pakartotiniai_silutes_2015_results,
+    SAVIVALDYBIU_2015_ELECTION_ID: build_savivaldybiu_2015_results,
+}
+
+
+def _build_results_for_election(election_id: str) -> tuple[Path, dict[str, Any]]:
+    builder = _RESULTS_BUILDERS.get(election_id)
+    if builder is None:
+        raise ValueError(f"No results builder for election id: {election_id}")
+    return builder()
 
 
 def _fetch_listing_sample_for_election(election_id: str) -> Path:
@@ -1411,6 +1456,16 @@ def build_parser() -> argparse.ArgumentParser:
         ),
     )
 
+    results_parser = subparsers.add_parser(
+        "build-results",
+        help=(
+            "Fetch VRK's results pages for an election whose candidate pages mark no "
+            "winner (2012-2015) and write sitemaps/<election-id>.results.json; "
+            "parse-anketa-samples joins it into kandidatavimas.isrinktas"
+        ),
+    )
+    results_parser.add_argument("election_id", choices=RESULTS_ELECTION_IDS)
+
     parse_anketa_parser = subparsers.add_parser(
         "parse-anketa-samples",
         help="Parse saved anketa HTML samples into initial structured JSON output",
@@ -1478,6 +1533,13 @@ def main() -> int:
                 dups=stats["duplicate_candidate_ids"],
             )
         )
+        return 0
+
+    if args.command == "build-results":
+        output_path, stats = _build_results_for_election(args.election_id)
+        print(f"Saved results: {output_path}")
+        for key, value in stats.items():
+            print(f"  {key}: {value}")
         return 0
 
     if args.command == "fetch-first-candidate-samples":

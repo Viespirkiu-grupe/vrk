@@ -97,8 +97,12 @@ the presidential elections**, where every candidate carries a participation
 note (`Dalyvavo I ture`, `Dalyvavo II ture`, or `Išrinktas II ture` for the
 winner). Counting non-null `pastaba` there reports 9 and 8 "elected" for a
 race one person won; match on the `Išrink` prefix, not on presence. The
-2015-era pages mark no winner at all, so both 2015 by-elections count 0
-elected despite each having a winner — see Known gaps.
+2012–2015 pages mark no winner at all, so for those ten elections the column
+counts `kandidatavimas.isrinktas == true` instead — the flag joined in from
+VRK's results trees (`python -m scraper build-results <id>`; the
+reconciliation behind each file is in `docs/CLI_REFERENCE.md`'s results
+section). The 48 annulled March 2015 council winners in Šilutė and Trakai
+are not counted; the June repeat elections' rows carry those seats.
 
 Records live under `data/<election-id>/` (~0.66 GB of JSON plus 362 MB of
 photo sidecar files under `data/<election-id>/photos/` — 2,199 portraits from
@@ -157,7 +161,22 @@ self-nominations). The `stats` block of `sitemaps/2012-seimo.json` records
 each of these. Every null in the fixture records was traced to a genuinely
 blank or omitted source line before the full runs started.
 
-### The 2026-08-19 municipal re-scrape
+### The 2026-08-21 elected-status join for 2012–2015
+
+The ten elections of the pre-2016 static layout had `isrinktas: null`
+everywhere because their pages mark no winner. VRK's static results trees
+do name the winners, and `python -m scraper build-results <id>` now walks
+them — the elected-members page for 2012, constituency pages (two rounds,
+round two under re-issued ids) for 2013 and the 2015 by-elections, the EP
+members page, the presidential final-results page, and for the four 2015
+municipal elections the per-municipality results pages with each list's
+mandate count and post-preference ranking. Every winner resolved to a VRK
+candidate id in the sitemap, with zero unresolved names; the 2012 members
+list agrees with all 69 non-annulled constituency pages; in 58 of 60
+municipalities every derived March 2015 winner appears on VRK's own
+composition page, the two exceptions being the councils VRK annulled
+(Šilutė, Trakai — 48 winners flagged `rezultataiPanaikinti`, not counted).
+The records were re-parsed offline from the retained HTML.
 
 Both municipal general elections were re-scraped overnight with
 `KEEP_SAMPLES=1` — 2023 in 3h33m, 2019 in 3h29m, zero fetch failures, zero
@@ -446,15 +465,17 @@ each now has one.
 
 - The corpus covers the elections implemented so far. VRK publishes further
   by-elections and older elections that have no module yet.
-- The 2015-era pages publish no elected markers anywhere (no `(V)` suffix, no
-  blue anchors, no elected note), so the 2015 elections' records all have a
-  null `profilis.pastaba` — the winners' included. Electedness for that era
-  lives only in VRK's results pages and would need a separate join
-  (`docs/PLAN_2015_ELECTIONS.md` §4). The 2012–2014 elections are the same
-  page family and have the same gap (`kandidatavimas.isrinktas` is null on
-  every 2012, 2013 and 2014 EP record); their cards do link the results
-  pages — `profilis.kita.i-turas` / `ii-turas` / `daugiamandateje-apygardoje`
-  on the 2012 and 2013 records — so a join has a URL to start from.
+- ~~The 2012–2015 pages publish no elected markers anywhere~~ — closed
+  2026-08-21 by the results join: `kandidatavimas.isrinktas` is now a real
+  true/false on every record of the ten elections of that family, derived
+  from VRK's results trees and reconciled against VRK's own counts (139
+  Seimas members in 2012, 3 in 2013, 11 MEPs, the president, both 2015
+  by-election winners, 57 mayors and 1,464 council seats in March 2015 — 48
+  of them annulled and flagged — and the four repeat/new mayors with 48
+  council seats). `profilis.pastaba` stays null for the family: the pages
+  themselves still say nothing. The one derivation that is not VRK's own
+  sentence is Žirmūnai 2015, whose round-two page states no verdict; the
+  winner is the runoff plurality, recorded as such in the results file.
 - One 2015 candidacy has no questionnaire at all: VRK published Marija Puč's
   Trakai council page as `Rengiama`. Its record keeps the profile card and
   carries the corpus's only `AnketaNotPublished` warning. The same person's

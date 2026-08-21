@@ -88,7 +88,19 @@ class Prezidento2014AnketaParserTests(unittest.TestCase):
         self.assertEqual(self.grybauskaite["electionId"], "2014-prezidento")
         self.assertEqual(self.grybauskaite["candidateId"], "dalia-grybauskaite")
         self.assertEqual(self.grybauskaite["candidateName"], "Dalia GRYBAUSKAITĖ")
-        self.assertNotIn("kandidatavimas", self.grybauskaite)
+        # No listing-only facts, but the results join adds the block: the
+        # final-results page names her elected in the second round.
+        self.assertEqual(
+            self.grybauskaite["kandidatavimas"],
+            {
+                "vrkCandidateId": "70873",
+                "isrinktas": True,
+                "isrinktasKaip": "prezidentas",
+                "rezultatuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2014_prezidento_rinkimai/output_lt/rinkimu_diena/rezultatai_isankstiniai2.html",
+                "rezultatuTuras": 2,
+            },
+        )
+        self.assertEqual(self.balcytis["kandidatavimas"], {"vrkCandidateId": "70874", "isrinktas": False})
         self.assertEqual(self.grybauskaite_stats["anomalies"], [])
 
     def test_normalized_section_order_includes_trustees(self) -> None:

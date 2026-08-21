@@ -62,7 +62,12 @@ conviction declaration. Structured conviction *details* are another matter;
 see the traps below.
 
 **Elected.** A candidate was elected iff `profilis.pastaba` starts with
-`Išrink` (`Išrinktas…`/`Išrinkta…`). Two traps:
+`Išrink` (`Išrinktas…`/`Išrinkta…`) **or** `kandidatavimas.isrinktas` is
+`true`. The second form is the 2012–2015 family, whose pages mark no winner:
+there `pastaba` is always null and the flag is joined in from VRK's results
+trees (`isrinktasKaip` names the seat, `rezultatuSaltinis` the page; a
+`false` means the results were consulted and the candidate is not among the
+winners, a `null` that no results file exists). Three traps:
 
 - *Presidential:* `pastaba` is non-null for every candidate (`Dalyvavo
   I ture` and the like), so non-null ≠ elected there.
@@ -71,6 +76,10 @@ see the traps below.
   against this string. In the municipal generals use `kandidatavimas`
   instead: per-role `elected` flags, and join lists on
   `kandidatavimas.tarybosNarys.partyList.id`, not on the name.
+- *Annulled results:* 48 March 2015 council winners in Šilutė and Trakai
+  carry `kandidatavimas.rezultataiPanaikinti` (the VRK decision) and
+  `isrinktas: false` — VRK's results page named them, its decision unmade
+  it, and the June repeat elections' records hold the seats actually won.
 
 **Placeholders.** Exactly three placeholder forms normalize to `null`:
 `Nenurodė`, `-`, and the empty string. A `null` means "not answered on the

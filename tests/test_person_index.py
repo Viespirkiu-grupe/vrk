@@ -120,6 +120,21 @@ class GroupingTests(unittest.TestCase):
         self.assertTrue(entries[0].get("w"))
         self.assertNotIn("w", entries[1])
 
+    def test_results_joined_elected_flag_becomes_the_win_flag(self):
+        # The 2012-2015 pages carry no elected note; the results join sets
+        # kandidatavimas.isrinktas instead, and false/null must not win.
+        winner = _record("A B", "1970-01-01")
+        winner["kandidatavimas"] = {"vrkCandidateId": "1", "isrinktas": True, "isrinktasKaip": "vienmandate"}
+        loser = _record("A B", "1970-01-01")
+        loser["kandidatavimas"] = {"vrkCandidateId": "2", "isrinktas": False}
+        unknown = _record("A B", "1970-01-01")
+        unknown["kandidatavimas"] = {"vrkCandidateId": "3", "isrinktas": None}
+        index = self._build([("2012-seimo", "a-b", winner), ("2014-ep", "a-b", loser), ("2015-kovo-1-savivaldybiu", "a-b", unknown)])
+        entries = index["people"][0]["e"]
+        self.assertTrue(entries[0].get("w"))
+        self.assertNotIn("w", entries[1])
+        self.assertNotIn("w", entries[2])
+
     def test_litas_declarations_are_converted_to_euro_and_flagged(self):
         # The 2012-2015 pages declare in litas; the index converts at the
         # irrevocable 3.4528 Lt/€ changeover rate so a person's series stays

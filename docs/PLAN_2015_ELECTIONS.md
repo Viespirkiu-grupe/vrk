@@ -30,7 +30,7 @@
 >   only); the three small by-elections are complete fields already.
 > - Downstream registration is done: person-index order, dashboard labels,
 >   concept map and `goal.md` scope all know about the 2015 elections.
-> - Elected status is **still not shipped** — see the rewritten §4 below.
+> - Elected status **shipped 2026-08-21** via the results join (`python -m scraper build-results <id>`, `scraper/shared/election_results.py`) — §4 below is the investigation that preceded it; its traps held, and the recipe changed in one respect: the election-night source is the municipality *results* page (per-list mandate counts and post-preference rankings with the mayor-elect marked), with the composition pages as the cross-check rather than the source.
 
 Written 2026-08-19 from live-page research. All six `help wanted` / `missing-election`
 issues are 2015 elections, and all of them share **one page-layout family that the
@@ -171,7 +171,7 @@ status must come from the results pages — see §4.
     counts and the mayoral/council overlap must reconcile, per the shared-machinery
     doctrine.
 
-## 4. Elected status: investigated, not shipped
+## 4. Elected status: the investigation (shipped 2026-08-21, see the status block)
 
 Every 2015 record carries `isrinktas: null` / `profilis.pastaba: null`. The
 candidate pages mark no winner anywhere, so electedness can only come from

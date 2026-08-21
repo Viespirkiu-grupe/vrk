@@ -105,7 +105,7 @@ class SeimoBirzuZarasuUkmerges2013AnketaParserTests(unittest.TestCase):
                     "iskele": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
                 },
                 "daugiamandate": None,
-                "isrinktas": None,
+                "isrinktas": False,
             },
         )
 

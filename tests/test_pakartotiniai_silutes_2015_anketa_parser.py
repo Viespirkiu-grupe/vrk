@@ -43,8 +43,10 @@ class PakartotiniaiSilutes2015AnketaParserTests(unittest.TestCase):
         self.assertEqual(k["tarybosNarys"]["partyList"], "Lietuvos socialdemokratų partija")
         self.assertEqual(k["tarybosNarys"]["listPosition"], 1)
         self.assertEqual(k["meras"]["nominatedBy"], "Lietuvos socialdemokratų partija")
-        # Electedness is unknown for this era, not false.
-        self.assertIsNone(k["isrinktas"])
+        # The results join: he lost the mayoral runoff but took his list's
+        # first seat, so the record says elected, as a council member.
+        self.assertIs(k["isrinktas"], True)
+        self.assertEqual(k["isrinktasKaip"], "tarybos-narys")
         self.assertIsNone(self.nauseda["normalized"]["profilis"]["pastaba"])
 
     def test_municipal_question_mapping_and_era_shapes(self) -> None:

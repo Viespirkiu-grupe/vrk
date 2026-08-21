@@ -157,10 +157,15 @@ class Seimo2012AnketaParserTests(unittest.TestCase):
                     "sarasoId": "4136-1",
                     "numerisSarase": 1,
                 },
-                "isrinktas": None,
+                "isrinktas": True,
+                "isrinktasKaip": "vienmandate",
+                "rezultatuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2012_seimo_rinkimai/output_lt/rinkimu_diena/isrinkti_seimo_nariai_kadencijaik.html",
             },
         )
         self.assertEqual(self.balsys["kandidatavimas"]["roles"], ["vienmandate"])
+        self.assertIs(self.balsys["kandidatavimas"]["isrinktas"], True)
+        self.assertEqual(self.blinkeviciute["kandidatavimas"]["isrinktasKaip"], "daugiamandate")
+        self.assertIs(self.medalinskas["kandidatavimas"]["isrinktas"], False)
         self.assertIsNone(self.balsys["kandidatavimas"]["daugiamandate"])
         self.assertEqual(self.blinkeviciute["kandidatavimas"]["roles"], ["daugiamandate"])
         self.assertIsNone(self.blinkeviciute["kandidatavimas"]["vienmandate"])

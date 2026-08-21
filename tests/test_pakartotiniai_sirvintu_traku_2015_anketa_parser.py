@@ -89,11 +89,17 @@ class PakartotiniaiSirvintuTraku2015AnketaParserTests(unittest.TestCase):
         self.assertEqual(mayoral["savivaldybe"], "Širvintų rajono savivaldybė")
         self.assertEqual(mayoral["roles"], ["meras"])
         self.assertIsNone(mayoral["tarybosNarys"])
-        # No 2015 page marks a winner, so electedness is unknown, not false.
-        self.assertIsNone(mayoral["isrinktas"])
+        # No 2015 page marks a winner; the results join says she won the
+        # mayoralty outright in round one.
+        self.assertIs(mayoral["isrinktas"], True)
+        self.assertEqual(mayoral["isrinktasKaip"], "meras")
+        self.assertEqual(mayoral["rezultatuTuras"], 1)
+        self.assertIn("2015_2_savivaldybiu_tarybu_rinkimai/output_lt/", mayoral["rezultatuSaltinis"])
 
         council = self.vilkauskas["kandidatavimas"]
         self.assertEqual(council["roles"], ["tarybos-narys"])
+        self.assertIs(council["isrinktas"], True)
+        self.assertEqual(council["isrinktasKaip"], "tarybos-narys")
         self.assertEqual(council["tarybosNarys"]["partyList"], "Lietuvos socialdemokratų partija")
         self.assertEqual(council["tarybosNarys"]["listPosition"], 2)
         self.assertIsNone(council["meras"])

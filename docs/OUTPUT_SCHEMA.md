@@ -221,6 +221,37 @@ parentheses (the suffixed entry's `pavadinimas` is then the literal
 `"(Iškėlė"`). Measured over the whole corpus when the rule was introduced
 (2026-08-21), exactly one pre-existing record had a recurring label.
 
+### Elected status in the 2012–2015 family (`kandidatavimas.isrinktas`)
+
+No page of the 2012–2015 static layout marks a winner, so `profilis.pastaba`
+is null on every record of those ten elections, winners included. Their
+electedness is **joined in from VRK's results trees** at parse time
+(`python -m scraper build-results <id>` writes
+`sitemaps/<id>.results.json`; `scraper/shared/election_results.py` documents
+every source page and how each winner is resolved to a VRK candidate id) and
+lands in `kandidatavimas`:
+
+- `isrinktas` — `true` / `false` when a results file exists for the election
+  (a false is then a real statement: the results pages name every winner,
+  and this candidate is not among them); `null` only when no results file
+  has been built, meaning unknown.
+- `isrinktasKaip` — the seat: `vienmandate`, `daugiamandate` (Seimas / EP
+  list), `prezidentas`, `meras`, `tarybos-narys`.
+- `rezultatuSaltinis` — the results page the seat was read from;
+  `rezultatuTuras` (1 or 2) where the page belongs to a round.
+- `rezultataiPanaikinti` — present, naming the VRK decision, on the 48
+  March 2015 council winners in Šilutė and Trakai whose results VRK declared
+  void before anyone was seated; their `isrinktas` is `false`, and the June
+  repeat elections' records carry the seats actually won.
+
+Elections without a listing-derived `kandidatavimas` block (the 2014
+presidential election, the 2015 Seimo by-elections, Telšiai) get a minimal
+one — `vrkCandidateId` plus the keys above — from the join alone.
+
+The person index and the inventory count a candidacy as won when
+`profilis.pastaba` starts with `Išrink` **or** `kandidatavimas.isrinktas` is
+`true`; see `docs/DATA_GUIDE.md`.
+
 ### Campaign entries
 
 Every entry of `politines-kampanijos-dalyvio-duomenys[]` has the same ten
@@ -1073,10 +1104,13 @@ with the same top-level fields and the corpus's section order (`profilis`,
 `kita`). The pages are the pre-2016 static layout — the oldest family in the
 repository — so several record shapes are this era's own:
 
-- **No elected data anywhere.** The 2015 pages carry no `(V)` suffix, no blue
-  anchors and no elected note, so `profilis.pastaba` is null on every record,
-  the winner's included. Electedness for this era can only come from VRK's
-  results pages and is not part of the candidate record.
+- **No elected markers on the pages.** The 2015 pages carry no `(V)` suffix,
+  no blue anchors and no elected note, so `profilis.pastaba` is null on every
+  record, the winner's included. Electedness is joined in from VRK's results
+  tree instead — `kandidatavimas.isrinktas`, see the shared section above.
+  Both by-elections were decided in a second round; Žirmūnai's round-two
+  page states no verdict sentence, so its winner is read as the plurality of
+  the two-candidate runoff (`method: "runoff-plurality"` in the results file).
 - `profilis.nuotrauka` is a URL to an external JPG
   (`Kandidato<ID>Foto.jpg`) — this era never embedded base64 photos.
   `profilis.kita` holds `apygarda` and `iskele`, plus a
@@ -1146,8 +1180,9 @@ data facts a consumer has to know about:
   `tarybosNarys` (`partyList`, `listNumber`, `listPosition`) and `meras`
   (`nominatedBy`). For a dual candidate this is the only place the list
   position appears at all — the mayoral profile card prints none.
-  **`isrinktas` is `null`, not `false`**: the 2015 pages publish no elected
-  markers, so electedness is unknown rather than negative.
+  `isrinktas` comes from the results join (shared section above): the
+  Širvintos mayor (round one), the Trakai mayor (round two) and Trakai's 24
+  council seats; `false` for everyone else.
 
 - The sitemap merges the mayoral listing and the party lists on VRK's
   candidate id, so one entry carries `roles` (`meras`, `tarybos-narys`, or
@@ -1195,9 +1230,16 @@ two appendices describe the shape. What is specific to this election:
   and Akmenė — and the positional `-2`/`-3` suffix would make an id depend on
   traversal order, which the batch runner uses as its resume marker.
 - `kandidatavimas.roles` is `["tarybos-narys"]` for 14,715 candidates,
-  `["meras", "tarybos-narys"]` for 412 and `["meras"]` for 22. As in every
-  2015 election `isrinktas` is `null`: no page marks a winner, so even the 60
-  people who became mayors carry an unknown rather than a false.
+  `["meras", "tarybos-narys"]` for 412 and `["meras"]` for 22. `isrinktas`
+  comes from the results join (shared section above): 57 mayors and 1,464
+  council seats derived from VRK's municipality results pages — each list's
+  top-M post-preference ranks, skipping the mayor-elect — of which the 48
+  council seats in Šilutė and Trakai carry `rezultataiPanaikinti` and a
+  `false`. Širvintos, Šilutė and Trakai elected no mayor that stood (their
+  mayoral results were annulled; the June repeats elected them). The
+  derivation was reconciled against VRK's own composition pages: in 58 of 60
+  municipalities every derived winner is seated there or in the
+  early-termination table, the two exceptions being the annulled councils.
 - `kandidatavimas.meras.nominatedBy` is `null` for twelve mayoral candidates.
   VRK published those rows as the bare name, with no "- iškėlė …" clause, so
   the nominator is genuinely absent rather than dropped.
@@ -1343,10 +1385,11 @@ field map all resolve them with no election-specific case.
 ## Appendix: 2012–2014 national elections (`2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`)
 
 All four are the 2015-era static layout described in the 2015 Seimo
-by-elections appendix, and every era shape there applies: no elected data
-anywhere (`profilis.pastaba` and `kandidatavimas.isrinktas` are null on
-every record, the winners' included — the 2012 and 2013 cards link VRK's
-results pages instead, see below), URL photos, litas amounts with
+by-elections appendix, and every era shape there applies: no elected markers
+on the pages (`profilis.pastaba` is null on every record; `isrinktas` is the
+results join — 139 Seimas members in 2012 from VRK's elected-members page,
+70 list and 69 constituency seats, the 3 constituency winners of 2013, the
+11 MEPs, the president), URL photos, litas amounts with
 `valiuta`/`pastaba`, the retained spouse block, the campaign additions.
 Records are written as `data/<election-id>/<candidate-id>-<election-id>.json`
 in the corpus's section order, with one insertion for the presidential
@@ -1363,7 +1406,9 @@ The listing-only facts, under one shape for all three:
   "roles": ["daugiamandate", "vienmandate"],
   "vienmandate": {"apygarda": "Vilkaviškio", "apygardosNumeris": 68, "apygardosId": "7277", "iskele": "Lietuvos socialdemokratų partija"},
   "daugiamandate": {"sarasas": "Lietuvos socialdemokratų partija", "sarasoNumeris": 8, "sarasoId": "4136-1", "numerisSarase": 1},
-  "isrinktas": null
+  "isrinktas": true,
+  "isrinktasKaip": "vienmandate",
+  "rezultatuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2012_seimo_rinkimai/output_lt/rinkimu_diena/isrinkti_seimo_nariai_kadencijaik.html"
 }
 ```
 
@@ -1382,8 +1427,9 @@ The listing-only facts, under one shape for all three:
   the page's `_1`/`_2` suffix, `"4136-1"`). `numerisSarase` is null where
   the list page prints an empty position cell — six 2012 rows, candidates
   VRK kept on the page (and in the declared count) without a number.
-- The presidential election has no block: a single listing, nothing on it
-  that the candidate page lacks.
+- The presidential election has no listing-derived block; the results join
+  gives it the minimal one (`vrkCandidateId`, `isrinktas`, `isrinktasKaip:
+  "prezidentas"`, `rezultatuTuras: 2` for the winner).
 
 ### `profilis.kita` per election
 

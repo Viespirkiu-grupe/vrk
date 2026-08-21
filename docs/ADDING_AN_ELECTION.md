@@ -118,6 +118,20 @@ empty is a question to answer, not a result to accept: trace it back to the
 page and confirm the source is genuinely blank. That habit is what surfaced
 every defect listed in `docs/DATASET.md`.
 
+### If the pages mark no winner
+
+The 2012–2015 static layout carries no elected marker of any kind. For those
+elections electedness is a separate join: a `results.py` in the module
+configures which VRK results tree to walk (`scraper/shared/election_results.py`
+has walkers for the Seimas elected-members page, constituency pages with
+rounds, the EP members page, the presidential final-results page and the
+municipal results/ranking pages), `python -m scraper build-results <id>`
+writes `sitemaps/<id>.results.json`, and the era parser joins it into
+`kandidatavimas.isrinktas`. Read the builder's reconciliation stats before
+shipping: every winner must resolve to a VRK candidate id that is in the
+sitemap, and seat counts must match what VRK declares — or the difference
+must be a named annulment, not a guess.
+
 ## 5. Tests and docs
 
 - `tests/test_<module>_anketa_parser.py` — pin the key lists, the elected-note

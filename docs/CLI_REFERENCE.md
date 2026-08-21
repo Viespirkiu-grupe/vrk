@@ -130,6 +130,22 @@ Output:
 
 - Updates candidate sample directories and prints per-candidate tab stats.
 
+### `build-results`
+
+Fetch VRK's results pages for an election whose candidate pages mark no
+winner — the ten 2012–2015 elections — and write
+`sitemaps/<election-id>.results.json`, the map of VRK candidate id → seat
+that `parse-anketa-samples` then joins into `kandidatavimas.isrinktas`.
+Pages are cached under `samples/results/<election-id>/` so a re-run is
+offline. The command prints the reconciliation stats; read them before
+trusting the file (`unresolved`, `*NotInSitemap`, `seatCountMismatches`
+should be zero or explained — see the 2012–2015 results section below).
+
+```bash
+python -m scraper build-results 2012-seimo
+python -m scraper parse-anketa-samples 2012-seimo --samples-root samples-full/2012-seimo
+```
+
 ### `parse-anketa-samples`
 
 Parse saved candidate samples into output JSON records.
@@ -938,6 +954,60 @@ python -m scraper parse-anketa-samples 2014-prezidento
 python -m scraper fetch-sample 2012-seimo
 python -m scraper sitemap 2012-seimo
 KEEP_SAMPLES=1 scripts/run_election_batches.sh 2012-seimo
+```
+
+## Elected status for 2012–2015 (`build-results`) Workflow
+
+The 2012–2015 static pages carry no winner mark, so the ten elections of
+that family (`2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`,
+`2014-prezidento`, `2014-ep`, the six 2015 elections) get their
+`kandidatavimas.isrinktas` from VRK's results trees
+(`statiniai/puslapiai/<year>_<type>_rinkimai/output_lt/`). The walkers and
+every source page are documented in `scraper/shared/election_results.py`;
+each module's `results.py` is the configuration (tree name, and for the
+2015 municipal general the three VRK annulment decisions). What the
+reconciliation looked like when the files were built (2026-08-21):
+
+| election | source | winners | reconciliation |
+|---|---|---|---|
+| `2012-seimo` | elected-members page (ids on the page) | 139 (70 list, 69 constituency) | all 139 in the sitemap; 69 of 71 constituency pages name the same winner, the other two being the annulled Biržų–Kupiškio and Zarasų–Visagino |
+| `2013-kovo-3-…` | 3 constituency pages, round two | 3 | all resolved by name within the constituency |
+| `2014-prezidento` | final-results page sentence | 1 | resolved |
+| `2014-ep` | elected-members page | 11 | all in the sitemap |
+| `2015-kovo-1-seimo-zirmunai` | round-two page (no verdict sentence: runoff plurality) | 1 | resolved |
+| `2015-birzelio-7-seimo-varena-eisiskes` | round-two page sentence | 1 | resolved |
+| `2015-kovo-1-savivaldybiu` | 60 municipality pages + 478 list rankings + 40 round-two pages | 57 mayors, 1,464 council (48 annulled) | 0 unresolved; 249 dual candidates resolved by name+list+position (two VRK ids each); 58/60 compositions contain every derived winner, the two exceptions the annulled councils |
+| `2015-birzelio-7-pakartotiniai-sirvintos-trakai` | same walk, `2015_2_…` tree | 2 mayors, 24 council | clean |
+| `2015-birzelio-21-pakartotiniai-silutes` | `2015_3_…` tree | 1 mayor, 24 council | clean |
+| `2015-lapkricio-8-telsiu-mero` | `2015_4_…` tree | 1 mayor | clean |
+
+Traps the walkers encode, worth knowing before touching them:
+
+- **Round two re-issues ids.** The round-two tree's constituency ids and its
+  `rezultatai_sm_kand<ID>` row ids do not match the candidate pages
+  (Gustainis is 87277 on his page, 87559 in the runoff), so round-two
+  winners are resolved by name within the constituency's own field.
+- **Dual mayor+council candidates hold two VRK ids** (Telšiai's mayor
+  three); the listings use one, the ranking pages the other. They are
+  resolved by name, list and pre-election position — never by name alone.
+- **"Meru išrinktas" / "Mere išrinkta"** — the noun inflects with the winner.
+- **The composition pages are a snapshot a year on**, with replacements
+  seated; they are the cross-check, not the source. The election-night
+  source is the municipality results page: each list's mandate count, and
+  the list's post-preference ranking with the mayor-elect marked.
+- **Annulments are configuration, not inference**: VRK decisions Sp-101
+  (Trakai), Sp-126 (Šilutė) and Sp-121 (Širvintos mayoral race) are named
+  in `savivaldybiu_2015/results.py`; the composition check cannot detect
+  them because most of the annulled winners won again in June.
+
+```bash
+for id in 2012-seimo 2013-kovo-3-seimo-birzai-zarasai-ukmerge 2014-prezidento 2014-ep \
+          2015-kovo-1-seimo-zirmunai 2015-birzelio-7-seimo-varena-eisiskes 2015-lapkricio-8-telsiu-mero \
+          2015-birzelio-7-pakartotiniai-sirvintos-trakai 2015-birzelio-21-pakartotiniai-silutes 2015-kovo-1-savivaldybiu; do
+  python -m scraper build-results "$id"
+done
+# then re-parse offline; the wrappers pick up sitemaps/<id>.results.json by default
+python -m scraper parse-anketa-samples 2012-seimo --samples-root samples-full/2012-seimo
 ```
 
 ## Helpful Checks

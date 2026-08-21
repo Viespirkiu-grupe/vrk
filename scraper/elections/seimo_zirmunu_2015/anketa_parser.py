@@ -32,10 +32,13 @@ from scraper.elections.seimo_2016.anketa_parser import (
     normalize_space,
 )
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.election_results import ANKETA_ID_PATTERN, load_results_lookup
 from scraper.shared.files import write_candidate_record
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2015-kovo-1-seimo-zirmunai")
 DEFAULT_OUTPUT_ROOT = Path("data/2015-kovo-1-seimo-zirmunai")
+# This election's own results file; sibling modules pass their own lookup.
+DEFAULT_RESULTS_PATH = Path("sitemaps/2015-kovo-1-seimo-zirmunai.results.json")
 
 # Question numbers start a text node ("5. Gimimo data", "8.1 Ar turite" — the
 # sub-question form carries no trailing dot). The bound keeps statute citations
@@ -1141,7 +1144,10 @@ def parse_anketa_sample(
     election_id: str = ELECTION_ID,
     rows_normalizer: Any = None,
     candidacy_builder: Any = None,
+    results_lookup: dict[str, dict[str, Any]] | None = None,
 ) -> tuple[Path, dict[str, Any]]:
+    if results_lookup is None and election_id == ELECTION_ID:
+        results_lookup = load_results_lookup(DEFAULT_RESULTS_PATH)
     candidate_dir = samples_root / candidate_id
     anketa_path = candidate_dir / "anketa.html"
     if not anketa_path.exists():
@@ -1303,6 +1309,12 @@ def parse_anketa_sample(
         output_payload["kandidatavimas"] = candidacy_builder(
             candidate_meta if isinstance(candidate_meta, dict) else {}
         )
+    if results_lookup is not None:
+        # No page of this family marks a winner; electedness is joined in from
+        # VRK's results tree (scraper/shared/election_results.py) on the VRK
+        # candidate id. With a results file the flag is a real true/false;
+        # without one it stays null, as unknown.
+        _apply_results(output_payload, candidate_meta if isinstance(candidate_meta, dict) else {}, candidate_source_url, results_lookup)
     output_payload |= {
         "source": {
             "candidateSourceUrl": candidate_source_url,
@@ -1325,6 +1337,45 @@ def parse_anketa_sample(
     return output_path, stats
 
 
+def _vrk_candidate_id(candidate_meta: dict[str, Any], candidate_source_url: str | None) -> str | None:
+    vrk_id = str(candidate_meta.get("vrkCandidateId", "") or "").strip()
+    if vrk_id:
+        return vrk_id
+    match = ANKETA_ID_PATTERN.search(candidate_source_url or "")
+    return match.group(1) if match else None
+
+
+def _apply_results(
+    output_payload: dict[str, Any],
+    candidate_meta: dict[str, Any],
+    candidate_source_url: str | None,
+    results_lookup: dict[str, dict[str, Any]],
+) -> None:
+    vrk_id = _vrk_candidate_id(candidate_meta, candidate_source_url)
+    candidacy = output_payload.get("kandidatavimas")
+    if not isinstance(candidacy, dict):
+        candidacy = {"vrkCandidateId": vrk_id}
+        output_payload["kandidatavimas"] = candidacy
+    hit = results_lookup.get(vrk_id) if vrk_id else None
+    if hit is None:
+        candidacy["isrinktas"] = False
+        return
+    annulled = hit.get("annulled")
+    candidacy["isrinktas"] = not annulled
+    candidacy["isrinktasKaip"] = hit.get("seat")
+    candidacy["rezultatuSaltinis"] = hit.get("sourceUrl")
+    if hit.get("round"):
+        candidacy["rezultatuTuras"] = hit["round"]
+    if annulled:
+        # The results page named this candidate; VRK then declared those
+        # results void. Recorded so the record says both things.
+        candidacy["rezultataiPanaikinti"] = annulled
+
+
+def load_results(results_path: Path | None) -> dict[str, dict[str, Any]] | None:
+    return load_results_lookup(results_path)
+
+
 def parse_anketa_samples(
     candidate_ids: list[str] | None,
     samples_root: Path = DEFAULT_SAMPLES_ROOT,
@@ -1332,6 +1383,7 @@ def parse_anketa_samples(
     election_id: str = ELECTION_ID,
     rows_normalizer: Any = None,
     candidacy_builder: Any = None,
+    results_lookup: dict[str, dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     if candidate_ids:
         target_ids = candidate_ids
@@ -1352,6 +1404,7 @@ def parse_anketa_samples(
             election_id=election_id,
             rows_normalizer=rows_normalizer,
             candidacy_builder=candidacy_builder,
+            results_lookup=results_lookup,
         )
         results.append(stats)
 

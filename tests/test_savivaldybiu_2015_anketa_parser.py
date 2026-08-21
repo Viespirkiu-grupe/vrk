@@ -42,9 +42,10 @@ class Savivaldybiu2015AnketaParserTests(unittest.TestCase):
         self.assertEqual(k["roles"], ["meras", "tarybos-narys"])
         self.assertEqual(k["tarybosNarys"]["listPosition"], 1)
         self.assertIn("komitetas", k["tarybosNarys"]["partyList"].lower())
-        # No 2015 page marks a winner, so electedness is unknown for the whole
-        # election — including the 60 people who actually became mayors.
-        self.assertIsNone(k["isrinktas"])
+        # No 2015 page marks a winner; electedness is joined in from VRK's
+        # results tree (sitemaps/<id>.results.json), so it is a real false
+        # here — the page's own note stays null.
+        self.assertIs(k["isrinktas"], False)
         self.assertIsNone(self.dimsiene["normalized"]["profilis"]["pastaba"])
 
     def test_mayor_only_candidate_has_no_council_block(self) -> None:

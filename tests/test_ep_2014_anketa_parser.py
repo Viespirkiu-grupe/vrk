@@ -120,7 +120,7 @@ class Ep2014AnketaParserTests(unittest.TestCase):
                     "sarasoId": "4953",
                     "numerisSarase": 1,
                 },
-                "isrinktas": None,
+                "isrinktas": False,
             },
         )
         self.assertEqual(self.panka["kandidatavimas"]["daugiamandate"]["sarasas"], "Tautininkų sąjunga")
