@@ -54,6 +54,7 @@ ELECTION_ORDER = [
     "1997-kovo-23-seimo-pakartotiniai",
     "1997-birzelio-29-svenciniu-tarybos-pakartotiniai",
     "1997-gruodzio-21-seimo-pakartotiniai",
+    "2009-prezidento",
     "2012-seimo",
     "2013-kovo-3-seimo-birzai-zarasai-ukmerge",
     "2014-prezidento",

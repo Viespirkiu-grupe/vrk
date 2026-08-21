@@ -1382,17 +1382,17 @@ field map all resolve them with no election-specific case.
   resolve with the corpus's standard positional `-2` suffix; see
   `docs/CLI_REFERENCE.md`'s municipal archive section for the concrete pair.
 
-## Appendix: 2012–2014 national elections (`2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`)
+## Appendix: 2009–2014 national elections (`2009-prezidento`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`)
 
-All four are the 2015-era static layout described in the 2015 Seimo
+All five are the 2015-era static layout described in the 2015 Seimo
 by-elections appendix, and every era shape there applies: no elected markers
 on the pages (`profilis.pastaba` is null on every record; `isrinktas` is the
 results join — 139 Seimas members in 2012 from VRK's elected-members page,
 70 list and 69 constituency seats, the 3 constituency winners of 2013, the
-11 MEPs, the president), URL photos, litas amounts with
+11 MEPs, the two presidents), URL photos, litas amounts with
 `valiuta`/`pastaba`, the retained spouse block, the campaign additions.
 Records are written as `data/<election-id>/<candidate-id>-<election-id>.json`
-in the corpus's section order, with one insertion for the presidential
+in the corpus's section order, with one insertion for the 2014 presidential
 election (`patiketiniai` between `privaciu-interesu-deklaracija` and the
 campaign section). What is this group's own:
 
@@ -1449,6 +1449,11 @@ The listing-only facts, under one shape for all three:
   are self-nominated and the card states no constituency or list. Note the
   link targets election path `423_lt`, VRK's id for the campaign, not the
   candidate pages' `424_lt`.
+- **2009 presidential**: the campaign link (under the candidate pages' own
+  `403_lt`) and, for five of the seven, the candidate's campaign website —
+  a bare link in the card, so it is keyed by its own text
+  (`www-grybauskaite2009-lt`: `pavadinimas` the link text, `reiksme` null,
+  `nuorodos` the URL). The only cards in the corpus that carry one.
 - **2014 EP**: `iskele` (linking the list page), `numeris-sarase`, the
   campaign link; the coalition nominee adds `iskele-2` / `numeris-sarase-2`.
 
@@ -1476,21 +1481,82 @@ The listing-only facts, under one shape for all three:
   all answer `Nenurodė`), `ar-atimta-balsavimo-teise-kitoje-valstybeje`
   (Q8.3.2) and `ar-buvote-pripazintas-kaltu-del-sunkaus-nusikaltimo` (Q9.3);
   there is no `kita-apie-save` (no Q21).
+- **Presidential (2009)**: the 2014 form one revision earlier.
+  `pareiskimai` is `ar-nebaigta-teismo-paskirta-bausme`,
+  `ar-atliekate-karo-tarnyba`, `ar-turite-kitos-valstybes-pilietybe`,
+  `ar-susijes-priesaika-uzsienio-valstybei` (Q8.1–8.4; the three
+  citizenship/residence/eligibility questions 2014 opens with were not
+  asked yet) and `ar-bendradarbiavote-su-uzsienio-tarnybomis` — Q9, the
+  Prezidento rinkimų įstatymo 3 str. lustration question (service in,
+  schooling by or collaboration with the NKVD/NKGB/MGB/KGB and equivalent
+  foreign services), under the key the Seimo and EP forms use for their
+  narrower "knowingly collaborated with other states' special services"
+  wording. Birthplace, nationality and education are Q10–Q12;
+  `mokslo-laipsnis` is the unnumbered line after the education table,
+  which here asks for the degree only (no pedagogical title, so not
+  `pedagoginis-vardas`); `anksciau-isrinktas` *is* asked (Q15, the 2015
+  Seimo shape, empty list for the two candidates with no prior mandate).
+  The page omits a question it has no answer for — Q7 everywhere, Q15 for
+  two candidates, Q20 and the spouse line for the unmarried, the degree
+  line for five — so a null there is an absent row.
 
 ### `patiketiniai` (2014 presidential only)
 
 The trustees tab, a list of `{numeris, vardas-pavarde}` in the page's order
 (7 to 114 per candidate); a `Duomenų nėra` page is an empty list, and the
-key is absent from every other election's records.
+key is absent from every other election's records. The 2009 pages link the
+same tab but VRK never published the file behind it (every
+`Kandidato<ID>Patiketiniai.html` is a 404), so the 2009 records have no
+`patiketiniai` key; the link is recorded under `unpublishedTabs` in the
+fixture's `index.json`.
+
+### `privaciu-interesu-deklaracija` (2009: the roman-numbered form)
+
+The 2009 interest declaration predates the `ID001x` sections: after the
+declarant and spouse cards it has `ii-dalyvavimas-juridiniuose-asmenyse`,
+`iv-naryste-pareigos-imonese-istaigose-asociacijose-ar-fonduose` and
+`vii-sandoriai`, each a list of records keyed by the section's column
+headings and present only when the candidate filed something under it.
+Transactions carry a `sandorio-vertes-litais-kodas` value-band code
+("001"–"012") where the later form has sums; `suma-skaiciais` and
+`suma-zodziais` are blank on every row. Unique to this election.
 
 ### Declarations
 
 `turto-ir-pajamu-deklaracijos` keeps the seven keys plus `valiuta: "Lt"`.
 `pastaba` names the period on the 2012 and 2013 pages ("nuo 2011-01-01 iki
 2011-12-31" for both — the 2013 repeat reused the 2012 declarations) and is
-null on the 2014 pages, whose note paragraph is empty. The income row cites
-"GPM308 formos 12, 13, 13A, 14, 20 laukelių … V13 laukelių suma" here
-(2015: "…14, 22 … V13 laukelio"); both spellings resolve to `gautos-pajamos`.
+null on the 2009 and 2014 pages, whose note paragraph is empty. The income
+row cites "GPM308 formos 12, 13, 13A, 14, 20 laukelių … V13 laukelių suma"
+on the 2012–2014 pages (2015 Seimo: "…14, 22 … V13 laukelio"); the 2009
+pages — and, it turned out, the whole 2015 municipal family — extract the
+earlier **GPM305** form ("GPM305 formos 12, 13, 14 ir GPM305V formos V14
+laukelių suma" / "…27,28,30 laukelių suma"). All three resolve to
+`gautos-pajamos` / `sumoketas-pajamu-mokestis`.
+
+### Campaign pages (2009)
+
+The 2009 participant pages are one revision older than 2012's. Their
+tables head columns with `<td><strong>` rather than `<th>`; the donor list
+is a single "Aukotojų sąrašas" section (`aukos-pagal-sekcija.aukotoju-sarasas`,
+columns `rowNumber`, `donor`, `municipality`, `amountLt`, `date`) with no
+separate "Nepriimtinos aukos" section — an unacceptable donation is flagged
+inline after the donor's name (", nepriimtina auka", once ", auka
+nepriimtina", once with VRK's typo "nepriintina"), and the flag is moved to
+`notes`, the key the later pages' notes column uses; the totals row carries
+the full column count, label in an inner cell. Financing reports have a
+kind instead of a verification status: `reportType` ("Pradinė"/"Galutinė")
+alongside a null `status`, the key present on 2009 rows only. A company
+auditor is labelled "Pavadinimas"/"Kodas" (→ `imones-pavadinimas`/
+`imones-kodas`); two of the seven have one, the other five an empty auditor
+table. No contracts tab content for any of the seven.
+
+In the totals (`suvestine`) of every election in this family the sums are
+now keyed by the table's own amount columns — `amountLt` on the litas-only
+2009–2014 pages, both on the March 2015 pages, `amountEur` on the later
+2015 ones. Until 2026-08-22 a positional read filed every litas-only total
+under `amountEur` and lost the "Nuo 2012-01-01 draudžiamos" note; see
+`DATASET.md`.
 
 ### Sitemap cross-checks (`sitemaps/2012-seimo.json`)
 
@@ -1515,5 +1581,5 @@ index before the merge was trusted; read them rather than assuming zero:
 
 Name slugs with the 2016 Seimo module's positional `-2` suffix for
 collisions (one in 2012: two Arūnas MARKŪNAS on different lists; none in
-the other three). The listing pages are static archives, so traversal order
+the other four). The listing pages are static archives, so traversal order
 — lists in index order, then constituencies in index order — is stable.

@@ -294,6 +294,7 @@ def _fetch_candidate_tabs(
     allow_new_candidate_dir: bool,
     election_id: str,
     expected_tabs: set[str] | Any,
+    unpublished_tabs: set[str] | None = None,
 ) -> dict[str, Any]:
     candidate_dir = samples_root / entry["candidateId"]
     if not candidate_dir.exists() and not allow_new_candidate_dir:
@@ -309,6 +310,15 @@ def _fetch_candidate_tabs(
     anketa_path.write_text(anketa_html, encoding="utf-8")
 
     tab_links = _extract_tab_links(anketa_html)
+    # Tabs the election's pages link but VRK never published (every such
+    # URL is a 404 for every candidate): recorded as a fact of the source,
+    # not fetched, and not counted against the expected set — see the
+    # module that names them for the probe that established it.
+    unpublished_links = [
+        tab for tab in tab_links if unpublished_tabs and tab["slug"] in unpublished_tabs
+    ]
+    if unpublished_links:
+        tab_links = [tab for tab in tab_links if tab not in unpublished_links]
     anomalies: list[dict[str, Any]] = []
     if not tab_links:
         anomalies.append(
@@ -324,7 +334,7 @@ def _fetch_candidate_tabs(
 
     found_tab_slugs = {tab["slug"] for tab in tab_links if tab["slug"]}
     required_tabs = expected_tabs(entry) if callable(expected_tabs) else expected_tabs
-    missing_expected_tabs = sorted(required_tabs - found_tab_slugs)
+    missing_expected_tabs = sorted(required_tabs - found_tab_slugs - set(unpublished_tabs or ()))
     if missing_expected_tabs:
         anomalies.append(
             build_anomaly_event(
@@ -424,6 +434,7 @@ def _fetch_candidate_tabs(
         "tabCount": len(tab_links),
         "tabSamples": saved_tabs,
         "missingExpectedTabs": missing_expected_tabs,
+        "unpublishedTabs": unpublished_links,
         "campaignSamples": campaign_samples,
         "anomalies": anomalies,
     }
@@ -440,6 +451,7 @@ def _fetch_candidate_tabs(
         "tab_count": len(tab_links),
         "tabs_saved": len(saved_tabs),
         "missing_expected_tabs": missing_expected_tabs,
+        "unpublished_tabs": unpublished_links,
         "campaign_samples": campaign_samples,
         "anomalies": anomalies,
         "index_path": index_path,
@@ -452,6 +464,7 @@ def fetch_first_candidate_with_tabs(
     allow_new_candidate_dir: bool = False,
     election_id: str = ELECTION_ID,
     expected_tabs: set[str] | Any | None = None,
+    unpublished_tabs: set[str] | None = None,
 ) -> dict[str, Any]:
     entry = _load_first_sitemap_entry(sitemap_path)
     return _fetch_candidate_tabs(
@@ -460,6 +473,7 @@ def fetch_first_candidate_with_tabs(
         allow_new_candidate_dir=allow_new_candidate_dir,
         election_id=election_id,
         expected_tabs=expected_tabs if expected_tabs is not None else EXPECTED_TABS,
+        unpublished_tabs=unpublished_tabs,
     )
 
 
@@ -470,6 +484,7 @@ def fetch_candidates_with_tabs(
     allow_new_candidate_dir: bool = False,
     election_id: str = ELECTION_ID,
     expected_tabs: set[str] | Any | None = None,
+    unpublished_tabs: set[str] | None = None,
 ) -> dict[str, Any]:
     if not candidate_ids:
         raise ValueError("At least one candidate id must be provided")
@@ -491,6 +506,7 @@ def fetch_candidates_with_tabs(
                 allow_new_candidate_dir=allow_new_candidate_dir,
                 election_id=election_id,
                 expected_tabs=expected_tabs if expected_tabs is not None else EXPECTED_TABS,
+                unpublished_tabs=unpublished_tabs,
             )
         )
 

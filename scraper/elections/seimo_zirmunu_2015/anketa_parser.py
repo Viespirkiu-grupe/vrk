@@ -73,6 +73,15 @@ TURTO_PAJAMU_KEY_ALIASES = {
     # resolve to the one income key.
     "gautu-pajamu-suma-gpm308-formos-12-13-13a-14-20-laukeliu-ir-gpm308-formos-v-priedo-v13-laukeliu-suma": "gautos-pajamos",
     "isskaiciuota-sumoketa-pajamu-mokescio-suma-gpm308-formos-26-laukelis": "sumoketas-pajamu-mokestis",
+    # The GPM305 form — the income-tax return in force before GPM308 —
+    # whose income line sums fields 12-14 plus V14 of the GPM305V annex and
+    # whose tax line sums fields 27, 28 and 30. Same two facts, one form
+    # earlier. The 2009 presidential pages extract it, and so does the whole
+    # 2015 municipal family (the March general, the June Širvintos-Trakai and
+    # Šilutė repeats, the November Telšiai mayoral) — 15,837 records whose
+    # income and tax read as null until this alias was added for 2009.
+    "gautu-pajamu-suma-gpm305-formos-12-13-14-ir-gpm305v-formos-v14-laukeliu-suma": "gautos-pajamos",
+    "isskaiciuota-sumoketa-pajamu-mokescio-suma-gpm305-formos-27-28-30-laukeliu-suma": "sumoketas-pajamu-mokestis",
 }
 
 TURTO_PAJAMU_OUTPUT_ORDER = [
@@ -695,6 +704,10 @@ CAMPAIGN_PERSON_KEY_ALIASES = {
     "el-pastas": "el-pastas",
     "imones-pavadinimas": "imones-pavadinimas",
     "imones-kodas": "imones-kodas",
+    # The 2009 presidential pages label a company auditor's card
+    # "Pavadinimas" / "Kodas" without the "Įmonės" qualifier.
+    "pavadinimas": "imones-pavadinimas",
+    "kodas": "imones-kodas",
 }
 
 AUKOS_COLUMN_KEYS = {
@@ -705,7 +718,51 @@ AUKOS_COLUMN_KEYS = {
     "aukos-suma-eur": "amountEur",
     "aukos-suma-lt": "amountLt",
     "pastabos-nepinigine-auka-auka-grynais-kita": "notes",
+    # The 2009 presidential pages' shorter headings for the same columns.
+    "aukotojas": "donor",
+    "savivaldybe": "municipality",
+    "aukos-data": "date",
 }
+AUKOS_AMOUNT_KEYS = ("amountEur", "amountLt")
+
+# The 2009 donor list has no notes column and no separate "Nepriimtinos
+# aukos" section: an unacceptable donation is flagged inline after the
+# donor's name (", nepriimtina auka", once ", auka nepriimtina", once with
+# VRK's own typo "nepriintina"). The flag is the later eras' notes column.
+AUKOS_DONOR_FLAG_PATTERN = re.compile(
+    r",\s*((?:nepri\w+\s+auka)|(?:auka\s+nepri\w+))\s*$", re.IGNORECASE
+)
+
+FINANSAVIMO_ATASKAITOS_COLUMN_KEYS = {
+    "eil-nr": "rowNumber",
+    "patvirtinimo-data": "approvedDate",
+    "statusas": "status",
+    "ataskaita": "reportUrls",
+    "priedas-del-politines-reklamos": "advertisingAppendixUrls",
+    # 2009 only: the report's kind ("Pradinė" / "Galutinė") where the later
+    # pages carry the verification status.
+    "ataskaitos-tipas": "reportType",
+}
+
+
+def _table_header_cells(table: Tag) -> tuple[list[str], Tag | None]:
+    """The column headings of a listing table and the row they sit in.
+
+    The 2012-2015 pages mark headings with <th>; the 2009 presidential pages
+    write them as a first row of <td><strong> cells, so that row is returned
+    too and callers skip it when walking the data rows.
+    """
+    headers = [_tag_text(th) for th in table.find_all("th")]
+    if headers:
+        return headers, None
+    for tr in table.find_all("tr"):
+        cells = tr.find_all("td")
+        if len(cells) < 2:
+            continue
+        if all(cell.find("strong") is not None for cell in cells):
+            return [_tag_text(cell) for cell in cells], tr
+        return [], None
+    return [], None
 
 
 def _kv_rows_from_table(table: Tag) -> list[tuple[str, str, Tag]]:
@@ -811,7 +868,7 @@ def _parse_campaign_person_html(html: str) -> dict[str, Any]:
 
 
 def _parse_aukos_html(html: str) -> dict[str, Any]:
-    # Donation sections are h3 headings followed by a th-headed table, all
+    # Donation sections are h3 headings followed by a headed table, all
     # inside the picklist div after the tab navigation.
     soup = BeautifulSoup(html, "lxml")
     sections: list[dict[str, Any]] = []
@@ -821,47 +878,83 @@ def _parse_aukos_html(html: str) -> dict[str, Any]:
         return {"sections": sections}
 
     for table in tabnav.find_all_next("table"):
-        headers = [_tag_text(th) for th in table.find_all("th")]
+        headers, header_row = _table_header_cells(table)
         if not headers:
             continue
         heading = table.find_previous("h3")
         title = _tag_text(heading).rstrip(":")
 
+        header_keys: list[str] = []
+        for index, header in enumerate(headers):
+            header_key = _source_key(header)
+            # The notes column's parenthetical varies per section
+            # ("Nepiniginė auka…" vs "grąžinta aukotojui…"); either way it
+            # is the notes column.
+            if header_key.startswith("pastabos"):
+                header_key = "pastabos-nepinigine-auka-auka-grynais-kita"
+            header_keys.append(AUKOS_COLUMN_KEYS.get(header_key) or header_key or f"stulpelis-{index + 1}")
+        # The totals block names one amount per amount column, in the
+        # header's order — Lt only (2009-2014), Eur and Lt (March 2015) or
+        # Eur only (the later 2015 elections) — so the sums are keyed by the
+        # header, not by position.
+        amount_keys = [key for key in header_keys if key in AUKOS_AMOUNT_KEYS]
+        has_notes_column = "notes" in header_keys
+
         records: list[dict[str, Any]] = []
         summary: list[dict[str, Any]] = []
         for tr in table.find_all("tr"):
+            if tr is header_row:
+                continue
             cells = tr.find_all("td")
             if not cells:
                 continue
             values = [_tag_text(cell) for cell in cells]
-            if len(cells) < len(headers):
+            # The 2009 totals row keeps the full cell count, with the label
+            # in an inner cell and no row number.
+            full_width_total = (
+                len(cells) == len(headers)
+                and not values[0].strip()
+                and any(value.rstrip().endswith(":") for value in values)
+            )
+            if len(cells) < len(headers) or full_width_total:
                 # The totals block under the donations: a colspan label, the
-                # Eur and Lt sums, and an occasional note ("juridinių asmenų
-                # aukos — Nuo 2012-01-01 draudžiamos").
-                entry = {
+                # sums, and an occasional note ("juridinių asmenų aukos — Nuo
+                # 2012-01-01 draudžiamos").
+                if full_width_total:
+                    label_index = next(
+                        index for index, value in enumerate(values) if value.rstrip().endswith(":")
+                    )
+                    values = [values[label_index]] + [
+                        value for value in values[label_index + 1 :] if value.strip()
+                    ]
+                entry: dict[str, Any] = {
                     "label": _normalize_text_value(values[0].rstrip(":")) if values else None,
-                    "amountEur": _parse_lt_amount(values[1]) if len(values) > 1 else None,
-                    "amountLt": _parse_lt_amount(values[2]) if len(values) > 2 else None,
-                    "note": _normalize_text_value(values[3]) if len(values) > 3 else None,
+                    "amountEur": None,
+                    "amountLt": None,
+                    "note": None,
                 }
+                for offset, key in enumerate(amount_keys, start=1):
+                    if offset < len(values):
+                        entry[key] = _parse_lt_amount(values[offset])
+                note_index = 1 + len(amount_keys)
+                if note_index < len(values):
+                    entry["note"] = _normalize_text_value(values[note_index])
                 if entry["label"] is not None:
                     summary.append(entry)
                 continue
             record: dict[str, Any] = {}
             for index, cell in enumerate(cells):
-                header = headers[index] if index < len(headers) else ""
-                header_key = _source_key(header)
-                # The notes column's parenthetical varies per section
-                # ("Nepiniginė auka…" vs "grąžinta aukotojui…"); either way it
-                # is the notes column.
-                if header_key.startswith("pastabos"):
-                    header_key = "pastabos-nepinigine-auka-auka-grynais-kita"
-                key = AUKOS_COLUMN_KEYS.get(header_key) or header_key or f"stulpelis-{index + 1}"
+                key = header_keys[index] if index < len(header_keys) else f"stulpelis-{index + 1}"
                 value = _normalize_text_value(_tag_text(cell))
-                if key in ("amountEur", "amountLt"):
+                if key in AUKOS_AMOUNT_KEYS:
                     record[key] = _parse_lt_amount(value)
                 else:
                     record[key] = value
+            if not has_notes_column and record.get("donor"):
+                flag = AUKOS_DONOR_FLAG_PATTERN.search(record["donor"])
+                if flag is not None:
+                    record["donor"] = record["donor"][: flag.start()].strip()
+                    record["notes"] = flag.group(1)
             if any(value is not None for value in record.values()):
                 records.append(record)
 
@@ -879,22 +972,33 @@ def _parse_finansavimo_ataskaitos_html(html: str) -> list[dict[str, Any]]:
         return entries
 
     for table in tabnav.find_all_next("table"):
-        if not table.find_all("th"):
+        headers, header_row = _table_header_cells(table)
+        if not headers:
             continue
+        column_keys = [
+            FINANSAVIMO_ATASKAITOS_COLUMN_KEYS.get(_source_key(header), "") for header in headers
+        ]
         for tr in table.find_all("tr"):
+            if tr is header_row:
+                continue
             cells = tr.find_all("td")
             if len(cells) < 4:
                 continue
             values = [_tag_text(cell) for cell in cells]
-            entries.append(
-                {
-                    "rowNumber": _normalize_text_value(values[0]),
-                    "approvedDate": _normalize_text_value(values[1]),
-                    "status": _normalize_text_value(values[2]),
-                    "reportUrls": _extract_links(cells[3]),
-                    "advertisingAppendixUrls": _extract_links(cells[4]) if len(cells) > 4 else [],
-                }
-            )
+            entry: dict[str, Any] = {
+                "rowNumber": None,
+                "approvedDate": None,
+                "status": None,
+                "reportUrls": [],
+                "advertisingAppendixUrls": [],
+            }
+            for index, cell in enumerate(cells):
+                key = column_keys[index] if index < len(column_keys) else ""
+                if key in ("reportUrls", "advertisingAppendixUrls"):
+                    entry[key] = _extract_links(cell)
+                elif key:
+                    entry[key] = _normalize_text_value(values[index])
+            entries.append(entry)
 
     return entries
 
@@ -993,7 +1097,9 @@ def _parse_campaign_sample(
         if parsed["reports"]:
             entry["auditorius"]["ataskaitos"] = parsed["reports"]
 
-    aukos_path = tab_files.get("auku-ir-aukotoju-sarasas")
+    # "Aukų ir aukotojų sąrašas" from 2012 on; the 2009 tab is titled just
+    # "Aukotojų sąrašas".
+    aukos_path = tab_files.get("auku-ir-aukotoju-sarasas") or tab_files.get("aukotoju-sarasas")
     if aukos_path is not None and aukos_path.exists():
         parsed = _parse_aukos_html(aukos_path.read_text(encoding="utf-8"))
         raw["aukos"] = parsed
