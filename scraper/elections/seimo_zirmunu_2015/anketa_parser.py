@@ -65,6 +65,10 @@ TURTO_PAJAMU_KEY_ALIASES = {
     "iv-suteiktos-paskolos": "suteiktos-paskolos",
     "v-gautos-paskolos": "gautos-paskolos",
     "gautu-pajamu-suma-gpm308-formos-12-13-13a-14-22-laukeliu-ir-gpm308-formos-v-priedo-v13-laukelio-suma": "gautos-pajamos",
+    # The 2012-2014 pages of the same layout family cite "…14, 20 laukelių"
+    # and "V13 laukelių" — the wording the 2016 pages kept — so both spellings
+    # resolve to the one income key.
+    "gautu-pajamu-suma-gpm308-formos-12-13-13a-14-20-laukeliu-ir-gpm308-formos-v-priedo-v13-laukeliu-suma": "gautos-pajamos",
     "isskaiciuota-sumoketa-pajamu-mokescio-suma-gpm308-formos-26-laukelis": "sumoketas-pajamu-mokestis",
 }
 
@@ -614,6 +618,45 @@ def _extract_interesu_section_id(title: str) -> str:
     return ""
 
 
+def _parse_patiketiniai_html(html: str) -> dict[str, Any]:
+    # The presidential elections publish the candidate's trustees as a
+    # numbered two-column table (Numeris, Vardas, pavardė) — names only, no
+    # links, no further detail.
+    soup = BeautifulSoup(html, "lxml")
+    content = _content_div(soup)
+    records: list[dict[str, Any]] = []
+    if content is None:
+        return {"records": records}
+
+    for table in content.find_all("table"):
+        for tr in table.find_all("tr"):
+            cells = tr.find_all("td")
+            if len(cells) < 2:
+                continue
+            values = [_tag_text(cell) for cell in cells]
+            if not values[1]:
+                continue
+            records.append({"number": values[0], "name": values[1]})
+
+    return {"records": records}
+
+
+def _normalize_patiketiniai_data(payload: dict[str, Any]) -> list[dict[str, Any]]:
+    records = payload.get("records") if isinstance(payload.get("records"), list) else []
+    normalized: list[dict[str, Any]] = []
+    for record in records:
+        if not isinstance(record, dict):
+            continue
+        number = _normalize_text_value(record.get("number"))
+        normalized.append(
+            {
+                "numeris": int(number) if number is not None and number.isdigit() else number,
+                "vardas-pavarde": _normalize_text_value(record.get("name")),
+            }
+        )
+    return normalized
+
+
 def _parse_kita_html(html: str) -> dict[str, Any]:
     soup = BeautifulSoup(html, "lxml")
     content = _content_div(soup)
@@ -1039,6 +1082,9 @@ def _parse_optional_subpages(
         # the corpus-wide "privačių interesų" name because the content is the
         # same ID001x form.
         "privaciuInteresuDeklaracija": ("interesu-deklaracija.html", _parse_interesu_html),
+        # Presidential elections only; the file does not exist for any other
+        # election's candidates, so the key is simply absent there.
+        "patiketiniai": ("patiketiniai.html", _parse_patiketiniai_html),
         "kita": ("kita.html", _parse_kita_html),
     }
 
@@ -1208,6 +1254,8 @@ def parse_anketa_sample(
             normalized["turto-ir-pajamu-deklaracijos"] = _normalize_turto_ir_pajamu_data(data)
         if key == "privaciuInteresuDeklaracija" and isinstance(data, dict):
             normalized["privaciu-interesu-deklaracija"] = _normalize_privaciu_interesu_data(data)
+        if key == "patiketiniai" and isinstance(data, dict):
+            normalized["patiketiniai"] = _normalize_patiketiniai_data(data)
         if key == "kita" and isinstance(data, dict):
             normalized["kita"] = _normalize_kita_data(data)
 
@@ -1224,6 +1272,7 @@ def parse_anketa_sample(
             "biografija",
             "turtoIrPajamuDeklaracijos",
             "privaciuInteresuDeklaracija",
+            "patiketiniai",
             "politinesKampanijosDalyvioDuomenys",
             "kita",
         ],
@@ -1236,6 +1285,7 @@ def parse_anketa_sample(
             "biografija",
             "turto-ir-pajamu-deklaracijos",
             "privaciu-interesu-deklaracija",
+            "patiketiniai",
             "politines-kampanijos-dalyvio-duomenys",
             "kita",
         ],

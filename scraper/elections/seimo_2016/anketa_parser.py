@@ -1421,6 +1421,17 @@ def _normalize_profile_data(profile: dict[str, Any]) -> dict[str, Any]:
         key = _source_key(key_text)
         if not key:
             continue
+        # A label can recur on one card: the 2012 Seimo cards carry an
+        # "Apygarda"/"Iškėlė" pair per candidacy (single-member, then
+        # multi-member), and a 2015 coalition nominee repeats "Iškėlė" for
+        # the member party in parentheses. The first occurrence keeps the
+        # plain key; later ones are suffixed rather than silently replacing
+        # it.
+        if key in normalized_fields:
+            suffix = 2
+            while f"{key}-{suffix}" in normalized_fields:
+                suffix += 1
+            key = f"{key}-{suffix}"
         normalized_fields[key] = {
             "pavadinimas": _normalize_text_value(key_text),
             "reiksme": _normalize_text_value(field.get("displayValue")),

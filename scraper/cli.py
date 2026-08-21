@@ -364,6 +364,18 @@ from scraper.elections.svencioniu_tarybos_1997.sitemap import (
     build_sitemap_from_sample as build_svencioniu_tarybos_1997_sitemap_from_sample,
     fetch_listing_sample as fetch_svencioniu_tarybos_1997_listing_sample,
 )
+from scraper.elections.prezidento_2014.anketa_parser import (
+    parse_anketa_samples as parse_prezidento_2014_anketa_samples,
+)
+from scraper.elections.prezidento_2014.candidate_samples import (
+    fetch_candidates_with_tabs as fetch_prezidento_2014_candidates_with_tabs,
+    fetch_first_candidate_with_tabs as fetch_prezidento_2014_first_candidate_with_tabs,
+)
+from scraper.elections.prezidento_2014.sitemap import (
+    ELECTION_ID as PREZIDENTO_2014_ELECTION_ID,
+    build_sitemap_from_sample as build_prezidento_2014_sitemap_from_sample,
+    fetch_listing_sample as fetch_prezidento_2014_listing_sample,
+)
 from scraper.shared.anomalies import write_jsonl
 
 FETCHABLE_ELECTION_IDS = [
@@ -398,6 +410,7 @@ FETCHABLE_ELECTION_IDS = [
     SEIMO_AUKSTAITIJOS_1997_GRUODZIO_ELECTION_ID,
     SAVIVALDYBIU_1997_ELECTION_ID,
     SVENCIONIU_TARYBOS_1997_ELECTION_ID,
+    PREZIDENTO_2014_ELECTION_ID,
 ]
 PARSABLE_ELECTION_IDS = [
     SEIMO_2016_ELECTION_ID,
@@ -431,6 +444,7 @@ PARSABLE_ELECTION_IDS = [
     SEIMO_AUKSTAITIJOS_1997_GRUODZIO_ELECTION_ID,
     SAVIVALDYBIU_1997_ELECTION_ID,
     SVENCIONIU_TARYBOS_1997_ELECTION_ID,
+    PREZIDENTO_2014_ELECTION_ID,
 ]
 
 
@@ -497,6 +511,8 @@ def _fetch_listing_sample_for_election(election_id: str) -> Path:
         return fetch_savivaldybiu_1997_listing_sample()
     if election_id == SVENCIONIU_TARYBOS_1997_ELECTION_ID:
         return fetch_svencioniu_tarybos_1997_listing_sample()
+    if election_id == PREZIDENTO_2014_ELECTION_ID:
+        return fetch_prezidento_2014_listing_sample()
     raise ValueError(f"Unsupported election id: {election_id}")
 
 
@@ -563,6 +579,8 @@ def _build_sitemap_from_sample_for_election(election_id: str, sample_path: Path 
         return build_savivaldybiu_1997_sitemap_from_sample(sample_path=sample_path)
     if election_id == SVENCIONIU_TARYBOS_1997_ELECTION_ID:
         return build_svencioniu_tarybos_1997_sitemap_from_sample(sample_path=sample_path)
+    if election_id == PREZIDENTO_2014_ELECTION_ID:
+        return build_prezidento_2014_sitemap_from_sample(sample_path=sample_path)
     raise ValueError(f"Unsupported election id: {election_id}")
 
 
@@ -754,6 +772,12 @@ def _fetch_first_candidate_with_tabs_for_election(
         )
     if election_id == SVENCIONIU_TARYBOS_1997_ELECTION_ID:
         return fetch_svencioniu_tarybos_1997_first_candidate_with_tabs(
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
+    if election_id == PREZIDENTO_2014_ELECTION_ID:
+        return fetch_prezidento_2014_first_candidate_with_tabs(
             sitemap_path=sitemap_path,
             samples_root=samples_root,
             allow_new_candidate_dir=allow_new_samples,
@@ -985,6 +1009,13 @@ def _fetch_candidates_with_tabs_for_election(
             samples_root=samples_root,
             allow_new_candidate_dir=allow_new_samples,
         )
+    if election_id == PREZIDENTO_2014_ELECTION_ID:
+        return fetch_prezidento_2014_candidates_with_tabs(
+            candidate_ids=candidate_ids,
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
     raise ValueError(f"Unsupported election id: {election_id}")
 
 
@@ -1176,6 +1207,12 @@ def _parse_anketa_samples_for_election(
         )
     if election_id == SVENCIONIU_TARYBOS_1997_ELECTION_ID:
         return parse_svencioniu_tarybos_1997_anketa_samples(
+            candidate_ids=candidate_ids,
+            samples_root=samples_root,
+            output_root=output_root,
+        )
+    if election_id == PREZIDENTO_2014_ELECTION_ID:
+        return parse_prezidento_2014_anketa_samples(
             candidate_ids=candidate_ids,
             samples_root=samples_root,
             output_root=output_root,
