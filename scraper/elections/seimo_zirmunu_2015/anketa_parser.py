@@ -1169,6 +1169,26 @@ def _parse_campaign_samples(
             )
             continue
         if parsed is None:
+            # The candidate page linked a campaign whose root page never
+            # fetched (the fetch stage recorded a CampaignRootFetchFailed in
+            # index.json — a dead link on VRK's side, such as the 2009 EP
+            # candidate pages that link a presidential campaign's participant
+            # id under the EP path). Without this the campaign would vanish
+            # from the record and from anomalies.jsonl alike.
+            anomalies.append(
+                build_anomaly_event(
+                    event_type="CampaignRootMissing",
+                    severity="warning",
+                    stage="parse",
+                    election_id=election_id,
+                    candidate_id=candidate_id,
+                    source_url=source_url,
+                    detail={
+                        "campaignKey": str(campaign_meta.get("campaignKey", "")),
+                        "campaignUrl": str(campaign_meta.get("campaignUrl", "")),
+                    },
+                )
+            )
             continue
         raw_campaigns.append(parsed["raw"])
         entries.append(parsed["entry"])

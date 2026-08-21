@@ -158,8 +158,12 @@ class SeimoBirzuZarasuUkmerges2013AnketaParserTests(unittest.TestCase):
                 "ar-bendradarbiavote-su-uzsienio-tarnybomis",
                 "ar-buvote-pripazintas-kaltu",
                 "ar-buvote-pripazintas-kaltu-del-sunkaus-nusikaltimo",
+                # The Q9 block's free-text line, asked on the 2012 pages
+                # (and the 2009 EP ones) but no longer on the 2013 form.
+                "teisiniai-argumentai",
             ],
         )
+        self.assertIsNone(pareiskimai["teisiniai-argumentai"])
         self.assertEqual(pareiskimai["ar-nebaigta-teismo-paskirta-bausme"], "Neturiu")
         self.assertEqual(pareiskimai["ar-buvote-pripazintas-kaltu"], "Ne")
         # Every 2013 form carries VRK's "Nenurodė" default for Q9.3, so the

@@ -17,6 +17,7 @@ from scraper.elections.seimo_zirmunu_2015.anketa_parser import (
     parse_anketa_samples as _parse_anketa_samples,
 )
 from scraper.elections.seimo_2016.anketa_parser import (
+    _find_row_by_prompt_prefix,
     _find_row_by_question_number,
     _row_answer_text,
 )
@@ -32,6 +33,13 @@ def normalize_seimo_2012_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, An
     pareiskimai = dict(normalized["pareiskimai"])
     pareiskimai["ar-buvote-pripazintas-kaltu-del-sunkaus-nusikaltimo"] = _normalize_answer_value(
         _row_answer_text(_find_row_by_question_number(rows, "9.3"))
+    )
+    # The Q9 block's free-text line for anyone who answered "Taip" ("Tuo
+    # atveju, jei bent į vieną 9 punkto klausimą atsakėte Taip … paaiškinimą
+    # įrašykite čia"), on the 2012 and 2009 EP pages but no longer asked
+    # from 2013 on; the 2016 Seimo key for the same slot.
+    pareiskimai["teisiniai-argumentai"] = _normalize_answer_value(
+        _row_answer_text(_find_row_by_prompt_prefix(rows, "tuo atveju, jei bent į vieną 9 punkto"))
     )
     normalized["pareiskimai"] = pareiskimai
     return normalized
