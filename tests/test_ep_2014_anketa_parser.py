@@ -157,6 +157,8 @@ class Ep2014AnketaParserTests(unittest.TestCase):
                 "gimimo-vieta",
                 "tautybe",
                 "issilavinimas",
+                "mokslo-laipsnis",
+                "pedagoginis-vardas",
                 "uzsienio-kalbos",
                 "politine-organizacija",
                 "anksciau-isrinktas",

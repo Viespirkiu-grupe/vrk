@@ -59,6 +59,7 @@ SINGLE_MEMBER_ONLY_MARKER = "tik vienmandatėse"
 COALITION_MEMBER_MARKER = "koalicijos sąrašas"
 COALITION_MEMBER_LINK_PATTERN = re.compile(r"RinkimuOrganizacija(\d+)_3\.html$")
 SELF_NOMINATED_PAGE = "RinkimuOrganizacija_Issikele.html"
+SELF_NOMINATED_MARKER = "išsikėlė"
 # Any constituency link, including the empty "Apygardanull" one a list page
 # renders for a list-only candidate; its presence says the page has a
 # constituency column at all (the coalition list page does not).
@@ -67,10 +68,12 @@ ANY_DISTRICT_LINK_PATTERN = re.compile(r"KandidataiApygardos(\d+|null)\.html$")
 
 def fetch_listing_sample(
     samples_dir: Path = DEFAULT_SAMPLES_DIR,
+    listing_url: str = LISTING_URL,
+    districts_url: str = DISTRICTS_URL,
 ) -> Path:
-    _fetch_lists_sample(samples_dir=samples_dir, listing_url=LISTING_URL, index_name=LISTS_INDEX_NAME)
+    _fetch_lists_sample(samples_dir=samples_dir, listing_url=listing_url, index_name=LISTS_INDEX_NAME)
     _fetch_districts_sample(
-        samples_dir=samples_dir, listing_url=DISTRICTS_URL, index_name=DISTRICTS_INDEX_NAME
+        samples_dir=samples_dir, listing_url=districts_url, index_name=DISTRICTS_INDEX_NAME
     )
     fetch_side_pages(samples_dir, (samples_dir / LISTS_INDEX_NAME).read_text(encoding="utf-8"))
     return samples_dir
@@ -140,13 +143,19 @@ def side_page_candidate_ids(samples_dir: Path, link: dict[str, Any]) -> list[str
     return ids
 
 
-def _coalition_member_from_row(row: Any) -> str | None:
+def _coalition_member_from_row(row: Any, member_keys: set[str] | None = None) -> str | None:
     # The coalition list page's last column links the member party that put
-    # the candidate on the joint list.
+    # the candidate on the joint list. The 2012 pages link it with a "_3"
+    # suffix; the 2008 pages link the member's plain list page, so the link
+    # is recognised by its key being one of the index's coalition-member
+    # rows rather than by the suffix.
     if row is None:
         return None
     for anchor in row.find_all("a", href=True):
-        if COALITION_MEMBER_LINK_PATTERN.search(anchor["href"]):
+        href = anchor["href"]
+        if COALITION_MEMBER_LINK_PATTERN.search(href) or (
+            member_keys and LIST_LINK_PATTERN.search(href) and _side_list_key(href) in member_keys
+        ):
             return normalize_space(anchor.get_text(" ", strip=True)) or None
     return None
 
@@ -174,6 +183,8 @@ def build_sitemap_from_sample(
     sample_path: Path | None = None,
     output_path: Path = DEFAULT_SITEMAP_PATH,
     election_id: str = ELECTION_ID,
+    listing_url: str = LISTING_URL,
+    districts_url: str = DISTRICTS_URL,
 ) -> tuple[Path, dict[str, int]]:
     # sample_path keeps the CLI's signature; it names the samples directory.
     samples_dir = sample_path if sample_path is not None else DEFAULT_SAMPLES_DIR
@@ -181,6 +192,7 @@ def build_sitemap_from_sample(
     lists, list_rows = collect_list_records(samples_dir, index_name=LISTS_INDEX_NAME)
     districts, district_rows = collect_district_records(samples_dir, index_name=DISTRICTS_INDEX_NAME)
     side_links = extract_side_links((samples_dir / LISTS_INDEX_NAME).read_text(encoding="utf-8"))
+    coalition_member_keys = {link["listKey"] for link in side_links if link["kind"] == "koalicijos-nare"}
 
     # Merge on VRK's own candidate id — one entry carries both candidacies.
     entries_by_vrk_id: dict[str, dict[str, Any]] = {}
@@ -217,7 +229,7 @@ def build_sitemap_from_sample(
             continue
         entry["roles"].append("daugiamandate")
         candidacy = list_candidacy(record)
-        member = _coalition_member_from_row(record.get("row"))
+        member = _coalition_member_from_row(record.get("row"), coalition_member_keys)
         if member is not None:
             candidacy["koalicijosPartija"] = member
         entry["daugiamandateCandidacy"] = candidacy
@@ -291,12 +303,26 @@ def build_sitemap_from_sample(
     side_ids_on_lists = sum(
         1 for vrk_id in side_ids if "daugiamandate" in entries_by_vrk_id.get(vrk_id, {}).get("roles", [])
     )
-    district_only_reconciled = single_member_only == len(side_ids) - side_ids_on_lists
+    # The 2008 index has no self-nominated page, so the constituency pages'
+    # own "Išsikėlė pats" rows stand in for it: a self-nominated candidate
+    # on no list and on no side page is a district-only candidate the side
+    # pages cannot account for. Zero wherever the page exists (2012).
+    self_nominated_unaccounted = sum(
+        1
+        for record in district_rows
+        if record["vrkCandidateId"]
+        and SELF_NOMINATED_MARKER in (record.get("nominatedBy") or "").lower()
+        and record["vrkCandidateId"] not in side_ids
+        and entries_by_vrk_id[record["vrkCandidateId"]]["roles"] == ["vienmandate"]
+    )
+    district_only_reconciled = (
+        single_member_only == len(side_ids) - side_ids_on_lists + self_nominated_unaccounted
+    )
 
     payload = {
         "electionId": election_id,
-        "sourceUrl": LISTING_URL,
-        "districtsUrl": DISTRICTS_URL,
+        "sourceUrl": listing_url,
+        "districtsUrl": districts_url,
         "listUrls": [link["url"] for link in lists],
         "districtUrls": [district["url"] for district in districts],
         "generatedAt": utc_now_iso(),
@@ -318,6 +344,7 @@ def build_sitemap_from_sample(
             "sidePageDistrictOnlyIds": len(side_ids),
             "sidePageIdsAlsoOnLists": side_ids_on_lists,
             "sidePageIdsNotOnDistrictPages": side_ids_not_on_districts,
+            "selfNominatedNotOnSidePages": self_nominated_unaccounted,
             "districtOnlyReconciled": district_only_reconciled,
             "listRowsWithoutDistrictColumn": list_rows_without_district_column,
             "listDistrictJoinMismatch": join_mismatch,
@@ -348,6 +375,7 @@ def build_sitemap_from_sample(
         "side_page_district_only_ids": len(side_ids),
         "side_page_ids_also_on_lists": side_ids_on_lists,
         "side_page_ids_not_on_district_pages": side_ids_not_on_districts,
+        "self_nominated_not_on_side_pages": self_nominated_unaccounted,
         "district_only_reconciled": int(district_only_reconciled),
         "list_rows_without_district_column": list_rows_without_district_column,
         "list_district_join_mismatch": join_mismatch,

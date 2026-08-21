@@ -59,6 +59,10 @@ def normalize_municipal_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any
             "aprasas": _answer("12"),
             "irasai": _normalize_table_records(_question_record_rows(rows, "12")),
         },
+        # The degree/title line after the education table, as on the Seimo
+        # pages of the family (see seimo_zirmunu_2015._normalize_anketa_rows).
+        "mokslo-laipsnis": _prompt_answer("jei turite, nurodykite mokslo laipsn"),
+        "pedagoginis-vardas": _prompt_answer(", vard") or _prompt_answer("jei turite, nurodykite mokslo vard"),
         "uzsienio-kalbos": _split_list_value(
             _row_answer_text(_find_row_by_question_number(rows, "13"))
         ),

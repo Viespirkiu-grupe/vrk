@@ -88,6 +88,8 @@ class SeimoZirmunu2015AnketaParserTests(unittest.TestCase):
                 "gimimo-vieta",
                 "tautybe",
                 "issilavinimas",
+                "mokslo-laipsnis",
+                "pedagoginis-vardas",
                 "uzsienio-kalbos",
                 "politine-organizacija",
                 "anksciau-isrinktas",
