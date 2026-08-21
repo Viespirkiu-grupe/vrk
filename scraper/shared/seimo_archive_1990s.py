@@ -253,6 +253,68 @@ def parse_candidate_detail(html: str, source_url: str) -> dict[str, Any]:
     }
 
 
+# Lithuanian month names as they appear in the genitive inside a birth-date
+# sentence ("Gimė 1942 m. rugpjūčio 3 d.").
+BIOGRAPHY_MONTHS = {
+    "sausio": 1,
+    "vasario": 2,
+    "kovo": 3,
+    "balandžio": 4,
+    "gegužės": 5,
+    "birželio": 6,
+    "liepos": 7,
+    "rugpjūčio": 8,
+    "rugsėjo": 9,
+    "spalio": 10,
+    "lapkričio": 11,
+    "gruodžio": 12,
+}
+BIOGRAPHY_BIRTH_FULL = re.compile(
+    r"Gim[ėe]\s+(\d{4})\s*m\.\s*(" + "|".join(BIOGRAPHY_MONTHS) + r")\s*(\d{1,2})\s*d\.",
+    re.IGNORECASE,
+)
+BIOGRAPHY_BIRTH_YEAR = re.compile(r"Gim[ėe]\s+(\d{4})\s*m\.", re.IGNORECASE)
+
+
+def extract_biography_birth_date(text: str) -> tuple[str | None, int | None]:
+    """Recover a birth date from the biography prose.
+
+    These pages publish no birth-date field -- the whole Seimas archive family
+    is the corpus's one era without one, which leaves all 906 of its records
+    unable to join a person across elections. The biography's opening sentence
+    almost always carries it: "Gimė 1942 m. rugpjūčio 3 d. Panevėžyje".
+
+    Returns `(iso_date, year)`. A full day-month-year match yields both; a
+    year-only sentence ("Gimė 1950 m.") yields `(None, year)` -- a year alone
+    is deliberately never treated as a birth date, because keying identity on
+    name plus year would merge namesakes wholesale.
+
+    Only the **first** match is used, and only the full-date pattern is
+    trusted for the date: later sentences routinely carry other people's years
+    ("Tėvas - Vincas Mickus 1926 m. baigė Dotnuvos žemės ūkio akademiją"),
+    so a looser scan would happily return a parent's date.
+
+    Measured over the 879 1996 biographies: 670 full dates (76%), 151
+    year-only (17%), 58 neither. Of the 149 full dates whose candidate shares
+    a name with a modern candidate who has a published birth date, 133 (89%)
+    match it exactly; 13 of the 16 that do not are plainly different people
+    (born decades apart), and 3 are genuine disagreements between VRK's own
+    two publications rather than parse failures.
+    """
+    if not text:
+        return None, None
+    full = BIOGRAPHY_BIRTH_FULL.search(text)
+    if full:
+        year = int(full.group(1))
+        month = BIOGRAPHY_MONTHS[full.group(2).lower()]
+        day = int(full.group(3))
+        return f"{year:04d}-{month:02d}-{day:02d}", year
+    year_only = BIOGRAPHY_BIRTH_YEAR.search(text)
+    if year_only:
+        return None, int(year_only.group(1))
+    return None, None
+
+
 def parse_biography(html: str) -> dict[str, Any]:
     # The biography text lives in the page's <blockquote>; everything outside
     # it is the shared page header/footer boilerplate ("Puslapius kuria ir
@@ -264,7 +326,9 @@ def parse_biography(html: str) -> dict[str, Any]:
         for p in container.find_all("p")
         if _clean_text(p.get_text(" ", strip=True))
     ]
-    return {"text": "\n".join(paragraphs)}
+    text = "\n".join(paragraphs)
+    birth_date, birth_year = extract_biography_birth_date(text)
+    return {"text": text, "birthDate": birth_date, "birthYear": birth_year}
 
 
 def fetch_constituency_samples(
@@ -566,10 +630,30 @@ def build_candidate_record(
         "biography": biography,
     }
 
+    # These pages publish no birth-date field, so the only birth date this
+    # family can have is the one recovered from the biography's opening
+    # sentence. It goes under the corpus's usual `anketa.gimimo-data` so the
+    # person index, concept map and dashboard resolve it with no special
+    # case -- but `gimimo-data-saltinis` records that it came from prose
+    # rather than a labelled field, because it is a weaker source than every
+    # other era's: VRK's own biography and questionnaire disagree for a
+    # measured 3 of 149 checkable people. `gimimo-metai` carries the
+    # year-only cases, which are never promoted to a birth date.
+    birth_date = biography.get("birthDate") if biography else None
+    birth_year = biography.get("birthYear") if biography else None
+    anketa: dict[str, Any] = {}
+    if birth_date:
+        anketa["gimimo-data"] = birth_date
+        anketa["gimimo-data-saltinis"] = "biografijos-tekstas"
+    if birth_year:
+        anketa["gimimo-metai"] = birth_year
+
     # Normalized keys are kebab-case throughout, matching every other election
     # module: `profilis.vardas-pavarde`, `profilis.nuotrauka` and the rest are
     # the corpus-wide names that docs/concept-map.json and the dashboard's
-    # field map both resolve against.
+    # field map both resolve against. `anketa` keeps the corpus's position
+    # (right after `profilis`) and is omitted entirely when the biography
+    # yielded nothing, rather than sitting there empty.
     normalized = {
         "profilis": {
             "vardas-pavarde": detail["candidateDisplayName"],
@@ -577,6 +661,7 @@ def build_candidate_record(
             "biografijos-nuoroda": detail["biographyUrl"] or None,
             "pajamu-deklaracijos-nuoroda": detail["incomeDeclarationUrl"] or None,
         },
+        **({"anketa": anketa} if anketa else {}),
         "kandidatavimas": [
             {
                 "apygarda": c["apygardaName"],

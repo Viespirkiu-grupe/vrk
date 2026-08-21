@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from scraper.elections.seimo_1996.anketa_parser import parse_anketa_samples
+from scraper.shared.seimo_archive_1990s import extract_biography_birth_date
 
 
 class Seimo1996AnketaParserTests(unittest.TestCase):
@@ -44,8 +45,16 @@ class Seimo1996AnketaParserTests(unittest.TestCase):
             list(self.asmolkov["rawData"].keys()),
             ["profile", "candidacies", "residence", "biography"],
         )
+        # `anketa` keeps the corpus's position right after `profilis`. Asmolkov's
+        # biography gives a year only, so his anketa holds `gimimo-metai` alone.
         self.assertEqual(
             list(self.asmolkov["normalized"].keys()),
+            ["profilis", "anketa", "kandidatavimas", "gyvenamoji-vieta", "biografija"],
+        )
+        # A candidate whose biography page is missing gets no anketa at all,
+        # rather than an empty one.
+        self.assertEqual(
+            list(self.astrauskas["normalized"].keys()),
             ["profilis", "kandidatavimas", "gyvenamoji-vieta", "biografija"],
         )
 
@@ -97,6 +106,71 @@ class Seimo1996AnketaParserTests(unittest.TestCase):
         self.assertEqual(len(candidacies), 2)
         self.assertEqual(candidacies[1]["apygardaName"], "Daugiamandatė")
         self.assertEqual(candidacies[1]["listNumber"], 20)
+
+class Seimo1996BiographyBirthDateTests(unittest.TestCase):
+    """The Seimas archive publishes no birth-date field, so the only one these
+    records can have is recovered from the biography's opening sentence."""
+
+    def test_full_date_is_parsed_from_the_genitive_month(self) -> None:
+        date, year = extract_biography_birth_date(
+            "Andrius KUBILIUS ... Gimė 1956 m. gruodžio 8 d. Vilniuje. Tėvai - ..."
+        )
+        self.assertEqual(date, "1956-12-08")
+        self.assertEqual(year, 1956)
+
+    def test_year_only_sentence_yields_a_year_and_no_date(self) -> None:
+        # "Gimė 1950 m." with no month or day. A year is never promoted to a
+        # birth date: name+year would merge namesakes wholesale.
+        date, year = extract_biography_birth_date("Gimė 1950 m. Baigė Riazanės institutą.")
+        self.assertIsNone(date)
+        self.assertEqual(year, 1950)
+
+    def test_a_parents_year_later_in_the_text_is_not_taken(self) -> None:
+        # Biographies routinely carry other people's years further down
+        # ("Tėvas - Vincas Mickus 1926 m. baigė ..."). Only the first Gimė
+        # sentence counts, and only its full-date form fixes the date.
+        date, year = extract_biography_birth_date(
+            "Gimė 1942 m. rugpjūčio 3 d. Panevėžyje. "
+            "Tėvas - Vincas Mickus 1926 m. baigė Dotnuvos žemės ūkio akademiją."
+        )
+        self.assertEqual(date, "1942-08-03")
+        self.assertEqual(year, 1942)
+
+    def test_no_birth_sentence_yields_nothing(self) -> None:
+        self.assertEqual(extract_biography_birth_date("Klaida užklausoje."), (None, None))
+        self.assertEqual(extract_biography_birth_date(""), (None, None))
+
+
+class Seimo1996BirthDateRecordTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+
+    def _parse(self, candidate_id: str) -> dict:
+        results = parse_anketa_samples(
+            candidate_ids=[candidate_id], output_root=Path(self._tmp.name)
+        )
+        return json.loads(Path(results[0]["outputPath"]).read_text(encoding="utf-8"))
+
+    def test_full_date_lands_in_anketa_with_its_provenance(self) -> None:
+        anketa = self._parse("butkevicius-audrius")["normalized"]["anketa"]
+        # Written to the corpus's usual key so the person index and dashboard
+        # need no special case...
+        self.assertEqual(anketa["gimimo-data"], "1960-09-24")
+        # ...but flagged, because unlike every other era this is prose-derived.
+        self.assertEqual(anketa["gimimo-data-saltinis"], "biografijos-tekstas")
+
+    def test_year_only_candidate_gets_a_year_but_no_birth_date(self) -> None:
+        anketa = self._parse("asmolkov-vasilij")["normalized"]["anketa"]
+        self.assertEqual(anketa["gimimo-metai"], 1950)
+        self.assertNotIn("gimimo-data", anketa)
+        self.assertNotIn("gimimo-data-saltinis", anketa)
+
+    def test_candidate_without_a_biography_page_gets_no_anketa_section(self) -> None:
+        record = self._parse("astrauskas-vytautas")
+        self.assertIsNone(record["rawData"]["biography"])
+        self.assertNotIn("anketa", record["normalized"])
+
 
 if __name__ == "__main__":
     unittest.main()

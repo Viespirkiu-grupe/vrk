@@ -1240,7 +1240,30 @@ of the declaration sections, because these pages carry no questionnaire.
   rather than through normal DOM parsing.
 - `rawData.biography` is `null` when the candidate page links no `Biografija`
   page (`astrauskas-vytautas` in the 1996 fixture set); otherwise
-  `{"text": "..."}`, the full free-text paragraph verbatim.
+  `{"text", "birthDate", "birthYear"}` — the full free-text paragraph
+  verbatim, plus whatever its opening sentence yields.
+- **`normalized.anketa.gimimo-data` here is derived from biography prose, not
+  read from a field.** These pages publish no birth-date field at all, so the
+  biography's opening sentence ("Gimė 1942 m. rugpjūčio 3 d. Panevėžyje") is
+  the only source. It is written to the corpus's usual key so the person
+  index, `docs/concept-map.json` and the dashboard resolve it with no
+  special case, and **`gimimo-data-saltinis: "biografijos-tekstas"` marks the
+  provenance** — treat it as a weaker source than every other era's published
+  field. `anketa` is omitted entirely when the biography yields nothing.
+  - Coverage over the 906 records of this family: 692 full dates (76%), 157
+    year-only, 61 neither.
+  - `gimimo-metai` holds the year-only cases ("Gimė 1950 m."). A year is
+    **never** promoted to a birth date — name plus year would merge namesakes
+    wholesale — so those records still group by name alone in the person
+    index.
+  - Accuracy, measured: of the 149 extracted dates whose candidate shares a
+    name with a modern candidate who has a published birth date, 133 (89%)
+    match exactly. 13 of the 16 that differ are plainly different people
+    (born decades apart); the remaining 3 are genuine disagreements between
+    VRK's own biography and questionnaire (Julius Sabatauskas: 1958-03-01 in
+    the biography, 1958-04-01 in the modern record), not parse failures. A
+    mis-extracted date fails to merge rather than merging wrongly, so the
+    failure mode is a split person, not a conflated one.
 - No elected data anywhere, same as the 2015 family: these pages carry no
   winner marker, so electedness is not part of the candidate record.
 - No income declaration, private-interest declaration, or campaign-finance

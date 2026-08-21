@@ -65,8 +65,12 @@
         "2015-birzelio-21-pakartotiniai-silutes": "anketa.gimimo-data",
         "2015-lapkricio-8-telsiu-mero": "anketa.gimimo-data",
         "1997-kovo-23-savivaldybiu-tarybu": "anketa.gimimo-data",
-        "1997-birzelio-29-svenciniu-tarybos-pakartotiniai": "anketa.gimimo-data"
-      }
+        "1997-birzelio-29-svenciniu-tarybos-pakartotiniai": "anketa.gimimo-data",
+        "1996-spalio-20-seimo": "anketa.gimimo-data",
+        "1997-kovo-23-seimo-pakartotiniai": "anketa.gimimo-data",
+        "1997-gruodzio-21-seimo-pakartotiniai": "anketa.gimimo-data"
+      },
+      "note": "For the 1996-1998 Seimas archive elections the value is derived from the biography's opening sentence rather than a published field (those pages have none); each such record carries anketa.gimimo-data-saltinis = 'biografijos-tekstas'. Present on 692 of that family's 906 records; a further 157 have only anketa.gimimo-metai (year, never a date)."
     },
     "gimimo-vieta": {
       "label-lt": "Gimimo vieta",

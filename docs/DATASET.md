@@ -466,11 +466,18 @@ each now has one.
   `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`)
   publish no elected markers, no income/private-interest declarations in a
   form worth parsing (the linked `kpdl.htm` declaration is captured only as a
-  raw URL), and — unlike every other era, including 2015 — **no birth date at
-  all**. Every record in these three elections groups by name alone in
-  `scripts/build_person_index.py`'s cross-election identity index; a
-  same-named person appearing only in this family cannot be told apart from a
-  namesake there. The 1997 municipal archive
+  raw URL), and — unlike every other era, including 2015 — **no birth-date
+  field**. A birth date is instead recovered from the biography's opening
+  sentence and marked
+  `anketa.gimimo-data-saltinis: "biografijos-tekstas"`; see
+  `docs/OUTPUT_SCHEMA.md` for coverage (692 of 906) and the measured 89%
+  agreement with independently published dates. The remaining 214 records of
+  this family — 157 whose biography gives only a year, 57 with no usable
+  biography — still group by name alone in
+  `scripts/build_person_index.py`'s cross-election identity index, so a
+  same-named person among them cannot be told apart from a namesake. Corpus
+  records without a birth date: **217** (down from 908 before the biography
+  pass). The 1997 municipal archive
   (`1997-kovo-23-savivaldybiu-tarybu`,
   `1997-birzelio-29-svenciniu-tarybos-pakartotiniai`) does publish birth date
   and resolves the same identity risk 2015 and later eras do; see
