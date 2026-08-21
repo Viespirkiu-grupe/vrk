@@ -18,7 +18,7 @@ never touched by a full run.
 
 ## Inventory
 
-58,475 candidate records across 36 elections, 1996–2025, with **zero fetch
+58,737 candidate records across 37 elections, 1996–2025, with **zero fetch
 failures**.
 
 **The table below is an aggregate, not an inventory of any one directory.**
@@ -87,7 +87,8 @@ election was re-parsed offline the same day.
 | `2014-prezidento` | 7 | 1 | 0 | 7 |
 | `2014-ep` | 215 | 11 | 4 | 215 |
 | `2009-prezidento` | 7 | 1 | 0 | 7 |
-| **total** | **58475** | **5204** | **1276** | **19909** |
+| `2009-ep` | 262 | 12 | 3 | 260 |
+| **total** | **58737** | **5216** | **1279** | **20169** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
@@ -96,7 +97,7 @@ the presidential elections**, where every candidate carries a participation
 note (`Dalyvavo I ture`, `Dalyvavo II ture`, or `Išrinktas II ture` for the
 winner). Counting non-null `pastaba` there reports 9 and 8 "elected" for a
 race one person won; match on the `Išrink` prefix, not on presence. The
-2009–2015 pages mark no winner at all, so for those eleven elections the column
+2009–2015 pages mark no winner at all, so for those twelve elections the column
 counts `kandidatavimas.isrinktas == true` instead — the flag joined in from
 VRK's results trees (`python -m scraper build-results <id>`; the
 reconciliation behind each file is in `docs/CLI_REFERENCE.md`'s results
@@ -159,6 +160,29 @@ hold a list seat (the index's declared 58 still counts five withdrawn
 self-nominations). The `stats` block of `sitemaps/2012-seimo.json` records
 each of these. Every null in the fixture records was traced to a genuinely
 blank or omitted source line before the full runs started.
+
+### The 2026-08-22 scrape of the 2009 European Parliament election
+
+GitHub issue #38; VRK election 404, the 2014 EP listing one revision
+earlier (15 party lists, 262 candidates, every list walked equal to its
+declared size). Built on `ep_2014`'s walkers with its own question mapping
+and scraped the same evening with `KEEP_SAMPLES=1`: **262/262, 0 fetch
+failures, 0 parse anomalies beyond two `CampaignRootMissing` warnings** —
+Tomaševski's and Matulevičius's pages link campaign participant ids that
+do not exist under the EP path (Tomaševski's is his presidential campaign's,
+valid under `403_lt`), a VRK cross-link error recorded as what it is. 12
+MEPs joined from the elected-members page, all in the sitemap. Fixtures are
+the 15 list leaders. 20 MB of HTML retained under `samples-full/`.
+
+Reading its fixtures back to the page added two things the 2012 Seimo
+records had been missing as well: the Q9 block's free-text conviction
+explanation (`pareiskimai.teisiniai-argumentai`, the 2016 Seimo key for the
+same slot — **24 of 2012's 50 declared convictions carry one**, recovered
+by offline re-parse), and a parse-stage `CampaignRootMissing` warning for a
+campaign whose root never fetched, which until now vanished from both the
+record and `anomalies.jsonl` (two 2009 EP cases; none elsewhere in the
+retained scrapes). Person index: 262 candidacies, 204 merged into existing
+people, 58 new persons (38,232 total).
 
 ### The 2026-08-22 build of the 2009 presidential election
 
@@ -432,7 +456,7 @@ key list itself is election-specific.
 
 ## Correctness fixes behind this corpus
 
-Fifteen defects were found and fixed while building the newer modules. Each had
+Seventeen defects were found and fixed while building the newer modules. Each had
 been invisible because the affected elections had thin or no test coverage, and
 each was measured against live data after the fix:
 
@@ -455,6 +479,8 @@ each was measured against live data after the fix:
 | conviction-detail table dropped by the 2019-era row loop | VRK nests the Q9.1 detail table — date, country, court and offence per conviction — inside an anketa row of its own. The 2019-era per-row extraction read only `<b>` text from the cell, found none (the detail cells carry plain or `<strong>` text), and the empty-row skip dropped the row, so the details reached neither `rawData` nor `normalized` anywhere in the ep_2019 parser family. A cell that hosts a nested table now parses as a records row — the same shape the standalone records path emits — and `2019-kovo-3-savivaldybiu-tarybu` folds it into `teistumo-detales.irasai` with meru_2021's keys, since both elections ask the same questions under the same statute. prezidento_2019's verbatim copy of the loop got the same capture. Measured: exactly the **six 2019 EP declarers** regain their conviction details, Gintas Orda's 1988 LTSR record lands in normalized, and the 2017 mayoral, Marijampolė and 2019 presidential corpora are byte-identical (no declarers) |
 | a recurring profile-card label overwrote its first value | `_normalize_profile_data` keyed `profilis.kita` by label slug, so the second `Iškėlė` on a card replaced the first. Measured over all 40,469 records when the 2012 Seimo cards (one `Apygarda`/`Iškėlė` pair per candidacy) made it routine: exactly one existing record was affected — Marija Puč, 2015 Trakai, whose `iskele` named the parenthetical member party instead of the coalition that nominated her. Later occurrences now land under `-2`, `-3` suffixes; the one record was re-parsed |
 | the GPM305 income form unknown to the 2015-era parser | the era's income aliases named the GPM308 return only. The 2009 presidential pages extract the earlier GPM305 form — and so, it turned out, does the entire 2015 municipal family: every March 2015 council/mayoral candidate, both June repeat elections and the November Telšiai race. Their `gautos-pajamos` and `sumoketas-pajamu-mokestis` had been null since the family was built, while the five asset lines above them parsed fine. Adding the alias for 2009 and re-parsing the family offline recovered income and tax for **15,837 records** (15,138 March municipal, 366 Šilutė, 326 Širvintos–Trakai, 7 Telšiai); the 13 still null across the family publish no declaration at all (11 municipal, one Širvintos–Trakai candidacy whose anketa VRK never published, one 2014 EP) |
+| the 2012-era conviction explanation never normalized | the 2012 Seimo and 2009 EP forms close the Q9 block with "Tuo atveju, jei bent į vieną 9 punkto klausimą atsakėte Taip … paaiškinimą įrašykite čia", and the era normalizer read the numbered questions only, so the explanation stayed in `rawData.anketa.rows`. Now `pareiskimai.teisiniai-argumentai` (2016's key for the same slot): **24 of 2012's 50 declared convictions** and 2 of 2009 EP's 3 carry text; null on every 2013 record, whose form no longer asks |
+| a campaign whose root never fetched vanished silently at parse time | `_parse_campaign_sample` returned None for a campaign directory with no tabs and no `root.html` — the shape a `CampaignRootFetchFailed` leaves behind — and the parse stage moved on, so the record had no campaign section and `anomalies.jsonl` said nothing; the only trace was the candidate's `index.json`. Now a `CampaignRootMissing` warning. Measured over every retained `index.json` (2009–2015, 18,246 candidates): the two 2009 EP dead links are the only cases |
 | litas-only donation totals filed under `amountEur` | the 2012–2015 donation-summary parser read the totals block positionally as label / Eur / Lt / note — the March 2015 column order. On the litas-only pages of 2012, 2013 and both 2014 elections the one amount is Lt, so every total landed in `amountEur` and the trailing note ("Nuo 2012-01-01 draudžiamos", VRK's reminder that corporate donations were banned) was parsed as a failed amount and lost. The sums are now keyed by the table's own amount headings — `amountLt` on litas-only pages, both on the March 2015 pages, `amountEur` on the later 2015 ones. Re-parsing re-keyed **19,966 summary rows in 1,576 records** (1,343 of 1,927 in 2012, 11 in 2013, all 7 presidential, all 215 EP) and restored the note to 1,576 of them; the per-donation rows had always been right |
 
 Every fix was verified by re-parsing all elections and confirming the diff was
@@ -488,8 +514,8 @@ each now has one.
   by-elections and older elections that have no module yet.
 - ~~The 2012–2015 pages publish no elected markers anywhere~~ — closed
   2026-08-21 by the results join: `kandidatavimas.isrinktas` is now a real
-  true/false on every record of the ten elections of that family (eleven
-  since 2009 joined on 2026-08-22), derived
+  true/false on every record of the ten elections of that family (twelve
+  since the two 2009 elections joined on 2026-08-22), derived
   from VRK's results trees and reconciled against VRK's own counts (139
   Seimas members in 2012, 3 in 2013, 11 MEPs, the president, both 2015
   by-election winners, 57 mayors and 1,464 council seats in March 2015 — 48

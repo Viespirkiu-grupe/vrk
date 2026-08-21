@@ -42,6 +42,7 @@ python -m scraper <command> [args]
 - `1997-kovo-23-savivaldybiu-tarybu` (1997-03-23 municipal council general election, all 56 municipalities)
 - `1997-birzelio-29-svenciniu-tarybos-pakartotiniai` (1997-06-29 Švenčionys district council repeat election)
 - `2009-prezidento` (2009-05-17 presidential election)
+- `2009-ep` (2009-06-07 European Parliament election, 15 party lists)
 - `2012-seimo` (2012-10-14 Seimas general election, 18 party lists and 71 single-member constituencies)
 - `2013-kovo-3-seimo-birzai-zarasai-ukmerge` (2013-03-03 Seimo repeat elections in Biržų–Kupiškio No. 48 and Zarasų–Visagino No. 52 and new election in Ukmergės No. 61)
 - `2014-prezidento` (2014-05-11 presidential election)
@@ -930,12 +931,33 @@ Question sets, one per election type:
   the Q15 prior-mandates table *is* asked. The page omits a question it
   has no answer for (Q7 everywhere, Q15 for two candidates, Q20 and the
   spouse line for the unmarried), so a null is an absent row.
+- **European Parliament (2009)** — `ep_2009.normalize_ep_anketa_rows`: the
+  2014 EP form one revision earlier. The 37 str. questions (Q8.1–8.3 with
+  8.3.1/8.3.2) and the 93 str. ones (Q9.1–9.3) are as in 2014; around them
+  the birth date is Q5 (2014: Q3), the Q9 block closes with a free-text
+  line for a "Taip" answer ("Tuo atveju, jei bent į vieną 9 punkto klausimą
+  atsakėte Taip … paaiškinimą įrašykite čia" → `pareiskimai.teisiniai-argumentai`,
+  the 2016 Seimo key for the same slot — also on the 2012 Seimo pages, where
+  the 2012/2013 normalizer now reads it), the line after the education
+  table asks for the degree *and* the pedagogical title ("…mokslo laipsnį
+  …, vardą …" → `mokslo-laipsnis` and `pedagoginis-vardas`), and Q21 is
+  asked (2014 dropped it).
 
 Listings, one walk per structure:
 
 - `2014-prezidento`: one table of seven candidates (each row links the
   anketa twice; the era's row walker takes the first). Fixtures are the
   whole field.
+- `2009-ep`: the 2014 EP index-and-lists walk one revision earlier (VRK
+  election 404): an index of 15 party lists with declared sizes, each a
+  page of candidates in list order. The sitemap reconciles every walked
+  list against its declared size (262/262). Fixtures are the 15 list
+  leaders; the full field is scraped by the batch runner. Every candidate
+  links the *party's* campaign participant page; Tomaševski's page links
+  his presidential campaign's participant id (`Dalyvis4000`, valid under
+  `403_lt`) under the EP path where it does not exist — the one
+  `CampaignRootFetchFailed` in the election, a VRK cross-link error left as
+  the anomaly it is.
 - `2009-prezidento`: the same one-table listing (VRK election 403), seven
   candidates, fixtures the whole field. The oldest election in this
   layout family, and the only one whose pages link a tab VRK never
@@ -976,6 +998,11 @@ coalition member party) travel in the `kandidatavimas` block on every 2012,
 2013 and EP record.
 
 ```bash
+python -m scraper fetch-sample 2009-ep
+python -m scraper sitemap 2009-ep
+python -m scraper fetch-candidate-samples 2009-ep --candidate-id vytautas-landsbergis --allow-new-samples
+python -m scraper build-results 2009-ep
+KEEP_SAMPLES=1 scripts/run_election_batches.sh 2009-ep
 python -m scraper fetch-sample 2009-prezidento
 python -m scraper sitemap 2009-prezidento
 python -m scraper fetch-candidate-samples 2009-prezidento --candidate-id dalia-grybauskaite --allow-new-samples
@@ -992,8 +1019,8 @@ KEEP_SAMPLES=1 scripts/run_election_batches.sh 2012-seimo
 
 ## Elected status for 2012–2015 (`build-results`) Workflow
 
-The 2009–2015 static pages carry no winner mark, so the eleven elections of
-that family (`2009-prezidento`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`,
+The 2009–2015 static pages carry no winner mark, so the twelve elections of
+that family (`2009-prezidento`, `2009-ep`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`,
 `2014-prezidento`, `2014-ep`, the six 2015 elections) get their
 `kandidatavimas.isrinktas` from VRK's results trees
 (`statiniai/puslapiai/<year>_<type>_rinkimai/output_lt/`). The walkers and
@@ -1007,6 +1034,7 @@ reconciliation looked like when the files were built (2026-08-21):
 | `2012-seimo` | elected-members page (ids on the page) | 139 (70 list, 69 constituency) | all 139 in the sitemap; 69 of 71 constituency pages name the same winner, the other two being the annulled Biržų–Kupiškio and Zarasų–Visagino |
 | `2013-kovo-3-…` | 3 constituency pages, round two | 3 | all resolved by name within the constituency |
 | `2009-prezidento` | first-round nationwide vote table sentence ("Respublikos Prezidente išrinkta …"; the tree's certificate-style final page declines the name) | 1 | resolved |
+| `2009-ep` | elected-members page (`rezultatai/index.html`; 2014's is `rezultatai/rezultatai.html`) | 12 | all in the sitemap |
 | `2014-prezidento` | final-results page sentence | 1 | resolved |
 | `2014-ep` | elected-members page | 11 | all in the sitemap |
 | `2015-kovo-1-seimo-zirmunai` | round-two page (no verdict sentence: runoff plurality) | 1 | resolved |
@@ -1036,7 +1064,7 @@ Traps the walkers encode, worth knowing before touching them:
   them because most of the annulled winners won again in June.
 
 ```bash
-for id in 2009-prezidento 2012-seimo 2013-kovo-3-seimo-birzai-zarasai-ukmerge 2014-prezidento 2014-ep \
+for id in 2009-prezidento 2009-ep 2012-seimo 2013-kovo-3-seimo-birzai-zarasai-ukmerge 2014-prezidento 2014-ep \
           2015-kovo-1-seimo-zirmunai 2015-birzelio-7-seimo-varena-eisiskes 2015-lapkricio-8-telsiu-mero \
           2015-birzelio-7-pakartotiniai-sirvintos-trakai 2015-birzelio-21-pakartotiniai-silutes 2015-kovo-1-savivaldybiu; do
   python -m scraper build-results "$id"
