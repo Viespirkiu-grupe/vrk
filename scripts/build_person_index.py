@@ -6,13 +6,29 @@ resolved by normalized name + birth date. Measured over the 33,119-record
 corpus: birth date is present on 33,118 records, the pair collides for zero
 same-election record pairs, and 305 names are shared by people with distinct
 birth dates, which name-only matching would have wrongly merged. A record
-without a birth date groups by name alone and is flagged; there are two, and
-the second is a known duplicate rather than a second person. VRK issued Marija
-Puč two candidate ids in the 2015 Trakai repeat election and published the
-council one as an unfilled "Rengiama" page, so that record has a name and no
-birth date and splits off from her real entry. Merging it on name alone is
-exactly what the birth-date key exists to prevent, so it is left split and
-recorded here instead — see docs/DATASET.md.
+without a birth date groups by name alone and is flagged; there were two
+before the 1996-1998 Seimas archive family was added, and the second is a
+known duplicate rather than a second person. VRK issued Marija Puč two
+candidate ids in the 2015 Trakai repeat election and published the council
+one as an unfilled "Rengiama" page, so that record has a name and no birth
+date and splits off from her real entry. Merging it on name alone is exactly
+what the birth-date key exists to prevent, so it is left split and recorded
+here instead — see docs/DATASET.md.
+
+The 1996-1998 Seimas archive family (`1996-spalio-20-seimo`,
+`1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`;
+`scraper/shared/seimo_archive_1990s.py`) publishes no birth date on any
+candidate page, so every one of its records groups by name alone rather than
+name+birth-date — a real, structural gap in this identity key, not a handful
+of flagged exceptions. A same-named person appearing only within this family
+cannot be told apart from a namesake by this index; see
+`docs/DATASET.md` for the measured count once the full 1996 scrape lands. The
+1997 municipal archive family (`1997-kovo-23-savivaldybiu-tarybu`,
+`1997-birzelio-29-svenciniu-tarybos-pakartotiniai`;
+`scraper/shared/savivaldybiu_archive_1997.py`) does publish birth date, under
+`normalized.asmeniniaiDuomenys.gimimoData` rather than the
+`anketa`/`biografija` shape the eras above use, so `birth_date_of` checks
+that section too.
 
 Run from the repo root:
 
@@ -36,6 +52,11 @@ OUTPUT_PATH = Path("dashboard/people.json")
 # Chronological order; the dashboard renders whatever appears here and sorts
 # unknown election ids after these.
 ELECTION_ORDER = [
+    "1996-spalio-20-seimo",
+    "1997-kovo-23-savivaldybiu-tarybu",
+    "1997-kovo-23-seimo-pakartotiniai",
+    "1997-birzelio-29-svenciniu-tarybos-pakartotiniai",
+    "1997-gruodzio-21-seimo-pakartotiniai",
     "2015-kovo-1-savivaldybiu",
     "2015-kovo-1-seimo-zirmunai",
     "2015-birzelio-7-seimo-varena-eisiskes",
@@ -78,6 +99,15 @@ def birth_date_of(record: dict) -> str | None:
         data = normalized.get(section)
         if isinstance(data, dict) and data.get("gimimo-data"):
             return str(data["gimimo-data"])
+    # The 1997 municipal archive family (scraper/shared/savivaldybiu_archive_1997.py)
+    # publishes birth date as a plain labelled paragraph, carried under its
+    # own section with a camelCase key rather than the anketa/biografija
+    # shape above. The 1996-1998 Seimas archive family
+    # (scraper/shared/seimo_archive_1990s.py) publishes no birth date at
+    # all — every one of its records groups by name alone; see docs/DATASET.md.
+    asmeniniai = normalized.get("asmeniniaiDuomenys")
+    if isinstance(asmeniniai, dict) and asmeniniai.get("gimimoData"):
+        return str(asmeniniai["gimimoData"])
     return None
 
 

@@ -419,6 +419,53 @@ used as the sitemap's cross-check), 60 `district-<id>.html` pages and a
 `lists/` directory of 478 list pages. The tests assert both counts, because a
 missing list page silently drops its candidates from the sitemap.
 
+For `1996-spalio-20-seimo` the allowlist (`tests/test_seimo_1996_sample_allowlist.py`)
+is a curated five of the 879 candidates:
+
+- `asmolkov-vasilij` — party-nominated, dual candidacy (single-mandate seat
+  plus a `Daugiamandatė` multi-mandate list position)
+- `butkevicius-audrius` — self-nominated (`Išsikėlė pats`), single candidacy
+- `andriukaitis-vytenis-povilas` — party-nominated, single candidacy, a
+  well-known figure to sanity-check the biography text against
+- `saltiene-irena` — has no photo
+- `astrauskas-vytautas` — has no biography link, and is also dual-candidacy
+
+The samples tree also carries a `constituencies/` directory with all 71
+`apgtl.htm` crawl pages the sitemap is built from — discovery scaffolding,
+allowlisted separately from the candidate fixtures.
+
+For `1997-kovo-23-seimo-pakartotiniai` and `1997-gruodzio-21-seimo-pakartotiniai`
+the allowlists (`tests/test_seimo_pakartotiniai_1997_kovo_sample_allowlist.py`,
+`tests/test_seimo_aukstaitijos_1997_gruodzio_sample_allowlist.py`) are the
+complete fields — 23 and 4 candidates — since both re-run elections are this
+small already. The March re-run's fixture set covers both a masculine and a
+feminine self-nomination spelling (`Išsikėlė pats` / `Išsikėlė pati`).
+
+For `1997-kovo-23-savivaldybiu-tarybu` the allowlist
+(`tests/test_savivaldybiu_1997_sample_allowlist.py`) is **six candidates out
+of 6,276** — a sample rather than the field, as with the other municipal
+generals:
+
+- `pilvelis-algirdas`, `kizelavicius-stasys`, `dapkus-ramualdas`,
+  `margeviciene-vince-vaidevute` — spread across four different municipalities
+  (Vilnius, Alytus, Birštonas, Kaunas cities), each a party-list head
+- `tamulevicius-kestutis` / `tamulevicius-kestutis-2` — two different people
+  (VRK ids 37862 and 37809) who share a name, in Alytus and Druskininkai; the
+  pair that guards the positional `-2` suffix against a false merge
+
+Its samples directory also holds the listing tree: `municipalities/` (56
+`apgtl.htm` pages) and `lists/` (449 `pkal.htm` party-list pages), since the
+sitemap is rebuilt from them offline the same way the Seimas archive's
+`constituencies/` directory works.
+
+For `1997-birzelio-29-svenciniu-tarybos-pakartotiniai` the allowlist
+(`tests/test_svencioniu_tarybos_1997_sample_allowlist.py`) is the **complete
+field — all 110 candidates** across the nine party lists Švenčionys fielded in
+the repeat vote, small enough that a curated subset would not save much and
+the full field is a stronger regression guard. Its samples directory holds the
+same `municipalities/`/`lists/` scaffolding as the general election, scoped to
+the one municipality.
+
 ## CLI behavior and guardrail
 
 By default, sample-fetch commands do not allow creating new candidate directories:

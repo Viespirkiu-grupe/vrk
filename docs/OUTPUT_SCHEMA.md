@@ -1196,3 +1196,79 @@ two appendices describe the shape. What is specific to this election:
   candidates by the district walk, 434 on the roll-up, none in only one of
   them. The list pages' dual-candidacy marker agrees with the candidate-id
   join on all 412 dual candidates.
+
+## Appendix: Seimas archive (`1996-spalio-20-seimo`, `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`)
+
+Records are written as `data/<election-id>/<candidate-id>-<election-id>.json`.
+1996 defines the parsers (`scraper/shared/seimo_archive_1990s.py`); both 1997
+repeat elections are thin wiring over the same machinery and share every
+shape below. These pages predate even the 2015 family — Teleport Pro
+snapshots of `lrs.lt/cgi-bin/ora7dbcgi/...` with no anketa tabs at all — so
+the record does **not** follow the shared body's section names
+(`profilis`/`anketa`/`biografija`/...). It has its own, smaller shape:
+
+- `rawData` section order: `profile`, `candidacies`, `residence`,
+  `biography`. `normalized` order: `profilis`, `kandidatavimas`,
+  `gyvenamojiVieta`, `biografija`.
+- `rawData.profile` holds `candidateDisplayName`, `photoUrl` (an external URL,
+  never downloaded — unlike the base64-embedded-photo eras, this family's
+  photos stay as source links), `biographyUrl` and `incomeDeclarationUrl`
+  (both raw URLs, not fetched or parsed — the income declaration has no
+  relation to the GPM308 shape any later era uses, and biography text is
+  captured but not further structured).
+- `rawData.candidacies` is a **list**, not a single object: a candidate can
+  hold two candidacies, their single-member constituency and, optionally, a
+  `Daugiamandatė` (multi-mandate party list) entry with its own `listNumber`.
+  Each entry is `{apygardaName, apygardaNumber, apygardaUrl, nominator,
+  nominatorUrl, listNumber}`; a self-nominated candidate's row reads
+  `nominator: "Išsikėlė pats"` (or `"Išsikėlė pati"`, feminine) with
+  `nominatorUrl: ""`.
+- `rawData.residence` is recovered from inside a malformed HTML comment (see
+  the module docstring and `docs/CLI_REFERENCE.md`'s Seimas archive section)
+  rather than through normal DOM parsing.
+- `rawData.biography` is `null` when the candidate page links no `Biografija`
+  page (`astrauskas-vytautas` in the 1996 fixture set); otherwise
+  `{"text": "..."}`, the full free-text paragraph verbatim.
+- No elected data anywhere, same as the 2015 family: these pages carry no
+  winner marker, so electedness is not part of the candidate record.
+- No income declaration, private-interest declaration, or campaign-finance
+  sections exist for this family — VRK published none of that structure on
+  these pages in a form worth parsing at fixture scale. This mirrors the
+  project's elected-status precedent (`docs/DATASET.md`): a fact that cannot
+  be trusted or cheaply parsed is left out and documented, not guessed at.
+
+## Appendix: Municipal archive (`1997-kovo-23-savivaldybiu-tarybu`, `1997-birzelio-29-svenciniu-tarybos-pakartotiniai`)
+
+Records are written as `data/<election-id>/<candidate-id>-<election-id>.json`.
+Both share the parser in `scraper/shared/savivaldybiu_archive_1997.py` and the
+`19970323` directory (distinguished only by the phase prefix in
+`apgtl.htm-<phase>+<municipality>.htm` — `3` for the general election, `5` for
+the Švenčionys repeat). Like the Seimas archive above, this family predates
+the 2016+ anketa-tab shape and does not follow the shared body's section
+names:
+
+- `rawData` section order: `profile`, `candidacy`, `personal`. `normalized`
+  order: `profilis`, `kandidatavimas`, `asmeniniaiDuomenys`.
+- `rawData.candidacy` is a single object (not a list — this family has no
+  multi-mandate-list concept): `{municipalityName, municipalityNumber,
+  municipalityUrl, nominator, nominatorUrl, listNumber}`.
+- `rawData.personal` is this family's distinguishing richness over the Seimas
+  archive: `birthDate`, `birthPlace`, `residence`, `nationality`, `education`,
+  `foreignLanguages` (list), `mainWorkplace`, `publicActivity`,
+  `familyStatus`, `familyMembers` (list of `{name, relation}`) — all plain
+  labelled paragraphs on `kandvl.htm`, no comment-corruption quirk here. Any
+  field genuinely absent from the source page (no matching label at all, not
+  just an empty answer) normalizes to `null`/`[]` rather than an empty
+  string — `pilvelis-algirdas`'s page has no "Tautybė:" line at all, for
+  example, and `normalized.asmeniniaiDuomenys.tautybe` is `null` for that
+  record.
+- `rawData.profile` holds only `candidateDisplayName` and
+  `incomeDeclarationUrl` (raw URL, not parsed — same call as the Seimas
+  archive) — no photo field, since this family's candidate pages carry no
+  portrait.
+- No elected data, no biography subpage, no private-interest or
+  campaign-finance sections — same scope decision as the Seimas archive
+  appendix above.
+- 46 candidate name collisions in the 6,276-candidate general election
+  resolve with the corpus's standard positional `-2` suffix; see
+  `docs/CLI_REFERENCE.md`'s municipal archive section for the concrete pair.

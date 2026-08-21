@@ -1,7 +1,12 @@
 {
   "description": "Concept-to-path bridge for the normalized layer of the VRK election corpus. For each concept, the normalized dotted path per election id. An election missing from a concept's paths does not publish (or does not normalize) that concept — see docs/DATA_GUIDE.md.",
-  "verified": "2026-08-19 against every record of the 20 elections then under data/; 2026-08-21 for the six 2015 elections added since, against their parsed records (complete fields for the three small ones, fixture sets for the three large ones).",
+  "verified": "2026-08-19 against every record of the 20 elections then under data/; 2026-08-21 for the six 2015 elections added since, against their parsed records (complete fields for the three small ones, fixture sets for the three large ones). 2026-08-21 for the five 1996-1998 archive elections added since: the two municipal ones (1997-kovo-23-savivaldybiu-tarybu, 1997-birzelio-29-svenciniu-tarybos-pakartotiniai) against their parsed records for the ten concepts their asmeniniaiDuomenys/kandidatavimas sections actually publish; the three Seimas archive elections (1996-spalio-20-seimo and its two 1997 repeats) publish none of the existing concepts — no birth date, nationality, education, or any of the other fields those pages simply do not carry, and their candidacy field is a list (single- and multi-mandate seats can both apply) rather than the single value every existing concept path assumes, so iskele/savivaldybe are left unmapped for them too — so they appear only in the elections list.",
   "elections": [
+    "1996-spalio-20-seimo",
+    "1997-kovo-23-savivaldybiu-tarybu",
+    "1997-kovo-23-seimo-pakartotiniai",
+    "1997-birzelio-29-svenciniu-tarybos-pakartotiniai",
+    "1997-gruodzio-21-seimo-pakartotiniai",
     "2015-kovo-1-seimo-zirmunai",
     "2015-birzelio-7-seimo-varena-eisiskes",
     "2015-kovo-1-savivaldybiu",
@@ -58,7 +63,9 @@
         "2015-kovo-1-savivaldybiu": "anketa.gimimo-data",
         "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.gimimo-data",
         "2015-birzelio-21-pakartotiniai-silutes": "anketa.gimimo-data",
-        "2015-lapkricio-8-telsiu-mero": "anketa.gimimo-data"
+        "2015-lapkricio-8-telsiu-mero": "anketa.gimimo-data",
+        "1997-kovo-23-savivaldybiu-tarybu": "asmeniniaiDuomenys.gimimoData",
+        "1997-birzelio-29-svenciniu-tarybos-pakartotiniai": "asmeniniaiDuomenys.gimimoData"
       }
     },
     "gimimo-vieta": {
@@ -89,7 +96,9 @@
         "2015-kovo-1-savivaldybiu": "anketa.gimimo-vieta",
         "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.gimimo-vieta",
         "2015-birzelio-21-pakartotiniai-silutes": "anketa.gimimo-vieta",
-        "2015-lapkricio-8-telsiu-mero": "anketa.gimimo-vieta"
+        "2015-lapkricio-8-telsiu-mero": "anketa.gimimo-vieta",
+        "1997-kovo-23-savivaldybiu-tarybu": "asmeniniaiDuomenys.gimimoVieta",
+        "1997-birzelio-29-svenciniu-tarybos-pakartotiniai": "asmeniniaiDuomenys.gimimoVieta"
       }
     },
     "tautybe": {
@@ -116,7 +125,9 @@
         "2015-kovo-1-savivaldybiu": "anketa.tautybe",
         "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.tautybe",
         "2015-birzelio-21-pakartotiniai-silutes": "anketa.tautybe",
-        "2015-lapkricio-8-telsiu-mero": "anketa.tautybe"
+        "2015-lapkricio-8-telsiu-mero": "anketa.tautybe",
+        "1997-kovo-23-savivaldybiu-tarybu": "asmeniniaiDuomenys.tautybe",
+        "1997-birzelio-29-svenciniu-tarybos-pakartotiniai": "asmeniniaiDuomenys.tautybe"
       },
       "note": "Not published in the 2024 and 2025 elections."
     },
@@ -148,7 +159,9 @@
         "2015-kovo-1-savivaldybiu": "anketa.issilavinimas.irasai",
         "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.issilavinimas.irasai",
         "2015-birzelio-21-pakartotiniai-silutes": "anketa.issilavinimas.irasai",
-        "2015-lapkricio-8-telsiu-mero": "anketa.issilavinimas.irasai"
+        "2015-lapkricio-8-telsiu-mero": "anketa.issilavinimas.irasai",
+        "1997-kovo-23-savivaldybiu-tarybu": "asmeniniaiDuomenys.issilavinimas",
+        "1997-birzelio-29-svenciniu-tarybos-pakartotiniai": "asmeniniaiDuomenys.issilavinimas"
       }
     },
     "uzsienio-kalbos": {
@@ -179,7 +192,9 @@
         "2015-kovo-1-savivaldybiu": "anketa.uzsienio-kalbos",
         "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.uzsienio-kalbos",
         "2015-birzelio-21-pakartotiniai-silutes": "anketa.uzsienio-kalbos",
-        "2015-lapkricio-8-telsiu-mero": "anketa.uzsienio-kalbos"
+        "2015-lapkricio-8-telsiu-mero": "anketa.uzsienio-kalbos",
+        "1997-kovo-23-savivaldybiu-tarybu": "asmeniniaiDuomenys.uzsienioKalbos",
+        "1997-birzelio-29-svenciniu-tarybos-pakartotiniai": "asmeniniaiDuomenys.uzsienioKalbos"
       }
     },
     "seimine-padetis": {
@@ -210,7 +225,9 @@
         "2015-kovo-1-savivaldybiu": "anketa.seimine-padetis",
         "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.seimine-padetis",
         "2015-birzelio-21-pakartotiniai-silutes": "anketa.seimine-padetis",
-        "2015-lapkricio-8-telsiu-mero": "anketa.seimine-padetis"
+        "2015-lapkricio-8-telsiu-mero": "anketa.seimine-padetis",
+        "1997-kovo-23-savivaldybiu-tarybu": "asmeniniaiDuomenys.seimyninePadetis",
+        "1997-birzelio-29-svenciniu-tarybos-pakartotiniai": "asmeniniaiDuomenys.seimyninePadetis"
       }
     },
     "sutuoktinio-vardas-pavarde": {
@@ -322,7 +339,9 @@
         "2015-kovo-1-savivaldybiu": "anketa.pagrindine-darboviete",
         "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.pagrindine-darboviete",
         "2015-birzelio-21-pakartotiniai-silutes": "anketa.pagrindine-darboviete",
-        "2015-lapkricio-8-telsiu-mero": "anketa.pagrindine-darboviete"
+        "2015-lapkricio-8-telsiu-mero": "anketa.pagrindine-darboviete",
+        "1997-kovo-23-savivaldybiu-tarybu": "asmeniniaiDuomenys.pagrindineDarboviete",
+        "1997-birzelio-29-svenciniu-tarybos-pakartotiniai": "asmeniniaiDuomenys.pagrindineDarboviete"
       },
       "note": "2016-era question; the 2020-on near-equivalent is einamos-pareigos."
     },
@@ -354,7 +373,9 @@
         "2015-kovo-1-savivaldybiu": "anketa.visuomenine-veikla",
         "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "anketa.visuomenine-veikla",
         "2015-birzelio-21-pakartotiniai-silutes": "anketa.visuomenine-veikla",
-        "2015-lapkricio-8-telsiu-mero": "anketa.visuomenine-veikla"
+        "2015-lapkricio-8-telsiu-mero": "anketa.visuomenine-veikla",
+        "1997-kovo-23-savivaldybiu-tarybu": "asmeniniaiDuomenys.visuomenineVeikla",
+        "1997-birzelio-29-svenciniu-tarybos-pakartotiniai": "asmeniniaiDuomenys.visuomenineVeikla"
       },
       "note": "2020-seimo's question wording is wider (scientific + pedagogical activity); the key is shared."
     },
@@ -440,7 +461,9 @@
         "2015-kovo-1-savivaldybiu": "profilis.kita.iskele.reiksme",
         "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "profilis.kita.iskele.reiksme",
         "2015-birzelio-21-pakartotiniai-silutes": "profilis.kita.iskele.reiksme",
-        "2015-lapkricio-8-telsiu-mero": "profilis.kita.iskele.reiksme"
+        "2015-lapkricio-8-telsiu-mero": "profilis.kita.iskele.reiksme",
+        "1997-kovo-23-savivaldybiu-tarybu": "kandidatavimas.iskele",
+        "1997-birzelio-29-svenciniu-tarybos-pakartotiniai": "kandidatavimas.iskele"
       },
       "note": "Absent from 2019-ep, 2019-prezidento and 2024-ep. On the profile card only for mayoral candidacies in the municipal general elections, and only on a subset of records in 2020-seimo and 2024-seimo (758/1754 and 699/1740); 2023-kovo-5 splits it by role across two keys."
     },
@@ -761,7 +784,9 @@
         "2015-kovo-1-savivaldybiu": "profilis.kita.savivaldybe.reiksme",
         "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "profilis.kita.savivaldybe.reiksme",
         "2015-birzelio-21-pakartotiniai-silutes": "profilis.kita.savivaldybe.reiksme",
-        "2015-lapkricio-8-telsiu-mero": "profilis.kita.savivaldybe.reiksme"
+        "2015-lapkricio-8-telsiu-mero": "profilis.kita.savivaldybe.reiksme",
+        "1997-kovo-23-savivaldybiu-tarybu": "kandidatavimas.savivaldybe",
+        "1997-birzelio-29-svenciniu-tarybos-pakartotiniai": "kandidatavimas.savivaldybe"
       }
     }
   }
