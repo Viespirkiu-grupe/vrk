@@ -721,7 +721,13 @@ def build_ep_results(
     return output_path, stats
 
 
-PRESIDENT_WINNER_PATTERN = re.compile(r"Respublikos Prezident[eu] išrinkt(?:as|a)\s+(.+?)(?:\.|$)")
+# The name runs up to and including its upper-cased surname token: 2014's
+# page closes the sentence with a period, 2009's runs straight into the next
+# heading ("… išrinkta Dalia GRYBAUSKAITĖ Balsavimo rezultatai …"), and the
+# collapsed page text keeps no line break between them.
+PRESIDENT_WINNER_PATTERN = re.compile(
+    r"Respublikos Prezident[eu] išrinkt(?:as|a)\s+((?:\S+\s+)*?[^\s.]*[A-ZĄČĘĖĮŠŲŪŽ]{2,}[^\s.,;]*)"
+)
 
 
 def build_presidential_results(
