@@ -83,6 +83,10 @@ const ELECTION_LABELS = {
   "1997-kovo-23-seimo-pakartotiniai": "1997-03 Seimas repeat (4 Vilnius-region constituencies)",
   "1997-birzelio-29-svenciniu-tarybos-pakartotiniai": "1997-06 repeat municipal (Švenčionys)",
   "1997-gruodzio-21-seimo-pakartotiniai": "1997-12 Seimas repeat (Aukštaitijos)",
+  "2012-seimo": "2012 Seimas",
+  "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "2013-03 Seimas repeat/new (Biržai–Kupiškis, Zarasai–Visaginas, Ukmergė)",
+  "2014-prezidento": "2014 presidential",
+  "2014-ep": "2014 European Parliament",
   "2015-kovo-1-savivaldybiu": "2015 municipal councils & first direct mayors",
   "2015-kovo-1-seimo-zirmunai": "2015-03 Seimas by-election (Žirmūnai)",
   "2015-birzelio-7-seimo-varena-eisiskes": "2015-06 Seimas by-election (Varėna–Eišiškės)",
@@ -112,6 +116,10 @@ const ELECTION_LABELS = {
 };
 
 const SHORT_LABELS = {
+  "2012-seimo": "2012 Seimas",
+  "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "2013-03 Seimas",
+  "2014-prezidento": "2014 prezidento",
+  "2014-ep": "2014 EP",
   "2016-seimo": "2016 Seimas",
   "2017-balandzio-23-meru": "2017-04 merai",
   "2017-balandzio-23-seimo-anyksciai-panevezys": "2017-04 Seimas",
@@ -391,7 +399,7 @@ function showMovers() {
       <option value="desc">largest increase</option>
       <option value="asc">largest decrease</option>
     </select>
-    <span class="stats" style="color:var(--muted);font-size:13px">first vs latest declared value, people with the figure in 2+ elections</span>`;
+    <span class="stats" style="color:var(--muted);font-size:13px">first vs latest declared value, people with the figure in 2+ elections · pre-2016 litas figures converted at 3.4528 Lt/€</span>`;
   root.appendChild(bar);
   const holder = document.createElement("div");
   root.appendChild(holder);
@@ -421,8 +429,9 @@ function showMovers() {
       a.textContent = `${r.p.n} · ${r.p.b || "?"}`;
       a.addEventListener("click", (ev) => { ev.preventDefault(); showPerson(r.p); });
       nameCell.appendChild(a);
-      tr.insertCell().textContent = `${fmtEUR(r.first.m[s])} (${SHORT_LABELS[r.first.id] || r.first.id})`;
-      tr.insertCell().textContent = `${fmtEUR(r.last.m[s])} (${SHORT_LABELS[r.last.id] || r.last.id})`;
+      const tag = (e) => (SHORT_LABELS[e.id] || e.id) + (e.lt ? ", Lt→€" : "");
+      tr.insertCell().textContent = `${fmtEUR(r.first.m[s])} (${tag(r.first)})`;
+      tr.insertCell().textContent = `${fmtEUR(r.last.m[s])} (${tag(r.last)})`;
       const d = tr.insertCell();
       d.textContent = (r.delta > 0 ? "+" : "−") + fmtEUR(Math.abs(r.delta));
       d.style.color = r.delta > 0 ? "var(--win)" : "#a03325";
@@ -443,14 +452,29 @@ function parseMoney(v) {
   return Number.isFinite(n) ? n : null;
 }
 
+// The 2012-2015 pages declare in litas (`valiuta: "Lt"`); converted at the
+// irrevocable 2015 changeover rate so a person's series stays comparable.
+// Mirrors scripts/build_person_index.py, which does the same for people.json.
+const LITAS_PER_EURO = 3.4528;
+function declaredInLitas(record) {
+  const d = (record.normalized || {})["turto-ir-pajamu-deklaracijos"];
+  return !!d && d.valiuta === "Lt";
+}
+function moneyEUR(record, path) {
+  const v = parseMoney(resolvePath(record.normalized || {}, path));
+  if (v == null) return null;
+  return declaredInLitas(record) ? v / LITAS_PER_EURO : v;
+}
+
 const fmtEUR = (n) => n.toLocaleString("lt-LT", { maximumFractionDigits: 0 }) + " €";
 
 function buildAssetPane(loaded) {
   const pane = document.createElement("div");
   const cols = loaded.map(([e, r]) => ({
-    label: SHORT_LABELS[e.id] || e.id,
-    values: MONEY_SERIES.map(([, path]) => parseMoney(resolvePath(r.normalized || {}, path))),
+    label: (SHORT_LABELS[e.id] || e.id) + (declaredInLitas(r) ? " (Lt→€)" : ""),
+    values: MONEY_SERIES.map(([, path]) => moneyEUR(r, path)),
   }));
+  const anyLitas = loaded.some(([, r]) => declaredInLitas(r));
   const allValues = cols.flatMap(c => c.values.filter(v => v != null));
   if (!allValues.length) {
     pane.innerHTML = `<div class="loading">No declared asset or income figures in any of this person's elections.</div>`;
@@ -491,7 +515,8 @@ function buildAssetPane(loaded) {
     MONEY_SERIES.map(([label, , color]) =>
       `<span><span style="display:inline-block;width:11px;height:11px;background:${color};border-radius:2px;margin-right:5px"></span>${label}</span>`
     ).join("") +
-    `<span style="margin-left:auto">missing bar = not declared / not published · hover a bar for the value</span></div>`;
+    `<span style="margin-left:auto">missing bar = not declared / not published · hover a bar for the value` +
+    (anyLitas ? ` · (Lt→€) = declared in litas, converted at ${LITAS_PER_EURO} Lt/€` : "") + `</span></div>`;
   pane.appendChild(card);
 
   // the numbers behind the bars

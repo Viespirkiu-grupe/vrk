@@ -2,7 +2,7 @@
 
 ## Goal
 
-Collect structured election and candidate data from VRK election pages, while keeping the workflow reliable and easy to extend election-by-election. The corpus began with the 2016 Seimo election and now reaches back to 2015, and further still to 1996-1998 — those earlier pages are Teleport Pro-captured archive snapshots of the original Oracle CGI site rather than the 2016+ anketa-tab layout, documented in `docs/PLAN_2015_ELECTIONS.md` and in `scraper/shared/seimo_archive_1990s.py` / `scraper/shared/savivaldybiu_archive_1997.py`'s module docstrings.
+Collect structured election and candidate data from VRK election pages, while keeping the workflow reliable and easy to extend election-by-election. The corpus began with the 2016 Seimo election and now reaches back through 2015 and 2012-2014 (the same pre-2016 static layout, one module per election: `seimo_2012`, `seimo_birzu_zarasu_ukmerges_2013`, `prezidento_2014`, `ep_2014`), and further still to 1996-1998 — those earlier pages are Teleport Pro-captured archive snapshots of the original Oracle CGI site rather than the 2016+ anketa-tab layout, documented in `docs/PLAN_2015_ELECTIONS.md` and in `scraper/shared/seimo_archive_1990s.py` / `scraper/shared/savivaldybiu_archive_1997.py`'s module docstrings.
 
 The current implementation is intentionally focused on one election module and fixture-driven parser development.
 

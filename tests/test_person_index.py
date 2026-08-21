@@ -120,6 +120,38 @@ class GroupingTests(unittest.TestCase):
         self.assertTrue(entries[0].get("w"))
         self.assertNotIn("w", entries[1])
 
+    def test_litas_declarations_are_converted_to_euro_and_flagged(self):
+        # The 2012-2015 pages declare in litas; the index converts at the
+        # irrevocable 3.4528 Lt/€ changeover rate so a person's series stays
+        # comparable across 2015→2016, and flags the converted candidacy.
+        litas = _record("A B", "1970-01-01")
+        litas["normalized"]["turto-ir-pajamu-deklaracijos"] = {
+            "privalomas-registruoti-turtas": 345280,
+            "pinigines-lesos": "34 528,00",
+            "gautos-pajamos": None,
+            "valiuta": "Lt",
+        }
+        euro = _record("A B", "1970-01-01")
+        euro["normalized"]["turto-ir-pajamu-deklaracijos"] = {
+            "privalomas-registruoti-turtas": 100000,
+            "pinigines-lesos": 10000,
+            "gautos-pajamos": 5000,
+        }
+        index = self._build([("2012-seimo", "a-b", litas), ("2016-seimo", "a-b", euro)])
+        entries = index["people"][0]["e"]
+        self.assertEqual(entries[0]["m"], [100000.0, 10000.0, None])
+        self.assertTrue(entries[0].get("lt"))
+        self.assertEqual(entries[1]["m"], [100000.0, 10000.0, 5000.0])
+        self.assertNotIn("lt", entries[1])
+
+    def test_undeclared_litas_record_carries_no_flag(self):
+        record = _record("A B", "1970-01-01")
+        record["normalized"]["turto-ir-pajamu-deklaracijos"] = {"valiuta": "Lt"}
+        index = self._build([("2012-seimo", "a-b", record)])
+        entry = index["people"][0]["e"][0]
+        self.assertNotIn("m", entry)
+        self.assertNotIn("lt", entry)
+
 
 if __name__ == "__main__":
     unittest.main()

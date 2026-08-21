@@ -54,6 +54,10 @@ ELECTION_ORDER = [
     "1997-kovo-23-seimo-pakartotiniai",
     "1997-birzelio-29-svenciniu-tarybos-pakartotiniai",
     "1997-gruodzio-21-seimo-pakartotiniai",
+    "2012-seimo",
+    "2013-kovo-3-seimo-birzai-zarasai-ukmerge",
+    "2014-prezidento",
+    "2014-ep",
     "2015-kovo-1-savivaldybiu",
     "2015-kovo-1-seimo-zirmunai",
     "2015-birzelio-7-seimo-varena-eisiskes",
@@ -118,17 +122,30 @@ def elected_note_of(record: dict) -> str | None:
 # without fetching 33k records.
 MONEY_FIELDS = ("privalomas-registruoti-turtas", "pinigines-lesos", "gautos-pajamos")
 
+# The 2012-2015 pages declare in litas (`turto-ir-pajamu-deklaracijos.valiuta`
+# is "Lt"); everything from 2016 on is in euro. The index converts at the
+# irrevocable LTL/EUR conversion rate fixed for the 2015-01-01 changeover so
+# that one person's series is comparable across the switch, and flags the
+# candidacy so the dashboard can say the figure was converted.
+LITAS_PER_EURO = 3.4528
+
+
+def declared_in_litas(record: dict) -> bool:
+    declarations = (record.get("normalized") or {}).get("turto-ir-pajamu-deklaracijos")
+    return isinstance(declarations, dict) and declarations.get("valiuta") == "Lt"
+
 
 def money_of(record: dict) -> list[float | None]:
     declarations = (record.get("normalized") or {}).get("turto-ir-pajamu-deklaracijos")
+    divisor = LITAS_PER_EURO if declared_in_litas(record) else 1.0
     values: list[float | None] = []
     for field in MONEY_FIELDS:
         raw = declarations.get(field) if isinstance(declarations, dict) else None
         if isinstance(raw, (int, float)):
-            values.append(float(raw))
+            values.append(round(float(raw) / divisor, 2))
         elif isinstance(raw, str):
             try:
-                values.append(float(raw.replace(" ", "").replace(",", ".")))
+                values.append(round(float(raw.replace(" ", "").replace(",", ".")) / divisor, 2))
             except ValueError:
                 values.append(None)
         else:
@@ -164,6 +181,7 @@ def build_index(data_root: Path) -> dict:
                     "displayName": record.get("candidateName"),
                     "elected": elected_note_of(record),
                     "money": money_of(record),
+                    "litas": declared_in_litas(record),
                 }
             )
 
@@ -177,13 +195,15 @@ def build_index(data_root: Path) -> dict:
             "b": None if birth == "?" else birth,
             # The record file is derivable: data/<id>/<c>-<id>.json.
             # "m" is [privalomas-registruoti-turtas, pinigines-lesos,
-            # gautos-pajamos], nulls where not declared/published.
+            # gautos-pajamos] in euro, nulls where not declared/published;
+            # "lt" marks a declaration published in litas and converted.
             "e": [
                 {
                     "id": r["election"],
                     "c": r["candidateId"],
                     **({"w": True} if r["elected"] else {}),
                     **({"m": r["money"]} if any(v is not None for v in r["money"]) else {}),
+                    **({"lt": True} if r["litas"] and any(v is not None for v in r["money"]) else {}),
                 }
                 for r in records
             ],
