@@ -82,7 +82,17 @@ unanswered. Account for them when counting.
 The questionnaire moved between VRK page eras, so the same concept lives
 under different paths. The machine-readable bridge is
 [concept-map.json](concept-map.json) — per concept, the exact normalized
-path for each election id. This table summarizes it and matches it exactly.
+path for each election id.
+
+**The table below covers the two modern eras only — 20 of the corpus's 31
+elections.** `concept-map.json` is the authority and is the thing to read
+programmatically; this table is a human summary of the 2016 and 2020 eras.
+The eleven pre-2016 elections (six 2015, five 1996-1998) are mapped in
+`concept-map.json` but not summarized here: the 2015 family and the 1997
+municipal archive both resolve most concepts under `anketa.*` with the same
+kebab-case keys as the 2016 era, while the 1996-1998 Seimas archive publishes
+almost none of these concepts at all (see its `docs/OUTPUT_SCHEMA.md`
+appendix).
 
 The two era groups:
 

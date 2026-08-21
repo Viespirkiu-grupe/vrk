@@ -18,17 +18,14 @@ here instead — see docs/DATASET.md.
 The 1996-1998 Seimas archive family (`1996-spalio-20-seimo`,
 `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`;
 `scraper/shared/seimo_archive_1990s.py`) publishes no birth date on any
-candidate page, so every one of its records groups by name alone rather than
+candidate page, so all 906 of its records group by name alone rather than
 name+birth-date — a real, structural gap in this identity key, not a handful
 of flagged exceptions. A same-named person appearing only within this family
-cannot be told apart from a namesake by this index; see
-`docs/DATASET.md` for the measured count once the full 1996 scrape lands. The
-1997 municipal archive family (`1997-kovo-23-savivaldybiu-tarybu`,
+cannot be told apart from a namesake by this index. The 1997 municipal
+archive family (`1997-kovo-23-savivaldybiu-tarybu`,
 `1997-birzelio-29-svenciniu-tarybos-pakartotiniai`;
 `scraper/shared/savivaldybiu_archive_1997.py`) does publish birth date, under
-`normalized.asmeniniaiDuomenys.gimimoData` rather than the
-`anketa`/`biografija` shape the eras above use, so `birth_date_of` checks
-that section too.
+the corpus's usual `anketa.gimimo-data`, so it needs no special case here.
 
 Run from the repo root:
 
@@ -99,15 +96,10 @@ def birth_date_of(record: dict) -> str | None:
         data = normalized.get(section)
         if isinstance(data, dict) and data.get("gimimo-data"):
             return str(data["gimimo-data"])
-    # The 1997 municipal archive family (scraper/shared/savivaldybiu_archive_1997.py)
-    # publishes birth date as a plain labelled paragraph, carried under its
-    # own section with a camelCase key rather than the anketa/biografija
-    # shape above. The 1996-1998 Seimas archive family
-    # (scraper/shared/seimo_archive_1990s.py) publishes no birth date at
-    # all — every one of its records groups by name alone; see docs/DATASET.md.
-    asmeniniai = normalized.get("asmeniniaiDuomenys")
-    if isinstance(asmeniniai, dict) and asmeniniai.get("gimimoData"):
-        return str(asmeniniai["gimimoData"])
+    # The 1997 municipal archive family also lands in `anketa.gimimo-data`,
+    # so it needs no case of its own. The 1996-1998 Seimas archive family
+    # (scraper/shared/seimo_archive_1990s.py) publishes no birth date at all —
+    # every one of its records groups by name alone; see docs/DATASET.md.
     return None
 
 

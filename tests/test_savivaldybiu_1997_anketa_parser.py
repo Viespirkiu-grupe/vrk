@@ -23,7 +23,7 @@ class Savivaldybiu1997AnketaParserTests(unittest.TestCase):
     def test_top_level_fields(self) -> None:
         self.assertEqual(self.pilvelis["electionId"], "1997-kovo-23-savivaldybiu-tarybu")
         self.assertEqual(self.pilvelis["candidateId"], "pilvelis-algirdas")
-        self.assertEqual(self.pilvelis["candidateName"], "Pilvelis Algirdas")
+        self.assertEqual(self.pilvelis["candidateName"], "Algirdas Pilvelis")
 
     def test_candidacy_and_personal_fields(self) -> None:
         candidacy = self.pilvelis["rawData"]["candidacy"]
@@ -37,7 +37,7 @@ class Savivaldybiu1997AnketaParserTests(unittest.TestCase):
         self.assertEqual(personal["residence"], "Vilnius")
         # A field genuinely absent from this candidate's page (no "Tautybė:"
         # line at all) normalizes to null rather than an empty string.
-        self.assertIsNone(self.pilvelis["normalized"]["asmeniniaiDuomenys"]["tautybe"])
+        self.assertIsNone(self.pilvelis["normalized"]["anketa"]["tautybe"])
 
     def test_same_name_different_municipality_gets_distinct_ids_and_records(self) -> None:
         # Two different VRK candidate ids (37862 and 37809) share the exact

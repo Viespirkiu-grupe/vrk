@@ -612,37 +612,50 @@ def build_candidate_record(
         "personal": personal,
     }
 
+    # The per-candidate facts live under `anketa` with the corpus's kebab-case
+    # concept keys -- `gimimo-data`, `issilavinimas`, `uzsienio-kalbos`,
+    # `pagrindine-darboviete`, `seimine-padetis` and the rest are the same
+    # names the 2015 and 2016 eras use, so docs/concept-map.json, the
+    # dashboard's field map and scripts/build_person_index.py all resolve them
+    # with no election-specific special case. (The source page's label reads
+    # "Šeimyninė padėtis"; the corpus concept key is `seimine-padetis`, so that
+    # is what is written here.)
     normalized = {
         "profilis": {
-            "vardasPavarde": detail["candidateDisplayName"],
-            "pajamuDeklaracijosNuoroda": detail["incomeDeclarationUrl"] or None,
+            "vardas-pavarde": detail["candidateDisplayName"],
+            "pajamu-deklaracijos-nuoroda": detail["incomeDeclarationUrl"] or None,
         },
         "kandidatavimas": {
             "savivaldybe": candidacy["municipalityName"],
-            "savivaldybesNumeris": candidacy["municipalityNumber"],
-            "savivaldybesNuoroda": candidacy["municipalityUrl"] or None,
+            "savivaldybes-numeris": candidacy["municipalityNumber"],
+            "savivaldybes-nuoroda": candidacy["municipalityUrl"] or None,
             "iskele": candidacy["nominator"],
-            "iskeleNuoroda": candidacy["nominatorUrl"] or None,
-            "numerisSarase": candidacy["listNumber"],
+            "iskele-nuoroda": candidacy["nominatorUrl"] or None,
+            "numeris-sarase": candidacy["listNumber"],
         },
-        "asmeniniaiDuomenys": {
-            "gimimoData": personal["birthDate"] or None,
-            "gimimoVieta": personal["birthPlace"] or None,
-            "gyvenamojiVieta": personal["residence"] or None,
+        "anketa": {
+            "gimimo-data": personal["birthDate"] or None,
+            "gimimo-vieta": personal["birthPlace"] or None,
+            "gyvenamoji-vieta": personal["residence"] or None,
             "tautybe": personal["nationality"] or None,
             "issilavinimas": personal["education"] or None,
-            "uzsienioKalbos": personal["foreignLanguages"],
-            "pagrindineDarboviete": personal["mainWorkplace"] or None,
-            "visuomenineVeikla": personal["publicActivity"] or None,
-            "seimyninePadetis": personal["familyStatus"] or None,
-            "seimosNariai": personal["familyMembers"],
+            "uzsienio-kalbos": personal["foreignLanguages"],
+            "pagrindine-darboviete": personal["mainWorkplace"] or None,
+            "visuomenine-veikla": personal["publicActivity"] or None,
+            "seimine-padetis": personal["familyStatus"] or None,
+            "seimos-nariai": personal["familyMembers"],
         },
     }
 
+    # Same as the Seimas archive: the party-list page prints the name
+    # surname-first ("Laužadis Šarūnas") while the candidate page heading
+    # prints it given-name-first ("Šarūnas Laužadis"), which is the order the
+    # rest of the corpus uses. Prefer the page heading; the listing form stays
+    # in rawData, and candidateId is untouched.
     record = {
         "electionId": election_id,
         "candidateId": candidate_id,
-        "candidateName": entry["candidateName"],
+        "candidateName": detail["candidateDisplayName"] or entry["candidateName"],
         "source": {"candidateSourceUrl": entry["url"]},
         "rawData": raw_data,
         "normalized": normalized,

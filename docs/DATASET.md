@@ -19,12 +19,26 @@ never touched by a full run.
 ## Inventory
 
 40,469 candidate records across 31 elections, 1996–2025, with **zero fetch
-failures**. Two named parse-time flags are worth distinguishing: the single
+failures**.
+
+**The table below is an aggregate, not an inventory of any one directory.**
+`data/` is gitignored, so it never travels with a branch or a merge, and the
+corpus has in practice been scraped from several checkouts and worktrees at
+different times. A given clone holds whatever was scraped *there*; the counts
+here are the union. Before trusting a local `data/` for analysis, count it
+(`ls data/*/ | wc -l` per election) rather than assuming this table describes
+it, and re-run `scripts/run_election_batches.sh <id>` for anything missing.
+The six rows written `N of total` are a second, different caveat: those
+elections are fixture-only *everywhere* — their modules, listings and sitemaps
+are complete, but the full candidate scrape has never been run.
+
+Two named parse-time flags are worth distinguishing: the single
 2015 candidacy whose questionnaire VRK never published (`AnketaNotPublished`,
 see Known gaps), and nine `ResidenceMissing` warnings across the two new
 1996-1998 archive general elections (one 1996 Seimo candidate, eight 1997
-municipal candidates) — each confirmed a genuinely blank field on the source
-page, not a parser fault. The three largest 2015 elections are the rows not
+municipal candidates) — each verified by re-fetching the source page, where
+the `Gyvenamoji vieta` label is absent entirely, so these are genuinely
+unpublished fields rather than a parser fault. The three largest 2015 elections are the rows not
 yet fully scraped: their modules, listings and fixtures exist, but only the
 fixture candidates have been parsed so far. The two municipal general
 elections from the modern eras are together larger than everything else in
@@ -440,6 +454,14 @@ each now has one.
   lists and are published outside the candidate pages.
 - Donation *records* were historically dropped by the shared parser; the totals
   in older analyses of this repo predate that fix and should be recomputed.
+- The 1996-1998 archive listings print names **surname-first** ("Kubilius
+  Andrius") while the candidate pages, and every modern era, print them
+  given-name-first. `candidateName` therefore takes the candidate page's
+  heading, not the listing row, so the same person's name is comparable
+  across eras. `candidateId` still derives from the listing slug
+  (`kubilius-andrius`), so ids and record filenames follow the listing order
+  while the display name follows the corpus convention — do not assume the id
+  and the name are in the same word order for these five elections.
 - The 1996-1998 Seimas archive pages (`1996-spalio-20-seimo`,
   `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`)
   publish no elected markers, no income/private-interest declarations in a

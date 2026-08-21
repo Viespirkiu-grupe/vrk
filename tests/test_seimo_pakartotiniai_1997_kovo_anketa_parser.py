@@ -23,7 +23,7 @@ class SeimoPakartotiniai1997KovoAnketaParserTests(unittest.TestCase):
     def test_top_level_fields(self) -> None:
         self.assertEqual(self.lazinko["electionId"], "1997-kovo-23-seimo-pakartotiniai")
         self.assertEqual(self.lazinko["candidateId"], "lazinko-vytautas-aleksas")
-        self.assertEqual(self.lazinko["candidateName"], "Lazinko Vytautas Aleksas")
+        self.assertEqual(self.lazinko["candidateName"], "Vytautas Aleksas Lazinko")
 
     def test_constituency_carried_from_the_re_run_listing(self) -> None:
         candidacy = self.lazinko["rawData"]["candidacies"][0]

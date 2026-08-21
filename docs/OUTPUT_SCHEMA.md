@@ -1204,25 +1204,37 @@ Records are written as `data/<election-id>/<candidate-id>-<election-id>.json`.
 repeat elections are thin wiring over the same machinery and share every
 shape below. These pages predate even the 2015 family — Teleport Pro
 snapshots of `lrs.lt/cgi-bin/ora7dbcgi/...` with no anketa tabs at all — so
-the record does **not** follow the shared body's section names
-(`profilis`/`anketa`/`biografija`/...). It has its own, smaller shape:
+while the keys are the corpus's usual kebab-case and the sections it does
+publish keep their corpus names (`profilis`, `biografija`), the record is a
+**subset** of the shared body's shape: there is no `anketa` section and none
+of the declaration sections, because these pages carry no questionnaire.
 
 - `rawData` section order: `profile`, `candidacies`, `residence`,
   `biography`. `normalized` order: `profilis`, `kandidatavimas`,
-  `gyvenamojiVieta`, `biografija`.
+  `gyvenamoji-vieta`, `biografija`.
+- `normalized.profilis` holds `vardas-pavarde`, `nuotrauka` (the external
+  photo URL), `biografijos-nuoroda` and `pajamu-deklaracijos-nuoroda`. There
+  is no `pastaba`: nothing on these pages marks a winner.
 - `rawData.profile` holds `candidateDisplayName`, `photoUrl` (an external URL,
   never downloaded — unlike the base64-embedded-photo eras, this family's
   photos stay as source links), `biographyUrl` and `incomeDeclarationUrl`
   (both raw URLs, not fetched or parsed — the income declaration has no
   relation to the GPM308 shape any later era uses, and biography text is
   captured but not further structured).
-- `rawData.candidacies` is a **list**, not a single object: a candidate can
-  hold two candidacies, their single-member constituency and, optionally, a
-  `Daugiamandatė` (multi-mandate party list) entry with its own `listNumber`.
-  Each entry is `{apygardaName, apygardaNumber, apygardaUrl, nominator,
-  nominatorUrl, listNumber}`; a self-nominated candidate's row reads
+- `rawData.candidacies` is a **list**, not a single object: typically the
+  candidate's single-member constituency plus, optionally, a `Daugiamandatė`
+  (multi-mandate party list) entry with its own `listNumber` — but do not
+  assume a maximum of two. `uksas-vladislovas` (1996) has **four**: a
+  coalition and one of its member parties each nominated him separately, for
+  both the constituency seat and the multi-mandate list. Each entry is
+  `{apygardaName, apygardaNumber, apygardaUrl, nominator, nominatorUrl,
+  listNumber}`; a self-nominated candidate's row reads
   `nominator: "Išsikėlė pats"` (or `"Išsikėlė pati"`, feminine) with
-  `nominatorUrl: ""`.
+  `nominatorUrl: ""`. `normalized.kandidatavimas` mirrors the list with
+  kebab-case keys (`apygarda`, `apygardos-numeris`, `apygardos-nuoroda`,
+  `iskele`, `iskele-nuoroda`, `numeris-sarase`) — so unlike most elections,
+  **`kandidatavimas` here is a list, and a consumer counting candidacies must
+  not assume one per record.**
 - `rawData.residence` is recovered from inside a malformed HTML comment (see
   the module docstring and `docs/CLI_REFERENCE.md`'s Seimas archive section)
   rather than through normal DOM parsing.
@@ -1244,11 +1256,24 @@ Both share the parser in `scraper/shared/savivaldybiu_archive_1997.py` and the
 `19970323` directory (distinguished only by the phase prefix in
 `apgtl.htm-<phase>+<municipality>.htm` — `3` for the general election, `5` for
 the Švenčionys repeat). Like the Seimas archive above, this family predates
-the 2016+ anketa-tab shape and does not follow the shared body's section
-names:
+the 2016+ anketa-tab shape, but its normalized record slots into the shared
+body cleanly: the per-candidate facts land in `anketa` under the same
+kebab-case concept keys the 2015 and 2016 eras use, so
+`docs/concept-map.json`, `scripts/build_person_index.py` and the dashboard's
+field map all resolve them with no election-specific case.
 
 - `rawData` section order: `profile`, `candidacy`, `personal`. `normalized`
-  order: `profilis`, `kandidatavimas`, `asmeniniaiDuomenys`.
+  order: `profilis`, `kandidatavimas`, `anketa`.
+- `normalized.anketa` carries `gimimo-data`, `gimimo-vieta`,
+  `gyvenamoji-vieta`, `tautybe`, `issilavinimas`, `uzsienio-kalbos`,
+  `pagrindine-darboviete`, `visuomenine-veikla`, `seimine-padetis` and
+  `seimos-nariai`. Note the last two: the source label reads *Šeimyninė
+  padėtis*, but the key is the corpus's `seimine-padetis`, and
+  `seimos-nariai` is a list of `{name, relation}` rather than the
+  `sutuoktinio-vardas-pavarde`/`vaiku-vardai-pavardes` split later eras use.
+- `normalized.kandidatavimas` is a single object here (contrast the Seimas
+  archive's list): `savivaldybe`, `savivaldybes-numeris`,
+  `savivaldybes-nuoroda`, `iskele`, `iskele-nuoroda`, `numeris-sarase`.
 - `rawData.candidacy` is a single object (not a list — this family has no
   multi-mandate-list concept): `{municipalityName, municipalityNumber,
   municipalityUrl, nominator, nominatorUrl, listNumber}`.
@@ -1260,7 +1285,7 @@ names:
   field genuinely absent from the source page (no matching label at all, not
   just an empty answer) normalizes to `null`/`[]` rather than an empty
   string — `pilvelis-algirdas`'s page has no "Tautybė:" line at all, for
-  example, and `normalized.asmeniniaiDuomenys.tautybe` is `null` for that
+  example, and `normalized.anketa.tautybe` is `null` for that
   record.
 - `rawData.profile` holds only `candidateDisplayName` and
   `incomeDeclarationUrl` (raw URL, not parsed — same call as the Seimas

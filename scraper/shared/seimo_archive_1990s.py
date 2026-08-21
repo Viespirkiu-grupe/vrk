@@ -566,32 +566,43 @@ def build_candidate_record(
         "biography": biography,
     }
 
+    # Normalized keys are kebab-case throughout, matching every other election
+    # module: `profilis.vardas-pavarde`, `profilis.nuotrauka` and the rest are
+    # the corpus-wide names that docs/concept-map.json and the dashboard's
+    # field map both resolve against.
     normalized = {
         "profilis": {
-            "vardasPavarde": detail["candidateDisplayName"],
-            "nuotraukosNuoroda": detail["photoUrl"] or None,
-            "biografijosNuoroda": detail["biographyUrl"] or None,
-            "pajamuDeklaracijosNuoroda": detail["incomeDeclarationUrl"] or None,
+            "vardas-pavarde": detail["candidateDisplayName"],
+            "nuotrauka": detail["photoUrl"] or None,
+            "biografijos-nuoroda": detail["biographyUrl"] or None,
+            "pajamu-deklaracijos-nuoroda": detail["incomeDeclarationUrl"] or None,
         },
         "kandidatavimas": [
             {
                 "apygarda": c["apygardaName"],
-                "apygardosNumeris": c["apygardaNumber"],
-                "apygardosNuoroda": c["apygardaUrl"] or None,
+                "apygardos-numeris": c["apygardaNumber"],
+                "apygardos-nuoroda": c["apygardaUrl"] or None,
                 "iskele": c["nominator"],
-                "iskeleNuoroda": c["nominatorUrl"] or None,
-                "numerisSarase": c["listNumber"],
+                "iskele-nuoroda": c["nominatorUrl"] or None,
+                "numeris-sarase": c["listNumber"],
             }
             for c in detail["candidacies"]
         ],
-        "gyvenamojiVieta": detail["residence"] or None,
+        "gyvenamoji-vieta": detail["residence"] or None,
         "biografija": {"tekstas": biography["text"]} if biography else None,
     }
 
+    # The listing table is headed "Pavardė, vardas" and prints the name
+    # surname-first ("Kubilius Andrius"); the candidate page's own heading
+    # prints it given-name-first ("Andrius Kubilius"), which is the order
+    # every other era in the corpus uses for candidateName. Prefer the page
+    # heading so a name is comparable across eras, and keep the listing form
+    # in rawData. (candidateId is unaffected -- it is slugified from the
+    # listing name at sitemap time, so record filenames stay stable.)
     record = {
         "electionId": election_id,
         "candidateId": candidate_id,
-        "candidateName": entry["candidateName"],
+        "candidateName": detail["candidateDisplayName"] or entry["candidateName"],
         "source": {"candidateSourceUrl": entry["url"]},
         "rawData": raw_data,
         "normalized": normalized,

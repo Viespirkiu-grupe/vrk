@@ -23,7 +23,7 @@ class SvencioniuTarybos1997AnketaParserTests(unittest.TestCase):
             self.lauzadis["electionId"], "1997-birzelio-29-svenciniu-tarybos-pakartotiniai"
         )
         self.assertEqual(self.lauzadis["candidateId"], "lauzadis-sarunas")
-        self.assertEqual(self.lauzadis["candidateName"], "Laužadis Šarūnas")
+        self.assertEqual(self.lauzadis["candidateName"], "Šarūnas Laužadis")
 
     def test_record_section_order(self) -> None:
         self.assertEqual(
@@ -31,7 +31,7 @@ class SvencioniuTarybos1997AnketaParserTests(unittest.TestCase):
         )
         self.assertEqual(
             list(self.lauzadis["normalized"].keys()),
-            ["profilis", "kandidatavimas", "asmeniniaiDuomenys"],
+            ["profilis", "kandidatavimas", "anketa"],
         )
 
     def test_candidacy_fields(self) -> None:

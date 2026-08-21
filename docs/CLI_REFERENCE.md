@@ -839,7 +839,7 @@ reach a candidate:
   family) and is considerably richer: birth date/place, residence,
   nationality, education, foreign languages, main workplace, public activity,
   family status and family members are all plain labelled paragraphs, carried
-  into `rawData.personal`/`normalized.asmeniniaiDuomenys`. As with the Seimas
+  into `rawData.personal`/`normalized.anketa`. As with the Seimas
   archive, `kpdl.htm` (income declaration) is captured only as a raw URL.
 - 46 candidate name collisions across the 6,276-candidate general election
   resolve with the same positional `-2` suffix the other families use — e.g.

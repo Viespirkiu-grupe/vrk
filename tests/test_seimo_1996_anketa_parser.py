@@ -29,7 +29,12 @@ class Seimo1996AnketaParserTests(unittest.TestCase):
     def test_top_level_fields(self) -> None:
         self.assertEqual(self.asmolkov["electionId"], "1996-spalio-20-seimo")
         self.assertEqual(self.asmolkov["candidateId"], "asmolkov-vasilij")
-        self.assertEqual(self.asmolkov["candidateName"], "Asmolkov Vasilij")
+        # The listing prints "Pavardė, vardas" (surname first); candidateName
+        # takes the candidate page's given-name-first heading instead, so a
+        # name is comparable with the modern eras. candidateId still comes
+        # from the listing slug, so record filenames are unaffected.
+        self.assertEqual(self.asmolkov["candidateName"], "Vasilij Asmolkov")
+        self.assertEqual(self.asmolkov["candidateId"], "asmolkov-vasilij")
         self.assertTrue(
             self.asmolkov["source"]["candidateSourceUrl"].endswith("kandvl.htm-17109.htm")
         )
@@ -41,7 +46,7 @@ class Seimo1996AnketaParserTests(unittest.TestCase):
         )
         self.assertEqual(
             list(self.asmolkov["normalized"].keys()),
-            ["profilis", "kandidatavimas", "gyvenamojiVieta", "biografija"],
+            ["profilis", "kandidatavimas", "gyvenamoji-vieta", "biografija"],
         )
 
     def test_dual_candidacy_carries_both_single_and_multi_mandate_entries(self) -> None:
@@ -63,7 +68,7 @@ class Seimo1996AnketaParserTests(unittest.TestCase):
         candidacy = self.butkevicius["rawData"]["candidacies"][0]
         self.assertEqual(candidacy["nominator"], "Išsikėlė pats")
         self.assertEqual(candidacy["nominatorUrl"], "")
-        self.assertIsNone(self.butkevicius["normalized"]["kandidatavimas"][0]["iskeleNuoroda"])
+        self.assertIsNone(self.butkevicius["normalized"]["kandidatavimas"][0]["iskele-nuoroda"])
 
     def test_biography_text_is_captured(self) -> None:
         self.assertIn("Gimė 1960", self.butkevicius["rawData"]["biography"]["text"])
@@ -76,15 +81,15 @@ class Seimo1996AnketaParserTests(unittest.TestCase):
         # swallows the residence line on these archived pages (see
         # scraper/shared/seimo_archive_1990s.py's module docstring).
         self.assertEqual(self.asmolkov["rawData"]["residence"], "Vilnius")
-        self.assertEqual(self.asmolkov["normalized"]["gyvenamojiVieta"], "Vilnius")
+        self.assertEqual(self.asmolkov["normalized"]["gyvenamoji-vieta"], "Vilnius")
 
     def test_missing_photo_and_biography_normalize_to_null(self) -> None:
         self.assertEqual(self.saltiene["rawData"]["profile"]["photoUrl"], "")
-        self.assertIsNone(self.saltiene["normalized"]["profilis"]["nuotraukosNuoroda"])
+        self.assertIsNone(self.saltiene["normalized"]["profilis"]["nuotrauka"])
 
         self.assertEqual(self.astrauskas["rawData"]["profile"]["biographyUrl"], "")
         self.assertIsNone(self.astrauskas["rawData"]["biography"])
-        self.assertIsNone(self.astrauskas["normalized"]["profilis"]["biografijosNuoroda"])
+        self.assertIsNone(self.astrauskas["normalized"]["profilis"]["biografijos-nuoroda"])
         self.assertIsNone(self.astrauskas["normalized"]["biografija"])
 
     def test_astrauskas_also_ran_on_a_multi_mandate_list(self) -> None:
