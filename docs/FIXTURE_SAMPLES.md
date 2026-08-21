@@ -486,6 +486,20 @@ empty-list case; Balčytis is also the one candidate whose `Kita` tab links a
 program PDF. Grybauskaitė's campaign link points at election path `423_lt`,
 not the candidate pages' `424_lt`.
 
+For `2008-seimo` the allowlist (`tests/test_seimo_2008_sample_allowlist.py`)
+is **eight candidates out of 1,603**, chosen for shape as for 2012: a
+list-only list leader (`gediminas-kirkilas`), a dual list+constituency
+leader (`andrius-kubilius`), a coalition nominee from each member party
+(`loreta-grauziniene`, `virginija-baltraitiene`), a self-nominated
+constituency candidate (`valdemaras-puodziunas`), a single-member-only
+party's candidate (`vytautas-aleksas-lazinka`), and both name collisions
+(`arunas-rimkus-2`, `algis-kaseta-2` — the latter one of two Algis KAŠĖTAs
+in the same constituency). The samples directory holds both indexes
+(`list.html`, `districts.html`), the 16 list pages plus the 4 side pages
+under `lists/` (no self-nominated page exists in 2008) and the 71
+constituency pages under `districts/`. No candidate directory holds a
+`kita.html` or a `campaigns/` tree: the 2008 pages publish neither.
+
 For `2009-ep` the allowlist (`tests/test_ep_2009_sample_allowlist.py`) is
 **fifteen candidates out of 262** — the leader of each of the fifteen lists,
 the same rule as `2014-ep`: `saulius-stoma`, `algirdas-paleckis`,

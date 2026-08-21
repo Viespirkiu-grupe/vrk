@@ -182,6 +182,7 @@ class Prezidento2009AnketaParserTests(unittest.TestCase):
                 "tautybe",
                 "issilavinimas",
                 "mokslo-laipsnis",
+                "pedagoginis-vardas",
                 "uzsienio-kalbos",
                 "politine-organizacija",
                 "anksciau-isrinktas",
@@ -231,6 +232,7 @@ class Prezidento2009AnketaParserTests(unittest.TestCase):
         # The degree line asks for "mokslo laipsnį" only, and is on the
         # page only when answered.
         self.assertEqual(anketa["mokslo-laipsnis"], "socialinių mokslų daktarės vardas, 1988 m.")
+        self.assertIsNone(anketa["pedagoginis-vardas"])
         self.assertIsNone(self.butkevicius["normalized"]["anketa"]["mokslo-laipsnis"])
         self.assertEqual(anketa["uzsienio-kalbos"], ["anglų", "lenkų", "rusų", "prancūzų"])
         self.assertEqual(anketa["politine-organizacija"], "1979-1988 KP narė, nuo 1990 - nepartinė")
@@ -276,7 +278,9 @@ class Prezidento2009AnketaParserTests(unittest.TestCase):
         self.assertEqual(normalized["gimimo-vieta"], "Kaunas")
         self.assertEqual(normalized["tautybe"], "lietuvis")
         self.assertIn("anksciau-isrinktas", normalized)
-        self.assertNotIn("pedagoginis-vardas", normalized)
+        # The title half of the degree line is mapped but on no 2009
+        # presidential page.
+        self.assertIsNone(normalized["pedagoginis-vardas"])
 
     def test_declarations_use_the_gpm305_form(self) -> None:
         turto = self.grybauskaite["normalized"]["turto-ir-pajamu-deklaracijos"]

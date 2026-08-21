@@ -410,6 +410,14 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
             "aprasas": _answer("12"),
             "irasai": _normalize_table_records(_question_record_rows(rows, "12")),
         },
+        # The unnumbered line after the education table: "Jei turite,
+        # nurodykite mokslo laipsnį <b>…</b>, vardą <b>…</b>" — degree and
+        # pedagogical title on one line, which the row splitter reads as
+        # two rows, the second prompted ", vardą"; a page with a title but
+        # no degree prints "Jei turite, nurodykite mokslo vardą" alone. The
+        # keys the 2019+ eras use for the same two facts.
+        "mokslo-laipsnis": _prompt_answer("jei turite, nurodykite mokslo laipsn"),
+        "pedagoginis-vardas": _prompt_answer(", vard") or _prompt_answer("jei turite, nurodykite mokslo vard"),
         "uzsienio-kalbos": _split_list_value(
             _row_answer_text(_find_row_by_question_number(rows, "13"))
         ),
@@ -449,10 +457,14 @@ def parse_anketa_html(
     anketa = _parse_anketa_cell(anketa_cell)
     anketa["normalized"] = rows_normalizer(anketa["rows"])
 
+    # An unpublished questionnaire is either VRK's "Rengiama" placeholder or
+    # (one 2008 Seimo candidate) a content div with nothing in it at all —
+    # no text, no table. Both are the source saying nothing, not a parse
+    # failure.
     placeholder = (
         anketa_cell is None
         and content is not None
-        and _tag_text(content).strip().lower() in ANKETA_PLACEHOLDER_TEXTS
+        and _tag_text(content).strip().lower() in ANKETA_PLACEHOLDER_TEXTS | {""}
     )
 
     return {

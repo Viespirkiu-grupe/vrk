@@ -69,6 +69,7 @@ def normalize_presidential_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, 
             "irasai": _normalize_table_records(_question_record_rows(rows, "12")),
         },
         "mokslo-laipsnis": _prompt_answer("jei turite, nurodykite mokslo laipsn"),
+        "pedagoginis-vardas": _prompt_answer(", vard") or _prompt_answer("jei turite, nurodykite mokslo vard"),
         "uzsienio-kalbos": _split_list_value(
             _row_answer_text(_find_row_by_question_number(rows, "13"))
         ),

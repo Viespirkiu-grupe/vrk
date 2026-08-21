@@ -1116,9 +1116,15 @@ repository — so several record shapes are this era's own:
   `profilis.kita` holds `apygarda` and `iskele`, plus a
   `savarankisko-`/`atstovaujamojo-politines-kampanijos-dalyvio-duomenys` entry
   whose link is the campaign participant page.
-- `normalized.anketa` carries the 2015 Seimo question set: the 2016 keys minus
-  `pedagoginis-vardas`, and `pareiskimai` stops at `ar-buvote-pripazintas-kaltu`
-  (Q9.2) — the 9.3.x follow-ups do not exist yet. `kita-apie-save` (Q21) is
+- `normalized.anketa` carries the 2015 Seimo question set: the 2016 keys
+  with `mokslo-laipsnis` and `pedagoginis-vardas` in place of 2016's one
+  combined `pedagoginis-vardas` line — the page prints "Jei turite,
+  nurodykite mokslo laipsnį <b>…</b>, vardą <b>…</b>" (or "…mokslo vardą"
+  alone for a title without a degree), and both halves are read (since
+  2026-08-22; the whole 2008–2015 family, the municipal elections
+  included, lacked the two keys before) — and `pareiskimai` stops at
+  `ar-buvote-pripazintas-kaltu` (Q9.2) — the 9.3.x follow-ups do not exist
+  yet. `kita-apie-save` (Q21) is
   present but answered by a minority. A bare `","` in `pagrindine-darboviete`
   is the template's empty workplace/position join and normalizes to null.
 - `turto-ir-pajamu-deklaracijos` keeps the seven canonical keys **but the
@@ -1382,13 +1388,13 @@ field map all resolve them with no election-specific case.
   resolve with the corpus's standard positional `-2` suffix; see
   `docs/CLI_REFERENCE.md`'s municipal archive section for the concrete pair.
 
-## Appendix: 2009–2014 national elections (`2009-prezidento`, `2009-ep`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`)
+## Appendix: 2008–2014 national elections (`2008-seimo`, `2009-prezidento`, `2009-ep`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`)
 
-All six are the 2015-era static layout described in the 2015 Seimo
+All seven are the 2015-era static layout described in the 2015 Seimo
 by-elections appendix, and every era shape there applies: no elected markers
 on the pages (`profilis.pastaba` is null on every record; `isrinktas` is the
-results join — 139 Seimas members in 2012 from VRK's elected-members page,
-70 list and 69 constituency seats, the 3 constituency winners of 2013, the
+results join — 141 Seimas members in 2008 and 139 in 2012 from VRK's
+elected-members pages, 70 list and 71/69 constituency seats, the 3 constituency winners of 2013, the
 12 MEPs of 2009 and 11 of 2014, the two presidents), URL photos, litas amounts with
 `valiuta`/`pastaba`, the retained spouse block, the campaign additions.
 Records are written as `data/<election-id>/<candidate-id>-<election-id>.json`
@@ -1396,7 +1402,7 @@ in the corpus's section order, with one insertion for the 2014 presidential
 election (`patiketiniai` between `privaciu-interesu-deklaracija` and the
 campaign section). What is this group's own:
 
-### `kandidatavimas` (2012, 2013, 2009 and 2014 EP)
+### `kandidatavimas` (2008, 2012, 2013, 2009 and 2014 EP)
 
 The listing-only facts, under one shape for all three:
 
@@ -1443,6 +1449,10 @@ The listing-only facts, under one shape for all three:
   `i-turas` and, where a second round was held, `ii-turas` (the
   constituency results pages). Coalition nominees add `iskele-3` =
   `"(Iškėlė"` for the member party.
+- **2008 Seimo**: as 2012 — one `apygarda`/`iskele` pair per candidacy,
+  `numeris-sarase`, the results links, `iskele-3` for a coalition
+  nominee's member party — but **no campaign link**: the 2008 candidate
+  pages do not link a participant page.
 - **2013**: `apygarda`, `iskele`, the campaign link, `i-turas`, and
   `ii-turas` for the six candidates who went to a second round.
 - **2014 presidential**: only the campaign link — presidential candidates
@@ -1462,7 +1472,7 @@ The listing-only facts, under one shape for all three:
 
 ### `normalized.anketa` per election type
 
-- **Seimo (2012, 2013)**: the 2015 Seimo key set with one addition in
+- **Seimo (2008, 2012, 2013)**: the 2015 Seimo key set with one addition in
   `pareiskimai`, `ar-buvote-pripazintas-kaltu-del-sunkaus-nusikaltimo`
   (Q9.3, conviction for a grave or very grave crime). Every 2013 form holds
   VRK's `Nenurodė` default for it (null normalized, literal in the raw row);
@@ -1523,10 +1533,15 @@ same tab but VRK never published the file behind it (every
 `patiketiniai` key; the link is recorded under `unpublishedTabs` in the
 fixture's `index.json`.
 
-### `privaciu-interesu-deklaracija` (2009: the roman-numbered form)
+### `privaciu-interesu-deklaracija` (2008–2009: the roman-numbered forms)
 
-The 2009 interest declaration (both elections) predates the `ID001x`
-sections: after the declarant and spouse cards come roman-numbered
+The 2008 and 2009 interest declarations predate the `ID001x` sections. The
+2008 form's sections are `ii-turtas` (four property lines, null when
+empty), `iii-pajamos`, `v-turtines-prievoles`,
+`vi-individualios-imones-kitos-organizacijos-ir-istaigos`, `ix-naryste-…`
+and `x-asmenys-del-kuriu-gali-kilti-viesuju-ir-privaciu-interesu-konfliktas`,
+after a spouse card keyed `deklaruojanciojo-asmens-sutuoktinis-partneris`
+(2009: `deklaruojancio-…`). The 2009 declaration (both elections) after the declarant and spouse cards come roman-numbered
 sections — `ii-dalyvavimas-juridiniuose-asmenyse`, `iii-individuali-veikla`,
 `iv-naryste-pareigos-imonese-istaigose-asociacijose-ar-fonduose`,
 `v-gautos-dovanos`, `vii-sandoriai`,
@@ -1553,8 +1568,10 @@ laukelių suma" / "…27,28,30 laukelių suma"). All three resolve to
 
 ### Campaign pages (2009)
 
-The 2009 participant pages (both elections) are one revision older than
-2012's. In the EP election the participant is the party, linked from every
+The 2008 records have no campaign section at all — the candidate pages
+link no participant page, though VRK's participants index for the
+election exists. The 2009 participant pages (both elections) are one
+revision older than 2012's. In the EP election the participant is the party, linked from every
 candidate of its list, so 24 candidates share one campaign record. Their
 tables head columns with `<td><strong>` rather than `<th>`; the donor list
 is a single "Aukotojų sąrašas" section (`aukos-pagal-sekcija.aukotoju-sarasas`,
@@ -1578,28 +1595,33 @@ now keyed by the table's own amount columns — `amountLt` on the litas-only
 under `amountEur` and lost the "Nuo 2012-01-01 draudžiamos" note; see
 `DATASET.md`.
 
-### Sitemap cross-checks (`sitemaps/2012-seimo.json`)
+### Sitemap cross-checks (`sitemaps/2012-seimo.json`, `sitemaps/2008-seimo.json`)
 
 The 2012 sitemap's `stats` record what was reconciled against VRK's own
-index before the merge was trusted; read them rather than assuming zero:
+index before the merge was trusted; read them rather than assuming zero
+(2008's figures in parentheses where they differ):
 
-- `listCandidacies` = `declaredListCandidates` (1,878) and
+- `listCandidacies` = `declaredListCandidates` (1,878; 2008: 1,583) and
   `listCountMismatches` = 0: every list page holds exactly as many
   candidates as the index declares for it.
 - `listDistrictJoinMismatch` = 0 over the rows that have a constituency
-  column; `listRowsWithoutDistrictColumn` = 135 is the coalition list page,
-  which shows the member party in that column's place.
+  column; `listRowsWithoutDistrictColumn` = 135 (2008: 130) is the
+  coalition list page, which shows the member party in that column's place.
 - `districtOnlyReconciled`: the "tik vienmandatėse" side pages hold
   `sidePageDistrictOnlyIds` (52) distinct people, `sidePageIdsAlsoOnLists`
   (3) of whom also hold a list seat, and the difference equals
   `districtOnlyCandidates` (49). `sidePageDistrictOnlyDeclared` (58) is the
   index's figure and is *not* expected to match: the self-nominated page
   declares 36 but lists 31, the withdrawn having left the page but not the
-  count.
+  count. The 2008 index has no self-nominated page at all, so
+  `selfNominatedNotOnSidePages` (15) counts the constituency pages' own
+  "Išsikėlė pats" rows towards the 20 district-only candidates (5 from the
+  two "tik vienmandatėse" pages); it is 0 for 2012.
 
 ### Ids
 
 Name slugs with the 2016 Seimo module's positional `-2` suffix for
-collisions (one in 2012: two Arūnas MARKŪNAS on different lists; none in
-the other five). The listing pages are static archives, so traversal order
+collisions (two in 2008: two Arūnas RIMKUS on different lists, and two
+Algis KAŠĖTA standing against each other in Varėnos–Eišiškių; one in
+2012: two Arūnas MARKŪNAS on different lists; none in the other five). The listing pages are static archives, so traversal order
 — lists in index order, then constituencies in index order — is stable.

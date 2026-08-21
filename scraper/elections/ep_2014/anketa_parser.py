@@ -8,8 +8,9 @@ from scraper.elections.ep_2014.sitemap import ELECTION_ID
 # question set: the birth date is numbered Q3 (the only such numbering in
 # the corpus), Q8.1-8.3 are the rinkimų į Europos Parlamentą įstatymo 37
 # str. questions with 8.3.1/8.3.2 on another member state's citizenship, and
-# Q9.1-9.3 the 93 str. ones. Q10-Q20 match the Seimo variant; there is no
-# Q21. Keys follow ep_2019 where the question matches.
+# Q9.1-9.3 the 93 str. ones. Q10-Q20 match the Seimo variant, including the
+# degree/title line after the education table; there is no Q21. Keys follow
+# ep_2019 where the question matches.
 from scraper.elections.seimo_birzu_zarasu_ukmerges_2013.anketa_parser import (
     build_candidacy,
 )
@@ -62,6 +63,8 @@ def normalize_ep_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
             "aprasas": _answer("12"),
             "irasai": _normalize_table_records(_question_record_rows(rows, "12")),
         },
+        "mokslo-laipsnis": _prompt_answer("jei turite, nurodykite mokslo laipsn"),
+        "pedagoginis-vardas": _prompt_answer(", vard") or _prompt_answer("jei turite, nurodykite mokslo vard"),
         "uzsienio-kalbos": _split_list_value(
             _row_answer_text(_find_row_by_question_number(rows, "13"))
         ),
