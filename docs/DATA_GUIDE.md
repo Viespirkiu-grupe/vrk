@@ -1,7 +1,7 @@
 # Data Guide
 
 The consumer entry point to the corpus: everything a third party needs to
-query 42,655 candidate records across 35 Lithuanian elections (1996–2025)
+query 58,468 candidate records across 35 Lithuanian elections (1996–2025)
 without reading the per-election schema appendices first. Every path and
 count on this page was verified against the full corpus on 2026-08-19; the
 election and record totals were refreshed on 2026-08-21 when the 2012–2014

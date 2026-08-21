@@ -18,7 +18,7 @@ never touched by a full run.
 
 ## Inventory
 
-42,655 candidate records across 35 elections, 1996–2025, with **zero fetch
+58,468 candidate records across 35 elections, 1996–2025, with **zero fetch
 failures**.
 
 **The table below is an aggregate, not an inventory of any one directory.**
@@ -28,9 +28,9 @@ different times. A given clone holds whatever was scraped *there*; the counts
 here are the union. Before trusting a local `data/` for analysis, count it
 (`ls data/*/ | wc -l` per election) rather than assuming this table describes
 it, and re-run `scripts/run_election_batches.sh <id>` for anything missing.
-The three rows written `N of total` are a second, different caveat: those
-elections are fixture-only *everywhere* — their modules, listings and sitemaps
-are complete, but the full candidate scrape has never been run.
+Every election in the table has now been scraped in full; the last three
+fixture-only rows (the 2015 municipal general and the two June 2015 repeat
+elections) were completed on 2026-08-21.
 
 Two named parse-time flags are worth distinguishing: the single
 2015 candidacy whose questionnaire VRK never published (`AnketaNotPublished`,
@@ -38,9 +38,7 @@ see Known gaps), and nine `ResidenceMissing` warnings across the two new
 1996-1998 archive general elections (one 1996 Seimo candidate, eight 1997
 municipal candidates) — each verified by re-fetching the source page, where
 the `Gyvenamoji vieta` label is absent entirely, so these are genuinely
-unpublished fields rather than a parser fault. The three largest 2015 elections are the rows not
-yet fully scraped: their modules, listings and fixtures exist, but only the
-fixture candidates have been parsed so far. The two municipal general
+unpublished fields rather than a parser fault. The two municipal general
 elections from the modern eras are together larger than everything else in
 the corpus by a factor of three; each was scraped separately in ~6h. The
 1996-1998 archive family's two general elections (`1996-spalio-20-seimo`,
@@ -53,12 +51,12 @@ election was re-parsed offline the same day.
 
 | election | records | elected | declared a conviction | with campaign data |
 |---|---:|---:|---:|---:|
-| `2015-kovo-1-seimo-zirmunai` | 12 | 0 | 0 | 12 |
-| `2015-birzelio-7-seimo-varena-eisiskes` | 8 | 0 | 0 | 8 |
-| `2015-lapkricio-8-telsiu-mero` | 7 | 0 | 0 | 7 |
-| `2015-birzelio-7-pakartotiniai-sirvintos-trakai` | 10 of 327 | 0 | 0 | 10 |
-| `2015-birzelio-21-pakartotiniai-silutes` | 10 of 366 | 0 | 0 | 9 |
-| `2015-kovo-1-savivaldybiu` | 9 of 15,149 | 0 | 0 | 8 |
+| `2015-kovo-1-seimo-zirmunai` | 12 | 1 | 0 | 12 |
+| `2015-birzelio-7-seimo-varena-eisiskes` | 8 | 1 | 0 | 8 |
+| `2015-lapkricio-8-telsiu-mero` | 7 | 1 | 0 | 7 |
+| `2015-birzelio-7-pakartotiniai-sirvintos-trakai` | 327 | 26 | 2 | 285 |
+| `2015-birzelio-21-pakartotiniai-silutes` | 366 | 25 | 12 | 182 |
+| `2015-kovo-1-savivaldybiu` | 15149 | 1473 | 266 | 13855 |
 | `2016-seimo` | 1415 | 141 | 38 | 672 |
 | `2017-balandzio-23-meru` | 11 | 2 | 0 | 11 |
 | `2017-balandzio-23-seimo-anyksciai-panevezys` | 11 | 1 | 0 | 11 |
@@ -84,11 +82,11 @@ election was re-parsed offline the same day.
 | `1997-gruodzio-21-seimo-pakartotiniai` | 4 | 0 | 0 | 0 |
 | `1997-kovo-23-savivaldybiu-tarybu` | 6276 | 0 | 0 | 0 |
 | `1997-birzelio-29-svenciniu-tarybos-pakartotiniai` | 110 | 0 | 0 | 0 |
-| `2012-seimo` | 1927 | 0 | 45 | 1927 |
-| `2013-kovo-3-seimo-birzai-zarasai-ukmerge` | 37 | 0 | 2 | 37 |
-| `2014-prezidento` | 7 | 0 | 0 | 7 |
-| `2014-ep` | 215 | 0 | 4 | 215 |
-| **total** | **42655** | **3522** | **996** | **5607** |
+| `2012-seimo` | 1927 | 139 | 45 | 1927 |
+| `2013-kovo-3-seimo-birzai-zarasai-ukmerge` | 37 | 3 | 2 | 37 |
+| `2014-prezidento` | 7 | 1 | 0 | 7 |
+| `2014-ep` | 215 | 11 | 4 | 215 |
+| **total** | **58468** | **5203** | **1276** | **19902** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
@@ -480,14 +478,11 @@ each now has one.
   Trakai council page as `Rengiama`. Its record keeps the profile card and
   carries the corpus's only `AnketaNotPublished` warning. The same person's
   mayoral candidacy, under a second VRK candidate id, is complete.
-- Three 2015 elections have not had their full scrapes yet — only their
-  fixture sets are parsed: 10 of 327 for
-  `2015-birzelio-7-pakartotiniai-sirvintos-trakai`, 10 of 366 for
-  `2015-birzelio-21-pakartotiniai-silutes` and 9 of 15,149 for
-  `2015-kovo-1-savivaldybiu`. Their listings and sitemaps are complete and
-  cross-checked; the candidate pages need
-  `scripts/run_election_batches.sh` (with `KEEP_SAMPLES=1` for the municipal
-  general, which is the size of the 2019 and 2023 ones).
+- ~~Three 2015 elections have not had their full scrapes yet~~ — completed
+  2026-08-21 with `KEEP_SAMPLES=1`: 327 (Širvintos–Trakai), 366 (Šilutė)
+  and 15,149 (the March municipal general, the corpus's third-largest
+  election) candidates, zero fetch failures, raw HTML retained under
+  `samples-full/`.
 - ~~The Q9.1 capture landed after the 2019 municipal full run~~ — resolved by
   the 2026-08-19 municipal re-scrape (below): every record in every election
   now reflects the post-fix parse in full, and `teistumo-detales` is present
