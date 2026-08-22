@@ -1405,9 +1405,9 @@ of the declaration sections, because these pages carry no questionnaire.
 - `rawData.profile` holds `candidateDisplayName`, `photoUrl` (an external URL,
   never downloaded — unlike the base64-embedded-photo eras, this family's
   photos stay as source links), `biographyUrl` and `incomeDeclarationUrl`
-  (both raw URLs, not fetched or parsed — the income declaration has no
-  relation to the GPM308 shape any later era uses, and biography text is
-  captured but not further structured).
+  (both fetched: the declaration is parsed into
+  `normalized.turto-ir-pajamu-deklaracijos` as described below, while biography
+  text is captured verbatim but not further structured).
 - `rawData.candidacies` is a **list**, not a single object: typically the
   candidate's single-member constituency plus, optionally, a `Daugiamandatė`
   (multi-mandate party list) entry with its own `listNumber` — but do not
@@ -1429,6 +1429,58 @@ of the declaration sections, because these pages carry no questionnaire.
   page (`astrauskas-vytautas` in the 1996 fixture set); otherwise
   `{"text", "birthDate", "birthYear"}` — the full free-text paragraph
   verbatim, plus whatever its opening sentence yields.
+- **`normalized.turto-ir-pajamu-deklaracijos` comes from the linked
+  `kpdl.htm` page**, parsed by `scraper/shared/deklaracija_archive_1990s.py`
+  (shared with the other 1990s archive family). The 1990s form is not the
+  modern one, so two things differ from every later era:
+  - `privalomas-registruoti-turtas` and `pinigines-lesos` are **always
+    null**. The form publishes turtas and piniginės lėšos as one summed
+    figure per section, and the modern split is not recoverable from it. The
+    combined figures are under `turtas-ir-pinigines-lesos-metu-pradzioje`,
+    `turtas-ir-pinigines-lesos-metu-pabaigoje` and
+    `kalendoriniais-metais-isigytas-turtas`.
+  - `gautos-pajamos` and `sumoketas-pajamu-mokestis` come from section III's
+    "20. Iš viso" row, but **only when that row is not smaller than row 1**,
+    the employment row printed above it. Where it is smaller the key is null
+    and a `DeclarationTotalBelowItsOwnRow` anomaly is written. Row 1 is always
+    published as `gautos-pajamos-darbo-santykiu` and
+    `sumoketas-pajamu-mokestis-darbo-santykiu`.
+  - `valiuta` is `"Lt"`, so the corpus-wide litas→euro conversion applies.
+  - Also carried: `israso-data`, `israsa-isdave` (municipal family only — the
+    Seimas pages print no issuer), `mokesciu-nepriemoka`,
+    `privaloma-sumoketi-mokesciu-ir-sankciju`, `seimos-nariu-skaicius`,
+    `islaikytiniu-skaicius`, `seimos-nariu-iki-18-metu`.
+  - The key is **absent** when the candidate page links no declaration.
+- **`normalized.anketa.gimimo-vieta` is likewise recovered from the biography
+  sentence**, and marked `gimimo-vietos-saltinis: "biografijos-tekstas"`. The
+  prose prints it in the locative ("Kaune", "Šiaulių rajone") while the corpus
+  stores the nominative, and suffix rules cannot settle it alone — `-yje`
+  yields both *Panevėžys* and *Radviliškis* — so candidates are accepted only
+  if they appear in `scraper/shared/vietovardziai.json`, the place names the
+  rest of the corpus uses. That lookup is the precision guard: a mis-parsed
+  fragment produces no candidate and is dropped.
+
+  Recovered on **447 of 906** records. Of the 459 without it, 25 have no
+  biography and the rest name a village, parish or region the corpus has no
+  nominative for, or name no place at all. Cross-checked against the same
+  people's later elections, where VRK publishes the field: **all 247
+  checkable values name the same place**, though often less specifically —
+  the district where a later form gives the village. The country name
+  ("Lietuvoje") is refused as too coarse; it was wrong on all three candidates
+  who had a specific birthplace published elsewhere.
+
+- **Nothing else is extracted from the biography prose, on purpose.** Education
+  and work history look extractable — "1972 m. baigė Vilniaus statybos
+  technikumą", "1978-1988 m. dirbo ..." — and match on most records, but
+  sampling the matches shows they are not reliable enough to write into
+  `issilavinimas` or `darbo-patirtis`: the captures run on into the following
+  clause ("25-ąją vidurinę mokyklą ir tais pačiais metais įstojo į..."), stop
+  at an abbreviation's period ("Biržų J"), or return a specialty where an
+  institution belongs ("transporto remonto ir eksploatacijos specialybę").
+  Roughly a third of them are wrong in one of those ways. The full text stays
+  in `biografija.tekstas`, which is the honest place for it, on the same
+  precedent as the eligibility Q&A this family also declines to normalize.
+
 - **`normalized.anketa.gimimo-data` here is derived from biography prose, not
   read from a field.** These pages publish no birth-date field at all, so the
   biography's opening sentence ("Gimė 1942 m. rugpjūčio 3 d. Panevėžyje") is
@@ -1508,12 +1560,49 @@ field map all resolve them with no election-specific case.
   example, and `normalized.anketa.tautybe` is `null` for that
   record.
 - `rawData.profile` holds only `candidateDisplayName` and
-  `incomeDeclarationUrl` (raw URL, not parsed — same call as the Seimas
-  archive) — no photo field, since this family's candidate pages carry no
-  portrait.
+  `incomeDeclarationUrl` — no photo field, since this family's candidate pages
+  carry no portrait.
+- **`normalized.turto-ir-pajamu-deklaracijos` comes from the linked
+  `kpdl.htm` page**, parsed by `scraper/shared/deklaracija_archive_1990s.py`
+  (shared with the other 1990s archive family). The 1990s form is not the
+  modern one, so two things differ from every later era:
+  - `privalomas-registruoti-turtas` and `pinigines-lesos` are **always
+    null**. The form publishes turtas and piniginės lėšos as one summed
+    figure per section, and the modern split is not recoverable from it. The
+    combined figures are under `turtas-ir-pinigines-lesos-metu-pradzioje`,
+    `turtas-ir-pinigines-lesos-metu-pabaigoje` and
+    `kalendoriniais-metais-isigytas-turtas`.
+  - `gautos-pajamos` and `sumoketas-pajamu-mokestis` come from section III's
+    "20. Iš viso" row, but **only when that row is not smaller than row 1**,
+    the employment row printed above it. Where it is smaller the key is null
+    and a `DeclarationTotalBelowItsOwnRow` anomaly is written. Row 1 is always
+    published as `gautos-pajamos-darbo-santykiu` and
+    `sumoketas-pajamu-mokestis-darbo-santykiu`.
+  - `valiuta` is `"Lt"`, so the corpus-wide litas→euro conversion applies.
+  - Also carried: `israso-data`, `israsa-isdave` (municipal family only — the
+    Seimas pages print no issuer), `mokesciu-nepriemoka`,
+    `privaloma-sumoketi-mokesciu-ir-sankciju`, `seimos-nariu-skaicius`,
+    `islaikytiniu-skaicius`, `seimos-nariu-iki-18-metu`.
+  - The key is **absent** when the candidate page links no declaration.
+  **This election is the one where that total is usually wrong**: measured over
+  all 5,477 of its declarations, the "Iš viso" row prints a figure below row 1
+  on **4,463** of them (99% of those print 0) and on 4,134 for tax — so most of
+  its records carry a null `gautos-pajamos` and a populated
+  `gautos-pajamos-darbo-santykiu`. The same failure appears, rarely, elsewhere:
+  9 of 879 in 1996 and 1 of 108 in Švenčionys.
 - No elected data, no biography subpage, no private-interest or
   campaign-finance sections — same scope decision as the Seimas archive
   appendix above.
+- `normalized.anketa.issilavinimas` is the corpus's education object,
+  `{"aprasas", "irasai": [...]}`, like every era from 2007 on. These pages
+  publish a single level from a controlled list ("Aukštasis",
+  "Aukštesnysis", "Specialus vidurinis", "Vidurinis", "Nebaigtas aukštasis",
+  "Nebaigtas vidurinis", "Aspirantūra", "Doktorantūra"), which is exactly the
+  modern entry's own `issilavinimas` field, so it goes there and
+  `mokymo-istaigos-pavadinimas`, `specialybe` and `baigimo-metai` are null —
+  this era never published them. It was a bare string until 2026-08-22, the
+  one concept in the corpus with two shapes; records already on disk were
+  reshaped in place by `scripts/reshape_1997_education.py`.
 - 46 candidate name collisions in the 6,276-candidate general election
   resolve with the corpus's standard positional `-2` suffix; see
   `docs/CLI_REFERENCE.md`'s municipal archive section for the concrete pair.

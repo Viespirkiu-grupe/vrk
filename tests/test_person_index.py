@@ -154,10 +154,29 @@ class GroupingTests(unittest.TestCase):
         }
         index = self._build([("2012-seimo", "a-b", litas), ("2016-seimo", "a-b", euro)])
         entries = index["people"][0]["e"]
-        self.assertEqual(entries[0]["m"], [100000.0, 10000.0, None])
+        # The fourth slot is the 1996-1997 form's combined turtas + piniginės
+        # lėšos, which neither of these modern-shaped records declares.
+        self.assertEqual(entries[0]["m"], [100000.0, 10000.0, None, None])
         self.assertTrue(entries[0].get("lt"))
-        self.assertEqual(entries[1]["m"], [100000.0, 10000.0, 5000.0])
+        self.assertEqual(entries[1]["m"], [100000.0, 10000.0, 5000.0, None])
         self.assertNotIn("lt", entries[1])
+
+    def test_the_archive_combined_turtas_lands_in_the_fourth_slot(self):
+        # The 1996-1997 pages sum turtas and piniginės lėšos, so those two
+        # keys are null and the combined figure carries the era's only asset
+        # number. Babravičius 1996: 381,757 Lt at the changeover rate.
+        record = _record("A B", "1970-01-01")
+        record["normalized"]["turto-ir-pajamu-deklaracijos"] = {
+            "privalomas-registruoti-turtas": None,
+            "pinigines-lesos": None,
+            "gautos-pajamos": 169391,
+            "turtas-ir-pinigines-lesos-metu-pabaigoje": 381757,
+            "valiuta": "Lt",
+        }
+        index = self._build([("1996-spalio-20-seimo", "a-b", record)])
+        entry = index["people"][0]["e"][0]
+        self.assertEqual(entry["m"], [None, None, 49059.02, 110564.47])
+        self.assertTrue(entry.get("lt"))
 
     def test_undeclared_litas_record_carries_no_flag(self):
         record = _record("A B", "1970-01-01")

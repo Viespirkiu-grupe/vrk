@@ -943,9 +943,12 @@ these three modules differ only in which directory (`seim96` vs `seimpk`),
   and, optionally, a `Daugiamandatė` (multi-mandate party list) entry with its
   own list number — both are kept as separate objects in
   `rawData.candidacies`/`normalized.kandidatavimas` rather than merged.
-- No income declaration parsing: `kpdl.htm` is captured only as a raw URL
-  (`incomeDeclarationUrl`), out of scope for this family's fixture-sized
-  ambition, same call as the elected-status gap recorded in `docs/DATASET.md`.
+- The `kpdl.htm` income declaration is fetched alongside the candidate page
+  (saved as `declaration.html`) and parsed by
+  `scraper/shared/deklaracija_archive_1990s.py` into the corpus's usual
+  `turto-ir-pajamu-deklaracijos` key. The 1990s form sums turtas and piniginės
+  lėšos rather than splitting them, so the two modern split keys are null and
+  the combined figures get their own; see `docs/OUTPUT_SCHEMA.md`.
   The free-text biography page (`biogr.htm`), when linked, is captured
   verbatim as `rawData.biography.text`.
 - 1996 is the only general election of the three (879 candidates, 71
@@ -999,7 +1002,11 @@ reach a candidate:
   nationality, education, foreign languages, main workplace, public activity,
   family status and family members are all plain labelled paragraphs, carried
   into `rawData.personal`/`normalized.anketa`. As with the Seimas
-  archive, `kpdl.htm` (income declaration) is captured only as a raw URL.
+  archive, `kpdl.htm` (income declaration) is fetched and parsed into
+  `normalized.turto-ir-pajamu-deklaracijos`. This is the family whose section
+  III "Iš viso" row usually prints 0 against a non-zero row 1, so most of its
+  records carry a null `gautos-pajamos` and a populated
+  `gautos-pajamos-darbo-santykiu`; see `docs/OUTPUT_SCHEMA.md`.
 - 46 candidate name collisions across the 6,276-candidate general election
   resolve with the same positional `-2` suffix the other families use — e.g.
   two different people named `Tamulevičius Kęstutis` (VRK ids 37862 and

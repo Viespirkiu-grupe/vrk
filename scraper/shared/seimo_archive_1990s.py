@@ -23,12 +23,15 @@ comment contents entirely); the eligibility junk is discarded on purpose, on
 the same precedent as the 2015-backlog elected-status investigation: a field
 that cannot be trusted is left out and documented, not guessed at.
 
-There is no per-candidate income declaration parsing here. The `kpdl.htm`
-link is captured as a raw URL (`incomeDeclarationUrl`) but not fetched or
-parsed -- it is a full income/asset declaration in a shape unrelated to any
-modern-era GPM308 table, and out of scope for this module's fixture-sized
-ambition. Same for the free-text biography page (`biogr.htm`): captured and
-stored verbatim, not further structured.
+The `kpdl.htm` income and asset declaration is fetched alongside the
+candidate page and read by `scraper/shared/deklaracija_archive_1990s.py`,
+which the 1997 municipal archive family shares. Its shape is unrelated to any
+modern-era GPM308 table -- turtas and piniginės lėšos come summed rather than
+split -- so it lands in the corpus's usual `turto-ir-pajamu-deklaracijos`
+block with the modern split keys null and the combined figures under their
+own names; see that module for the mapping and for why section III's total is
+not always trusted. The free-text biography page (`biogr.htm`) is still
+captured and stored verbatim rather than structured.
 
 Callers pass in the directory, phase and constituency numbers explicitly
 rather than importing them, matching `scraper/shared/municipal_sitemap.py`.
@@ -47,6 +50,7 @@ from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.deklaracija_archive_1990s import parse_declaration
 from scraper.shared.files import slugify, write_candidate_record, write_json
 from scraper.shared.http import fetch_text
 
@@ -315,6 +319,76 @@ def extract_biography_birth_date(text: str) -> tuple[str | None, int | None]:
     return None, None
 
 
+# The birthplace is printed in the locative ("Kaune", "Klaipėdoje", "Šiaulių
+# rajone") while the rest of the corpus stores the nominative. Suffix rules
+# alone cannot do the conversion -- "-yje" yields both Panevėžys and
+# Radviliškis -- so every candidate a rule produces is checked against
+# scraper/shared/vietovardziai.json, the place names the rest of the corpus
+# actually uses. That lookup is the precision guard: a mis-parsed fragment
+# ("Lietuvė", "1976 m") produces no candidate in the list and is dropped.
+LOCATIVE_RULES = (
+    ("iuose", "iai"), ("uose", "ai"), ("ose", "os"),
+    ("iuje", "ius"), ("uje", "us"),
+    ("yje", "ys"), ("yje", "is"),
+    ("ijoje", "ija"), ("ėje", "ė"), ("oje", "a"),
+    ("je", ""), ("e", "as"), ("e", "is"), ("e", "ys"),
+)
+
+_PLACE_VOCABULARY: set[str] | None = None
+
+
+def place_vocabulary() -> set[str]:
+    global _PLACE_VOCABULARY
+    if _PLACE_VOCABULARY is None:
+        path = Path(__file__).resolve().parent / "vietovardziai.json"
+        _PLACE_VOCABULARY = set(json.loads(path.read_text(encoding="utf-8"))["places"])
+    return _PLACE_VOCABULARY
+
+
+# "Gimė ... Lietuvoje" resolves to a real vocabulary entry and says nothing --
+# every candidate in this corpus was born somewhere. Worse, it is wrong where
+# the sentence names the country before the village: cross-checked against the
+# same people's later elections, all three candidates whose recovered value was
+# "Lietuva" had a specific birthplace published elsewhere.
+TOO_COARSE_PLACES = {"Lietuva", "Lietuvos Respublika"}
+
+
+def nominative_place(locative: str) -> str | None:
+    """The nominative for a locative place name, or None if unrecognised."""
+    vocabulary = place_vocabulary() - TOO_COARSE_PLACES
+    for suffix, replacement in LOCATIVE_RULES:
+        if locative.endswith(suffix) and len(locative) > len(suffix):
+            candidate = locative[: -len(suffix)] + replacement
+            if candidate in vocabulary:
+                return candidate
+    return None
+
+
+# "Gimė 1955 m. rugsėjo 8 d. Klaipėdoje, tarnautojų šeimoje." The place runs
+# to the first comma; what follows is the family's background, not a location.
+BIOGRAPHY_BIRTH_PLACE = re.compile(
+    r"Gim[ėe]\s+\d{4}\s*m\.\s*\w+\s+\d+\s*d\.\s*(.{0,60}?)(?:\.|;)", re.S
+)
+
+
+def extract_biography_birth_place(text: str) -> str | None:
+    """Birthplace from the biography's opening sentence, nominative.
+
+    Measured over the family's 881 biographies: 571 name a place and 453 of
+    those resolve against the vocabulary (79%). The rest are villages,
+    parishes and regions the corpus has no nominative for, and are left out
+    rather than guessed at.
+    """
+    match = BIOGRAPHY_BIRTH_PLACE.search(text or "")
+    if not match:
+        return None
+    head = match.group(1).split(",")[0].strip()
+    # "Gimė ... d. darbininkų šeimoje" names a background, not a place.
+    if not head or "šeim" in head:
+        return None
+    return nominative_place(head)
+
+
 def parse_biography(html: str) -> dict[str, Any]:
     # The biography text lives in the page's <blockquote>; everything outside
     # it is the shared page header/footer boilerplate ("Puslapius kuria ir
@@ -328,7 +402,12 @@ def parse_biography(html: str) -> dict[str, Any]:
     ]
     text = "\n".join(paragraphs)
     birth_date, birth_year = extract_biography_birth_date(text)
-    return {"text": text, "birthDate": birth_date, "birthYear": birth_year}
+    return {
+        "text": text,
+        "birthDate": birth_date,
+        "birthYear": birth_year,
+        "birthPlace": extract_biography_birth_place(text),
+    }
 
 
 def fetch_constituency_samples(
@@ -494,22 +573,26 @@ def fetch_candidate_sample(
     tab_count = 1
     tabs_saved = 1
     anomalies: list[dict[str, Any]] = []
-    if detail["biographyUrl"]:
+    for label, url, filename in (
+        ("Biography", detail["biographyUrl"], "biography.html"),
+        ("Declaration", detail["incomeDeclarationUrl"], "declaration.html"),
+    ):
+        if not url:
+            continue
         tab_count += 1
         try:
-            biography_html = fetch_text(detail["biographyUrl"])
-            (candidate_dir / "biography.html").write_text(biography_html, encoding="utf-8")
+            (candidate_dir / filename).write_text(fetch_text(url), encoding="utf-8")
             tabs_saved += 1
         except Exception as exc:  # noqa: BLE001 - recorded as an anomaly, not fatal
             anomalies.append(
                 build_anomaly_event(
-                    event_type="BiographyFetchFailed",
+                    event_type=f"{label}FetchFailed",
                     severity="error",
                     stage="fetch",
                     election_id=election_id,
                     candidate_id=entry["candidateId"],
                     source_url=entry["url"],
-                    detail={"biographyUrl": detail["biographyUrl"], "error": str(exc)},
+                    detail={"url": url, "error": str(exc)},
                 )
             )
 
@@ -595,6 +678,37 @@ def build_candidate_record(
                 )
             )
 
+    declaration: dict[str, Any] | None = None
+    declaration_path = candidate_dir / "declaration.html"
+    if detail["incomeDeclarationUrl"]:
+        if declaration_path.exists():
+            parsed = parse_declaration(declaration_path.read_text(encoding="utf-8"))
+            declaration = parsed["declaration"]
+            for event in parsed["anomalies"]:
+                anomalies.append(
+                    build_anomaly_event(
+                        event_type=event["eventType"],
+                        severity=event["severity"],
+                        stage="parse",
+                        election_id=election_id,
+                        candidate_id=candidate_id,
+                        source_url=detail["incomeDeclarationUrl"],
+                        detail=event["detail"],
+                    )
+                )
+        else:
+            anomalies.append(
+                build_anomaly_event(
+                    event_type="DeclarationSampleMissing",
+                    severity="warning",
+                    stage="parse",
+                    election_id=election_id,
+                    candidate_id=candidate_id,
+                    source_url=entry["url"],
+                    detail={"incomeDeclarationUrl": detail["incomeDeclarationUrl"]},
+                )
+            )
+
     if not detail["candidacies"]:
         anomalies.append(
             build_anomaly_event(
@@ -628,6 +742,7 @@ def build_candidate_record(
         "candidacies": detail["candidacies"],
         "residence": detail["residence"],
         "biography": biography,
+        "declaration": declaration,
     }
 
     # These pages publish no birth-date field, so the only birth date this
@@ -641,12 +756,18 @@ def build_candidate_record(
     # year-only cases, which are never promoted to a birth date.
     birth_date = biography.get("birthDate") if biography else None
     birth_year = biography.get("birthYear") if biography else None
+    birth_place = biography.get("birthPlace") if biography else None
     anketa: dict[str, Any] = {}
     if birth_date:
         anketa["gimimo-data"] = birth_date
         anketa["gimimo-data-saltinis"] = "biografijos-tekstas"
     if birth_year:
         anketa["gimimo-metai"] = birth_year
+    # Same story as the birth date: recovered from prose, so it is marked as
+    # such rather than passing for a field the page never had.
+    if birth_place:
+        anketa["gimimo-vieta"] = birth_place
+        anketa["gimimo-vietos-saltinis"] = "biografijos-tekstas"
 
     # Normalized keys are kebab-case throughout, matching every other election
     # module: `profilis.vardas-pavarde`, `profilis.nuotrauka` and the rest are
@@ -675,6 +796,9 @@ def build_candidate_record(
         ],
         "gyvenamoji-vieta": detail["residence"] or None,
         "biografija": {"tekstas": biography["text"]} if biography else None,
+        # Same key the whole corpus declares under, so the person index,
+        # concept map and dashboard need no special case for this era.
+        **({"turto-ir-pajamu-deklaracijos": declaration} if declaration else {}),
     }
 
     # The listing table is headed "Pavardė, vardas" and prints the name

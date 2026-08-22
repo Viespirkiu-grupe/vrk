@@ -167,6 +167,83 @@ self-nominations). The `stats` block of `sitemaps/2012-seimo.json` records
 each of these. Every null in the fixture records was traced to a genuinely
 blank or omitted source line before the full runs started.
 
+### The 2026-08-23 recovery of 1996-1997 birthplaces
+
+GitHub issue #63. The 1996-1998 Seimas archive publishes no birth-place field,
+so its 881 biographies were the only source. The text was already stored as
+`biografija.tekstas`, making this a pure offline pass —
+`scripts/backfill_archive_birthplaces.py`, no page fetched, nothing but
+`anketa.gimimo-vieta` and its source marker touched.
+
+**447 of 906 records gained a birthplace.** The conversion from the prose's
+locative to the corpus's nominative is settled by lookup against
+`scraper/shared/vietovardziai.json` (1,100 names, built from the rest of the
+corpus by `scripts/build_place_vocabulary.py`), because suffix rules are
+ambiguous — `-yje` yields both *Panevėžys* and *Radviliškis*.
+
+Precision was measured against VRK itself: 247 of the recovered values belong
+to people who also stood in an election that publishes the field outright, and
+**all 247 name the same place**. They are frequently less specific — the
+district where a later form gives the village — but none contradicts. The
+country name was excluded after that check: three candidates whose sentence
+gave only "Lietuvoje" had a real birthplace published elsewhere.
+
+Nothing else is taken from the prose. Education and work history match on most
+records but roughly a third of the matches are truncated, run on into the next
+clause, or capture a specialty in place of an institution, which is below the
+bar for writing into a normalized field. See `docs/OUTPUT_SCHEMA.md`.
+
+### The 2026-08-23 backfill of the 1996-1997 archive declarations
+
+GitHub issue #63. The five archive elections were scraped before their
+`kpdl.htm` income and asset declarations were parsed, so 7,292 records carried
+`profilis.pajamu-deklaracijos-nuoroda` and no figures -- the only elections in
+the corpus without them.
+
+`scripts/backfill_archive_declarations.py` fetched the one page per candidate
+and merged the parsed block into the existing record. The candidate pages had
+not changed, so this touched only the new key: 6,469 fetches rather than the
+~20,000 a full re-scrape would have cost, and no window where the corpus was
+missing records. `scripts/run_election_batches.sh` could not do it -- it skips
+any candidate whose record already exists, being a resumable *initial* scrape.
+Equivalence was measured rather than assumed: over the 124 archive fixture
+candidates holding both a candidate page and a declaration, the merged record
+is identical key for key to what `build_candidate_record` writes.
+
+**0 fetch failures across 6,469 pages.** Coverage after the run:
+
+| election | records | with declaration | turtas | income (total) | income (employment) |
+|---|---:|---:|---:|---:|---:|
+| `1996-spalio-20-seimo` | 879 | 879 | 877 | 868 | 877 |
+| `1997-kovo-23-savivaldybiu-tarybu` | 6276 | 5477 | 5477 | 1014 | 5477 |
+| `1997-birzelio-29-svenciniu-tarybos-pakartotiniai` | 110 | 108 | 108 | 107 | 108 |
+| `1997-kovo-23-seimo-pakartotiniai` | 23 | 1 | 1 | 1 | 1 |
+| `1997-gruodzio-21-seimo-pakartotiniai` | 4 | 4 | 4 | 4 | 4 |
+| **total** | **7292** | **6469** | **6467** | **1994** | **6467** |
+
+The 823 records without a declaration link none from their candidate page.
+The gap between the two income columns is section III's total row: it renders
+0 against a non-zero row 1 on 4,463 of the municipal general's declarations,
+9 of 1996's and 1 of Švenčionys', and a total its own detail line contradicts
+is refused rather than published (see `docs/OUTPUT_SCHEMA.md` and the module
+docstring). The refused figure is kept in the anomaly, and the employment row
+is published either way -- which is why every record but two has an income
+figure even where the total is unusable.
+
+Two 1996 declarations are permanently unreadable: VRK's archive froze an
+Oracle error into them (`ORA-02391: exceeded simultaneous SESSIONS_PER_USER
+limit`), still served at those URLs today. They are the two records missing
+turtas and are recorded as `DeclarationPageUnreadable`.
+
+The fetched HTML is retained under `samples-full/<election-id>/<candidate-id>/`
+so a later parser fix can be an offline re-parse.
+
+In the same pass, `scripts/reshape_1997_education.py` reshaped
+`anketa.issilavinimas` on 5,192 municipal-archive records from a bare level
+string into the corpus's `{"aprasas", "irasai": [...]}` object -- a pure local
+reshape of a value already present, needing no fetch. `issilavinimas` was the
+last concept in the corpus with two shapes.
+
 ### The 2026-08-22 scrape of the 2011 municipal general election
 
 GitHub issue #42; VRK election 409 (2011-02-27) — the last municipal
@@ -736,10 +813,11 @@ each now has one.
   and the name are in the same word order for these five elections.
 - The 1996-1998 Seimas archive pages (`1996-spalio-20-seimo`,
   `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`)
-  publish no elected markers, no income/private-interest declarations in a
-  form worth parsing (the linked `kpdl.htm` declaration is captured only as a
-  raw URL), and — unlike every other era, including 2015 — **no birth-date
-  field**. A birth date is instead recovered from the biography's opening
+  publish no elected markers, no private-interest declarations, and — unlike
+  every other era, including 2015 — **no birth-date field**. (The linked
+  `kpdl.htm` income declaration *is* parsed, into the corpus's usual
+  `turto-ir-pajamu-deklaracijos` key; see `docs/OUTPUT_SCHEMA.md` for how the
+  1990s form's summed sections map onto it.) A birth date is instead recovered from the biography's opening
   sentence and marked
   `anketa.gimimo-data-saltinis: "biografijos-tekstas"`; see
   `docs/OUTPUT_SCHEMA.md` for coverage (692 of 906) and the measured 89%

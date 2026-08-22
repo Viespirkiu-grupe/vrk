@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from scraper.elections.savivaldybiu_1997.anketa_parser import parse_anketa_samples
+from scraper.shared.savivaldybiu_archive_1997 import education_record
 
 
 class Savivaldybiu1997AnketaParserTests(unittest.TestCase):
@@ -17,7 +18,16 @@ class Savivaldybiu1997AnketaParserTests(unittest.TestCase):
     def _parse(self, candidate_id: str) -> dict:
         output_root = Path(self._tmp.name)
         results = parse_anketa_samples(candidate_ids=[candidate_id], output_root=output_root)
-        self.assertEqual(results[0]["anomalies"], [])
+        # This election's declaration pages print a section III total of 0
+        # against a non-zero row 1 -- measured on 72 of 84 sampled pages --
+        # so a DeclarationTotalBelowItsOwnRow warning is expected here and is
+        # asserted on its own in DeclarationTests below. Nothing else should
+        # be raised, and nothing at error severity.
+        unexpected = [
+            a for a in results[0]["anomalies"]
+            if a["eventType"] != "DeclarationTotalBelowItsOwnRow"
+        ]
+        self.assertEqual(unexpected, [])
         return json.loads(Path(results[0]["outputPath"]).read_text(encoding="utf-8"))
 
     def test_top_level_fields(self) -> None:
@@ -81,6 +91,115 @@ class Savivaldybiu1997AnketaParserTests(unittest.TestCase):
         self.assertEqual(
             self.tamulevicius_2["rawData"]["candidacy"]["municipalityName"], "Druskininkų miesto"
         )
+
+
+
+class EducationShapeTests(unittest.TestCase):
+    """This era's one-word level, carried in the corpus's education object.
+
+    Every election from 2007 on publishes `issilavinimas` as
+    `{"aprasas", "irasai": [...]}`. These pages publish a single level from a
+    controlled list, which is exactly the modern entry's own `issilavinimas`
+    field -- so it goes there rather than staying the corpus's one concept
+    with two shapes.
+    """
+
+    def test_a_level_becomes_a_single_entry_in_the_corpus_object(self):
+        self.assertEqual(
+            education_record("Aukštasis"),
+            {
+                "aprasas": None,
+                "irasai": [
+                    {
+                        "issilavinimas": "Aukštasis",
+                        "mokymo-istaigos-pavadinimas": None,
+                        "specialybe": None,
+                        "baigimo-metai": None,
+                    }
+                ],
+            },
+        )
+
+    def test_every_level_this_era_publishes_is_carried_through(self):
+        # The eight values the 6,276-record general election actually uses.
+        for level in (
+            "Aukštasis", "Aukštesnysis", "Specialus vidurinis", "Vidurinis",
+            "Nebaigtas aukštasis", "Nebaigtas vidurinis", "Aspirantūra",
+            "Doktorantūra",
+        ):
+            with self.subTest(level):
+                record = education_record(level)
+                self.assertEqual(record["irasai"][0]["issilavinimas"], level)
+
+    def test_no_education_stays_null_rather_than_an_empty_object(self):
+        self.assertIsNone(education_record(""))
+        self.assertIsNone(education_record(None))
+
+    def test_a_parsed_record_carries_the_object_shape(self):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        results = parse_anketa_samples(
+            candidate_ids=["pilvelis-algirdas"], output_root=Path(tmp.name)
+        )
+        record = json.loads(Path(results[0]["outputPath"]).read_text(encoding="utf-8"))
+        value = record["normalized"]["anketa"]["issilavinimas"]
+        self.assertIsInstance(value, dict)
+        self.assertEqual(sorted(value), ["aprasas", "irasai"])
+
+
+class DeclarationTests(unittest.TestCase):
+    """The kpdl.htm declaration, now read into the corpus's usual key.
+
+    This election is the one whose section III total renders 0 against a
+    non-zero row 1 -- 72 of 84 sampled pages -- so it is where the
+    "a total its own row contradicts is not a total" rule earns its keep.
+    """
+
+    def setUp(self) -> None:
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+        results = parse_anketa_samples(
+            candidate_ids=["tamulevicius-kestutis"], output_root=Path(self._tmp.name)
+        )
+        self.result = results[0]
+        self.record = json.loads(
+            Path(self.result["outputPath"]).read_text(encoding="utf-8")
+        )
+        self.declaration = self.record["normalized"]["turto-ir-pajamu-deklaracijos"]
+
+    def test_the_declaration_lands_in_the_corpus_wide_key(self):
+        self.assertIn("turto-ir-pajamu-deklaracijos", self.record["normalized"])
+
+    def test_figures_are_litas_so_the_corpus_conversion_applies(self):
+        self.assertEqual(self.declaration["valiuta"], "Lt")
+
+    def test_the_combined_section_totals_are_present(self):
+        for key in (
+            "turtas-ir-pinigines-lesos-metu-pradzioje",
+            "turtas-ir-pinigines-lesos-metu-pabaigoje",
+            "kalendoriniais-metais-isigytas-turtas",
+        ):
+            with self.subTest(key):
+                self.assertIsInstance(self.declaration[key], int)
+
+    def test_the_modern_split_keys_are_null_not_invented(self):
+        self.assertIsNone(self.declaration["privalomas-registruoti-turtas"])
+        self.assertIsNone(self.declaration["pinigines-lesos"])
+
+    def test_the_employment_row_is_published(self):
+        self.assertEqual(self.declaration["gautos-pajamos-darbo-santykiu"], 2589)
+
+    def test_the_contradicted_total_is_refused_and_flagged(self):
+        self.assertIsNone(self.declaration["gautos-pajamos"])
+        events = [
+            a for a in self.result["anomalies"]
+            if a["eventType"] == "DeclarationTotalBelowItsOwnRow"
+        ]
+        self.assertTrue(events)
+        self.assertEqual(events[0]["electionId"], "1997-kovo-23-savivaldybiu-tarybu")
+        self.assertEqual(events[0]["stage"], "parse")
+        self.assertEqual(events[0]["detail"]["row1Employment"], 2589)
+        self.assertEqual(events[0]["detail"]["row20Total"], 0)
 
 
 if __name__ == "__main__":
