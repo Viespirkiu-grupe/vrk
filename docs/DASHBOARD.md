@@ -5,6 +5,12 @@ stood in: searchable people list, per-election answers, and a comparison table
 showing how selected fields (position, assets, income…) changed across their
 elections.
 
+The interface is in Lithuanian, like the data. Counts go through
+`Intl.PluralRules("lt")` rather than an `n === 1` split, because Lithuanian
+takes three forms on a rule that does not follow English's — 1 asmuo,
+2 asmenys, 11 asmenų, 21 asmuo — and numbers and the litas rate are formatted
+`lt-LT`, so the decimal separator is a comma (3,4528 Lt/€).
+
 ## Run it
 
 ```bash
@@ -103,3 +109,5 @@ repeat municipal votes and there is no other order between them.
 - `tests/test_dashboard_money_rendering.py` — pins that both renderers
   convert litas; lifts the helpers out of the page and runs them under node,
   skipping the behavioural half where node is absent.
+- `tests/test_dashboard_ui.py` — pins the page's Lithuanian chrome, the
+  sidebar's `nowrap`, and the plural rule across the 11/21 boundaries.

@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="lt">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VRK Candidate Browser</title>
+<title>VRK kandidatų naršyklė</title>
 <style>
   :root {
     --bg: #f6f6f4; --panel: #ffffff; --ink: #1c1c1a; --muted: #6d6d68;
@@ -25,7 +25,7 @@
   .row { padding: 8px 14px; border-bottom: 1px solid var(--line); cursor: pointer; display: flex; justify-content: space-between; gap: 8px; }
   .row:hover, .row.active { background: var(--accent-soft); }
   .row .nm { font-weight: 500; }
-  .row .bd { color: var(--muted); font-size: 12.5px; }
+  .row .bd { color: var(--muted); font-size: 12.5px; white-space: nowrap; }
   .row .cnt { color: var(--accent); font-size: 12.5px; white-space: nowrap; }
   #person { padding: 22px 28px; overflow-y: auto; }
   #person .placeholder { color: var(--muted); margin-top: 40px; text-align: center; }
@@ -60,20 +60,17 @@
 </head>
 <body>
 <header>
-  <h1>VRK Candidate Browser</h1>
-  <span class="stats" id="topstats">loading index…</span>
-  <button id="moversBtn" style="margin-left:auto;padding:6px 12px;border:1px solid var(--line);background:var(--panel);border-radius:8px;cursor:pointer;font-size:13.5px">📈 Biggest movers</button>
+  <h1>VRK kandidatų naršyklė</h1>
+  <span class="stats" id="topstats">kraunamas indeksas…</span>
+  <button id="moversBtn" style="margin-left:auto;padding:6px 12px;border:1px solid var(--line);background:var(--panel);border-radius:8px;cursor:pointer;font-size:13.5px">📈 Didžiausi pokyčiai</button>
 </header>
 <main>
   <div id="left">
-    <div id="searchbox"><input id="search" type="search" placeholder="Search a person… (e.g. Puidokas)" autofocus></div>
-    <div id="filters">
-      <label><input type="checkbox" id="multiOnly"> 2+ elections</label>
-      <span id="count"></span>
-    </div>
+    <div id="searchbox"><input id="search" type="search" placeholder="Ieškokite asmens… (pvz., Puidokas)" autofocus></div>
+    <div id="filters"><span id="count"></span></div>
     <div id="results"></div>
   </div>
-  <div id="person"><div class="placeholder">Select a person to see their elections and answers.</div></div>
+  <div id="person"><div class="placeholder">Pasirinkite asmenį — matysite rinkimus ir anketų atsakymus.</div></div>
 </main>
 <script>
 "use strict";
@@ -127,6 +124,14 @@ const recordCache = new Map();
 
 const fold = (s) => (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase();
 
+// Lithuanian counts three integer forms -- 1 asmuo, 2 asmenys, 11 asmenų --
+// on a rule that is not "n === 1", so pick them through Intl rather than by
+// hand. ("many" is Lithuanian's fraction form; it falls back to the genitive.)
+const PLURAL = new Intl.PluralRules("lt");
+const plural = (n, one, few, rest) => ({ one, few, many: rest, other: rest })[PLURAL.select(n)];
+const fmtInt = (n) => n.toLocaleString("lt-LT");
+const fmtRate = () => LITAS_PER_EURO.toLocaleString("lt-LT", { minimumFractionDigits: 4 });
+
 async function boot() {
   // The index changes after every corpus update; a cached stale copy makes
   // the app quietly disagree with the data on disk.
@@ -135,37 +140,47 @@ async function boot() {
   ELECTIONS = new Map((INDEX.elections || []).map(e => [e.id, e]));
   const s = INDEX.stats;
   document.getElementById("topstats").textContent =
-    `${s.persons.toLocaleString()} people · ${s.records.toLocaleString()} candidacies · ` +
-    `${s.personsInMultipleElections.toLocaleString()} in 2+ elections`;
+    `${fmtInt(s.persons)} ${plural(s.persons, "asmuo", "asmenys", "asmenų")} · ` +
+    `${fmtInt(s.records)} ${plural(s.records, "kandidatavimas", "kandidatavimai", "kandidatavimų")} · ` +
+    `${fmtInt(s.personsInMultipleElections)} dalyvavo 2+ rinkimuose`;
   for (const p of INDEX.people) p._f = fold(p.n);
   document.getElementById("search").addEventListener("input", renderList);
-  document.getElementById("multiOnly").addEventListener("change", renderList);
   document.getElementById("moversBtn").addEventListener("click", showMovers);
   renderList();
   const hashKey = decodeURIComponent(location.hash.slice(1));
   if (hashKey) { const p = INDEX.people.find(p => p.k === hashKey); if (p) showPerson(p); }
 }
 
+// Matching stops at MATCH_CAP so a bare search does not walk all 47k people;
+// only the first RENDER_LIMIT rows are built. The count says both numbers --
+// it used to report the match count alone ("5,000+ shown") while 300 rows
+// existed, which read as a claim about what was on screen.
+const MATCH_CAP = 5000;
+const RENDER_LIMIT = 300;
+
 function renderList() {
   const q = fold(document.getElementById("search").value.trim());
-  const multiOnly = document.getElementById("multiOnly").checked;
   const out = [];
   for (const p of INDEX.people) {
-    if (multiOnly && p.e.length < 2) continue;
     if (q && !p._f.includes(q)) continue;
     out.push(p);
-    if (out.length >= 5000) break;
+    if (out.length >= MATCH_CAP) break;
   }
-  document.getElementById("count").textContent = `${out.length.toLocaleString()}${out.length >= 5000 ? "+" : ""} shown`;
+  const capped = out.length >= MATCH_CAP;
+  const shown = Math.min(out.length, RENDER_LIMIT);
+  document.getElementById("count").textContent =
+    shown < out.length
+      ? `rasta ${fmtInt(out.length)}${capped ? "+" : ""} · rodoma ${fmtInt(shown)}`
+      : `rasta ${fmtInt(out.length)}`;
   const frag = document.createDocumentFragment();
-  for (const p of out.slice(0, 300)) {
+  for (const p of out.slice(0, RENDER_LIMIT)) {
     const div = document.createElement("div");
     div.className = "row";
     div.dataset.key = p.k;
     div.innerHTML = `<span><span class="nm"></span> <span class="bd"></span></span>` +
-      `<span class="cnt">${p.e.length} election${p.e.length > 1 ? "s" : ""}</span>`;
+      `<span class="cnt">Rinkimų: ${p.e.length}</span>`;
     div.querySelector(".nm").textContent = p.n;
-    div.querySelector(".bd").textContent = p.b ? `· ${p.b}` : "· birth date unknown";
+    div.querySelector(".bd").textContent = p.b ? `· ${p.b}` : "· gimimo data nežinoma";
     div.addEventListener("click", () => showPerson(p));
     frag.appendChild(div);
   }
@@ -245,7 +260,7 @@ async function showPerson(p) {
   location.hash = encodeURIComponent(p.k);
   for (const el of document.querySelectorAll(".row")) el.classList.toggle("active", el.dataset.key === p.k);
   const root = document.getElementById("person");
-  root.innerHTML = `<div class="loading">Loading ${p.e.length} record(s)…</div>`;
+  root.innerHTML = `<div class="loading">Kraunami įrašai (${p.e.length})…</div>`;
   const records = await Promise.all(p.e.map(e => fetchRecord(e).then(r => [e, r])));
   const loaded = records.filter(([, r]) => !r._error);
   const failed = records.filter(([, r]) => r._error);
@@ -254,7 +269,9 @@ async function showPerson(p) {
   if (failed.length) {
     const warn = document.createElement("div");
     warn.style.cssText = "background:#fdf0ee;border:1px solid #e5b8b0;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13.5px;";
-    warn.textContent = `${failed.length} record(s) failed to load — is the server running from the repo root next to data/? ` +
+    warn.textContent =
+      `Nepavyko įkelti ${failed.length} ${plural(failed.length, "įrašo", "įrašų", "įrašų")} — ` +
+      "ar serveris paleistas iš saugyklos šaknies, šalia data/? " +
       failed.map(([, r]) => r._error).join(" · ");
     root.appendChild(warn);
   }
@@ -272,8 +289,8 @@ async function showPerson(p) {
   const hd = document.createElement("div");
   const h2 = document.createElement("h2"); h2.textContent = p.n;
   const meta = document.createElement("div"); meta.className = "meta";
-  meta.textContent = (p.b ? `Born ${p.b} · ` : "Birth date unknown · ") +
-    `${p.e.length} election${p.e.length > 1 ? "s" : ""}, ${p.e.filter(e => e.w).length} won`;
+  meta.textContent = (p.b ? `Gimė ${p.b} · ` : "Gimimo data nežinoma · ") +
+    `rinkimų: ${p.e.length}, laimėta: ${p.e.filter(e => e.w).length}`;
   hd.append(h2, meta); head.appendChild(hd); root.appendChild(head);
 
   const tabs = document.createElement("div"); tabs.className = "tabs";
@@ -285,12 +302,12 @@ async function showPerson(p) {
     if (records.length <= 3) card.open = true;
     const sum = document.createElement("summary");
     sum.textContent = electionName(e.id);
-    if (e.w) { const win = document.createElement("span"); win.className = "win"; win.textContent = "✓ elected"; sum.appendChild(win); }
+    if (e.w) { const win = document.createElement("span"); win.className = "win"; win.textContent = "✓ išrinktas (-a)"; sum.appendChild(win); }
     card.appendChild(sum);
     const body = document.createElement("div"); body.className = "body";
     if (r._error) {
       const err = document.createElement("div"); err.className = "sec";
-      err.textContent = `Failed to load: ${r._error}`;
+      err.textContent = `Nepavyko įkelti: ${r._error}`;
       body.appendChild(err);
     } else {
       for (const [sec, val] of Object.entries(r.normalized || {})) {
@@ -305,7 +322,7 @@ async function showPerson(p) {
 
   const paneC = document.createElement("div");
   const cmp = document.createElement("table"); cmp.className = "cmp";
-  cmp.innerHTML = "<thead><tr><th>Field</th></tr></thead><tbody></tbody>";
+  cmp.innerHTML = "<thead><tr><th>Laukas</th></tr></thead><tbody></tbody>";
   for (const [e, r] of loaded) {
     const th = document.createElement("th");
     th.textContent = electionName(e.id);
@@ -330,16 +347,16 @@ async function showPerson(p) {
   const note = document.createElement("div");
   note.style.cssText = "margin-top:8px;font-size:13px;color:var(--muted)";
   note.textContent = loaded.some(([, r]) => declaredInLitas(r))
-    ? `Lt→€ — declared in litas, converted at ${LITAS_PER_EURO} Lt/€. Records keep the figures as published.`
+    ? `Lt→€ — deklaruota litais, perskaičiuota kursu ${fmtRate()} Lt/€. Įrašuose sumos saugomos tokios, kokios paskelbtos.`
     : "";
   paneC.appendChild(note);
 
   const paneA = buildAssetPane(loaded);
 
   const panes = [
-    ["Elections & answers", paneE],
-    ["Assets & income", paneA],
-    ["Compare across elections", paneC],
+    ["Rinkimai ir atsakymai", paneE],
+    ["Turtas ir pajamos", paneA],
+    ["Palyginimas tarp rinkimų", paneC],
   ];
   for (const [label, pane] of panes) {
     const btn = document.createElement("button");
@@ -365,15 +382,15 @@ function showMovers() {
 
   const bar = document.createElement("div");
   bar.style.cssText = "display:flex;gap:12px;align-items:center;margin-bottom:14px;flex-wrap:wrap";
-  bar.innerHTML = `<h2 style="margin:0;font-size:20px">Biggest movers</h2>
+  bar.innerHTML = `<h2 style="margin:0;font-size:20px">Didžiausi pokyčiai</h2>
     <select id="mvSeries" style="padding:6px 8px;border:1px solid var(--line);border-radius:6px">
       ${MONEY_SERIES.map(([label], i) => `<option value="${i}">${label}</option>`).join("")}
     </select>
     <select id="mvDir" style="padding:6px 8px;border:1px solid var(--line);border-radius:6px">
-      <option value="desc">largest increase</option>
-      <option value="asc">largest decrease</option>
+      <option value="desc">didžiausias padidėjimas</option>
+      <option value="asc">didžiausias sumažėjimas</option>
     </select>
-    <span class="stats" style="color:var(--muted);font-size:13px">first vs latest declared value, people with the figure in 2+ elections · pre-2016 litas figures converted at 3.4528 Lt/€</span>`;
+    <span class="stats" style="color:var(--muted);font-size:13px">pirma ir paskutinė deklaruota reikšmė; asmenys, ją deklaravę 2+ rinkimuose · iki 2016 m. litais deklaruotos sumos perskaičiuotos kursu ${fmtRate()} Lt/€</span>`;
   root.appendChild(bar);
   const holder = document.createElement("div");
   root.appendChild(holder);
@@ -393,7 +410,7 @@ function showMovers() {
     }
     rows.sort((a, b) => dir === "desc" ? b.delta - a.delta : a.delta - b.delta);
     const t = document.createElement("table"); t.className = "cmp";
-    t.innerHTML = `<thead><tr><th>#</th><th>Person</th><th>From</th><th>To</th><th>Δ</th></tr></thead><tbody></tbody>`;
+    t.innerHTML = `<thead><tr><th>#</th><th>Asmuo</th><th>Nuo</th><th>Iki</th><th>Δ</th></tr></thead><tbody></tbody>`;
     rows.slice(0, 100).forEach((r, i) => {
       const tr = t.tBodies[0].insertRow();
       tr.insertCell().textContent = String(i + 1);
@@ -451,7 +468,7 @@ function buildAssetPane(loaded) {
   const anyLitas = loaded.some(([, r]) => declaredInLitas(r));
   const allValues = cols.flatMap(c => c.values.filter(v => v != null));
   if (!allValues.length) {
-    pane.innerHTML = `<div class="loading">No declared asset or income figures in any of this person's elections.</div>`;
+    pane.innerHTML = `<div class="loading">Nė vienuose šio asmens rinkimuose turto ar pajamų nedeklaruota.</div>`;
     return pane;
   }
 
@@ -489,13 +506,13 @@ function buildAssetPane(loaded) {
     MONEY_SERIES.map(([label, , color]) =>
       `<span><span style="display:inline-block;width:11px;height:11px;background:${color};border-radius:2px;margin-right:5px"></span>${label}</span>`
     ).join("") +
-    `<span style="margin-left:auto">missing bar = not declared / not published · hover a bar for the value` +
-    (anyLitas ? ` · (Lt→€) = declared in litas, converted at ${LITAS_PER_EURO} Lt/€` : "") + `</span></div>`;
+    `<span style="margin-left:auto">nėra stulpelio — nedeklaruota arba nepaskelbta · užveskite pelę ant stulpelio, kad matytumėte sumą` +
+    (anyLitas ? ` · (Lt→€) — deklaruota litais, perskaičiuota kursu ${fmtRate()} Lt/€` : "") + `</span></div>`;
   pane.appendChild(card);
 
   // the numbers behind the bars
   const t = document.createElement("table"); t.className = "cmp"; t.style.marginTop = "14px";
-  t.innerHTML = "<thead><tr><th>Series</th></tr></thead><tbody></tbody>";
+  t.innerHTML = "<thead><tr><th>Rodiklis</th></tr></thead><tbody></tbody>";
   for (const col of cols) { const th = document.createElement("th"); th.textContent = col.label; t.tHead.rows[0].appendChild(th); }
   MONEY_SERIES.forEach(([label], s) => {
     const tr = t.tBodies[0].insertRow();
