@@ -536,6 +536,15 @@ questionnaire, a health certificate, the party's nomination decision);
 Grybauskaitė's and Prunskienė's anketa carry the academic-degree line,
 which the other five omit.
 
+For `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai` (`tests/test_seimo_silales_silutes_vilniaus_salcininku_2009_sample_allowlist.py`)
+and `2011-vasario-13-seimo-marijampole` (`tests/test_seimo_marijampoles_2011_sample_allowlist.py`) the
+allowlists are the complete fields — 17 candidates across the two November
+2009 constituencies (9 in Šilalės–Šilutės, 8 in Vilniaus–Šalčininkų) and
+the 9 of Marijampolės — with both campaign participant types in each (10
+represented + 7 independent; 4 + 5). The samples directories hold the
+constituency index (`list.html`) and the constituency pages under
+`districts/`.
+
 For `2013-kovo-3-seimo-birzai-zarasai-ukmerge` the allowlist
 (`tests/test_seimo_birzu_zarasu_ukmerges_2013_sample_allowlist.py`) is the
 complete 37-candidate field across the three constituencies (11 in

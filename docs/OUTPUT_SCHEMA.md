@@ -1388,13 +1388,14 @@ field map all resolve them with no election-specific case.
   resolve with the corpus's standard positional `-2` suffix; see
   `docs/CLI_REFERENCE.md`'s municipal archive section for the concrete pair.
 
-## Appendix: 2008–2014 national elections (`2008-seimo`, `2009-prezidento`, `2009-ep`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`)
+## Appendix: 2008–2014 national elections (`2008-seimo`, `2009-prezidento`, `2009-ep`, `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai`, `2011-vasario-13-seimo-marijampole`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`)
 
-All seven are the 2015-era static layout described in the 2015 Seimo
+All nine are the 2015-era static layout described in the 2015 Seimo
 by-elections appendix, and every era shape there applies: no elected markers
 on the pages (`profilis.pastaba` is null on every record; `isrinktas` is the
 results join — 141 Seimas members in 2008 and 139 in 2012 from VRK's
-elected-members pages, 70 list and 71/69 constituency seats, the 3 constituency winners of 2013, the
+elected-members pages, 70 list and 71/69 constituency seats, the 2 + 1
+by-election winners of November 2009 and February 2011, the 3 constituency winners of 2013, the
 12 MEPs of 2009 and 11 of 2014, the two presidents), URL photos, litas amounts with
 `valiuta`/`pastaba`, the retained spouse block, the campaign additions.
 Records are written as `data/<election-id>/<candidate-id>-<election-id>.json`
@@ -1402,7 +1403,7 @@ in the corpus's section order, with one insertion for the 2014 presidential
 election (`patiketiniai` between `privaciu-interesu-deklaracija` and the
 campaign section). What is this group's own:
 
-### `kandidatavimas` (2008, 2012, 2013, 2009 and 2014 EP)
+### `kandidatavimas` (2008, 2012, 2013, the 2009 and 2011 by-elections, 2009 and 2014 EP)
 
 The listing-only facts, under one shape for all three:
 
@@ -1455,6 +1456,8 @@ The listing-only facts, under one shape for all three:
   pages do not link a participant page.
 - **2013**: `apygarda`, `iskele`, the campaign link, `i-turas`, and
   `ii-turas` for the six candidates who went to a second round.
+- **2009 and 2011 by-elections**: `apygarda`, `iskele` and the campaign
+  link only — these cards carry no results links.
 - **2014 presidential**: only the campaign link — presidential candidates
   are self-nominated and the card states no constituency or list. Note the
   link targets election path `423_lt`, VRK's id for the campaign, not the
@@ -1472,7 +1475,7 @@ The listing-only facts, under one shape for all three:
 
 ### `normalized.anketa` per election type
 
-- **Seimo (2008, 2012, 2013)**: the 2015 Seimo key set with one addition in
+- **Seimo (2008, 2012, 2013, the 2009/2011 by-elections)**: the 2015 Seimo key set with one addition in
   `pareiskimai`, `ar-buvote-pripazintas-kaltu-del-sunkaus-nusikaltimo`
   (Q9.3, conviction for a grave or very grave crime). Every 2013 form holds
   VRK's `Nenurodė` default for it (null normalized, literal in the raw row);
