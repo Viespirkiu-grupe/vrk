@@ -55,8 +55,12 @@ ANKETA_PLACEHOLDER_TEXTS = {"rengiama"}
 # The municipal profile cards close with a standing notice to parties and
 # candidates. It is page furniture, not a field, and it is emphasised like a
 # value, so it is recognised and dropped rather than attached to whatever
-# label happens to precede it.
-PROFILE_NOTICE_PREFIX = "politinių partijų, visuomeninių rinkimų komitetų"
+# label happens to precede it. Its opening words differ by year — the 2015
+# pages address "Politinių partijų, visuomeninių rinkimų komitetų ir
+# kandidatų atstovus", the 2011 ones, before election committees existed,
+# "Politinių partijų ir kandidatų atstovus" — so it is recognised by the
+# invitation that follows, the same on both.
+PROFILE_NOTICE_MARKER = "kviečiame susipažinti su skelbiamais duomenimis"
 
 # The 2015 pages publish declared amounts in litas; the GPM308 row wording is
 # also this era's own (the 2016 pages cite fields "…14, 20", these cite
@@ -88,6 +92,16 @@ TURTO_PAJAMU_KEY_ALIASES = {
     "gautu-pajamu-suma-12-13-14-ir-15-laukeliu-bei-gpm302v-priedo-v14-laukelio-suma": "gautos-pajamos",
     "isskaiciuota-mokescio-suma-36-laukelio-suma": "sumoketas-pajamu-mokestis",
 }
+
+# The income extract stated as one sentence on the form's own line —
+# "GPM305 formos deklaracijos: Gauta 0 Lt, išskaičiuota pajamų mokesčio
+# 0 Lt" — instead of the two labelled rows. Thirty pages across the 2011 and
+# March 2015 municipal generals do this, every one of them a declared zero,
+# which is a statement and not a missing declaration.
+TURTO_PAJAMU_PROSE_PATTERN = re.compile(
+    r"^\s*Gauta\s+(?P<income>-?[\d\s.,]+?)\s*Lt\b\s*,\s*išskaičiuota pajamų mokesčio\s+(?P<tax>-?[\d\s.,]+?)\s*Lt\b",
+    re.IGNORECASE,
+)
 
 TURTO_PAJAMU_OUTPUT_ORDER = [
     "privalomas-registruoti-turtas",
@@ -195,7 +209,7 @@ def _parse_profile_html(soup: BeautifulSoup) -> dict[str, Any]:
             continue
         if node.name == "b":
             value_text = _tag_text(node)
-            if value_text.lower().startswith(PROFILE_NOTICE_PREFIX):
+            if PROFILE_NOTICE_MARKER in value_text.lower():
                 # A label still pending here has no value of its own — the
                 # self-nomination flag ("Išsikėlęs kandidatas") is written
                 # that way — so it is kept as a valueless field rather than
@@ -631,6 +645,10 @@ def _normalize_turto_ir_pajamu_data(payload: dict[str, Any]) -> dict[str, Any]:
             source_key = _source_key(str(item.get("key", "")))
             target_key = TURTO_PAJAMU_KEY_ALIASES.get(source_key)
             if target_key is None:
+                prose = TURTO_PAJAMU_PROSE_PATTERN.match(normalize_space(str(item.get("value") or "")))
+                if prose is not None:
+                    normalized_fields["gautos-pajamos"] = _parse_lt_amount(prose.group("income") + " Lt")
+                    normalized_fields["sumoketas-pajamu-mokestis"] = _parse_lt_amount(prose.group("tax") + " Lt")
                 continue
             normalized_fields[target_key] = _parse_lt_amount(item.get("value"))
 

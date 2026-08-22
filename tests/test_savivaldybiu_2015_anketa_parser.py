@@ -81,6 +81,7 @@ class Savivaldybiu2015AnketaParserTests(unittest.TestCase):
                 "ar-kitos-valstybes-institucijos-narys",
                 "ar-turite-kitos-valstybes-pilietybe",
                 "ar-buvote-pripazintas-kaltu",
+                "teisiniai-argumentai",
             ],
         )
         self.assertEqual(n["turto-ir-pajamu-deklaracijos"]["valiuta"], "Lt")

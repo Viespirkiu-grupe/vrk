@@ -109,6 +109,19 @@ different page eras, so `savivaldybiu_2019` reuses `meru_2017`'s parsers while
 `savivaldybiu_2023` reuses `kupiskio_mero_2023`'s. Matching the listing
 structure says nothing about matching the pages.
 
+The 2015-era municipal listings (a municipality index, a district page per
+municipality, the lists hanging off it) have their own walker in
+`pakartotiniai_sirvintu_traku_2015/sitemap.py`, which `savivaldybiu_2015`
+drives with the 60 discovered district pages. Read the district-page rows
+before reusing it: in 2015 a direct candidate link there is a mayoral
+candidate, in 2011 (`savivaldybiu_2011`) it is a self-nominated individual
+standing for the council alone, so that module keeps the walker's fetcher,
+list reader and id builder and reads the district rows itself. VRK's
+roll-up pages (`KandidataiMerai.html` in 2015; `KandidataiIssikele.html` and
+the two coalition pages in 2011) are the cross-check either way — and in
+2011 the self-nominated roll-up counts coalition members too, so reconcile
+against the union, not the individuals alone.
+
 ## 4. Verify against the whole field before trusting it
 
 ```bash

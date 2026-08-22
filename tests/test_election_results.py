@@ -163,6 +163,31 @@ COMPOSITION_HTML = """
 """
 
 
+# The 2011 page: no mayoral section, no "% su pirmumo" column, a
+# self-nominated individual's own row (savkand) that can carry a mandate,
+# and a totals row of plain numbers.
+MUNICIPALITY_2011_HTML = """
+<html><body>
+<table>
+<tr><td>VRK sut. Nr.</td><td>Kandidatų sąrašo pavadinimas, išsikėlusio kandidato vardas ir pavardė</td><td>Pirmumo balsai</td><td>apylinkėse</td><td>paštu</td><td>iš viso</td><td>% nuo dalyvavusių rinkėjų</td><td>Mandatų skaičius</td></tr>
+<tr><td>2</td><td><a href="partijos3994_gauti_balsai_apygardoje7131.html">Artūro Zuoko ir Vilniaus koalicija</a></td><td><a href="apygardos7131_partijos3994_pirmumo_balsai.html">pirm.</a></td><td>33218</td><td>918</td><td>34136</td><td>17,74%</td><td>12</td></tr>
+<tr><td>3</td><td><a href="savkand42302_gauti_balsai_apygardoje7131.html">Darius NORKUS</a></td><td></td><td>1300</td><td>108</td><td>1408</td><td>0,73%</td><td>0</td></tr>
+<tr><td>14</td><td><a href="savkand42186_gauti_balsai_apygardoje7131.html">Juozas JAKAVIČIUS</a></td><td></td><td>2709</td><td>36</td><td>2745</td><td>1,39%</td><td>1</td></tr>
+<tr><td>Iš viso:</td><td>179002</td><td>7238</td><td>186240</td><td></td><td>51</td></tr>
+</table>
+<h3>Balsavimo rezultatai rinkimų apylinkėse</h3>
+<table><tr><td>Iš viso:</td><td>437109</td><td>192405</td><td>44,02%</td></tr></table>
+</body></html>
+"""
+
+COMPOSITION_2011_HTML = """
+<p>Mandatų skaičius: 51</p>
+<table>
+<tr><td>Artūro Zuoko ir Vilniaus koalicija</td><td><a href="/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas42680/Kandidato42680Anketa.html">ZUOKAS ARTŪRAS</a></td><td></td></tr>
+</table>
+"""
+
+
 class MunicipalPageTests(unittest.TestCase):
     def test_municipality_page_lists_mandates_and_mayor(self):
         parsed = parse_municipality_results_page(MUNICIPALITY_HTML, "https://www.vrk.lt/statiniai/puslapiai/t/output_lt/rezultatai_daugiamand_apygardose/apygardos_rezultatai7761.html")
@@ -171,6 +196,29 @@ class MunicipalPageTests(unittest.TestCase):
         self.assertEqual(parsed["mayorVerdictName"], "Nijolė DIRGINČIENĖ")
         self.assertEqual(parsed["mayoralField"], ["Nijolė DIRGINČIENĖ", "Apolinaras NICIUS"])
         self.assertEqual(parsed["listMandatesTotal"], 24)
+
+    def test_2011_page_has_individuals_plain_totals_and_no_mayor(self):
+        parsed = parse_municipality_results_page(MUNICIPALITY_2011_HTML, "https://www.vrk.lt/statiniai/puslapiai/t/output_lt/rezultatai_daugiamand_apygardose/apygardos_rezultatai7131.html")
+        self.assertEqual([(l["listId"], l["mandates"]) for l in parsed["lists"]], [("3994", 12)])
+        self.assertEqual(
+            [(i["vrkCandidateId"], i["name"], i["mandates"]) for i in parsed["individuals"]],
+            [("42302", "Darius NORKUS", 0), ("42186", "Juozas JAKAVIČIUS", 1)],
+        )
+        # The totals row has no percentage columns here; the seat total is
+        # still its last cell, read from the table rather than a regex over
+        # the page text — which would otherwise pick up the turnout table.
+        self.assertEqual(parsed["listMandatesTotal"], 51)
+        self.assertEqual(parsed["mayoralField"], [])
+        self.assertIsNone(parsed["mayorVerdictName"])
+        # The 2015 page still reads the same way.
+        parsed_2015 = parse_municipality_results_page(MUNICIPALITY_HTML, "https://x/apygardos_rezultatai7761.html")
+        self.assertEqual(parsed_2015["individuals"], [])
+        self.assertEqual(parsed_2015["listMandatesTotal"], 24)
+
+    def test_composition_page_without_a_mayor(self):
+        parsed = parse_composition_page(COMPOSITION_2011_HTML)
+        self.assertEqual(parsed["mandates"], 51)
+        self.assertEqual([(m["vrkCandidateId"], m["recognized"], m["mayor"]) for m in parsed["members"]], [("42680", None, False)])
 
     def test_ranking_rows_carry_rank_position_id_and_mayor_marker(self):
         rows = parse_list_ranking_page(RANKING_HTML, "https://x/")
@@ -243,6 +291,31 @@ class BuiltResultsPins(unittest.TestCase):
         telsiai = [v for v in payload["elected"].values() if v.get("municipality") == "51. Telšių rajono" and v["seat"] == "meras"]
         self.assertEqual(len(telsiai), 1)
         self.assertNotIn("annulled", telsiai[0])
+
+    def test_2011_municipal_general(self):
+        payload = _results("2011-vasario-27-savivaldybiu")
+        stats = payload["stats"]
+        self.assertEqual(stats["municipalities"], 60)
+        # No mayor was elected directly in 2011.
+        self.assertEqual(stats["mayorsResolved"], 0)
+        self.assertEqual(stats["mayorsUnresolved"], 0)
+        self.assertEqual(stats["seats"], {"tarybos-narys": 1526})
+        # Eighteen self-nominated individuals won a seat on their own row of
+        # the results table; everyone else through a list's ranking.
+        self.assertEqual(stats["councilSelfNominated"], 18)
+        self.assertEqual(stats["councilNotInSitemap"], 0)
+        self.assertEqual(stats["councilResolvedByNameAndList"], 0)
+        self.assertEqual(stats["seatCountMismatches"], 0)
+        self.assertEqual(stats["annulledWinners"], 0)
+        # Every derived winner is on VRK's own composition page of their
+        # council, in all sixty municipalities.
+        self.assertEqual(stats["compositionPagesChecked"], 60)
+        self.assertEqual(stats["compositionFullyContainsDerived"], 60)
+        self.assertEqual(stats["derivedNotInComposition"], 0)
+        individual = [v for v in payload["elected"].values() if v["method"] == "self-nominated"]
+        self.assertEqual(len(individual), 18)
+        self.assertTrue(all("listName" not in v for v in individual))
+        self.assertEqual(payload["elected"]["42680"]["municipality"], "57. Vilniaus miesto")
 
     def test_2015_repeat_elections_and_telsiai(self):
         self.assertEqual(_results("2015-birzelio-7-pakartotiniai-sirvintos-trakai")["stats"]["seats"], {"meras": 2, "tarybos-narys": 24})
