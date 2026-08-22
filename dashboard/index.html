@@ -231,12 +231,18 @@ function recordFile(e) {
 
 // A failed record must degrade to an error note on its card — never hang the
 // whole person page (one 404 used to reject the Promise.all silently).
+//
+// no-store for the same reason people.json uses it, and it is not theoretical:
+// records are rewritten in place when a parser gains a field — the 1996-1997
+// declarations were backfilled into existing files — and a browser holding the
+// pre-backfill copy showed empty asset rows against a corpus that had the
+// figures, with no way to tell the difference from "never declared".
 async function fetchRecord(e) {
   const file = recordFile(e);
   if (!recordCache.has(file)) {
     recordCache.set(
       file,
-      fetch("../" + file)
+      fetch("../" + file, { cache: "no-store" })
         .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
         .catch(err => { recordCache.delete(file); return { _error: `${file}: ${err.message || err}` }; })
     );

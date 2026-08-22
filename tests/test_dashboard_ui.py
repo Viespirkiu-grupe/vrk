@@ -171,6 +171,21 @@ class EducationCellTests(unittest.TestCase):
         self.assertEqual(self._render([value])[0], "Savarankiškos studijos")
 
 
+class FreshnessTests(unittest.TestCase):
+    """Both fetches must bypass the browser cache.
+
+    Records are rewritten in place when a parser gains a field, so a cached
+    copy shows empty rows against a corpus that has the figures — and an empty
+    row is indistinguishable from "never declared".
+    """
+
+    def test_the_index_is_fetched_no_store(self):
+        self.assertRegex(SOURCE, r'fetch\("people\.json",\s*\{\s*cache:\s*"no-store"')
+
+    def test_candidate_records_are_fetched_no_store(self):
+        self.assertRegex(SOURCE, r'fetch\("\.\./"\s*\+\s*file,\s*\{\s*cache:\s*"no-store"')
+
+
 class ComparisonTableRenderingTests(unittest.TestCase):
     def test_multi_line_cells_keep_their_line_breaks(self):
         # educationCell joins entries with \n, which textContent only shows
