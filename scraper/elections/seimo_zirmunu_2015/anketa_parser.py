@@ -82,6 +82,11 @@ TURTO_PAJAMU_KEY_ALIASES = {
     # income and tax read as null until this alias was added for 2009.
     "gautu-pajamu-suma-gpm305-formos-12-13-14-ir-gpm305v-formos-v14-laukeliu-suma": "gautos-pajamos",
     "isskaiciuota-sumoketa-pajamu-mokescio-suma-gpm305-formos-27-28-30-laukeliu-suma": "sumoketas-pajamu-mokestis",
+    # One form older still: the 2007 Dzūkija by-election pages extract the
+    # "laikinoji" (interim) GPM302 return — income from fields 12-15 plus
+    # V14 of the GPM302V annex, tax from field 36.
+    "gautu-pajamu-suma-12-13-14-ir-15-laukeliu-bei-gpm302v-priedo-v14-laukelio-suma": "gautos-pajamos",
+    "isskaiciuota-mokescio-suma-36-laukelio-suma": "sumoketas-pajamu-mokestis",
 }
 
 TURTO_PAJAMU_OUTPUT_ORDER = [
@@ -163,7 +168,7 @@ def _parse_profile_html(soup: BeautifulSoup) -> dict[str, Any]:
             detail_cell = cell
             break
     if detail_cell is None:
-        return profile
+        return _parse_legacy_profile_card(soup, card, profile)
 
     fields: list[dict[str, Any]] = []
     pending_label = ""
@@ -232,6 +237,56 @@ def _parse_profile_html(soup: BeautifulSoup) -> dict[str, Any]:
                 )
             pending_label = ""
 
+    profile["fields"] = fields
+    return profile
+
+
+def _parse_legacy_profile_card(soup: BeautifulSoup, card: Tag, profile: dict[str, Any]) -> dict[str, Any]:
+    # The 2007 by-election card (the oldest page of the family) emphasises
+    # nothing: the name and "Gimimo data: 1946-01-08" are plain text runs,
+    # the campaign and results links stand alone, and the constituency and
+    # the nominating party sit in a two-cell header table above the card,
+    # in <strong>. They are read into the same fields the later cards
+    # label Apygarda / Iškėlė, so the record keeps the era's keys.
+    cells = card.find_all("td")
+    detail_cell = None
+    for cell in cells:
+        if cell.find("img") is None and _tag_text(cell):
+            detail_cell = cell
+            break
+    if detail_cell is None:
+        return profile
+
+    fields: list[dict[str, Any]] = []
+    header = card.find_previous("table")
+    if header is not None:
+        strongs = [_tag_text(node) for node in header.find_all("strong")]
+        if len(strongs) == 2:
+            fields.append({"key": "Apygarda", "displayValue": strongs[0], "urls": []})
+            fields.append({"key": "Iškėlė", "displayValue": strongs[1], "urls": []})
+
+    pending_label = ""
+    for node in detail_cell.children:
+        if isinstance(node, NavigableString):
+            text = normalize_space(str(node))
+            if not text or text in (",", "."):
+                continue
+            if ":" in text:
+                label, _, value = text.partition(":")
+                if value.strip():
+                    fields.append({"key": label.strip(), "displayValue": value.strip(), "urls": []})
+                    pending_label = ""
+                else:
+                    pending_label = label.strip()
+                continue
+            if not profile["candidateDisplayName"]:
+                profile["candidateDisplayName"] = text
+            continue
+        if isinstance(node, Tag) and node.name == "a":
+            label = _tag_text(node)
+            urls = _extract_links(node)
+            if label or urls:
+                fields.append({"key": label, "displayValue": "", "urls": urls})
     profile["fields"] = fields
     return profile
 
@@ -456,6 +511,14 @@ def parse_anketa_html(
 
     anketa = _parse_anketa_cell(anketa_cell)
     anketa["normalized"] = rows_normalizer(anketa["rows"])
+    # The 2007 form does not ask Q5; the birth date is the card's
+    # "Gimimo data" line instead, and it belongs under the anketa key every
+    # other era publishes it under.
+    if anketa["normalized"].get("gimimo-data") is None:
+        for field in profile.get("fields", []):
+            if _source_key(str(field.get("key", ""))) == "gimimo-data" and field.get("displayValue"):
+                anketa["normalized"]["gimimo-data"] = _normalize_text_value(field["displayValue"])
+                break
 
     # An unpublished questionnaire is either VRK's "Rengiama" placeholder or
     # (one 2008 Seimo candidate) a content div with nothing in it at all —

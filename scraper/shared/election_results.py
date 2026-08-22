@@ -63,6 +63,16 @@ from scraper.shared.http import fetch_text
 
 VRK_BASE = "https://www.vrk.lt/"
 STATIC_BASE = "https://www.vrk.lt/statiniai/puslapiai/"
+
+
+def tree_root(tree: str) -> str:
+    """The URL under which a results tree's pages live. Every tree from 2008
+    on keeps them under ``<tree>/output_lt/``; the 2007 by-election tree has
+    no output_lt level, which its module says by passing the name with a
+    trailing slash ("2007_seimo_rinkimai/")."""
+    if tree.endswith("/"):
+        return f"{STATIC_BASE}{tree.rstrip('/')}"
+    return f"{STATIC_BASE}{tree}/output_lt"
 FETCH_PAUSE_SECONDS = 0.3
 
 ANKETA_ID_PATTERN = re.compile(r"Kandidato(\d+)Anketa\.html")
@@ -104,7 +114,7 @@ def resolve_url(href: str, base: str) -> str:
 
 def page_path(results_dir: Path, url: str) -> Path:
     """One file per fetched results page, named by its path under output_lt."""
-    tail = url.split("/output_lt/", 1)[-1] if "/output_lt/" in url else url.rsplit("/", 2)[-1]
+    tail = url.split("/output_lt/", 1)[-1] if "/output_lt/" in url else "/".join(url.rsplit("/", 2)[-2:])
     tail = tail.replace("../", "").replace("/", "__")
     return results_dir / tail
 
@@ -194,11 +204,19 @@ DISTRICT_ROW_PATTERN = re.compile(r"rezultatai_(?:sm|prezidento)_kand\d+")
 def seimo_district_pages(results_dir: Path, tree: str, round_number: int) -> list[dict[str, Any]]:
     """The constituency pages of one round: url, constituency id, label."""
     folder = "rezultatai_vienmand_apygardose" + ("" if round_number == 1 else "2")
-    index_url = f"{STATIC_BASE}{tree}/output_lt/{folder}/rezultatai_vienmand_apygardose{round_number}turas.html"
+    index_url = f"{tree_root(tree)}/{folder}/rezultatai_vienmand_apygardose{round_number}turas.html"
     try:
         index_html = fetch_page(results_dir, index_url)
     except Exception:
-        return []
+        if round_number == 1:
+            return []
+        # The 2007 by-election tree keeps its round-two index and pages in
+        # the round-one folder.
+        index_url = f"{tree_root(tree)}/rezultatai_vienmand_apygardose/rezultatai_vienmand_apygardose{round_number}turas.html"
+        try:
+            index_html = fetch_page(results_dir, index_url)
+        except Exception:
+            return []
     pages: list[dict[str, Any]] = []
     for url, label, match in find_links(index_html, index_url, SEIMO_DISTRICT_PATTERN):
         pages.append({"url": url, "resultDistrictId": match.group(1), "label": label, "round": round_number})
@@ -218,8 +236,9 @@ def parse_seimo_district_page(html: str) -> dict[str, Any]:
     for anchor in soup.find_all("a", href=True):
         # The candidate row pages are "rezultatai_sm_kand<ID>…" from 2012
         # on; the 2009 and 2011 by-election trees reuse the presidential
-        # template's "rezultatai_prezidento_kand<ID>…" stem for them.
-        if not DISTRICT_ROW_PATTERN.search(anchor["href"]):
+        # template's "rezultatai_prezidento_kand<ID>…" stem for them; the
+        # 2007 tree links each row straight to the candidate's anketa.
+        if not (DISTRICT_ROW_PATTERN.search(anchor["href"]) or ANKETA_ID_PATTERN.search(anchor["href"])):
             continue
         tr = anchor.find_parent("tr")
         cells = [normalize_space(td.get_text(" ", strip=True)) for td in tr.find_all("td")] if tr else []
@@ -246,7 +265,7 @@ def first_round_elected_by_label(results_dir: Path, tree: str) -> dict[str, dict
     (a constituency decided outright in round one gets no verdict sentence
     on its own page and no round-two page); the 2011 and 2013 trees do not,
     and a missing page is simply an empty map."""
-    url = f"{STATIC_BASE}{tree}/output_lt/{FIRST_ROUND_ELECTED_PAGE}"
+    url = f"{tree_root(tree)}/{FIRST_ROUND_ELECTED_PAGE}"
     try:
         html = fetch_page(results_dir, url)
     except Exception:
@@ -346,9 +365,9 @@ MAYOR_WINNER_PATTERN = re.compile(r"Mer[ue] išrinkt(?:as|a)\s+(.+?)(?:\.\s|\.$|
 
 def municipal_index_pages(results_dir: Path, tree: str, round_number: int) -> list[dict[str, Any]]:
     if round_number == 1:
-        index_url = f"{STATIC_BASE}{tree}/output_lt/rezultatai_daugiamand_apygardose/rezultatai_daugiamand_apygardose1turas.html"
+        index_url = f"{tree_root(tree)}/rezultatai_daugiamand_apygardose/rezultatai_daugiamand_apygardose1turas.html"
     else:
-        index_url = f"{STATIC_BASE}{tree}/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmand_apygardose2turas.html"
+        index_url = f"{tree_root(tree)}/rezultatai_vienmand_apygardose2/rezultatai_vienmand_apygardose2turas.html"
     try:
         index_html = fetch_page(results_dir, index_url)
     except Exception:
@@ -474,7 +493,7 @@ def municipal_winners(
 
     composition_by_label: dict[str, str] = {}
     if composition_tree:
-        index_url = f"{STATIC_BASE}{composition_tree}/output_lt/savivaldybiu_tarybu_sudetis/savivaldybes.html"
+        index_url = f"{tree_root(composition_tree)}/savivaldybiu_tarybu_sudetis/savivaldybes.html"
         try:
             index_html = fetch_page(results_dir, index_url)
             for url, label, _ in find_links(index_html, index_url, COMPOSITION_PATTERN):
@@ -676,7 +695,7 @@ def build_seimo_members_results(
     names."""
     entries = load_sitemap_entries(sitemap_path)
     by_id = {entry["vrkCandidateId"]: entry for entry in entries if entry.get("vrkCandidateId")}
-    url = f"{STATIC_BASE}{tree}/output_lt/{members_page}"
+    url = f"{tree_root(tree)}/{members_page}"
     members = parse_elected_members_page(fetch_page(results_dir, url), url)
     elected: dict[str, dict[str, Any]] = {}
     not_in_sitemap: list[dict[str, Any]] = []
@@ -735,7 +754,7 @@ def build_ep_results(
 ) -> tuple[Path, dict[str, Any]]:
     entries = load_sitemap_entries(sitemap_path)
     by_id = {entry["vrkCandidateId"]: entry for entry in entries if entry.get("vrkCandidateId")}
-    url = f"{STATIC_BASE}{tree}/output_lt/{members_page}"
+    url = f"{tree_root(tree)}/{members_page}"
     members = parse_elected_members_page(fetch_page(results_dir, url), url)
     elected: dict[str, dict[str, Any]] = {}
     not_in_sitemap: list[dict[str, Any]] = []
@@ -769,7 +788,7 @@ def build_presidential_results(
     results_page: str = "rinkimu_diena/rezultatai_isankstiniai2.html",
 ) -> tuple[Path, dict[str, Any]]:
     entries = load_sitemap_entries(sitemap_path)
-    url = f"{STATIC_BASE}{tree}/output_lt/{results_page}"
+    url = f"{tree_root(tree)}/{results_page}"
     text = page_text(fetch_page(results_dir, url))
     match = PRESIDENT_WINNER_PATTERN.search(text)
     elected: dict[str, dict[str, Any]] = {}
