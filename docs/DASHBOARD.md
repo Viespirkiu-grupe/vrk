@@ -52,12 +52,21 @@ joined in from VRK's results trees (`python -m scraper build-results <id>`).
 
 **Currency.** The 2012–2015 pages declare assets and income in litas
 (`turto-ir-pajamu-deklaracijos.valiuta` is `"Lt"` on those records); 2016 on
-is euro. Both the index builder (`money_of`) and the page (`moneyEUR`)
-convert litas at the irrevocable changeover rate, 3.4528 Lt/€, so one
-person's series is comparable across 2015→2016, and a converted candidacy is
-flagged (`"lt": true` in `people.json`; "(Lt→€)" on the chart's column label
-and in the Biggest-movers table). The records themselves keep the litas
-figures as published.
+is euro. The index builder (`money_of`) and both of the page's renderers --
+`moneyEUR` for the chart, `moneyCell` for the comparison table -- convert
+litas at the irrevocable changeover rate, 3.4528 Lt/€, so one person's series
+is comparable across 2015→2016. A converted candidacy is flagged: `"lt": true`
+in `people.json`, "(Lt→€)" on the chart's column label and in the
+Biggest-movers table, and "Lt→€" under the election name in the comparison
+table's header. The records themselves keep the litas figures as published.
+
+The comparison table did not always convert. It read the stored number
+straight through `compactValue`, so a litas figure printed raw, unlabelled,
+and 3.4528× too large beside the euro columns next to it — the same field
+disagreeing between two tabs of the same person, across the 36,362 of 76,776
+records that declare in litas. `FIELD_MAP` rows may now carry an optional
+`(value, record) => string` formatter, and the three money rows use
+`moneyCell`.
 
 ## Election names
 
@@ -91,3 +100,6 @@ repeat municipal votes and there is no other order between them.
 - `tests/test_person_index.py` — pins the grouping rules on synthetic records.
 - `tests/test_elections_registry.py` — pins the registry's shape, its
   chronology, and that every scraped election has an entry.
+- `tests/test_dashboard_money_rendering.py` — pins that both renderers
+  convert litas; lifts the helpers out of the page and runs them under node,
+  skipping the behavioural half where node is absent.

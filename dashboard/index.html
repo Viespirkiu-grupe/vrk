@@ -52,6 +52,7 @@
   table.cmp { border-collapse: collapse; width: 100%; font-size: 13.5px; background: var(--panel); }
   table.cmp th, table.cmp td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; }
   table.cmp thead th { background: var(--accent-soft); position: sticky; top: 0; }
+  table.cmp thead th .cur { font-weight: 400; font-size: 11.5px; color: var(--muted); }
   table.cmp td.null { color: var(--muted); }
   .loading { color: var(--muted); padding: 20px; }
   @media (max-width: 900px) { main { grid-template-columns: 1fr; } #left { max-height: 45vh; } }
@@ -95,16 +96,29 @@ const MONEY_SERIES = [
   ["Gautos pajamos", "turto-ir-pajamu-deklaracijos.gautos-pajamos", "#2c8a4b"],
 ];
 
-// Comparison concepts: label -> normalized paths tried in order per election.
+// Render a declared figure the way the assets pane does: litas converted at
+// the changeover rate and formatted as euro. Without this the compare table
+// printed the stored number raw, so a 2008 income sat next to a 2024 one
+// 3.4528x too large and unlabelled -- half the corpus declares in litas.
+// A function declaration, so FIELD_MAP below can reference it.
+function moneyCell(value, record) {
+  const n = parseMoney(value);
+  if (n == null) return null;
+  return fmtEUR(declaredInLitas(record) ? n / LITAS_PER_EURO : n);
+}
+
+// Comparison concepts: label -> normalized paths tried in order per election,
+// plus an optional formatter (value, record) -> string for concepts a bare
+// compactValue() renders wrongly.
 const FIELD_MAP = [
   ["Einamos pareigos", ["anketa.einamos-pareigos"]],
   ["Pagrindinė darbovietė", ["anketa.pagrindine-darboviete"]],
   ["Išsilavinimas", ["anketa.issilavinimas", "biografija.issilavinimas"]],
   ["Šeiminė padėtis", ["anketa.seimine-padetis", "biografija.seimine-padetis"]],
   ["Užsienio kalbos", ["anketa.uzsienio-kalbos", "biografija.uzsienio-kalbos"]],
-  ["Privalomas registruoti turtas", ["turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas"]],
-  ["Piniginės lėšos", ["turto-ir-pajamu-deklaracijos.pinigines-lesos"]],
-  ["Gautos pajamos", ["turto-ir-pajamu-deklaracijos.gautos-pajamos"]],
+  ["Privalomas registruoti turtas", ["turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas"], moneyCell],
+  ["Piniginės lėšos", ["turto-ir-pajamu-deklaracijos.pinigines-lesos"], moneyCell],
+  ["Gautos pajamos", ["turto-ir-pajamu-deklaracijos.gautos-pajamos"], moneyCell],
   ["Teistumas (deklaracija)", ["anketa.pareiskimai.ar-buvote-pripazintas-kaltu"]],
 ];
 
@@ -292,19 +306,33 @@ async function showPerson(p) {
   const paneC = document.createElement("div");
   const cmp = document.createElement("table"); cmp.className = "cmp";
   cmp.innerHTML = "<thead><tr><th>Field</th></tr></thead><tbody></tbody>";
-  for (const [e] of loaded) { const th = document.createElement("th"); th.textContent = electionName(e.id); cmp.tHead.rows[0].appendChild(th); }
-  for (const [label, paths] of FIELD_MAP) {
+  for (const [e, r] of loaded) {
+    const th = document.createElement("th");
+    th.textContent = electionName(e.id);
+    // Same marker the assets pane puts on a converted column.
+    if (declaredInLitas(r)) { const cur = document.createElement("div"); cur.className = "cur"; cur.textContent = "Lt→€"; th.appendChild(cur); }
+    cmp.tHead.rows[0].appendChild(th);
+  }
+  for (const [label, paths, format] of FIELD_MAP) {
     const tr = cmp.tBodies[0].insertRow();
     const th = document.createElement("th"); th.textContent = label; tr.appendChild(th);
     for (const [, r] of loaded) {
       let v = null;
       for (const path of paths) { v = resolvePath(r.normalized || {}, path); if (v != null && v !== "") break; }
-      const td = tr.insertCell(); const c = compactValue(v);
+      const td = tr.insertCell();
+      const c = format ? format(v, r) : compactValue(v);
       td.textContent = c == null ? "—" : c;
       if (c == null) td.className = "null";
+      else if (format === moneyCell) td.style.fontVariantNumeric = "tabular-nums";
     }
   }
   paneC.appendChild(cmp);
+  const note = document.createElement("div");
+  note.style.cssText = "margin-top:8px;font-size:13px;color:var(--muted)";
+  note.textContent = loaded.some(([, r]) => declaredInLitas(r))
+    ? `Lt→€ — declared in litas, converted at ${LITAS_PER_EURO} Lt/€. Records keep the figures as published.`
+    : "";
+  paneC.appendChild(note);
 
   const paneA = buildAssetPane(loaded);
 
