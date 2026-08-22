@@ -85,12 +85,21 @@ let ELECTIONS = new Map();
 const electionName = (id) => (ELECTIONS.get(id) || {}).name || id;
 const electionShortName = (id) => (ELECTIONS.get(id) || {}).shortName || id;
 
-// Money series for the assets & income chart; aligned across all 20 elections
-// by the modules' key-reuse convention.
+// Money series for the assets & income chart. The first three are the keys
+// every election from 2007 on declares under. The fourth exists because the
+// 1996-1997 form does not split turtas from piniginės lėšos -- it publishes
+// one summed figure -- so those elections leave the first two null and would
+// otherwise chart no turtas at all, despite the page stating it. It is a
+// different measure, not a fallback, so it gets its own series rather than
+// being folded into the first.
+// ORDER MATTERS: it is the order of MONEY_FIELDS in
+// scripts/build_person_index.py, which people.json's "m" array follows and
+// the Biggest movers picker indexes into.
 const MONEY_SERIES = [
   ["Privalomas registruoti turtas", "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas", "#2456a4"],
   ["Piniginės lėšos", "turto-ir-pajamu-deklaracijos.pinigines-lesos", "#7fa8d9"],
   ["Gautos pajamos", "turto-ir-pajamu-deklaracijos.gautos-pajamos", "#2c8a4b"],
+  ["Turtas ir piniginės lėšos (metų pabaigoje)", "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pabaigoje", "#b5761f"],
 ];
 
 // Render a declared figure the way the assets pane does: litas converted at
@@ -136,6 +145,14 @@ const FIELD_MAP = [
   ["Privalomas registruoti turtas", ["turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas"], moneyCell],
   ["Piniginės lėšos", ["turto-ir-pajamu-deklaracijos.pinigines-lesos"], moneyCell],
   ["Gautos pajamos", ["turto-ir-pajamu-deklaracijos.gautos-pajamos"], moneyCell],
+  // 1996-1997 only: that form sums turtas and piniginės lėšos, and prints
+  // employment income separately from the total. On the 1997 municipal
+  // election the total is usually unusable, so the employment row is the only
+  // income figure those records have -- without this row they read as blank.
+  ["Turtas ir piniginės lėšos (metų pabaigoje)", ["turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pabaigoje"], moneyCell],
+  ["Turtas ir piniginės lėšos (metų pradžioje)", ["turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pradzioje"], moneyCell],
+  ["Per metus įsigytas turtas", ["turto-ir-pajamu-deklaracijos.kalendoriniais-metais-isigytas-turtas"], moneyCell],
+  ["Gautos pajamos (darbo santykiai)", ["turto-ir-pajamu-deklaracijos.gautos-pajamos-darbo-santykiu"], moneyCell],
   ["Teistumas (deklaracija)", ["anketa.pareiskimai.ar-buvote-pripazintas-kaltu"]],
 ];
 

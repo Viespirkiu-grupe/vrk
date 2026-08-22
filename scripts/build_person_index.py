@@ -107,10 +107,20 @@ def elected_note_of(record: dict) -> str | None:
     return None
 
 
-# The three asset/income fields every election module normalizes under the
-# same keys. Carried into the index so the dashboard can chart and rank
-# without fetching 33k records.
-MONEY_FIELDS = ("privalomas-registruoti-turtas", "pinigines-lesos", "gautos-pajamos")
+# The asset/income fields carried into the index so the dashboard can chart
+# and rank without fetching 47k records. The first three are the keys every
+# election from 2007 on normalizes under. The fourth is the 1996-1997 form's
+# combined turtas + piniginės lėšos: that era does not split them, so it
+# leaves the first two null and would otherwise contribute no turtas at all.
+#
+# ORDER MATTERS: people.json's "m" array follows this order, and the
+# dashboard's MONEY_SERIES and Biggest movers picker index into it.
+MONEY_FIELDS = (
+    "privalomas-registruoti-turtas",
+    "pinigines-lesos",
+    "gautos-pajamos",
+    "turtas-ir-pinigines-lesos-metu-pabaigoje",
+)
 
 # The 2012-2015 pages declare in litas (`turto-ir-pajamu-deklaracijos.valiuta`
 # is "Lt"); everything from 2016 on is in euro. The index converts at the

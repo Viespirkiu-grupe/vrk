@@ -74,6 +74,27 @@ records that declare in litas. `FIELD_MAP` rows may now carry an optional
 `(value, record) => string` formatter, and the three money rows use
 `moneyCell`.
 
+## Assets & income across two different forms
+
+The chart's first three series are the keys every election from 2007 on
+declares under. The fourth, **Turtas ir piniginės lėšos (metų pabaigoje)**,
+exists because the 1996–1997 form does not split turtas from piniginės lėšos —
+it publishes one summed figure — so those elections leave the first two null
+and would chart no assets at all, despite the page stating them. It is a
+different measure rather than a fallback, so it is its own series and its own
+comparison row.
+
+The comparison table carries three further archive-only rows: the start-of-year
+and acquired-during-year totals, and **Gautos pajamos (darbo santykiai)**. That
+last one matters — on `1997-kovo-23-savivaldybiu-tarybu` the declaration's own
+total row is usually unusable (see `docs/OUTPUT_SCHEMA.md`), so the employment
+row is the only income figure most of those records have.
+
+`MONEY_SERIES` in the page and `MONEY_FIELDS` in
+`scripts/build_person_index.py` are **order-dependent on each other**:
+`people.json`'s `"m"` array follows `MONEY_FIELDS`, and the Biggest movers
+picker indexes into it by position.
+
 ## Election names
 
 `scraper/elections.json` is the **one** registry of elections: id, first-round

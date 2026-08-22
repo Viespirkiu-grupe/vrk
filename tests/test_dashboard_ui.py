@@ -22,6 +22,11 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DASHBOARD_PATH = REPO_ROOT / "dashboard" / "index.html"
 SOURCE = DASHBOARD_PATH.read_text(encoding="utf-8")
+# Comments may name an English label while explaining it (the Biggest movers
+# picker, say); only text that can reach the DOM is chrome.
+UNCOMMENTED = "\n".join(
+    line for line in SOURCE.splitlines() if not line.lstrip().startswith("//")
+)
 NODE = shutil.which("node")
 
 
@@ -52,7 +57,7 @@ class DocumentTests(unittest.TestCase):
             "largest increase",
         ):
             with self.subTest(phrase):
-                self.assertNotIn(phrase, SOURCE)
+                self.assertNotIn(phrase, UNCOMMENTED)
 
     def test_the_result_count_reports_matches_and_rendered_rows(self):
         # It used to print the match count alone while 300 rows existed.
