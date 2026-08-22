@@ -98,5 +98,86 @@ class LithuanianPluralTests(unittest.TestCase):
         )
 
 
+@unittest.skipIf(NODE is None, "node not installed — behavioural checks skipped")
+class EducationCellTests(unittest.TestCase):
+    """`issilavinimas` is an object; compactValue() dumped its raw keys.
+
+    Before the formatter every column read
+    "irasai: issilavinimas: Aukštasis; mokymo-istaigos-pavadinimas: ..."
+    across the whole comparison row.
+    """
+
+    def _render(self, values):
+        fn = re.search(r"^function educationCell\(.*?^}", SOURCE, re.S | re.M).group(0)
+        script = f"{fn}\nconsole.log(JSON.stringify({json.dumps(values)}.map(educationCell)));"
+        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        return json.loads(out.stdout)
+
+    def test_one_line_per_education_entry(self):
+        value = {
+            "aprasas": None,
+            "irasai": [
+                {
+                    "issilavinimas": "Aukštasis universitetinis",
+                    "mokymo-istaigos-pavadinimas": "Vilniaus universitetas",
+                    "specialybe": "Filologija",
+                    "baigimo-metai": "2001",
+                },
+                {
+                    "issilavinimas": "Aukštasis",
+                    "mokymo-istaigos-pavadinimas": "Mykolo Romerio universitetas",
+                    "specialybe": "Viešasis administravimas",
+                    "baigimo-metai": "2021",
+                },
+            ],
+        }
+        self.assertEqual(
+            self._render([value])[0],
+            "Aukštasis universitetinis — Vilniaus universitetas, Filologija (2001)\n"
+            "Aukštasis — Mykolo Romerio universitetas, Viešasis administravimas (2021)",
+        )
+
+    def test_the_1997_archive_shape_renders_as_its_bare_level(self):
+        # scripts/reshape_1997_education.py wraps that era's single level in
+        # the corpus object, leaving the three fields it never published null.
+        value = {
+            "aprasas": None,
+            "irasai": [
+                {
+                    "issilavinimas": "Aukštasis",
+                    "mokymo-istaigos-pavadinimas": None,
+                    "specialybe": None,
+                    "baigimo-metai": None,
+                }
+            ],
+        }
+        self.assertEqual(self._render([value])[0], "Aukštasis")
+
+    def test_nothing_declared_renders_as_a_dash_not_an_empty_object(self):
+        self.assertEqual(
+            self._render([{"aprasas": None, "irasai": []}, None, ""]),
+            [None, None, None],
+        )
+
+    def test_a_free_text_description_leads(self):
+        value = {"aprasas": "Savarankiškos studijos", "irasai": []}
+        self.assertEqual(self._render([value])[0], "Savarankiškos studijos")
+
+
+class ComparisonTableRenderingTests(unittest.TestCase):
+    def test_multi_line_cells_keep_their_line_breaks(self):
+        # educationCell joins entries with \n, which textContent only shows
+        # if the cell does not collapse whitespace.
+        rule = re.search(r"table\.cmp th, table\.cmp td \{[^}]*\}", SOURCE).group(0)
+        self.assertIn("white-space: pre-line", rule)
+
+    def test_education_uses_the_formatter(self):
+        row = re.search(r'\["Išsilavinimas", \[[^\]]*\](, *\w+)?\]', SOURCE)
+        self.assertIsNotNone(row)
+        self.assertEqual((row.group(1) or "").strip(" ,"), "educationCell")
+
+
 if __name__ == "__main__":
     unittest.main()

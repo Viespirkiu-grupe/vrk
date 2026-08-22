@@ -1493,6 +1493,16 @@ field map all resolve them with no election-specific case.
 - No elected data, no biography subpage, no private-interest or
   campaign-finance sections — same scope decision as the Seimas archive
   appendix above.
+- `normalized.anketa.issilavinimas` is the corpus's education object,
+  `{"aprasas", "irasai": [...]}`, like every era from 2007 on. These pages
+  publish a single level from a controlled list ("Aukštasis",
+  "Aukštesnysis", "Specialus vidurinis", "Vidurinis", "Nebaigtas aukštasis",
+  "Nebaigtas vidurinis", "Aspirantūra", "Doktorantūra"), which is exactly the
+  modern entry's own `issilavinimas` field, so it goes there and
+  `mokymo-istaigos-pavadinimas`, `specialybe` and `baigimo-metai` are null —
+  this era never published them. It was a bare string until 2026-08-22, the
+  one concept in the corpus with two shapes; records already on disk were
+  reshaped in place by `scripts/reshape_1997_education.py`.
 - 46 candidate name collisions in the 6,276-candidate general election
   resolve with the corpus's standard positional `-2` suffix; see
   `docs/CLI_REFERENCE.md`'s municipal archive section for the concrete pair.

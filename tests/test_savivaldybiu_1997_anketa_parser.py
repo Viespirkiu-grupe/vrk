@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from scraper.elections.savivaldybiu_1997.anketa_parser import parse_anketa_samples
+from scraper.shared.savivaldybiu_archive_1997 import education_record
 
 
 class Savivaldybiu1997AnketaParserTests(unittest.TestCase):
@@ -91,6 +92,59 @@ class Savivaldybiu1997AnketaParserTests(unittest.TestCase):
             self.tamulevicius_2["rawData"]["candidacy"]["municipalityName"], "Druskininkų miesto"
         )
 
+
+
+class EducationShapeTests(unittest.TestCase):
+    """This era's one-word level, carried in the corpus's education object.
+
+    Every election from 2007 on publishes `issilavinimas` as
+    `{"aprasas", "irasai": [...]}`. These pages publish a single level from a
+    controlled list, which is exactly the modern entry's own `issilavinimas`
+    field -- so it goes there rather than staying the corpus's one concept
+    with two shapes.
+    """
+
+    def test_a_level_becomes_a_single_entry_in_the_corpus_object(self):
+        self.assertEqual(
+            education_record("Aukštasis"),
+            {
+                "aprasas": None,
+                "irasai": [
+                    {
+                        "issilavinimas": "Aukštasis",
+                        "mokymo-istaigos-pavadinimas": None,
+                        "specialybe": None,
+                        "baigimo-metai": None,
+                    }
+                ],
+            },
+        )
+
+    def test_every_level_this_era_publishes_is_carried_through(self):
+        # The eight values the 6,276-record general election actually uses.
+        for level in (
+            "Aukštasis", "Aukštesnysis", "Specialus vidurinis", "Vidurinis",
+            "Nebaigtas aukštasis", "Nebaigtas vidurinis", "Aspirantūra",
+            "Doktorantūra",
+        ):
+            with self.subTest(level):
+                record = education_record(level)
+                self.assertEqual(record["irasai"][0]["issilavinimas"], level)
+
+    def test_no_education_stays_null_rather_than_an_empty_object(self):
+        self.assertIsNone(education_record(""))
+        self.assertIsNone(education_record(None))
+
+    def test_a_parsed_record_carries_the_object_shape(self):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        results = parse_anketa_samples(
+            candidate_ids=["pilvelis-algirdas"], output_root=Path(tmp.name)
+        )
+        record = json.loads(Path(results[0]["outputPath"]).read_text(encoding="utf-8"))
+        value = record["normalized"]["anketa"]["issilavinimas"]
+        self.assertIsInstance(value, dict)
+        self.assertEqual(sorted(value), ["aprasas", "irasai"])
 
 
 class DeclarationTests(unittest.TestCase):

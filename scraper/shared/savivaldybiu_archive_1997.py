@@ -634,6 +634,34 @@ def fetch_first_candidate_sample(
     return fetch_candidate_sample(entry, samples_root, allow_new_candidate_dir, election_id)
 
 
+def education_record(education: str) -> dict[str, Any] | None:
+    """Wrap this era's one-word education level in the corpus's shape.
+
+    Every election from 2007 on publishes `issilavinimas` as
+    `{"aprasas", "irasai": [...]}`, each entry carrying `issilavinimas`,
+    `mokymo-istaigos-pavadinimas`, `specialybe` and `baigimo-metai`. These
+    1997 pages publish a single level from a controlled list instead --
+    "Aukštasis", "Aukštesnysis", "Specialus vidurinis", "Vidurinis",
+    "Nebaigtas aukštasis", "Nebaigtas vidurinis", "Aspirantūra",
+    "Doktorantūra" -- which is exactly the modern entry's `issilavinimas`
+    field, so it goes there and the three the page does not publish are null.
+    Same value, corpus shape, and one less special case downstream.
+    """
+    if not education:
+        return None
+    return {
+        "aprasas": None,
+        "irasai": [
+            {
+                "issilavinimas": education,
+                "mokymo-istaigos-pavadinimas": None,
+                "specialybe": None,
+                "baigimo-metai": None,
+            }
+        ],
+    }
+
+
 def build_candidate_record(
     candidate_id: str,
     entry: dict[str, Any],
@@ -739,7 +767,7 @@ def build_candidate_record(
             "gimimo-vieta": personal["birthPlace"] or None,
             "gyvenamoji-vieta": personal["residence"] or None,
             "tautybe": personal["nationality"] or None,
-            "issilavinimas": personal["education"] or None,
+            "issilavinimas": education_record(personal["education"]),
             "uzsienio-kalbos": personal["foreignLanguages"],
             "pagrindine-darboviete": personal["mainWorkplace"] or None,
             "visuomenine-veikla": personal["publicActivity"] or None,

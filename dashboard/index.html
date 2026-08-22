@@ -50,7 +50,7 @@
   table.rec th, table.rec td { border: 1px solid var(--line); padding: 4px 8px; text-align: left; vertical-align: top; min-width: 110px; }
   table.rec th { background: var(--accent-soft); font-weight: 600; }
   table.cmp { border-collapse: collapse; width: 100%; font-size: 13.5px; background: var(--panel); }
-  table.cmp th, table.cmp td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; }
+  table.cmp th, table.cmp td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; white-space: pre-line; }
   table.cmp thead th { background: var(--accent-soft); position: sticky; top: 0; }
   table.cmp thead th .cur { font-weight: 400; font-size: 11.5px; color: var(--muted); }
   table.cmp td.null { color: var(--muted); }
@@ -104,13 +104,33 @@ function moneyCell(value, record) {
   return fmtEUR(declaredInLitas(record) ? n / LITAS_PER_EURO : n);
 }
 
+// Education is an object -- {aprasas, irasai:[{issilavinimas,
+// mokymo-istaigos-pavadinimas, specialybe, baigimo-metai}]} -- so the generic
+// compactValue() rendered it as "irasai: issilavinimas: Aukštasis;
+// mokymo-istaigos-pavadinimas: ..." across every column. One line per entry
+// reads as what it is. (The 1997 municipal archive published a bare level
+// string and is reshaped into this same object by
+// scripts/reshape_1997_education.py, so there is one shape to render.)
+function educationCell(value) {
+  if (value == null || value === "") return null;
+  if (typeof value !== "object") return String(value);
+  const lines = (value.irasai || []).map((entry) => {
+    const where = [entry["mokymo-istaigos-pavadinimas"], entry["specialybe"]].filter(Boolean).join(", ");
+    const year = entry["baigimo-metai"] ? ` (${entry["baigimo-metai"]})` : "";
+    return [entry.issilavinimas, where && `${where}${year}`].filter(Boolean).join(" — ")
+        || (year ? year.trim() : "");
+  }).filter(Boolean);
+  if (value.aprasas) lines.unshift(value.aprasas);
+  return lines.length ? lines.join("\n") : null;
+}
+
 // Comparison concepts: label -> normalized paths tried in order per election,
 // plus an optional formatter (value, record) -> string for concepts a bare
 // compactValue() renders wrongly.
 const FIELD_MAP = [
   ["Einamos pareigos", ["anketa.einamos-pareigos"]],
   ["Pagrindinė darbovietė", ["anketa.pagrindine-darboviete"]],
-  ["Išsilavinimas", ["anketa.issilavinimas", "biografija.issilavinimas"]],
+  ["Išsilavinimas", ["anketa.issilavinimas", "biografija.issilavinimas"], educationCell],
   ["Šeiminė padėtis", ["anketa.seimine-padetis", "biografija.seimine-padetis"]],
   ["Užsienio kalbos", ["anketa.uzsienio-kalbos", "biografija.uzsienio-kalbos"]],
   ["Privalomas registruoti turtas", ["turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas"], moneyCell],
