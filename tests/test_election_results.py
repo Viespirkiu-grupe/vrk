@@ -9,12 +9,14 @@ numbers that were checked against VRK's own counts when the join shipped.
 import json
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 from scraper.shared.election_results import (
     MAYOR_WINNER_PATTERN,
     PRESIDENT_WINNER_PATTERN,
     SEIMO_WINNER_PATTERN,
+    first_round_elected_by_label,
     load_results_lookup,
     normalize_person_name,
     parse_composition_page,
@@ -87,6 +89,24 @@ class SeimoDistrictPageTests(unittest.TestCase):
         parsed = parse_seimo_district_page(html)
         self.assertIsNone(parsed["verdictName"])
         self.assertTrue(parsed["runoff"])
+
+    def test_rows_linked_with_the_presidential_template_stem(self):
+        # The 2009 and 2011 by-election trees name the candidate row pages
+        # "rezultatai_prezidento_kand…" instead of "rezultatai_sm_kand…".
+        html = SEIMO_DISTRICT_HTML.replace("rezultatai_sm_kand", "rezultatai_prezidento_kand")
+        parsed = parse_seimo_district_page(html)
+        self.assertEqual([r["name"] for r in parsed["rows"]], ["Algirdas BUTKEVIČIUS", "Rimvydas ŽIEMYS"])
+
+    def test_first_round_elected_page_keyed_by_constituency(self):
+        html = """<table><tr><th>Kandidatas</th><th>Apygarda</th><th>Iškėlė</th></tr>
+        <tr><td><a href="../../../rinkimai/406_lt/Kandidatai/Kandidatas26261/Kandidato26261Anketa.html">Leonard TALMONT</a></td><td>56. Vilniaus - Šalčininkų</td><td>Lietuvos lenkų rinkimų akcija</td></tr></table>"""
+        with tempfile.TemporaryDirectory() as tmp, mock.patch("scraper.shared.election_results.fetch_text", return_value=html):
+            by_label = first_round_elected_by_label(Path(tmp), "2009_seimo_rinkimai")
+        self.assertEqual(list(by_label), ["56. Vilniaus - Šalčininkų"])
+        self.assertEqual(by_label["56. Vilniaus - Šalčininkų"]["vrkCandidateId"], "26261")
+        # A tree without the page (2011, 2013) is an empty map, not an error.
+        with tempfile.TemporaryDirectory() as tmp, mock.patch("scraper.shared.election_results.fetch_text", side_effect=RuntimeError("404")):
+            self.assertEqual(first_round_elected_by_label(Path(tmp), "2013_seimo_rinkimai"), {})
 
 
 MEMBERS_HTML = """
@@ -186,7 +206,7 @@ class BuiltResultsPins(unittest.TestCase):
         self.assertEqual(stats["constituencyWinnersDisagree"] + stats["constituencyWinnersUnresolved"], 2)
 
     def test_2013_and_2015_seimo_by_elections(self):
-        for election_id, plurality in [("2013-kovo-3-seimo-birzai-zarasai-ukmerge", 0), ("2015-kovo-1-seimo-zirmunai", 1), ("2015-birzelio-7-seimo-varena-eisiskes", 0)]:
+        for election_id, plurality in [("2013-kovo-3-seimo-birzai-zarasai-ukmerge", 0), ("2015-kovo-1-seimo-zirmunai", 1), ("2015-birzelio-7-seimo-varena-eisiskes", 0), ("2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai", 1), ("2011-vasario-13-seimo-marijampole", 1)]:
             stats = _results(election_id)["stats"]
             self.assertEqual(stats["unresolved"], 0, election_id)
             self.assertEqual(stats["winnersResolved"], stats["constituencies"], election_id)

@@ -188,6 +188,7 @@ SEIMO_WINNER_PATTERN = re.compile(
     r"Seimo nari[ua]\s+išrinkt(?:as|a)\s+(.+?)(?:\.\s|\s+Pastaba|\s+Rūšiuoti|$)"
 )
 RUNOFF_PATTERN = re.compile(r"reikalingas pakartotinis balsavimas", re.IGNORECASE)
+DISTRICT_ROW_PATTERN = re.compile(r"rezultatai_(?:sm|prezidento)_kand\d+")
 
 
 def seimo_district_pages(results_dir: Path, tree: str, round_number: int) -> list[dict[str, Any]]:
@@ -215,7 +216,10 @@ def parse_seimo_district_page(html: str) -> dict[str, Any]:
     rows: list[dict[str, Any]] = []
     soup = BeautifulSoup(html, "lxml")
     for anchor in soup.find_all("a", href=True):
-        if "rezultatai_sm_kand" not in anchor["href"]:
+        # The candidate row pages are "rezultatai_sm_kand<ID>…" from 2012
+        # on; the 2009 and 2011 by-election trees reuse the presidential
+        # template's "rezultatai_prezidento_kand<ID>…" stem for them.
+        if not DISTRICT_ROW_PATTERN.search(anchor["href"]):
             continue
         tr = anchor.find_parent("tr")
         cells = [normalize_space(td.get_text(" ", strip=True)) for td in tr.find_all("td")] if tr else []
@@ -233,6 +237,28 @@ def parse_seimo_district_page(html: str) -> dict[str, Any]:
     return {"verdictName": verdict, "runoff": runoff, "rows": rows, "number": number, "text": text}
 
 
+FIRST_ROUND_ELECTED_PAGE = "rezultatai_vienmand_apygardose/isrinkti_seimo_nariai.html"
+
+
+def first_round_elected_by_label(results_dir: Path, tree: str) -> dict[str, dict[str, Any]]:
+    """The tree's first-round elected-members page, keyed by constituency
+    label ("56. Vilniaus - Šalčininkų"). The 2008 and 2009 trees publish it
+    (a constituency decided outright in round one gets no verdict sentence
+    on its own page and no round-two page); the 2011 and 2013 trees do not,
+    and a missing page is simply an empty map."""
+    url = f"{STATIC_BASE}{tree}/output_lt/{FIRST_ROUND_ELECTED_PAGE}"
+    try:
+        html = fetch_page(results_dir, url)
+    except Exception:
+        return {}
+    by_label: dict[str, dict[str, Any]] = {}
+    for member in parse_elected_members_page(html, url):
+        label = member["cells"][1] if len(member["cells"]) > 1 else ""
+        if label:
+            by_label[label] = {**member, "sourceUrl": url}
+    return by_label
+
+
 def seimo_constituency_winners(results_dir: Path, tree: str) -> list[dict[str, Any]]:
     """One record per constituency: the winner's name, the deciding round and
     how it was read (verdict sentence or runoff plurality)."""
@@ -242,6 +268,7 @@ def seimo_constituency_winners(results_dir: Path, tree: str) -> list[dict[str, A
     # Round-two pages are matched to round-one constituencies by label
     # (e.g. "48. Biržų - Kupiškio"); their ids are re-issued.
     round_two_by_label = {page["label"]: page for page in round_two}
+    first_round_elected = first_round_elected_by_label(results_dir, tree)
     for page in round_one:
         parsed = parse_seimo_district_page(fetch_page(results_dir, page["url"]))
         record: dict[str, Any] = {
@@ -256,6 +283,9 @@ def seimo_constituency_winners(results_dir: Path, tree: str) -> list[dict[str, A
         }
         if parsed["verdictName"]:
             record.update(winnerName=parsed["verdictName"], round=1, method="verdict", sourceUrl=page["url"])
+        elif page["label"] in first_round_elected:
+            member = first_round_elected[page["label"]]
+            record.update(winnerName=member["name"], round=1, method="first-round-list", sourceUrl=member["sourceUrl"])
         else:
             second = round_two_by_label.get(page["label"])
             if second is None and len(round_two) == 1 and len(round_one) == 1:
