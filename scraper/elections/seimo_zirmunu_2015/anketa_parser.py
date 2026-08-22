@@ -93,6 +93,16 @@ TURTO_PAJAMU_KEY_ALIASES = {
     "isskaiciuota-mokescio-suma-36-laukelio-suma": "sumoketas-pajamu-mokestis",
 }
 
+# The income extract stated as one sentence on the form's own line —
+# "GPM305 formos deklaracijos: Gauta 0 Lt, išskaičiuota pajamų mokesčio
+# 0 Lt" — instead of the two labelled rows. Thirty pages across the 2011 and
+# March 2015 municipal generals do this, every one of them a declared zero,
+# which is a statement and not a missing declaration.
+TURTO_PAJAMU_PROSE_PATTERN = re.compile(
+    r"^\s*Gauta\s+(?P<income>-?[\d\s.,]+?)\s*Lt\b\s*,\s*išskaičiuota pajamų mokesčio\s+(?P<tax>-?[\d\s.,]+?)\s*Lt\b",
+    re.IGNORECASE,
+)
+
 TURTO_PAJAMU_OUTPUT_ORDER = [
     "privalomas-registruoti-turtas",
     "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
@@ -635,6 +645,10 @@ def _normalize_turto_ir_pajamu_data(payload: dict[str, Any]) -> dict[str, Any]:
             source_key = _source_key(str(item.get("key", "")))
             target_key = TURTO_PAJAMU_KEY_ALIASES.get(source_key)
             if target_key is None:
+                prose = TURTO_PAJAMU_PROSE_PATTERN.match(normalize_space(str(item.get("value") or "")))
+                if prose is not None:
+                    normalized_fields["gautos-pajamos"] = _parse_lt_amount(prose.group("income") + " Lt")
+                    normalized_fields["sumoketas-pajamu-mokestis"] = _parse_lt_amount(prose.group("tax") + " Lt")
                 continue
             normalized_fields[target_key] = _parse_lt_amount(item.get("value"))
 

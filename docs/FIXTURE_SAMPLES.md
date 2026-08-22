@@ -419,6 +419,32 @@ used as the sitemap's cross-check), 60 `district-<id>.html` pages and a
 `lists/` directory of 478 list pages. The tests assert both counts, because a
 missing list page silently drops its candidates from the sitemap.
 
+For `2011-vasario-27-savivaldybiu` the allowlist
+(`tests/test_savivaldybiu_2011_sample_allowlist.py`) is **ten candidates out
+of 16,403**, chosen for the shapes the record depends on in the one general
+election where individuals stood for the council on their own:
+
+- `darius-norkus-42302`, `mindaugas-kaknevicius-26835` — self-nominated
+  individuals (Vilnius, Alytus): a ballot number, no list, the card's
+  "Išsikėlęs kandidatas" flag
+- `valdemaras-stancikas-42569`, `visvaldas-matijosaitis-29278`,
+  `arturas-zuokas-42680` — leaders of coalitions of self-nominated
+  candidates; Zuokas the elected one, and the one with a conviction
+  explanation after Q9
+- `arunas-karlonas-43800`, `arunas-burksas-27707` — leaders of party
+  coalitions (Kauno rajonas, Neringa), whose cards carry the member party as
+  a second `(Iškėlė` nomination
+- `viktor-uspaskich-48972` — party list head (Darbo partija, Vilnius)
+- `rimvydas-buinickas-59139` — party list, position 60
+- `diana-jokimciene-kachabrisvili-44060` — a double surname, position 31
+
+Its samples directory also holds the listing tree: `index.html` (VRK's
+municipality index), the three roll-ups used as the sitemap's cross-checks
+(`issikele.html`, `koalicijos.html`, `issikele-koalicijos.html`), 60
+`district-<id>.html` pages (ids 7131–7190) and a `lists/` directory of 599
+list pages. Every candidate has exactly the four tabs; there is no
+Biografija and no campaign subtree in this election.
+
 For `1996-spalio-20-seimo` the allowlist (`tests/test_seimo_1996_sample_allowlist.py`)
 is a curated five of the 879 candidates:
 

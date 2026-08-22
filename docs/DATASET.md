@@ -18,8 +18,9 @@ never touched by a full run.
 
 ## Inventory
 
-60,376 candidate records across 41 elections, 1996–2025, with **zero fetch
-failures**.
+76,776 candidate records across 42 elections, 1996–2025, with **zero fetch
+failures** other than three 2011 candidate pages VRK never published (see
+Known gaps).
 
 **The table below is an aggregate, not an inventory of any one directory.**
 `data/` is gitignored, so it never travels with a branch or a merge, and the
@@ -92,7 +93,8 @@ election was re-parsed offline the same day.
 | `2009-ep` | 262 | 12 | 3 | 260 |
 | `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai` | 17 | 2 | 0 | 17 |
 | `2011-vasario-13-seimo-marijampole` | 9 | 1 | 0 | 9 |
-| **total** | **60376** | **5361** | **1304** | **20199** |
+| `2011-vasario-27-savivaldybiu` | 16400 | 1526 | 200 | 0 |
+| **total** | **76776** | **6887** | **1504** | **20199** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
@@ -101,7 +103,7 @@ the presidential elections**, where every candidate carries a participation
 note (`Dalyvavo I ture`, `Dalyvavo II ture`, or `Išrinktas II ture` for the
 winner). Counting non-null `pastaba` there reports 9 and 8 "elected" for a
 race one person won; match on the `Išrink` prefix, not on presence. The
-2007–2015 pages mark no winner at all, so for those sixteen elections the column
+2007–2015 pages mark no winner at all, so for those seventeen elections the column
 counts `kandidatavimas.isrinktas == true` instead — the flag joined in from
 VRK's results trees (`python -m scraper build-results <id>`; the
 reconciliation behind each file is in `docs/CLI_REFERENCE.md`'s results
@@ -164,6 +166,43 @@ hold a list seat (the index's declared 58 still counts five withdrawn
 self-nominations). The `stats` block of `sitemaps/2012-seimo.json` records
 each of these. Every null in the fixture records was traced to a genuinely
 blank or omitted source line before the full runs started.
+
+### The 2026-08-22 scrape of the 2011 municipal general election
+
+GitHub issue #42; VRK election 409 (2011-02-27) — the last municipal
+general before mayors were elected directly, and the only general election
+in which self-nominated individuals stood for the council on their own.
+The listing is the 2015 municipal shape (index, 60 district pages, the
+lists under them) walked by the 2015 repeat-election machinery with this
+module's own district-row reader, because a direct candidate link on a
+district page is an individual here rather than a mayoral candidate.
+Sitemap: **16,403 candidates** — 16,260 on 599 lists (560 party, 11 party
+coalitions, 28 coalitions of self-nominated candidates) and 143 individuals
+— reconciled against VRK's three roll-ups with every check at 0 (the
+self-nominated roll-up's 505 = the 143 individuals + the 362 coalition
+members). Pages are the 2015-era static layout with the municipal question
+set: four tabs, no biography, no campaign link anywhere. Results:
+`2011_savivaldybiu_tarybu_rinkimai` via the municipal walker, generalised
+for a seat won on an individual's own results row, a totals row without
+percentage columns, and a mandate total that is the whole council (no
+mayoral seat): 1,526 seats, 18 of them self-nominated individuals, all 60
+composition pages containing every derived winner, 0 seat mismatches.
+
+Full scrape with `KEEP_SAMPLES=1` (worktree symlinked onto the main
+checkout's `data/` and `samples-full/`): 09:57–16:24 UTC, 83 batches,
+**16,400 of 16,403** fetched and parsed, **0 anomalies**, 562 MB of HTML
+retained. The three missing are candidate pages VRK never published (all
+four tabs 404; see Known gaps) — the batch runner names them in
+`failed_ids.txt`. Measured over the full corpus: 1,526 elected (every
+results-file winner present), the card's "Išsikėlęs kandidatas" flag on
+exactly the 505 self-nominated candidates, the parenthesised member-party
+nomination on all 538 party-coalition members, 200 declared convictions
+(79 with the Q9 explanation), income populated on all 16,400 once the
+prose zero-income sentence parsed (20 records). Fixtures: ten candidates
+chosen by shape. Two sibling defects surfaced and were fixed across the
+2015 municipal family (the Q9 explanation, the prose zero income — rows
+in the fix table above). Person index rebuilt: 47,125 persons (8,350 new;
+the other 8,050 candidacies merged into people already in the corpus).
 
 ### The 2026-08-22 build of the 2007 Dzūkija Seimo by-election
 
@@ -549,7 +588,7 @@ key list itself is election-specific.
 
 ## Correctness fixes behind this corpus
 
-Eighteen defects were found and fixed while building the newer modules. Each had
+Twenty defects were found and fixed while building the newer modules. Each had
 been invisible because the affected elections had thin or no test coverage, and
 each was measured against live data after the fix:
 
@@ -571,11 +610,14 @@ each was measured against live data after the fix:
 | campaign tab paths resolved against the CWD | `index.json` records each campaign tab file at its fetch-time repo-root-relative path, and the parse stage resolved it against the current directory instead of the `--samples-root` that located the index. Run from anywhere but the repo root, every campaign tab file counted as absent and was silently skipped: tabs, auditor, donations, contracts and financing reports all parsed as empty, with **zero anomalies emitted**. Re-parsing the fixture corpora from a directory without a samples tree restored campaign data for **92 of 156 candidates across 15 of 17 elections** — 396 tab sections and 72 auditors that the broken run had dropped. Recorded paths are now re-anchored onto the samples root in use (repo-root runs are byte-identical before and after), and a listed tab file that is missing or unreadable emits a `CampaignTabSampleMissing` anomaly instead of vanishing |
 | conviction-detail table dropped by the 2019-era row loop | VRK nests the Q9.1 detail table — date, country, court and offence per conviction — inside an anketa row of its own. The 2019-era per-row extraction read only `<b>` text from the cell, found none (the detail cells carry plain or `<strong>` text), and the empty-row skip dropped the row, so the details reached neither `rawData` nor `normalized` anywhere in the ep_2019 parser family. A cell that hosts a nested table now parses as a records row — the same shape the standalone records path emits — and `2019-kovo-3-savivaldybiu-tarybu` folds it into `teistumo-detales.irasai` with meru_2021's keys, since both elections ask the same questions under the same statute. prezidento_2019's verbatim copy of the loop got the same capture. Measured: exactly the **six 2019 EP declarers** regain their conviction details, Gintas Orda's 1988 LTSR record lands in normalized, and the 2017 mayoral, Marijampolė and 2019 presidential corpora are byte-identical (no declarers) |
 | a recurring profile-card label overwrote its first value | `_normalize_profile_data` keyed `profilis.kita` by label slug, so the second `Iškėlė` on a card replaced the first. Measured over all 40,469 records when the 2012 Seimo cards (one `Apygarda`/`Iškėlė` pair per candidacy) made it routine: exactly one existing record was affected — Marija Puč, 2015 Trakai, whose `iskele` named the parenthetical member party instead of the coalition that nominated her. Later occurrences now land under `-2`, `-3` suffixes; the one record was re-parsed |
-| the GPM305 income form unknown to the 2015-era parser | the era's income aliases named the GPM308 return only. The 2009 presidential pages extract the earlier GPM305 form — and so, it turned out, does the entire 2015 municipal family: every March 2015 council/mayoral candidate, both June repeat elections and the November Telšiai race. Their `gautos-pajamos` and `sumoketas-pajamu-mokestis` had been null since the family was built, while the five asset lines above them parsed fine. Adding the alias for 2009 and re-parsing the family offline recovered income and tax for **15,837 records** (15,138 March municipal, 366 Šilutė, 326 Širvintos–Trakai, 7 Telšiai); the 13 still null across the family publish no declaration at all (11 municipal, one Širvintos–Trakai candidacy whose anketa VRK never published, one 2014 EP) |
+| the GPM305 income form unknown to the 2015-era parser | the era's income aliases named the GPM308 return only. The 2009 presidential pages extract the earlier GPM305 form — and so, it turned out, does the entire 2015 municipal family: every March 2015 council/mayoral candidate, both June repeat elections and the November Telšiai race. Their `gautos-pajamos` and `sumoketas-pajamu-mokestis` had been null since the family was built, while the five asset lines above them parsed fine. Adding the alias for 2009 and re-parsing the family offline recovered income and tax for **15,837 records** (15,138 March municipal, 366 Šilutė, 326 Širvintos–Trakai, 7 Telšiai). Of the 13 then still null, ten turned out to be the prose zero-income sentence of the next row; the three that publish no declaration at all are one March municipal record, one Širvintos–Trakai candidacy whose anketa VRK never published, and one 2014 EP candidate |
 | the 2012-era conviction explanation never normalized | the 2012 Seimo and 2009 EP forms close the Q9 block with "Tuo atveju, jei bent į vieną 9 punkto klausimą atsakėte Taip … paaiškinimą įrašykite čia", and the era normalizer read the numbered questions only, so the explanation stayed in `rawData.anketa.rows`. Now `pareiskimai.teisiniai-argumentai` (2016's key for the same slot): **24 of 2012's 50 declared convictions** and 2 of 2009 EP's 3 carry text; null on every 2013 record, whose form no longer asks |
 | a campaign whose root never fetched vanished silently at parse time | `_parse_campaign_sample` returned None for a campaign directory with no tabs and no `root.html` — the shape a `CampaignRootFetchFailed` leaves behind — and the parse stage moved on, so the record had no campaign section and `anomalies.jsonl` said nothing; the only trace was the candidate's `index.json`. Now a `CampaignRootMissing` warning. Measured over every retained `index.json` (2009–2015, 18,246 candidates): the two 2009 EP dead links are the only cases |
 | the 2008–2015 degree/title line never normalized | the line after the education table — "Jei turite, nurodykite mokslo laipsnį <b>…</b>, vardą <b>…</b>", or "…mokslo vardą" alone for a title without a degree — was split into prompt rows by the era parser and then read by no mapping, so the whole 2008–2015 static family lacked `mokslo-laipsnis` and `pedagoginis-vardas` while every 2019+ era has them. Mapped in the era normalizer, the municipal family's and `ep_2014`'s, and re-parsed offline: **2,822 records gained a degree and/or a title** — 2,210 `mokslo-laipsnis` and 1,056 `pedagoginis-vardas` across ten elections (1,912 records in the March 2015 municipal general alone, 513 in 2012 Seimo, 270 in 2008 Seimo) |
 | litas-only donation totals filed under `amountEur` | the 2012–2015 donation-summary parser read the totals block positionally as label / Eur / Lt / note — the March 2015 column order. On the litas-only pages of 2012, 2013 and both 2014 elections the one amount is Lt, so every total landed in `amountEur` and the trailing note ("Nuo 2012-01-01 draudžiamos", VRK's reminder that corporate donations were banned) was parsed as a failed amount and lost. The sums are now keyed by the table's own amount headings — `amountLt` on litas-only pages, both on the March 2015 pages, `amountEur` on the later 2015 ones. Re-parsing re-keyed **19,966 summary rows in 1,576 records** (1,343 of 1,927 in 2012, 11 in 2013, all 7 presidential, all 215 EP) and restored the note to 1,576 of them; the per-donation rows had always been right |
+
+| a zero income stated in one sentence read as no declaration | thirty 2011 and March 2015 municipal pages put the GPM305 extract on the form's own line as prose — "GPM305 formos deklaracijos: Gauta 0 Lt, išskaičiuota pajamų mokesčio 0 Lt" — instead of the two labelled rows the aliases match, so `gautos-pajamos` and `sumoketas-pajamu-mokestis` were null while the page said zero. Every one of the thirty declares zero. The sentence now parses into both keys: **20 records in 2011 and 10 in March 2015** gained a 0/0, re-parsed in place from the retained HTML with nothing else changed |
+| the municipal conviction explanation never normalized | the same slot on the municipal form — an unnumbered row after Q9, "Jeigu į 9 p. klausimą atsakėte „Taip“ ir norite papildomai apie tai paaiškinti, tai įrašykite čia" — was read by the municipal mapping (`telsiu_mero_2015`, shared by the whole 2015 municipal family) no better than the Seimo one had been: the yes/no was kept, the explanation stayed in `rawData.anketa.rows`. Found on the 2011 municipal pages, which use the same form, and chased across the family: re-parsing it offline from the retained HTML gave **142 records their `pareiskimai.teisiniai-argumentai` text** (137 of the March 2015 general's 266 declared convictions, 4 of Šilutė's 12, 1 of Širvintos–Trakai's 2; Telšiai declares none), with every other field of all 15,849 records byte-identical |
 
 Every fix was verified by re-parsing all elections and confirming the diff was
 confined to the intended records.
@@ -622,6 +664,15 @@ each now has one.
   Trakai council page as `Rengiama`. Its record keeps the profile card and
   carries the corpus's only `AnketaNotPublished` warning. The same person's
   mayoral candidacy, under a second VRK candidate id, is complete.
+- Three 2011 municipal candidates have **no page at all**: the list pages
+  link them and the results rankings carry their preference votes, but every
+  tab of `Kandidatas<ID>/` is a 404 on vrk.lt — Viktorija
+  Zubovaitė-Steponavičienė (29964, Mažeikiai, Naujoji sąjunga position 3, 131
+  votes), Gerda Ivaškevičiūtė (61654, Vilnius, Jaunoji Lietuva position 31,
+  92 votes) and Aleksandras Bukinas (53039, Vilnius, LLRA–Rusų aljansas
+  coalition position 34, 239 votes). None was elected. They are in the
+  sitemap (16,403 entries) and in `.run-state/…/failed_ids.txt`, and have no
+  record (16,400); a record cannot be written without a candidate page.
 - ~~Three 2015 elections have not had their full scrapes yet~~ — completed
   2026-08-21 with `KEEP_SAMPLES=1`: 327 (Širvintos–Trakai), 366 (Šilutė)
   and 15,149 (the March municipal general, the corpus's third-largest

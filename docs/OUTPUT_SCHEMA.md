@@ -216,15 +216,16 @@ A label that recurs on one profile card keeps its first value under the
 plain key and lands the later ones under `-2`, `-3` suffixes (`iskele`,
 `iskele-2`). Two shapes produce this: the 2012 Seimo cards, which carry one
 `Apygarda`/`Iškėlė` pair per candidacy, and coalition nominees in any
-2012–2015 election, whose card repeats `Iškėlė` for the member party in
+2011–2015 election, whose card repeats `Iškėlė` for the member party in
 parentheses (the suffixed entry's `pavadinimas` is then the literal
 `"(Iškėlė"`). Measured over the whole corpus when the rule was introduced
 (2026-08-21), exactly one pre-existing record had a recurring label.
 
 ### Elected status in the 2012–2015 family (`kandidatavimas.isrinktas`)
 
-No page of the 2012–2015 static layout marks a winner, so `profilis.pastaba`
-is null on every record of those ten elections, winners included. Their
+No page of the 2007–2015 static layout marks a winner, so `profilis.pastaba`
+is null on every record of those seventeen elections (the 2011 municipal
+general included), winners included. Their
 electedness is **joined in from VRK's results trees** at parse time
 (`python -m scraper build-results <id>` writes
 `sitemaps/<id>.results.json`; `scraper/shared/election_results.py` documents
@@ -1160,8 +1161,12 @@ is the municipal question set and the profile card:
   `ar-atliekate-karo-tarnyba` (Q8.2), `ar-eina-nesuderinamas-pareigas` (Q8.3),
   `ar-kitos-valstybes-institucijos-narys` (Q8.4),
   `ar-turite-kitos-valstybes-pilietybe` (Q8.5) and
-  `ar-buvote-pripazintas-kaltu` (the Q9 "anything to declare" question) —
-  keys shared with `meru_2017` where the questions match. Answers are the
+  `ar-buvote-pripazintas-kaltu` (the Q9 "anything to declare" question) and
+  `teisiniai-argumentai` — the unnumbered explanation row a "Taip" may be
+  followed by ("Jeigu į 9 p. klausimą atsakėte „Taip“ ir norite papildomai
+  apie tai paaiškinti, tai įrašykite čia"; null for everyone else and on
+  every Telšiai record). Keys shared with `meru_2017` where the questions
+  match, and with the 2016 form for the explanation slot. Answers are the
   era's verbose first person (`Neturiu`, `Nesu`, `Neinu`; one candidate
   answers `Einu`).
 - `profilis.kita` holds `savivaldybe`, `iskele` and `numeris-sarase` for
@@ -1253,6 +1258,62 @@ two appendices describe the shape. What is specific to this election:
   candidates by the district walk, 434 on the roll-up, none in only one of
   them. The list pages' dual-candidacy marker agrees with the candidate-id
   join on all 412 dual candidates.
+
+## Appendix: 2011 municipal general (`2011-vasario-27-savivaldybiu`)
+
+Records are written as
+`data/2011-vasario-27-savivaldybiu/<candidate-id>-2011-vasario-27-savivaldybiu.json`.
+The pages are the 2015 era with the municipal question set (the Telšiai
+appendix describes the questionnaire — the 2011 form numbers the same
+questions the same way, under 35 str. 12 d. and 89 str. 1 d. of the statute
+as it then stood), and the record carries the `kandidatavimas` block of the
+2015 municipal elections. The election itself is the last before mayors
+were elected directly and the only general election in which individuals
+stood for the council on their own, so:
+
+- `kandidatavimas.roles` is `["tarybos-narys"]` on every record and `meras`
+  is null throughout — there was no mayoral vote, not merely no mayoral
+  candidacy. `candidateId` is `<name-slug>-<vrkCandidateId>` as in 2015.
+- `kandidatavimas.tarybosNarys` has two extra keys. `listKind` says what
+  the list is — `partija` (560 lists), `partiju-koalicija` (11 party
+  coalitions) or `issikelusiu-kandidatu-koalicija` (28 coalitions formed by
+  self-nominated candidates) — as VRK's own roll-ups classify them.
+  `selfNominated` is `true` for the 143 individuals who stood alone: their
+  `partyList`, `listKind` and `listPosition` are null and `listNumber` is
+  their own number on the ballot, in the one sequence the lists are
+  numbered in (an individual is a one-seat "list" on the ballot and on the
+  results page). For everyone on a list `selfNominated` is `false` — a
+  member of a self-nominated coalition included, because the listing puts
+  them on a list; their card's `issikeles-kandidatas` flag (below) says the
+  other half.
+- `isrinktas` comes from the results join: 1,526 council seats, 1,508 from
+  each list's top-M post-preference ranks and 18 from a self-nominated
+  individual's own row of the results table (`method: "self-nominated"` in
+  the results file; the record's `isrinktasKaip` is `tarybos-narys` either
+  way). Every winner resolved by VRK id — nobody holds two ids here, there
+  being one candidacy each — and all 60 composition pages contain every
+  derived winner.
+- `profilis.kita` is the Telšiai shape: `savivaldybe`, then `iskele` and
+  `numeris-sarase` for a list candidate. The `issikeles-kandidatas`
+  valueless entry appears on two kinds of card: an individual's (no list
+  fields at all) and a self-nominated coalition member's (alongside the list
+  fields). A party-coalition member's card adds the coalition's member party
+  as a second, parenthesised nomination — `iskele-2` (`pavadinimas` the
+  literal `"(Iškėlė"`) and `numeris-sarase-2`, the position on that party's
+  own share — under the recurring-label rule in the shared section.
+  `iskele.nuorodos` links the list page for a coalition and the party's
+  own page (`Partijos/Partijos<ID>Apygardos.html`) for a party list.
+- `profilis.vardas-pavarde` is in capitals as the card prints it
+  (`ARTŪRAS ZUOKAS`); the top-level `candidateName` is the sitemap's title
+  case (`Artūras Zuokas`).
+- Four sections only: `profilis`, `anketa`, `turto-ir-pajamu-deklaracijos`,
+  `privaciu-interesu-deklaracija`, `kita`. No `biografija` (council
+  candidates only) and no `politines-kampanijos-dalyvio-duomenys` on any
+  record — the 2011 pages link no campaign participant, as the 2008 Seimo
+  pages do not. Income is the GPM305 return in litas; `kita` is
+  `Duomenų nėra` throughout the fixture set.
+- `anketa.pareiskimai.teisiniai-argumentai` is the Q9 explanation row, as
+  in Telšiai (Zuokas: "Teistumas buvo panaikintas …").
 
 ## Appendix: Seimas archive (`1996-spalio-20-seimo`, `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`)
 
