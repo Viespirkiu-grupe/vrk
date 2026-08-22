@@ -295,6 +295,7 @@ def _fetch_candidate_tabs(
     election_id: str,
     expected_tabs: set[str] | Any,
     unpublished_tabs: set[str] | None = None,
+    tab_links_extractor: Any = None,
 ) -> dict[str, Any]:
     candidate_dir = samples_root / entry["candidateId"]
     if not candidate_dir.exists() and not allow_new_candidate_dir:
@@ -309,7 +310,13 @@ def _fetch_candidate_tabs(
     anketa_path = candidate_dir / "anketa.html"
     anketa_path.write_text(anketa_html, encoding="utf-8")
 
-    tab_links = _extract_tab_links(anketa_html)
+    # The 2004 EP pages (VRK's original static site) link their sub-pages
+    # from the profile card under other file stems; that module supplies
+    # its own extractor, with the same (label, slug, url) result.
+    if tab_links_extractor is None:
+        tab_links = _extract_tab_links(anketa_html)
+    else:
+        tab_links = tab_links_extractor(anketa_html, entry["url"])
     # Tabs the election's pages link but VRK never published (every such
     # URL is a 404 for every candidate): recorded as a fact of the source,
     # not fetched, and not counted against the expected set — see the
@@ -465,6 +472,7 @@ def fetch_first_candidate_with_tabs(
     election_id: str = ELECTION_ID,
     expected_tabs: set[str] | Any | None = None,
     unpublished_tabs: set[str] | None = None,
+    tab_links_extractor: Any = None,
 ) -> dict[str, Any]:
     entry = _load_first_sitemap_entry(sitemap_path)
     return _fetch_candidate_tabs(
@@ -474,6 +482,7 @@ def fetch_first_candidate_with_tabs(
         election_id=election_id,
         expected_tabs=expected_tabs if expected_tabs is not None else EXPECTED_TABS,
         unpublished_tabs=unpublished_tabs,
+        tab_links_extractor=tab_links_extractor,
     )
 
 
@@ -485,6 +494,7 @@ def fetch_candidates_with_tabs(
     election_id: str = ELECTION_ID,
     expected_tabs: set[str] | Any | None = None,
     unpublished_tabs: set[str] | None = None,
+    tab_links_extractor: Any = None,
 ) -> dict[str, Any]:
     if not candidate_ids:
         raise ValueError("At least one candidate id must be provided")
@@ -507,6 +517,7 @@ def fetch_candidates_with_tabs(
                 election_id=election_id,
                 expected_tabs=expected_tabs if expected_tabs is not None else EXPECTED_TABS,
                 unpublished_tabs=unpublished_tabs,
+                tab_links_extractor=tab_links_extractor,
             )
         )
 

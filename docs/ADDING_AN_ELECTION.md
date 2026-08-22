@@ -21,6 +21,15 @@ names mirror them: `kupiskio_mero_2023`, `meru_2021`, `seimo_anyksciu_panevezio_
 This is the whole job. Fetch one candidate page and run existing parsers against
 it before writing anything. The layout families are:
 
+- **2004 static site** (`ep_2004`): VRK's original LRS-ITD page template
+  (`rinkimai/2004/euro/`), between the 1996-1998 Teleport archive and the
+  2015-era layout — a profile card over one `r1`/`r2` table row per
+  question in `N. Prompt: <b>answer</b>` form, separate `kand_biog_l_` and
+  `kand_pajam_l_` pages instead of tabs, no interest declaration and no
+  campaign page. Its sitemap is the 2014 EP walk with other link patterns
+  and its fetcher the 2015-era one with its own link extractor; the page
+  readers are the module's own. The 2004 Seimas and presidential trees, if
+  ever added, are the likely second and third members.
 - **2016 era** (`seimo_2016`): one anketa table with the whole Q5–Q21 set,
   elected note inside the name cell, base64 photos, GPM308 income labels,
   `ID001x` private-interest sections.

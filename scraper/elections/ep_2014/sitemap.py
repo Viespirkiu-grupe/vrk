@@ -39,20 +39,27 @@ def _list_sample_path(samples_dir: Path, list_key: str) -> Path:
     return samples_dir / "lists" / f"list-{list_key}.html"
 
 
-def _list_key(href: str) -> str:
-    match = LIST_LINK_PATTERN.search(href)
+def _list_key(href: str, list_link_pattern: re.Pattern[str] = LIST_LINK_PATTERN) -> str:
+    match = list_link_pattern.search(href)
     if match is None:
         return slugify(href)[-40:]
-    return match.group(1) if match.group(2) is None else f"{match.group(1)}-{match.group(2)}"
+    return "-".join(group for group in match.groups() if group)
 
 
-def extract_list_links(index_html: str) -> list[dict[str, Any]]:
+def extract_list_links(
+    index_html: str,
+    list_link_pattern: re.Pattern[str] = LIST_LINK_PATTERN,
+) -> list[dict[str, Any]]:
     """The numbered list rows of the index: list number, name, declared count.
 
     Rows whose first cell is not a number are skipped — the 2012 Seimo index
     also lists coalition member parties ("koalicijos sąrašas Nr. 10") and
     single-member-only parties ("tik vienmandatėse") under the same table,
     and those are not lists of their own.
+
+    The link patterns are parameters because the 2004 EP tree — the same
+    index-and-lists shape on VRK's original static site — names its pages
+    `kand_part_l_<ID>.htm` and `kand_anketa_l_<ID>.htm`.
     """
     soup = BeautifulSoup(index_html, "lxml")
     links: list[dict[str, Any]] = []
@@ -63,7 +70,7 @@ def extract_list_links(index_html: str) -> list[dict[str, Any]]:
             continue
         anchor = None
         for candidate in tr.find_all("a", href=True):
-            if LIST_LINK_PATTERN.search(candidate["href"]):
+            if list_link_pattern.search(candidate["href"]) and candidate.find_parent("tr") is tr:
                 anchor = candidate
                 break
         if anchor is None:
@@ -72,7 +79,7 @@ def extract_list_links(index_html: str) -> list[dict[str, Any]]:
         if not number_text.isdigit():
             continue
         href = normalize_space(anchor["href"])
-        key = _list_key(href)
+        key = _list_key(href, list_link_pattern)
         if key in seen:
             continue
         seen.add(key)
@@ -93,6 +100,7 @@ def fetch_listing_sample(
     samples_dir: Path = DEFAULT_SAMPLES_DIR,
     listing_url: str = LISTING_URL,
     index_name: str = "list.html",
+    list_link_pattern: re.Pattern[str] = LIST_LINK_PATTERN,
 ) -> Path:
     # Fetches the list index and every list page, skipping files already on
     # disk so an interrupted capture resumes.
@@ -105,7 +113,7 @@ def fetch_listing_sample(
         index_path.write_text(index_html, encoding="utf-8")
         time.sleep(FETCH_PAUSE_SECONDS)
 
-    for link in extract_list_links(index_html):
+    for link in extract_list_links(index_html, list_link_pattern):
         list_path = _list_sample_path(samples_dir, link["listKey"])
         if list_path.exists():
             continue
@@ -116,21 +124,29 @@ def fetch_listing_sample(
     return samples_dir
 
 
-def list_records(list_html: str, link: dict[str, Any]) -> list[dict[str, Any]]:
+def list_records(
+    list_html: str,
+    link: dict[str, Any],
+    candidate_pattern: re.Pattern[str] = CANDIDATE_ANKETA_PATTERN,
+) -> list[dict[str, Any]]:
     """The candidates of one list page in list order."""
     soup = BeautifulSoup(list_html, "lxml")
     records: list[dict[str, Any]] = []
     for tr in soup.find_all("tr"):
+        # The 2004 pages lay the whole page out in nested tables, so an
+        # outer layout row contains every candidate anchor too; only the
+        # row the anchor sits in directly is a candidate row. (The 2009 and
+        # 2014 list tables are flat, where this is a no-op.)
         anchor = None
         for candidate in tr.find_all("a", href=True):
-            if CANDIDATE_ANKETA_PATTERN.search(candidate["href"]):
+            if candidate_pattern.search(candidate["href"]) and candidate.find_parent("tr") is tr:
                 anchor = candidate
                 break
         if anchor is None:
             continue
         cells = tr.find_all("td")
         position_text = normalize_space(cells[0].get_text(" ", strip=True)) if cells else ""
-        match = CANDIDATE_ANKETA_PATTERN.search(anchor["href"])
+        match = candidate_pattern.search(anchor["href"])
         records.append(
             {
                 "vrkCandidateId": match.group(1) if match else "",
@@ -145,14 +161,17 @@ def list_records(list_html: str, link: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def collect_list_records(
-    samples_dir: Path, index_name: str = "list.html"
+    samples_dir: Path,
+    index_name: str = "list.html",
+    list_link_pattern: re.Pattern[str] = LIST_LINK_PATTERN,
+    candidate_pattern: re.Pattern[str] = CANDIDATE_ANKETA_PATTERN,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     index_html = (samples_dir / index_name).read_text(encoding="utf-8")
-    lists = extract_list_links(index_html)
+    lists = extract_list_links(index_html, list_link_pattern)
     records: list[dict[str, Any]] = []
     for link in lists:
         list_path = _list_sample_path(samples_dir, link["listKey"])
-        records.extend(list_records(list_path.read_text(encoding="utf-8"), link))
+        records.extend(list_records(list_path.read_text(encoding="utf-8"), link, candidate_pattern))
     return lists, records
 
 
@@ -171,10 +190,16 @@ def build_sitemap_from_sample(
     output_path: Path = DEFAULT_SITEMAP_PATH,
     election_id: str = ELECTION_ID,
     listing_url: str = LISTING_URL,
+    list_link_pattern: re.Pattern[str] = LIST_LINK_PATTERN,
+    candidate_pattern: re.Pattern[str] = CANDIDATE_ANKETA_PATTERN,
 ) -> tuple[Path, dict[str, int]]:
     # sample_path keeps the CLI's signature; it names the samples directory.
     samples_dir = sample_path if sample_path is not None else DEFAULT_SAMPLES_DIR
-    lists, records = collect_list_records(samples_dir)
+    lists, records = collect_list_records(
+        samples_dir,
+        list_link_pattern=list_link_pattern,
+        candidate_pattern=candidate_pattern,
+    )
 
     entries: list[dict[str, Any]] = []
     skipped: list[dict[str, Any]] = []
