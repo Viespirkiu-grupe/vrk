@@ -224,8 +224,8 @@ parentheses (the suffixed entry's `pavadinimas` is then the literal
 ### Elected status in the 2012–2015 family (`kandidatavimas.isrinktas`)
 
 No page of the 2007–2015 static layout marks a winner, so `profilis.pastaba`
-is null on every record of those seventeen elections (the 2011 municipal
-general included), winners included. Their
+is null on every record of those eighteen elections (the 2007 and 2011
+municipal generals included), winners included. Their
 electedness is **joined in from VRK's results trees** at parse time
 (`python -m scraper build-results <id>` writes
 `sitemaps/<id>.results.json`; `scraper/shared/election_results.py` documents
@@ -1315,6 +1315,75 @@ stood for the council on their own, so:
 - `anketa.pareiskimai.teisiniai-argumentai` is the Q9 explanation row, as
   in Telšiai (Zuokas: "Teistumas buvo panaikintas …").
 
+## Appendix: 2007 municipal general (`2007-vasario-25-savivaldybiu`)
+
+Records are written as
+`data/2007-vasario-25-savivaldybiu/<candidate-id>-2007-vasario-25-savivaldybiu.json`.
+The pages are the family's oldest shape — the one the Dzūkija by-election of
+the same year has (plain-text card, unnumbered questionnaire, FR0462 /
+GPM302-era declarations, roman-numbered interest form) — and the record
+carries the `kandidatavimas` block of the 2011 and 2015 municipal
+elections. Only parties and coalitions of parties could nominate, and no
+mayor was elected directly, so:
+
+- `kandidatavimas.roles` is `["tarybos-narys"]` on every record and `meras`
+  is null throughout. `candidateId` is `<name-slug>-<vrkCandidateId>`.
+- `kandidatavimas.tarybosNarys` is the 2011 shape: `partyList`, `listKind`
+  (`partija` for 596 lists, `partiju-koalicija` for the 4 coalitions — the
+  sitemap's `coalitions` names each one's two member parties, read from
+  the by-party pages), `listNumber` (the list's ballot number, the party's
+  national number for a party list), `listPosition` (the printed number —
+  a withdrawn candidate keeps theirs, so a list can run 1–33 without 29)
+  and `selfNominated`, false on every record.
+- `isrinktas` comes from the results join: 1,550 seats read from each
+  municipality's "Mandatus gavę kandidatai" page, every winner by VRK id
+  (`method: "mandates-page"` in the results file, with the list and the
+  post-election number on it); `isrinktasKaip` is `tarybos-narys`, and
+  there is no `rezultatuTuras` (one round).
+- `profilis.kita` is the legacy-card reading: `apygarda` ("Elektrėnų
+  rinkimų apygarda (8 )" — the page names the municipality as the
+  electoral district it also is) and `iskele` from the header table above
+  the card, then `numeris-sarase` and `gimimo-data` from the card's plain
+  lines. A coalition member's card has `numeris-partijos-sarase` too — the
+  position on the member party's own share of the list. No links, no
+  photo, no notice.
+- `profilis.vardas-pavarde` is in capitals as the card prints it; the
+  top-level `candidateName` is the sitemap's title case (`Artūras Zuokas`).
+- `anketa` keeps the municipal key order with two differences. The 2007
+  form numbers nothing, so the rows are keyed by their prompts
+  (`rawData.anketa.rows[*].questionNumber` is null throughout), and it asks
+  one declaration the later forms do not — `pareiskimai` is
+  `ar-nebaigta-teismo-paskirta-bausme`, `ar-atliekate-karo-tarnyba`,
+  `ar-eina-nesuderinamas-pareigas`, `ar-kitos-valstybes-institucijos-narys`,
+  `ar-turite-kitos-valstybes-pilietybe`,
+  **`ar-pasyvioji-rinkimu-teise-neapribota`** ("Ar pasyvioji rinkimų teisė
+  nėra apribota valstybėje, kurios pilietis yra" — "Neapribota" on every
+  fixture, Lithuanian-only citizens included) and `ar-buvote-pripazintas-kaltu`
+  (the 89 str. 1 d. question, as in 2011/2015); there is no
+  `teisiniai-argumentai` row on the form. `gimimo-data` is the card's date
+  (no Q5). `issilavinimas.irasai` and `anksciau-isrinktas.irasai` are the
+  record tables, with `aprasas` null. `mokslo-laipsnis` is the
+  "Moksliniai laipsniai" line, printed only where there is one;
+  `pedagoginis-vardas` and `kita-apie-save` are null (not asked). The
+  family line "Šeimos nariai: Sutuoktinis/sutuoktinė Vida, Vaikas Gintarė,
+  Vaikas Ieva" is kept whole as **`seimos-nariai`** (a key only this
+  election has) and split into `sutuoktinio-vardas-pavarde` ("Vida") and
+  `vaiku-vardai-pavardes` ("Gintarė, Ieva"); `seimine-padetis` is the
+  form's own both-gender wording ("Vedęs, ištekėjusi"). `tautybe` is
+  verbatim ("Lietuvis (-ė)"). An empty answer (`<b></b>`) leaves its key
+  null and closes its row, so the next label is not joined to it.
+- Four sections only: `profilis`, `anketa`, `turto-ir-pajamu-deklaracijos`,
+  `privaciu-interesu-deklaracija`. No `biografija`, no `kita` (first
+  published in 2008) and no `politines-kampanijos-dalyvio-duomenys` on any
+  record. `turto-ir-pajamu-deklaracijos` is in litas; `gautos-pajamos` and
+  `sumoketas-pajamu-mokestis` are the **sum of the five FR0462 prose
+  lines** ("FR0462 Formos deklaracijos: Gauta 39019.30 Lt, išskaičiuota
+  pajamų mokesčio 11613.00 Lt", then the S33, S15, S0 and S variants) —
+  the candidate filed one of the five and the rest read zero, so the sum
+  is the declared income; all five at zero is a declared zero, not a
+  missing declaration. `privaciu-interesu-deklaracija` is the
+  roman-numbered record-table form of the 2007–2009 section above.
+
 ## Appendix: Seimas archive (`1996-spalio-20-seimo`, `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`)
 
 Records are written as `data/<election-id>/<candidate-id>-<election-id>.json`.
@@ -1610,12 +1679,20 @@ fixture's `index.json`.
 ### `privaciu-interesu-deklaracija` (2007–2009: the roman-numbered forms)
 
 The 2007–2009 interest declarations predate the `ID001x` sections. The
-2007 and 2008 form's sections are `ii-turtas` (four property lines, null when
-empty), `iii-pajamos`, `v-turtines-prievoles`,
+2007 and 2008 form's sections are `ii-turtas`, `iii-pajamos`,
+`iv-vertybiniai-popieriai`, `v-turtines-prievoles`,
 `vi-individualios-imones-kitos-organizacijos-ir-istaigos`, `ix-naryste-…`
 and `x-asmenys-del-kuriu-gali-kilti-viesuju-ir-privaciu-interesu-konfliktas`,
 after a spouse card keyed `deklaruojanciojo-asmens-sutuoktinis-partneris`
-(2009: `deklaruojancio-…`). The 2009 declaration (both elections) after the declarant and spouse cards come roman-numbered
+(2009: `deklaruojancio-…`), each present only when filed. Each is a
+**list of records** keyed by the table's column names — `ii-turtas` rows
+are `tipas`, `vienetu-skaicius`, `vietoves-pavadinimas`, `isigijimo-budas`;
+`iii-pajamos` rows `tipas` and `pajamu-saltinio-pavadinimas` — so two
+flats or two employers are two rows. (Until 2026-08-22 these tables were
+read as key/value pairs: the column-name row, bold cells rather than
+`<th>`, was not recognised as one, so a section collapsed to its first
+column with the last row winning and a spurious `tipas` entry; see
+DATASET.md.) The 2009 declaration (both elections) after the declarant and spouse cards come roman-numbered
 sections — `ii-dalyvavimas-juridiniuose-asmenyse`, `iii-individuali-veikla`,
 `iv-naryste-pareigos-imonese-istaigose-asociacijose-ar-fonduose`,
 `v-gautos-dovanos`, `vii-sandoriai`,

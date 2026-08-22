@@ -120,7 +120,12 @@ list reader and id builder and reads the district rows itself. VRK's
 roll-up pages (`KandidataiMerai.html` in 2015; `KandidataiIssikele.html` and
 the two coalition pages in 2011) are the cross-check either way — and in
 2011 the self-nominated roll-up counts coalition members too, so reconcile
-against the union, not the individuals alone.
+against the union, not the individuals alone. The 2007 tree
+(`savivaldybiu_2007`) is the same walk under older file names — the
+walker's district-id pattern accepts both — with VRK's by-party pages as
+the roll-up: a party's page links its list in every municipality it stood
+in, and links an empty shell where it stood in a coalition, which is how
+the coalitions' members are known at all.
 
 ## 4. Verify against the whole field before trusting it
 
