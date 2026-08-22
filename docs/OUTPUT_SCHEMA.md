@@ -1382,6 +1382,36 @@ of the declaration sections, because these pages carry no questionnaire.
     `privaloma-sumoketi-mokesciu-ir-sankciju`, `seimos-nariu-skaicius`,
     `islaikytiniu-skaicius`, `seimos-nariu-iki-18-metu`.
   - The key is **absent** when the candidate page links no declaration.
+- **`normalized.anketa.gimimo-vieta` is likewise recovered from the biography
+  sentence**, and marked `gimimo-vietos-saltinis: "biografijos-tekstas"`. The
+  prose prints it in the locative ("Kaune", "Šiaulių rajone") while the corpus
+  stores the nominative, and suffix rules cannot settle it alone — `-yje`
+  yields both *Panevėžys* and *Radviliškis* — so candidates are accepted only
+  if they appear in `scraper/shared/vietovardziai.json`, the place names the
+  rest of the corpus uses. That lookup is the precision guard: a mis-parsed
+  fragment produces no candidate and is dropped.
+
+  Recovered on **447 of 906** records. Of the 459 without it, 25 have no
+  biography and the rest name a village, parish or region the corpus has no
+  nominative for, or name no place at all. Cross-checked against the same
+  people's later elections, where VRK publishes the field: **all 247
+  checkable values name the same place**, though often less specifically —
+  the district where a later form gives the village. The country name
+  ("Lietuvoje") is refused as too coarse; it was wrong on all three candidates
+  who had a specific birthplace published elsewhere.
+
+- **Nothing else is extracted from the biography prose, on purpose.** Education
+  and work history look extractable — "1972 m. baigė Vilniaus statybos
+  technikumą", "1978-1988 m. dirbo ..." — and match on most records, but
+  sampling the matches shows they are not reliable enough to write into
+  `issilavinimas` or `darbo-patirtis`: the captures run on into the following
+  clause ("25-ąją vidurinę mokyklą ir tais pačiais metais įstojo į..."), stop
+  at an abbreviation's period ("Biržų J"), or return a specialty where an
+  institution belongs ("transporto remonto ir eksploatacijos specialybę").
+  Roughly a third of them are wrong in one of those ways. The full text stays
+  in `biografija.tekstas`, which is the honest place for it, on the same
+  precedent as the eligibility Q&A this family also declines to normalize.
+
 - **`normalized.anketa.gimimo-data` here is derived from biography prose, not
   read from a field.** These pages publish no birth-date field at all, so the
   biography's opening sentence ("Gimė 1942 m. rugpjūčio 3 d. Panevėžyje") is

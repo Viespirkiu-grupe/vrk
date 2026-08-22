@@ -4,7 +4,11 @@ import unittest
 from pathlib import Path
 
 from scraper.elections.seimo_1996.anketa_parser import parse_anketa_samples
-from scraper.shared.seimo_archive_1990s import extract_biography_birth_date
+from scraper.shared.seimo_archive_1990s import (
+    extract_biography_birth_date,
+    extract_biography_birth_place,
+    nominative_place,
+)
 
 
 class Seimo1996AnketaParserTests(unittest.TestCase):
@@ -185,6 +189,86 @@ class Seimo1996BirthDateRecordTests(unittest.TestCase):
         record = self._parse("astrauskas-vytautas")
         self.assertIsNone(record["rawData"]["biography"])
         self.assertNotIn("anketa", record["normalized"])
+
+
+
+class BirthPlaceFromBiographyTests(unittest.TestCase):
+    """These pages publish no birth-place field; the prose is the only source.
+
+    The sentence prints the place in the locative ("Kaune", "Klaipėdoje")
+    while the rest of the corpus stores the nominative, and suffix rules alone
+    cannot convert it -- "-yje" yields both Panevėžys and Radviliškis. So
+    candidates are checked against scraper/shared/vietovardziai.json, and that
+    lookup is what keeps a mis-parse out of the record.
+
+    Cross-checked against the same people's later elections, where VRK
+    publishes the field outright: all 247 recovered values that can be checked
+    name the same place. They are often less specific -- the district where a
+    later form gives the village -- but none contradicts.
+    """
+
+    def test_a_city_in_the_locative_becomes_the_nominative(self):
+        self.assertEqual(
+            extract_biography_birth_place("Gimė 1955 m. rugsėjo 8 d. Klaipėdoje."),
+            "Klaipėda",
+        )
+
+    def test_the_family_background_clause_is_not_a_place(self):
+        # "Gimė ... Vilniuje, tarnautojų šeimoje" — the place ends at the comma.
+        self.assertEqual(
+            extract_biography_birth_place(
+                "Gimė 1947 m. gegužės 11 d. Vilniuje, tarnautojų šeimoje."
+            ),
+            "Vilnius",
+        )
+
+    def test_a_sentence_naming_only_a_background_yields_nothing(self):
+        self.assertIsNone(
+            extract_biography_birth_place("Gimė 1946 m. sausio 20 d. darbininkų šeimoje.")
+        )
+
+    def test_the_vocabulary_settles_what_suffix_rules_cannot(self):
+        # Both end in -yje and the ending alone does not say which.
+        self.assertEqual(nominative_place("Panevėžyje"), "Panevėžys")
+        self.assertEqual(nominative_place("Radviliškyje"), "Radviliškis")
+
+    def test_plural_and_district_forms(self):
+        self.assertEqual(nominative_place("Zarasuose"), "Zarasai")
+        self.assertEqual(nominative_place("Šiauliuose"), "Šiauliai")
+        self.assertEqual(nominative_place("Pakruojo rajone"), "Pakruojo rajonas")
+
+    def test_a_misparse_resolves_to_nothing_rather_than_a_wrong_place(self):
+        # Real fragments this used to pick up before the vocabulary check.
+        for fragment in ("Lietuvė", "1976 m", "Bobriškių kaime", "Adutiškio parapijoje"):
+            with self.subTest(fragment):
+                self.assertIsNone(nominative_place(fragment))
+
+    def test_the_country_is_refused_as_too_coarse(self):
+        # "Gimė ... Lietuvoje" resolves but says nothing, and was wrong on all
+        # three candidates who had a specific birthplace published elsewhere.
+        self.assertIsNone(nominative_place("Lietuvoje"))
+
+    def test_a_parsed_record_carries_the_place_and_its_source_marker(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            results = parse_anketa_samples(
+                candidate_ids=["butkevicius-audrius"], output_root=Path(tmp)
+            )
+            anketa = json.loads(
+                Path(results[0]["outputPath"]).read_text(encoding="utf-8")
+            )["normalized"]["anketa"]
+        self.assertEqual(anketa["gimimo-vieta"], "Kaunas")
+        # Marked like the birth date is: a weaker source than a real field.
+        self.assertEqual(anketa["gimimo-vietos-saltinis"], "biografijos-tekstas")
+
+    def test_a_candidate_whose_prose_names_no_place_gets_no_key(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            results = parse_anketa_samples(
+                candidate_ids=["asmolkov-vasilij"], output_root=Path(tmp)
+            )
+            anketa = json.loads(
+                Path(results[0]["outputPath"]).read_text(encoding="utf-8")
+            )["normalized"]["anketa"]
+        self.assertNotIn("gimimo-vieta", anketa)
 
 
 if __name__ == "__main__":

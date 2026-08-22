@@ -167,6 +167,32 @@ self-nominations). The `stats` block of `sitemaps/2012-seimo.json` records
 each of these. Every null in the fixture records was traced to a genuinely
 blank or omitted source line before the full runs started.
 
+### The 2026-08-23 recovery of 1996-1997 birthplaces
+
+GitHub issue #63. The 1996-1998 Seimas archive publishes no birth-place field,
+so its 881 biographies were the only source. The text was already stored as
+`biografija.tekstas`, making this a pure offline pass —
+`scripts/backfill_archive_birthplaces.py`, no page fetched, nothing but
+`anketa.gimimo-vieta` and its source marker touched.
+
+**447 of 906 records gained a birthplace.** The conversion from the prose's
+locative to the corpus's nominative is settled by lookup against
+`scraper/shared/vietovardziai.json` (1,100 names, built from the rest of the
+corpus by `scripts/build_place_vocabulary.py`), because suffix rules are
+ambiguous — `-yje` yields both *Panevėžys* and *Radviliškis*.
+
+Precision was measured against VRK itself: 247 of the recovered values belong
+to people who also stood in an election that publishes the field outright, and
+**all 247 name the same place**. They are frequently less specific — the
+district where a later form gives the village — but none contradicts. The
+country name was excluded after that check: three candidates whose sentence
+gave only "Lietuvoje" had a real birthplace published elsewhere.
+
+Nothing else is taken from the prose. Education and work history match on most
+records but roughly a third of the matches are truncated, run on into the next
+clause, or capture a specialty in place of an institution, which is below the
+bar for writing into a normalized field. See `docs/OUTPUT_SCHEMA.md`.
+
 ### The 2026-08-23 backfill of the 1996-1997 archive declarations
 
 GitHub issue #63. The five archive elections were scraped before their
