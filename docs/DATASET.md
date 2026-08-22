@@ -702,10 +702,11 @@ each now has one.
   and the name are in the same word order for these five elections.
 - The 1996-1998 Seimas archive pages (`1996-spalio-20-seimo`,
   `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`)
-  publish no elected markers, no income/private-interest declarations in a
-  form worth parsing (the linked `kpdl.htm` declaration is captured only as a
-  raw URL), and — unlike every other era, including 2015 — **no birth-date
-  field**. A birth date is instead recovered from the biography's opening
+  publish no elected markers, no private-interest declarations, and — unlike
+  every other era, including 2015 — **no birth-date field**. (The linked
+  `kpdl.htm` income declaration *is* parsed, into the corpus's usual
+  `turto-ir-pajamu-deklaracijos` key; see `docs/OUTPUT_SCHEMA.md` for how the
+  1990s form's summed sections map onto it.) A birth date is instead recovered from the biography's opening
   sentence and marked
   `anketa.gimimo-data-saltinis: "biografijos-tekstas"`; see
   `docs/OUTPUT_SCHEMA.md` for coverage (692 of 906) and the measured 89%

@@ -43,19 +43,34 @@ class Seimo1996AnketaParserTests(unittest.TestCase):
     def test_record_section_order(self) -> None:
         self.assertEqual(
             list(self.asmolkov["rawData"].keys()),
-            ["profile", "candidacies", "residence", "biography"],
+            ["profile", "candidacies", "residence", "biography", "declaration"],
         )
         # `anketa` keeps the corpus's position right after `profilis`. Asmolkov's
         # biography gives a year only, so his anketa holds `gimimo-metai` alone.
         self.assertEqual(
             list(self.asmolkov["normalized"].keys()),
-            ["profilis", "anketa", "kandidatavimas", "gyvenamoji-vieta", "biografija"],
+            [
+                "profilis",
+                "anketa",
+                "kandidatavimas",
+                "gyvenamoji-vieta",
+                "biografija",
+                # The kpdl.htm declaration, read into the corpus-wide key.
+                "turto-ir-pajamu-deklaracijos",
+            ],
         )
         # A candidate whose biography page is missing gets no anketa at all,
-        # rather than an empty one.
+        # rather than an empty one. The declaration is a separate page and is
+        # read regardless.
         self.assertEqual(
             list(self.astrauskas["normalized"].keys()),
-            ["profilis", "kandidatavimas", "gyvenamoji-vieta", "biografija"],
+            [
+                "profilis",
+                "kandidatavimas",
+                "gyvenamoji-vieta",
+                "biografija",
+                "turto-ir-pajamu-deklaracijos",
+            ],
         )
 
     def test_dual_candidacy_carries_both_single_and_multi_mandate_entries(self) -> None:

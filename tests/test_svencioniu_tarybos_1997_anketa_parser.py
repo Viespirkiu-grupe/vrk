@@ -27,11 +27,12 @@ class SvencioniuTarybos1997AnketaParserTests(unittest.TestCase):
 
     def test_record_section_order(self) -> None:
         self.assertEqual(
-            list(self.lauzadis["rawData"].keys()), ["profile", "candidacy", "personal"]
+            list(self.lauzadis["rawData"].keys()),
+            ["profile", "candidacy", "personal", "declaration"],
         )
         self.assertEqual(
             list(self.lauzadis["normalized"].keys()),
-            ["profilis", "kandidatavimas", "anketa"],
+            ["profilis", "kandidatavimas", "anketa", "turto-ir-pajamu-deklaracijos"],
         )
 
     def test_candidacy_fields(self) -> None:

@@ -23,12 +23,15 @@ comment contents entirely); the eligibility junk is discarded on purpose, on
 the same precedent as the 2015-backlog elected-status investigation: a field
 that cannot be trusted is left out and documented, not guessed at.
 
-There is no per-candidate income declaration parsing here. The `kpdl.htm`
-link is captured as a raw URL (`incomeDeclarationUrl`) but not fetched or
-parsed -- it is a full income/asset declaration in a shape unrelated to any
-modern-era GPM308 table, and out of scope for this module's fixture-sized
-ambition. Same for the free-text biography page (`biogr.htm`): captured and
-stored verbatim, not further structured.
+The `kpdl.htm` income and asset declaration is fetched alongside the
+candidate page and read by `scraper/shared/deklaracija_archive_1990s.py`,
+which the 1997 municipal archive family shares. Its shape is unrelated to any
+modern-era GPM308 table -- turtas and piniginės lėšos come summed rather than
+split -- so it lands in the corpus's usual `turto-ir-pajamu-deklaracijos`
+block with the modern split keys null and the combined figures under their
+own names; see that module for the mapping and for why section III's total is
+not always trusted. The free-text biography page (`biogr.htm`) is still
+captured and stored verbatim rather than structured.
 
 Callers pass in the directory, phase and constituency numbers explicitly
 rather than importing them, matching `scraper/shared/municipal_sitemap.py`.
@@ -47,6 +50,7 @@ from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.deklaracija_archive_1990s import parse_declaration
 from scraper.shared.files import slugify, write_candidate_record, write_json
 from scraper.shared.http import fetch_text
 
@@ -494,22 +498,26 @@ def fetch_candidate_sample(
     tab_count = 1
     tabs_saved = 1
     anomalies: list[dict[str, Any]] = []
-    if detail["biographyUrl"]:
+    for label, url, filename in (
+        ("Biography", detail["biographyUrl"], "biography.html"),
+        ("Declaration", detail["incomeDeclarationUrl"], "declaration.html"),
+    ):
+        if not url:
+            continue
         tab_count += 1
         try:
-            biography_html = fetch_text(detail["biographyUrl"])
-            (candidate_dir / "biography.html").write_text(biography_html, encoding="utf-8")
+            (candidate_dir / filename).write_text(fetch_text(url), encoding="utf-8")
             tabs_saved += 1
         except Exception as exc:  # noqa: BLE001 - recorded as an anomaly, not fatal
             anomalies.append(
                 build_anomaly_event(
-                    event_type="BiographyFetchFailed",
+                    event_type=f"{label}FetchFailed",
                     severity="error",
                     stage="fetch",
                     election_id=election_id,
                     candidate_id=entry["candidateId"],
                     source_url=entry["url"],
-                    detail={"biographyUrl": detail["biographyUrl"], "error": str(exc)},
+                    detail={"url": url, "error": str(exc)},
                 )
             )
 
@@ -595,6 +603,37 @@ def build_candidate_record(
                 )
             )
 
+    declaration: dict[str, Any] | None = None
+    declaration_path = candidate_dir / "declaration.html"
+    if detail["incomeDeclarationUrl"]:
+        if declaration_path.exists():
+            parsed = parse_declaration(declaration_path.read_text(encoding="utf-8"))
+            declaration = parsed["declaration"]
+            for event in parsed["anomalies"]:
+                anomalies.append(
+                    build_anomaly_event(
+                        event_type=event["eventType"],
+                        severity=event["severity"],
+                        stage="parse",
+                        election_id=election_id,
+                        candidate_id=candidate_id,
+                        source_url=detail["incomeDeclarationUrl"],
+                        detail=event["detail"],
+                    )
+                )
+        else:
+            anomalies.append(
+                build_anomaly_event(
+                    event_type="DeclarationSampleMissing",
+                    severity="warning",
+                    stage="parse",
+                    election_id=election_id,
+                    candidate_id=candidate_id,
+                    source_url=entry["url"],
+                    detail={"incomeDeclarationUrl": detail["incomeDeclarationUrl"]},
+                )
+            )
+
     if not detail["candidacies"]:
         anomalies.append(
             build_anomaly_event(
@@ -628,6 +667,7 @@ def build_candidate_record(
         "candidacies": detail["candidacies"],
         "residence": detail["residence"],
         "biography": biography,
+        "declaration": declaration,
     }
 
     # These pages publish no birth-date field, so the only birth date this
@@ -675,6 +715,9 @@ def build_candidate_record(
         ],
         "gyvenamoji-vieta": detail["residence"] or None,
         "biografija": {"tekstas": biography["text"]} if biography else None,
+        # Same key the whole corpus declares under, so the person index,
+        # concept map and dashboard need no special case for this era.
+        **({"turto-ir-pajamu-deklaracijos": declaration} if declaration else {}),
     }
 
     # The listing table is headed "Pavardė, vardas" and prints the name

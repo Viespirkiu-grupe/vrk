@@ -1336,9 +1336,9 @@ of the declaration sections, because these pages carry no questionnaire.
 - `rawData.profile` holds `candidateDisplayName`, `photoUrl` (an external URL,
   never downloaded — unlike the base64-embedded-photo eras, this family's
   photos stay as source links), `biographyUrl` and `incomeDeclarationUrl`
-  (both raw URLs, not fetched or parsed — the income declaration has no
-  relation to the GPM308 shape any later era uses, and biography text is
-  captured but not further structured).
+  (both fetched: the declaration is parsed into
+  `normalized.turto-ir-pajamu-deklaracijos` as described below, while biography
+  text is captured verbatim but not further structured).
 - `rawData.candidacies` is a **list**, not a single object: typically the
   candidate's single-member constituency plus, optionally, a `Daugiamandatė`
   (multi-mandate party list) entry with its own `listNumber` — but do not
@@ -1360,6 +1360,28 @@ of the declaration sections, because these pages carry no questionnaire.
   page (`astrauskas-vytautas` in the 1996 fixture set); otherwise
   `{"text", "birthDate", "birthYear"}` — the full free-text paragraph
   verbatim, plus whatever its opening sentence yields.
+- **`normalized.turto-ir-pajamu-deklaracijos` comes from the linked
+  `kpdl.htm` page**, parsed by `scraper/shared/deklaracija_archive_1990s.py`
+  (shared with the other 1990s archive family). The 1990s form is not the
+  modern one, so two things differ from every later era:
+  - `privalomas-registruoti-turtas` and `pinigines-lesos` are **always
+    null**. The form publishes turtas and piniginės lėšos as one summed
+    figure per section, and the modern split is not recoverable from it. The
+    combined figures are under `turtas-ir-pinigines-lesos-metu-pradzioje`,
+    `turtas-ir-pinigines-lesos-metu-pabaigoje` and
+    `kalendoriniais-metais-isigytas-turtas`.
+  - `gautos-pajamos` and `sumoketas-pajamu-mokestis` come from section III's
+    "20. Iš viso" row, but **only when that row is not smaller than row 1**,
+    the employment row printed above it. Where it is smaller the key is null
+    and a `DeclarationTotalBelowItsOwnRow` anomaly is written. Row 1 is always
+    published as `gautos-pajamos-darbo-santykiu` and
+    `sumoketas-pajamu-mokestis-darbo-santykiu`.
+  - `valiuta` is `"Lt"`, so the corpus-wide litas→euro conversion applies.
+  - Also carried: `israso-data`, `israsa-isdave` (municipal family only — the
+    Seimas pages print no issuer), `mokesciu-nepriemoka`,
+    `privaloma-sumoketi-mokesciu-ir-sankciju`, `seimos-nariu-skaicius`,
+    `islaikytiniu-skaicius`, `seimos-nariu-iki-18-metu`.
+  - The key is **absent** when the candidate page links no declaration.
 - **`normalized.anketa.gimimo-data` here is derived from biography prose, not
   read from a field.** These pages publish no birth-date field at all, so the
   biography's opening sentence ("Gimė 1942 m. rugpjūčio 3 d. Panevėžyje") is
@@ -1439,9 +1461,35 @@ field map all resolve them with no election-specific case.
   example, and `normalized.anketa.tautybe` is `null` for that
   record.
 - `rawData.profile` holds only `candidateDisplayName` and
-  `incomeDeclarationUrl` (raw URL, not parsed — same call as the Seimas
-  archive) — no photo field, since this family's candidate pages carry no
-  portrait.
+  `incomeDeclarationUrl` — no photo field, since this family's candidate pages
+  carry no portrait.
+- **`normalized.turto-ir-pajamu-deklaracijos` comes from the linked
+  `kpdl.htm` page**, parsed by `scraper/shared/deklaracija_archive_1990s.py`
+  (shared with the other 1990s archive family). The 1990s form is not the
+  modern one, so two things differ from every later era:
+  - `privalomas-registruoti-turtas` and `pinigines-lesos` are **always
+    null**. The form publishes turtas and piniginės lėšos as one summed
+    figure per section, and the modern split is not recoverable from it. The
+    combined figures are under `turtas-ir-pinigines-lesos-metu-pradzioje`,
+    `turtas-ir-pinigines-lesos-metu-pabaigoje` and
+    `kalendoriniais-metais-isigytas-turtas`.
+  - `gautos-pajamos` and `sumoketas-pajamu-mokestis` come from section III's
+    "20. Iš viso" row, but **only when that row is not smaller than row 1**,
+    the employment row printed above it. Where it is smaller the key is null
+    and a `DeclarationTotalBelowItsOwnRow` anomaly is written. Row 1 is always
+    published as `gautos-pajamos-darbo-santykiu` and
+    `sumoketas-pajamu-mokestis-darbo-santykiu`.
+  - `valiuta` is `"Lt"`, so the corpus-wide litas→euro conversion applies.
+  - Also carried: `israso-data`, `israsa-isdave` (municipal family only — the
+    Seimas pages print no issuer), `mokesciu-nepriemoka`,
+    `privaloma-sumoketi-mokesciu-ir-sankciju`, `seimos-nariu-skaicius`,
+    `islaikytiniu-skaicius`, `seimos-nariu-iki-18-metu`.
+  - The key is **absent** when the candidate page links no declaration.
+  **This election is the one where that total is usually wrong**: on 72 of 84
+  sampled `1997-kovo-23-savivaldybiu-tarybu` pages the "Iš viso" row prints 0
+  against a non-zero row 1, and 68 of 84 do the same for tax, so most of its
+  records carry a null `gautos-pajamos` and a populated
+  `gautos-pajamos-darbo-santykiu`.
 - No elected data, no biography subpage, no private-interest or
   campaign-finance sections — same scope decision as the Seimas archive
   appendix above.

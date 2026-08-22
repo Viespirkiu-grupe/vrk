@@ -23,8 +23,11 @@ The candidate detail page is uncorrupted (no malformed-comment quirk here)
 and considerably richer than the Seimas family's: birth date/place,
 residence, nationality, education, foreign languages, main workplace, public
 activity, family status and family members are all present as plain labelled
-paragraphs. As with the Seimas archive, the income declaration
-(`kpdl.htm`) is captured only as a raw URL, not fetched or parsed.
+paragraphs. The income declaration (`kpdl.htm`) is fetched alongside and read
+by `scraper/shared/deklaracija_archive_1990s.py`, shared with the Seimas
+archive family. Note that this election's declaration pages are the ones whose
+section III total renders 0 against a non-zero row 1 -- see that module for
+the measurement and for what is published instead.
 """
 
 from __future__ import annotations
@@ -40,6 +43,7 @@ from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.deklaracija_archive_1990s import parse_declaration
 from scraper.shared.files import slugify, write_candidate_record, write_json
 from scraper.shared.http import fetch_text
 
@@ -529,14 +533,16 @@ def fetch_candidate_sample(
     entry: dict[str, Any],
     samples_root: Path,
     allow_new_candidate_dir: bool,
+    election_id: str = "",
 ) -> dict[str, Any]:
-    """Fetch and save one candidate's kandvl.htm page.
+    """Fetch and save one candidate's kandvl.htm page and its declaration.
 
     There is no tab navigation on these pages (unlike every 2016+ election)
     and no separate biography page (unlike the Seimas 1996-1998 family), so
-    the "tab" count below is always 1 -- kept only so `cli.py`'s generic
-    fetch-sample printing (written against the tabbed elections) still has
-    the fields it expects.
+    the "tab" count below is the candidate page plus the `kpdl.htm`
+    declaration where the page links one -- an analogue of the tabbed
+    modules' count, kept so `cli.py`'s generic fetch-sample printing still
+    has the fields it expects.
     """
     candidate_dir = samples_root / entry["candidateId"]
     if not candidate_dir.exists() and not allow_new_candidate_dir:
@@ -551,13 +557,37 @@ def fetch_candidate_sample(
     candidate_path = candidate_dir / "candidate.html"
     candidate_path.write_text(candidate_html, encoding="utf-8")
 
+    detail = parse_candidate_detail(candidate_html, entry["url"])
+    tab_count = 1
+    tabs_saved = 1
+    anomalies: list[dict[str, Any]] = []
+    if detail["incomeDeclarationUrl"]:
+        tab_count += 1
+        try:
+            (candidate_dir / "declaration.html").write_text(
+                fetch_text(detail["incomeDeclarationUrl"]), encoding="utf-8"
+            )
+            tabs_saved += 1
+        except Exception as exc:  # noqa: BLE001 - recorded as an anomaly, not fatal
+            anomalies.append(
+                build_anomaly_event(
+                    event_type="DeclarationFetchFailed",
+                    severity="error",
+                    stage="fetch",
+                    election_id=election_id,
+                    candidate_id=entry["candidateId"],
+                    source_url=entry["url"],
+                    detail={"url": detail["incomeDeclarationUrl"], "error": str(exc)},
+                )
+            )
+
     index_path = candidate_dir / "index.json"
     index_payload = {
         "candidate": entry,
         "anketaPath": str(candidate_path),
-        "tabCount": 1,
-        "tabsSaved": 1,
-        "anomalies": [],
+        "tabCount": tab_count,
+        "tabsSaved": tabs_saved,
+        "anomalies": anomalies,
     }
     write_json(index_path, index_payload)
 
@@ -565,10 +595,10 @@ def fetch_candidate_sample(
         "candidate": entry,
         "candidate_dir": candidate_dir,
         "anketa_path": candidate_path,
-        "tab_count": 1,
-        "tabs_saved": 1,
+        "tab_count": tab_count,
+        "tabs_saved": tabs_saved,
         "missing_expected_tabs": [],
-        "anomalies": [],
+        "anomalies": anomalies,
         "index_path": index_path,
     }
 
@@ -578,6 +608,7 @@ def fetch_candidates_samples(
     sitemap_path: Path,
     samples_root: Path,
     allow_new_candidate_dir: bool = False,
+    election_id: str = "",
 ) -> dict[str, Any]:
     if not candidate_ids:
         raise ValueError("At least one candidate id must be provided")
@@ -587,7 +618,7 @@ def fetch_candidates_samples(
         raise ValueError("Candidate IDs not found in sitemap: " + ", ".join(sorted(set(missing_ids))))
 
     results = [
-        fetch_candidate_sample(entries_by_id[candidate_id], samples_root, allow_new_candidate_dir)
+        fetch_candidate_sample(entries_by_id[candidate_id], samples_root, allow_new_candidate_dir, election_id)
         for candidate_id in candidate_ids
     ]
     return {"count": len(results), "results": results}
@@ -597,9 +628,10 @@ def fetch_first_candidate_sample(
     sitemap_path: Path,
     samples_root: Path,
     allow_new_candidate_dir: bool = False,
+    election_id: str = "",
 ) -> dict[str, Any]:
     entry = _load_sitemap_entries(sitemap_path)[0]
-    return fetch_candidate_sample(entry, samples_root, allow_new_candidate_dir)
+    return fetch_candidate_sample(entry, samples_root, allow_new_candidate_dir, election_id)
 
 
 def build_candidate_record(
@@ -613,6 +645,38 @@ def build_candidate_record(
     detail = parse_candidate_detail(candidate_html, entry["url"])
 
     anomalies: list[dict[str, Any]] = []
+
+    declaration: dict[str, Any] | None = None
+    declaration_path = candidate_dir / "declaration.html"
+    if detail["incomeDeclarationUrl"]:
+        if declaration_path.exists():
+            parsed = parse_declaration(declaration_path.read_text(encoding="utf-8"))
+            declaration = parsed["declaration"]
+            for event in parsed["anomalies"]:
+                anomalies.append(
+                    build_anomaly_event(
+                        event_type=event["eventType"],
+                        severity=event["severity"],
+                        stage="parse",
+                        election_id=election_id,
+                        candidate_id=candidate_id,
+                        source_url=detail["incomeDeclarationUrl"],
+                        detail=event["detail"],
+                    )
+                )
+        else:
+            anomalies.append(
+                build_anomaly_event(
+                    event_type="DeclarationSampleMissing",
+                    severity="warning",
+                    stage="parse",
+                    election_id=election_id,
+                    candidate_id=candidate_id,
+                    source_url=entry["url"],
+                    detail={"incomeDeclarationUrl": detail["incomeDeclarationUrl"]},
+                )
+            )
+
     if not detail["candidacy"]["municipalityName"]:
         anomalies.append(
             build_anomaly_event(
@@ -646,6 +710,7 @@ def build_candidate_record(
         },
         "candidacy": candidacy,
         "personal": personal,
+        "declaration": declaration,
     }
 
     # The per-candidate facts live under `anketa` with the corpus's kebab-case
@@ -681,6 +746,9 @@ def build_candidate_record(
             "seimine-padetis": personal["familyStatus"] or None,
             "seimos-nariai": personal["familyMembers"],
         },
+        # Same key the whole corpus declares under, so the person index,
+        # concept map and dashboard need no special case for this era.
+        **({"turto-ir-pajamu-deklaracijos": declaration} if declaration else {}),
     }
 
     # Same as the Seimas archive: the party-list page prints the name
