@@ -1485,11 +1485,12 @@ field map all resolve them with no election-specific case.
     `privaloma-sumoketi-mokesciu-ir-sankciju`, `seimos-nariu-skaicius`,
     `islaikytiniu-skaicius`, `seimos-nariu-iki-18-metu`.
   - The key is **absent** when the candidate page links no declaration.
-  **This election is the one where that total is usually wrong**: on 72 of 84
-  sampled `1997-kovo-23-savivaldybiu-tarybu` pages the "Iš viso" row prints 0
-  against a non-zero row 1, and 68 of 84 do the same for tax, so most of its
-  records carry a null `gautos-pajamos` and a populated
-  `gautos-pajamos-darbo-santykiu`.
+  **This election is the one where that total is usually wrong**: measured over
+  all 5,477 of its declarations, the "Iš viso" row prints a figure below row 1
+  on **4,463** of them (99% of those print 0) and on 4,134 for tax — so most of
+  its records carry a null `gautos-pajamos` and a populated
+  `gautos-pajamos-darbo-santykiu`. The same failure appears, rarely, elsewhere:
+  9 of 879 in 1996 and 1 of 108 in Švenčionys.
 - No elected data, no biography subpage, no private-interest or
   campaign-finance sections — same scope decision as the Seimas archive
   appendix above.

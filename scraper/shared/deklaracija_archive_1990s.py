@@ -26,23 +26,39 @@ Both modern keys are therefore emitted as null, and the combined figures get
 their own `turtas-ir-pinigines-lesos-*` keys.
 
 Section III prints only rows 1 (employment income) and 20 (the total), and
-row 20 is not always trustworthy. Measured over 165 pages sampled across all
-five archive elections: on the four Seimas-family and Švenčionys elections
-the total is always consistent -- equal to row 1, or larger where other
-income categories exist. On `1997-kovo-23-savivaldybiu-tarybu`, the largest
-archive family, **72 of 84 sampled pages print a total of 0 while row 1 is
-non-zero**, and 68 of 84 do the same for the tax column. That is the same
-failure the municipal candidate pages already show elsewhere -- a sub-query
-that failed rendering its default -- and those pages carry VRK's own
-"Klaida užklausoje." banner. (The banner marks the family, not the breakage:
-Švenčionys carries it too and its totals are sane.)
+row 20 is not always trustworthy. It fails by rendering **0** against a
+non-zero row 1 -- a sub-query that failed leaving its default behind, the
+same failure these archives show elsewhere. Measured over all 6,469
+declarations after the backfill:
+
+    election                                     income totals refused
+    1997-kovo-23-savivaldybiu-tarybu             4,463 of 5,477   (99% are 0)
+    1996-spalio-20-seimo                             9 of   879   (89% are 0)
+    1997-birzelio-29-svenciniu-tarybos-pakart.       1 of   108
+    the other two                                    0
+
+So the failure is not confined to one election, only overwhelmingly
+concentrated in the largest. Note it is *not* a rounding artefact: across the
+whole corpus exactly two refused totals fall short of row 1 by 1-2 Lt, and the
+median shortfall is 946 Lt in the municipal general and 1,852 Lt in 1996.
+
+VRK's own "Klaida užklausoje." banner is not the signal -- it marks the
+municipal family as a whole, and Švenčionys carries it on 27 of 27 sampled
+pages whose totals are fine.
 
 So `gautos-pajamos` takes row 20 only when row 20 >= row 1, which is the
 weakest check that catches a total contradicted by its own detail line;
-otherwise the key is null and an anomaly is recorded. Row 1 is always
-published as it stands, under its own key, because it is a printed figure
-either way. Guessing a total from it would be inventing one, which this
-repository does not do with a field it cannot trust.
+otherwise the key is null and an anomaly is recorded, carrying the refused
+figure so nothing is lost from the audit trail. Row 1 is always published as
+it stands, under its own key, because it is a printed figure either way, and
+for most of the municipal general it is the only income figure there is.
+Guessing a total from it would be inventing one, which this repository does
+not do with a field it cannot trust.
+
+Two 1996 pages carry no declaration at all: VRK's archive froze an Oracle
+error into them ("ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit"),
+which is still what the URL serves today. They raise
+`DeclarationPageUnreadable` and are permanently unrecoverable.
 
 Figures are integer litas. `valiuta` is set to "Lt" so the corpus-wide
 litas->euro conversion applies to these records like any other pre-2015
