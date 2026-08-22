@@ -419,6 +419,14 @@ def _parse_anketa_cell(cell: Tag | None) -> dict[str, Any]:
         if node.name == "b":
             text = _tag_text(node)
             if not text:
+                # An empty emphasised answer still answers its prompt: the
+                # row closes, so the next label starts a row of its own
+                # rather than joining this prompt and taking the next value.
+                # Only the unnumbered 2007 municipal form can be misread
+                # that way — in the numbered forms an empty answer is always
+                # followed by a table or a numbered question.
+                if current is not None and not current["answer"]:
+                    _flush()
                 continue
             if current is None:
                 _start(None, "")
@@ -632,6 +640,17 @@ def _parse_lt_amount(value: Any) -> int | float | None:
     return amount
 
 
+def _sum_amounts(current: int | float | None, amount: int | float | None) -> int | float | None:
+    if amount is None:
+        return current
+    if current is None:
+        return amount
+    total = current + amount
+    if isinstance(total, float) and total.is_integer():
+        return int(total)
+    return round(total, 2) if isinstance(total, float) else total
+
+
 def _normalize_turto_ir_pajamu_data(payload: dict[str, Any]) -> dict[str, Any]:
     sections = payload.get("sections") if isinstance(payload.get("sections"), list) else []
     normalized_fields: dict[str, Any] = {key: None for key in TURTO_PAJAMU_OUTPUT_ORDER}
@@ -647,8 +666,17 @@ def _normalize_turto_ir_pajamu_data(payload: dict[str, Any]) -> dict[str, Any]:
             if target_key is None:
                 prose = TURTO_PAJAMU_PROSE_PATTERN.match(normalize_space(str(item.get("value") or "")))
                 if prose is not None:
-                    normalized_fields["gautos-pajamos"] = _parse_lt_amount(prose.group("income") + " Lt")
-                    normalized_fields["sumoketas-pajamu-mokestis"] = _parse_lt_amount(prose.group("tax") + " Lt")
+                    # The 2007 municipal pages print one prose line per
+                    # income form VRK knew of (FR0462 and its S, S0, S15 and
+                    # S33 variants), all but the one the candidate filed at
+                    # zero; the 2011 and 2015 pages print one. Either way the
+                    # declared income is the sum of the lines, not the last.
+                    income = _parse_lt_amount(prose.group("income") + " Lt")
+                    tax = _parse_lt_amount(prose.group("tax") + " Lt")
+                    normalized_fields["gautos-pajamos"] = _sum_amounts(normalized_fields["gautos-pajamos"], income)
+                    normalized_fields["sumoketas-pajamu-mokestis"] = _sum_amounts(
+                        normalized_fields["sumoketas-pajamu-mokestis"], tax
+                    )
                 continue
             normalized_fields[target_key] = _parse_lt_amount(item.get("value"))
 
@@ -690,6 +718,16 @@ def _parse_interesu_html(html: str) -> dict[str, Any]:
                 else:
                     items.append({"key": "", "value": values[0]})
                 continue
+            if not headers and not items and not data_rows and _is_bold_header_row(cells):
+                # The 2007 and 2008 pages publish the declaration as record
+                # tables — "Tipas | Vienetų skaičius | Vietovės pavadinimas |
+                # Įsigijimo būdas" under "II. Turtas" — whose column names are
+                # a row of bold cells rather than <th>. Read as key/value
+                # pairs, a table of two flats became one "1.0" and two
+                # employers the last one; as columns and rows every record
+                # keeps its cells, in the shape the 2016-era sections use.
+                headers = values
+                continue
             if headers:
                 data_rows.append(values)
             else:
@@ -714,6 +752,19 @@ def _parse_interesu_html(html: str) -> dict[str, Any]:
         sections.append(section)
 
     return {"sections": sections}
+
+
+def _is_bold_header_row(cells: list[Tag]) -> bool:
+    """Every cell's text is the text of a <b> inside it — the column-name
+    row of the 2007/2008 record tables; no key/value row of the family is
+    emphasised whole."""
+    for cell in cells:
+        bold = cell.find("b")
+        if bold is None:
+            return False
+        if _tag_text(bold) != _tag_text(cell):
+            return False
+    return True
 
 
 def _extract_interesu_section_id(title: str) -> str:

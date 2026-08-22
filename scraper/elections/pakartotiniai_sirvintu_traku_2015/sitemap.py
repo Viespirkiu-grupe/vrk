@@ -35,7 +35,10 @@ FETCH_PAUSE_SECONDS = 0.3
 
 CANDIDATE_ANKETA_PATTERN = re.compile(r"Kandidato(\d+)Anketa\.html$")
 PARTY_LIST_LINK_PATTERN = re.compile(r"Apygarda(\d+)Partijos(\d+)Kandidatai\.html$")
-DISTRICT_URL_ID_PATTERN = re.compile(r"KandidataiApygardos(\d+)\.html$")
+# The municipality page of the 2011 and 2015 trees is KandidataiApygardos<ID>;
+# the 2007 tree names it Apygardoje<ID>DalyvaujanciosPartijos. Same page,
+# same id, one sample file name.
+DISTRICT_URL_ID_PATTERN = re.compile(r"(?:KandidataiApygardos|Apygardoje)(\d+)(?:DalyvaujanciosPartijos)?\.html$")
 # The dual-candidacy marker as the 2015 list pages spell it.
 MAYOR_MARKER_PATTERN = re.compile(r"\(kandidatas į savivaldybės tarybos narius - merus\)")
 
