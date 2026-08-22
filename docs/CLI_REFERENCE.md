@@ -44,6 +44,8 @@ python -m scraper <command> [args]
 - `2008-seimo` (2008-10-12 Seimas general election, 16 party lists and 71 single-member constituencies)
 - `2009-prezidento` (2009-05-17 presidential election)
 - `2009-ep` (2009-06-07 European Parliament election, 15 party lists)
+- `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai` (2009-11-15 Seimo new elections in Šilalės–Šilutės No. 33 and Vilniaus–Šalčininkų No. 56)
+- `2011-vasario-13-seimo-marijampole` (2011-02-13 Seimo new election in Marijampolės No. 29)
 - `2012-seimo` (2012-10-14 Seimas general election, 18 party lists and 71 single-member constituencies)
 - `2013-kovo-3-seimo-birzai-zarasai-ukmerge` (2013-03-03 Seimo repeat elections in Biržų–Kupiškio No. 48 and Zarasų–Visagino No. 52 and new election in Ukmergės No. 61)
 - `2014-prezidento` (2014-05-11 presidential election)
@@ -999,6 +1001,19 @@ Listings, one walk per structure:
   index-driven walk saves the index as `list.html` and the pages under
   `districts/district-<id>.html`; the 2012 module reuses it. 37 candidates,
   fixtures are the whole field.
+- `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai` (VRK election 406; issues #39 and #40 are one election — two seats
+  vacated by the June 2009 EP election, voted on one day) and `2011-vasario-13-seimo-marijampole` (VRK
+  election 410): the same index-driven walk, two and one constituency pages
+  — `seimo_silales_silutes_vilniaus_salcininku_2009` and
+  `seimo_marijampoles_2011` are thin wiring over the 2013 module. 17 and 9
+  candidates, fixtures the whole field, every campaign link resolved (10 +
+  4 represented, 7 + 5 independent). The cards carry no results links. The
+  third 2011 by-election (Danės No. 19, VRK election 412, issue #43) has
+  **no candidate data on VRK**: the constituency page's candidate table is
+  empty, the "Balsavimo rezultatai" page is an empty Liferay shell, no
+  `2011_*_seimo_rinkimai` results tree exists for July, and only the
+  campaign participants index (`412_lt/PolitiniuKampanijuFinansavimas/`,
+  ten participants) survives — nothing to build a module on.
 - `2014-ep`: an index of ten party lists with declared sizes
   (`KandidatuSarasai/index.html`), each a page of candidates in list order
   (`lists/list-<id>.html`). The sitemap reconciles every walked list
@@ -1018,6 +1033,9 @@ coalition member party) travel in the `kandidatavimas` block on every 2012,
 2013 and EP record.
 
 ```bash
+python -m scraper fetch-sample 2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai
+python -m scraper sitemap 2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai
+python -m scraper build-results 2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai
 python -m scraper fetch-sample 2008-seimo
 python -m scraper sitemap 2008-seimo
 python -m scraper fetch-candidate-samples 2008-seimo --candidate-id andrius-kubilius --allow-new-samples
@@ -1044,8 +1062,8 @@ KEEP_SAMPLES=1 scripts/run_election_batches.sh 2012-seimo
 
 ## Elected status for 2012–2015 (`build-results`) Workflow
 
-The 2008–2015 static pages carry no winner mark, so the thirteen elections of
-that family (`2008-seimo`, `2009-prezidento`, `2009-ep`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`,
+The 2008–2015 static pages carry no winner mark, so the fifteen elections of
+that family (`2008-seimo`, `2009-prezidento`, `2009-ep`, `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai`, `2011-vasario-13-seimo-marijampole`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`,
 `2014-prezidento`, `2014-ep`, the six 2015 elections) get their
 `kandidatavimas.isrinktas` from VRK's results trees
 (`statiniai/puslapiai/<year>_<type>_rinkimai/output_lt/`). The walkers and
@@ -1059,6 +1077,8 @@ reconciliation looked like when the files were built (2026-08-21):
 | `2008-seimo` | elected-members page (ids on the page) | 141 (70 list, 71 constituency) | all 141 in the sitemap; 70 of 71 constituency pages resolve to the same winner, the 71st (Varėnos–Eišiškių) being the one constituency where two candidates share a name — Algis KAŠĖTA of the LRLS and of the Lietuvos laisvės sąjunga — so name resolution declines and the member page's id decides |
 | `2012-seimo` | elected-members page (ids on the page) | 139 (70 list, 69 constituency) | all 139 in the sitemap; 69 of 71 constituency pages name the same winner, the other two being the annulled Biržų–Kupiškio and Zarasų–Visagino |
 | `2013-kovo-3-…` | 3 constituency pages, round two | 3 | all resolved by name within the constituency |
+| `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai` | 2 constituency pages: Šilalės–Šilutės by runoff plurality (the 2009 round-two page states no verdict), Vilniaus–Šalčininkų from the tree's first-round elected page (`rezultatai_vienmand_apygardose/isrinkti_seimo_nariai.html` — decided outright, 77.8%, no round two) | 2 | resolved |
+| `2011-vasario-13-seimo-marijampole` | 1 constituency page, runoff plurality | 1 | resolved |
 | `2009-prezidento` | first-round nationwide vote table sentence ("Respublikos Prezidente išrinkta …"; the tree's certificate-style final page declines the name) | 1 | resolved |
 | `2009-ep` | elected-members page (`rezultatai/index.html`; 2014's is `rezultatai/rezultatai.html`) | 12 | all in the sitemap |
 | `2014-prezidento` | final-results page sentence | 1 | resolved |
@@ -1079,6 +1099,12 @@ Traps the walkers encode, worth knowing before touching them:
 - **Dual mayor+council candidates hold two VRK ids** (Telšiai's mayor
   three); the listings use one, the ranking pages the other. They are
   resolved by name, list and pre-election position — never by name alone.
+- **The 2009 and 2011 by-election trees reuse the presidential template**
+  for the candidate row pages (`rezultatai_prezidento_kand<ID>…` instead
+  of `rezultatai_sm_kand<ID>…`), and their round pages state no verdict;
+  a constituency decided outright in round one is named only on the
+  tree's first-round elected page, which the 2008 and 2009 trees publish
+  and the 2011/2013 trees do not.
 - **"Meru išrinktas" / "Mere išrinkta"** — the noun inflects with the winner.
 - **The composition pages are a snapshot a year on**, with replacements
   seated; they are the cross-check, not the source. The election-night
@@ -1090,7 +1116,7 @@ Traps the walkers encode, worth knowing before touching them:
   them because most of the annulled winners won again in June.
 
 ```bash
-for id in 2008-seimo 2009-prezidento 2009-ep 2012-seimo 2013-kovo-3-seimo-birzai-zarasai-ukmerge 2014-prezidento 2014-ep \
+for id in 2008-seimo 2009-prezidento 2009-ep 2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai 2011-vasario-13-seimo-marijampole 2012-seimo 2013-kovo-3-seimo-birzai-zarasai-ukmerge 2014-prezidento 2014-ep \
           2015-kovo-1-seimo-zirmunai 2015-birzelio-7-seimo-varena-eisiskes 2015-lapkricio-8-telsiu-mero \
           2015-birzelio-7-pakartotiniai-sirvintos-trakai 2015-birzelio-21-pakartotiniai-silutes 2015-kovo-1-savivaldybiu; do
   python -m scraper build-results "$id"

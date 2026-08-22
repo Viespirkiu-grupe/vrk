@@ -57,6 +57,8 @@ ELECTION_ORDER = [
     "2008-seimo",
     "2009-prezidento",
     "2009-ep",
+    "2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai",
+    "2011-vasario-13-seimo-marijampole",
     "2012-seimo",
     "2013-kovo-3-seimo-birzai-zarasai-ukmerge",
     "2014-prezidento",

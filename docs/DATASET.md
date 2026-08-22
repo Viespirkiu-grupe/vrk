@@ -18,7 +18,7 @@ never touched by a full run.
 
 ## Inventory
 
-60,340 candidate records across 38 elections, 1996–2025, with **zero fetch
+60,366 candidate records across 40 elections, 1996–2025, with **zero fetch
 failures**.
 
 **The table below is an aggregate, not an inventory of any one directory.**
@@ -89,7 +89,9 @@ election was re-parsed offline the same day.
 | `2008-seimo` | 1603 | 141 | 25 | 0 |
 | `2009-prezidento` | 7 | 1 | 0 | 7 |
 | `2009-ep` | 262 | 12 | 3 | 260 |
-| **total** | **60340** | **5357** | **1304** | **20169** |
+| `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai` | 17 | 2 | 0 | 17 |
+| `2011-vasario-13-seimo-marijampole` | 9 | 1 | 0 | 9 |
+| **total** | **60366** | **5360** | **1304** | **20195** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
@@ -98,7 +100,7 @@ the presidential elections**, where every candidate carries a participation
 note (`Dalyvavo I ture`, `Dalyvavo II ture`, or `Išrinktas II ture` for the
 winner). Counting non-null `pastaba` there reports 9 and 8 "elected" for a
 race one person won; match on the `Išrink` prefix, not on presence. The
-2008–2015 pages mark no winner at all, so for those thirteen elections the column
+2008–2015 pages mark no winner at all, so for those fifteen elections the column
 counts `kandidatavimas.isrinktas == true` instead — the flag joined in from
 VRK's results trees (`python -m scraper build-results <id>`; the
 reconciliation behind each file is in `docs/CLI_REFERENCE.md`'s results
@@ -161,6 +163,32 @@ hold a list seat (the index's declared 58 still counts five withdrawn
 self-nominations). The `stats` block of `sitemaps/2012-seimo.json` records
 each of these. Every null in the fixture records was traced to a genuinely
 blank or omitted source line before the full runs started.
+
+### The 2026-08-22 builds of the 2009 and 2011 Seimo by-elections
+
+GitHub issues #39, #40 (one VRK election, 406: the two seats the June 2009
+EP election vacated, Šilalės–Šilutės No. 33 and Vilniaus–Šalčininkų No. 56,
+voted on 2009-11-15) and #41 (VRK election 410, Marijampolės No. 29,
+2011-02-13). Both are the March 2013 repeat election's shape exactly —
+a constituency index, the 2012 question set, five tabs, campaign links —
+so `seimo_silales_silutes_vilniaus_salcininku_2009` and
+`seimo_marijampoles_2011` are thin wiring over that module. 17 and 9
+candidates, complete fields as fixtures, 0 anomalies, every campaign link
+resolved. Elected status joined from the constituency results trees
+(`2009_seimo_rinkimai`, `2011_seimo_rinkimai`), which needed two
+generalisations of the shared walker: their candidate row pages reuse the
+presidential template's `rezultatai_prezidento_kand…` stem, and a
+constituency decided outright in round one (Vilniaus–Šalčininkų, Talmont
+at 77.8%) is named only on the tree's first-round elected page
+(`rezultatai_vienmand_apygardose/isrinkti_seimo_nariai.html`), which the
+walker now consults — the 2008 results rebuild identically.
+
+Issue #43 (Danės No. 19, 2011-07-03, VRK election 412) has **no candidate
+data on VRK**: the constituency page's candidate table is empty, the
+"Balsavimo rezultatai" page is an empty Liferay shell, no July 2011 results
+tree exists, and a probe of 164 candidate ids above Marijampolė's range
+found no candidate page; only the campaign participants index survives
+(ten participants). Not built.
 
 ### The 2026-08-22 scrape of the 2008 Seimo general election
 
