@@ -59,10 +59,35 @@ flagged (`"lt": true` in `people.json`; "(Lt→€)" on the chart's column label
 and in the Biggest-movers table). The records themselves keep the litas
 figures as published.
 
+## Election names
+
+`scraper/elections.json` is the **one** registry of elections: id, first-round
+date, official Lithuanian name, and a short label for chart axes. The index
+builder reads it, orders the corpus by its dates, and copies the entries into
+`people.json`, so `dashboard/index.html` holds no election list of its own.
+
+Adding an election means adding one entry there. If a scraped
+`data/<id>/` has no entry, the builder names it in its output and exits
+non-zero, and `tests/test_elections_registry.py` fails — the id would
+otherwise reach the UI as a raw slug.
+
+This replaced three hand-maintained lists (`ELECTION_ORDER` here plus
+`ELECTION_LABELS`/`SHORT_LABELS` in the page). Keeping them in step was
+manual, so they drifted: the 2011 municipal general — 16,400 records — was in
+none of them and invisible to the dashboard, and six further elections
+rendered as raw slugs. See GitHub issue #63.
+
+Same-day elections keep the order the registry file lists them in; the sort is
+stable on the date alone, because 2015-06-07 ran a Seimas by-election and two
+repeat municipal votes and there is no other order between them.
+
 ## Files
 
+- `scraper/elections.json` — the election registry (version controlled).
 - `scripts/build_person_index.py` — builds `dashboard/people.json`
   (gitignored); prints the audit counts on every run.
 - `dashboard/index.html` — the whole app: no dependencies, vanilla JS, served
   statically next to `data/`.
 - `tests/test_person_index.py` — pins the grouping rules on synthetic records.
+- `tests/test_elections_registry.py` — pins the registry's shape, its
+  chronology, and that every scraped election has an entry.

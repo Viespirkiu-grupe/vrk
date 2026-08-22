@@ -156,6 +156,13 @@ must be a named annulment, not a guess.
   should make them fail; check that it does.
 - `tests/test_<module>_sample_allowlist.py` — the fixture set.
 - `docs/CLI_REFERENCE.md`, `docs/FIXTURE_SAMPLES.md`, `docs/OUTPUT_SCHEMA.md`.
+- **`scraper/elections.json`** — add the election: id, first-round date,
+  official Lithuanian name, short label for chart axes. This is what names it
+  in the dashboard and places it in the cross-election chronology. Skipping it
+  fails `tests/test_elections_registry.py` and makes
+  `scripts/build_person_index.py` exit non-zero, because the id would
+  otherwise reach the UI as a raw slug — which is how the 2011 municipal
+  general stayed invisible (issue #63).
 
 ## 6. Full scrape
 

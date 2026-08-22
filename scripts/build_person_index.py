@@ -27,12 +27,19 @@ archive family (`1997-kovo-23-savivaldybiu-tarybu`,
 `scraper/shared/savivaldybiu_archive_1997.py`) does publish birth date, under
 the corpus's usual `anketa.gimimo-data`, so it needs no special case here.
 
+Election names and chronology come from the one registry,
+`scraper/elections.json` -- id, first-round date, official Lithuanian name,
+short label -- and are copied into people.json so the dashboard carries no
+election list of its own. An election directory with no registry entry is
+reported by the run and falls back to its raw id in the UI.
+
 Run from the repo root:
 
     python scripts/build_person_index.py
 
-Reads data/<election-id>/*.json, writes dashboard/people.json, and prints the
-audit counts so a run is its own sanity check.
+Reads data/<election-id>/*.json and scraper/elections.json, writes
+dashboard/people.json, and prints the audit counts so a run is its own sanity
+check.
 """
 
 from __future__ import annotations
@@ -46,51 +53,20 @@ from pathlib import Path
 DATA_ROOT = Path("data")
 OUTPUT_PATH = Path("dashboard/people.json")
 
-# Chronological order; the dashboard renders whatever appears here and sorts
-# unknown election ids after these.
-ELECTION_ORDER = [
-    "1996-spalio-20-seimo",
-    "1997-kovo-23-savivaldybiu-tarybu",
-    "1997-kovo-23-seimo-pakartotiniai",
-    "1997-birzelio-29-svenciniu-tarybos-pakartotiniai",
-    "1997-gruodzio-21-seimo-pakartotiniai",
-    "2007-spalio-7-seimo-dzukija",
-    "2008-seimo",
-    "2009-prezidento",
-    "2009-ep",
-    "2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai",
-    "2011-vasario-13-seimo-marijampole",
-    "2012-seimo",
-    "2013-kovo-3-seimo-birzai-zarasai-ukmerge",
-    "2014-prezidento",
-    "2014-ep",
-    "2015-kovo-1-savivaldybiu",
-    "2015-kovo-1-seimo-zirmunai",
-    "2015-birzelio-7-seimo-varena-eisiskes",
-    "2015-birzelio-7-pakartotiniai-sirvintos-trakai",
-    "2015-birzelio-21-pakartotiniai-silutes",
-    "2015-lapkricio-8-telsiu-mero",
-    "2016-seimo",
-    "2017-balandzio-23-meru",
-    "2017-balandzio-23-seimo-anyksciai-panevezys",
-    "2017-rugsejo-10-marijampoles-mero",
-    "2018-rugsejo-16-seimo-zanavykai",
-    "2019-kovo-3-savivaldybiu-tarybu",
-    "2019-prezidento",
-    "2019-ep",
-    "2019-rugsejo-8-seimo",
-    "2020-seimo",
-    "2021-balandzio-11-radviliskio-mero",
-    "2021-spalio-10-meru",
-    "2023-kovo-5-savivaldybiu-tarybu-ir-meru",
-    "2023-geguzes-7-visagino-mero",
-    "2023-rugsejo-3-seimo-raseiniai-kedainiai",
-    "2023-spalio-8-kupiskio-mero",
-    "2024-prezidento",
-    "2024-ep",
-    "2024-seimo",
-    "2025-kovo-16-meru",
-]
+REGISTRY_PATH = Path("scraper/elections.json")
+
+
+def load_registry(path: Path = REGISTRY_PATH) -> list[dict]:
+    """Read scraper/elections.json, chronologically ordered.
+
+    The file is stored sorted by date, but the order is re-derived here so a
+    mis-sorted hand edit cannot quietly change the dashboard's chronology.
+    The sort is stable and keyed on the date alone, so elections held on the
+    same day -- 2015-06-07 ran a Seimas by-election and two repeat municipal
+    votes -- keep the order the file lists them in, there being no other.
+    """
+    entries = json.loads(path.read_text(encoding="utf-8"))["elections"]
+    return sorted(entries, key=lambda e: e["date"])
 
 
 def normalize_name(name: str | None) -> str | None:
@@ -171,13 +147,16 @@ def person_key(name: str | None, birth: str | None) -> str:
     return f"{name or '?'}|{birth or '?'}"
 
 
-def build_index(data_root: Path) -> dict:
+def build_index(data_root: Path, registry: list[dict] | None = None) -> dict:
+    registry = load_registry() if registry is None else registry
     people: dict[str, dict] = {}
     grouped: dict[str, list[dict]] = defaultdict(list)
     total = missing_birth = 0
+    seen_elections: set[str] = set()
 
     for election_dir in sorted(p for p in data_root.iterdir() if p.is_dir()):
         election_id = election_dir.name
+        seen_elections.add(election_id)
         for path in sorted(election_dir.glob("*.json")):
             if path.name == "anomalies.jsonl":
                 continue
@@ -199,7 +178,7 @@ def build_index(data_root: Path) -> dict:
                 }
             )
 
-    order = {eid: i for i, eid in enumerate(ELECTION_ORDER)}
+    order = {e["id"]: i for i, e in enumerate(registry)}
     for key, records in grouped.items():
         records.sort(key=lambda r: order.get(r["election"], len(order)))
         name, _, birth = key.rpartition("|")
@@ -225,8 +204,13 @@ def build_index(data_root: Path) -> dict:
 
     entries = sorted(people.values(), key=lambda p: (-len(p["e"]), p["n"] or ""))
     multi = sum(1 for p in entries if len({e["id"] for e in p["e"]}) > 1)
+    # Only the elections actually present are carried into people.json; the
+    # dashboard reads its labels and chronology from this list and nothing
+    # else. An unregistered directory keeps its raw id as its own label, and
+    # is reported so it gets a registry entry rather than shipping as a slug.
     return {
-        "electionOrder": ELECTION_ORDER,
+        "elections": [e for e in registry if e["id"] in seen_elections],
+        "unregisteredElections": sorted(seen_elections - set(order)),
         "stats": {
             "records": total,
             "persons": len(entries),
@@ -252,7 +236,18 @@ def main() -> int:
     print(f"distinct persons:         {stats['persons']}")
     print(f"in multiple elections:    {stats['personsInMultipleElections']}")
     print(f"records w/o birth date:   {stats['recordsWithoutBirthDate']} (grouped by name alone)")
+    print(f"elections:                {len(index['elections'])} of {len(load_registry())} registered")
     print(f"wrote {OUTPUT_PATH} ({OUTPUT_PATH.stat().st_size // 1024} KB)")
+    unregistered = index["unregisteredElections"]
+    if unregistered:
+        print(
+            f"\n{len(unregistered)} election(s) have no entry in {REGISTRY_PATH} and will\n"
+            "render as raw ids — add them there:",
+            file=sys.stderr,
+        )
+        for eid in unregistered:
+            print(f"  {eid}", file=sys.stderr)
+        return 1
     return 0
 
 
