@@ -22,7 +22,9 @@ from scraper.shared.election_results import (
     parse_composition_page,
     parse_elected_members_page,
     parse_list_ranking_page,
+    parse_mandates_page_2007,
     parse_municipality_results_page,
+    parse_municipality_results_page_2007,
     parse_seimo_district_page,
     resolve_name,
 )
@@ -230,6 +232,42 @@ class MunicipalPageTests(unittest.TestCase):
         self.assertEqual([(m["vrkCandidateId"], m["recognized"], m["mayor"]) for m in parsed["members"]], [("84013", "2015-03-22", True), ("84014", "2015-03-22", False), ("84015", "2015-03-22", False)])
 
 
+MUNICIPALITY_2007_HTML = """
+<table>
+<tr><th>Sąrašo numeris</th><th>Pavadinimas</th><th>balsadėžėse</th><th>paštu</th><th>iš viso</th><th>Mandatų skaičius</th></tr>
+<tr><td>3.</td><td><a href="../rorg_kand_rapg/rapg_kand6783_2300.html">Koalicija "Už Neringos ateitį"</a></td><td>455</td><td>30</td><td>485</td><td>7</td></tr>
+<tr><td>24.</td><td><a href="../rorg_kand_rapg/rapg_kand6783_2278.html">Naujoji sąjunga (socialliberalai)</a></td><td>308</td><td>31</td><td>339</td><td>5</td></tr>
+<tr><th>&nbsp;</th><th align="right"><b>Iš viso:</b></th><th><b>1436</b></th><th><b>138</b></th><th><b>1574</b></th><th><b>12</b></th></tr>
+</table>
+<a href="../kand_mandatai_rapyg/kand_mand_rapyg6783.html">Mandatus gavę kandidatai</a>
+"""
+
+MANDATES_2007_HTML = """
+<table>
+<tr><th>Pavardė, vardas</th><th>Iškėlė</th><th>Porinkiminis numeris sąraše</th></tr>
+<tr><td><a href="/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas2544/Kandidato2544Anketa.html">GIEDRAITIS VIGANTAS</a></td><td>Koalicija "Už Neringos ateitį"</td><td>1</td></tr>
+<tr><td><a href="/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas6014/Kandidato6014Anketa.html">PUKELIS ALGIMANTAS</a></td><td>Lietuvos socialdemokratų partija</td><td>1</td></tr>
+</table>
+"""
+
+
+class Municipal2007PageTests(unittest.TestCase):
+    def test_results_page_reads_lists_th_total_and_mandates_link(self):
+        url = "https://www.vrk.lt/statiniai/puslapiai/2007_savivaldybiu_tarybu_rinkimai/balsu_uz_partijas_skaiciavimas/rinkimu_apygardos/rapgpl_6783.html"
+        parsed = parse_municipality_results_page_2007(MUNICIPALITY_2007_HTML, url)
+        self.assertEqual([(l["listName"], l["listId"], l["mandates"]) for l in parsed["lists"]], [('Koalicija "Už Neringos ateitį"', "2300", 7), ("Naujoji sąjunga (socialliberalai)", "2278", 5)])
+        # The total row is <th> cells with a blank first cell.
+        self.assertEqual(parsed["listMandatesTotal"], 12)
+        self.assertEqual(parsed["mandatesPageUrl"], "https://www.vrk.lt/statiniai/puslapiai/2007_savivaldybiu_tarybu_rinkimai/balsu_uz_partijas_skaiciavimas/kand_mandatai_rapyg/kand_mand_rapyg6783.html")
+
+    def test_mandates_page_rows_carry_id_list_and_rank(self):
+        rows = parse_mandates_page_2007(MANDATES_2007_HTML)
+        self.assertEqual(
+            [(r["vrkCandidateId"], r["name"], r["listName"], r["rank"]) for r in rows],
+            [("2544", "GIEDRAITIS VIGANTAS", 'Koalicija "Už Neringos ateitį"', 1), ("6014", "PUKELIS ALGIMANTAS", "Lietuvos socialdemokratų partija", 1)],
+        )
+
+
 class ResultsLookupTests(unittest.TestCase):
     def test_missing_file_means_unknown_not_false(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -316,6 +354,27 @@ class BuiltResultsPins(unittest.TestCase):
         self.assertEqual(len(individual), 18)
         self.assertTrue(all("listName" not in v for v in individual))
         self.assertEqual(payload["elected"]["42680"]["municipality"], "57. Vilniaus miesto")
+
+    def test_2007_municipal_general(self):
+        payload = _results("2007-vasario-25-savivaldybiu")
+        stats = payload["stats"]
+        self.assertEqual(stats["municipalities"], 60)
+        self.assertEqual(stats["seats"], {"tarybos-narys": 1550})
+        # Every winner is on the municipality's mandates page with an
+        # anketa link, so every one is joined by id, none by name.
+        self.assertEqual(stats["winnersOnPages"], 1550)
+        self.assertEqual(stats["councilNotInSitemap"], 0)
+        self.assertEqual(stats["municipalityMismatches"], 0)
+        # Per municipality, the winners equal the results table's "Iš viso"
+        # mandate total and the sum of the lists' mandates, and the
+        # composition page (a 2010 snapshot) states the same council size.
+        self.assertEqual(stats["seatCountMismatches"], 0)
+        self.assertEqual(stats["compositionPagesChecked"], 60)
+        self.assertEqual(stats["compositionMandateMismatches"], 0)
+        self.assertTrue(all(v["method"] == "mandates-page" for v in payload["elected"].values()))
+        self.assertEqual(payload["elected"]["12711"]["municipality"], "57. Vilniaus miesto")
+        self.assertEqual((payload["elected"]["9852"]["listName"], payload["elected"]["9852"]["rank"]), ("Darbo partija", 3))
+        self.assertEqual(len(payload["sources"]), 60)
 
     def test_2015_repeat_elections_and_telsiai(self):
         self.assertEqual(_results("2015-birzelio-7-pakartotiniai-sirvintos-trakai")["stats"]["seats"], {"meras": 2, "tarybos-narys": 24})

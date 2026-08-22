@@ -445,6 +445,39 @@ municipality index), the three roll-ups used as the sitemap's cross-checks
 list pages. Every candidate has exactly the four tabs; there is no
 Biografija and no campaign subtree in this election.
 
+For `2007-vasario-25-savivaldybiu` the allowlist
+(`tests/test_savivaldybiu_2007_sample_allowlist.py`) is **ten candidates out
+of 13,422**, chosen for the shapes the record depends on in the oldest
+municipal election with candidate pages (party lists only, no
+self-nomination of any kind):
+
+- `arvydas-vysniauskas-7357` — party list head (LSDP, Elektrėnai), elected;
+  the FR0462 income filed on the main form, two flats and two employers in
+  the interest declaration (the rows the record-table fix keeps)
+- `algirdas-strignatavicius-7436` — the same list's last position, 33 of a
+  ballot numbered 1–33 with 29 withdrawn
+- `arturas-zuokas-12711`, `rolandas-paksas-1537` — list heads in Vilnius,
+  the largest municipality (687 candidates); Zuokas has the
+  "Moksliniai laipsniai" line
+- `viktor-uspaskich-9852` — position 25 of the Kėdainiai Darbo partija
+  list, seated third on preference votes; Russian nationality on the form
+- `vigantas-giedraitis-2544`, `bronis-rope-660`, `danute-mileikiene-3258` —
+  leaders of three of the four party coalitions (Neringa and Ignalina
+  elected, Telšiai not); their cards carry a second "Numeris partijos
+  sąraše" line, and Mileikienė's five FR0462 lines are all zero
+- `giedre-ramanauskaite-kedikiene-9665` — a double surname, position 21
+- `zigfridas-herbertas-pilvinis-996` — a three-part name whose
+  questionnaire stops after an empty "Gimimo vieta" and "Tautybė" (the
+  empty-answer row boundary), and an "Einu" on the incompatible-office
+  question
+
+Its samples directory also holds the listing tree: `index.html` (VRK's
+index of municipalities and parties), a `parties/` directory of the 24
+by-party pages used as the sitemap's cross-check, 60 `district-<id>.html`
+pages (ids 6776–6835) and a `lists/` directory of 600 list pages. Every
+candidate has exactly the three tabs; there is no Biografija, no Kita and
+no campaign subtree in this election.
+
 For `1996-spalio-20-seimo` the allowlist (`tests/test_seimo_1996_sample_allowlist.py`)
 is a curated five of the 879 candidates:
 

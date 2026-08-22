@@ -38,6 +38,15 @@ election that the parse stage joins on. Four page families:
   snapshot taken a year later, with replacements seated — but they are
   fetched and used as a cross-check: every derived winner should appear
   there unless the page's early-termination table explains the absence.
+- **Municipal councils, 2007** (the oldest tree, no ``output_lt`` level):
+  ``balsu_uz_partijas_skaiciavimas/rinkimu_apygardos.html`` indexes the
+  municipality pages (``rapgpl_<ID>``), each of which gives the lists'
+  mandate counts and links a "Mandatus gavę kandidatai" page
+  (``kand_mand_rapyg<ID>``) that rows every winner with an anketa link —
+  the id is on the page and no ranking arithmetic is needed. The list
+  mandate total on the results page and the ``Mandatų skaičius`` of the
+  composition page (``lt/savivaldybes/rapg_<ID>``, a 2010 snapshot) are
+  the cross-checks.
 
 Every derivation carries its source URL and method, and every builder
 reports reconciliation stats; a result set with unresolved winners or a
@@ -1047,6 +1056,180 @@ def build_municipal_results(
         "seatCountMismatches": seat_mismatches,
     }
     sources = [muni["sourceUrl"] for muni in walked["municipalities"]]
+    write_results(output_path, election_id, elected, stats, sources, details)
+    return output_path, stats
+
+
+# ---------------------------------------------------------------------------
+# Municipal councils, 2007: the mandates page
+# ---------------------------------------------------------------------------
+
+MUNICIPAL_2007_INDEX_PAGE = "balsu_uz_partijas_skaiciavimas/rinkimu_apygardos.html"
+MUNICIPAL_2007_COMPOSITION_INDEX_PAGE = "lt/savivaldybes.html"
+MUNICIPAL_2007_DISTRICT_PATTERN = re.compile(r"rapgpl_(\d+)\.html$")
+MUNICIPAL_2007_LIST_PATTERN = re.compile(r"rapg_kand(\d+)_(\d+)\.html$")
+MANDATES_PAGE_PATTERN = re.compile(r"kand_mand_rapyg(\d+)\.html$")
+
+
+def parse_municipality_results_page_2007(html: str, url: str) -> dict[str, Any]:
+    """The lists' mandate counts, the table's "Iš viso" total and the
+    mandates-page link of one 2007 municipality results page."""
+    soup = BeautifulSoup(html, "lxml")
+    lists: list[dict[str, Any]] = []
+    results_table = None
+    for anchor in soup.find_all("a", href=True):
+        match = MUNICIPAL_2007_LIST_PATTERN.search(anchor["href"])
+        if match is None:
+            continue
+        tr = anchor.find_parent("tr")
+        if tr is None:
+            continue
+        if results_table is None:
+            results_table = tr.find_parent("table")
+        cells = [normalize_space(td.get_text(" ", strip=True)) for td in tr.find_all("td")]
+        lists.append(
+            {
+                "listName": normalize_space(anchor.get_text(" ", strip=True)),
+                "listId": match.group(2),
+                "mandates": _row_mandates(cells),
+            }
+        )
+    mandates_total = None
+    if results_table is not None:
+        # The 2007 total row is <th> cells, the first of them blank.
+        for tr in results_table.find_all("tr"):
+            cells = [normalize_space(cell.get_text(" ", strip=True)) for cell in tr.find_all(["td", "th"])]
+            cells = [cell for cell in cells if cell]
+            if cells and cells[0].lower().startswith("iš viso"):
+                mandates_total = _row_mandates(cells)
+                break
+    mandates_page = None
+    for page_url, _, _ in find_links(html, url, MANDATES_PAGE_PATTERN):
+        mandates_page = page_url
+        break
+    return {"lists": lists, "listMandatesTotal": mandates_total, "mandatesPageUrl": mandates_page}
+
+
+def parse_mandates_page_2007(html: str) -> list[dict[str, Any]]:
+    """The winners of one municipality: surname-first name, list, and
+    post-election number on the list, each with VRK's candidate id from
+    the anketa link."""
+    soup = BeautifulSoup(html, "lxml")
+    winners: list[dict[str, Any]] = []
+    for anchor in soup.find_all("a", href=True):
+        match = ANKETA_ID_PATTERN.search(anchor["href"])
+        if match is None:
+            continue
+        tr = anchor.find_parent("tr")
+        cells = [normalize_space(td.get_text(" ", strip=True)) for td in tr.find_all("td")] if tr else []
+        rank = cells[-1] if cells else ""
+        winners.append(
+            {
+                "vrkCandidateId": match.group(1),
+                "name": normalize_space(anchor.get_text(" ", strip=True)),
+                "listName": cells[1] if len(cells) > 2 else None,
+                "rank": int(rank) if rank.isdigit() else None,
+            }
+        )
+    return winners
+
+
+def build_municipal_mandates_results(
+    election_id: str,
+    tree: str,
+    sitemap_path: Path,
+    results_dir: Path,
+    output_path: Path,
+) -> tuple[Path, dict[str, Any]]:
+    """Municipal councils from VRK's per-municipality "Mandatus gavę
+    kandidatai" pages (2007). Every winner is on the page with an anketa
+    link, so the join is by id; the results table's mandate total and the
+    composition page's mandate count are the cross-checks."""
+    entries = load_sitemap_entries(sitemap_path)
+    by_id = {entry["vrkCandidateId"]: entry for entry in entries if entry.get("vrkCandidateId")}
+    index_url = f"{tree_root(tree)}/{MUNICIPAL_2007_INDEX_PAGE}"
+    index_html = fetch_page(results_dir, index_url)
+    composition_index_url = f"{tree_root(tree)}/{MUNICIPAL_2007_COMPOSITION_INDEX_PAGE}"
+    composition_by_id: dict[str, str] = {}
+    try:
+        for url, _, match in find_links(fetch_page(results_dir, composition_index_url), composition_index_url, COMPOSITION_PATTERN):
+            composition_by_id[match.group(1)] = url
+    except Exception:
+        composition_by_id = {}
+
+    elected: dict[str, dict[str, Any]] = {}
+    per_municipality: list[dict[str, Any]] = []
+    council_not_in_sitemap: list[dict[str, Any]] = []
+    seat_mismatches: list[dict[str, Any]] = []
+    municipality_mismatches: list[dict[str, Any]] = []
+    sources: list[str] = []
+    for page_url, label, match in find_links(index_html, index_url, MUNICIPAL_2007_DISTRICT_PATTERN):
+        district_id = match.group(1)
+        parsed = parse_municipality_results_page_2007(fetch_page(results_dir, page_url), page_url)
+        winners: list[dict[str, Any]] = []
+        if parsed["mandatesPageUrl"]:
+            winners = parse_mandates_page_2007(fetch_page(results_dir, parsed["mandatesPageUrl"]))
+            sources.append(parsed["mandatesPageUrl"])
+        resolved = 0
+        for winner in winners:
+            vrk_id = winner["vrkCandidateId"]
+            entry = by_id.get(vrk_id)
+            if entry is None:
+                council_not_in_sitemap.append({"municipality": label, **winner})
+                continue
+            # The id is VRK's own, so the join is exact; the municipality
+            # the sitemap places the candidate in should still be this one.
+            if not _municipality_matches(entry.get("municipality"), label):
+                municipality_mismatches.append({"municipality": label, "sitemapMunicipality": entry.get("municipality"), **winner})
+            resolved += 1
+            elected[vrk_id] = _winner_entry(
+                "tarybos-narys",
+                parsed["mandatesPageUrl"],
+                "mandates-page",
+                municipality=label,
+                listName=winner["listName"],
+                rank=winner["rank"],
+            )
+        list_mandates_sum = sum(lst["mandates"] or 0 for lst in parsed["lists"])
+        muni_stats: dict[str, Any] = {
+            "municipality": label,
+            "resultDistrictId": district_id,
+            "winnersOnPage": len(winners),
+            "councilElected": resolved,
+            "listMandatesTotal": parsed["listMandatesTotal"],
+            "listMandatesSum": list_mandates_sum,
+            "lists": len(parsed["lists"]),
+        }
+        if parsed["listMandatesTotal"] is None or len(winners) != parsed["listMandatesTotal"] or list_mandates_sum != parsed["listMandatesTotal"]:
+            seat_mismatches.append(muni_stats)
+        composition_url = composition_by_id.get(district_id)
+        if composition_url:
+            comp = parse_composition_page(fetch_page(results_dir, composition_url))
+            muni_stats["compositionMandates"] = comp["mandates"]
+            muni_stats["compositionMembers"] = len(comp["members"])
+            # The 2010 snapshot seats replacements; the winners it still
+            # lists are a floor, its mandate count the whole council.
+            muni_stats["winnersStillSeated"] = sum(1 for w in winners if w["vrkCandidateId"] in {m["vrkCandidateId"] for m in comp["members"]})
+        per_municipality.append(muni_stats)
+    stats = {
+        "municipalities": len(per_municipality),
+        "councilMembers": len(elected),
+        "winnersOnPages": sum(m["winnersOnPage"] for m in per_municipality),
+        "councilNotInSitemap": len(council_not_in_sitemap),
+        "municipalityMismatches": len(municipality_mismatches),
+        "seatCountMismatches": len(seat_mismatches),
+        "compositionPagesChecked": sum(1 for m in per_municipality if "compositionMandates" in m),
+        "compositionMandateMismatches": sum(
+            1 for m in per_municipality if "compositionMandates" in m and m["compositionMandates"] != m["listMandatesTotal"]
+        ),
+        "seats": count_stats(elected),
+    }
+    details = {
+        "perMunicipality": per_municipality,
+        "councilNotInSitemap": council_not_in_sitemap,
+        "municipalityMismatches": municipality_mismatches,
+        "seatCountMismatches": seat_mismatches,
+    }
     write_results(output_path, election_id, elected, stats, sources, details)
     return output_path, stats
 

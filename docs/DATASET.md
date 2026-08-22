@@ -204,6 +204,39 @@ chosen by shape. Two sibling defects surfaced and were fixed across the
 in the fix table above). Person index rebuilt: 47,125 persons (8,350 new;
 the other 8,050 candidacies merged into people already in the corpus).
 
+### The 2026-08-22 build of the 2007 municipal general election
+
+GitHub issue #34; VRK election 3 (2007-02-25) — the oldest municipal
+election with candidate pages, the same year as the Dzūkija by-election and
+one tree older than the 2008 Seimo general (the path is `rinkimai/3/`,
+without `_lt`). Council seats only; only parties and coalitions of parties
+could nominate. The listing is the 2011/2015 municipal shape one rename
+away (VRK's index of 60 municipality pages and 24 by-party pages, a ballot
+of list rows per municipality, the lists under them), walked by the 2015
+repeat-election machinery with this module's index and by-party readers.
+Sitemap: **13,422 candidates on 600 lists** (596 party lists, 4 party
+coalitions — Ignalina, Neringa, Telšiai, Vilnius — each of two parties,
+named from the member parties' own pages), nobody standing alone or twice,
+reconciled against the by-party pages with every check at 0 (the 8 party
+links that lead to no ballot are the coalition members' empty shells).
+Pages are the family's oldest shape — the Dzūkija card and an unnumbered
+"label: answer" questionnaire keyed by its prompts, three tabs, no
+campaign link — and they surfaced three things in the shared era code,
+each measured a no-op on the numbered 2008–2015 pages (2012 Seimo
+re-parsed to scratch: 1,918 records byte-identical): the interest
+declaration's record tables (the fix row above, 1,593 existing records
+re-parsed), the income stated as five FR0462 prose lines of which one is
+non-zero (the prose income reader now sums the lines — 2011 and 2015 print
+one), and an empty `<b></b>` answer that did not close its row, so the
+next label joined the prompt and would have taken the next value (one
+fixture, Pilvinis, whose questionnaire stops after two empty answers).
+Results: `2007_savivaldybiu_tarybu_rinkimai/` (no `output_lt`), where each
+municipality's results page links a "Mandatus gavę kandidatai" page that
+names every winner with an anketa link — **1,550 seats read by id**, the
+results-table total, the lists' mandate sum and the composition page's
+council size agreeing in all 60. Fixtures: ten candidates chosen by
+shape, 0 anomalies. Full scrape: see below.
+
 ### The 2026-08-22 build of the 2007 Dzūkija Seimo by-election
 
 GitHub issue #35; VRK election 396 (Dzūkijos No. 69, 2007-10-07) — the
@@ -588,7 +621,7 @@ key list itself is election-specific.
 
 ## Correctness fixes behind this corpus
 
-Twenty defects were found and fixed while building the newer modules. Each had
+Twenty-one defects were found and fixed while building the newer modules. Each had
 been invisible because the affected elections had thin or no test coverage, and
 each was measured against live data after the fix:
 
@@ -618,6 +651,7 @@ each was measured against live data after the fix:
 
 | a zero income stated in one sentence read as no declaration | thirty 2011 and March 2015 municipal pages put the GPM305 extract on the form's own line as prose — "GPM305 formos deklaracijos: Gauta 0 Lt, išskaičiuota pajamų mokesčio 0 Lt" — instead of the two labelled rows the aliases match, so `gautos-pajamos` and `sumoketas-pajamu-mokestis` were null while the page said zero. Every one of the thirty declares zero. The sentence now parses into both keys: **20 records in 2011 and 10 in March 2015** gained a 0/0, re-parsed in place from the retained HTML with nothing else changed |
 | the municipal conviction explanation never normalized | the same slot on the municipal form — an unnumbered row after Q9, "Jeigu į 9 p. klausimą atsakėte „Taip“ ir norite papildomai apie tai paaiškinti, tai įrašykite čia" — was read by the municipal mapping (`telsiu_mero_2015`, shared by the whole 2015 municipal family) no better than the Seimo one had been: the yes/no was kept, the explanation stayed in `rawData.anketa.rows`. Found on the 2011 municipal pages, which use the same form, and chased across the family: re-parsing it offline from the retained HTML gave **142 records their `pareiskimai.teisiniai-argumentai` text** (137 of the March 2015 general's 266 declared convictions, 4 of Šilutė's 12, 1 of Širvintos–Trakai's 2; Telšiai declares none), with every other field of all 15,849 records byte-identical |
+| the 2007–2008 interest declaration read as key/value pairs | the roman-numbered interest form of the 2007 and 2008 pages publishes each section as a record table — "Tipas \| Vienetų skaičius \| Vietovės pavadinimas \| Įsigijimo būdas" under II. Turtas — whose column-name row is bold `<td>` cells rather than `<th>`, so the era's interest parser saw no header and read every row as a label/value pair: a section collapsed to one entry per distinct first column with the last row winning, plus a spurious `tipas: "Vienetų skaičius"` from the header itself. Two flats became one, two employers the last. Found on the first 2007 municipal page; the header is now recognised by the emphasis (no key/value row of the family is bold whole — measured over 1,627 pages of 2007, 2008, 2011 and 2015) and the sections normalize as record lists in the 2016-era shape. Re-parsed offline: **1,593 records (1,584 of 2008 Seimo, 9 of 2007 Dzūkija), 5,357 sections, 13,198 rows** recovered; every other election byte-identical |
 
 Every fix was verified by re-parsing all elections and confirming the diff was
 confined to the intended records.

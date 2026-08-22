@@ -37,6 +37,7 @@ python -m scraper <command> [args]
 - `2015-birzelio-21-pakartotiniai-silutes` (2015-06-21 repeat Šilutė district council election)
 - `2015-kovo-1-savivaldybiu` (2015-03-01 municipal council elections and the first direct mayoral elections, all 60 municipalities)
 - `2011-vasario-27-savivaldybiu` (2011-02-27 municipal council elections, all 60 municipalities; the last without a direct mayoral vote)
+- `2007-vasario-25-savivaldybiu` (2007-02-25 municipal council elections, all 60 municipalities; party lists only)
 - `1996-spalio-20-seimo` (1996-10-20 Seimas general election, 71 single-member constituencies)
 - `1997-kovo-23-seimo-pakartotiniai` (1997-03-23 Seimo repeat election in four Vilnius-region constituencies)
 - `1997-gruodzio-21-seimo-pakartotiniai` (1997-12-21 Seimo repeat election in Aukštaitijos No. 28)
@@ -842,6 +843,77 @@ Resumable full scrape, with the HTML retained for offline re-parses:
 KEEP_SAMPLES=1 scripts/run_election_batches.sh 2011-vasario-27-savivaldybiu
 ```
 
+## Municipal general election (`2007-vasario-25-savivaldybiu`) Workflow
+
+The 2007-02-25 municipal general (VRK election 3, issue #34) — 13,422
+candidates in all 60 municipalities, council seats only, and the oldest
+municipal election with candidate pages: the same year as the Dzūkija Seimo
+by-election, one tree older than the 2008 Seimo general (the path is
+`rinkimai/3/`, without `_lt`). Only parties and coalitions of parties could
+nominate, so every candidate is on one of the 600 lists (596 party lists,
+4 coalitions); nobody stood on their own or twice.
+
+The listing is the 2011/2015 shape one rename away: VRK's index lists the
+60 municipality pages ("Pagal apygardą",
+`Apygardoje<ID>DalyvaujanciosPartijos.html` rather than
+`KandidataiApygardos<ID>.html`) and the 24 parties ("Pagal partiją"), each
+municipality page is a ballot of numbered list rows, each list page the
+numbered candidates. The 2015 walker's fetcher, list reader and sample-file
+naming do the work (its district-id pattern now accepts both file names);
+`scraper/elections/savivaldybiu_2007/sitemap.py` reads the index and the
+by-party pages, which the later trees do not have.
+
+- `fetch-sample` saves the index, the 24 by-party pages (`parties/`), all
+  60 municipality pages and all 600 list pages, resuming past what is on
+  disk. About 690 requests cold.
+- `sitemap` cross-checks the walk against the by-party pages: every party
+  list walked is linked from its party's page, and of the 604 links on the
+  party pages the 8 that lead nowhere on any ballot are the coalition
+  members' empty shells (a member party's page links a list under its own
+  id in the municipality where it stood in coalition; the page has a
+  heading and no candidates). Those 8 name the coalitions' members — two
+  each — which the sitemap records under `coalitions`. The list kind is on
+  every council candidacy (`listKind`: `partija` or `partiju-koalicija`;
+  `selfNominated` is false throughout).
+- The list pages print names in capitals; the sitemap keeps title case
+  (`Artūras Zuokas`), as the 2011 module does. The municipality pages are
+  headed as electoral districts ("Elektrėnų rinkimų apygarda"); the
+  sitemap names the municipality (`Elektrėnų savivaldybė`).
+- A withdrawn candidate keeps their number on the ballot: `listPosition`
+  is the printed number, so a list can run 1–33 with no 29.
+- Candidate ids carry VRK's own id (`arturas-zuokas-12711`).
+- Three tabs for everyone — Anketa, the declarations and the interest
+  declaration: no Biografija, no Kita (first published in 2008), and no
+  campaign participant link on any page.
+- The pages are the family's oldest shape, the one the Dzūkija by-election
+  has: a plain-text card read by the era's legacy-card branch and an
+  unnumbered "label: <b>answer</b>" questionnaire, so
+  `savivaldybiu_2007/anketa_parser.py` keys the rows by their prompts.
+  Income is five FR0462 prose lines (the form and its S, S0, S15 and S33
+  variants; the candidate filed one) summed by the era normalizer; the
+  interest declaration is record tables with bold column-name rows, read
+  as columns and rows. Both were shared defects — see DATASET.md.
+- `build-results` walks the `2007_savivaldybiu_tarybu_rinkimai/` tree (no
+  `output_lt` level): each municipality's results page gives the lists'
+  mandate counts and links a "Mandatus gavę kandidatai" page that rows
+  every winner with an anketa link, so the 1,550 seats are read by id, not
+  derived by ranking. The results table's total, the lists' mandate sum
+  and the composition page's `Mandatų skaičius` agree in all 60.
+
+```bash
+python -m scraper fetch-sample 2007-vasario-25-savivaldybiu
+python -m scraper sitemap 2007-vasario-25-savivaldybiu
+python -m scraper build-results 2007-vasario-25-savivaldybiu
+python -m scraper fetch-candidate-samples 2007-vasario-25-savivaldybiu --candidate-id arvydas-vysniauskas-7357 --allow-new-samples
+python -m scraper parse-anketa-samples 2007-vasario-25-savivaldybiu
+```
+
+Resumable full scrape, with the HTML retained for offline re-parses:
+
+```bash
+KEEP_SAMPLES=1 scripts/run_election_batches.sh 2007-vasario-25-savivaldybiu
+```
+
 ## Seimas archive (`1996-spalio-20-seimo`, `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`) Workflow
 
 The 1996-10-20 Seimas general election and its two 1997 repeat votes are the
@@ -1150,8 +1222,8 @@ KEEP_SAMPLES=1 scripts/run_election_batches.sh 2012-seimo
 
 ## Elected status for 2012–2015 (`build-results`) Workflow
 
-The 2007–2015 static pages carry no winner mark, so the seventeen elections of
-that family (`2007-spalio-7-seimo-dzukija`, `2008-seimo`, `2009-prezidento`, `2009-ep`, `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai`, `2011-vasario-13-seimo-marijampole`, `2011-vasario-27-savivaldybiu`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`,
+The 2007–2015 static pages carry no winner mark, so the eighteen elections of
+that family (`2007-vasario-25-savivaldybiu`, `2007-spalio-7-seimo-dzukija`, `2008-seimo`, `2009-prezidento`, `2009-ep`, `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai`, `2011-vasario-13-seimo-marijampole`, `2011-vasario-27-savivaldybiu`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`,
 `2014-prezidento`, `2014-ep`, the six 2015 elections) get their
 `kandidatavimas.isrinktas` from VRK's results trees
 (`statiniai/puslapiai/<year>_<type>_rinkimai/output_lt/`). The walkers and
@@ -1176,6 +1248,7 @@ reconciliation looked like when the files were built (2026-08-21):
 | `2015-birzelio-7-seimo-varena-eisiskes` | round-two page sentence | 1 | resolved |
 | `2015-kovo-1-savivaldybiu` | 60 municipality pages + 478 list rankings + 40 round-two pages | 57 mayors, 1,464 council (48 annulled) | 0 unresolved; 249 dual candidates resolved by name+list+position (two VRK ids each); 58/60 compositions contain every derived winner, the two exceptions the annulled councils |
 | `2011-vasario-27-savivaldybiu` | 60 municipality pages + 599 list rankings (no mayoral vote, no round two); built 2026-08-22 | 1,526 council, 18 of them self-nominated individuals seated from their own row of the results table | every winner by id in the sitemap (no dual ids: one candidacy each); 0 seat mismatches; 60/60 compositions contain every derived winner |
+| `2007-vasario-25-savivaldybiu` | 60 municipality pages + 60 "Mandatus gavę kandidatai" pages (the winners with anketa links; no ranking arithmetic), `2007_savivaldybiu_tarybu_rinkimai/` without `output_lt`; built 2026-08-22 | 1,550 council | every winner by id in the sitemap and in the municipality the sitemap places them; winners = results-table total = sum of list mandates = composition-page council size in all 60 |
 | `2015-birzelio-7-pakartotiniai-sirvintos-trakai` | same walk, `2015_2_…` tree | 2 mayors, 24 council | clean |
 | `2015-birzelio-21-pakartotiniai-silutes` | `2015_3_…` tree | 1 mayor, 24 council | clean |
 | `2015-lapkricio-8-telsiu-mero` | `2015_4_…` tree | 1 mayor | clean |
@@ -1215,7 +1288,7 @@ Traps the walkers encode, worth knowing before touching them:
 for id in 2007-spalio-7-seimo-dzukija 2008-seimo 2009-prezidento 2009-ep 2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai 2011-vasario-13-seimo-marijampole 2012-seimo 2013-kovo-3-seimo-birzai-zarasai-ukmerge 2014-prezidento 2014-ep \
           2015-kovo-1-seimo-zirmunai 2015-birzelio-7-seimo-varena-eisiskes 2015-lapkricio-8-telsiu-mero \
           2015-birzelio-7-pakartotiniai-sirvintos-trakai 2015-birzelio-21-pakartotiniai-silutes 2015-kovo-1-savivaldybiu \
-          2011-vasario-27-savivaldybiu; do
+          2011-vasario-27-savivaldybiu 2007-vasario-25-savivaldybiu; do
   python -m scraper build-results "$id"
 done
 # then re-parse offline; the wrappers pick up sitemaps/<id>.results.json by default
