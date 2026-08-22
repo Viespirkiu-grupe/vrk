@@ -5,7 +5,9 @@ assets pane converted: the compare table printed the stored number raw, so a
 2008 income (declared in litas) sat beside a 2024 one 3.4528x too large and
 carrying no unit. 36,362 of the corpus's 76,776 records declare in litas, so
 this was just under half the table. The conversion itself is correct and
-wanted -- these tests pin that *both* renderers do it. See GitHub issue #63.
+wanted -- these tests pin that *both* renderers do it. The figures carry no
+"Lt→€" marker: the conversion is obvious from the currency and the labels were
+removed. See GitHub issue #63.
 
 The money helpers are lifted out of dashboard/index.html and executed with
 node, so this tests the shipped code rather than a transcription of it. The
@@ -86,10 +88,17 @@ class FieldMapWiringTests(unittest.TestCase):
     def test_the_compare_table_applies_the_formatter(self):
         self.assertIn("const c = format ? format(v, r) : compactValue(v);", SOURCE)
 
-    def test_converted_columns_are_marked_in_the_compare_header(self):
-        header = SOURCE[SOURCE.index("table.cmp") : SOURCE.index("function showMovers")]
-        self.assertIn("declaredInLitas(r)", header)
-        self.assertIn("Lt→€", header)
+    def test_no_conversion_marker_is_shown_anywhere(self):
+        # The figures are converted; saying so on every column and in three
+        # footnotes was noise, so the labels went. The conversion did not.
+        self.assertNotIn("Lt→€", SOURCE)
+
+    def test_the_conversion_itself_is_still_applied_in_both_renderers(self):
+        for renderer in ("moneyCell", "moneyEUR"):
+            with self.subTest(renderer):
+                body = re.search(rf"^function {renderer}\(.*?^}}", SOURCE, re.S | re.M).group(0)
+                self.assertIn("declaredInLitas", body)
+                self.assertIn("LITAS_PER_EURO", body)
 
 
 # fmtEUR formats with toLocaleString("lt-LT"), whose thousands separator is a

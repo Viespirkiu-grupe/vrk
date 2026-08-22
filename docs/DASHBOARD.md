@@ -61,10 +61,13 @@ joined in from VRK's results trees (`python -m scraper build-results <id>`).
 is euro. The index builder (`money_of`) and both of the page's renderers --
 `moneyEUR` for the chart, `moneyCell` for the comparison table -- convert
 litas at the irrevocable changeover rate, 3.4528 Lt/€, so one person's series
-is comparable across 2015→2016. A converted candidacy is flagged: `"lt": true`
-in `people.json`, "(Lt→€)" on the chart's column label and in the
-Biggest-movers table, and "Lt→€" under the election name in the comparison
-table's header. The records themselves keep the litas figures as published.
+is comparable across 2015→2016. The records themselves keep the litas figures
+as published, and `people.json` still carries `"lt": true` on a converted
+candidacy for anything downstream that wants it.
+
+The page shows no conversion marker. Every figure it displays is in euro, so
+labelling the pre-2015 ones "(Lt→€)" on each column and explaining the rate in
+three separate footnotes was noise rather than information.
 
 The comparison table did not always convert. It read the stored number
 straight through `compactValue`, so a litas figure printed raw, unlabelled,

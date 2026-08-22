@@ -52,7 +52,6 @@
   table.cmp { border-collapse: collapse; width: 100%; font-size: 13.5px; background: var(--panel); }
   table.cmp th, table.cmp td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; white-space: pre-line; }
   table.cmp thead th { background: var(--accent-soft); position: sticky; top: 0; }
-  table.cmp thead th .cur { font-weight: 400; font-size: 11.5px; color: var(--muted); }
   table.cmp td.null { color: var(--muted); }
   .loading { color: var(--muted); padding: 20px; }
   @media (max-width: 900px) { main { grid-template-columns: 1fr; } #left { max-height: 45vh; } }
@@ -167,7 +166,6 @@ const fold = (s) => (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCa
 const PLURAL = new Intl.PluralRules("lt");
 const plural = (n, one, few, rest) => ({ one, few, many: rest, other: rest })[PLURAL.select(n)];
 const fmtInt = (n) => n.toLocaleString("lt-LT");
-const fmtRate = () => LITAS_PER_EURO.toLocaleString("lt-LT", { minimumFractionDigits: 4 });
 
 async function boot() {
   // The index changes after every corpus update; a cached stale copy makes
@@ -366,11 +364,9 @@ async function showPerson(p) {
   const paneC = document.createElement("div");
   const cmp = document.createElement("table"); cmp.className = "cmp";
   cmp.innerHTML = "<thead><tr><th>Laukas</th></tr></thead><tbody></tbody>";
-  for (const [e, r] of loaded) {
+  for (const [e] of loaded) {
     const th = document.createElement("th");
     th.textContent = electionName(e.id);
-    // Same marker the assets pane puts on a converted column.
-    if (declaredInLitas(r)) { const cur = document.createElement("div"); cur.className = "cur"; cur.textContent = "Lt→€"; th.appendChild(cur); }
     cmp.tHead.rows[0].appendChild(th);
   }
   for (const [label, paths, format] of FIELD_MAP) {
@@ -387,12 +383,6 @@ async function showPerson(p) {
     }
   }
   paneC.appendChild(cmp);
-  const note = document.createElement("div");
-  note.style.cssText = "margin-top:8px;font-size:13px;color:var(--muted)";
-  note.textContent = loaded.some(([, r]) => declaredInLitas(r))
-    ? `Lt→€ — deklaruota litais, perskaičiuota kursu ${fmtRate()} Lt/€. Įrašuose sumos saugomos tokios, kokios paskelbtos.`
-    : "";
-  paneC.appendChild(note);
 
   const paneA = buildAssetPane(loaded);
 
@@ -433,7 +423,7 @@ function showMovers() {
       <option value="desc">didžiausias padidėjimas</option>
       <option value="asc">didžiausias sumažėjimas</option>
     </select>
-    <span class="stats" style="color:var(--muted);font-size:13px">pirma ir paskutinė deklaruota reikšmė; asmenys, ją deklaravę 2+ rinkimuose · iki 2016 m. litais deklaruotos sumos perskaičiuotos kursu ${fmtRate()} Lt/€</span>`;
+    <span class="stats" style="color:var(--muted);font-size:13px">pirma ir paskutinė deklaruota reikšmė; asmenys, ją deklaravę 2+ rinkimuose</span>`;
   root.appendChild(bar);
   const holder = document.createElement("div");
   root.appendChild(holder);
@@ -463,7 +453,7 @@ function showMovers() {
       a.textContent = `${r.p.n} · ${r.p.b || "?"}`;
       a.addEventListener("click", (ev) => { ev.preventDefault(); showPerson(r.p); });
       nameCell.appendChild(a);
-      const tag = (e) => electionShortName(e.id) + (e.lt ? ", Lt→€" : "");
+      const tag = (e) => electionShortName(e.id);
       tr.insertCell().textContent = `${fmtEUR(r.first.m[s])} (${tag(r.first)})`;
       tr.insertCell().textContent = `${fmtEUR(r.last.m[s])} (${tag(r.last)})`;
       const d = tr.insertCell();
@@ -505,10 +495,9 @@ const fmtEUR = (n) => n.toLocaleString("lt-LT", { maximumFractionDigits: 0 }) + 
 function buildAssetPane(loaded) {
   const pane = document.createElement("div");
   const cols = loaded.map(([e, r]) => ({
-    label: electionShortName(e.id) + (declaredInLitas(r) ? " (Lt→€)" : ""),
+    label: electionShortName(e.id),
     values: MONEY_SERIES.map(([, path]) => moneyEUR(r, path)),
   }));
-  const anyLitas = loaded.some(([, r]) => declaredInLitas(r));
   const allValues = cols.flatMap(c => c.values.filter(v => v != null));
   if (!allValues.length) {
     pane.innerHTML = `<div class="loading">Nė vienuose šio asmens rinkimuose turto ar pajamų nedeklaruota.</div>`;
@@ -550,7 +539,7 @@ function buildAssetPane(loaded) {
       `<span><span style="display:inline-block;width:11px;height:11px;background:${color};border-radius:2px;margin-right:5px"></span>${label}</span>`
     ).join("") +
     `<span style="margin-left:auto">nėra stulpelio — nedeklaruota arba nepaskelbta · užveskite pelę ant stulpelio, kad matytumėte sumą` +
-    (anyLitas ? ` · (Lt→€) — deklaruota litais, perskaičiuota kursu ${fmtRate()} Lt/€` : "") + `</span></div>`;
+    `</span></div>`;
   pane.appendChild(card);
 
   // the numbers behind the bars
