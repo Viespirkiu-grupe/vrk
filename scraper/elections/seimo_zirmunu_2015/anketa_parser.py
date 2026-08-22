@@ -55,8 +55,12 @@ ANKETA_PLACEHOLDER_TEXTS = {"rengiama"}
 # The municipal profile cards close with a standing notice to parties and
 # candidates. It is page furniture, not a field, and it is emphasised like a
 # value, so it is recognised and dropped rather than attached to whatever
-# label happens to precede it.
-PROFILE_NOTICE_PREFIX = "politinių partijų, visuomeninių rinkimų komitetų"
+# label happens to precede it. Its opening words differ by year — the 2015
+# pages address "Politinių partijų, visuomeninių rinkimų komitetų ir
+# kandidatų atstovus", the 2011 ones, before election committees existed,
+# "Politinių partijų ir kandidatų atstovus" — so it is recognised by the
+# invitation that follows, the same on both.
+PROFILE_NOTICE_MARKER = "kviečiame susipažinti su skelbiamais duomenimis"
 
 # The 2015 pages publish declared amounts in litas; the GPM308 row wording is
 # also this era's own (the 2016 pages cite fields "…14, 20", these cite
@@ -195,7 +199,7 @@ def _parse_profile_html(soup: BeautifulSoup) -> dict[str, Any]:
             continue
         if node.name == "b":
             value_text = _tag_text(node)
-            if value_text.lower().startswith(PROFILE_NOTICE_PREFIX):
+            if PROFILE_NOTICE_MARKER in value_text.lower():
                 # A label still pending here has no value of its own — the
                 # self-nomination flag ("Išsikėlęs kandidatas") is written
                 # that way — so it is kept as a valueless field rather than

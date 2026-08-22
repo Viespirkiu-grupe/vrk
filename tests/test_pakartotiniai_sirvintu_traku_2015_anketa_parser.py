@@ -48,6 +48,7 @@ class PakartotiniaiSirvintuTraku2015AnketaParserTests(unittest.TestCase):
                 "ar-kitos-valstybes-institucijos-narys",
                 "ar-turite-kitos-valstybes-pilietybe",
                 "ar-buvote-pripazintas-kaltu",
+                "teisiniai-argumentai",
             ],
         )
         self.assertEqual(pareiskimai["ar-nebaigta-teismo-paskirta-bausme"], "Neturiu")

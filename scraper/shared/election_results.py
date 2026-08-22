@@ -80,6 +80,10 @@ RESULT_DISTRICT_PATTERN = re.compile(r"apygardos_rezultatai(\d+)\.html$")
 SEIMO_DISTRICT_PATTERN = re.compile(r"rezultatai_vienmanate_apygarda(\d+)aktyvumasdesc(\d)turas\.html$")
 LIST_RANKING_PATTERN = re.compile(r"apygardos(\d+)_partijos(\d+)_pirmumo_balsai\.html$")
 COMPOSITION_PATTERN = re.compile(r"rapg_(\d+)\.html$")
+# A self-nominated individual's own results row (2011, the one municipal
+# general election in which individuals stood for the council on their own,
+# listed on the ballot among the lists).
+SELF_NOMINATED_RESULT_PATTERN = re.compile(r"savkand(\d+)_gauti_balsai_apygardoje\d+\.html$")
 MAYOR_ELECT_MARKER = "išrinktas(-a) meru(-e)"
 
 
@@ -378,12 +382,25 @@ def municipal_index_pages(results_dir: Path, tree: str, round_number: int) -> li
     return pages
 
 
+def _row_mandates(cells: list[str]) -> int | None:
+    # The mandate count is the row's last cell on every vintage of the page:
+    # Rinkimų Nr. | list | "pirm." | apylinkėse | paštu | iš viso | % [| % su
+    # pirmumo] | Mandatų skaičius — 2015 has the extra percentage, 2011 not.
+    if not cells:
+        return None
+    last = cells[-1].replace(" ", "")
+    return int(last) if last.isdigit() else None
+
+
 def parse_municipality_results_page(html: str, url: str) -> dict[str, Any]:
-    """Per-list mandate counts with ranking-page links, the mayoral field and
-    verdict, of one municipality's round-one results page."""
+    """Per-list mandate counts with ranking-page links, the self-nominated
+    individuals' rows, the mayoral field and verdict, of one municipality's
+    round-one results page."""
     soup = BeautifulSoup(html, "lxml")
     text = page_text(html)
     lists: list[dict[str, Any]] = []
+    individuals: list[dict[str, Any]] = []
+    results_table = None
     for anchor in soup.find_all("a", href=True):
         match = LIST_RANKING_PATTERN.search(anchor["href"])
         if match is None:
@@ -391,18 +408,30 @@ def parse_municipality_results_page(html: str, url: str) -> dict[str, Any]:
         tr = anchor.find_parent("tr")
         if tr is None:
             continue
+        if results_table is None:
+            results_table = tr.find_parent("table")
         cells = [normalize_space(td.get_text(" ", strip=True)) for td in tr.find_all("td")]
-        # Rinkimų Nr. | list | "pirm." (this anchor) | apylinkėse | paštu | iš viso | % | % su pirmumo | Mandatų skaičius
-        mandates = None
-        if cells:
-            last = cells[-1].replace(" ", "")
-            mandates = int(last) if last.isdigit() else None
         lists.append(
             {
                 "listName": cells[1] if len(cells) > 1 else normalize_space(anchor.get_text(" ", strip=True)),
                 "listId": match.group(2),
                 "rankingUrl": resolve_url(anchor["href"], url),
-                "mandates": mandates,
+                "mandates": _row_mandates(cells),
+            }
+        )
+    for anchor in soup.find_all("a", href=True):
+        match = SELF_NOMINATED_RESULT_PATTERN.search(anchor["href"])
+        if match is None:
+            continue
+        tr = anchor.find_parent("tr")
+        if tr is None:
+            continue
+        cells = [normalize_space(td.get_text(" ", strip=True)) for td in tr.find_all("td")]
+        individuals.append(
+            {
+                "vrkCandidateId": match.group(1),
+                "name": normalize_space(anchor.get_text(" ", strip=True)),
+                "mandates": _row_mandates(cells),
             }
         )
     mayoral_field: list[str] = []
@@ -413,12 +442,25 @@ def parse_municipality_results_page(html: str, url: str) -> dict[str, Any]:
     match = MAYOR_WINNER_PATTERN.search(text)
     if match:
         verdict = normalize_space(match.group(1)).rstrip(".")
-    total_match = re.search(r"Iš viso:?\s*(?:\d[\d\s]*\s+){3}[\d,]+%\s+[\d,]+%\s+(\d+)", text)
+    # The seats the page distributes: the results table's own "Iš viso" row,
+    # whose last cell is the mandate column's total (individuals' seats
+    # included, in 2011). The table is the one the ranking links live in.
+    mandates_total = None
+    if results_table is not None:
+        for tr in results_table.find_all("tr"):
+            cells = [normalize_space(td.get_text(" ", strip=True)) for td in tr.find_all("td")]
+            if cells and cells[0].lower().startswith("iš viso"):
+                mandates_total = _row_mandates([cell for cell in cells if cell])
+                break
+    if mandates_total is None:
+        total_match = re.search(r"Iš viso:?\s*(?:\d[\d\s]*\s+){3}[\d,]+%\s+[\d,]+%\s+(\d+)", text)
+        mandates_total = int(total_match.group(1)) if total_match else None
     return {
         "lists": lists,
+        "individuals": individuals,
         "mayoralField": list(dict.fromkeys(mayoral_field)),
         "mayorVerdictName": verdict,
-        "listMandatesTotal": int(total_match.group(1)) if total_match else None,
+        "listMandatesTotal": mandates_total,
     }
 
 
@@ -456,7 +498,9 @@ def parse_composition_page(html: str) -> dict[str, Any]:
     dates, and the early-termination table (names only)."""
     soup = BeautifulSoup(html, "lxml")
     text = page_text(html)
-    mandates_match = re.search(r"Mandatų skaičius, įskaitant merą:\s*(\d+)", text)
+    # "Mandatų skaičius, įskaitant merą: 25" once mayors were elected
+    # directly (2015); "Mandatų skaičius: 51" before that (2011).
+    mandates_match = re.search(r"Mandatų skaičius(?:, įskaitant merą)?:\s*(\d+)", text)
     members: list[dict[str, Any]] = []
     for anchor in soup.find_all("a", href=True):
         match = ANKETA_ID_PATTERN.search(anchor["href"])
@@ -512,6 +556,7 @@ def municipal_winners(
             "mayoralField": parsed["mayoralField"],
             "mayor": None,
             "lists": [],
+            "individuals": parsed["individuals"],
             "council": [],
             "listMandatesTotal": parsed["listMandatesTotal"],
         }
@@ -563,6 +608,21 @@ def municipal_winners(
                 }
                 for row in elected_rows
             )
+        # A self-nominated individual wins a seat on the mandate column of
+        # the results table itself — there is no ranking page to walk.
+        record["council"].extend(
+            {
+                "vrkCandidateId": individual["vrkCandidateId"],
+                "name": individual["name"],
+                "listName": None,
+                "rank": None,
+                "preElectionPosition": None,
+                "selfNominated": True,
+                "sourceUrl": page["url"],
+            }
+            for individual in parsed["individuals"]
+            if individual["mandates"]
+        )
         record["mayorElectIdsFromRankings"] = mayor_elect_ids
         if composition_by_label.get(page["label"]):
             comp = parse_composition_page(fetch_page(results_dir, composition_by_label[page["label"]]))
@@ -897,9 +957,14 @@ def build_municipal_results(
                 # Cannot happen by construction (the mayor-elect is skipped
                 # in the rankings) but keep the mayoral seat if it did.
                 continue
-            entry = _winner_entry(
-                "tarybos-narys", member["sourceUrl"], "list-ranking", municipality=muni["label"], listName=member["listName"], rank=member["rank"]
-            )
+            if member.get("selfNominated"):
+                entry = _winner_entry(
+                    "tarybos-narys", member["sourceUrl"], "self-nominated", municipality=muni["label"]
+                )
+            else:
+                entry = _winner_entry(
+                    "tarybos-narys", member["sourceUrl"], "list-ranking", municipality=muni["label"], listName=member["listName"], rank=member["rank"]
+                )
             if resolved_by != "id":
                 entry["resolvedBy"] = resolved_by
                 entry["vrkCandidateIdOnResultsPage"] = member["vrkCandidateId"]
@@ -907,7 +972,11 @@ def build_municipal_results(
                 entry["annulled"] = annulment["decision"]
             elected[vrk_id] = entry
         derived_total = len(council_ids) + (1 if mayor_id else 0)
-        expected_total = (muni["listMandatesTotal"] + 1) if muni["listMandatesTotal"] is not None else None
+        # The mayor's seat is on top of the list mandates only where a mayor
+        # was elected at all — the page then carries a mayoral field. 2011
+        # elected none, and its mandate total is the whole council.
+        mayoral_seat = 1 if (muni["mayor"] or muni["mayoralField"]) else 0
+        expected_total = (muni["listMandatesTotal"] + mayoral_seat) if muni["listMandatesTotal"] is not None else None
         short_lists = [lst for lst in muni["lists"] if lst["electedShort"]]
         muni_stats = {
             "municipality": muni["label"],
@@ -962,6 +1031,7 @@ def build_municipal_results(
         "councilMembers": sum(m["councilElected"] for m in per_municipality),
         "councilNotInSitemap": len(council_not_in_sitemap),
         "councilResolvedByNameAndList": sum(1 for e in elected.values() if e.get("resolvedBy") == "name-and-list"),
+        "councilSelfNominated": sum(1 for e in elected.values() if e.get("method") == "self-nominated"),
         "seatCountMismatches": len(seat_mismatches),
         "compositionPagesChecked": composition_checked,
         "compositionFullyContainsDerived": composition_agree,

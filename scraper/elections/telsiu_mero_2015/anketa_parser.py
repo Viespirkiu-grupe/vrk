@@ -52,6 +52,12 @@ def normalize_municipal_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any
             "ar-kitos-valstybes-institucijos-narys": _answer("8.4"),
             "ar-turite-kitos-valstybes-pilietybe": _answer("8.5"),
             "ar-buvote-pripazintas-kaltu": _answer("9"),
+            # The explanation a "Taip" may be followed by ("Jeigu į 9 p.
+            # klausimą atsakėte „Taip“ ir norite papildomai apie tai
+            # paaiškinti, tai įrašykite čia"), an unnumbered row after Q9 on
+            # the 2011 and 2015 municipal pages; the key the Seimo pages of
+            # the family and the 2016 form use for the same slot.
+            "teisiniai-argumentai": _prompt_answer("jeigu į 9 p. klausimą atsakėte"),
         },
         "gimimo-vieta": _answer("10"),
         "tautybe": _answer("11"),
