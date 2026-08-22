@@ -424,6 +424,18 @@ from scraper.elections.ep_2014.sitemap import (
     build_sitemap_from_sample as build_ep_2014_sitemap_from_sample,
     fetch_listing_sample as fetch_ep_2014_listing_sample,
 )
+from scraper.elections.seimo_dzukijos_2007.anketa_parser import (
+    parse_anketa_samples as parse_seimo_dzukijos_2007_anketa_samples,
+)
+from scraper.elections.seimo_dzukijos_2007.candidate_samples import (
+    fetch_candidates_with_tabs as fetch_seimo_dzukijos_2007_candidates_with_tabs,
+    fetch_first_candidate_with_tabs as fetch_seimo_dzukijos_2007_first_candidate_with_tabs,
+)
+from scraper.elections.seimo_dzukijos_2007.sitemap import (
+    ELECTION_ID as SEIMO_DZUKIJOS_2007_ELECTION_ID,
+    build_sitemap_from_sample as build_seimo_dzukijos_2007_sitemap_from_sample,
+    fetch_listing_sample as fetch_seimo_dzukijos_2007_listing_sample,
+)
 from scraper.elections.seimo_silales_silutes_vilniaus_salcininku_2009.anketa_parser import (
     parse_anketa_samples as parse_seimo_silales_silutes_vilniaus_salcininku_2009_anketa_samples,
 )
@@ -472,6 +484,7 @@ from scraper.elections.seimo_2012.sitemap import (
     build_sitemap_from_sample as build_seimo_2012_sitemap_from_sample,
     fetch_listing_sample as fetch_seimo_2012_listing_sample,
 )
+from scraper.elections.seimo_dzukijos_2007.results import build_results as build_seimo_dzukijos_2007_results
 from scraper.elections.seimo_silales_silutes_vilniaus_salcininku_2009.results import build_results as build_seimo_silales_silutes_vilniaus_salcininku_2009_results
 from scraper.elections.seimo_marijampoles_2011.results import build_results as build_seimo_marijampoles_2011_results
 from scraper.elections.seimo_2008.results import build_results as build_seimo_2008_results
@@ -530,6 +543,7 @@ FETCHABLE_ELECTION_IDS = [
     SEIMO_2008_ELECTION_ID,
     SEIMO_SILALES_SILUTES_VILNIAUS_SALCININKU_2009_ELECTION_ID,
     SEIMO_MARIJAMPOLES_2011_ELECTION_ID,
+    SEIMO_DZUKIJOS_2007_ELECTION_ID,
 ]
 PARSABLE_ELECTION_IDS = [
     SEIMO_2016_ELECTION_ID,
@@ -572,11 +586,13 @@ PARSABLE_ELECTION_IDS = [
     SEIMO_2008_ELECTION_ID,
     SEIMO_SILALES_SILUTES_VILNIAUS_SALCININKU_2009_ELECTION_ID,
     SEIMO_MARIJAMPOLES_2011_ELECTION_ID,
+    SEIMO_DZUKIJOS_2007_ELECTION_ID,
 ]
 
 # Elections whose pages mark no winner and whose elected status is joined in
 # from VRK's results tree (scraper/shared/election_results.py).
 RESULTS_ELECTION_IDS = [
+    SEIMO_DZUKIJOS_2007_ELECTION_ID,
     SEIMO_2008_ELECTION_ID,
     SEIMO_SILALES_SILUTES_VILNIAUS_SALCININKU_2009_ELECTION_ID,
     SEIMO_MARIJAMPOLES_2011_ELECTION_ID,
@@ -595,6 +611,7 @@ RESULTS_ELECTION_IDS = [
 ]
 
 _RESULTS_BUILDERS = {
+    SEIMO_DZUKIJOS_2007_ELECTION_ID: build_seimo_dzukijos_2007_results,
     SEIMO_2008_ELECTION_ID: build_seimo_2008_results,
     SEIMO_SILALES_SILUTES_VILNIAUS_SALCININKU_2009_ELECTION_ID: build_seimo_silales_silutes_vilniaus_salcininku_2009_results,
     SEIMO_MARIJAMPOLES_2011_ELECTION_ID: build_seimo_marijampoles_2011_results,
@@ -697,6 +714,8 @@ def _fetch_listing_sample_for_election(election_id: str) -> Path:
         return fetch_seimo_silales_silutes_vilniaus_salcininku_2009_listing_sample()
     if election_id == SEIMO_MARIJAMPOLES_2011_ELECTION_ID:
         return fetch_seimo_marijampoles_2011_listing_sample()
+    if election_id == SEIMO_DZUKIJOS_2007_ELECTION_ID:
+        return fetch_seimo_dzukijos_2007_listing_sample()
     if election_id == SEIMO_2008_ELECTION_ID:
         return fetch_seimo_2008_listing_sample()
     if election_id == SEIMO_2012_ELECTION_ID:
@@ -781,6 +800,8 @@ def _build_sitemap_from_sample_for_election(election_id: str, sample_path: Path 
         return build_seimo_silales_silutes_vilniaus_salcininku_2009_sitemap_from_sample(sample_path=sample_path)
     if election_id == SEIMO_MARIJAMPOLES_2011_ELECTION_ID:
         return build_seimo_marijampoles_2011_sitemap_from_sample(sample_path=sample_path)
+    if election_id == SEIMO_DZUKIJOS_2007_ELECTION_ID:
+        return build_seimo_dzukijos_2007_sitemap_from_sample(sample_path=sample_path)
     if election_id == SEIMO_2008_ELECTION_ID:
         return build_seimo_2008_sitemap_from_sample(sample_path=sample_path)
     if election_id == SEIMO_2012_ELECTION_ID:
@@ -1018,6 +1039,12 @@ def _fetch_first_candidate_with_tabs_for_election(
         )
     if election_id == SEIMO_MARIJAMPOLES_2011_ELECTION_ID:
         return fetch_seimo_marijampoles_2011_first_candidate_with_tabs(
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
+    if election_id == SEIMO_DZUKIJOS_2007_ELECTION_ID:
+        return fetch_seimo_dzukijos_2007_first_candidate_with_tabs(
             sitemap_path=sitemap_path,
             samples_root=samples_root,
             allow_new_candidate_dir=allow_new_samples,
@@ -1310,6 +1337,13 @@ def _fetch_candidates_with_tabs_for_election(
             samples_root=samples_root,
             allow_new_candidate_dir=allow_new_samples,
         )
+    if election_id == SEIMO_DZUKIJOS_2007_ELECTION_ID:
+        return fetch_seimo_dzukijos_2007_candidates_with_tabs(
+            candidate_ids=candidate_ids,
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
     if election_id == SEIMO_2008_ELECTION_ID:
         return fetch_seimo_2008_candidates_with_tabs(
             candidate_ids=candidate_ids,
@@ -1557,6 +1591,12 @@ def _parse_anketa_samples_for_election(
         )
     if election_id == SEIMO_MARIJAMPOLES_2011_ELECTION_ID:
         return parse_seimo_marijampoles_2011_anketa_samples(
+            candidate_ids=candidate_ids,
+            samples_root=samples_root,
+            output_root=output_root,
+        )
+    if election_id == SEIMO_DZUKIJOS_2007_ELECTION_ID:
+        return parse_seimo_dzukijos_2007_anketa_samples(
             candidate_ids=candidate_ids,
             samples_root=samples_root,
             output_root=output_root,

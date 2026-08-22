@@ -1,0 +1,62 @@
+from __future__ import annotations
+
+from pathlib import Path
+from typing import Any
+
+from scraper.elections.seimo_dzukijos_2007.sitemap import ELECTION_ID
+# The pre-2016 layout family's page walkers with the Seimo 2008-2013
+# question mapping and candidacy block owned by the March 2013 module: the
+# 2007 form is the 2008 one without Q5 — the birth date is on the profile
+# card ("Gimimo data: 1946-01-08"), which the era parser folds into
+# anketa.gimimo-data — and the card itself is the family's oldest shape
+# (plain-text name and lines, constituency and party in a header table
+# above it), read by the era's legacy-card branch into the usual
+# Apygarda/Iškėlė fields.
+from scraper.elections.seimo_birzu_zarasu_ukmerges_2013.anketa_parser import (
+    build_candidacy,
+    normalize_seimo_2012_anketa_rows,
+)
+from scraper.elections.seimo_zirmunu_2015.anketa_parser import (
+    load_results,
+    parse_anketa_sample as _parse_anketa_sample,
+    parse_anketa_samples as _parse_anketa_samples,
+)
+
+DEFAULT_SAMPLES_ROOT = Path(f"samples/html/{ELECTION_ID}")
+DEFAULT_OUTPUT_ROOT = Path(f"data/{ELECTION_ID}")
+# Elected status, joined in from VRK's results tree when the file exists.
+DEFAULT_RESULTS_PATH = Path(f"sitemaps/{ELECTION_ID}.results.json")
+
+
+def parse_anketa_sample(
+    candidate_id: str,
+    samples_root: Path = DEFAULT_SAMPLES_ROOT,
+    output_root: Path = DEFAULT_OUTPUT_ROOT,
+    results_path: Path | None = DEFAULT_RESULTS_PATH,
+) -> tuple[Path, dict[str, Any]]:
+    return _parse_anketa_sample(
+        results_lookup=load_results(results_path),
+        candidate_id=candidate_id,
+        samples_root=samples_root,
+        output_root=output_root,
+        election_id=ELECTION_ID,
+        rows_normalizer=normalize_seimo_2012_anketa_rows,
+        candidacy_builder=build_candidacy,
+    )
+
+
+def parse_anketa_samples(
+    candidate_ids: list[str] | None,
+    samples_root: Path = DEFAULT_SAMPLES_ROOT,
+    output_root: Path = DEFAULT_OUTPUT_ROOT,
+    results_path: Path | None = DEFAULT_RESULTS_PATH,
+) -> list[dict[str, Any]]:
+    return _parse_anketa_samples(
+        results_lookup=load_results(results_path),
+        candidate_ids=candidate_ids,
+        samples_root=samples_root,
+        output_root=output_root,
+        election_id=ELECTION_ID,
+        rows_normalizer=normalize_seimo_2012_anketa_rows,
+        candidacy_builder=build_candidacy,
+    )

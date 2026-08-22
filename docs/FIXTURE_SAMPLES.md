@@ -486,6 +486,13 @@ empty-list case; Balčytis is also the one candidate whose `Kita` tab links a
 program PDF. Grybauskaitė's campaign link points at election path `423_lt`,
 not the candidate pages' `424_lt`.
 
+For `2007-spalio-7-seimo-dzukija` the allowlist (`tests/test_seimo_dzukijos_2007_sample_allowlist.py`)
+is the complete ten-candidate field: four independent campaign participants
+(Čilinskas, Truncė, Uspaskich, Kadžys — the donor tables and financing
+reports) and six represented ones whose cards say so in words and link no
+campaign. The samples directory holds the district page as `list.html` (the
+index is a meta-refresh to it). No candidate directory holds a `kita.html`.
+
 For `2008-seimo` the allowlist (`tests/test_seimo_2008_sample_allowlist.py`)
 is **eight candidates out of 1,603**, chosen for shape as for 2012: a
 list-only list leader (`gediminas-kirkilas`), a dual list+constituency

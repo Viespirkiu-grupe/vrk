@@ -18,7 +18,7 @@ never touched by a full run.
 
 ## Inventory
 
-60,366 candidate records across 40 elections, 1996–2025, with **zero fetch
+60,376 candidate records across 41 elections, 1996–2025, with **zero fetch
 failures**.
 
 **The table below is an aggregate, not an inventory of any one directory.**
@@ -86,12 +86,13 @@ election was re-parsed offline the same day.
 | `2013-kovo-3-seimo-birzai-zarasai-ukmerge` | 37 | 3 | 2 | 37 |
 | `2014-prezidento` | 7 | 1 | 0 | 7 |
 | `2014-ep` | 215 | 11 | 4 | 215 |
+| `2007-spalio-7-seimo-dzukija` | 10 | 1 | 0 | 4 |
 | `2008-seimo` | 1603 | 141 | 25 | 0 |
 | `2009-prezidento` | 7 | 1 | 0 | 7 |
 | `2009-ep` | 262 | 12 | 3 | 260 |
 | `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai` | 17 | 2 | 0 | 17 |
 | `2011-vasario-13-seimo-marijampole` | 9 | 1 | 0 | 9 |
-| **total** | **60366** | **5360** | **1304** | **20195** |
+| **total** | **60376** | **5361** | **1304** | **20199** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
@@ -100,7 +101,7 @@ the presidential elections**, where every candidate carries a participation
 note (`Dalyvavo I ture`, `Dalyvavo II ture`, or `Išrinktas II ture` for the
 winner). Counting non-null `pastaba` there reports 9 and 8 "elected" for a
 race one person won; match on the `Išrink` prefix, not on presence. The
-2008–2015 pages mark no winner at all, so for those fifteen elections the column
+2007–2015 pages mark no winner at all, so for those sixteen elections the column
 counts `kandidatavimas.isrinktas == true` instead — the flag joined in from
 VRK's results trees (`python -m scraper build-results <id>`; the
 reconciliation behind each file is in `docs/CLI_REFERENCE.md`'s results
@@ -163,6 +164,35 @@ hold a list seat (the index's declared 58 still counts five withdrawn
 self-nominations). The `stats` block of `sitemaps/2012-seimo.json` records
 each of these. Every null in the fixture records was traced to a genuinely
 blank or omitted source line before the full runs started.
+
+### The 2026-08-22 build of the 2007 Dzūkija Seimo by-election
+
+GitHub issue #35; VRK election 396 (Dzūkijos No. 69, 2007-10-07) — the
+oldest page of the pre-2016 static family, one year before the 2008
+general, and the only one so far under a path without the `_lt` suffix.
+The listing is the one constituency page (the index is a meta-refresh to
+it), walked by the Žirmūnai machinery and enriched with VRK's id and the
+nominator; 10 candidates, the whole field as fixtures, 0 anomalies. Three
+things are this election's own, each handled in the shared code it
+belongs to and measured harmless elsewhere: the listing prints names in
+capitals (restored to the corpus's "Ona BALEVIČIŪTĖ"); the profile card
+is the family's oldest shape — plain-text name and "Gimimo data:" line
+(the form asks no Q5; the card's date now fills `anketa.gimimo-data`),
+constituency and party in a header table above the card, a campaign link
+with one `../` too many — read by a legacy-card branch of the era's card
+parser and a one-path rewrite in its URL resolver; and the
+`2007_seimo_rinkimai` results tree has no `output_lt` level, keeps round
+two in the round-one folder and links its candidate rows straight to the
+anketa pages, all three taught to the shared walker (`tree_root`, a
+round-two folder fallback, anketa-linked rows). Čilinskas (TS) joined as
+the winner by runoff plurality (56.4%). The income extract is the interim
+**GPM302** return, one form older than 2008's GPM305 — a fourth alias.
+Six of the ten are represented candidates whose card says so in words
+("Kandidatas nėra savarankiškas politinės kampanijos dalyvis") and links
+no campaign; the four independents' campaign pages parsed in full. One
+VRK-side mojibake: Orenienė's Q8.4.1 answer reads "NenurodÄ—" in the
+source HTML (kept as published in `rawData`; the sub-question maps to
+nothing). 7 of the 10 merged into existing people (38,775 persons).
 
 ### The 2026-08-22 builds of the 2009 and 2011 Seimo by-elections
 

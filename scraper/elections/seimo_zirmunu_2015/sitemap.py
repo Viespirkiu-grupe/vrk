@@ -54,8 +54,12 @@ def resolve_candidate_url(href: str) -> str:
 
     # Hrefs on these pages are root-relative and carry literal "../.."
     # segments ("/statiniai/.../Apygarda7822/../../Kandidatai/..."); urljoin
-    # against the site root collapses them.
-    return urljoin(VRK_BASE, href)
+    # against the site root collapses them. The 2007 by-election template
+    # climbs one level too many for its campaign link (five "../" from
+    # Kandidatas<ID>/, landing in /statiniai/rinkimai/…, which does not
+    # exist); the page the template meant is one level down.
+    resolved = urljoin(VRK_BASE, href)
+    return resolved.replace("/statiniai/rinkimai/", "/statiniai/puslapiai/rinkimai/", 1)
 
 
 def fetch_listing_sample(
