@@ -37,9 +37,115 @@ DEFAULT_RESULTS_PATH = Path(f"sitemaps/{ELECTION_ID}.results.json")
 
 # "Šeimos nariai: Sutuoktinis/sutuoktinė Vida, Vaikas Gintarė, Vaikas Ieva"
 # — one line of role-prefixed names where the later forms ask for the
-# spouse (Q19's second line) and the children (Q20) separately.
-FAMILY_SPOUSE_PREFIX = re.compile(r"^sutuoktin(?:is|ė)(?:\s*/\s*sutuoktin(?:is|ė))?\s+", re.IGNORECASE)
-FAMILY_CHILD_PREFIX = re.compile(r"^vaikas\s+", re.IGNORECASE)
+# spouse (Q19's second line) and the children (Q20) separately. The form's
+# roles, measured over the whole field: Sutuoktinis/sutuoktinė and
+# Partneris/partnerė (a spouse), Vaikas and Augintinis (-ė) (a child),
+# Anūkas (neither); a name with no role continues the previous role's
+# list ("Vaikas Andrius, Tomas, Giedrius").
+FAMILY_ROLE_PREFIXES = [
+    (re.compile(r"^(?:sutuoktin(?:is|ė)|partner(?:is|ė))(?:\s*/\s*(?:sutuoktin(?:is|ė)|partner(?:is|ė)))?\s+", re.IGNORECASE), "spouse"),
+    (re.compile(r"^(?:vaikas|augintin(?:is|ė)(?:\s*\(-ė\))?)\s+", re.IGNORECASE), "child"),
+    (re.compile(r"^(?:anūk(?:as|ė)(?:\s*\(-ė\))?)\s+", re.IGNORECASE), "other"),
+]
+
+# The 2007 form's labels. The questionnaire is one run of "label: <b>answer</b>"
+# lines, and the era's row splitter starts a row at a text node only when
+# the row before it has an answer. Two things on these pages break that:
+# a question printed without its <b> at all (its label then joins the next
+# label's prompt, and every answer after it lands one label early — the
+# pasyvioji rinkimų teisė question on 611 pages, the citizenship one on a
+# handful), and the conviction explanation, a bare text line after
+# "<b>Taip</b>" that joins the "Gimimo vieta:" prompt. Both are undone by
+# splitting a prompt wherever one of the form's labels begins inside it.
+LABEL_STARTS = [
+    "Nuolatinė gyvenamoji vieta",
+    "Ar neturite nebaigtos atlikti teismo",
+    "Ar nesate asmuo, atliekantis",
+    "Ar einate pareigas, nesuderinamas",
+    "Ar esate kitos valstybės renkamos",
+    "Ar turite kitos valstybės pilietybę",
+    "Ar pasyvioji rinkimų teisė",
+    "Ar turite ką nurodyti pagal",
+    "Gimimo vieta",
+    "Tautybė",
+    "Moksliniai laipsniai",
+    "Moksliniai vardai",
+    "Kokias kalbas moka",
+    "Kokios partijos, politinės organizacijos",
+    "Pagrindinė darbovietė",
+    "Visuomeninė veikla",
+    "Pomėgiai",
+    "Šeiminė padėtis",
+    "Šeimos nariai",
+]
+LABEL_START_PATTERN = re.compile("|".join(re.escape(label) for label in LABEL_STARTS))
+CONVICTION_LABEL = "Ar turite ką nurodyti pagal"
+
+
+def split_merged_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """The era's rows with every prompt that holds more than one of the
+    form's labels — or free text before one — split into a row per label.
+    A label the page printed without an answer keeps an empty one; the
+    row's answer stays with the last label; free text becomes a row of its
+    own with no answer (after the conviction question, the explanation)."""
+    result: list[dict[str, Any]] = []
+    for row in rows:
+        prompt = str(row.get("prompt", ""))
+        if not isinstance(row.get("answer"), str):
+            result.append(row)
+            continue
+        starts = [m.start() for m in LABEL_START_PATTERN.finditer(prompt)]
+        if not starts:
+            result.append(row)
+            continue
+        segments: list[tuple[str, bool]] = []
+        if starts[0] > 0:
+            segments.append((prompt[: starts[0]].strip(), False))
+        for index, start in enumerate(starts):
+            end = starts[index + 1] if index + 1 < len(starts) else len(prompt)
+            segment = prompt[start:end].strip()
+            # A label ends at its colon; anything after it on the same text
+            # run (the conviction explanation when the <b>Taip</b> is
+            # missing) is free text.
+            colon = segment.find(":")
+            if 0 < colon < len(segment) - 1:
+                segments.append((segment[: colon + 1].strip(), True))
+                segments.append((segment[colon + 1 :].strip(), False))
+            else:
+                segments.append((segment, True))
+        segments = [(text, is_label) for text, is_label in segments if text]
+        if len(segments) <= 1:
+            result.append(row)
+            continue
+        # The answer belongs to the last label; a trailing free-text
+        # segment would have come after that label's <b>, which the splitter
+        # would have made a row of its own, so the last segment is a label.
+        last_label = max(i for i, (_, is_label) in enumerate(segments) if is_label)
+        for index, (text, _) in enumerate(segments):
+            result.append(
+                {
+                    "questionNumber": None,
+                    "prompt": text,
+                    "answer": row["answer"] if index == last_label else "",
+                }
+            )
+    for index, row in enumerate(result, start=1):
+        row["rowIndex"] = index
+    return result
+
+
+def conviction_explanation(rows: list[dict[str, Any]]) -> str | None:
+    """The free-text line after the conviction question: a row of its own,
+    prompted by the text and unanswered, that is not one of the labels."""
+    for index, row in enumerate(rows):
+        if not str(row.get("prompt", "")).startswith(CONVICTION_LABEL):
+            continue
+        for candidate in rows[index + 1 : index + 2]:
+            prompt = str(candidate.get("prompt", "")).strip()
+            if prompt and not LABEL_START_PATTERN.match(prompt) and not isinstance(candidate.get("answer"), list):
+                return prompt
+        return None
+    return None
 
 
 def _prompt_record_rows(rows: list[dict[str, Any]], prompt_prefix: str) -> list[Any]:
@@ -53,25 +159,27 @@ def _prompt_record_rows(rows: list[dict[str, Any]], prompt_prefix: str) -> list[
 
 def split_family_members(value: str | None) -> tuple[str | None, str | None]:
     """(spouse names, children names) from the family-members line; a part
-    with neither prefix goes with the children, which is where the form's
-    "Vaikas" entries are the only other thing it lists."""
+    with no role of its own continues the role before it."""
     if not value:
         return None, None
-    spouses: list[str] = []
-    children: list[str] = []
+    names: dict[str, list[str]] = {"spouse": [], "child": [], "other": []}
+    role = "child"
     for part in (p.strip() for p in value.split(",")):
         if not part:
             continue
-        if FAMILY_SPOUSE_PREFIX.match(part):
-            spouses.append(FAMILY_SPOUSE_PREFIX.sub("", part).strip())
-        elif FAMILY_CHILD_PREFIX.match(part):
-            children.append(FAMILY_CHILD_PREFIX.sub("", part).strip())
-        else:
-            children.append(part)
-    return (", ".join(s for s in spouses if s) or None, ", ".join(c for c in children if c) or None)
+        for pattern, prefixed_role in FAMILY_ROLE_PREFIXES:
+            if pattern.match(part):
+                role = prefixed_role
+                part = pattern.sub("", part).strip()
+                break
+        if part:
+            names[role].append(part)
+    return (", ".join(names["spouse"]) or None, ", ".join(names["child"]) or None)
 
 
 def normalize_municipal_2007_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    rows = split_merged_rows(rows)
+
     def _prompt_answer(prefix: str) -> str | None:
         return _normalize_answer_value(_row_answer_text(_find_row_by_prompt_prefix(rows, prefix)))
 
@@ -98,6 +206,10 @@ def normalize_municipal_2007_anketa_rows(rows: list[dict[str, Any]]) -> dict[str
             # The conviction question, under the same 89 str. 1 d. the 2011
             # and 2015 forms cite as Q9.
             "ar-buvote-pripazintas-kaltu": _prompt_answer("ar turite ką nurodyti pagal"),
+            # The explanation a "Taip" is followed by — a bare text line on
+            # this form, where the 2011/2015 forms have a prompted row; the
+            # key the rest of the family uses for it.
+            "teisiniai-argumentai": _normalize_answer_value(conviction_explanation(rows) or ""),
         },
         "gimimo-vieta": _prompt_answer("gimimo vieta"),
         "tautybe": _prompt_answer("tautybė"),
@@ -105,10 +217,10 @@ def normalize_municipal_2007_anketa_rows(rows: list[dict[str, Any]]) -> dict[str
             "aprasas": None,
             "irasai": _normalize_table_records(_prompt_record_rows(rows, "išsilavinimas")),
         },
-        # "Moksliniai laipsniai:" — printed only on the pages that have one.
+        # "Moksliniai laipsniai:" and "Moksliniai vardai:" — each printed
+        # only on the pages that have one.
         "mokslo-laipsnis": _prompt_answer("moksliniai laipsniai"),
-        # Not asked in 2007.
-        "pedagoginis-vardas": None,
+        "pedagoginis-vardas": _prompt_answer("moksliniai vardai"),
         "uzsienio-kalbos": _split_list_value(
             _row_answer_text(_find_row_by_prompt_prefix(rows, "kokias kalbas moka"))
         ),

@@ -7,6 +7,7 @@ from scraper.elections.savivaldybiu_2007.anketa_parser import (
     normalize_municipal_2007_anketa_rows,
     parse_anketa_sample,
     split_family_members,
+    split_merged_rows,
 )
 from scraper.elections.savivaldybiu_2007.candidate_samples import EXPECTED_TABS
 from scraper.elections.savivaldybiu_2007.sitemap import ELECTION_ID
@@ -123,6 +124,7 @@ class Savivaldybiu2007AnketaParserTests(unittest.TestCase):
                 "ar-turite-kitos-valstybes-pilietybe": "Neturiu",
                 "ar-pasyvioji-rinkimu-teise-neapribota": "Neapribota",
                 "ar-buvote-pripazintas-kaltu": "Ne",
+                "teisiniai-argumentai": None,
             },
         )
         self.assertEqual(a["gimimo-vieta"], "Radviliškis")
@@ -141,7 +143,7 @@ class Savivaldybiu2007AnketaParserTests(unittest.TestCase):
         self.assertEqual(a["visuomenine-veikla"], "LSDP Elektrėnų skyriaus pirmininkas, LSDP tarybos narys")
         self.assertEqual(a["pomegiai"], "knygos, fotografija")
         self.assertEqual(a["seimine-padetis"], "Vedęs, ištekėjusi")
-        self.assertIsNone(a["pedagoginis-vardas"])
+        self.assertIsNone(a["pedagoginis-vardas"])  # "Moksliniai vardai" printed only where there is one
         self.assertIsNone(a["kita-apie-save"])
         # The degree line is printed only where there is one.
         self.assertIsNone(a["mokslo-laipsnis"])
@@ -159,6 +161,61 @@ class Savivaldybiu2007AnketaParserTests(unittest.TestCase):
         self.assertEqual(split_family_members("Sutuoktinis/sutuoktinė Laima Paksienė, Vaikas Mindaugas Paksas"), ("Laima Paksienė", "Mindaugas Paksas"))
         self.assertEqual(split_family_members("Vaikas Rokas"), (None, "Rokas"))
         self.assertEqual(split_family_members(None), (None, None))
+        # A name without a role continues the role before it; a partner is
+        # a spouse, a foster child a child, a grandchild neither.
+        self.assertEqual(
+            split_family_members("Vaikas Andrius, Tomas, Giedrius, Sutuoktinis/sutuoktinė Robertas"),
+            ("Robertas", "Andrius, Tomas, Giedrius"),
+        )
+        self.assertEqual(
+            split_family_members("Partneris/partnerė Vladas, Vaikas Simonas, Anūkas Jonas, Augintinis (-ė) Rikantė"),
+            ("Vladas", "Simonas, Rikantė"),
+        )
+
+    def test_merged_prompts_are_split_on_the_forms_labels(self) -> None:
+        # A question printed without its <b> joins the next label's prompt
+        # and every answer after it lands one label early — the pasyvioji
+        # question on 611 pages of the field. The split gives the missing
+        # question a null and the answers back to their own labels.
+        html = (
+            '<div class="candidateInfo"><table><tr><td>X</td></tr></table></div>'
+            '<div class="candidateInfo"><table><tr><td> Ar turite kitos valstybės pilietybę?: <br /> '
+            'Ar pasyvioji rinkimų teisė nėra apribota valstybėje, kurios pilietis yra: <b> Neapribota </b> <br /> '
+            'Ar turite ką nurodyti pagal Lietuvos Respublikos savivaldybių tarybų rinkimų įstatymo 89 straipsnio 1 dalyje išdėstytus reikalavimus: <b> Taip </b><br /> '
+            '1995 m. teistas. Teistumo nebeturiu <br /> Gimimo vieta: <b>Zarasai</b> <br /> Tautybė: <b>Lietuvis (-ė)</b> </td></tr></table></div>'
+        )
+        parsed = parse_anketa_html(html, rows_normalizer=normalize_municipal_2007_anketa_rows)
+        # rawData keeps the page's own run: the two labels in one prompt,
+        # the explanation joined to "Gimimo vieta:".
+        self.assertIn("Ar pasyvioji", parsed["anketa"]["rows"][0]["prompt"])
+        self.assertTrue(parsed["anketa"]["rows"][2]["prompt"].endswith("Gimimo vieta:"))
+        n = parsed["anketa"]["normalized"]
+        self.assertIsNone(n["pareiskimai"]["ar-turite-kitos-valstybes-pilietybe"])
+        self.assertEqual(n["pareiskimai"]["ar-pasyvioji-rinkimu-teise-neapribota"], "Neapribota")
+        self.assertEqual(n["pareiskimai"]["ar-buvote-pripazintas-kaltu"], "Taip")
+        # The bare explanation line after "Taip" is the explanation, and
+        # "Gimimo vieta:" gets its own value back.
+        self.assertEqual(n["pareiskimai"]["teisiniai-argumentai"], "1995 m. teistas. Teistumo nebeturiu")
+        self.assertEqual(n["gimimo-vieta"], "Zarasai")
+        self.assertEqual(n["tautybe"], "Lietuvis (-ė)")
+        split = split_merged_rows(parsed["anketa"]["rows"])
+        self.assertEqual(
+            [(r["prompt"][:22], r["answer"]) for r in split],
+            [("Ar turite kitos valsty", ""), ("Ar pasyvioji rinkimų t", "Neapribota"), ("Ar turite ką nurodyti ", "Taip"), ("1995 m. teistas. Teist", ""), ("Gimimo vieta:", "Zarasai"), ("Tautybė:", "Lietuvis (-ė)")],
+        )
+        # A "Taip" with nothing after it explains nothing.
+        html_plain = html.replace("1995 m. teistas. Teistumo nebeturiu <br /> ", "")
+        n2 = parse_anketa_html(html_plain, rows_normalizer=normalize_municipal_2007_anketa_rows)["anketa"]["normalized"]
+        self.assertIsNone(n2["pareiskimai"]["teisiniai-argumentai"])
+        self.assertEqual(n2["gimimo-vieta"], "Zarasai")
+
+    def test_degree_and_title_lines(self) -> None:
+        rows = [
+            {"questionNumber": None, "prompt": "Moksliniai laipsniai:", "answer": "Daktaras", "rowIndex": 1},
+            {"questionNumber": None, "prompt": "Moksliniai vardai:", "answer": "Profesorius", "rowIndex": 2},
+        ]
+        n = normalize_municipal_2007_anketa_rows(rows)
+        self.assertEqual((n["mokslo-laipsnis"], n["pedagoginis-vardas"]), ("Daktaras", "Profesorius"))
 
     def test_empty_answer_closes_its_row(self) -> None:
         # Pilvinis's questionnaire stops after "Gimimo vieta: <b></b> Tautybė:

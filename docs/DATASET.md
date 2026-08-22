@@ -18,9 +18,9 @@ never touched by a full run.
 
 ## Inventory
 
-76,776 candidate records across 42 elections, 1996–2025, with **zero fetch
-failures** other than three 2011 candidate pages VRK never published (see
-Known gaps).
+90,195 candidate records across 43 elections, 1996–2025, with **zero fetch
+failures** other than three 2011 and three 2007 candidate pages VRK never
+published (see Known gaps).
 
 **The table below is an aggregate, not an inventory of any one directory.**
 `data/` is gitignored, so it never travels with a branch or a merge, and the
@@ -94,7 +94,8 @@ election was re-parsed offline the same day.
 | `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai` | 17 | 2 | 0 | 17 |
 | `2011-vasario-13-seimo-marijampole` | 9 | 1 | 0 | 9 |
 | `2011-vasario-27-savivaldybiu` | 16400 | 1526 | 200 | 0 |
-| **total** | **76776** | **6887** | **1504** | **20199** |
+| `2007-vasario-25-savivaldybiu` | 13419 | 1550 | 78 | 0 |
+| **total** | **90195** | **8437** | **1582** | **20199** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
@@ -312,7 +313,32 @@ municipality's results page links a "Mandatus gavę kandidatai" page that
 names every winner with an anketa link — **1,550 seats read by id**, the
 results-table total, the lists' mandate sum and the composition page's
 council size agreeing in all 60. Fixtures: ten candidates chosen by
-shape, 0 anomalies. Full scrape: see below.
+shape, 0 anomalies.
+
+Full scrape with `KEEP_SAMPLES=1`, from the main checkout: 17:26–22:04 UTC,
+68 batches, **13,419 of 13,422** fetched and parsed, **0 anomalies**,
+368 MB of HTML retained. The three missing are candidate pages VRK never
+published — every tab of `Kandidatas<ID>/` a 404 (see Known gaps). The
+full field then showed what ten fixtures could not, all in the unnumbered
+questionnaire and all this election's own: a question printed with no
+`<b>` at all (the pasyvioji rinkimų teisė question on 611 pages, the
+citizenship one on 8) ran its label into the next label's prompt, so every
+answer after it sat under the label before its own — "Ne" from the
+conviction question under `ar-pasyvioji-…` on 611 records; the conviction
+explanation is a bare text line after "Taip" that joined the "Gimimo
+vieta:" prompt (39 records, with their birthplace gone null); the
+"Moksliniai vardai" line (133) had no key; and the family line has more
+roles than the fixtures showed (Partneris/partnerė, Augintinis, Anūkas,
+and a bare name continuing the previous role). The normalizer now splits
+a prompt wherever one of the form's labels begins inside it, reads the
+explanation into `pareiskimai.teisiniai-argumentai` and the title into
+`pedagoginis-vardas`; re-parsed offline from the retained HTML, after
+which every declaration key holds only its own vocabulary (78 "Taip", 39
+explanations, 37 birthplaces recovered). Measured over the corpus: 1,550
+elected (every results-file winner present), income on 13,363 records
+(56 pages say "duomenys nesuvesti", as do 384 interest declarations),
+degree on 753, title on 133. Person index rebuilt: 52,896 persons (5,771
+new; the other 7,648 candidacies merged into people already in the corpus).
 
 ### The 2026-08-22 build of the 2007 Dzūkija Seimo by-election
 
@@ -784,6 +810,12 @@ each now has one.
   coalition position 34, 239 votes). None was elected. They are in the
   sitemap (16,403 entries) and in `.run-state/…/failed_ids.txt`, and have no
   record (16,400); a record cannot be written without a candidate page.
+- Likewise three 2007 municipal candidates: the list pages link them but
+  every tab of `Kandidatas<ID>/` is a 404 on vrk.lt — Antanas Katinas
+  (1835, Skuodas, LVLS position 14), Genrika Rynkun (6582, Švenčionys,
+  Lietuvos lenkų liaudies partija position 3) and Juzefa Bagdonienė (1336,
+  Varėna, LRLS position 15). None was elected. In the sitemap (13,422) and
+  `failed_ids.txt`, no record (13,419).
 - ~~Three 2015 elections have not had their full scrapes yet~~ — completed
   2026-08-21 with `KEEP_SAMPLES=1`: 327 (Širvintos–Trakai), 366 (Šilutė)
   and 15,149 (the March municipal general, the corpus's third-largest
