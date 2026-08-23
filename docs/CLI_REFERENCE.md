@@ -54,6 +54,7 @@ python -m scraper <command> [args]
 - `2014-prezidento` (2014-05-11 presidential election)
 - `2014-ep` (2014-05-25 European Parliament election)
 - `2004-ep` (2004-06-13 European Parliament election — Lithuania's first, 12 party lists; VRK's original 2004 static site)
+- `2004-prezidento` (2004-06-13 presidential election, five candidates, runoff June 27; VRK's original 2004 static site, the biography and programme as Word documents)
 - `2004-seimo` (2004-10-10 Seimas general election, 15 party lists and 71 single-member constituencies; VRK's original 2004 static site)
 - `2005-lapkricio-20-seimo-kedainiai` (2005-11-20 Seimo new election in Kėdainių No. 43; the 2004 static site one year on)
 - `2000-seimo` (2000-10-08 Seimas general election, 15 party lists and 71 single-member constituencies; the 1996-2000 LRS-ITD archive template)
@@ -1134,6 +1135,86 @@ Fixtures are thirteen candidates chosen by shape
 2026-08-23 with retention (241/241, 0 fetch failures, 0 anomalies, 8.7 MB
 under `samples-full/2004-ep/`).
 
+## Presidential 2004 (`2004-prezidento`) Workflow
+
+The 2004-06-13 presidential election (GitHub issue #30; VRK's
+`rinkimai/2004/prezidentas/` tree) — called early after the April 2004
+impeachment, held with the EP election on one day, won by Valdas Adamkus
+over Prunskienė in the June 27 runoff. The third member of the 2004
+static site family, read by `scraper/elections/prezidento_2004/`, and
+unlike its siblings it publishes **one shared listing page, not a page
+per candidate** — and the biography and programme as **Word documents**,
+the corpus's only non-page source:
+
+- **Listing**: `kandidatai_l_19.htm`, the five candidates as profile
+  cards. Each card carries the name and VRK's candidate id (the card's
+  own `<a name>` anchor), the photo thumbnail (full portrait behind
+  `nuotrauka_<ID>.htm`), the registration sentence with the VRK decision
+  linked on lrs.lt ("2004 m. gegužės 12 dienos VRK sprendimu Nr. 120
+  registruotas kandidatu…"), and the candidate's links: the declaration
+  extracts (`kand_pajam_l_<ID>.htm`, the family's usual page and the
+  card's only per-candidate HTML), the trustees
+  (`patiketiniai_l_<RID>.htm` — a **second id space**, VRK's
+  registration record id, which the results tree reuses; the page itself
+  is a 404 for all five, linked but never published, so it goes to
+  `unpublishedTabs` as the 2009 presidential trustees did), the
+  biography and programme as Word 97 `.doc` (Auštrevičius published no
+  programme), the scanned statement GIF (and, on Adamkus's card only,
+  the health certificate GIF), and the campaign site. The sitemap
+  reconciles rather than skips: five cards, both ids on every card, the
+  declaration id equal to the card anchor.
+- **Candidate page-set**: the module's own fetcher (the era fetcher
+  assumes text pages) saves the shared listing as each candidate's
+  `anketa.html`, the declarations under the corpus's usual name, the
+  documents as `biografija.doc` / `programa.doc` — fetched as **bytes**
+  (`fetch_bytes`; a `.doc` run through text decoding is corrupt beyond
+  repair) — and the portrait page as `nuotrauka.html`. `programa` is
+  expected per entry, only where the card links one.
+- **Word documents**: `scraper/shared/word_doc.py`, a dependency-free
+  Word 97 reader — OLE container, FIB, the Clx piece table (document
+  order even for fast-saved files), main-document range only (the VRK
+  files keep a page-header subdocument beyond `ccpText`), field codes
+  keep result text and lose instruction text. All ten documents extract
+  clean Lithuanian text. The record keeps the text under
+  `rawData.biografija` / `rawData.programa` (with the source URL) and
+  `normalized.biografija.tekstas` / `normalized.programa.tekstas`.
+- **Birth facts**: no questionnaire exists in this tree, so the birth
+  date is recovered from the biography's opening sentence ("Valdas
+  Adamkus gimė 1926 m. lapkričio 3 d. Kaune…") under the 1990s archive
+  family's keys and caveats — `anketa.gimimo-data` with
+  `gimimo-data-saltinis: biografijos-tekstas`. All five biographies
+  state the full date; the person index joins all five to their careers
+  across the corpus (Adamkus to his residency-establishing 1997 Šiauliai
+  council run, Prunskienė to nine elections).
+- **Results**: the tree's two national pages, walked by
+  `prezidento_2004/results.py`: `rez_l_19_1.htm` (first round — summary
+  block, one row per candidate with votes at the stations / by post / in
+  total and both percentages, the runoff qualifiers' names in bold) and
+  `rez_l_19_2.htm` (the runoff, closed by the verdict "Respublikos
+  Prezidentu išrinktas - Valdas ADAMKUS" with the name linked to the
+  listing's card anchor). Every join is by id: candidate rows link
+  `rez_kand_l_<RID>_<round>_1.htm` under the registration record id from
+  the sitemap, the verdict's anchor fragment is the candidate id itself.
+  Both rounds' votes are joined into each record as
+  `kandidatavimas.turai`; the winner gets `isrinktas: true`,
+  `isrinktasKaip: "prezidentas"`, `rezultatuTuras: 2`.
+
+```bash
+python -m scraper fetch-sample 2004-prezidento
+python -m scraper sitemap 2004-prezidento
+python -m scraper fetch-candidate-samples 2004-prezidento --allow-new-samples \
+  --candidate-id valdas-adamkus --candidate-id petras-austrevicius \
+  --candidate-id vilija-blinkeviciute --candidate-id ceslovas-jursenas \
+  --candidate-id kazimira-danute-prunskiene
+python -m scraper build-results 2004-prezidento
+python -m scraper parse-anketa-samples 2004-prezidento
+```
+
+Fixtures are the complete five-candidate field
+(`tests/test_prezidento_2004_sample_allowlist.py`), so the fixture
+capture *is* the full scrape — as for the 2005 Kėdainiai by-election.
+Scraped 2026-08-24: 5/5, 0 fetch failures, 0 anomalies.
+
 ## Seimas 2004 (`2004-seimo`) Workflow
 
 The 2004-10-10 Seimas general election (GitHub issue #32; VRK's
@@ -1659,6 +1740,7 @@ reconciliation looked like when the files were built (2026-08-21):
 | `2011-vasario-27-savivaldybiu` | 60 municipality pages + 599 list rankings (no mayoral vote, no round two); built 2026-08-22 | 1,526 council, 18 of them self-nominated individuals seated from their own row of the results table | every winner by id in the sitemap (no dual ids: one candidacy each); 0 seat mismatches; 60/60 compositions contain every derived winner |
 | `2007-vasario-25-savivaldybiu` | 60 municipality pages + 60 "Mandatus gavę kandidatai" pages (the winners with anketa links; no ranking arithmetic), `2007_savivaldybiu_tarybu_rinkimai/` without `output_lt`; built 2026-08-22 | 1,550 council | every winner by id in the sitemap and in the municipality the sitemap places them; winners = results-table total = sum of list mandates = composition-page council size in all 60 |
 | `2004-ep` | the 2004 tree's own members page (`rinkimai/2004/euro/rezultatai/rez_isrinkti_l_18_1.htm`, ids on the page) with its substitution footnote, the national page's mandate column and the 12 per-list ranking pages; built 2026-08-23 | 13 (14 records: Prunskienė's terminated mandate and Didžiokas seated by VRK decision Nr. 181) | all in the sitemap; mandates per list = members per list; bold ranking rows = members; 241/241 ranked, pre-election positions = listing |
+| `2004-prezidento` | the 2004 tree's two national pages (`rinkimai/2004/prezidentas/rezultatai/rez_l_19_1.htm` and `_2.htm`), joined by the registration record id the listing's trustee links carry and the runoff verdict's card-anchor fragment; both rounds' votes kept in the details for the `kandidatavimas.turai` join; built 2026-08-24 | 1 (Adamkus, runoff verdict) | 5 round-one rows all in the sitemap; bold round-one names = the runoff field; each round's votes sum to its valid ballots; winner resolved by id |
 | `2004-seimo` | the 2004 tree's members page (`rinkimai/2004/seimas/rezultatai/rez_isrinkti_l_20_1.htm`, ids on the page, seat and deciding round on the row), cross-checked against the list-seat and the two constituency-winner pages and the national page's mandate column; the 15 per-list ranking pages for rank and preference votes; built 2026-08-23 | 141 (70 list, 71 constituency: 5 in round one, 66 in the runoff) | all in the sitemap with the right role and constituency; all three id cross-checks and the mandate column at 0; 1,183 list candidates ranked (128 on the unranked LLRA list with rank but no votes), pre-election positions = listing |
 | `2005-lapkricio-20-seimo-kedainiai` | the 2005 tree's members page (`rinkimai/2005/seimas/rezultatai/rez_isrinkti_l_21_1.htm`, id and round on the row), cross-checked against the runoff winners page; built 2026-08-23 | 1 (runoff) | resolved |
 | `2015-birzelio-7-pakartotiniai-sirvintos-trakai` | same walk, `2015_2_…` tree | 2 mayors, 24 council | clean |
@@ -1700,7 +1782,7 @@ Traps the walkers encode, worth knowing before touching them:
 for id in 2007-spalio-7-seimo-dzukija 2008-seimo 2009-prezidento 2009-ep 2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai 2011-vasario-13-seimo-marijampole 2012-seimo 2013-kovo-3-seimo-birzai-zarasai-ukmerge 2014-prezidento 2014-ep \
           2015-kovo-1-seimo-zirmunai 2015-birzelio-7-seimo-varena-eisiskes 2015-lapkricio-8-telsiu-mero \
           2015-birzelio-7-pakartotiniai-sirvintos-trakai 2015-birzelio-21-pakartotiniai-silutes 2015-kovo-1-savivaldybiu \
-          2011-vasario-27-savivaldybiu 2007-vasario-25-savivaldybiu 2004-ep 2004-seimo 2005-lapkricio-20-seimo-kedainiai; do
+          2011-vasario-27-savivaldybiu 2007-vasario-25-savivaldybiu 2004-ep 2004-prezidento 2004-seimo 2005-lapkricio-20-seimo-kedainiai; do
   python -m scraper build-results "$id"
 done
 # then re-parse offline; the wrappers pick up sitemaps/<id>.results.json by default

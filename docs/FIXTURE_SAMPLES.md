@@ -605,6 +605,20 @@ the samples directory holds the list index (`list.html`) and the twelve
 list pages under `lists/`. The field is scraped by
 `scripts/run_election_batches.sh`.
 
+For `2004-prezidento` the allowlist
+(`tests/test_prezidento_2004_sample_allowlist.py`) is the complete
+five-candidate field — `valdas-adamkus` (the runoff winner; the only card
+with the health certificate; individual-form asset declaration with an
+explicit 0 Lt of registered property), `kazimira-danute-prunskiene` (the
+runoff loser), `petras-austrevicius` (the one candidate without a
+programme), `vilija-blinkeviciute` and `ceslovas-jursenas` (family-form
+asset declarations). Each directory holds the shared listing as
+`anketa.html`, the declarations page, the full-portrait page
+(`nuotrauka.html`) and the Word documents (`biografija.doc`, and
+`programa.doc` where published) — the corpus's only binary fixtures; the
+samples directory holds the listing (`list.html`). The fixture capture
+is the full scrape.
+
 For `2004-seimo` the allowlist (`tests/test_seimo_2004_sample_allowlist.py`)
 is **fourteen candidates out of 1,251**, chosen by shape: the Paksas
 coalition's leader `valentinas-mazuronis` (LDP member, first on both lists,

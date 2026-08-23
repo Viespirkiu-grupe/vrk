@@ -1735,6 +1735,73 @@ roman section heading as the key of its total (with the page's row label,
 "Visa šeimos turto vertė", as `label`), and the form line ("1) FR0462
 formos deklaracijos") as a three-field item (`form`, `income`, `tax`).
 
+## Appendix: 2004 Presidential (`2004-prezidento`)
+
+The June 2004 presidential election (five candidates, the runoff on June
+27), the third member of the 2004 static site family, read by
+`scraper/elections/prezidento_2004/`. Written as
+`data/2004-prezidento/<candidate-id>-2004-prezidento.json`. The tree has
+**no questionnaire** — the record's sections are `profilis`/`profile`,
+a prose-recovered `anketa`, `biografija`, `programa` (this election's
+own section) and `turto-ir-pajamu-deklaracijos`; `rawData` also keeps
+`nuotrauka` (the portrait pages). What is this election's own:
+
+### `kandidatavimas`
+
+`vrkCandidateId` (the listing card's own anchor, which the declaration
+page id equals) and `vrkRegistrationId` — VRK's registration record id,
+the second id space the trustee links carry and the results tree keys on
+(`rez_kand_l_<RID>_…`). The results join gives the winner
+`isrinktas: true`, `isrinktasKaip: "prezidentas"`, `rezultatuTuras: 2`
+and `rezultatuSaltinis` (the runoff page, whose verdict names him by the
+listing's card anchor); the other four are plain false. `turai` is on
+every record — one entry per round the candidate stood in (two for
+Adamkus and Prunskienė, one for the rest): `turas`, `balsai`,
+`balsai-apylinkese`, `balsai-pastu`, `procentai-nuo-galiojanciu`,
+`procentai-nuo-dalyvavusiu` and `saltinis`, from the round's national
+page. Each round's `balsai` sum to its valid ballots.
+
+### `profilis`
+
+`vardas-pavarde` from the card, `pastaba` always null, `nuotrauka` the
+**full portrait** (the `nuotrauka.html` page's image; the card's
+thumbnail is kept as `rawData.nuotrauka.thumbnailUrl`), and `kita` with
+the card's facts: `registracija` (the sentence — "2004 m. gegužės 12
+dienos VRK sprendimu Nr. 120 registruotas kandidatu į Respublikos
+Prezidentus." — linking the decision on lrs.lt), `pareiskimas` (the
+scanned statement GIF's URL), `sveikatos-pazymejimas` (Adamkus's card
+only) and `interneto-svetaine` (all five). The sitemap entry also keeps
+the parsed `registeredDate` and `decision`.
+
+### `normalized.anketa`
+
+Recovered from the biography prose, exactly as the 1990s Seimas archive
+family does it (same keys, same caveats): `gimimo-data` with
+`gimimo-data-saltinis: "biografijos-tekstas"` and `gimimo-metai`. All
+five biographies state the full date, so all five records carry one —
+the person index joins every candidate to their other candidacies.
+`gimimo-vieta` resolves for none of the five (the birthplace phrases are
+the helper's documented misses: "Kaune tarnautojų šeimoje", villages the
+place vocabulary lacks).
+
+### `biografija` and `programa`
+
+The Word 97 documents' text (`scraper/shared/word_doc.py`):
+`rawData.biografija` / `rawData.programa` keep `text` with paragraph
+breaks and the document's `sourceUrl`; `normalized.*.tekstas` is the
+corpus's one-line normalized form. The biographies open "Kandidatas į
+Respublikos PREZIDENTUS <name>" before the prose; the programmes are
+each campaign's own composition. Auštrevičius published no programme, so
+his record has no `programa` section — absent, not null-filled.
+
+### `turto-ir-pajamu-deklaracijos`
+
+The 2004 EP appendix's shape, parsed by the same readers: Adamkus and
+Auštrevičius filed the individual form, the rest the family form;
+Adamkus's `privalomas-registruoti-turtas` is an explicit `0` (the page
+prints "0 Lt.", not "-"). All five filed income on the FR0462S variant
+alone.
+
 ## Appendix: 2004 Seimas (`2004-seimo`) and the 2005 Kėdainiai by-election (`2005-lapkricio-20-seimo-kedainiai`)
 
 The 2005 Kėdainiai by-election is the 2004 Seimas record shape for a

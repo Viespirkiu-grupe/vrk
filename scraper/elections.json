@@ -66,6 +66,12 @@
       "shortName": "2004 EP"
     },
     {
+      "id": "2004-prezidento",
+      "date": "2004-06-13",
+      "name": "2004 m. Lietuvos Respublikos Prezidento rinkimai",
+      "shortName": "2004 prezidento"
+    },
+    {
       "id": "2004-seimo",
       "date": "2004-10-10",
       "name": "2004 m. Lietuvos Respublikos Seimo rinkimai",
