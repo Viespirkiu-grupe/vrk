@@ -1,6 +1,6 @@
 {
   "description": "Concept-to-path bridge for the normalized layer of the VRK election corpus. For each concept, the normalized dotted path per election id. An election missing from a concept's paths does not publish (or does not normalize) that concept — see docs/DATA_GUIDE.md.",
-  "verified": "2026-08-19 against every record of the 20 elections then under data/; 2026-08-21 for the six 2015 elections added since, against their parsed records (complete fields for the three small ones, fixture sets for the three large ones). 2026-08-21 for the five 1996-1998 archive elections added since: the two municipal ones (1997-kovo-23-savivaldybiu-tarybu, 1997-birzelio-29-svenciniu-tarybos-pakartotiniai) against their parsed records for the ten concepts their anketa/kandidatavimas sections actually publish (kebab-case keys shared with the 2015 and 2016 eras, so no era-specific path shape); the three Seimas archive elections (1996-spalio-20-seimo and its two 1997 repeats) publish none of the existing concepts — no birth date, nationality, education, or any of the other fields those pages simply do not carry, and their candidacy field is a list (single- and multi-mandate seats can both apply) rather than the single value every existing concept path assumes, so iskele/savivaldybe are left unmapped for them too — so they appear only in the elections list. 2026-08-21 for the four 2012-2014 elections (2012-seimo, 2013-kovo-3-seimo-birzai-zarasai-ukmerge, 2014-prezidento, 2014-ep): same era and key set as the 2015 elections, paths copied from 2015-kovo-1-seimo-zirmunai and validated against every parsed record; the presidential election maps no iskele (self-nominated) and no ar-buvote-pripazintas-kaltu (its form asks the eligibility set, not Q9.2), the EP election no kita-apie-save (no Q21), and neither 2014 election a declaration period (their note paragraph is empty). 2026-08-22 for 2009-prezidento: the 2014 presidential paths copied and validated against all seven parsed records (same concept set — no iskele, no ar-buvote-pripazintas-kaltu, no declaration period). Same day for 2009-ep: the 2014 EP paths (plus kita-apie-save, which its Q21 publishes) validated against the fifteen fixture records. Same day for 2008-seimo: the 2012 Seimo paths validated against the eight fixture records. Same day for the 2009 and 2011 Seimo by-elections: the 2013 paths validated against their complete fields (17 and 9 records). Same day for 2007-spalio-7-seimo-dzukija: the 2013 paths validated against its complete field (10 records); gimimo-data resolves through anketa because the era parser folds the card's date in. Same day for 2011-vasario-27-savivaldybiu: the 2015 municipal general's paths validated against the ten fixture records (same era, same municipal key set; the election adds no concept of its own). Same day for 2007-vasario-25-savivaldybiu: the 2011 municipal general's paths validated against the ten fixture records; savivaldybe resolves through kandidatavimas (the 2007 card names the electoral district, not the municipality), kita-apie-save is unmapped (not asked) and so is the declaration period (no note paragraph); the election's own keys — anketa.seimos-nariai and pareiskimai.ar-pasyvioji-rinkimu-teise-neapribota — map to no existing concept. 2026-08-23 for 2004-ep: the 2009 EP paths (the same question set, five years earlier) validated against its complete field (241 records); porinkiminis-numeris is unmapped as for the other pre-2016 results-joined elections — the 2004 rank lives in kandidatavimas.porinkiminisNumerisSarase, a results-tree join outside the normalized layer — and so is the declaration period (no note paragraph). Same day for 2004-seimo: the 2012 Seimo paths (the same Seimas question set, under the 2016 keys) validated against its complete field (1,251 records); the declaration concepts resolve on 1,250 — Žiobakienė has no declarations page — and the section is present on 1,249 asset extracts (Matkevičius's page prints the income extract only); porinkiminis-numeris is unmapped as for 2004-ep (kandidatavimas.porinkiminisNumerisSarase, a results-tree join), and so is the declaration period. Same day for 2005-lapkricio-20-seimo-kedainiai: the 2004 Seimas paths validated against its complete field (5 records). Same day for 2000-seimo: the 2004 Seimas paths for the fields the 2000 card asks, validated against the fifteen fixture records; tautybe, kita-apie-save and naryste-politinese-organizacijose are unmapped (not asked), porinkiminis-numeris as for the other results-joined elections (kandidatavimas.porinkiminisNumerisSarase), the declaration period likewise; the asset concepts are unmapped because the 1990s form sums turtas and piniginės lėšos (turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pradzioje carries the combined figure), so only income, tax and currency resolve. Same day for 2000-kovo-19-savivaldybiu-tarybu: the 2000 Seimas paths for the fields the municipal card asks, validated against the ten fixture records; issilavinimas resolves through anketa.issilavinimas.aprasas (the form asks the level, as 1997), iskele through kandidatavimas.tarybosNarys.partyList (the card prints the list in the genitive) and savivaldybe through kandidatavimas.savivaldybe as for 2007; tautybe, sutuoktinio-vardas-pavarde, vaiku-vardai-pavardes, pomegiai, kita-apie-save and naryste-politinese-organizacijose are unmapped (not printed), porinkiminis-numeris as for the other results-joined elections, the asset concepts as for 2000-seimo.",
+  "verified": "2026-08-19 against every record of the 20 elections then under data/; 2026-08-21 for the six 2015 elections added since, against their parsed records (complete fields for the three small ones, fixture sets for the three large ones). 2026-08-21 for the five 1996-1998 archive elections added since: the two municipal ones (1997-kovo-23-savivaldybiu-tarybu, 1997-birzelio-29-svenciniu-tarybos-pakartotiniai) against their parsed records for the ten concepts their anketa/kandidatavimas sections actually publish (kebab-case keys shared with the 2015 and 2016 eras, so no era-specific path shape); the three Seimas archive elections (1996-spalio-20-seimo and its two 1997 repeats) publish none of the existing concepts — no birth date, nationality, education, or any of the other fields those pages simply do not carry, and their candidacy field is a list (single- and multi-mandate seats can both apply) rather than the single value every existing concept path assumes, so iskele/savivaldybe are left unmapped for them too — so they appear only in the elections list. 2026-08-21 for the four 2012-2014 elections (2012-seimo, 2013-kovo-3-seimo-birzai-zarasai-ukmerge, 2014-prezidento, 2014-ep): same era and key set as the 2015 elections, paths copied from 2015-kovo-1-seimo-zirmunai and validated against every parsed record; the presidential election maps no iskele (self-nominated) and no ar-buvote-pripazintas-kaltu (its form asks the eligibility set, not Q9.2), the EP election no kita-apie-save (no Q21), and neither 2014 election a declaration period (their note paragraph is empty). 2026-08-22 for 2009-prezidento: the 2014 presidential paths copied and validated against all seven parsed records (same concept set — no iskele, no ar-buvote-pripazintas-kaltu, no declaration period). Same day for 2009-ep: the 2014 EP paths (plus kita-apie-save, which its Q21 publishes) validated against the fifteen fixture records. Same day for 2008-seimo: the 2012 Seimo paths validated against the eight fixture records. Same day for the 2009 and 2011 Seimo by-elections: the 2013 paths validated against their complete fields (17 and 9 records). Same day for 2007-spalio-7-seimo-dzukija: the 2013 paths validated against its complete field (10 records); gimimo-data resolves through anketa because the era parser folds the card's date in. Same day for 2011-vasario-27-savivaldybiu: the 2015 municipal general's paths validated against the ten fixture records (same era, same municipal key set; the election adds no concept of its own). Same day for 2007-vasario-25-savivaldybiu: the 2011 municipal general's paths validated against the ten fixture records; savivaldybe resolves through kandidatavimas (the 2007 card names the electoral district, not the municipality), kita-apie-save is unmapped (not asked) and so is the declaration period (no note paragraph); the election's own keys — anketa.seimos-nariai and pareiskimai.ar-pasyvioji-rinkimu-teise-neapribota — map to no existing concept. 2026-08-23 for 2004-ep: the 2009 EP paths (the same question set, five years earlier) validated against its complete field (241 records); porinkiminis-numeris is unmapped as for the other pre-2016 results-joined elections — the 2004 rank lives in kandidatavimas.porinkiminisNumerisSarase, a results-tree join outside the normalized layer — and so is the declaration period (no note paragraph). Same day for 2004-seimo: the 2012 Seimo paths (the same Seimas question set, under the 2016 keys) validated against its complete field (1,251 records); the declaration concepts resolve on 1,250 — Žiobakienė has no declarations page — and the section is present on 1,249 asset extracts (Matkevičius's page prints the income extract only); porinkiminis-numeris is unmapped as for 2004-ep (kandidatavimas.porinkiminisNumerisSarase, a results-tree join), and so is the declaration period. Same day for 2005-lapkricio-20-seimo-kedainiai: the 2004 Seimas paths validated against its complete field (5 records). Same day for 2000-seimo: the 2004 Seimas paths for the fields the 2000 card asks, validated against the fifteen fixture records; tautybe, kita-apie-save and naryste-politinese-organizacijose are unmapped (not asked), porinkiminis-numeris as for the other results-joined elections (kandidatavimas.porinkiminisNumerisSarase), the declaration period likewise; the asset concepts are unmapped because the 1990s form sums turtas and piniginės lėšos (turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pradzioje carries the combined figure), so only income, tax and currency resolve. Same day for 2000-kovo-19-savivaldybiu-tarybu: the 2000 Seimas paths for the fields the municipal card asks, validated against the ten fixture records; issilavinimas resolves through anketa.issilavinimas.aprasas (the form asks the level, as 1997), iskele through kandidatavimas.tarybosNarys.partyList (the card prints the list in the genitive) and savivaldybe through kandidatavimas.savivaldybe as for 2007; tautybe, sutuoktinio-vardas-pavarde, vaiku-vardai-pavardes, pomegiai, kita-apie-save and naryste-politinese-organizacijose are unmapped (not printed), porinkiminis-numeris as for the other results-joined elections, the asset concepts as for 2000-seimo. 2026-08-24 for 2004-prezidento: validated against its complete field (5 records) — the tree asks no questionnaire, so only the prose-recovered birth date (anketa.gimimo-data, from the .doc biography, all five resolving) and the declaration concepts (the 2004-ep page shape, all five) map; gimimo-vieta is unmapped (the five birthplace phrases are the prose helper's documented misses), iskele is unmapped (presidential candidates self-nominate and the card names no nominator), and the declaration period likewise (no note paragraph).",
   "elections": [
     "1996-spalio-20-seimo",
     "1997-kovo-23-savivaldybiu-tarybu",
@@ -10,6 +10,7 @@
     "2000-kovo-19-savivaldybiu-tarybu",
     "2000-seimo",
     "2004-ep",
+    "2004-prezidento",
     "2004-seimo",
     "2005-lapkricio-20-seimo-kedainiai",
     "2007-spalio-7-seimo-dzukija",
@@ -99,6 +100,7 @@
         "2014-prezidento": "anketa.gimimo-data",
         "2014-ep": "anketa.gimimo-data",
         "2004-ep": "anketa.gimimo-data",
+        "2004-prezidento": "anketa.gimimo-data",
         "2004-seimo": "anketa.gimimo-data",
         "2005-lapkricio-20-seimo-kedainiai": "anketa.gimimo-data",
         "2000-seimo": "anketa.gimimo-data",
@@ -842,6 +844,7 @@
         "2014-prezidento": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas",
         "2014-ep": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas",
         "2004-ep": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas",
+        "2004-prezidento": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas",
         "2004-seimo": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas",
         "2005-lapkricio-20-seimo-kedainiai": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas"
       }
@@ -888,6 +891,7 @@
         "2014-prezidento": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
         "2014-ep": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
         "2004-ep": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
+        "2004-prezidento": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
         "2004-seimo": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
         "2005-lapkricio-20-seimo-kedainiai": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai"
       }
@@ -934,6 +938,7 @@
         "2014-prezidento": "turto-ir-pajamu-deklaracijos.pinigines-lesos",
         "2014-ep": "turto-ir-pajamu-deklaracijos.pinigines-lesos",
         "2004-ep": "turto-ir-pajamu-deklaracijos.pinigines-lesos",
+        "2004-prezidento": "turto-ir-pajamu-deklaracijos.pinigines-lesos",
         "2004-seimo": "turto-ir-pajamu-deklaracijos.pinigines-lesos",
         "2005-lapkricio-20-seimo-kedainiai": "turto-ir-pajamu-deklaracijos.pinigines-lesos"
       }
@@ -980,6 +985,7 @@
         "2014-prezidento": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos",
         "2014-ep": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos",
         "2004-ep": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos",
+        "2004-prezidento": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos",
         "2004-seimo": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos",
         "2005-lapkricio-20-seimo-kedainiai": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos"
       }
@@ -1026,6 +1032,7 @@
         "2014-prezidento": "turto-ir-pajamu-deklaracijos.gautos-paskolos",
         "2014-ep": "turto-ir-pajamu-deklaracijos.gautos-paskolos",
         "2004-ep": "turto-ir-pajamu-deklaracijos.gautos-paskolos",
+        "2004-prezidento": "turto-ir-pajamu-deklaracijos.gautos-paskolos",
         "2004-seimo": "turto-ir-pajamu-deklaracijos.gautos-paskolos",
         "2005-lapkricio-20-seimo-kedainiai": "turto-ir-pajamu-deklaracijos.gautos-paskolos"
       }
@@ -1072,6 +1079,7 @@
         "2014-prezidento": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
         "2014-ep": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
         "2004-ep": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
+        "2004-prezidento": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
         "2004-seimo": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
         "2005-lapkricio-20-seimo-kedainiai": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
         "2000-seimo": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
@@ -1120,6 +1128,7 @@
         "2014-prezidento": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis",
         "2014-ep": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis",
         "2004-ep": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis",
+        "2004-prezidento": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis",
         "2004-seimo": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis",
         "2005-lapkricio-20-seimo-kedainiai": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis",
         "2000-seimo": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis",
@@ -1148,6 +1157,7 @@
         "2014-prezidento": "turto-ir-pajamu-deklaracijos.valiuta",
         "2014-ep": "turto-ir-pajamu-deklaracijos.valiuta",
         "2004-ep": "turto-ir-pajamu-deklaracijos.valiuta",
+        "2004-prezidento": "turto-ir-pajamu-deklaracijos.valiuta",
         "2004-seimo": "turto-ir-pajamu-deklaracijos.valiuta",
         "2005-lapkricio-20-seimo-kedainiai": "turto-ir-pajamu-deklaracijos.valiuta",
         "2000-seimo": "turto-ir-pajamu-deklaracijos.valiuta",

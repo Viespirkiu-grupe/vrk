@@ -34,7 +34,15 @@ it before writing anything. The layout families are:
   registration, and its own two-structure listing walk (lists and
   constituencies, as 2008/2012, on the 2004 template); the November 2005
   Kėdainiai by-election (`seimo_kedainiu_2005`) is thin wiring over it.
-  The 2004 presidential tree, if ever added, would be the next.
+  The June 2004 presidential election (`prezidento_2004`) is the third
+  member, with a different publication shape: one shared listing of five
+  profile cards instead of per-candidate pages, the biography and
+  programme as Word 97 `.doc` documents (read by
+  `scraper/shared/word_doc.py`, fetched as bytes with `fetch_bytes`),
+  the declaration page the only per-candidate HTML (`ep_2004`'s readers
+  parse it unchanged), birth facts recovered from the biography prose
+  under the 1990s family's keys, and a two-round results walk of its own
+  joined by VRK's registration record id.
 - **2000 archive** (`seimo_2000`): the 1996-1998 Teleport archive's
   template (`statiniai/puslapiai/n/rinkimai/20001008/`, the
   `kandvl.htm-<ID>.htm` candidate page) carrying the 2004 static site's

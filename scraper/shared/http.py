@@ -63,3 +63,19 @@ def fetch_text(
     response.raise_for_status()
     response.encoding = response.encoding or "utf-8"
     return response.text
+
+
+def fetch_bytes(
+    url: str,
+    timeout_seconds: int = 45,
+    session: requests.Session | None = None,
+) -> bytes:
+    """A binary page — the 2004 presidential candidates' Word documents.
+
+    Same session, politeness and retries as ``fetch_text``; the body is
+    returned undecoded, because a ``.doc`` run through text decoding is
+    corrupt beyond repair.
+    """
+    response = (session or _get_default_session()).get(url, timeout=timeout_seconds)
+    response.raise_for_status()
+    return response.content
