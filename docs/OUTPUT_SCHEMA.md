@@ -1816,6 +1816,111 @@ extracts). One record (Žiobakienė) has no section — VRK published no
 declarations page for her; one (Matkevičius) has the income extract only
 (`israsai.turto-deklaracija` null, the asset keys null).
 
+## Appendix: 2000 Seimas (`2000-seimo`)
+
+The 1996-1998 Seimas archive's candidate page with the 2004 Seimas
+election's content on it, in one document — so the record is the 2004
+Seimas shape (four sections: `profilis`, `anketa`, `biografija`,
+`turto-ir-pajamu-deklaracijos`; no interest declaration, no `kita`, no
+campaign section) with the 1990s family's declaration block. Records are
+written as `data/2000-seimo/<candidate-id>-2000-seimo.json`.
+
+- `rawData` section order: `profile` (the card as 2004's
+  `candidateDisplayName`/`electedNote`/`photoSrc`/`fields`), `candidacies`
+  (the card's blocks read: `apygardaName`, `apygardaNumber`, `apygardaUrl`,
+  `isMultiMember`, `electedNote`, `nominator`, `nominatorUrl`,
+  `listNumber`, `memberParty`, `memberPartyUrl`, `memberListNumber`),
+  `anketa` (`rows`: the seven Q8/Q9 questions as `questionNumber`/`prompt`/
+  `answer`, with `explanation` where a run follows an answer; `fields`: each
+  labelled paragraph as `label` and `items` of `value`/`note`), `residence`,
+  `biography` (`text`, null where the page has no "Autobiografija"),
+  `declaration` (the normalized block, as the 1996 family stores it).
+
+### `kandidatavimas`
+
+The 2004 Seimas shape: `roles`, `vienmandate`, `daugiamandate` (with
+`koalicijosPartija`/`numerisPartijosSarase` for the Brazauskas coalition's
+140 candidates), `vienmandate.kitiIskelejai` where the card names a second
+nominator for the same constituency, the results join (`isrinktas`,
+`isrinktasKaip`, `rezultatuSaltinis` — no `rezultatuTuras`: every 2000
+constituency was decided in one round). No `savarankiskasKampanijosDalyvis`
+(the 2000 cards carry no campaign registration line). What this election
+adds:
+
+- The ranking join carries two 2000-only figures beside
+  `porinkiminisNumerisSarase`, `pirmumoBalsai` and `pirmumoBalsuSaltinis`:
+  `partinisReitingas` (VRK's party rating, from the pre-election number and
+  the list's size) and `reitingoBalai` (its product with the preference
+  votes, the figure the post-election order follows). Every list was
+  ranked, LLRA included.
+- `vienmandatesBalsai` on every constituency candidate: `balsadezese`,
+  `pastu`, `isViso`, `procentai` (of valid ballots), `vieta` (place on the
+  page, 1 = winner) and `saltinis` (the `rvapgl.htm-<district>.htm` page).
+  The 2000 results pages row candidates under the candidate-page id, which
+  the 2004 tree does not, so this is the one pre-2016 Seimas election with
+  constituency votes on the record.
+
+### `profilis`
+
+`vardas-pavarde` (the page heading, given-name first: "Aloyzas SAKALAS";
+the listing's surname-first form stays in the sitemap and `candidateId`),
+`pastaba` — **the card's own winner note**, "šioje apygardoje išrinktas
+Seimo nariu" / "išrinkta Seimo nare", the one pre-2016 static era that
+marks a winner on the page (cross-checked against the results join: 139
+of the 141 members carry it; the two who do not — Babravičius and
+Žukauskas — are among the 32 pages VRK's archive holds in their
+**pre-results vintage**, whose links point at the live CGI
+(`cgi-bin/ora7dbcgi/…`) instead of the static pages and which predate the
+note; their `ElectedNoteMismatch` warning records the gap, and
+`kandidatavimas.isrinktas` is the results page's answer either way), `nuotrauka` (the external `lm…jpg` URL; null where
+the card has no image), and `kita` with one `apygarda`/`iskele` pair per
+card block in card order (the multi-member block first for most dual
+candidates), `priesrinkiminis-numeris-sarase`, and for a coalition's
+candidate `iskele-N` = the member party and `buves-numeris-sarase` = the
+position on its list. The `apygarda` value keeps the note ("Žirmūnų (Nr.
+4), šioje apygardoje išrinktas Seimo nariu.").
+
+### `normalized.anketa`
+
+The 2004 Seimas keys for what the 2000 form asks, in this order:
+`gimimo-data` (ISO from the card's "Gimimo data: 1951 08 09"), `adresas`
+(the card's "Gyvenamoji vieta"; two cards print none), `pareiskimai` (the
+seven 2004 Seimas keys and `teisiniai-argumentai` — the emphasised run
+after 9.3, a bare "Ne" on 25 records and a sentence on three; answers in
+the form's third person, five `Turi` on 8.3, one `Yra` on 8.4, five `Yra`
+on 9.2, no `Buvo` on 9.3; "Nenurodė" normalizes to null — plus the two
+sub-questions the form prints under a non-default 8.3/8.4:
+`kitos-valstybes-pilietybe-valstybe` (8.3.1 "Kurios", the EP form's key
+for the same fact; one row per citizenship, comma-joined — "KANADA,
+LENKIJA") and `priesaikos-uzsienio-valstybei-atsisakymas` (8.4.1 "Jei
+yra, kaip ir kada raštu šios priesaikos ar pasižadėjimo atsisakė", with
+the "<STATE> -" template prefix stripped and null where the template is
+all the page prints; two records)),
+`gimimo-vieta` (the card's "Gimimo vieta", printed on a minority of
+cards), `issilavinimas` (`aprasas` null; `irasai` one per "YYYY - school,
+qualification" line as `mokymo-istaigos-pavadinimas` / `specialybe` (after
+the last comma; null when the line has none) / `baigimo-metai`),
+`mokslo-laipsnis`, `pedagoginis-vardas`, `uzsienio-kalbos` (list),
+`anksciau-isrinktas` (`irasai` of `institucijos-pavadinimas-pareigos`,
+`laikotarpis` null — the page prints the body and role, no years),
+`pagrindine-darboviete`, `visuomenine-veikla`, `pomegiai` (comma-joined as
+2004), `seimine-padetis`, `sutuoktinio-vardas-pavarde` and
+`vaiku-vardai-pavardes` (from the family line's relations), and
+`seimos-nariai` (the family line itself: `vardas`, `rysys`). No `tautybe`,
+`politine-organizacija`, `kita-apie-save`: not asked. A blank field is not
+printed by the page, so it is null (or `[]`) here.
+
+### `turto-ir-pajamu-deklaracijos`
+
+The 1996-1998 archive family's block (see that appendix): the summed
+`turtas-ir-pinigines-lesos-*` totals with the modern split keys null,
+rows 1 and 20 of section III, the tax lines, the family counts,
+`israso-data`, `israsa-isdave`, `valiuta` "Lt" — with the figures to the
+centas (a float where the centai are non-zero, an integer otherwise) and
+section I's workplace lines, which the 1996-1997 pages leave blank:
+`darboviete`, `pareigos`, and where filled `nepagrindines-darbovietes`,
+`pareigos-nepagrindinese-darbovietese`. The same row-20 guard applies.
+
 ## Appendix: 2007–2014 national elections (`2007-spalio-7-seimo-dzukija`, `2008-seimo`, `2009-prezidento`, `2009-ep`, `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai`, `2011-vasario-13-seimo-marijampole`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`)
 
 All ten are the 2015-era static layout described in the 2015 Seimo

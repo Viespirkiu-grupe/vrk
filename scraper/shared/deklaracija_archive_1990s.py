@@ -60,9 +60,21 @@ error into them ("ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit"),
 which is still what the URL serves today. They raise
 `DeclarationPageUnreadable` and are permanently unrecoverable.
 
-Figures are integer litas. `valiuta` is set to "Lt" so the corpus-wide
-litas->euro conversion applies to these records like any other pre-2015
-declaration.
+Figures are integer litas on the 1996-1997 pages. The October 2000 Seimas
+election (`scraper/elections/seimo_2000`) prints the same form inline on the
+candidate page with the figures to the centas ("9546.02 Lt"); those parse to
+a float where the centai are non-zero and an integer otherwise, the way the
+2015-era `_parse_lt_amount` reads a modern page. `valiuta` is set to "Lt" so
+the corpus-wide litas->euro conversion applies to these records like any
+other pre-2015 declaration.
+
+The 2000 form also fills section I's workplace lines ("Pagrindinė
+darbovietė", "Pareigos", "Nepagrindinės darbovietės", "Pareigos
+nepagrindinėse darbovietėse"); the 1996-1997 pages print the labels with
+nothing after them. They are read as `darboviete`, `pareigos`,
+`nepagrindines-darbovietes` and `pareigos-nepagrindinese-darbovietese`,
+present only when the page gives a value, so the older families' records
+are unchanged.
 """
 
 from __future__ import annotations
@@ -71,6 +83,10 @@ import html as html_module
 import re
 from typing import Any
 
+# A printed figure: digits (thousands sometimes spaced), on the 2000 pages
+# with two decimals.
+AMOUNT = r"([\d\s]+?(?:[.,]\d{1,2})?)"
+
 # Sections II, IV and V each end in the same "Bendra suma ... punktus:" line,
 # so each is anchored on the words unique to its own heading.
 SECTION_TOTALS = {
@@ -78,23 +94,34 @@ SECTION_TOTALS = {
     "kalendoriniais-metais-isigytas-turtas": r"Kalendoriniais\s+metais\s+įsigytas\s+turtas",
     "turtas-ir-pinigines-lesos-metu-pabaigoje": r"met\w*\s+pabaigoje",
 }
-SECTION_TOTAL_TAIL = r".*?punktus:\s*([\d\s]+?)\s*Lt"
+SECTION_TOTAL_TAIL = r".*?punktus:\s*" + AMOUNT + r"\s*Lt"
 
 # Section III. The two figures on a row are the income and the tax columns;
-# "Lt" follows each on the municipal pages and neither on the Seimas ones.
+# "Lt" follows each on the municipal and 2000 pages and neither on the 1996
+# Seimas ones.
 ROW_EMPLOYMENT = re.compile(
     r"1\.\s*Susijusios\s+su\s+darbo\s+santykiais\s+pajamos"
-    r"[^\d]*?([\d\s]+?)(?:\s*Lt)?\s+([\d\s]+?)(?:\s*Lt)?\s+20\.",
+    r"[^\d]*?" + AMOUNT + r"(?:\s*Lt)?\s+" + AMOUNT + r"(?:\s*Lt)?\s+20\.",
     re.S,
 )
 ROW_TOTAL = re.compile(
-    r"20\.\s*Iš\s+viso:\s*([\d\s]+?)(?:\s*Lt)?\s+([\d\s]+?)(?:\s*Lt)?"
+    r"20\.\s*Iš\s+viso:\s*" + AMOUNT + r"(?:\s*Lt)?\s+" + AMOUNT + r"(?:\s*Lt)?"
     r"\s+(?:IV\.|Kalendoriniais)",
     re.S,
 )
 
-TAX_ARREARS = re.compile(r"Mokesčių\s+nepriemoka[^:]*:\s*([\d\s]+?)\s*Lt", re.S)
-TAX_PAYABLE = re.compile(r"Privaloma\s+sumokėti[^:]*:\s*([\d\s]+?)\s*Lt", re.S)
+TAX_ARREARS = re.compile(r"Mokesčių\s+nepriemoka[^:]*:\s*" + AMOUNT + r"\s*Lt", re.S)
+TAX_PAYABLE = re.compile(r"Privaloma\s+sumokėti[^:]*:\s*" + AMOUNT + r"\s*Lt", re.S)
+
+# Section I's workplace lines, between the name and the family counts. Each
+# value runs to the next label; the 1996-1997 labels are "Nepagrindinė(-ės)
+# darbovietė(-ės):" and a second bare "Pareigos:", the 2000 ones
+# "Nepagrindinės darbovietės:" and "Pareigos nepagrindinėse darbovietėse:".
+WORKPLACE = re.compile(
+    r"Pagrindinė\s+darbovietė:\s*(.*?)\s*Pareigos:\s*(.*?)\s*Nepagrindin[^:]*:\s*(.*?)"
+    r"\s*Pareigos[^:]*:\s*(.*?)\s*Šeimos\s+narių",
+    re.S,
+)
 FAMILY_COUNTS = re.compile(
     r"Šeimos\s+narių\s+skaičius:\s*(\d+)\s*,\s*tarp\s+jų\s+išlaikytinių:\s*(\d+)"
     r"\s*,\s*iš\s+jų\s+iki\s+18\s+metų:\s*(\d+)",
@@ -128,11 +155,17 @@ def clean_page_text(html: str) -> str:
     return re.sub(r"[\s ]+", " ", text).strip()
 
 
-def _int(value: str | None) -> int | None:
+def _int(value: str | None) -> int | float | None:
+    """A printed litas figure: an int, or a float when it carries non-zero
+    centai (the 2000 pages; the 1996-1997 figures are whole litas)."""
     if not value:
         return None
-    digits = re.sub(r"[^\d]", "", value)
-    return int(digits) if digits else None
+    compact = re.sub(r"\s", "", value).replace(",", ".")
+    if not re.fullmatch(r"\d+(?:\.\d+)?", compact):
+        digits = re.sub(r"[^\d]", "", compact)
+        return int(digits) if digits else None
+    amount = float(compact)
+    return int(amount) if amount.is_integer() else amount
 
 
 def _section_total(text: str, pattern: str) -> int | None:
@@ -225,6 +258,21 @@ def parse_declaration(html: str) -> dict[str, Any]:
     issuer = ISSUER.search(text)
     if issuer:
         declaration["israsa-isdave"] = issuer.group(1).strip() or None
+
+    workplace = WORKPLACE.search(text)
+    if workplace:
+        for key, value in zip(
+            (
+                "darboviete",
+                "pareigos",
+                "nepagrindines-darbovietes",
+                "pareigos-nepagrindinese-darbovietese",
+            ),
+            workplace.groups(),
+        ):
+            value = value.strip().rstrip(".").strip()
+            if value:
+                declaration[key] = value
 
     if not any(
         declaration[k] is not None

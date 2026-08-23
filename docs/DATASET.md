@@ -18,7 +18,7 @@ never touched by a full run.
 
 ## Inventory
 
-91,692 candidate records across 46 elections, 1996–2025, with **zero fetch
+92,963 candidate records across 47 elections, 1996–2025, with **zero fetch
 failures** other than three 2011 and three 2007 candidate pages VRK never
 published (see Known gaps).
 
@@ -98,7 +98,8 @@ election was re-parsed offline the same day.
 | `2004-ep` | 241 | 14 | 3 | 0 |
 | `2004-seimo` | 1251 | 141 | 8 | 0 |
 | `2005-lapkricio-20-seimo-kedainiai` | 5 | 1 | 0 | 0 |
-| **total** | **91692** | **8593** | **1593** | **20199** |
+| `2000-seimo` | 1271 | 141 | 5 | 0 |
+| **total** | **92963** | **8734** | **1598** | **20199** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
@@ -108,7 +109,9 @@ note (`Dalyvavo I ture`, `Dalyvavo II ture`, or `Išrinktas II ture` for the
 winner). Counting non-null `pastaba` there reports 9 and 8 "elected" for a
 race one person won; match on the `Išrink` prefix, not on presence. The
 2007–2015 pages mark no winner at all, so for those seventeen elections the column
-counts `kandidatavimas.isrinktas == true` instead — the flag joined in from
+counts `kandidatavimas.isrinktas == true` instead (and so does the 2000
+row: its cards do carry a winner note, on 139 of the 141 — the other two
+pages are VRK's pre-results capture — but the flag is the results join) — the flag joined in from
 VRK's results trees (`python -m scraper build-results <id>`; the
 reconciliation behind each file is in `docs/CLI_REFERENCE.md`'s results
 section). The 48 annulled March 2015 council winners in Šilutė and Trakai
@@ -289,6 +292,62 @@ chosen by shape. Two sibling defects surfaced and were fixed across the
 2015 municipal family (the Q9 explanation, the prose zero income — rows
 in the fix table above). Person index rebuilt: 47,125 persons (8,350 new;
 the other 8,050 candidacies merged into people already in the corpus).
+
+### The 2026-08-23 build and scrape of the 2000 Seimas general election
+
+GitHub issue #26; VRK's `statiniai/puslapiai/n/rinkimai/20001008/` tree
+(2000-10-08), the last of the LRS-ITD Oracle-CGI captures: the 1996-1998
+Seimas archive's template carrying the 2004 static site's content in one
+page per candidate — card, the seven Q8/Q9 declarations, the
+questionnaire fields, the 1990s income and asset form inline with the
+figures to the centas, the autobiography. `seimo_2000` is its own module
+over two shared pieces: the 2004 Seimas listing merge, lifted out of
+`seimo_2004` as `merge_listing_records` (its stats gained
+`districtOnlyUnaccounted`; the 2004 sitemap is otherwise byte-for-byte
+what it was), and the 1990s declaration parser, which learned decimal
+amounts and section I's workplace lines (the 1996-1997 figures are whole
+litas and their workplace lines blank, so their records are unchanged —
+58 tests green). Sitemap: **1,271 candidates** (582 in both structures,
+569 list-only, 120 constituency-only) from 15 lists, 13 unnumbered
+parties (4 coalition members, resolved from the pages since the 2000
+index does not say, 9 constituency-only) and 71 constituencies; every
+cross-check at 0 but one — Virginijus Šmigelskas is the LCS nominee on
+the Širvintų–Vilniaus page and absent from the LCS party page (which has
+his namesake Vidmantas at #48), so the constituency-only reconciliation
+is 119 + 1 unaccounted, the source's own gap; three namesake pairs take
+positional ids. Results from the tree's own pages: **141 members by id**
+(70 list, 71 constituency — every one decided in one round by plurality,
+the 2000 rule, and every one the top of its vote page), 70 mandates
+matching the members page per list, every list ranked (LLRA included;
+rank, preference votes, VRK's party rating and rating points joined into
+all 1,151 list candidates' records), the list seats exactly the top ranks
+after the 54 constituency winners are passed over, and — unlike 2004 —
+the 71 constituency pages keyed by the candidate-page id, so all 702
+constituency candidates carry their ballot-box, postal and total votes,
+share and place. Scraped the same afternoon with `KEEP_SAMPLES=1`:
+**1,271/1,271 fetched, 0 fetch failures, 19 parse anomalies** after one
+offline re-parse — the first pass lost Q9.1 on eleven cards where a
+non-default 8.4 brings an 8.4.1 sub-question whose answer the page prints
+with no `<b>` at all (the reader now splits the run at every question
+number; 8.3.1 "Kurios" and 8.4.1 are new `pareiskimai` keys), fixed
+against the retained HTML without a re-fetch. The 19: 15 declaration
+totals refused by the family's row-20 guard (9 income totals of 0 against
+a non-zero row 1, 6 tax totals below their row — income stands on 1,262
+records), 2 cards with no residence line, and 2 `ElectedNoteMismatch` —
+Babravičius and Žukauskas won seats but their cards carry no winner
+note, because theirs are 2 of the **32 pages VRK's archive holds in the
+pre-results vintage** (links to the live `cgi-bin/ora7dbcgi/`, the note
+not yet added); the other 139 members' cards all carry it and no
+non-member's does. What the field says: five candidates declared another
+citizenship (JAV ×3, Kanada+Lenkija, JAV), one a foreign oath, five a
+conviction on Q9.2 (three with a sentence of explanation; 25 others
+answered the explanation slot "Ne"), none a grave one; 700 cards have a
+photo and 699 an autobiography, all 1,271 a birth date and a declaration
+(279 with a secondary workplace), 138 a birthplace, 11 an education line
+the candidate left as an empty `<b></b>`; three cards name a second
+constituency nominator (`kitiIskelejai` — self-nominated beside the
+party), 46 list seats went to people who also stood in a constituency.
+Fixtures are 18 candidates chosen by shape.
 
 ### The 2026-08-23 build of the 2005 Kėdainiai Seimo by-election
 

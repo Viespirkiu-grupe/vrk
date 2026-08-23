@@ -56,6 +56,7 @@ python -m scraper <command> [args]
 - `2004-ep` (2004-06-13 European Parliament election — Lithuania's first, 12 party lists; VRK's original 2004 static site)
 - `2004-seimo` (2004-10-10 Seimas general election, 15 party lists and 71 single-member constituencies; VRK's original 2004 static site)
 - `2005-lapkricio-20-seimo-kedainiai` (2005-11-20 Seimo new election in Kėdainių No. 43; the 2004 static site one year on)
+- `2000-seimo` (2000-10-08 Seimas general election, 15 party lists and 71 single-member constituencies; the 1996-2000 LRS-ITD archive template)
 
 ## Election Separation
 
@@ -1252,6 +1253,108 @@ python -m scraper fetch-candidate-samples 2005-lapkricio-20-seimo-kedainiai --ca
 python -m scraper build-results 2005-lapkricio-20-seimo-kedainiai
 python -m scraper parse-anketa-samples 2005-lapkricio-20-seimo-kedainiai
 ```
+
+## Seimas 2000 (`2000-seimo`) Workflow
+
+The 2000-10-08 Seimas general election (GitHub issue #26; VRK's
+`statiniai/puslapiai/n/rinkimai/20001008/` tree) is the last of the
+LRS-ITD Oracle-CGI captures — the 1996-1998 Seimas archive's template
+(`scraper/shared/seimo_archive_1990s.py`'s `kandvl.htm-<ID>.htm` candidate
+page) carrying the 2004 static site's content — and
+`scraper/elections/seimo_2000/` is its own module over two shared pieces:
+`seimo_2004.sitemap.merge_listing_records` for the two-structure listing
+merge and the 1990s declaration parser for the income extract.
+
+- **Listing**: `partsarl.htm-13.htm` indexes the 15 numbered lists and,
+  unnumbered below them, the 13 parties that "kandidatų daugiamandatėje
+  apygardoje išvis nekelia arba dalyvauja koalicijoje"; `kandapgsarl.htm-13.htm`
+  the 71 constituencies (`kandapgl.htm-13+<number>+<ID>.htm`). The party
+  pages behave as the 2004 ones — a party's page lists every nominee (its
+  list, then unnumbered constituency-only nominees; 19 such rows), a
+  coalition's page rows the coalition list with the member party and its
+  position on the member's own list, a member party's page repeats the
+  coalition position — but the index does not say which unnumbered party
+  is a coalition member: the pages do ("Partijos ir politinės
+  organizacijos, dalyvaujančios koalicijoje:" on the coalition's,
+  "Koalicija, kurioje partija dalyvauja:" on the member's), so the kinds
+  are resolved after the pages are read and the two statements
+  cross-checked (4 members of the one coalition, A.Brazausko
+  socialdemokratinė koalicija, every link reciprocated; 9 constituency-
+  only parties). Merged on VRK's id: **1,271 candidates** — 582 in both
+  structures, 569 list-only, 120 constituency-only (52 of the
+  constituency-only parties, 48 self-nominated, 19 numbered-list parties'
+  constituency-only nominees and **one VRK gap**: Virginijus Šmigelskas
+  is the Lietuvos centro sąjunga's nominee on the Širvintų–Vilniaus page
+  but absent from the LCS party page, which lists his namesake Vidmantas
+  at #48 — the constituency page is the authority, so he is in; the
+  merge's `districtOnlyUnaccounted` names the count). 29 people sit on
+  one party's list and another's constituency nomination (the LTS list's
+  people standing for Lietuvos nacionaldemokratų partija and Lietuvos
+  laisvės lyga, the TS list's for the political prisoners' union), 8
+  self-nominated in a constituency while on a list. Three namesake pairs
+  (different VRK ids and parties) take the positional `-2` id.
+- **Candidate page**: one document per candidate — the card (photo, one
+  "Apygarda:"/"Iškėlė:" block per candidacy with ", šioje apygardoje
+  išrinktas Seimo nariu" where the candidate won that seat, the list
+  number and, for the coalition's candidates, "(iškėlė <member party>,
+  buvęs numeris sąraše: N)"; birth date, sometimes birthplace, residence),
+  the seven Seimo rinkimų įstatymo declarations (8.1–8.4, 9.1–9.3, the
+  2004–2013 Q8/Q9 set) in a small-font run — with 8.3.1 "Kurios" and
+  8.4.1 "Jei yra, kaip ir kada raštu … atsisakė" printed under a
+  non-default 8.3/8.4, the latter sometimes with no `<b>` at all so the
+  next prompt runs on (the reader splits the run at every question
+  number), and the Q9 explanation as an unlabelled run after 9.3 — the questionnaire fields as
+  "Label: <b>value</b>…" paragraphs (education as "YYYY - school,
+  qualification" lines, degree, title, languages, prior mandates,
+  workplace, public activity, hobbies, marital status, family members
+  with the relation — no nationality, no party membership; a blank field
+  is not printed), the 1996-1997 income and asset declaration form inline
+  with the figures to the centas and the section-I workplace lines filled
+  in, and the autobiography. No tabs, no sub-pages: saved as
+  `candidate.html`. Keys are the 2004 Seimas ones wherever the content is
+  the same (`anketa.pareiskimai`, `issilavinimas.irasai`, …) plus
+  `anketa.seimos-nariai`, and the 1990s family's declaration keys plus
+  `darboviete`/`pareigos`. The card's winner note is kept in
+  `profilis.pastaba` and cross-checked against the results join
+  (`ElectedNoteMismatch`); the card's constituency, list number and member
+  party against the sitemap (`Card…Mismatch`); a second constituency
+  nominator on the card → `vienmandate.kitiIskelejai` (Juknevičienė:
+  self-nominated and TS-nominated in Lazdynai). A card label outside the
+  parser's table is an `UnmappedCardLabel` warning, so a new field would
+  be noticed rather than lost.
+- **Results**: `seimo_2000/results.py`. `ril.htm-13+2.htm` lists the 141
+  members by candidate-page id with the seat ("Daugiamandatė", or the
+  constituency linking `rvapgl.htm-<district>.htm`) and nominator;
+  `rdl.htm-13.htm` the votes, share and mandates per list (70, matching
+  the members page per list) and the links to the 15 `rdpbl.htm-<list>.htm`
+  preference pages — every list ranked in 2000, LLRA included — giving
+  rank, pre-election number, preference votes, VRK's party rating and the
+  rating points (`porinkiminisNumerisSarase`, `pirmumoBalsai`,
+  `partinisReitingas`, `reitingoBalai`); the 71 `rvapgl.htm-<district>.htm`
+  pages row every constituency candidate under the candidate-page id
+  (unlike 2004), so each gets `vienmandatesBalsai` (ballot-box, postal,
+  total, share, place). Every constituency was decided in one round by
+  plurality ("Rinkimai apygardoje įvyko. Seimo nariu išrinktas
+  kandidatas, už kurį paduota daugiausia balsų" on all 71), the top row
+  of every page is the members page's winner, and the list seats are
+  exactly each list's top ranks after passing over the 54 constituency
+  winners who also ranked — every cross-check at 0.
+
+```bash
+python -m scraper fetch-sample 2000-seimo
+python -m scraper sitemap 2000-seimo
+python -m scraper fetch-candidate-samples 2000-seimo --candidate-id andriukaitis-vytenis-povilas --allow-new-samples
+python -m scraper build-results 2000-seimo
+python -m scraper parse-anketa-samples 2000-seimo
+KEEP_SAMPLES=1 scripts/run_election_batches.sh 2000-seimo
+```
+
+Fixtures are eighteen candidates chosen by shape
+(`tests/test_seimo_2000_sample_allowlist.py`); the full field was scraped
+2026-08-23 with retention (see `docs/DATASET.md`). 32 of the 1,271 pages
+are VRK's pre-results capture (links to the live CGI, no winner note):
+two winners among them get the `ElectedNoteMismatch` warning, and the
+results join stands.
 
 ## 2012–2014 national elections (`2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`) Workflow
 
