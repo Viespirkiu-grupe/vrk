@@ -638,6 +638,39 @@ runoff winner), `steponas-navajauskas`, `stasys-sedbaras`,
 samples directory holds the constituency index (`districts.html`), the
 party index (`list.html`) and the one constituency page under `districts/`.
 
+For `2000-seimo` the allowlist (`tests/test_seimo_2000_sample_allowlist.py`)
+is **eighteen candidates out of 1,271**, chosen by shape:
+`andriukaitis-vytenis-povilas` (constituency winner who heads the
+Brazauskas coalition list as an LSDP member — the card's member-party
+line), `sakalas-aloyzas` (a coalition list seat, the winner note on the
+multi-member block), `maldeikis-eugenijus` (a plain-party list seat with
+no photo and no autobiography), `uspaskich-viktor` (self-nominated
+constituency winner, Kėdainiai, with secondary-workplace declaration
+lines), `kaseta-algis` (a constituency-only party's winner, MKDS),
+`bobelis-kazys` (KDS leader: a list with no seats, constituency winner),
+`jukneviciene-rasa` (TS list seat who also self-nominated beside her
+party in Lazdynai — three card blocks, the feminine winner note,
+`kitiIskelejai`), `narviliene-jane` (NDP member of the coalition who won
+a constituency), `petkus-viktoras` (list-only, no autobiography, no
+family line, a school with no qualification), `ozelyte-nijole`
+(self-nominated woman, constituency only, with a birthplace),
+`gaizauskas-raimundas` (a numbered party's constituency-only nominee — an
+unnumbered row on the LCS page), `terleckas-antanas` (LTS list #1,
+Lietuvos laisvės lyga constituency nomination),
+`smigelskas-virginijus` (the one constituency nominee his party page
+omits), `sedzius-alvydas-2` (a namesake with the positional id, LDDP
+member of the coalition list), `cobotas-medardas` (degree, title, five
+languages), `vaitas-vilimantas-stanislovas` (a US citizen who also
+declared a foreign oath: 8.3.1 and a filled 8.4.1),
+`laugalis-victor-vitold-vytautas` (two citizenships — 8.3.1 twice — and
+the empty 8.4.1 template after a "Nėra") and `zukauskas-henrikas` (a
+constituency winner whose page is one of the 32 pre-results-vintage
+captures: CGI links, no winner note). Nine of the eighteen were elected. Each directory holds the
+one page (`candidate.html`) and `index.json`; the samples directory holds
+both indexes (`list.html`, `districts.html`), the 28 party pages under
+`lists/` and the 71 constituency pages under `districts/`. The field is
+scraped by `scripts/run_election_batches.sh`.
+
 For `2009-prezidento` the allowlist
 (`tests/test_prezidento_2009_sample_allowlist.py`) is likewise the complete
 seven-candidate field:

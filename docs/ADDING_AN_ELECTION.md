@@ -35,6 +35,19 @@ it before writing anything. The layout families are:
   constituencies, as 2008/2012, on the 2004 template); the November 2005
   Kėdainiai by-election (`seimo_kedainiu_2005`) is thin wiring over it.
   The 2004 presidential tree, if ever added, would be the next.
+- **2000 archive** (`seimo_2000`): the 1996-1998 Teleport archive's
+  template (`statiniai/puslapiai/n/rinkimai/20001008/`, the
+  `kandvl.htm-<ID>.htm` candidate page) carrying the 2004 static site's
+  content in one document — card with the candidacies and a winner note,
+  the Q8/Q9 declarations, the questionnaire fields as labelled
+  paragraphs, the 1990s declaration form inline with decimal litas, the
+  autobiography. Its listing is the 2004 Seimas two-structure walk
+  (`seimo_2004.sitemap.merge_listing_records` is shared; the page readers
+  and the coalition-kind resolution are the module's own) and its
+  declaration parser the 1990s one. The 1996-1998 archive family
+  (`scraper/shared/seimo_archive_1990s.py`, next bullet) is the same
+  template without the questionnaire; a 2000-era municipal tree, if ever
+  added, should be compared against both.
 - **2016 era** (`seimo_2016`): one anketa table with the whole Q5–Q21 set,
   elected note inside the name cell, base64 photos, GPM308 income labels,
   `ID001x` private-interest sections.

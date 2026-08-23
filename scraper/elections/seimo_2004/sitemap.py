@@ -72,7 +72,9 @@ __all__ = [
     "extract_district_links",
     "extract_party_links",
     "fetch_listing_sample",
+    "merge_listing_records",
     "resolve_candidate_url",
+    "write_two_structure_sitemap",
 ]
 
 
@@ -330,30 +332,21 @@ def district_records(district_html: str, district: dict[str, Any]) -> list[dict[
 # ---------------------------------------------------------------------------
 
 
-def build_sitemap_from_sample(
-    sample_path: Path | None = None,
-    output_path: Path = DEFAULT_SITEMAP_PATH,
-    election_id: str = ELECTION_ID,
-    listing_url: str = LISTING_URL,
-    districts_url: str = DISTRICTS_URL,
-) -> tuple[Path, dict[str, int]]:
-    # sample_path keeps the CLI's signature; it names the samples directory.
-    samples_dir = sample_path if sample_path is not None else DEFAULT_SAMPLES_DIR
-    party_links = extract_party_links((samples_dir / LISTS_INDEX_NAME).read_text(encoding="utf-8"))
-    districts = extract_district_links((samples_dir / DISTRICTS_INDEX_NAME).read_text(encoding="utf-8"))
-    by_key = {link["listKey"]: link for link in party_links}
+def merge_listing_records(
+    party_links: list[dict[str, Any]],
+    party_rows: dict[str, list[dict[str, Any]]],
+    district_rows: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Merge the two listing structures on VRK's candidate id.
 
-    party_rows: dict[str, list[dict[str, Any]]] = {}
-    for link in party_links:
-        party_rows[link["listKey"]] = party_page_records(
-            _list_sample_path(samples_dir, link["listKey"]).read_text(encoding="utf-8"), link
-        )
-    district_rows: list[dict[str, Any]] = []
-    for district in districts:
-        district_rows.extend(
-            district_records(_district_sample_path(samples_dir, district["districtId"]).read_text(encoding="utf-8"), district)
-        )
-
+    `party_links` are the index rows (`extract_party_links`), `party_rows`
+    each page's rows keyed by list key (`party_page_records`) and
+    `district_rows` every constituency page's rows (`district_records`).
+    Returns the sitemap entries in first-seen order and the reconciliation
+    stats. The October 2000 election (`seimo_2000`) is the same two
+    structures on the 1996-2000 archive template, read by its own page
+    readers into these record shapes, so the merge is shared.
+    """
     entries_by_vrk_id: dict[str, dict[str, Any]] = {}
     order: list[str] = []
 
@@ -488,7 +481,98 @@ def build_sitemap_from_sample(
     district_only_reconciled = district_only == (
         side_not_on_lists + member_only_not_on_lists + self_nominated_district_only + numbered_party_only
     )
+    # The constituency-only candidates none of the four sources names: a
+    # party nominee on a constituency page whose party page omits them
+    # (one in 2000). The constituency page is the authority, so they stay
+    # in the sitemap; the count names the source's own gap.
+    accounted = set(side_ids) | set(member_only_ids) | set(unnumbered_on_lists)
+    district_only_unaccounted = sum(
+        1
+        for record in district_rows
+        if entries_by_vrk_id[record["vrkCandidateId"]]["roles"] == ["vienmandate"]
+        and record["vrkCandidateId"] not in accounted
+        and SELF_NOMINATED_MARKER not in record["nominatedBy"].lower()
+    )
 
+    stats = {
+        "rows": sum(len(rows) for rows in party_rows.values()) + len(district_rows),
+        "extracted": len(entries),
+        "duplicateCandidateIds": duplicate_candidate_ids,
+        "lists": sum(1 for link in party_links if link["kind"] == "sarasas"),
+        "sidePages": sum(1 for link in party_links if link["kind"] != "sarasas"),
+        "dual": dual,
+        "listOnly": list_only,
+        "districtOnly": district_only,
+        "declaredCountMismatches": declared_mismatches,
+        "unnumberedRowsOnLists": len(unnumbered_on_lists),
+        "unnumberedRowsNotInAnyConstituency": len(unnumbered_not_in_district),
+        "memberPositionMismatches": member_position_mismatches,
+        "listColumnConstituencyWrong": claimed_wrong,
+        "constituencyByAnotherNominator": other_party_constituency,
+        "duplicateDistrictRows": duplicate_district_rows,
+        "selfNominated": self_nominated,
+        "districtOnlyReconciled": district_only_reconciled,
+        "districtOnlyUnaccounted": district_only_unaccounted,
+    }
+    return entries, stats
+
+
+def build_sitemap_from_sample(
+    sample_path: Path | None = None,
+    output_path: Path = DEFAULT_SITEMAP_PATH,
+    election_id: str = ELECTION_ID,
+    listing_url: str = LISTING_URL,
+    districts_url: str = DISTRICTS_URL,
+) -> tuple[Path, dict[str, int]]:
+    # sample_path keeps the CLI's signature; it names the samples directory.
+    samples_dir = sample_path if sample_path is not None else DEFAULT_SAMPLES_DIR
+    party_links = extract_party_links((samples_dir / LISTS_INDEX_NAME).read_text(encoding="utf-8"))
+    districts = extract_district_links((samples_dir / DISTRICTS_INDEX_NAME).read_text(encoding="utf-8"))
+
+    party_rows: dict[str, list[dict[str, Any]]] = {}
+    for link in party_links:
+        party_rows[link["listKey"]] = party_page_records(
+            _list_sample_path(samples_dir, link["listKey"]).read_text(encoding="utf-8"), link
+        )
+    district_rows: list[dict[str, Any]] = []
+    for district in districts:
+        district_rows.extend(
+            district_records(_district_sample_path(samples_dir, district["districtId"]).read_text(encoding="utf-8"), district)
+        )
+
+    entries, merge_stats = merge_listing_records(party_links, party_rows, district_rows)
+    return write_two_structure_sitemap(
+        output_path,
+        election_id=election_id,
+        listing_url=listing_url,
+        districts_url=districts_url,
+        party_links=party_links,
+        districts=districts,
+        entries=entries,
+        merge_stats=merge_stats,
+    )
+
+
+def write_two_structure_sitemap(
+    output_path: Path,
+    election_id: str,
+    listing_url: str,
+    districts_url: str,
+    party_links: list[dict[str, Any]],
+    districts: list[dict[str, Any]],
+    entries: list[dict[str, Any]],
+    merge_stats: dict[str, Any],
+) -> tuple[Path, dict[str, int]]:
+    """Write the sitemap file of a two-structure listing and return the
+    stats the CLI's summary line reads."""
+    stats: dict[str, Any] = dict(merge_stats)
+    # The stat order is the one the file has always had: the page counts
+    # sit between the list counts and the merge's breakdown.
+    ordered = {}
+    for key, value in stats.items():
+        ordered[key] = value
+        if key == "sidePages":
+            ordered["districts"] = len(districts)
     payload = {
         "electionId": election_id,
         "sourceUrl": listing_url,
@@ -497,31 +581,12 @@ def build_sitemap_from_sample(
         "sidePageUrls": [link["url"] for link in party_links if link["kind"] != "sarasas"],
         "districtUrls": [district["url"] for district in districts],
         "generatedAt": utc_now_iso(),
-        "stats": {
-            "rows": sum(len(rows) for rows in party_rows.values()) + len(district_rows),
-            "extracted": len(entries),
-            "duplicateCandidateIds": duplicate_candidate_ids,
-            "lists": sum(1 for link in party_links if link["kind"] == "sarasas"),
-            "sidePages": sum(1 for link in party_links if link["kind"] != "sarasas"),
-            "districts": len(districts),
-            "dual": dual,
-            "listOnly": list_only,
-            "districtOnly": district_only,
-            "declaredCountMismatches": declared_mismatches,
-            "unnumberedRowsOnLists": len(unnumbered_on_lists),
-            "unnumberedRowsNotInAnyConstituency": len(unnumbered_not_in_district),
-            "memberPositionMismatches": member_position_mismatches,
-            "listColumnConstituencyWrong": claimed_wrong,
-            "constituencyByAnotherNominator": other_party_constituency,
-            "duplicateDistrictRows": duplicate_district_rows,
-            "selfNominated": self_nominated,
-            "districtOnlyReconciled": district_only_reconciled,
-        },
+        "stats": ordered,
         "entries": entries,
     }
     write_json(output_path, payload)
     stats = dict(payload["stats"])
     # The CLI's summary line reads these three by the era's names.
-    stats["skipped"] = len(unnumbered_not_in_district)
-    stats["duplicate_candidate_ids"] = duplicate_candidate_ids
+    stats["skipped"] = merge_stats["unnumberedRowsNotInAnyConstituency"]
+    stats["duplicate_candidate_ids"] = merge_stats["duplicateCandidateIds"]
     return output_path, stats

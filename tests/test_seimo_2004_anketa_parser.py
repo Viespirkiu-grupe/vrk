@@ -108,6 +108,7 @@ class Seimo2004SitemapTests(unittest.TestCase):
                 "duplicateDistrictRows": 0,
                 "selfNominated": 49,
                 "districtOnlyReconciled": True,
+                "districtOnlyUnaccounted": 0,
             },
         )
         self.assertEqual(stats["skipped"], 0)
