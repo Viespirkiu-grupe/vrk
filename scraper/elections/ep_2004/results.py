@@ -169,19 +169,25 @@ def parse_results_page(html: str) -> list[dict[str, Any]]:
 
 def parse_preference_page(html: str) -> list[dict[str, Any]]:
     """Post-preference ranking rows: rank, anketa id, pre-election position,
-    preference votes, whether the name is bold (a mandate)."""
+    preference votes, whether the name is bold (a mandate).
+
+    A list not subject to preference ranking — the 2004 Seimas LLRA list,
+    "Lietuvos lenkų rinkimų akcijos prašymu jos sąrašas nebuvo
+    reitinguojamas" — prints rank and name only; its rows carry the rank
+    (the list order) with `ranked: False` and no votes.
+    """
     soup = BeautifulSoup(html, "lxml")
     rows: list[dict[str, Any]] = []
     for tr in soup.find_all("tr"):
         cells = _own_cells(tr)
-        if len(cells) < 4:
+        if len(cells) < 2:
             continue
         anchor = _anketa_anchor(cells[1])
-        if anchor is None:
+        if anchor is None or anchor.find_parent("tr") is not tr:
             continue
         rank = normalize_space(cells[0].get_text(" ", strip=True))
-        position = normalize_space(cells[2].get_text(" ", strip=True))
-        votes = normalize_space(cells[3].get_text(" ", strip=True))
+        position = normalize_space(cells[2].get_text(" ", strip=True)) if len(cells) > 2 else ""
+        votes = normalize_space(cells[3].get_text(" ", strip=True)) if len(cells) > 3 else ""
         rows.append(
             {
                 "vrkCandidateId": ANKETA_PATTERN.search(anchor["href"]).group(1),
@@ -190,6 +196,7 @@ def parse_preference_page(html: str) -> list[dict[str, Any]]:
                 "listPosition": int(position) if position.isdigit() else None,
                 "preferenceVotes": int(votes) if votes.isdigit() else None,
                 "mandate": anchor.find("b") is not None or anchor.find_parent("b") is not None,
+                "ranked": len(cells) > 3,
             }
         )
     return rows
@@ -291,6 +298,7 @@ def build_results(
                 "rank": row["rank"],
                 "listPosition": row["listPosition"],
                 "preferenceVotes": row["preferenceVotes"],
+                "ranked": row["ranked"],
                 "listId": match.group(1),
                 "sourceUrl": url,
             }

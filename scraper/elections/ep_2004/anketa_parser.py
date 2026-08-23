@@ -82,6 +82,8 @@ QUESTION_START_PATTERN = re.compile(r"^\s*(\d{1,2}(?:\.\d{1,2})*)\.?\s+")
 # Text runs that only separate one emphasised value from the next
 # ("<b>Anglų</b>,&nbsp;<b>Rusų</b>").
 SEPARATOR_TEXTS = {",", ".", ";"}
+# "Moksliniai laipsniai: Moksliniai vardai:" — two labels, no values.
+DOUBLE_LABEL_PATTERN = re.compile(r"([^:]+:)\s+([^:]+:)")
 
 # The income extract's form lines: "1) FR0462 formos deklaracijos:".
 INCOME_FORM_PATTERN = re.compile(r"^\d+\)\s*(?P<form>\S+)\s+formos\s+deklaracijos", re.IGNORECASE)
@@ -116,11 +118,20 @@ def _parse_profile_html(soup: BeautifulSoup) -> tuple[dict[str, Any], Tag | None
     elif headings:
         profile["candidateDisplayName"] = headings[0]
 
-    card = content.find("td", class_="lt")
+    # The card is the cell whose own children are the "label: <b>value</b>"
+    # runs. On the EP pages that is the first td.lt of the content; the
+    # Seimas pages wrap the card in one more table, with the photo in a
+    # sibling cell, so the cell with the emphasised values is searched for.
+    card = None
+    for cell in content.find_all("td", class_="lt"):
+        if cell.find("b", recursive=False) is not None:
+            card = cell
+            break
     if card is None:
         return profile, None
 
-    img = card.find("img")
+    holder = card.find_parent("table")
+    img = (holder or card).find("img")
     if img is not None:
         src = normalize_space(img.get("src", ""))
         if src:
@@ -143,7 +154,7 @@ def _parse_profile_html(soup: BeautifulSoup) -> tuple[dict[str, Any], Tag | None
                 for anchor in node.find_all("a", href=True)
                 if normalize_space(anchor["href"]) not in ("", "#")
             ]
-            fields.append({"key": pending_label.rstrip(":"), "displayValue": value, "urls": urls})
+            fields.append({"key": _card_label(pending_label), "displayValue": value, "urls": urls})
             pending_label = ""
             continue
         if node.name == "a":
@@ -154,11 +165,23 @@ def _parse_profile_html(soup: BeautifulSoup) -> tuple[dict[str, Any], Tag | None
                 pending_label = ""
                 continue
             label = _tag_text(node)
-            if label or href:
-                fields.append({"key": label, "displayValue": "", "urls": [resolve_candidate_url(href)] if href else []})
+            urls = [resolve_candidate_url(href)] if href else []
+            if pending_label and label:
+                # A labelled link — the Seimas card's campaign registration
+                # ("… Sprendimas - <a>Nr.316, 2004.09.20</a>", the decision
+                # as a PDF): the link text is the value.
+                fields.append({"key": _card_label(pending_label), "displayValue": label, "urls": urls})
+            elif label or href:
+                fields.append({"key": label, "displayValue": "", "urls": urls})
             pending_label = ""
     profile["fields"] = fields
     return profile, card
+
+
+def _card_label(label: str) -> str:
+    # "Iškėlė: <b>…</b>, priešrinkiminis numeris sąraše:" — the comma that
+    # separates two labelled values on one line is not part of the label.
+    return normalize_space(label).lstrip(", ").rstrip(":")
 
 
 # ---------------------------------------------------------------------------
@@ -246,6 +269,15 @@ def _parse_anketa_row_cell(cell: Tag) -> list[dict[str, Any]]:
             if started is not None:
                 number, remainder = started
                 _start(number, f"{number}. {normalize_space(remainder)}")
+            elif DOUBLE_LABEL_PATTERN.fullmatch(text) and (current is None or current["answered"]):
+                # Two labels in one text run with nothing between them: the
+                # Seimas pages drop the empty <b></b> of an unanswered
+                # degree or title, so "Moksliniai laipsniai: Moksliniai
+                # vardai:" is two unanswered rows, not one prompt.
+                first, second = DOUBLE_LABEL_PATTERN.fullmatch(text).groups()
+                _start(None, first)
+                current["answered"] = True
+                _start(None, second)
             elif current is None or current["answered"]:
                 _start(None, text)
             else:
@@ -280,20 +312,30 @@ def _parse_anketa_row_cell(cell: Tag) -> list[dict[str, Any]]:
     return rows
 
 
-def _parse_anketa_rows(card: Tag | None) -> dict[str, Any]:
+def _question_rows_table(content: Tag | None) -> Tag | None:
+    """The table whose own rows are the questions — the r1/r2-classed rows
+    under the card (the card's own row has no class)."""
+    if content is None:
+        return None
+    for table in content.find_all("table"):
+        body = table.find("tbody") or table
+        if any(tr.get("class") for tr in body.find_all("tr", recursive=False)):
+            return table
+    return None
+
+
+def _parse_anketa_rows(content: Tag | None) -> dict[str, Any]:
     rows: list[dict[str, Any]] = []
-    if card is not None:
-        card_row = card.find_parent("tr")
-        table = card_row.find_parent("table") if card_row is not None else None
-        body = table.find("tbody") if table is not None else None
-        if body is not None:
-            for tr in body.find_all("tr", recursive=False):
-                if tr is card_row or not tr.get("class"):
-                    continue
-                cell = tr.find("td", recursive=False)
-                if cell is None:
-                    continue
-                rows.extend(_parse_anketa_row_cell(cell))
+    table = _question_rows_table(content)
+    if table is not None:
+        body = table.find("tbody") or table
+        for tr in body.find_all("tr", recursive=False):
+            if not tr.get("class"):
+                continue
+            cell = tr.find("td", recursive=False)
+            if cell is None:
+                continue
+            rows.extend(_parse_anketa_row_cell(cell))
     for index, row in enumerate(rows, start=1):
         row["rowIndex"] = index
     answered = sum(1 for row in rows if row.get("answer"))
@@ -377,11 +419,13 @@ def normalize_ep_2004_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
-def parse_anketa_html(html: str) -> dict[str, Any]:
+def parse_anketa_html(html: str, rows_normalizer: Any = None) -> dict[str, Any]:
     soup = BeautifulSoup(html, "lxml")
     profile, card = _parse_profile_html(soup)
-    anketa = _parse_anketa_rows(card)
-    anketa["normalized"] = normalize_ep_2004_anketa_rows(anketa["rows"])
+    anketa = _parse_anketa_rows(_content_cell(soup))
+    if rows_normalizer is None:
+        rows_normalizer = normalize_ep_2004_anketa_rows
+    anketa["normalized"] = rows_normalizer(anketa["rows"])
     return {
         "profile": profile,
         "anketa": anketa,
@@ -593,7 +637,16 @@ def parse_anketa_sample(
     results_path: Path | None = DEFAULT_RESULTS_PATH,
     results_lookup: dict[str, dict[str, Any]] | None = None,
     ranking_lookup: dict[str, dict[str, Any]] | None = None,
+    election_id: str = ELECTION_ID,
+    rows_normalizer: Any = None,
+    candidacy_finisher: Any = None,
 ) -> tuple[Path, dict[str, Any]]:
+    """Parse one candidate's saved pages into the corpus record.
+
+    The 2004 Seimas module runs this with its own election id, question
+    mapping and a `candidacy_finisher(output_payload, parsed_anketa)` that
+    adds what its card says beyond the listing.
+    """
     if results_lookup is None:
         results_lookup = load_results(results_path)
     if ranking_lookup is None:
@@ -603,7 +656,7 @@ def parse_anketa_sample(
     if not anketa_path.exists():
         raise FileNotFoundError(f"Missing anketa sample: {anketa_path}")
 
-    parsed = parse_anketa_html(anketa_path.read_text(encoding="utf-8"))
+    parsed = parse_anketa_html(anketa_path.read_text(encoding="utf-8"), rows_normalizer=rows_normalizer)
     meta = _load_candidate_meta(candidate_dir)
     candidate_meta = meta.get("candidate", {}) if isinstance(meta.get("candidate"), dict) else {}
     source_url = candidate_meta.get("url")
@@ -616,7 +669,7 @@ def parse_anketa_sample(
                 event_type="ProfileCardMissing",
                 severity="error",
                 stage="parse",
-                election_id=ELECTION_ID,
+                election_id=election_id,
                 candidate_id=candidate_id,
                 source_url=source_url,
             )
@@ -627,7 +680,7 @@ def parse_anketa_sample(
                 event_type="AnketaTableNotFound",
                 severity="critical",
                 stage="parse",
-                election_id=ELECTION_ID,
+                election_id=election_id,
                 candidate_id=candidate_id,
                 source_url=source_url,
             )
@@ -654,7 +707,7 @@ def parse_anketa_sample(
                     event_type="SubpageParseError",
                     severity="error",
                     stage="parse",
-                    election_id=ELECTION_ID,
+                    election_id=election_id,
                     candidate_id=candidate_id,
                     source_url=source_url,
                     detail={"subpage": key, "sourcePath": str(path), "error": str(exc)},
@@ -669,7 +722,7 @@ def parse_anketa_sample(
 
     candidate_name = str(candidate_meta.get("candidateName", "")).strip() or parsed["profile"]["candidateDisplayName"]
     output_payload: dict[str, Any] = {
-        "electionId": ELECTION_ID,
+        "electionId": election_id,
         "candidateId": candidate_id,
         "candidateName": candidate_name,
         "kandidatavimas": build_candidacy(candidate_meta),
@@ -679,6 +732,8 @@ def parse_anketa_sample(
         _apply_mandate_notes(output_payload, candidate_meta, results_lookup)
     if ranking_lookup is not None:
         _apply_ranking(output_payload, candidate_meta, ranking_lookup)
+    if candidacy_finisher is not None:
+        candidacy_finisher(output_payload, parsed)
     output_payload |= {
         "source": {"candidateSourceUrl": source_url},
         "rawData": _order_dict_keys(raw_data, ["profile", "anketa", "biografija", "turtoIrPajamuDeklaracijos"]),
@@ -687,7 +742,7 @@ def parse_anketa_sample(
         ),
     }
 
-    output_path = output_root / f"{candidate_id}-{ELECTION_ID}.json"
+    output_path = output_root / f"{candidate_id}-{election_id}.json"
     write_candidate_record(output_path, output_payload)
 
     stats = {
@@ -748,6 +803,9 @@ def parse_anketa_samples(
     samples_root: Path = DEFAULT_SAMPLES_ROOT,
     output_root: Path = DEFAULT_OUTPUT_ROOT,
     results_path: Path | None = DEFAULT_RESULTS_PATH,
+    election_id: str = ELECTION_ID,
+    rows_normalizer: Any = None,
+    candidacy_finisher: Any = None,
 ) -> list[dict[str, Any]]:
     if candidate_ids:
         target_ids = list(candidate_ids)
@@ -768,6 +826,9 @@ def parse_anketa_samples(
             results_path=results_path,
             results_lookup=results_lookup,
             ranking_lookup=ranking_lookup,
+            election_id=election_id,
+            rows_normalizer=rows_normalizer,
+            candidacy_finisher=candidacy_finisher,
         )
         stats.append(candidate_stats)
     return stats

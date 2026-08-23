@@ -54,6 +54,7 @@ python -m scraper <command> [args]
 - `2014-prezidento` (2014-05-11 presidential election)
 - `2014-ep` (2014-05-25 European Parliament election)
 - `2004-ep` (2004-06-13 European Parliament election — Lithuania's first, 12 party lists; VRK's original 2004 static site)
+- `2004-seimo` (2004-10-10 Seimas general election, 15 party lists and 71 single-member constituencies; VRK's original 2004 static site)
 
 ## Election Separation
 
@@ -1130,6 +1131,101 @@ Fixtures are thirteen candidates chosen by shape
 2026-08-23 with retention (241/241, 0 fetch failures, 0 anomalies, 8.7 MB
 under `samples-full/2004-ep/`).
 
+## Seimas 2004 (`2004-seimo`) Workflow
+
+The 2004-10-10 Seimas general election (GitHub issue #32; VRK's
+`rinkimai/2004/seimas/` tree), four months after the EP election on the
+same original static site: the same candidate pages, read by `ep_2004`'s
+readers with the Seimas question mapping and a richer profile card, and
+the 2008/2012 two-structure listing on the 2004 template.
+`scraper/elections/seimo_2004/`:
+
+- **Listing**: `part_sar_l_20.htm` indexes the party pages — the 15
+  numbered lists, three "tik vienmandatėse" parties and the four coalition
+  member parties ("koalicijos sąrašas Nr. 6/8"), as in 2012 — and
+  `vapg_sar_l_20.htm` the 71 constituencies (two cells of
+  "N. <a>name</a>" runs, not a table). Three things the 2004 party pages
+  do that the module's own walk reads: a party's page lists **every**
+  nominee of the party — its list in order and, unnumbered below it, the
+  people it nominated in a constituency only — so the index's declared
+  count is the party's nominees and an unnumbered row carries no list
+  candidacy (9 such rows on the numbered lists, all on a constituency
+  page under the same party); a coalition's page rows the coalition list
+  with each candidate's member party and position on the member's own
+  list (`koalicijosPartija`, `numerisPartijosSarase`), which the member
+  party's page repeats the other way round and the walk cross-checks
+  (140 = 99 + 41, 137 = 121 + 16, every position agreeing); and a list
+  page's "Vienmandatė apygarda" column shows only constituencies where
+  the *same* party nominated the candidate, so the constituency page is
+  the authority on the single-member candidacy (17 people sit on one
+  party's list and another's constituency nomination — the Lietuvos rusų
+  sąjunga, a constituency-only party, ran its people where they also sat
+  on the LLRA list). Merged on VRK's id: **1,251 candidates** — 534 in
+  both structures, 649 list-only, 68 constituency-only (10 of the
+  constituency-only parties, 46 self-nominated "Išsikėlė pats/pati", 3
+  coalition-member nominees standing in a constituency only, 9 numbered-
+  list parties' constituency-only nominees), every declared count met,
+  no name collisions.
+- **Candidate pages**: the three 2004 pages (`ep_2004` workflow above),
+  with the Seimas card: "Apygarda: <constituency> (Nr.N)" and "Iškėlė:"
+  for the single-member candidacy, "Apygarda: Daugiamandatė", "Iškėlė:
+  <list>, priešrinkiminis numeris sąraše: N" for the list one, the
+  coalition member party and its position in parentheses (2012's
+  `iskele-3`), and for the 455 independent campaign participants a
+  closing "Kandidatas registruotas savarankišku politinės kampanijos
+  dalyviu. Sprendimas - <a>Nr…, date</a>" linking the registration
+  decision as a PDF — a card field (`profilis.kita`) and
+  `kandidatavimas.savarankiskasKampanijosDalyvis`, not a page. Two cards
+  carry two constituency blocks (a party nominee who also self-nominated
+  there; the constituency page says only "Išsikėlė pats") →
+  `vienmandate.kitiIskelejai`. One candidate (Žiobakienė) has no
+  declarations page at all — no link on the card, the URL a 404 — so the
+  fetcher records a `MissingExpectedTab` and the record has no
+  declarations section; one page (Matkevičius) prints the income extract
+  only. The 2004 page readers learned one thing here, a no-op on the EP
+  pages: an unanswered degree or title drops its `<b></b>`, so
+  "Moksliniai laipsniai: Moksliniai vardai:" arrives as one text run and
+  is split into its two rows.
+- **Question set**: the Seimo rinkimų įstatymo form the 2008–2013 pages
+  ask, keyed with the 2016 Seimo names — `seimo_2004.normalize_seimo_2004_anketa_rows`:
+  Q8.3 another state's citizenship (`ar-turite-kitos-valstybes-pilietybe`),
+  Q8.4 an oath to a foreign state (`ar-susijes-priesaika-uzsienio-valstybei`),
+  Q9.1–9.3 the 98 str. questions; birth date Q3 (ISO in normalized), the Q9
+  explanation the unlabelled row after 9.3 (ten pages), answers in the
+  form's third person as on the EP pages (`Yra`/`Nėra`, `Buvo`/`Nebuvo`).
+  Uniform across all 1,251 pages.
+- **Results**: the tree's own pages, `seimo_2004/results.py`.
+  `rez_isrinkti_l_20_1.htm` lists the 141 members by anketa id with the
+  seat — "Daugiamandatė", or the constituency's number and name linking
+  `rezv_apg_l_<district>_<round>.htm`, so the constituency id and the
+  deciding round are on the row (5 first-round, 66 runoff) — and the
+  party. Cross-checked by id against the list-seat page
+  (`rezd_isrinkti_l_20_1.htm`, 70) and the two constituency-winner pages
+  (`rezv_isrinkti_l_20_1_1.htm`, `…_2_1.htm`), against the national
+  page's mandate column per list, against the sitemap's roles and
+  constituency ids, all at 0. The 15 `rez_pirm_l_<list>.htm` ranking
+  pages give every list candidate's rank and preference votes, joined as
+  for the EP election — except the LLRA list, which "Lietuvos lenkų
+  rinkimų akcijos prašymu … nebuvo reitinguojamas": its page prints rank
+  (= list order) and name only, so its 128 candidates carry
+  `porinkiminisNumerisSarase` and a null `pirmumoBalsai`. The
+  per-constituency results pages row candidates under a results-system id
+  of their own, not the anketa id, so constituency vote counts are not
+  joined.
+
+```bash
+python -m scraper fetch-sample 2004-seimo
+python -m scraper sitemap 2004-seimo
+python -m scraper fetch-candidate-samples 2004-seimo --candidate-id valentinas-mazuronis --allow-new-samples
+python -m scraper build-results 2004-seimo
+python -m scraper parse-anketa-samples 2004-seimo
+KEEP_SAMPLES=1 scripts/run_election_batches.sh 2004-seimo
+```
+
+Fixtures are fourteen candidates chosen by shape
+(`tests/test_seimo_2004_sample_allowlist.py`); the full field was scraped
+2026-08-23 with retention (see `docs/DATASET.md`).
+
 ## 2012–2014 national elections (`2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`) Workflow
 
 The four elections between the 1990s archive and the 2015 backlog are the
@@ -1355,6 +1451,7 @@ reconciliation looked like when the files were built (2026-08-21):
 | `2011-vasario-27-savivaldybiu` | 60 municipality pages + 599 list rankings (no mayoral vote, no round two); built 2026-08-22 | 1,526 council, 18 of them self-nominated individuals seated from their own row of the results table | every winner by id in the sitemap (no dual ids: one candidacy each); 0 seat mismatches; 60/60 compositions contain every derived winner |
 | `2007-vasario-25-savivaldybiu` | 60 municipality pages + 60 "Mandatus gavę kandidatai" pages (the winners with anketa links; no ranking arithmetic), `2007_savivaldybiu_tarybu_rinkimai/` without `output_lt`; built 2026-08-22 | 1,550 council | every winner by id in the sitemap and in the municipality the sitemap places them; winners = results-table total = sum of list mandates = composition-page council size in all 60 |
 | `2004-ep` | the 2004 tree's own members page (`rinkimai/2004/euro/rezultatai/rez_isrinkti_l_18_1.htm`, ids on the page) with its substitution footnote, the national page's mandate column and the 12 per-list ranking pages; built 2026-08-23 | 13 (14 records: Prunskienė's terminated mandate and Didžiokas seated by VRK decision Nr. 181) | all in the sitemap; mandates per list = members per list; bold ranking rows = members; 241/241 ranked, pre-election positions = listing |
+| `2004-seimo` | the 2004 tree's members page (`rinkimai/2004/seimas/rezultatai/rez_isrinkti_l_20_1.htm`, ids on the page, seat and deciding round on the row), cross-checked against the list-seat and the two constituency-winner pages and the national page's mandate column; the 15 per-list ranking pages for rank and preference votes; built 2026-08-23 | 141 (70 list, 71 constituency: 5 in round one, 66 in the runoff) | all in the sitemap with the right role and constituency; all three id cross-checks and the mandate column at 0; 1,183 list candidates ranked (128 on the unranked LLRA list with rank but no votes), pre-election positions = listing |
 | `2015-birzelio-7-pakartotiniai-sirvintos-trakai` | same walk, `2015_2_…` tree | 2 mayors, 24 council | clean |
 | `2015-birzelio-21-pakartotiniai-silutes` | `2015_3_…` tree | 1 mayor, 24 council | clean |
 | `2015-lapkricio-8-telsiu-mero` | `2015_4_…` tree | 1 mayor | clean |
@@ -1394,7 +1491,7 @@ Traps the walkers encode, worth knowing before touching them:
 for id in 2007-spalio-7-seimo-dzukija 2008-seimo 2009-prezidento 2009-ep 2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai 2011-vasario-13-seimo-marijampole 2012-seimo 2013-kovo-3-seimo-birzai-zarasai-ukmerge 2014-prezidento 2014-ep \
           2015-kovo-1-seimo-zirmunai 2015-birzelio-7-seimo-varena-eisiskes 2015-lapkricio-8-telsiu-mero \
           2015-birzelio-7-pakartotiniai-sirvintos-trakai 2015-birzelio-21-pakartotiniai-silutes 2015-kovo-1-savivaldybiu \
-          2011-vasario-27-savivaldybiu 2007-vasario-25-savivaldybiu 2004-ep; do
+          2011-vasario-27-savivaldybiu 2007-vasario-25-savivaldybiu 2004-ep 2004-seimo; do
   python -m scraper build-results "$id"
 done
 # then re-parse offline; the wrappers pick up sitemaps/<id>.results.json by default

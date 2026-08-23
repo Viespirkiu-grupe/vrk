@@ -1735,6 +1735,82 @@ roman section heading as the key of its total (with the page's row label,
 "Visa šeimos turto vertė", as `label`), and the form line ("1) FR0462
 formos deklaracijos") as a three-field item (`form`, `income`, `tax`).
 
+## Appendix: 2004 Seimas (`2004-seimo`)
+
+The same pages and record shape as the 2004 EP appendix above — four
+sections, `profilis`/`anketa`/`biografija`/`turto-ir-pajamu-deklaracijos`,
+no interest declaration, no `kita`, no campaign section — with what the
+Seimas election adds:
+
+### `kandidatavimas`
+
+The 2008/2012 Seimo shape: `roles` in first-seen order (lists before
+constituencies), `vienmandate` (`apygarda`, `apygardosNumeris`,
+`apygardosId`, `iskele` — the constituency page's nominator verbatim: a
+party, `Išsikėlė pats` or `Išsikėlė pati`), `daugiamandate` (`sarasas`,
+`sarasoNumeris`, `sarasoId`, `numerisSarase`, and for a coalition's
+candidate `koalicijosPartija` and `numerisPartijosSarase` — the member
+party and the position on its own list, which 2012 does not carry), the
+other slot null. 534 records have both, 649 the list only, 68 the
+constituency only. Two additions:
+
+- `vienmandate.kitiIskelejai` (two records): the card names a nominator
+  the constituency page does not — a party nominee who also
+  self-nominated in the same constituency, listed there as "Išsikėlė
+  pats".
+- `savarankiskasKampanijosDalyvis` (455 records): the card's registration
+  line — `sprendimas` ("Nr.194, 2004.09.16") and `nuoroda` (the decision
+  as a PDF under `kandidatai/pazym_l_<ID>.pdf`). The other 796 cards have
+  no campaign line.
+
+The results join: `isrinktas`, `isrinktasKaip` (`daugiamandate` for the 70
+list seats, `vienmandate` for the 71 constituency seats), `rezultatuSaltinis`
+(the members page) and, for constituency seats, `rezultatuTuras` (1 for
+the five decided in the first round, 2 for the 66 runoffs). Every list
+candidate carries `porinkiminisNumerisSarase`, `pirmumoBalsai` and
+`pirmumoBalsuSaltinis` from the list's ranking page; the 128 on the LLRA
+list, which VRK did not rank at the party's request, have the rank (the
+list order) and a null `pirmumoBalsai`. Constituency vote counts are not
+joined (see the results section of `docs/CLI_REFERENCE.md`).
+
+### `profilis.kita`
+
+One `apygarda`/`iskele` pair per candidacy in card order — the
+constituency first (`apygarda` = "Dainų (Nr.25)" linking the constituency
+page, `iskele` the nominator linking the party page), then `apygarda-2`
+= "Daugiamandatė", `iskele-2` the list and `priesrinkiminis-numeris-sarase`;
+a coalition's candidate adds `iskele-3` = the member party (the page
+prints it as "(Iškėlė", the key 2012 also uses) and
+`priesrinkiminis-numeris-sarase-2`, the position on the member's list. A
+list-only card has the list block alone (so `apygarda` is
+"Daugiamandatė"); a constituency-only card the constituency pair alone;
+the two double-nominated cards have `apygarda`/`iskele` twice before the
+list block. Independent campaign participants add
+`kandidatas-registruotas-savarankisku-politines-kampanijos-dalyviu-sprendimas`
+(`reiksme` the decision, `nuorodos` the PDF).
+
+### `normalized.anketa`
+
+The EP appendix's key set with the Seimas Q8 block: `pareiskimai` has
+`ar-nebaigta-teismo-paskirta-bausme` (8.1), `ar-atliekate-karo-tarnyba`
+(8.2), `ar-turite-kitos-valstybes-pilietybe` (8.3),
+`ar-susijes-priesaika-uzsienio-valstybei` (8.4),
+`ar-bendradarbiavote-su-uzsienio-tarnybomis` (9.1),
+`ar-buvote-pripazintas-kaltu` (9.2),
+`ar-buvote-pripazintas-kaltu-del-sunkaus-nusikaltimo` (9.3) and
+`teisiniai-argumentai` — no `kitos-valstybes-pilietybe-valstybe` /
+`ar-atimta-balsavimo-teise-kitoje-valstybeje` (those are the EP form's
+8.4.1/8.4.2). `adresas` is Q6 "Nuolatinė gyvenamoji vieta". Answers keep
+the form's third person (eight `Yra` on 9.2, four `Buvo` on 9.3, ten
+explanations).
+
+### `turto-ir-pajamu-deklaracijos`
+
+As the EP appendix (699 family-form and 550 individual-form asset
+extracts). One record (Žiobakienė) has no section — VRK published no
+declarations page for her; one (Matkevičius) has the income extract only
+(`israsai.turto-deklaracija` null, the asset keys null).
+
 ## Appendix: 2007–2014 national elections (`2007-spalio-7-seimo-dzukija`, `2008-seimo`, `2009-prezidento`, `2009-ep`, `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai`, `2011-vasario-13-seimo-marijampole`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`)
 
 All ten are the 2015-era static layout described in the 2015 Seimo
