@@ -1357,21 +1357,32 @@ mayor was elected directly, so:
   `ar-eina-nesuderinamas-pareigas`, `ar-kitos-valstybes-institucijos-narys`,
   `ar-turite-kitos-valstybes-pilietybe`,
   **`ar-pasyvioji-rinkimu-teise-neapribota`** ("Ar pasyvioji rinkimų teisė
-  nėra apribota valstybėje, kurios pilietis yra" — "Neapribota" on every
-  fixture, Lithuanian-only citizens included) and `ar-buvote-pripazintas-kaltu`
-  (the 89 str. 1 d. question, as in 2011/2015); there is no
-  `teisiniai-argumentai` row on the form. `gimimo-data` is the card's date
-  (no Q5). `issilavinimas.irasai` and `anksciau-isrinktas.irasai` are the
-  record tables, with `aprasas` null. `mokslo-laipsnis` is the
-  "Moksliniai laipsniai" line, printed only where there is one;
-  `pedagoginis-vardas` and `kita-apie-save` are null (not asked). The
-  family line "Šeimos nariai: Sutuoktinis/sutuoktinė Vida, Vaikas Gintarė,
-  Vaikas Ieva" is kept whole as **`seimos-nariai`** (a key only this
-  election has) and split into `sutuoktinio-vardas-pavarde` ("Vida") and
-  `vaiku-vardai-pavardes` ("Gintarė, Ieva"); `seimine-padetis` is the
-  form's own both-gender wording ("Vedęs, ištekėjusi"). `tautybe` is
-  verbatim ("Lietuvis (-ė)"). An empty answer (`<b></b>`) leaves its key
-  null and closes its row, so the next label is not joined to it.
+  nėra apribota valstybėje, kurios pilietis yra" — "Neapribota" on 12,799
+  of 13,419 records, Lithuanian-only citizens included), `ar-buvote-pripazintas-kaltu`
+  (the 89 str. 1 d. question, as in 2011/2015; 72 "Taip") and
+  `teisiniai-argumentai`, the explanation a "Taip" may be followed by —
+  on this form a bare text line after the answer rather than a prompted
+  row (39 of the 78). `gimimo-data` is the card's date (no Q5).
+  `issilavinimas.irasai` and `anksciau-isrinktas.irasai` are the record
+  tables, with `aprasas` null. `mokslo-laipsnis` is the "Moksliniai
+  laipsniai" line and `pedagoginis-vardas` the "Moksliniai vardai" line,
+  each printed only where there is one (753 and 133 records);
+  `kita-apie-save` is null (not asked). The family line "Šeimos nariai:
+  Sutuoktinis/sutuoktinė Vida, Vaikas Gintarė, Vaikas Ieva" is kept whole
+  as **`seimos-nariai`** (a key only this election has) and split into
+  `sutuoktinio-vardas-pavarde` ("Vida"; Partneris/partnerė counts) and
+  `vaiku-vardai-pavardes` ("Gintarė, Ieva"; Augintinis counts, Anūkas does
+  not, and a name with no role continues the role before it);
+  `seimine-padetis` is the form's own both-gender wording ("Vedęs,
+  ištekėjusi"). `tautybe` is verbatim ("Lietuvis (-ė)").
+- Two page habits the normalizer undoes, both visible in `rawData.anketa.rows`
+  as the page prints them: an empty answer (`<b></b>`) leaves its key null
+  and closes its row; a question printed with **no `<b>` at all** (the
+  pasyvioji question on 611 pages, the citizenship one on 8) runs its
+  label into the next label's prompt, and the normalizer splits such a
+  prompt on the form's labels so the missing question is null and every
+  later answer stays with its own label — without which "Ne" from the
+  conviction question sat under `ar-pasyvioji-…` on those 611 records.
 - Four sections only: `profilis`, `anketa`, `turto-ir-pajamu-deklaracijos`,
   `privaciu-interesu-deklaracija`. No `biografija`, no `kita` (first
   published in 2008) and no `politines-kampanijos-dalyvio-duomenys` on any

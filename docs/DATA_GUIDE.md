@@ -1,13 +1,14 @@
 # Data Guide
 
 The consumer entry point to the corpus: everything a third party needs to
-query 77,017 candidate records across 43 Lithuanian elections (1996–2025)
+query 90,436 candidate records across 44 Lithuanian elections (1996–2025)
 without reading the per-election schema appendices first. Every path and
 count on this page was verified against the full corpus on 2026-08-19; the
 election and record totals were refreshed on 2026-08-21 when the 2012–2014
 elections joined and on 2026-08-22 for the 2007–2011 Seimo by-elections, the 2008 Seimo, the two
 2009 elections and the 2011 municipal general, and on 2026-08-23 for the
-2004 European Parliament election (see DATASET.md).
+2007 municipal general and the 2004 European Parliament election (see
+DATASET.md).
 
 Records live at `data/<election-id>/<candidateId>-<electionId>.json`, one
 file per candidacy. `data/` is not version controlled; see
@@ -97,10 +98,10 @@ under different paths. The machine-readable bridge is
 [concept-map.json](concept-map.json) — per concept, the exact normalized
 path for each election id.
 
-**The table below covers the two modern eras only — 20 of the corpus's 43
+**The table below covers the two modern eras only — 20 of the corpus's 44
 elections.** `concept-map.json` is the authority and is the thing to read
 programmatically; this table is a human summary of the 2016 and 2020 eras.
-The twenty-three pre-2016 elections (six 2007–2011, four 2012–2014, six 2015, five 1996-1998, the 2011 municipal general, the 2004 EP)
+The twenty-four pre-2016 elections (six 2007–2011, four 2012–2014, six 2015, five 1996-1998, the 2007 and 2011 municipal generals, the 2004 EP)
 are mapped in `concept-map.json` but not summarized here: the 2012–2015
 family, the 2004 EP election and the 1997 municipal archive all resolve most concepts under
 `anketa.*` with the same kebab-case keys as the 2016 era, while the 1996-1998 Seimas archive publishes
