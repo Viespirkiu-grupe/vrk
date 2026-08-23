@@ -630,6 +630,14 @@ directory holds both indexes (`list.html`,
 constituency pages under `districts/`. The field is scraped by
 `scripts/run_election_batches.sh`.
 
+For `2005-lapkricio-20-seimo-kedainiai` the allowlist
+(`tests/test_seimo_kedainiu_2005_sample_allowlist.py`) is the complete
+five-candidate field — `tomas-bakucionis`, `virginija-baltraitiene` (the
+runoff winner), `steponas-navajauskas`, `stasys-sedbaras`,
+`vytautas-valaitis` (the one without a campaign registration line); the
+samples directory holds the constituency index (`districts.html`), the
+party index (`list.html`) and the one constituency page under `districts/`.
+
 For `2009-prezidento` the allowlist
 (`tests/test_prezidento_2009_sample_allowlist.py`) is likewise the complete
 seven-candidate field:

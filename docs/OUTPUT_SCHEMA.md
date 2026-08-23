@@ -1735,7 +1735,12 @@ roman section heading as the key of its total (with the page's row label,
 "Visa šeimos turto vertė", as `label`), and the form line ("1) FR0462
 formos deklaracijos") as a three-field item (`form`, `income`, `tax`).
 
-## Appendix: 2004 Seimas (`2004-seimo`)
+## Appendix: 2004 Seimas (`2004-seimo`) and the 2005 Kėdainiai by-election (`2005-lapkricio-20-seimo-kedainiai`)
+
+The 2005 Kėdainiai by-election is the 2004 Seimas record shape for a
+constituency-only field: `roles: ["vienmandate"]`, `daugiamandate` null,
+no rank or preference votes, the winner's `rezultatuTuras` 2, four of the
+five with `savarankiskasKampanijosDalyvis`. Everything below applies.
 
 The same pages and record shape as the 2004 EP appendix above — four
 sections, `profilis`/`anketa`/`biografija`/`turto-ir-pajamu-deklaracijos`,

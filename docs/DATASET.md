@@ -18,7 +18,7 @@ never touched by a full run.
 
 ## Inventory
 
-91,687 candidate records across 45 elections, 1996–2025, with **zero fetch
+91,692 candidate records across 46 elections, 1996–2025, with **zero fetch
 failures** other than three 2011 and three 2007 candidate pages VRK never
 published (see Known gaps).
 
@@ -97,7 +97,8 @@ election was re-parsed offline the same day.
 | `2007-vasario-25-savivaldybiu` | 13419 | 1550 | 78 | 0 |
 | `2004-ep` | 241 | 14 | 3 | 0 |
 | `2004-seimo` | 1251 | 141 | 8 | 0 |
-| **total** | **91687** | **8592** | **1593** | **20199** |
+| `2005-lapkricio-20-seimo-kedainiai` | 5 | 1 | 0 | 0 |
+| **total** | **91692** | **8593** | **1593** | **20199** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
@@ -288,6 +289,21 @@ chosen by shape. Two sibling defects surfaced and were fixed across the
 2015 municipal family (the Q9 explanation, the prose zero income — rows
 in the fix table above). Person index rebuilt: 47,125 persons (8,350 new;
 the other 8,050 candidacies merged into people already in the corpus).
+
+### The 2026-08-23 build of the 2005 Kėdainiai Seimo by-election
+
+GitHub issue #33; VRK's `rinkimai/2005/seimas/` tree (2005-11-20, the
+seat Viktor Uspaskich gave up) — the 2004 Seimas pages one year on, so
+`seimo_kedainiu_2005` is thin wiring over `seimo_2004`: its constituency
+reader for the one district, the 2004 card hook and question mapping, the
+2004 members-page reader for the results. Five candidates, one each from
+five parties (the party index declares exactly that), the complete field
+as fixtures, 0 anomalies; Baltraitienė (Darbo partija) won the runoff —
+first-round turnout was 26% — joined by id with `rezultatuTuras: 2` and
+cross-checked against the runoff winners page. Four of the five are
+independent campaign participants with their registration decision PDF.
+Person index: all five merge into existing people (every one of them
+stood in 2004 or later).
 
 ### The 2026-08-23 build and scrape of the 2004 Seimas general election
 
