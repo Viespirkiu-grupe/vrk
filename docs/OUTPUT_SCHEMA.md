@@ -1618,6 +1618,123 @@ field map all resolve them with no election-specific case.
   resolve with the corpus's standard positional `-2` suffix; see
   `docs/CLI_REFERENCE.md`'s municipal archive section for the concrete pair.
 
+## Appendix: 2004 European Parliament (`2004-ep`)
+
+Lithuania's first EP election, published on VRK's original 2004 static site
+— a layout family of its own, read by `scraper/elections/ep_2004/`, whose
+records keep the corpus's sections and keys. Written as
+`data/2004-ep/<candidate-id>-2004-ep.json` with four sections in both
+layers: `profilis`/`profile`, `anketa`, `biografija`,
+`turto-ir-pajamu-deklaracijos`/`turtoIrPajamuDeklaracijos`. There is no
+private-interest declaration, no `kita` and no campaign section: the 2004
+pages publish none of them. What is this election's own:
+
+### `kandidatavimas`
+
+The 2009/2014 EP shape — `vrkCandidateId`, `roles: ["daugiamandate"]`,
+`vienmandate: null`, `daugiamandate` (`sarasas`, `sarasoNumeris` = VRK's
+list number, `sarasoId` = the list page's id, `numerisSarase`), the
+results join (`isrinktas`, `isrinktasKaip: "daugiamandate"`,
+`rezultatuSaltinis` = the members page) — plus three keys from the list's
+post-preference ranking page, on every record:
+`porinkiminisNumerisSarase` (the rank after preference votes),
+`pirmumoBalsai` (the preference votes) and `pirmumoBalsuSaltinis` (the
+page). The modern cards print the rank (`porinkiminis-numeris-sarase` in
+`profilis.kita`); here it is a results-tree join, so it lives with the
+other joined facts.
+
+Two records carry the one post-election substitution VRK's members page
+names in a footnote. Prunskienė (VNDPS, list 1, position 1, 48,852
+preference votes) has `isrinktas: true` and `mandatasNutrauktas` —
+`decision` (`label` "VRK 2004 m. birželio 21 d. sprendimu Nr. 180", `url`
+on lrs.lt), `statementUrl` (her statement, a scanned image on VRK),
+`replacedBy: "260979"` and the footnote's `note`. Didžiokas (the same list's
+second) has `isrinktas: true`, `pakeiteNari: "260978"` and `vrkSprendimas`
+(decision Nr. 181, by which VRK recognised him as the member elected under
+the list). Fourteen records are elected for thirteen seats; `isrinktas` is
+a plain false on the other 227 (the results file exists, so unknown is not
+an option).
+
+### `profilis`
+
+`vardas-pavarde` from the page's second heading ("Justas Vincas
+PALECKIS"), `pastaba` always null (no winner mark on any page),
+`nuotrauka` a VRK URL under `2004/euro/nuotraukos/`, and `kita` with
+exactly two keys on every record: `iskele` (the nominating list, linking
+its page) and `priesrinkiminis-numeris-sarase` (the pre-election position,
+as text). The card's Biografija / Pajamų links are the page-set, not
+fields.
+
+### `normalized.anketa`
+
+The 2009 EP key set (`ep_2009`'s normalizer one form earlier — see that
+appendix), with these differences:
+
+- `gimimo-data` is Q3 and the page prints it dotted (`1942.01.01`);
+  normalized is the ISO form (`1942-01-01`, the person index's key),
+  `rawData.anketa.rows` keeps the page's text.
+- `pareiskimai`: `ar-turite-kitos-valstybes-pilietybe`,
+  `kitos-valstybes-pilietybe-valstybe` and
+  `ar-atimta-balsavimo-teise-kitoje-valstybeje` are Q8.4 / 8.4.1 / 8.4.2
+  here (the 2009 form's 8.3 block; there is no 8.3), the other keys Q8.1,
+  8.2 and 9.1–9.3 as in 2009. Answers are the form's third-person wording
+  — `Neturi`/`Turi`, `Nėra`/`Yra`, `Nebuvo`/`Buvo` — kept as published.
+  `teisiniai-argumentai` is the unlabelled emphasised row the page prints
+  right after 9.3 when the candidate wrote an explanation (five records;
+  each under a `Yra`/`Buvo` answer).
+- `issilavinimas.irasai` columns are the 2004 headings:
+  `issilavinimas`, `mokyklos-istaigos-pavadinimas`, `specialybe`,
+  `baigimo-metai` (2009+: `mokymo-istaigos-pavadinimas`). `aprasas` is
+  always null (the question has no free-text form). `mokslo-laipsnis` and
+  `pedagoginis-vardas` come from the two "Moksliniai laipsniai:" /
+  "Moksliniai vardai:" pairs after the table (78 and 28 non-null).
+- A list-type answer (Q13 languages, Q18 hobbies, Q20 children) is one
+  `<b>` per item on the page; the row's `answer` is the items joined with
+  ", " (so `pomegiai` and `vaiku-vardai-pavardes` read as every other
+  era's), `uzsienio-kalbos` is the split list, and the row in
+  `rawData.anketa.rows` keeps the items as `answerItems` when there were
+  several.
+- An unanswered question is printed with an empty `<b>`: the row exists
+  with an empty answer and the key is null. One page (Šiškauskienė) omits
+  Q19, the spouse line and Q20 altogether — null as well.
+
+### `biografija`
+
+`tekstas` is the blockquote's one paragraph, which on most pages opens
+with the name and the nominator in capitals ("JUSTAS VINCAS PALECKIS
+KANDIDATAS Į EUROPOS PARLAMENTĄ, IŠKELTAS …") before the prose;
+`rawData.biografija.html` is the blockquote.
+
+### `turto-ir-pajamu-deklaracijos`
+
+The corpus's seven amount keys in litas (`valiuta: "Lt"`, `pastaba` null —
+the page has no note paragraph), read from the two extracts of the
+declarations page:
+
+- The asset extract is either the **family** form ("METINĖ ŠEIMOS TURTO
+  DEKLARACIJA", 144 records) or the **individual** form ("METINĖ
+  GYVENTOJO TURTO DEKLARACIJA", 97), sections I–V with one total each —
+  `privalomas-registruoti-turtas` … `gautos-paskolos`. A "-" total is
+  null (nothing declared under that section), never zero.
+- The income extract prints one income/tax pair for each of the five
+  FR0462 form variants VRK knew of (FR0462, S33, S15, S0, S); the
+  candidate filed one, occasionally two or three (Platelis: FR0462, S33
+  and S15), the rest "-". `gautos-pajamos` and `sumoketas-pajamu-mokestis`
+  are the sums of the filed lines; `pajamos-pagal-forma` keeps the five
+  lines (`forma`, `gautos-pajamos`, `sumoketas-pajamu-mokestis`, null
+  where "-"). Five records filed on no form at all: null, not zero.
+- `israsai.turto-deklaracija` / `israsai.pajamu-deklaracija` carry what the
+  page prints above and below each table: `pavadinimas` (the extract's
+  title, which is how the family/individual form is told apart),
+  `israsa-isdave` (the issuing tax office), `gavimo-data` and
+  `pildymo-data` (ISO), and `darboviete` (the form's "3. Darbovietė").
+
+`rawData.turtoIrPajamuDeklaracijos.sections` is the two extracts with their
+`title`, `issuer`, `receivedDate` and `items` as the page labels them — the
+roman section heading as the key of its total (with the page's row label,
+"Visa šeimos turto vertė", as `label`), and the form line ("1) FR0462
+formos deklaracijos") as a three-field item (`form`, `income`, `tax`).
+
 ## Appendix: 2007–2014 national elections (`2007-spalio-7-seimo-dzukija`, `2008-seimo`, `2009-prezidento`, `2009-ep`, `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai`, `2011-vasario-13-seimo-marijampole`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`)
 
 All ten are the 2015-era static layout described in the 2015 Seimo

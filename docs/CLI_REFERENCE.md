@@ -53,6 +53,7 @@ python -m scraper <command> [args]
 - `2013-kovo-3-seimo-birzai-zarasai-ukmerge` (2013-03-03 Seimo repeat elections in Biržų–Kupiškio No. 48 and Zarasų–Visagino No. 52 and new election in Ukmergės No. 61)
 - `2014-prezidento` (2014-05-11 presidential election)
 - `2014-ep` (2014-05-25 European Parliament election)
+- `2004-ep` (2004-06-13 European Parliament election — Lithuania's first, 12 party lists; VRK's original 2004 static site)
 
 ## Election Separation
 
@@ -1032,6 +1033,103 @@ candidates are the complete field already covered above):
   `KEEP_SAMPLES=1` — at this size a later parser fix should be an offline
   re-parse, not hours of repeat traffic to vrk.lt.
 
+## European Parliament 2004 (`2004-ep`) Workflow
+
+Lithuania's first EP election (2004-06-13, VRK's `rinkimai/2004/euro/`
+tree; GitHub issue #31), one month after accession — and the only election
+of the corpus published on VRK's **original 2004 static site** (the LRS-ITD
+page template), which sits between the 1996-1998 Teleport archive and the
+2015-era layout that every election from 2007 on shares. A layout family
+of its own, read by `scraper/elections/ep_2004/`:
+
+- **Listing**: the same index-and-lists shape as 2009/2014 EP — an index
+  of the 12 party lists (VRK number, name, declared size), each a page of
+  candidates in list order, no constituencies — so `ep_2014`'s walk runs
+  with this tree's link patterns (`kand_part_l_<ID>.htm`,
+  `kand_anketa_l_<ID>.htm`; the `_l_` is the Lithuanian page, an `_e_`
+  English twin exists and is not read). One thing the walk had to learn:
+  the 2004 pages lay everything out in nested tables, so an outer layout
+  row *contains* every candidate anchor — only the row an anchor sits in
+  directly is a candidate row (a no-op on the flat 2009/2014 tables; read
+  naively the walk counted 277 rows for 241 and lost every list position).
+  241 candidates on 12 lists, every list equal to its declared size, no
+  name collisions.
+- **Candidate pages**: three static pages, no tab bar. The questionnaire
+  (`kand_anketa_l_`) is a profile card — photo, "Iškėlė:" linking the
+  list page, "priešrinkiminis numeris sąraše:" — over one `r1`/`r2` row
+  per question in `N. Prompt: <b>answer</b>` form: list-type answers as
+  several `<b>` with commas between (languages, hobbies, children; the
+  joined string is the row's answer, the items kept as `answerItems`),
+  the education and prior-mandate record tables as bordered `table.basic`
+  with a bold column-name row, and two unnumbered "label: <b>…</b>" pairs
+  trailing a question in the same cell (the degree and academic title after
+  the education table — "Moksliniai laipsniai" / "Moksliniai vardai" — and
+  the spouse after Q19). An unanswered question is printed with an empty
+  `<b>`, which closes its row. The biography (`kand_biog_l_`) is one
+  free-text paragraph in a blockquote. The declarations page
+  (`kand_pajam_l_`, "Pajamų ir turto deklaracijų pagrindinių duomenų
+  išrašai") prints two extracts — the asset declaration (family form on
+  144 pages, individual form on 97; sections I–V with one total each) and
+  the resident's income declaration (one income/tax pair for each of the
+  five FR0462 form variants VRK knew of, "-" for the ones not filed; the
+  declared income is the sum of the lines; two candidates filed on more
+  than one form) — each with the issuing tax office, receipt date, filing
+  date and workplace. No private-interest declaration (the ID001 form was
+  not yet required of EP candidates), no "Kita", no campaign page (the
+  2004 site publishes campaign finance as per-party PDF reports). The
+  fetcher is the 2015-era one with this module's link extractor; files
+  land under the corpus's usual names (`anketa.html`, `biografija.html`,
+  `turto-ir-pajamu-deklaracijos.html`).
+- **Question set**: the 2009 EP form five years earlier, keyed with
+  `ep_2009`'s names — `ep_2004.normalize_ep_2004_anketa_rows`. Birth date
+  is Q3 (printed "1942.01.01"; `anketa.gimimo-data` is the corpus's ISO
+  form, the key the person index joins on); the rinkimų į Europos
+  Parlamentą įstatymo declarations are Q8.1, 8.2 and **8.4** (another
+  member state's citizenship, with 8.4.1 "Kurios" and 8.4.2 on the vote
+  there — the 2009 form's 8.3/8.3.1/8.3.2; there is no 8.3), kept under
+  the 2009 keys; the lustration and conviction questions are Q9.1–9.3;
+  the Q9 block's free-text explanation is printed as an **unlabelled
+  emphasised row right after 9.3** on the five pages that have one →
+  `pareiskimai.teisiniai-argumentai`. Answers are the form's third-person
+  wording — `Neturi`/`Turi`, `Nėra`/`Yra`, `Nebuvo`/`Buvo` — kept as
+  published, as every era's are; count convictions on 9.2 = `Yra`
+  (three) and 9.3 = `Buvo` (one more). Q10–Q21 are as every later form
+  asks them. One page (Šiškauskienė) omits Q19, the spouse line and Q20
+  altogether; two (Imbrasas, Kundrotas) answer almost nothing.
+- **Results**: the 2004 tree's own pages, walked by `ep_2004/results.py`
+  (the shared EP builder keys on the later `Kandidato<ID>Anketa` pattern).
+  `rez_isrinkti_l_18_1.htm` lists the 13 members with anketa links and
+  names, in a footnote, the one substitution: Prunskienė's mandate was
+  declared terminated at her own request (VRK decision Nr. 180 of
+  2004-06-21) and the list's next member, Didžiokas, recognised as elected
+  in her place (Nr. 181), both linked to the decisions on lrs.lt. **Both
+  are recorded as elected** — VRK's page lists both and calls the
+  replacement "išrinktu" — so 14 records carry the flag for 13 seats,
+  with `kandidatavimas.mandatasNutrauktas` on hers (decision, statement,
+  `replacedBy`) and `pakeiteNari` / `vrkSprendimas` on his. Two
+  cross-checks, both at 0: the national page's mandate column per list
+  (5+2+2+2+1+1) against the members table, and the 12 per-list ranking
+  pages (`rez_pirm_l_<list>.htm`, winners in bold) against the members.
+  The ranking pages also give every candidate's post-preference rank and
+  preference votes, joined into the record as
+  `kandidatavimas.porinkiminisNumerisSarase` / `pirmumoBalsai` (the modern
+  cards print the former; here it is a results join); the pre-election
+  position they repeat equals the listing's for all 241.
+
+```bash
+python -m scraper fetch-sample 2004-ep
+python -m scraper sitemap 2004-ep
+python -m scraper fetch-candidate-samples 2004-ep --candidate-id justas-vincas-paleckis --allow-new-samples
+python -m scraper build-results 2004-ep
+python -m scraper parse-anketa-samples 2004-ep
+KEEP_SAMPLES=1 scripts/run_election_batches.sh 2004-ep
+```
+
+Fixtures are thirteen candidates chosen by shape
+(`tests/test_ep_2004_sample_allowlist.py`); the full field was scraped
+2026-08-23 with retention (241/241, 0 fetch failures, 0 anomalies, 8.7 MB
+under `samples-full/2004-ep/`).
+
 ## 2012–2014 national elections (`2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`) Workflow
 
 The four elections between the 1990s archive and the 2015 backlog are the
@@ -1256,6 +1354,7 @@ reconciliation looked like when the files were built (2026-08-21):
 | `2015-kovo-1-savivaldybiu` | 60 municipality pages + 478 list rankings + 40 round-two pages | 57 mayors, 1,464 council (48 annulled) | 0 unresolved; 249 dual candidates resolved by name+list+position (two VRK ids each); 58/60 compositions contain every derived winner, the two exceptions the annulled councils |
 | `2011-vasario-27-savivaldybiu` | 60 municipality pages + 599 list rankings (no mayoral vote, no round two); built 2026-08-22 | 1,526 council, 18 of them self-nominated individuals seated from their own row of the results table | every winner by id in the sitemap (no dual ids: one candidacy each); 0 seat mismatches; 60/60 compositions contain every derived winner |
 | `2007-vasario-25-savivaldybiu` | 60 municipality pages + 60 "Mandatus gavę kandidatai" pages (the winners with anketa links; no ranking arithmetic), `2007_savivaldybiu_tarybu_rinkimai/` without `output_lt`; built 2026-08-22 | 1,550 council | every winner by id in the sitemap and in the municipality the sitemap places them; winners = results-table total = sum of list mandates = composition-page council size in all 60 |
+| `2004-ep` | the 2004 tree's own members page (`rinkimai/2004/euro/rezultatai/rez_isrinkti_l_18_1.htm`, ids on the page) with its substitution footnote, the national page's mandate column and the 12 per-list ranking pages; built 2026-08-23 | 13 (14 records: Prunskienė's terminated mandate and Didžiokas seated by VRK decision Nr. 181) | all in the sitemap; mandates per list = members per list; bold ranking rows = members; 241/241 ranked, pre-election positions = listing |
 | `2015-birzelio-7-pakartotiniai-sirvintos-trakai` | same walk, `2015_2_…` tree | 2 mayors, 24 council | clean |
 | `2015-birzelio-21-pakartotiniai-silutes` | `2015_3_…` tree | 1 mayor, 24 council | clean |
 | `2015-lapkricio-8-telsiu-mero` | `2015_4_…` tree | 1 mayor | clean |
@@ -1295,7 +1394,7 @@ Traps the walkers encode, worth knowing before touching them:
 for id in 2007-spalio-7-seimo-dzukija 2008-seimo 2009-prezidento 2009-ep 2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai 2011-vasario-13-seimo-marijampole 2012-seimo 2013-kovo-3-seimo-birzai-zarasai-ukmerge 2014-prezidento 2014-ep \
           2015-kovo-1-seimo-zirmunai 2015-birzelio-7-seimo-varena-eisiskes 2015-lapkricio-8-telsiu-mero \
           2015-birzelio-7-pakartotiniai-sirvintos-trakai 2015-birzelio-21-pakartotiniai-silutes 2015-kovo-1-savivaldybiu \
-          2011-vasario-27-savivaldybiu 2007-vasario-25-savivaldybiu; do
+          2011-vasario-27-savivaldybiu 2007-vasario-25-savivaldybiu 2004-ep; do
   python -m scraper build-results "$id"
 done
 # then re-parse offline; the wrappers pick up sitemaps/<id>.results.json by default

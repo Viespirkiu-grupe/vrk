@@ -18,7 +18,7 @@ never touched by a full run.
 
 ## Inventory
 
-90,195 candidate records across 43 elections, 1996–2025, with **zero fetch
+90,436 candidate records across 44 elections, 1996–2025, with **zero fetch
 failures** other than three 2011 and three 2007 candidate pages VRK never
 published (see Known gaps).
 
@@ -95,7 +95,8 @@ election was re-parsed offline the same day.
 | `2011-vasario-13-seimo-marijampole` | 9 | 1 | 0 | 9 |
 | `2011-vasario-27-savivaldybiu` | 16400 | 1526 | 200 | 0 |
 | `2007-vasario-25-savivaldybiu` | 13419 | 1550 | 78 | 0 |
-| **total** | **90195** | **8437** | **1582** | **20199** |
+| `2004-ep` | 241 | 14 | 3 | 0 |
+| **total** | **90436** | **8451** | **1585** | **20199** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
@@ -109,7 +110,12 @@ counts `kandidatavimas.isrinktas == true` instead — the flag joined in from
 VRK's results trees (`python -m scraper build-results <id>`; the
 reconciliation behind each file is in `docs/CLI_REFERENCE.md`'s results
 section). The 48 annulled March 2015 council winners in Šilutė and Trakai
-are not counted; the June repeat elections' rows carry those seats.
+are not counted; the June repeat elections' rows carry those seats. The
+2004 EP row counts 14 for 13 seats: Prunskienė, whose mandate VRK declared
+terminated at her request eight days after the vote, and Didžiokas, whom
+VRK recognised as elected in her place (see that election's record
+below). Its conviction column counts Q9.2 (`Yra`, three candidates); a
+fourth declared a grave conviction under Q9.3 alone.
 
 Records live under `data/<election-id>/` (~0.66 GB of JSON plus 362 MB of
 photo sidecar files under `data/<election-id>/photos/` — 2,199 portraits from
@@ -281,6 +287,44 @@ chosen by shape. Two sibling defects surfaced and were fixed across the
 2015 municipal family (the Q9 explanation, the prose zero income — rows
 in the fix table above). Person index rebuilt: 47,125 persons (8,350 new;
 the other 8,050 candidacies merged into people already in the corpus).
+
+### The 2026-08-23 build and scrape of the 2004 European Parliament election
+
+GitHub issue #31; VRK's `rinkimai/2004/euro/` tree (2004-06-13) —
+Lithuania's first EP election, one month after accession, and the first
+election in the corpus published on VRK's **original 2004 static site**
+(the LRS-ITD page template): a layout family of its own between the
+1996-1998 Teleport archive and the 2015-era pages every election from 2007
+on shares, read by `scraper/elections/ep_2004/`. The listing is the
+2009/2014 EP index-and-lists shape, walked by `ep_2014`'s code with this
+tree's link patterns and one generalisation measured a no-op on the flat
+2009/2014 tables: the 2004 pages nest the whole layout in tables, so only
+the row an anchor sits in directly is a candidate row (read naively, 277
+rows for 241 and every list position lost). Sitemap: **241 candidates on
+12 lists**, every list equal to its declared size, no name collisions.
+The candidate is three pages — the questionnaire, the biography and the
+income-and-asset extracts — linked from the profile card, read by page
+readers of this module's own (the row shape, the trailing degree/title and
+spouse pairs, the bold-headed record tables, the five FR0462 form lines
+summed into the declared income); the normalizers, the results join and
+the record writer are the shared ones. The question set is the 2009 EP
+form five years earlier, under `ep_2009`'s keys (birth date at Q3, another
+member state's citizenship at Q8.4 with 8.4.1/8.4.2 — one candidate, French
+— and the Q9 explanation as an unlabelled row after 9.3 on five pages).
+Results from the tree's own pages: the 13 members by id, the national
+page's mandate column and the 12 per-list ranking pages all agreeing, the
+ranking's rank and preference votes joined into every record; VRK's
+footnote substitution (Prunskienė's mandate terminated by decision Nr.
+180, Didžiokas seated by Nr. 181) recorded on both records, so **14
+records carry `isrinktas` for 13 seats**. Scraped the same night with
+`KEEP_SAMPLES=1`: **241/241, 0 fetch failures, 0 parse anomalies**,
+8.7 MB of HTML retained; the retained pages are byte-identical to an
+independent download made while the module was built. Fixtures are 13
+candidates chosen by shape. Person index: 241 candidacies, 198 merged into
+existing people by name and birth date (119 also stood in the 2008 Seimas
+election, 113 in the 2007 municipal general, 63 in 2009 EP), 43 new
+persons; every record carries a birth date (the page's "1942.01.01" is
+written as the corpus's ISO form, which is what the join keys on).
 
 ### The 2026-08-22 build of the 2007 municipal general election
 
@@ -633,7 +677,10 @@ share campaigns that declared nothing at all.
 Every election except `2019-prezidento` — whose pages ask the constitutional
 eligibility questions instead — records the yes/no declaration under
 `normalized.anketa.pareiskimai.ar-buvote-pripazintas-kaltu`, and that is the
-field to count on. Structured conviction *details* (date, court, offence) exist
+field to count on. The answer is the page's own wording: `Taip`/`Ne` from
+2008 on, first-person `Neturiu`/`Nesu` on the 2007 cards, and the 2004 EP
+form's third person — `Yra`/`Nėra`, with `Buvo`/`Nebuvo` on its Q9.3 — so a
+cross-era count matches on the yes-forms, not on one string. Structured conviction *details* (date, court, offence) exist
 only where the page publishes them:
 
 - 2023 onward (Rinkimų kodekso era), 2021 and — since the nested-row capture

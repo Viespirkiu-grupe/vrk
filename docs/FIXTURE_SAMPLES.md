@@ -582,6 +582,29 @@ and the roman-numbered interest sections II–VIII across the fifteen. The
 samples directory holds the list index (`list.html`) and the fifteen list
 pages under `lists/`.
 
+For `2004-ep` the allowlist (`tests/test_ep_2004_sample_allowlist.py`) is
+**thirteen candidates out of 241**, chosen by shape rather than by list:
+the LSDP leader `justas-vincas-paleckis` (two education records, a prior
+mandate, three children, elected), the TS leader `vytautas-landsbergis`
+(degree and academic title, Q21, elected), the VNDPS leader
+`kazimira-danute-prunskiene` (elected; mandate declared terminated by VRK
+decision Nr. 180) and the list's second `gintaras-didziokas` (seated by
+decision Nr. 181), `laima-liucija-andrikiene` (elected, individual-form
+asset declaration), `vytautas-ricardas-backis` (the one candidate with
+another member state's citizenship — Q8.4.1/8.4.2 answered),
+`nikolajus-salkovskis`, `viktor-balakin` and `vladislavas-kazakevicius`
+(the Q9 block's free-text explanation under 9.2 "Yra", 9.1 "Yra" and 9.3
+"Buvo" respectively), `evalda-siskauskiene` (a page that omits Q19, the
+spouse line and Q20), `juozas-imbrasas` and `marius-kundrotas` (the two
+sparsest questionnaires — no education table, no languages, no
+birthplace; Kundrotas with no income on any form) and
+`kornelijus-platelis` (income filed on three FR0462 variants, so the total
+is a sum). Each directory holds the three pages (`anketa.html`,
+`biografija.html`, `turto-ir-pajamu-deklaracijos.html`) and `index.json`;
+the samples directory holds the list index (`list.html`) and the twelve
+list pages under `lists/`. The field is scraped by
+`scripts/run_election_batches.sh`.
+
 For `2009-prezidento` the allowlist
 (`tests/test_prezidento_2009_sample_allowlist.py`) is likewise the complete
 seven-candidate field:

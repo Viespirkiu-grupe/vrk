@@ -1,12 +1,13 @@
 {
   "description": "Concept-to-path bridge for the normalized layer of the VRK election corpus. For each concept, the normalized dotted path per election id. An election missing from a concept's paths does not publish (or does not normalize) that concept — see docs/DATA_GUIDE.md.",
-  "verified": "2026-08-19 against every record of the 20 elections then under data/; 2026-08-21 for the six 2015 elections added since, against their parsed records (complete fields for the three small ones, fixture sets for the three large ones). 2026-08-21 for the five 1996-1998 archive elections added since: the two municipal ones (1997-kovo-23-savivaldybiu-tarybu, 1997-birzelio-29-svenciniu-tarybos-pakartotiniai) against their parsed records for the ten concepts their anketa/kandidatavimas sections actually publish (kebab-case keys shared with the 2015 and 2016 eras, so no era-specific path shape); the three Seimas archive elections (1996-spalio-20-seimo and its two 1997 repeats) publish none of the existing concepts — no birth date, nationality, education, or any of the other fields those pages simply do not carry, and their candidacy field is a list (single- and multi-mandate seats can both apply) rather than the single value every existing concept path assumes, so iskele/savivaldybe are left unmapped for them too — so they appear only in the elections list. 2026-08-21 for the four 2012-2014 elections (2012-seimo, 2013-kovo-3-seimo-birzai-zarasai-ukmerge, 2014-prezidento, 2014-ep): same era and key set as the 2015 elections, paths copied from 2015-kovo-1-seimo-zirmunai and validated against every parsed record; the presidential election maps no iskele (self-nominated) and no ar-buvote-pripazintas-kaltu (its form asks the eligibility set, not Q9.2), the EP election no kita-apie-save (no Q21), and neither 2014 election a declaration period (their note paragraph is empty). 2026-08-22 for 2009-prezidento: the 2014 presidential paths copied and validated against all seven parsed records (same concept set — no iskele, no ar-buvote-pripazintas-kaltu, no declaration period). Same day for 2009-ep: the 2014 EP paths (plus kita-apie-save, which its Q21 publishes) validated against the fifteen fixture records. Same day for 2008-seimo: the 2012 Seimo paths validated against the eight fixture records. Same day for the 2009 and 2011 Seimo by-elections: the 2013 paths validated against their complete fields (17 and 9 records). Same day for 2007-spalio-7-seimo-dzukija: the 2013 paths validated against its complete field (10 records); gimimo-data resolves through anketa because the era parser folds the card's date in. Same day for 2011-vasario-27-savivaldybiu: the 2015 municipal general's paths validated against the ten fixture records (same era, same municipal key set; the election adds no concept of its own). Same day for 2007-vasario-25-savivaldybiu: the 2011 municipal general's paths validated against the ten fixture records; savivaldybe resolves through kandidatavimas (the 2007 card names the electoral district, not the municipality), kita-apie-save is unmapped (not asked) and so is the declaration period (no note paragraph); the election's own keys — anketa.seimos-nariai and pareiskimai.ar-pasyvioji-rinkimu-teise-neapribota — map to no existing concept.",
+  "verified": "2026-08-19 against every record of the 20 elections then under data/; 2026-08-21 for the six 2015 elections added since, against their parsed records (complete fields for the three small ones, fixture sets for the three large ones). 2026-08-21 for the five 1996-1998 archive elections added since: the two municipal ones (1997-kovo-23-savivaldybiu-tarybu, 1997-birzelio-29-svenciniu-tarybos-pakartotiniai) against their parsed records for the ten concepts their anketa/kandidatavimas sections actually publish (kebab-case keys shared with the 2015 and 2016 eras, so no era-specific path shape); the three Seimas archive elections (1996-spalio-20-seimo and its two 1997 repeats) publish none of the existing concepts — no birth date, nationality, education, or any of the other fields those pages simply do not carry, and their candidacy field is a list (single- and multi-mandate seats can both apply) rather than the single value every existing concept path assumes, so iskele/savivaldybe are left unmapped for them too — so they appear only in the elections list. 2026-08-21 for the four 2012-2014 elections (2012-seimo, 2013-kovo-3-seimo-birzai-zarasai-ukmerge, 2014-prezidento, 2014-ep): same era and key set as the 2015 elections, paths copied from 2015-kovo-1-seimo-zirmunai and validated against every parsed record; the presidential election maps no iskele (self-nominated) and no ar-buvote-pripazintas-kaltu (its form asks the eligibility set, not Q9.2), the EP election no kita-apie-save (no Q21), and neither 2014 election a declaration period (their note paragraph is empty). 2026-08-22 for 2009-prezidento: the 2014 presidential paths copied and validated against all seven parsed records (same concept set — no iskele, no ar-buvote-pripazintas-kaltu, no declaration period). Same day for 2009-ep: the 2014 EP paths (plus kita-apie-save, which its Q21 publishes) validated against the fifteen fixture records. Same day for 2008-seimo: the 2012 Seimo paths validated against the eight fixture records. Same day for the 2009 and 2011 Seimo by-elections: the 2013 paths validated against their complete fields (17 and 9 records). Same day for 2007-spalio-7-seimo-dzukija: the 2013 paths validated against its complete field (10 records); gimimo-data resolves through anketa because the era parser folds the card's date in. Same day for 2011-vasario-27-savivaldybiu: the 2015 municipal general's paths validated against the ten fixture records (same era, same municipal key set; the election adds no concept of its own). Same day for 2007-vasario-25-savivaldybiu: the 2011 municipal general's paths validated against the ten fixture records; savivaldybe resolves through kandidatavimas (the 2007 card names the electoral district, not the municipality), kita-apie-save is unmapped (not asked) and so is the declaration period (no note paragraph); the election's own keys — anketa.seimos-nariai and pareiskimai.ar-pasyvioji-rinkimu-teise-neapribota — map to no existing concept. 2026-08-23 for 2004-ep: the 2009 EP paths (the same question set, five years earlier) validated against its complete field (241 records); porinkiminis-numeris is unmapped as for the other pre-2016 results-joined elections — the 2004 rank lives in kandidatavimas.porinkiminisNumerisSarase, a results-tree join outside the normalized layer — and so is the declaration period (no note paragraph).",
   "elections": [
     "1996-spalio-20-seimo",
     "1997-kovo-23-savivaldybiu-tarybu",
     "1997-kovo-23-seimo-pakartotiniai",
     "1997-birzelio-29-svenciniu-tarybos-pakartotiniai",
     "1997-gruodzio-21-seimo-pakartotiniai",
+    "2004-ep",
     "2007-spalio-7-seimo-dzukija",
     "2008-seimo",
     "2009-prezidento",
@@ -92,7 +93,8 @@
         "2012-seimo": "anketa.gimimo-data",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "anketa.gimimo-data",
         "2014-prezidento": "anketa.gimimo-data",
-        "2014-ep": "anketa.gimimo-data"
+        "2014-ep": "anketa.gimimo-data",
+        "2004-ep": "anketa.gimimo-data"
       },
       "note": "For the 1996-1998 Seimas archive elections the value is derived from the biography's opening sentence rather than a published field (those pages have none); each such record carries anketa.gimimo-data-saltinis = 'biografijos-tekstas'. Present on 692 of that family's 906 records; a further 157 have only anketa.gimimo-metai (year, never a date)."
     },
@@ -138,7 +140,8 @@
         "2012-seimo": "anketa.gimimo-vieta",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "anketa.gimimo-vieta",
         "2014-prezidento": "anketa.gimimo-vieta",
-        "2014-ep": "anketa.gimimo-vieta"
+        "2014-ep": "anketa.gimimo-vieta",
+        "2004-ep": "anketa.gimimo-vieta"
       }
     },
     "tautybe": {
@@ -179,7 +182,8 @@
         "2012-seimo": "anketa.tautybe",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "anketa.tautybe",
         "2014-prezidento": "anketa.tautybe",
-        "2014-ep": "anketa.tautybe"
+        "2014-ep": "anketa.tautybe",
+        "2004-ep": "anketa.tautybe"
       },
       "note": "Not published in the 2024 and 2025 elections."
     },
@@ -225,7 +229,8 @@
         "2012-seimo": "anketa.issilavinimas.irasai",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "anketa.issilavinimas.irasai",
         "2014-prezidento": "anketa.issilavinimas.irasai",
-        "2014-ep": "anketa.issilavinimas.irasai"
+        "2014-ep": "anketa.issilavinimas.irasai",
+        "2004-ep": "anketa.issilavinimas.irasai"
       }
     },
     "uzsienio-kalbos": {
@@ -270,7 +275,8 @@
         "2012-seimo": "anketa.uzsienio-kalbos",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "anketa.uzsienio-kalbos",
         "2014-prezidento": "anketa.uzsienio-kalbos",
-        "2014-ep": "anketa.uzsienio-kalbos"
+        "2014-ep": "anketa.uzsienio-kalbos",
+        "2004-ep": "anketa.uzsienio-kalbos"
       }
     },
     "seimine-padetis": {
@@ -315,7 +321,8 @@
         "2012-seimo": "anketa.seimine-padetis",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "anketa.seimine-padetis",
         "2014-prezidento": "anketa.seimine-padetis",
-        "2014-ep": "anketa.seimine-padetis"
+        "2014-ep": "anketa.seimine-padetis",
+        "2004-ep": "anketa.seimine-padetis"
       }
     },
     "sutuoktinio-vardas-pavarde": {
@@ -348,7 +355,8 @@
         "2012-seimo": "anketa.sutuoktinio-vardas-pavarde",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "anketa.sutuoktinio-vardas-pavarde",
         "2014-prezidento": "anketa.sutuoktinio-vardas-pavarde",
-        "2014-ep": "anketa.sutuoktinio-vardas-pavarde"
+        "2014-ep": "anketa.sutuoktinio-vardas-pavarde",
+        "2004-ep": "anketa.sutuoktinio-vardas-pavarde"
       },
       "note": "Not published from 2021 on."
     },
@@ -382,7 +390,8 @@
         "2012-seimo": "anketa.vaiku-vardai-pavardes",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "anketa.vaiku-vardai-pavardes",
         "2014-prezidento": "anketa.vaiku-vardai-pavardes",
-        "2014-ep": "anketa.vaiku-vardai-pavardes"
+        "2014-ep": "anketa.vaiku-vardai-pavardes",
+        "2004-ep": "anketa.vaiku-vardai-pavardes"
       },
       "note": "Not published from 2021 on."
     },
@@ -426,7 +435,8 @@
         "2012-seimo": "anketa.pomegiai",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "anketa.pomegiai",
         "2014-prezidento": "anketa.pomegiai",
-        "2014-ep": "anketa.pomegiai"
+        "2014-ep": "anketa.pomegiai",
+        "2004-ep": "anketa.pomegiai"
       }
     },
     "einamos-pareigos": {
@@ -477,7 +487,8 @@
         "2012-seimo": "anketa.pagrindine-darboviete",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "anketa.pagrindine-darboviete",
         "2014-prezidento": "anketa.pagrindine-darboviete",
-        "2014-ep": "anketa.pagrindine-darboviete"
+        "2014-ep": "anketa.pagrindine-darboviete",
+        "2004-ep": "anketa.pagrindine-darboviete"
       },
       "note": "2016-era question; the 2020-on near-equivalent is einamos-pareigos."
     },
@@ -523,7 +534,8 @@
         "2012-seimo": "anketa.visuomenine-veikla",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "anketa.visuomenine-veikla",
         "2014-prezidento": "anketa.visuomenine-veikla",
-        "2014-ep": "anketa.visuomenine-veikla"
+        "2014-ep": "anketa.visuomenine-veikla",
+        "2004-ep": "anketa.visuomenine-veikla"
       },
       "note": "2020-seimo's question wording is wider (scientific + pedagogical activity); the key is shared."
     },
@@ -555,7 +567,8 @@
         "2011-vasario-13-seimo-marijampole": "anketa.kita-apie-save",
         "2012-seimo": "anketa.kita-apie-save",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "anketa.kita-apie-save",
-        "2014-prezidento": "anketa.kita-apie-save"
+        "2014-prezidento": "anketa.kita-apie-save",
+        "2004-ep": "anketa.kita-apie-save"
       },
       "note": "Not published from 2021 on."
     },
@@ -599,7 +612,8 @@
         "2012-seimo": "anketa.politine-organizacija",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "anketa.politine-organizacija",
         "2014-prezidento": "anketa.politine-organizacija",
-        "2014-ep": "anketa.politine-organizacija"
+        "2014-ep": "anketa.politine-organizacija",
+        "2004-ep": "anketa.politine-organizacija"
       },
       "note": "Three value shapes: plain string (2016 era), free text under .tekstas (2020–2023), record list under .irasai with politine-organizacija/nuo/iki items (2024 on)."
     },
@@ -643,7 +657,8 @@
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "profilis.kita.iskele.reiksme",
         "2014-ep": "profilis.kita.iskele.reiksme",
         "2007-spalio-7-seimo-dzukija": "profilis.kita.iskele.reiksme",
-        "2008-seimo": "profilis.kita.iskele.reiksme"
+        "2008-seimo": "profilis.kita.iskele.reiksme",
+        "2004-ep": "profilis.kita.iskele.reiksme"
       },
       "note": "Absent from 2019-ep, 2019-prezidento and 2024-ep. On the profile card only for mayoral candidacies in the municipal general elections, and only on a subset of records in 2020-seimo and 2024-seimo (758/1754 and 699/1740); 2023-kovo-5 splits it by role across two keys."
     },
@@ -708,7 +723,8 @@
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "anketa.pareiskimai.ar-buvote-pripazintas-kaltu",
         "2014-ep": "anketa.pareiskimai.ar-buvote-pripazintas-kaltu",
         "2007-spalio-7-seimo-dzukija": "anketa.pareiskimai.ar-buvote-pripazintas-kaltu",
-        "2008-seimo": "anketa.pareiskimai.ar-buvote-pripazintas-kaltu"
+        "2008-seimo": "anketa.pareiskimai.ar-buvote-pripazintas-kaltu",
+        "2004-ep": "anketa.pareiskimai.ar-buvote-pripazintas-kaltu"
       },
       "note": "19 of 20 elections; the 2019 presidential questionnaire asks constitutional eligibility questions instead and has no conviction declaration."
     },
@@ -769,7 +785,8 @@
         "2012-seimo": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas",
         "2014-prezidento": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas",
-        "2014-ep": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas"
+        "2014-ep": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas",
+        "2004-ep": "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas"
       }
     },
     "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": {
@@ -812,7 +829,8 @@
         "2012-seimo": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
         "2014-prezidento": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
-        "2014-ep": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai"
+        "2014-ep": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
+        "2004-ep": "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai"
       }
     },
     "pinigines-lesos": {
@@ -855,7 +873,8 @@
         "2012-seimo": "turto-ir-pajamu-deklaracijos.pinigines-lesos",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "turto-ir-pajamu-deklaracijos.pinigines-lesos",
         "2014-prezidento": "turto-ir-pajamu-deklaracijos.pinigines-lesos",
-        "2014-ep": "turto-ir-pajamu-deklaracijos.pinigines-lesos"
+        "2014-ep": "turto-ir-pajamu-deklaracijos.pinigines-lesos",
+        "2004-ep": "turto-ir-pajamu-deklaracijos.pinigines-lesos"
       }
     },
     "suteiktos-paskolos": {
@@ -898,7 +917,8 @@
         "2012-seimo": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos",
         "2014-prezidento": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos",
-        "2014-ep": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos"
+        "2014-ep": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos",
+        "2004-ep": "turto-ir-pajamu-deklaracijos.suteiktos-paskolos"
       }
     },
     "gautos-paskolos": {
@@ -941,7 +961,8 @@
         "2012-seimo": "turto-ir-pajamu-deklaracijos.gautos-paskolos",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "turto-ir-pajamu-deklaracijos.gautos-paskolos",
         "2014-prezidento": "turto-ir-pajamu-deklaracijos.gautos-paskolos",
-        "2014-ep": "turto-ir-pajamu-deklaracijos.gautos-paskolos"
+        "2014-ep": "turto-ir-pajamu-deklaracijos.gautos-paskolos",
+        "2004-ep": "turto-ir-pajamu-deklaracijos.gautos-paskolos"
       }
     },
     "gautos-pajamos": {
@@ -984,7 +1005,8 @@
         "2012-seimo": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
         "2014-prezidento": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
-        "2014-ep": "turto-ir-pajamu-deklaracijos.gautos-pajamos"
+        "2014-ep": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
+        "2004-ep": "turto-ir-pajamu-deklaracijos.gautos-pajamos"
       }
     },
     "sumoketas-pajamu-mokestis": {
@@ -1027,7 +1049,8 @@
         "2012-seimo": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis",
         "2014-prezidento": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis",
-        "2014-ep": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis"
+        "2014-ep": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis",
+        "2004-ep": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis"
       }
     },
     "deklaraciju-valiuta": {
@@ -1050,7 +1073,8 @@
         "2012-seimo": "turto-ir-pajamu-deklaracijos.valiuta",
         "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "turto-ir-pajamu-deklaracijos.valiuta",
         "2014-prezidento": "turto-ir-pajamu-deklaracijos.valiuta",
-        "2014-ep": "turto-ir-pajamu-deklaracijos.valiuta"
+        "2014-ep": "turto-ir-pajamu-deklaracijos.valiuta",
+        "2004-ep": "turto-ir-pajamu-deklaracijos.valiuta"
       }
     },
     "deklaraciju-laikotarpis": {
