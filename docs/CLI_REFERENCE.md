@@ -57,6 +57,7 @@ python -m scraper <command> [args]
 - `2004-seimo` (2004-10-10 Seimas general election, 15 party lists and 71 single-member constituencies; VRK's original 2004 static site)
 - `2005-lapkricio-20-seimo-kedainiai` (2005-11-20 Seimo new election in Kėdainių No. 43; the 2004 static site one year on)
 - `2000-seimo` (2000-10-08 Seimas general election, 15 party lists and 71 single-member constituencies; the 1996-2000 LRS-ITD archive template)
+- `2000-kovo-19-savivaldybiu-tarybu` (2000-03-19 municipal council general election, all 60 municipalities, party and coalition lists; the 1997 municipal archive template)
 
 ## Election Separation
 
@@ -1355,6 +1356,83 @@ Fixtures are eighteen candidates chosen by shape
 are VRK's pre-results capture (links to the live CGI, no winner note):
 two winners among them get the `ElectedNoteMismatch` warning, and the
 results join stands.
+
+## Municipal general 2000 (`2000-kovo-19-savivaldybiu-tarybu`) Workflow
+
+The 2000-03-19 municipal council general election (GitHub issue #25;
+VRK's `statiniai/puslapiai/n/rinkimai/20000319/` tree) is the 1997
+municipal archive three years on — the same Teleport capture of the
+LRS-ITD CGI site and the same three-hop listing — with the October 2000
+Seimas election's candidate document. `scraper/elections/savivaldybiu_2000/`
+is its own module over the 1997 list-page reader, the 2000 Seimas page
+readers and the 1990s declaration parser.
+
+- **Listing**: the municipality directory the index links
+  (`apgsarl.htm-12.htm`) is a 403 on vrk.lt, so the 60 municipalities
+  come from the results index (`rapgsarl.htm-12.htm`: number, name and
+  the municipality id — `apgl.htm-12+<number>.htm` keys on the number,
+  `pkal`/`rapgpl` on the id). Each `apgl` page lists the lists standing
+  there with VRK's registration decision (blank for a coalition) linking
+  `pkal.htm-<id>+<list>.htm`, the 1997 numbered-candidates page. The
+  by-party roll-up (`psarl.htm-12.htm`, 28 parties, each
+  `papgsarl.htm-<party>.htm` naming the municipalities it stood in — its
+  own list in bold, a coalition it joined in plain type) is the
+  cross-check and the only source of a coalition's member parties:
+  **9,881 candidates** on 651 lists (26 coalition lists) in 60
+  municipalities, every list a party claims one the walk found and vice
+  versa, every own-list claim under the party's own name, 1,562 seats
+  declared, no id collisions (ids are `<slug>-<vrk id>` as for the other
+  municipal generals).
+- **Candidate page**: the 2000 Seimas document for the municipal form —
+  card ("Apygarda: <municipality> (Nr. N)", "Sąrašas: <list, genitive>,
+  priešrinkiminis numeris sąraše: N", for a coalition's candidate
+  "(iškėlė <member party>, buvęs numeris sąraše: N)"; birth date,
+  residence), five **unnumbered** declarations (sentence, service,
+  citizenship, collaboration, conviction — no oath, no grave crime;
+  8.3.1-style "Kurios" under a "Turi"), the fields as labelled paragraphs
+  (education as a level, languages, degree, title, prior mandates,
+  workplace, public activity, marital status — no family members,
+  hobbies or birthplace printed on any page read), the 1990s declaration
+  inline to the centas. No photo, no autobiography. Saved as
+  `candidate.html`. Keys are the 2000 Seimas ones; the candidacy block is
+  the 2007 municipal general's (`savivaldybe`, `tarybosNarys` with
+  `listKind`, `listPosition`, `vrkSprendimas`, `koalicijosPartijos`, and
+  from the card `koalicijosPartija`/`numerisPartijosSarase`). The card's
+  municipality, position and member party are checked against the
+  sitemap (`Card…Mismatch`).
+- **Results**: `savivaldybiu_2000/results.py`. Per municipality
+  `rapgpl.htm-<id>.htm` (voters, turnout, quota, votes and mandates per
+  list, a totals row), `rikl.htm-<id>.htm` ("Kandidatai, gavę mandatus":
+  every member by candidate-page id with list and rank) and per list
+  `rpbapgl.htm-<id>+<list>.htm` (rank, preference votes, pre-election
+  number, winners in bold). **Five municipalities — Jurbarko, Kelmės,
+  Radviliškio, Raseinių, Vilkaviškio rajono — were captured only to the
+  list level**: their `rapgpl` page prints the rows unlinked, the
+  members link goes to the live CGI and none of the per-candidate pages
+  exists statically. For the other 55: 1,433 members, every count equal
+  to the page's "Mandatų skaičius", the mandate column and the totals
+  row, every member in the sitemap on the right list in the right
+  municipality, the bold rows exactly the members, each list's members
+  exactly its top ranks, all 9,075 candidates of those municipalities
+  ranked with the listing's pre-election number — all at 0. The 806
+  candidates of the five keep `isrinktas` **null** with
+  `rezultataiNeskelbiami` naming the missing page; every record carries
+  its list's votes and mandates (`tarybosNarys.sarasoBalsai`,
+  `sarasoMandatai`) from the municipality page, which the five do have
+  (129 seats known by list, not by member).
+
+```bash
+python -m scraper fetch-sample 2000-kovo-19-savivaldybiu-tarybu
+python -m scraper sitemap 2000-kovo-19-savivaldybiu-tarybu
+python -m scraper fetch-candidate-samples 2000-kovo-19-savivaldybiu-tarybu --candidate-id paksas-rolandas-84817 --allow-new-samples
+python -m scraper build-results 2000-kovo-19-savivaldybiu-tarybu
+python -m scraper parse-anketa-samples 2000-kovo-19-savivaldybiu-tarybu
+KEEP_SAMPLES=1 scripts/run_election_batches.sh 2000-kovo-19-savivaldybiu-tarybu
+```
+
+Fixtures are ten candidates chosen by shape
+(`tests/test_savivaldybiu_2000_sample_allowlist.py`); the full field was
+scraped 2026-08-23/24 with retention (see `docs/DATASET.md`).
 
 ## 2012–2014 national elections (`2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`) Workflow
 

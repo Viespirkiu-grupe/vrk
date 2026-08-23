@@ -1921,6 +1921,85 @@ section I's workplace lines, which the 1996-1997 pages leave blank:
 `darboviete`, `pareigos`, and where filled `nepagrindines-darbovietes`,
 `pareigos-nepagrindinese-darbovietese`. The same row-20 guard applies.
 
+## Appendix: 2000 municipal general (`2000-kovo-19-savivaldybiu-tarybu`)
+
+The 2000 Seimas candidate document (previous appendix) for the municipal
+form, on the 1997 municipal archive's listing — so the record is three
+sections (`profilis`, `anketa`, `turto-ir-pajamu-deklaracijos`; no
+biography, no photo, no interest declaration, no campaign section) with
+the 2007 municipal general's candidacy block. Records are written as
+`data/2000-kovo-19-savivaldybiu-tarybu/<candidate-id>-2000-kovo-19-savivaldybiu-tarybu.json`,
+the id `<name-slug>-<vrk id>` as for the other municipal generals.
+
+- `rawData` section order: `profile` (the card as `candidateDisplayName`,
+  `electedNote` (always empty), `photoSrc` (always empty), `fields`),
+  `candidacy` (the card read: `municipalityName`, `municipalityNumber`,
+  `municipalityUrl`, `listName` (genitive, as printed), `listUrl`,
+  `listPosition`, `memberParty`, `memberListNumber`), `anketa` (`rows`:
+  the five unnumbered questions as `prompt`/`key`/`answer`; `fields`: each
+  labelled paragraph), `residence`, `declaration`.
+
+### `kandidatavimas`
+
+The 2007 municipal general's shape without the mayoral half:
+`vrkCandidateId`, `savivaldybe` (the page's name, "Vilniaus miesto"),
+`savivaldybesNumeris`, `savivaldybesId` (VRK's id, which the list and
+results pages key on), `roles` (always `["tarybos-narys"]`), and
+`tarybosNarys` with `partyList`, `listKind` (`partija` or `koalicija`),
+`listNumber` (VRK's number for the list in that municipality),
+`sarasoId`, `listPosition`, `vrkSprendimas` (the registration decision
+the municipality page prints, "2000 01 21, Nr.13"; null for a coalition),
+for a coalition list `koalicijosPartijos` (the member parties, from the
+by-party pages) and, from the card, `koalicijosPartija` and
+`numerisPartijosSarase` (the member party that nominated the candidate
+and the position on its own list); then the list's own result from the
+municipality results page — `sarasoBalsai`, `sarasoMandatai` (0 where
+the page prints "-"), `sarasoRezultatuSaltinis`.
+
+The results join: `isrinktas`, `isrinktasKaip` (`tarybos-narys`),
+`rezultatuSaltinis` (the municipality's members page), and for every
+ranked candidate `porinkiminisNumerisSarase`, `pirmumoBalsai`,
+`pirmumoBalsuSaltinis` (the list's preference page). **In five
+municipalities — Jurbarko, Kelmės, Radviliškio, Raseinių and Vilkaviškio
+rajono, 806 candidates — VRK's archive holds the list results only**:
+those records have `isrinktas` **null**, no rank or preference votes, and
+`rezultataiNeskelbiami` (`priezastis`, `nariuPuslapis` — the members page
+URL that does not exist). A null there is unknown, not false: the list's
+seats are known (`sarasoMandatai`), the members are not.
+
+### `profilis`
+
+`vardas-pavarde` (the page heading, given-name first), `pastaba` and
+`nuotrauka` always null (the card marks no winner and carries no photo),
+`kita` with `apygarda` (the municipality and number, linking its page),
+`sarasas` (the list as the card prints it — in the genitive,
+"Lietuvos liberalų sąjungos" — linking its list page),
+`priesrinkiminis-numeris-sarase`, and for a coalition's candidate
+`iskele` (the member party) and `buves-numeris-sarase`.
+
+### `normalized.anketa`
+
+The 2000 Seimas keys the municipal form asks, in this order:
+`gimimo-data`, `adresas` (the card's "Gyvenamoji vieta"), `pareiskimai`
+(`ar-nebaigta-teismo-paskirta-bausme`, `ar-atliekate-karo-tarnyba`,
+`ar-turite-kitos-valstybes-pilietybe`, `kitos-valstybes-pilietybe-valstybe`
+(the "Kurios" sub-question under a "Turi"),
+`ar-bendradarbiavote-su-uzsienio-tarnybomis`, `ar-buvote-pripazintas-kaltu`
+and `teisiniai-argumentai` — no oath (8.4) and no grave-crime (9.3)
+question on this form; answers in the form's third person, "Ne" on the
+last two), `gimimo-vieta` (on the card template; null on every page read
+while building), `issilavinimas` (`aprasas` the level — "Aukštasis",
+"Aukštesnysis", "Vidurinis" — as in 1997; `irasai` always empty),
+`mokslo-laipsnis`, `pedagoginis-vardas`, `uzsienio-kalbos`,
+`anksciau-isrinktas`, `pagrindine-darboviete`, `visuomenine-veikla`,
+`seimine-padetis`. No family members, hobbies, spouse or children keys:
+the municipal cards do not print them.
+
+### `turto-ir-pajamu-deklaracijos`
+
+As the 2000 Seimas appendix: the 1990s family's block to the centas with
+the section-I workplace lines.
+
 ## Appendix: 2007–2014 national elections (`2007-spalio-7-seimo-dzukija`, `2008-seimo`, `2009-prezidento`, `2009-ep`, `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai`, `2011-vasario-13-seimo-marijampole`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`)
 
 All ten are the 2015-era static layout described in the 2015 Seimo

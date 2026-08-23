@@ -208,11 +208,16 @@ def parse_declaration(html: str) -> dict[str, Any]:
     total_income = _int(total.group(1)) if total else None
     total_tax = _int(total.group(2)) if total else None
 
-    def trusted(total_value: int | None, row_value: int | None, column: str) -> int | None:
-        """A total the page's own row 1 contradicts is not a total."""
+    def trusted(total_value, row_value, column: str):
+        """A total the page's own row 1 contradicts is not a total.
+
+        The 2000 pages print the figures to the centas but row 20 with
+        the centai dropped ("10042.00 Lt" against a row 1 of
+        "10042.32 Lt"), so a shortfall under one litas is the page's own
+        truncation, not a contradiction, and the total stands."""
         if total_value is None or row_value is None:
             return total_value
-        if total_value >= row_value:
+        if row_value - total_value < 1:
             return total_value
         anomalies.append(
             {
