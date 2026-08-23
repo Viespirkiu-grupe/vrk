@@ -55,6 +55,7 @@ python -m scraper <command> [args]
 - `2014-ep` (2014-05-25 European Parliament election)
 - `2004-ep` (2004-06-13 European Parliament election — Lithuania's first, 12 party lists; VRK's original 2004 static site)
 - `2004-seimo` (2004-10-10 Seimas general election, 15 party lists and 71 single-member constituencies; VRK's original 2004 static site)
+- `2005-lapkricio-20-seimo-kedainiai` (2005-11-20 Seimo new election in Kėdainių No. 43; the 2004 static site one year on)
 
 ## Election Separation
 
@@ -1226,6 +1227,32 @@ Fixtures are fourteen candidates chosen by shape
 (`tests/test_seimo_2004_sample_allowlist.py`); the full field was scraped
 2026-08-23 with retention (see `docs/DATASET.md`).
 
+## Seimo by-election 2005 (`2005-lapkricio-20-seimo-kedainiai`) Workflow
+
+The 2005-11-20 new election in Kėdainių No. 43 (GitHub issue #33; the
+seat Viktor Uspaskich gave up) is the 2004 Seimas tree one year on —
+`rinkimai/2005/seimas/`, the same original static site — and
+`scraper/elections/seimo_kedainiu_2005/` is thin wiring over
+`seimo_2004`: its constituency reader for the one district (`apg_kand_l_1675.htm`,
+five candidates with their nominators; the party index, five parties one
+nominee each, is the cross-check), `ep_2004`'s fetcher links and page
+readers with the Seimas mapping and card hook (four of the five are
+independent campaign participants with the registration decision PDF),
+and the 2004 members-page reader for the results: `rez_isrinkti_l_21_1.htm`
+rows the one winner with the constituency linking
+`rezv_apg_l_1675_2.htm` — decided in the runoff (26% turnout in the first
+round) — cross-checked against the runoff winners page
+(`rezv_isrinkti_l_21_2_1.htm`; the first-round page is a 404). Fixtures
+are the complete five-candidate field.
+
+```bash
+python -m scraper fetch-sample 2005-lapkricio-20-seimo-kedainiai
+python -m scraper sitemap 2005-lapkricio-20-seimo-kedainiai
+python -m scraper fetch-candidate-samples 2005-lapkricio-20-seimo-kedainiai --candidate-id virginija-baltraitiene --allow-new-samples
+python -m scraper build-results 2005-lapkricio-20-seimo-kedainiai
+python -m scraper parse-anketa-samples 2005-lapkricio-20-seimo-kedainiai
+```
+
 ## 2012–2014 national elections (`2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`) Workflow
 
 The four elections between the 1990s archive and the 2015 backlog are the
@@ -1452,6 +1479,7 @@ reconciliation looked like when the files were built (2026-08-21):
 | `2007-vasario-25-savivaldybiu` | 60 municipality pages + 60 "Mandatus gavę kandidatai" pages (the winners with anketa links; no ranking arithmetic), `2007_savivaldybiu_tarybu_rinkimai/` without `output_lt`; built 2026-08-22 | 1,550 council | every winner by id in the sitemap and in the municipality the sitemap places them; winners = results-table total = sum of list mandates = composition-page council size in all 60 |
 | `2004-ep` | the 2004 tree's own members page (`rinkimai/2004/euro/rezultatai/rez_isrinkti_l_18_1.htm`, ids on the page) with its substitution footnote, the national page's mandate column and the 12 per-list ranking pages; built 2026-08-23 | 13 (14 records: Prunskienė's terminated mandate and Didžiokas seated by VRK decision Nr. 181) | all in the sitemap; mandates per list = members per list; bold ranking rows = members; 241/241 ranked, pre-election positions = listing |
 | `2004-seimo` | the 2004 tree's members page (`rinkimai/2004/seimas/rezultatai/rez_isrinkti_l_20_1.htm`, ids on the page, seat and deciding round on the row), cross-checked against the list-seat and the two constituency-winner pages and the national page's mandate column; the 15 per-list ranking pages for rank and preference votes; built 2026-08-23 | 141 (70 list, 71 constituency: 5 in round one, 66 in the runoff) | all in the sitemap with the right role and constituency; all three id cross-checks and the mandate column at 0; 1,183 list candidates ranked (128 on the unranked LLRA list with rank but no votes), pre-election positions = listing |
+| `2005-lapkricio-20-seimo-kedainiai` | the 2005 tree's members page (`rinkimai/2005/seimas/rezultatai/rez_isrinkti_l_21_1.htm`, id and round on the row), cross-checked against the runoff winners page; built 2026-08-23 | 1 (runoff) | resolved |
 | `2015-birzelio-7-pakartotiniai-sirvintos-trakai` | same walk, `2015_2_…` tree | 2 mayors, 24 council | clean |
 | `2015-birzelio-21-pakartotiniai-silutes` | `2015_3_…` tree | 1 mayor, 24 council | clean |
 | `2015-lapkricio-8-telsiu-mero` | `2015_4_…` tree | 1 mayor | clean |
@@ -1491,7 +1519,7 @@ Traps the walkers encode, worth knowing before touching them:
 for id in 2007-spalio-7-seimo-dzukija 2008-seimo 2009-prezidento 2009-ep 2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai 2011-vasario-13-seimo-marijampole 2012-seimo 2013-kovo-3-seimo-birzai-zarasai-ukmerge 2014-prezidento 2014-ep \
           2015-kovo-1-seimo-zirmunai 2015-birzelio-7-seimo-varena-eisiskes 2015-lapkricio-8-telsiu-mero \
           2015-birzelio-7-pakartotiniai-sirvintos-trakai 2015-birzelio-21-pakartotiniai-silutes 2015-kovo-1-savivaldybiu \
-          2011-vasario-27-savivaldybiu 2007-vasario-25-savivaldybiu 2004-ep 2004-seimo; do
+          2011-vasario-27-savivaldybiu 2007-vasario-25-savivaldybiu 2004-ep 2004-seimo 2005-lapkricio-20-seimo-kedainiai; do
   python -m scraper build-results "$id"
 done
 # then re-parse offline; the wrappers pick up sitemaps/<id>.results.json by default

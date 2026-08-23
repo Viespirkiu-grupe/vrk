@@ -32,8 +32,9 @@ it before writing anything. The layout families are:
   (`seimo_2004`) is the second member: `ep_2004`'s readers with the Seimas
   question mapping, a card that states both candidacies and the campaign
   registration, and its own two-structure listing walk (lists and
-  constituencies, as 2008/2012, on the 2004 template). The 2004
-  presidential tree, if ever added, would be the third.
+  constituencies, as 2008/2012, on the 2004 template); the November 2005
+  Kėdainiai by-election (`seimo_kedainiu_2005`) is thin wiring over it.
+  The 2004 presidential tree, if ever added, would be the next.
 - **2016 era** (`seimo_2016`): one anketa table with the whole Q5–Q21 set,
   elected note inside the name cell, base64 photos, GPM308 income labels,
   `ID001x` private-interest sections.
