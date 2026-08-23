@@ -143,6 +143,7 @@ class Ep2004ResultsTests(unittest.TestCase):
             "rank": 1,
             "listPosition": 1,
             "preferenceVotes": 100701,
+            "ranked": True,
             "listId": "1739",
             "sourceUrl": REZULTATAI + "rez_pirm_l_1739.htm",
         })
@@ -180,6 +181,7 @@ class Ep2004ResultsTests(unittest.TestCase):
             "listPosition": 2,
             "preferenceVotes": 26767,
             "mandate": False,
+            "ranked": True,
         })
 
 

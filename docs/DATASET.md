@@ -18,7 +18,7 @@ never touched by a full run.
 
 ## Inventory
 
-90,436 candidate records across 44 elections, 1996–2025, with **zero fetch
+91,687 candidate records across 45 elections, 1996–2025, with **zero fetch
 failures** other than three 2011 and three 2007 candidate pages VRK never
 published (see Known gaps).
 
@@ -96,7 +96,8 @@ election was re-parsed offline the same day.
 | `2011-vasario-27-savivaldybiu` | 16400 | 1526 | 200 | 0 |
 | `2007-vasario-25-savivaldybiu` | 13419 | 1550 | 78 | 0 |
 | `2004-ep` | 241 | 14 | 3 | 0 |
-| **total** | **90436** | **8451** | **1585** | **20199** |
+| `2004-seimo` | 1251 | 141 | 8 | 0 |
+| **total** | **91687** | **8592** | **1593** | **20199** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
@@ -287,6 +288,58 @@ chosen by shape. Two sibling defects surfaced and were fixed across the
 2015 municipal family (the Q9 explanation, the prose zero income — rows
 in the fix table above). Person index rebuilt: 47,125 persons (8,350 new;
 the other 8,050 candidacies merged into people already in the corpus).
+
+### The 2026-08-23 build and scrape of the 2004 Seimas general election
+
+GitHub issue #32; VRK's `rinkimai/2004/seimas/` tree (2004-10-10), four
+months after the EP election on the same original static site, built the
+same day as `seimo_2004` over `ep_2004`'s page readers. What the election
+adds is the listing and the card: the 2008/2012 two-structure listing on
+the 2004 template — 15 numbered lists, three constituency-only parties and
+four coalition member parties on one index, 71 constituencies on the other
+— read by a walk of this module's own because of three things the 2004
+party pages do (a party's page lists every nominee of the party, the
+constituency-only ones unnumbered below its list; a coalition's page names
+each candidate's member party and position there, which the member's page
+repeats the other way and the walk cross-checks; and a list page's
+constituency column shows same-party nominations only, so the constituency
+page is the authority — 17 people sit on one party's list and another's
+constituency nomination). Sitemap: **1,251 candidates** (534 in both
+structures, 649 list-only, 68 constituency-only), every declared count
+met, member positions agreeing with the coalition pages, no name
+collisions. The card states every candidacy and, for 455 candidates, the
+campaign registration decision (a PDF) — `savarankiskasKampanijosDalyvis`
+— and two cards name a second nominator the constituency page does not
+(`vienmandate.kitiIskelejai`). The question set is the Seimo rinkimų
+įstatymo form under the 2016 keys; uniform on all 1,251 pages (eight
+declared convictions on Q9.2, four grave ones on Q9.3, ten explanations).
+Results from the tree's own pages: **141 members by id** (70 list, 71
+constituency — 5 in the first round, 66 in the runoff, the round on the
+row), cross-checked by id against the list-seat and constituency-winner
+pages and the mandate column, all at 0; rank and preference votes from the
+15 ranking pages joined into every list candidate's record, the LLRA list
+(unranked at the party's request) with rank but no votes. Two source
+gaps, both VRK's: Žiobakienė's declarations page was never published (no
+link, a 404 — the fixture index records the `MissingExpectedTab`; the
+record has no declarations section) and Matkevičius's prints the income
+extract only. The 2004 page readers learned one thing, a no-op on the EP
+pages: an unanswered degree/title drops its `<b></b>`, merging the two
+labels into one text run, now split into two rows (EP's 241 records
+re-parsed byte-identical). Scraped the same afternoon with
+`KEEP_SAMPLES=1`: **1,251/1,251 fetched, 0 fetch failures, 0 parse
+anomalies** — with one self-inflicted detour worth recording: the runner
+marked 79 candidates failed because the parser module was being edited
+under it mid-run (a mutation check on the tests overwrote a file for a
+few seconds, and the runner invokes the parser afresh per candidate);
+their pages had fetched fine and every record was rewritten by the
+offline re-parse of the retained HTML that closed the run; the retained
+pages are byte-identical to an independent download made while the
+module was built (3,752 files; the 3,753rd is the 404). Fixtures are 14
+candidates chosen by shape. Person index: 1,251 candidacies, 1,015
+merged into existing people by name and birth date (705 also stood in
+the 2007 municipal general, 510 in the 2008 Seimas election, 180 in the
+EP election four months earlier), 236 new persons (53,175 in all); every
+record carries a birth date.
 
 ### The 2026-08-23 build and scrape of the 2004 European Parliament election
 

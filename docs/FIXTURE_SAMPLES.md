@@ -605,6 +605,31 @@ the samples directory holds the list index (`list.html`) and the twelve
 list pages under `lists/`. The field is scraped by
 `scripts/run_election_batches.sh`.
 
+For `2004-seimo` the allowlist (`tests/test_seimo_2004_sample_allowlist.py`)
+is **fourteen candidates out of 1,251**, chosen by shape: the Paksas
+coalition's leader `valentinas-mazuronis` (LDP member, first on both lists,
+list seat, independent campaign participant), `irena-degutiene`
+(constituency runoff winner), `zigmantas-balcytis` (first-round
+constituency winner, LSDP member of the Brazauskas–Paulauskas coalition),
+`remigijus-acas` (a coalition list seat lower down), `valdemar-tomasevski`
+(LLRA leader, constituency seat; the one list VRK did not rank),
+`jonas-ramonas` (constituency winner with a Q9 explanation under "Yra"),
+`arimantas-dumcius` (winner with degree and title),
+`vytautas-ricardas-backis` (a numbered-list party's constituency-only
+nominee — an unnumbered row on the TS page), `nikolajus-salkovskis` (LLRA
+list, Lietuvos rusų sąjunga constituency nomination), `saulius-gintautas`
+(party nominee who also self-nominated in the same constituency),
+`alma-vitkiene` (self-nominated, "Išsikėlė pati", constituency only),
+`nikolaj-medvedev` (a constituency-only party's nominee),
+`visvaldas-matkevicius` (list-only coalition candidate whose declarations
+page prints the income extract only) and `genovaite-ziobakiene` (the one
+candidate with no declarations page — her fixture `index.json` carries the
+`MissingExpectedTab`). Seven of the fourteen were elected. The samples
+directory holds both indexes (`list.html`,
+`districts.html`), the 22 party pages under `lists/` and the 71
+constituency pages under `districts/`. The field is scraped by
+`scripts/run_election_batches.sh`.
+
 For `2009-prezidento` the allowlist
 (`tests/test_prezidento_2009_sample_allowlist.py`) is likewise the complete
 seven-candidate field:
