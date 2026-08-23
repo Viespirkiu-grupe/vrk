@@ -46,8 +46,11 @@ it before writing anything. The layout families are:
   and the coalition-kind resolution are the module's own) and its
   declaration parser the 1990s one. The 1996-1998 archive family
   (`scraper/shared/seimo_archive_1990s.py`, next bullet) is the same
-  template without the questionnaire; a 2000-era municipal tree, if ever
-  added, should be compared against both.
+  template without the questionnaire. The March 2000 municipal general
+  (`savivaldybiu_2000`) is the same document for the municipal form on
+  the 1997 municipal archive's three-hop listing (municipality → list →
+  candidate, plus a by-party roll-up that names coalition members), with
+  a results tree that five municipalities were captured without.
 - **2016 era** (`seimo_2016`): one anketa table with the whole Q5–Q21 set,
   elected note inside the name cell, base64 photos, GPM308 income labels,
   `ID001x` private-interest sections.

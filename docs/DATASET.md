@@ -18,9 +18,9 @@ never touched by a full run.
 
 ## Inventory
 
-92,963 candidate records across 47 elections, 1996–2025, with **zero fetch
-failures** other than three 2011 and three 2007 candidate pages VRK never
-published (see Known gaps).
+102,842 candidate records across 48 elections, 1996–2025, with **zero fetch
+failures** other than three 2011, three 2007 and two 2000 candidate pages
+VRK never published (see Known gaps).
 
 **The table below is an aggregate, not an inventory of any one directory.**
 `data/` is gitignored, so it never travels with a branch or a merge, and the
@@ -99,7 +99,8 @@ election was re-parsed offline the same day.
 | `2004-seimo` | 1251 | 141 | 8 | 0 |
 | `2005-lapkricio-20-seimo-kedainiai` | 5 | 1 | 0 | 0 |
 | `2000-seimo` | 1271 | 141 | 5 | 0 |
-| **total** | **92963** | **8734** | **1598** | **20199** |
+| `2000-kovo-19-savivaldybiu-tarybu` | 9879 | 1433 | 9 | 0 |
+| **total** | **102842** | **10167** | **1607** | **20199** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
@@ -292,6 +293,53 @@ chosen by shape. Two sibling defects surfaced and were fixed across the
 2015 municipal family (the Q9 explanation, the prose zero income — rows
 in the fix table above). Person index rebuilt: 47,125 persons (8,350 new;
 the other 8,050 candidacies merged into people already in the corpus).
+
+### The 2026-08-23/24 build and scrape of the 2000 municipal council general election
+
+GitHub issue #25; VRK's `statiniai/puslapiai/n/rinkimai/20000319/` tree
+(2000-03-19) — the 1997 municipal archive three years on (the same
+Teleport capture, `tppabs` and all) carrying the 2000 Seimas candidate
+document for the municipal form. `savivaldybiu_2000` reuses the 1997
+list-page reader, the 2000 Seimas page readers and the 1990s declaration
+parser; the candidacy block is the 2007 municipal general's. Listing:
+the municipality directory is served as a 403, so the 60 municipalities
+come from the results index; each municipality page lists its lists with
+VRK's registration decision, and the 28 by-party pages (own list in
+bold, coalition in plain type) are the cross-check and the only source
+of a coalition's member parties. Sitemap: **9,881 candidates** on 651
+lists (26 coalitions) in 60 municipalities, 1,562 seats declared, every
+claim reconciling both ways, ids `<slug>-<vrk id>`. Results per
+municipality (list votes and mandates, the members page, the preference
+pages with winners in bold): 1,433 members in 55 municipalities, every
+count matching the page's own seat number, the mandate column, the
+totals row, the bold rows and each list's top ranks — all at 0. **Five
+municipalities — Jurbarko, Kelmės, Radviliškio, Raseinių ir Vilkaviškio
+rajono — exist in the archive only to the list level** (unlinked result
+rows, the members and preference pages never captured), so their 806
+candidates carry `isrinktas: null` with `rezultataiNeskelbiami` and the
+129 seats are known per list, not per member; every record still gets
+its list's votes and mandates (`tarybosNarys.sarasoBalsai`/`sarasoMandatai`).
+Scraped overnight 2026-08-23/24 with `KEEP_SAMPLES=1` (116 MB):
+**9,879/9,881 fetched — the two missing candidate pages are VRK's own
+404s** (Binkauskas 84814, Kalendauskaitė 86936; their list rows and
+preference votes exist, the pages do not — see Known gaps). Parse: after
+one offline re-parse pass, **297 warnings + 1 error**, all source truth:
+297 declaration totals refused by the row-20 guard (the guard learned on
+this election that row 20 prints with the centai dropped, so a sub-litas
+shortfall — 29 pages — is truncation and now stands; the 297 are the real
+zero-or-short totals the 1990s family shows everywhere) and one
+declaration section printed empty (Kaluina 87455). The municipal form
+omits any question or field the candidate left unanswered — seven pages
+print a single declaration question — so a missing question is a blank,
+not an anomaly. What the field says: 9 declared a post-1990 conviction
+("Taip"; the form has no explanation slot), 2 collaboration with foreign
+services, 2 another citizenship (both Russia-adjacent lines with the
+renunciation sub-question, one "Nesu atsisakęs"); 8,526 records carry an
+education level, 7,786 languages, 286 a degree, 1,511 prior mandates;
+all 9,879 a birth date, residence and declaration (9,731 with a trusted
+income total). Fixtures are 10 candidates chosen by shape. Related
+follow-up: none — the five list-level municipalities and two 404 pages
+are permanent VRK gaps.
 
 ### The 2026-08-23 build and scrape of the 2000 Seimas general election
 
@@ -985,6 +1033,21 @@ each now has one.
   coalition position 34, 239 votes). None was elected. They are in the
   sitemap (16,403 entries) and in `.run-state/…/failed_ids.txt`, and have no
   record (16,400); a record cannot be written without a candidate page.
+- Likewise two 2000 municipal candidates: the March 2000 list pages carry
+  their rows and the preference pages their votes, but `kandvl.htm-84814.htm`
+  (Gintaras Binkauskas, Vilnius, Lietuvių nacionalinės partijos ir "Jaunosios
+  Lietuvos" sąjungos list position 2, 1,198 preference votes) and
+  `kandvl.htm-86936.htm` (Vilma Kalendauskaitė, Alytaus rajonas, TS list
+  position 10, 42 votes) are 404s in VRK's archive. Neither was elected.
+  They are in the sitemap (9,881 entries) and `.run-state/…/failed_ids.txt`,
+  and have no record (9,879).
+- The March 2000 municipal election's per-candidate results exist for 55
+  of the 60 municipalities: Jurbarko, Kelmės, Radviliškio, Raseinių and
+  Vilkaviškio rajono were captured only to the list level (votes and
+  mandates per list; the members and preference pages link the live CGI
+  and were never archived), so those 806 records carry `isrinktas: null`
+  with `kandidatavimas.rezultataiNeskelbiami` — 129 of the election's
+  1,562 seats are known by list, not by member.
 - Likewise three 2007 municipal candidates: the list pages link them but
   every tab of `Kandidatas<ID>/` is a 404 on vrk.lt — Antanas Katinas
   (1835, Skuodas, LVLS position 14), Genrika Rynkun (6582, Švenčionys,

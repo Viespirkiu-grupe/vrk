@@ -671,6 +671,27 @@ both indexes (`list.html`, `districts.html`), the 28 party pages under
 `lists/` and the 71 constituency pages under `districts/`. The field is
 scraped by `scripts/run_election_batches.sh`.
 
+For `2000-kovo-19-savivaldybiu-tarybu` the allowlist
+(`tests/test_savivaldybiu_2000_sample_allowlist.py`) is **ten candidates out
+of 9,881**, chosen by shape: `paksas-rolandas-84817` (the Vilnius LLS
+leader, 47,349 preference votes), `cekuolis-jonas-85130` (LLS #52 elected at
+rank 6, the furthest climb), `jusas-albertas-94748` and `zekas-algis-94742`
+(the Alytus district LVP–KDS coalition's leader and its #5 elected at rank
+2, both with the card's member-party line),
+`martusevicius-stasys-algirdas-89379` (Birštonas LSDP #17 elected at rank
+6), `dagys-algirdas-89945` (a coalition candidate ranked 15th, not
+elected), `lizdenis-antanas-85463` (leader of a list below the threshold),
+`petkus-viktoras-89850` (the KDS leader in Vilnius with a sparse card —
+pensioner, no languages, zero income), and `zairys-aloyzas-86350` with
+`karaliene-rasa-88512` (Jurbarkas, one of the five municipalities whose
+per-candidate results VRK never captured: elected status unknown, the
+list's votes and mandates still joined). Each directory holds the one page
+(`candidate.html`) and `index.json`; the samples directory holds the party
+index (`list.html`), the results index used as the municipality directory
+(`municipalities.html`), the 60 municipality pages under
+`municipalities/`, the 651 list pages under `lists/` and the 28 party pages
+under `parties/`. The field is scraped by `scripts/run_election_batches.sh`.
+
 For `2009-prezidento` the allowlist
 (`tests/test_prezidento_2009_sample_allowlist.py`) is likewise the complete
 seven-candidate field:
