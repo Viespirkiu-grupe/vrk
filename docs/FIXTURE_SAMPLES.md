@@ -582,6 +582,19 @@ and the roman-numbered interest sections II–VIII across the fifteen. The
 samples directory holds the list index (`list.html`) and the fifteen list
 pages under `lists/`.
 
+For `2002-prezidento` the allowlist
+(`tests/test_prezidento_2002_sample_allowlist.py`) is the complete
+seventeen-candidate field. Each directory holds the shared listing as
+`anketa.html`, the HTML biography, the Word programme (`programa.doc`)
+and the archived scans — `pareiskimas.jpg`, `duomenu-anketa-1.jpg` and
+`-2.jpg`, `deklaracija.jpg` — except `vytautas-sustauskas`, whose second
+questionnaire page was a 404 on the original 2002 site already. The four
+health-certificate scans the cards link are 404 on VRK's mirror, so no
+directory holds one. The samples directory holds the listing
+(`list.html`) and the trustee index (`patiketiniai-index.html`, the
+name-to-registration-id map whose per-candidate pages are 404). The
+fixture capture is the full scrape.
+
 For `2004-ep` the allowlist (`tests/test_ep_2004_sample_allowlist.py`) is
 **thirteen candidates out of 241**, chosen by shape rather than by list:
 the LSDP leader `justas-vincas-paleckis` (two education records, a prior

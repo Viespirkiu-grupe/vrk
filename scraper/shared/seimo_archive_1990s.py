@@ -277,7 +277,9 @@ BIOGRAPHY_BIRTH_FULL = re.compile(
     r"Gim[ėe]\s+(\d{4})\s*m\.\s*(" + "|".join(BIOGRAPHY_MONTHS) + r")\s*(\d{1,2})\s*d\.",
     re.IGNORECASE,
 )
-BIOGRAPHY_BIRTH_YEAR = re.compile(r"Gim[ėe]\s+(\d{4})\s*m\.", re.IGNORECASE)
+# "Gimė 1950 m." and the spelled-out "Gimė 1940 metais" (the 2002
+# presidential biographies write the latter) both carry a year.
+BIOGRAPHY_BIRTH_YEAR = re.compile(r"Gim[ėe]\s+(\d{4})\s*m(?:\.|et)", re.IGNORECASE)
 
 
 def extract_biography_birth_date(text: str) -> tuple[str | None, int | None]:
@@ -298,8 +300,9 @@ def extract_biography_birth_date(text: str) -> tuple[str | None, int | None]:
     ("Tėvas - Vincas Mickus 1926 m. baigė Dotnuvos žemės ūkio akademiją"),
     so a looser scan would happily return a parent's date.
 
-    Measured over the 879 1996 biographies: 670 full dates (76%), 151
-    year-only (17%), 58 neither. Of the 149 full dates whose candidate shares
+    Measured over the 879 1996 biographies: 670 full dates (76%), 154
+    year-only (18%; three of them "Gimė 1940 metais" spellings the widened
+    year pattern reads), 55 neither. Of the 149 full dates whose candidate shares
     a name with a modern candidate who has a published birth date, 133 (89%)
     match it exactly; 13 of the 16 that do not are plainly different people
     (born decades apart), and 3 are genuine disagreements between VRK's own
