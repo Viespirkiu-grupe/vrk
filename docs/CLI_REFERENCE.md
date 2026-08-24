@@ -54,6 +54,7 @@ python -m scraper <command> [args]
 - `2014-prezidento` (2014-05-11 presidential election)
 - `2014-ep` (2014-05-25 European Parliament election)
 - `2002-prezidento` (2002-12-22 presidential election, seventeen candidates, runoff 2003-01-05; the 2002 LRS-ITD site — HTML biographies, Word-document programmes, the questionnaire and declarations as scans)
+- `2002-gruodzio-22-savivaldybiu-tarybu` (2002-12-22 municipal council general election, all 60 municipalities, party and coalition lists; the 2002 LRS-ITD site — two static pages per candidate)
 - `2004-ep` (2004-06-13 European Parliament election — Lithuania's first, 12 party lists; VRK's original 2004 static site)
 - `2004-prezidento` (2004-06-13 presidential election, five candidates, runoff June 27; VRK's original 2004 static site, the biography and programme as Word documents)
 - `2004-seimo` (2004-10-10 Seimas general election, 15 party lists and 71 single-member constituencies; VRK's original 2004 static site)
@@ -1112,6 +1113,83 @@ Fixtures are the complete seventeen-candidate field
 (`tests/test_prezidento_2002_sample_allowlist.py`), so the fixture
 capture *is* the full scrape. Scraped 2026-08-24: 17/17, 0 fetch
 failures, 0 anomalies; ~9 MB with the scans.
+
+## Municipal general 2002 (`2002-gruodzio-22-savivaldybiu-tarybu`) Workflow
+
+The 2002-12-22 municipal council general election (GitHub issue #28;
+VRK's `rinkimai/2002/savivaldybes/` tree), held the same day as the
+presidential first round, on the same 2002 LRS-ITD site generation —
+but published as per-candidate static pages, not scans, so unlike
+`2002-prezidento` everything parses. Read by
+`scraper/elections/savivaldybiu_2002/`:
+
+- **Listing**: two structures. The constituency index links the 60
+  municipality pages
+  (`kandidatai_apygardoje_jsp_ri_id_15_apyg_id_<APYG>.htm`), each the
+  full field grouped under bold "N. <list name>" headings — the
+  position, the anketa link and the "pajamų deklaracijos" link per
+  candidate, both keyed by `asm_kod`, VRK's person id. The party index
+  links the 25 party pages, each linking the party's per-municipality
+  pages (the same document narrowed to the party's own candidates) —
+  the overlay that resolves each list's kind and a coalition's members:
+  a heading exactly one party claims under its own name is that party's
+  list, anything else a coalition of the claimants (A. Zuoko koalicija
+  in Vilnius stands under the Liberals' number 26 and is claimed by the
+  Liberals and the Moderate Christian Democrats). **10,139 candidates
+  on 521 lists (15 coalitions) in 60 municipalities**, every candidate
+  claimed by exactly one party page at the same position, no duplicate
+  ids anywhere (ids are `<slug>-<asm_kod>` as for the other municipal
+  generals), a declaration link on every row. The heading numbers are
+  the party index's own ballot numbers (gapped — no 7), constant across
+  municipalities, and the join key to the results tree's list rows.
+- **Candidate pages**: two per candidate, each one table cell of
+  `<br>`-separated `N. Prompt: <b>answer</b>` lines — the anketa
+  (Q5–Q19 with gaps: birth date already ISO, residence, the 8.1–8.3
+  declarations, the 88 str. conviction question at Q9 with the
+  article's text as an italic boilerplate block, birth place,
+  nationality, education as a level, languages in one bold with
+  commas, prior mandates at Q15 inline ("Nebuvo") or as indented
+  "nuo/iki + institution" lines, workplace, public activity, marital
+  status with unnumbered spouse/children lines trailing it; Q19
+  omitted entirely on some pages) and the declaration extract
+  ("Lietuvos Respublikos gyventojo turto ir pajamų deklaracija",
+  saved as `turto-ir-pajamu-deklaracijos.html`) — litas summary lines
+  matched on wording because an inserted joint-bank-accounts item
+  shifts the numbering between the 11- and 12-item variants. The
+  pages carry no candidacy facts: municipality, list and position are
+  the sitemap's, in the 2000/2007 municipal candidacy shape.
+- **Results**: `savivaldybiu_2002/results.py`. Per municipality
+  `rezultatai/rapgpl_<APYG>.htm` (voters, turnout, valid/invalid
+  ballots, quota, votes and mandates per list — "-" below the
+  threshold — with a totals row), `rezultatai/rikl_<APYG>.htm`
+  ("Kandidatai, gavę mandatus", the `isrinktas` source), per list
+  `rezultatai/rpbapgl_<APYG>_<SEQ>.htm` (post-election rank,
+  preference votes, pre-election number, winners in bold, the list's
+  own total above) and `savtaryb/sav_apg_l_<APYG>_1.htm` — the council
+  **as frozen**, where a substitute's row (dated by its entry) replaces
+  a departed member's; the dates join as `tarybosNarysNuo`. **1,560
+  seats across all 60 municipalities**, every count reconciling: the
+  members pages against their own declared seat counts, the mandate
+  columns and the totals rows, the bold preference rows and the top-N
+  ranks; all 10,139 candidates ranked with the listing's pre-election
+  number; every election-day council row an elected member, 562
+  members replaced mid-term by 562 substitutes (all of them
+  candidates of the same election); the national mandate summary
+  (`mandatai/mlt_15_1.html`, per member party) summing to the same
+  1,560 — all at 0 mismatches.
+
+```bash
+python -m scraper fetch-sample 2002-gruodzio-22-savivaldybiu-tarybu
+python -m scraper sitemap 2002-gruodzio-22-savivaldybiu-tarybu
+python -m scraper fetch-candidate-samples 2002-gruodzio-22-savivaldybiu-tarybu --candidate-id anicetas-lupeika-132972 --allow-new-samples
+python -m scraper build-results 2002-gruodzio-22-savivaldybiu-tarybu
+python -m scraper parse-anketa-samples 2002-gruodzio-22-savivaldybiu-tarybu
+KEEP_SAMPLES=1 scripts/run_election_batches.sh 2002-gruodzio-22-savivaldybiu-tarybu
+```
+
+Fixtures are nine candidates chosen by shape
+(`tests/test_savivaldybiu_2002_sample_allowlist.py`); the full field is
+scraped by `scripts/run_election_batches.sh`.
 
 ## European Parliament 2004 (`2004-ep`) Workflow
 

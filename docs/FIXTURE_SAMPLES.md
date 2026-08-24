@@ -719,6 +719,30 @@ index (`list.html`), the results index used as the municipality directory
 `municipalities/`, the 651 list pages under `lists/` and the 28 party pages
 under `parties/`. The field is scraped by `scripts/run_election_batches.sh`.
 
+For `2002-gruodzio-22-savivaldybiu-tarybu` the allowlist
+(`tests/test_savivaldybiu_2002_sample_allowlist.py`) is **nine candidates
+out of 10,139**, chosen by shape: `anicetas-lupeika-132972` (the Akmenė
+Tautininkai leader — rank 1, 2,086 preference votes, on the council from
+election day), `arturas-zuokas-154491` and `vytautas-bogusis-22` (the
+Vilnius A. Zuoko coalition's #1 and #2 — the Liberals' and the Moderate
+Christian Democrats' nominees, 42,797 preference votes for Zuokas, and
+VRK person id "22", the election's shortest), `stasys-mikelis-135915`
+(the Neringa coalition's leader), `jadvyga-daukantaite-204265` (not
+elected, on the council from 2004-03-17 as a substitute —
+`isrinktas: false` with `tarybosNarysNuo` set), `stasys-berzinis-132939`
+(a VNDPS candidate whose list starts at position 2 — a withdrawn #1 —
+with a prior-mandate line and a widower's children-only family block),
+`vytautas-juozapavicius-132963` (the 12-item declaration variant with
+the joint bank-accounts item), `algimantas-rasimas-121894` (a
+declaration with an empty workplace) and `veronika-staneikiene-202013`
+(a below-threshold-list candidate whose anketa leaves most questions
+blank and omits Q19 entirely). Each directory holds the two pages
+(`anketa.html`, `turto-ir-pajamu-deklaracijos.html`) and `index.json`;
+the samples directory holds both indexes (`list.html`, `parties.html`),
+the 60 constituency pages under `municipalities/`, the 25 party pages
+under `parties/` and the 564 party-municipality pages under
+`party-lists/`. The field is scraped by `scripts/run_election_batches.sh`.
+
 For `2009-prezidento` the allowlist
 (`tests/test_prezidento_2009_sample_allowlist.py`) is likewise the complete
 seven-candidate field:
