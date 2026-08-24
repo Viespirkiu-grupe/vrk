@@ -235,6 +235,7 @@ class Savivaldybiu2002AnketaParserTests(unittest.TestCase):
                 "anksciau-isrinktas",
                 "pagrindine-darboviete",
                 "visuomenine-veikla",
+                "pomegiai",
                 "seimine-padetis",
                 "sutuoktinio-vardas-pavarde",
                 "vaiku-vardai-pavardes",

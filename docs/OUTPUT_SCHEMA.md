@@ -2196,10 +2196,12 @@ level — "Aukštasis" — `irasai` always empty), `uzsienio-kalbos`,
 `irasai` one record per indented mandate line,
 `institucijos-pavadinimas-pareigos` and `laikotarpis` "1997–2000" — as
 printed, duplicates included), `pagrindine-darboviete`,
-`visuomenine-veikla`, `seimine-padetis`, `sutuoktinio-vardas-pavarde`
-(the form asks the first name only), `vaiku-vardai-pavardes`. No
-degree, title, political-organisation, hobbies or kita-apie-save keys:
-this form does not ask them.
+`visuomenine-veikla`, `pomegiai` (the form omits an unanswered
+question entirely — Q18 survives on one page of the 10,139),
+`seimine-padetis`, `sutuoktinio-vardas-pavarde` (the form asks the
+first name only), `vaiku-vardai-pavardes`. No degree, title,
+political-organisation or kita-apie-save keys: this form does not ask
+them.
 
 ### `turto-ir-pajamu-deklaracijos`
 

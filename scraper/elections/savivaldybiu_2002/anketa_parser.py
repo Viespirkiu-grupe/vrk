@@ -76,7 +76,9 @@ DEKLARACIJA_FILE_NAME = "turto-ir-pajamu-deklaracijos.html"
 QUESTION_START_PATTERN = re.compile(r"^\s*(\d{1,2}(?:\.\d{1,2})*)\.\s+")
 
 # The known question numbers; anything else the pages print is reported.
-KNOWN_QUESTION_NUMBERS = {"5", "6", "8.1", "8.2", "8.3", "9", "10", "11", "12", "13", "15", "16", "17", "19"}
+# The form omits a question the candidate left unanswered: Q18
+# (Pomėgiai) survives on one page of the 10,139, Q19 on most.
+KNOWN_QUESTION_NUMBERS = {"5", "6", "8.1", "8.2", "8.3", "9", "10", "11", "12", "13", "15", "16", "17", "18", "19"}
 
 # The declaration's summary lines, matched on their wording — the item
 # numbers shift between the 11- and 12-item variants. Single-figure
@@ -341,6 +343,7 @@ def normalize_savivaldybiu_2002_anketa_rows(rows: list[dict[str, Any]]) -> dict[
         "anksciau-isrinktas": {"aprasas": _answer("15"), "irasai": mandates},
         "pagrindine-darboviete": _answer("16"),
         "visuomenine-veikla": _answer("17"),
+        "pomegiai": _answer("18"),
         "seimine-padetis": _answer("19"),
         "sutuoktinio-vardas-pavarde": _prompt_answer("sutuoktinio vardas"),
         "vaiku-vardai-pavardes": _prompt_answer("vaikų vardai"),
