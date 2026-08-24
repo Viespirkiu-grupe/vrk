@@ -42,7 +42,16 @@ it before writing anything. The layout families are:
   the declaration page the only per-candidate HTML (`ep_2004`'s readers
   parse it unchanged), birth facts recovered from the biography prose
   under the 1990s family's keys, and a two-round results walk of its own
-  joined by VRK's registration record id.
+  joined by VRK's registration record id. The December 2002 presidential
+  election (`prezidento_2002`) sits one site generation earlier
+  (`rinkimai/2002/Prezidentas/`, the 2002 LRS-ITD template) with the
+  same shared-listing shape and its own page readers: the biography is
+  HTML, the programme a Word `.doc`, and the questionnaire, declaration
+  and statement exist only as scans — archived as bytes and linked from
+  the record (`rawData.skenai`), never OCR'd. Its trustee index is the
+  name-to-registration-id map the results join keys on, and its verdict
+  is the final protocol's accusative sentence, resolved by word-stem
+  prefix.
 - **2000 archive** (`seimo_2000`): the 1996-1998 Teleport archive's
   template (`statiniai/puslapiai/n/rinkimai/20001008/`, the
   `kandvl.htm-<ID>.htm` candidate page) carrying the 2004 static site's

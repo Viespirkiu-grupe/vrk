@@ -18,7 +18,7 @@ never touched by a full run.
 
 ## Inventory
 
-102,847 candidate records across 49 elections, 1996–2025, with **zero fetch
+102,864 candidate records across 50 elections, 1996–2025, with **zero fetch
 failures** other than three 2011, three 2007 and two 2000 candidate pages
 VRK never published (see Known gaps).
 
@@ -95,13 +95,14 @@ election was re-parsed offline the same day.
 | `2011-vasario-13-seimo-marijampole` | 9 | 1 | 0 | 9 |
 | `2011-vasario-27-savivaldybiu` | 16400 | 1526 | 200 | 0 |
 | `2007-vasario-25-savivaldybiu` | 13419 | 1550 | 78 | 0 |
+| `2002-prezidento` | 17 | 1 | 0 | 0 |
 | `2004-ep` | 241 | 14 | 3 | 0 |
 | `2004-prezidento` | 5 | 1 | 0 | 0 |
 | `2004-seimo` | 1251 | 141 | 8 | 0 |
 | `2005-lapkricio-20-seimo-kedainiai` | 5 | 1 | 0 | 0 |
 | `2000-seimo` | 1271 | 141 | 5 | 0 |
 | `2000-kovo-19-savivaldybiu-tarybu` | 9879 | 1433 | 9 | 0 |
-| **total** | **102847** | **10168** | **1607** | **20199** |
+| **total** | **102864** | **10169** | **1607** | **20199** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
@@ -126,6 +127,10 @@ fourth declared a grave conviction under Q9.3 alone. The 2004
 presidential row's elected count is likewise the joined flag — the
 runoff verdict names Adamkus alone — and its conviction column is 0 by
 absence: that tree asked its five candidates no questionnaire at all.
+The 2002 presidential row reads the same way (the protocol's verdict
+names Paksas alone), and its conviction column is 0 by absence twice
+over: the questionnaire exists only as a two-page scan of the paper
+form, archived and linked but never OCR'd into data.
 
 Records live under `data/<election-id>/` (~0.66 GB of JSON plus 362 MB of
 photo sidecar files under `data/<election-id>/photos/` — 2,199 portraits from

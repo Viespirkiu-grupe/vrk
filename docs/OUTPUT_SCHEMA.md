@@ -1735,6 +1735,69 @@ roman section heading as the key of its total (with the page's row label,
 "Visa šeimos turto vertė", as `label`), and the form line ("1) FR0462
 formos deklaracijos") as a three-field item (`form`, `income`, `tax`).
 
+## Appendix: 2002 Presidential (`2002-prezidento`)
+
+The December 2002 presidential election (seventeen candidates, the
+runoff on January 5, 2003), on the 2002 LRS-ITD site one generation
+before the 2004 static site, read by
+`scraper/elections/prezidento_2002/`. Written as
+`data/2002-prezidento/<candidate-id>-2002-prezidento.json`. The rule of
+this tree: **text that survives as text is parsed; scans are archived
+and linked, never OCR'd.** The sections are `profilis`/`profile`, a
+prose-recovered `anketa`, `biografija`, `programa` and — this
+election's own — `rawData.skenai`. There is **no
+`turto-ir-pajamu-deklaracijos` section**: the declaration exists only
+as a photograph of the paper form.
+
+### `kandidatavimas`
+
+As the 2004 presidential appendix: `vrkCandidateId` (the card's own
+anchor) and `vrkRegistrationId` (from the trustee index's links, the id
+the results rows and the archived per-candidate result pages key on);
+`turai` on every record with both rounds' national votes (two entries
+for Paksas and Adamkus, one for the rest); the winner's `isrinktas:
+true`, `isrinktasKaip: "prezidentas"`, `rezultatuTuras: 2` and
+`rezultatuSaltinis` — here the final protocol page, whose verdict names
+Paksas in the accusative.
+
+### `profilis`
+
+`vardas-pavarde` from the card (mixed case, "Rolandas Paksas"),
+`pastaba` always null, `nuotrauka` the card's photo
+(`docs/<Name>_nuotrauka.jpg`), and `kita` with the card's facts:
+`registracija` (the sentence, linking the decision on lrs.lt),
+`pareiskimas`, `duomenu-anketa` (two scan URLs), the declaration under
+its own label as the key — `seimos-turto-pajamu-deklaracija` on eleven
+records, `gyventojo-turto-pajamu-deklaracija` on six, which is how the
+filed form is told apart — `sveikatos-pazyma` on four, and
+`tinklalapis` on nine (two URLs on one).
+
+### `rawData.skenai`
+
+The scan inventory in one machine-readable block: `pareiskimas`,
+`duomenu-anketa` (a list), `deklaracija` (`url` and `forma`, the link
+label), `sveikatos-pazyma` (a list). The JPGs themselves are archived
+in the sample set; the health-certificate URLs are dead on VRK's mirror
+(kept as the card's fact), and Šustauskas's second questionnaire page
+was dead on the original site.
+
+### `normalized.anketa`
+
+Recovered from the biography prose as everywhere in this family:
+sixteen full `gimimo-data` (with `gimimo-data-saltinis:
+"biografijos-tekstas"`), Bernatonis year-only (`gimimo-metai: 1940`
+from "Gimė 1940 metais" — never promoted to a date), and `gimimo-vieta`
+for ten of seventeen.
+
+### `biografija` and `programa`
+
+`biografija` from the HTML page (`rawData.biografija.text` keeps the
+prose block per line, plus `headingName`, the page's own name heading,
+as a cross-check); `programa` from the Word 97 document via
+`scraper/shared/word_doc.py`. All seventeen of each parse; the
+programme lengths span Šerėnas's one line (his campaign aired on LNK)
+to Bobelis's 86 KB manifesto.
+
 ## Appendix: 2004 Presidential (`2004-prezidento`)
 
 The June 2004 presidential election (five candidates, the runoff on June

@@ -60,6 +60,12 @@
       "shortName": "2000 Seimas"
     },
     {
+      "id": "2002-prezidento",
+      "date": "2002-12-22",
+      "name": "2002 m. Lietuvos Respublikos Prezidento rinkimai",
+      "shortName": "2002 prezidento"
+    },
+    {
       "id": "2004-ep",
       "date": "2004-06-13",
       "name": "2004 m. rinkimai į Europos Parlamentą",
