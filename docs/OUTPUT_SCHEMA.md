@@ -2130,6 +2130,101 @@ the municipal cards do not print them.
 As the 2000 Seimas appendix: the 1990s family's block to the centas with
 the section-I workplace lines.
 
+## Appendix: 2002 municipal general (`2002-gruodzio-22-savivaldybiu-tarybu`)
+
+Two static pages per candidate on the 2002 LRS-ITD template (the
+`2002-prezidento` site generation, but per-candidate text pages, not
+scans): the anketa and the income and asset declaration extract. The
+record is three sections (`profilis`, `anketa`,
+`turto-ir-pajamu-deklaracijos`; no biography, no photo, no interest
+declaration, no campaign section) with the 2000/2007 municipal
+candidacy block. Records are written as
+`data/2002-gruodzio-22-savivaldybiu-tarybu/<candidate-id>-2002-gruodzio-22-savivaldybiu-tarybu.json`,
+the id `<name-slug>-<asm_kod>` as for the other municipal generals.
+
+- `rawData` section order: `profile` (`candidateDisplayName` from the
+  page's `<h2>`; `electedNote` and `photoSrc` always empty, `fields`
+  always empty — the pages carry no card), `anketa.rows` (the numbered
+  `N. Prompt: <b>answer</b>` lines as `questionNumber`/`prompt`/`answer`,
+  Q15's indented mandate lines as its `records`
+  (`nuo`/`iki`/`institucija`), the unnumbered "Sutuoktinio vardas:" and
+  "Vaikų vardai:" lines as rows of their own), `deklaracija` (`items`:
+  each summary line's `prompt` and printed `value`, the two-figure items
+  with `periods.pradzioje`/`pabaigoje`).
+
+### `kandidatavimas`
+
+The 2000 municipal shape on this tree's ids: `vrkCandidateId` (the
+`asm_kod` both candidate pages and every results page key on),
+`savivaldybe`, `savivaldybesNumeris`, `apygardosId` (the constituency id
+of the URLs), `roles` (always `["tarybos-narys"]` — mayors were not
+directly elected), and `tarybosNarys` with `partyList`, `listKind`
+(`partija` or `koalicija`, resolved from the party-page overlay),
+`listNumber` (the party index's ballot number, constant across
+municipalities), `listPosition`, for a coalition list
+`koalicijosPartijos` (the member parties — the parties whose
+per-municipality pages carry the list's candidates) and
+`koalicijosPartija` (the member party whose page carries *this*
+candidate); then the list's own result — `sarasoBalsai`,
+`sarasoMandatai` (0 where the page prints "-"),
+`sarasoRezultatuSaltinis`.
+
+The results join: `isrinktas`, `isrinktasKaip` (`tarybos-narys`),
+`rezultatuSaltinis` (the municipality's `rikl` page); for every
+candidate `porinkiminisNumerisSarase`, `pirmumoBalsai`,
+`pirmumoBalsuSaltinis` (the list's preference page — all 10,139 are
+ranked). The council-composition join (`savtaryb` page, the council
+**as frozen**, substitutes standing in departed members' rows):
+`tarybosNarysNuo` (ISO; election day 2002-12-22 for a member serving
+since the election, later for a substitute who entered when a member
+left — on a record with `isrinktas: false`, the seat came mid-term, not
+from the vote) and `tarybosSudetiesSaltinis`. An elected member with no
+`tarybosNarysNuo` left the council before VRK froze the page (562 of
+the 1,560).
+
+### `normalized.anketa`
+
+The municipal-form keys in this order: `gimimo-data` (printed ISO by
+the page itself), `adresas`, `pareiskimai`
+(`ar-nebaigta-teismo-paskirta-bausme`, `ar-atliekate-karo-tarnyba`,
+`ar-turite-kitos-valstybes-pilietybe`, `ar-buvote-pripazintas-kaltu` —
+the 88 str. 1 d. question, the same wording `savivaldybiu_2007` maps to
+this key; the article's own text under it is boilerplate, kept out of
+the rows — and `teisiniai-argumentai`, the explanation a "Taip" is
+followed by in a blockquote of its own, 27 pages of the 10,139),
+`gimimo-vieta`, `tautybe`, `issilavinimas` (`aprasas` the
+level — "Aukštasis" — `irasai` always empty), `uzsienio-kalbos`,
+`anksciau-isrinktas` (`aprasas` the inline "Nebuvo" where printed;
+`irasai` one record per indented mandate line,
+`institucijos-pavadinimas-pareigos` and `laikotarpis` "1997–2000" — as
+printed, duplicates included), `pagrindine-darboviete`,
+`visuomenine-veikla`, `pomegiai` (the form omits an unanswered
+question entirely — Q18 survives on one page of the 10,139),
+`seimine-padetis`, `sutuoktinio-vardas-pavarde` (the form asks the
+first name only), `vaiku-vardai-pavardes`. No degree, title,
+political-organisation or kita-apie-save keys: this form does not ask
+them.
+
+### `turto-ir-pajamu-deklaracijos`
+
+The 2002 extract's summary lines in litas (`valiuta: "Lt"`), matched on
+wording because the numbering shifts between the 11- and 12-item
+variants. The corpus keys it can fill: `gautos-pajamos`,
+`sumoketas-pajamu-mokestis`, `suteiktos-paskolos`, `gautos-paskolos`,
+`pinigines-lesos` (item 8's — money outside banks, in accounts and
+deposits — end-of-period figure) and `darboviete`. The form sums
+registrable assets with securities/art/jewellery into one figure
+(III S1 + IV S1), so `privalomas-registruoti-turtas` and
+`vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai` are null
+and the combined start/end figures keep era keys
+(`turtas-ir-vertybiniai-popieriai-laikotarpio-pradzioje`/`-pabaigoje`),
+the `deklaracija_archive_1990s` convention; likewise
+`pinigines-lesos-laikotarpio-pradzioje`/`-pabaigoje`, the 12-item
+variant's `bendros-pinigines-lesos-banke-laikotarpio-pradzioje`/
+`-pabaigoje` (joint accounts with spouse and children; null on the
+11-item pages), `grazintos-paskolos` and
+`pasiskolintos-ir-dovanotos-lesos`.
+
 ## Appendix: 2007–2014 national elections (`2007-spalio-7-seimo-dzukija`, `2008-seimo`, `2009-prezidento`, `2009-ep`, `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai`, `2011-vasario-13-seimo-marijampole`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`)
 
 All ten are the 2015-era static layout described in the 2015 Seimo

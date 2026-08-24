@@ -66,6 +66,12 @@
       "shortName": "2002 prezidento"
     },
     {
+      "id": "2002-gruodzio-22-savivaldybiu-tarybu",
+      "date": "2002-12-22",
+      "name": "2002 m. gruodžio 22 d. savivaldybių tarybų rinkimai",
+      "shortName": "2002 savivaldybės"
+    },
+    {
       "id": "2004-ep",
       "date": "2004-06-13",
       "name": "2004 m. rinkimai į Europos Parlamentą",

@@ -18,9 +18,9 @@ never touched by a full run.
 
 ## Inventory
 
-102,864 candidate records across 50 elections, 1996–2025, with **zero fetch
-failures** other than three 2011, three 2007 and two 2000 candidate pages
-VRK never published (see Known gaps).
+113,002 candidate records across 51 elections, 1996–2025, with **zero fetch
+failures** other than three 2011, three 2007, two 2000 and one 2002
+candidate pages VRK never published (see Known gaps).
 
 **The table below is an aggregate, not an inventory of any one directory.**
 `data/` is gitignored, so it never travels with a branch or a merge, and the
@@ -96,13 +96,14 @@ election was re-parsed offline the same day.
 | `2011-vasario-27-savivaldybiu` | 16400 | 1526 | 200 | 0 |
 | `2007-vasario-25-savivaldybiu` | 13419 | 1550 | 78 | 0 |
 | `2002-prezidento` | 17 | 1 | 0 | 0 |
+| `2002-gruodzio-22-savivaldybiu-tarybu` | 10138 | 1560 | 27 | 0 |
 | `2004-ep` | 241 | 14 | 3 | 0 |
 | `2004-prezidento` | 5 | 1 | 0 | 0 |
 | `2004-seimo` | 1251 | 141 | 8 | 0 |
 | `2005-lapkricio-20-seimo-kedainiai` | 5 | 1 | 0 | 0 |
 | `2000-seimo` | 1271 | 141 | 5 | 0 |
 | `2000-kovo-19-savivaldybiu-tarybu` | 9879 | 1433 | 9 | 0 |
-| **total** | **102864** | **10169** | **1607** | **20199** |
+| **total** | **113002** | **11729** | **1634** | **20199** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
@@ -1050,6 +1051,16 @@ each now has one.
   position 10, 42 votes) are 404s in VRK's archive. Neither was elected.
   They are in the sitemap (9,881 entries) and `.run-state/…/failed_ids.txt`,
   and have no record (9,879).
+- Likewise one 2002 municipal candidate: the Kauno miesto constituency page
+  links Zita Vincentina Liubarskienė (asm_kod 158225, list 8 position 4) and
+  the preference page carries her 1,019 votes and rank 4, but both her
+  anketa and declaration pages are 404s on vrk.lt. She was not elected. She
+  is in the sitemap (10,139 entries) and `.run-state/…/failed_ids.txt`, and
+  has no record (10,138). Four parse warnings in the same election are
+  source blanks, verified in the retained HTML: three declaration pages VRK
+  published with an empty table cell and one anketa whose birth-date bold is
+  empty; one of the 27 conviction disclosures carries an empty explanation
+  blockquote the same way.
 - The March 2000 municipal election's per-candidate results exist for 55
   of the 60 municipalities: Jurbarko, Kelmės, Radviliškio, Raseinių and
   Vilkaviškio rajono were captured only to the list level (votes and
