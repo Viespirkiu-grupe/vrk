@@ -1187,9 +1187,11 @@ python -m scraper parse-anketa-samples 2002-gruodzio-22-savivaldybiu-tarybu
 KEEP_SAMPLES=1 scripts/run_election_batches.sh 2002-gruodzio-22-savivaldybiu-tarybu
 ```
 
-Fixtures are nine candidates chosen by shape
-(`tests/test_savivaldybiu_2002_sample_allowlist.py`); the full field is
-scraped by `scripts/run_election_batches.sh`.
+Fixtures are ten candidates chosen by shape
+(`tests/test_savivaldybiu_2002_sample_allowlist.py`). The full field was
+scraped 2026-08-24 with retention: 10,138 of 10,139 (one candidate's
+pages are 404s — see `docs/DATASET.md` Known gaps), 4 anomalies, all of
+them verified source blanks.
 
 ## European Parliament 2004 (`2004-ep`) Workflow
 

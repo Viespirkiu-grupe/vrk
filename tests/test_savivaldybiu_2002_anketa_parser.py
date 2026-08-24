@@ -205,6 +205,19 @@ class Savivaldybiu2002AnketaParserTests(unittest.TestCase):
         # The children's names trail Q19 as an unnumbered row.
         self.assertEqual((rows[-1]["prompt"], rows[-1]["answer"]), ("Vaikų vardai:", "Sonata, Stasys"))
 
+    def test_conviction_explanation(self) -> None:
+        # A "Taip" on the 88 str. question is followed by the
+        # conviction's circumstances in a blockquote of its own.
+        parsed = parse_anketa_html(
+            (SAMPLES_ROOT / "rimvydas-vytautas-kliucius-135195" / "anketa.html").read_text(encoding="utf-8")
+        )
+        q9 = next(row for row in parsed["anketa"]["rows"] if row.get("questionNumber") == "9")
+        self.assertEqual(q9["answer"], "Taip")
+        self.assertTrue(q9["explanation"].startswith("Transporto priemonės vairavimas"))
+        anketa = normalize_savivaldybiu_2002_anketa_rows(parsed["anketa"]["rows"])
+        self.assertEqual(anketa["pareiskimai"]["ar-buvote-pripazintas-kaltu"], "Taip")
+        self.assertEqual(anketa["pareiskimai"]["teisiniai-argumentai"], q9["explanation"])
+
     def test_sparse_page(self) -> None:
         # A page that answers almost nothing: the blanks are empty
         # bolds, Q19 is omitted entirely, Q15 is an inline "Nebuvo".
@@ -248,6 +261,7 @@ class Savivaldybiu2002AnketaParserTests(unittest.TestCase):
                 "ar-atliekate-karo-tarnyba",
                 "ar-turite-kitos-valstybes-pilietybe",
                 "ar-buvote-pripazintas-kaltu",
+                "teisiniai-argumentai",
             ],
         )
         self.assertEqual(anketa["gimimo-data"], "1968-02-21")

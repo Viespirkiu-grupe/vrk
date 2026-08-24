@@ -720,7 +720,7 @@ index (`list.html`), the results index used as the municipality directory
 under `parties/`. The field is scraped by `scripts/run_election_batches.sh`.
 
 For `2002-gruodzio-22-savivaldybiu-tarybu` the allowlist
-(`tests/test_savivaldybiu_2002_sample_allowlist.py`) is **nine candidates
+(`tests/test_savivaldybiu_2002_sample_allowlist.py`) is **ten candidates
 out of 10,139**, chosen by shape: `anicetas-lupeika-132972` (the Akmenė
 Tautininkai leader — rank 1, 2,086 preference votes, on the council from
 election day), `arturas-zuokas-154491` and `vytautas-bogusis-22` (the
@@ -734,9 +734,12 @@ elected, on the council from 2004-03-17 as a substitute —
 with a prior-mandate line and a widower's children-only family block),
 `vytautas-juozapavicius-132963` (the 12-item declaration variant with
 the joint bank-accounts item), `algimantas-rasimas-121894` (a
-declaration with an empty workplace) and `veronika-staneikiene-202013`
+declaration with an empty workplace), `veronika-staneikiene-202013`
 (a below-threshold-list candidate whose anketa leaves most questions
-blank and omits Q19 entirely). Each directory holds the two pages
+blank and omits Q19 entirely) and `rimvydas-vytautas-kliucius-135195`
+(a "Taip" on the 88 str. question with the conviction's circumstances
+in a blockquote of its own — one of 27 in the election). Each
+directory holds the two pages
 (`anketa.html`, `turto-ir-pajamu-deklaracijos.html`) and `index.json`;
 the samples directory holds both indexes (`list.html`, `parties.html`),
 the 60 constituency pages under `municipalities/`, the 25 party pages

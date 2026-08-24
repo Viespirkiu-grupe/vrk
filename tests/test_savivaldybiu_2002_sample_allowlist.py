@@ -4,7 +4,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SAMPLES_ROOT = REPO_ROOT / "samples" / "html" / "2002-gruodzio-22-savivaldybiu-tarybu"
-# Nine of the 10,139, chosen by shape: the full field is scraped by
+# Ten of the 10,139, chosen by shape: the full field is scraped by
 # scripts/run_election_batches.sh, not kept as fixtures.
 ALLOWED_CANDIDATE_DIRS = {
     # Elected: the Akmenė Tautininkai leader (rank 1, 2,086 preference
@@ -24,12 +24,16 @@ ALLOWED_CANDIDATE_DIRS = {
     # candidate with the 12-item declaration variant (the joint
     # bank-accounts item), a TS candidate whose declaration has an
     # empty workplace, a below-threshold-list candidate whose anketa
-    # leaves most questions blank and omits Q19 entirely.
+    # leaves most questions blank and omits Q19 entirely, and a
+    # candidate whose "Taip" on the 88 str. question carries the
+    # conviction's circumstances in a blockquote of its own (one of 27
+    # in the election).
     "jadvyga-daukantaite-204265",
     "stasys-berzinis-132939",
     "vytautas-juozapavicius-132963",
     "algimantas-rasimas-121894",
     "veronika-staneikiene-202013",
+    "rimvydas-vytautas-kliucius-135195",
 }
 # The two indexes plus the 60 constituency pages under municipalities/,
 # the 25 party pages under parties/ and the 564 party-municipality

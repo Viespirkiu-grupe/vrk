@@ -2190,7 +2190,9 @@ the page itself), `adresas`, `pareiskimai`
 `ar-turite-kitos-valstybes-pilietybe`, `ar-buvote-pripazintas-kaltu` —
 the 88 str. 1 d. question, the same wording `savivaldybiu_2007` maps to
 this key; the article's own text under it is boilerplate, kept out of
-the rows), `gimimo-vieta`, `tautybe`, `issilavinimas` (`aprasas` the
+the rows — and `teisiniai-argumentai`, the explanation a "Taip" is
+followed by in a blockquote of its own, 27 pages of the 10,139),
+`gimimo-vieta`, `tautybe`, `issilavinimas` (`aprasas` the
 level — "Aukštasis" — `irasai` always empty), `uzsienio-kalbos`,
 `anksciau-isrinktas` (`aprasas` the inline "Nebuvo" where printed;
 `irasai` one record per indented mandate line,

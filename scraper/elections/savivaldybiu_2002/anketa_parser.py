@@ -240,6 +240,15 @@ def parse_anketa_html(html: str) -> dict[str, Any]:
                 continue
             first_kind, first_value = parts[0]
             if first_kind != "text":
+                # A bold-only line is the explanation a "Taip" on Q9 is
+                # followed by — the conviction's circumstances in a
+                # blockquote of its own (27 pages of the 10,139).
+                text = normalize_space(" ".join(value for kind, value in parts if kind == "bold"))
+                if text and rows:
+                    target = rows[-1]
+                    target["explanation"] = normalize_space(
+                        " ".join(filter(None, [target.get("explanation"), text]))
+                    )
                 continue
             lowered = first_value.lower()
             started = QUESTION_START_PATTERN.match(first_value)
@@ -330,8 +339,13 @@ def normalize_savivaldybiu_2002_anketa_rows(rows: list[dict[str, Any]]) -> dict[
             "ar-turite-kitos-valstybes-pilietybe": _answer("8.3"),
             # The conviction question, under the same 88 str. 1 d. the
             # later municipal forms cite (savivaldybiu_2007 maps the same
-            # wording to this key).
+            # wording to this key), and the explanation a "Taip" is
+            # followed by — a blockquote of its own on the page, the key
+            # the rest of the family uses for it.
             "ar-buvote-pripazintas-kaltu": _answer("9"),
+            "teisiniai-argumentai": _normalize_answer_value(
+                (_find_row_by_question_number(rows, "9") or {}).get("explanation")
+            ),
         },
         "gimimo-vieta": _answer("10"),
         "tautybe": _answer("11"),
@@ -618,10 +632,14 @@ def parse_anketa_sample(
             )
         else:
             if not deklaracija_raw["found"] or not deklaracija_raw["items"]:
+                # VRK published the page with an empty table cell (three
+                # of the 10,139): nothing to normalize, the anomaly is
+                # the record of it.
                 _anomaly("DeclarationSectionMissing", "warning")
-            declaration, unknown_prompts = normalize_deklaracija(deklaracija_raw)
-            if unknown_prompts:
-                _anomaly("UnmappedCardLabel", "warning", {"deklaracijaPrompts": unknown_prompts})
+            else:
+                declaration, unknown_prompts = normalize_deklaracija(deklaracija_raw)
+                if unknown_prompts:
+                    _anomaly("UnmappedCardLabel", "warning", {"deklaracijaPrompts": unknown_prompts})
     else:
         _anomaly("DeclarationSectionMissing", "warning")
 
