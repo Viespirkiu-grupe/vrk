@@ -18,7 +18,7 @@ never touched by a full run.
 
 ## Inventory
 
-113,013 candidate records across 52 elections, 1996–2025, with **zero fetch
+113,024 candidate records across 53 elections, 1996–2025, with **zero fetch
 failures** other than three 2011, three 2007, two 2000 and one 2002
 candidate pages VRK never published (see Known gaps).
 
@@ -81,6 +81,7 @@ election was re-parsed offline the same day.
 | `1996-spalio-20-seimo` | 879 | 0 | 0 | 0 |
 | `1997-kovo-23-seimo-pakartotiniai` | 23 | 0 | 0 | 0 |
 | `1997-gruodzio-21-seimo-pakartotiniai` | 4 | 0 | 0 | 0 |
+| `1998-kovo-22-seimo-pakartotiniai` | 11 | 0 | 0 | 0 |
 | `1998-lapkricio-15-seimo-pakartotiniai` | 11 | 0 | 0 | 0 |
 | `1997-kovo-23-savivaldybiu-tarybu` | 6276 | 0 | 0 | 0 |
 | `1997-birzelio-29-svenciniu-tarybos-pakartotiniai` | 110 | 0 | 0 | 0 |
@@ -360,6 +361,50 @@ the two blocks that come from the retained page — through the same
 Seimas elections and the Švenčionys repeat retained everything and were
 re-parsed normally. **That gap was closed the same week — see the retention
 pass below — and the election has since been re-parsed properly.**
+
+### The 2026-08-26 build of the 1998 March Seimo by-election
+
+GitHub issue #21 (and #22, closed as a duplicate). VRK re-ran the vote in two
+constituencies on 1998-03-22 — Naujosios Vilnios (No. 10) and Vilniaus Trakų
+(No. 57) — and its `seimpk` index names them as **one** election, not two:
+"1998 m. kovo 22 d. pakartotiniai rinkimai Naujosios Vilnios ir
+Vilniaus-Trakų apygardose". So this is one module over both, exactly as
+`seimo_pakartotiniai_1997_kovo` covers its four; splitting it would give two
+election ids for one polling day and cut 11 candidates into 5 + 6 for no
+reason. **11 candidates, the complete field, 0 fetch failures, 0 anomalies.**
+
+Thin wiring again — `seimpk`, phase prefix `8`, `CONSTITUENCIES = [10, 57]`.
+No parser changed.
+
+**Two things here look like scrape failures and are not**, both flagged by the
+survey and both confirmed against the raw cards:
+
+- **Only 2 of the 11 cards link a declaration** (`filipovic-tadeus`,
+  `tomasevski-valdemar`). Every card links a biography. This is unique to this
+  election in its era — the November 1998 re-run is 11/11 — so a mostly empty
+  declaration column here is the source.
+- **Four labels no card prints at all**: `Moksliniai laipsniai`,
+  `Moksliniai vardai`, `Visuomeninė veikla` and `Ką dar norėtų parašyti apie
+  save` are 0 of 11 on the raw HTML, so those keys are absent from every
+  record and unmapped in `docs/concept-map.json`.
+
+Coverage over the 11, every count reconciled against the raw cards:
+`gimimo-metai` 10; `gimimo-data` and `gimimo-vieta` 9; `issilavinimas` and
+`pagrindine-darboviete` 8; `uzsienio-kalbos` 7; `seimine-padetis`,
+`seimos-nariai` and `sutuoktinio-vardas-pavarde` 6; `tautybe` and
+`vaiku-vardai-pavardes` 5; `anksciau-isrinktas` 1.
+
+**This is the first election where #69's prose birthplace fallback earns its
+keep.** 6 of the 11 cards print `Gimimo vieta`; the biography's opening
+sentence reaches 3 more (Palanga, Lentvaris, Vilnius), and only those 3 carry
+`gimimo-vietos-saltinis`. In the November 1998 re-run the fallback added
+nothing at all.
+
+**Both constituencies failed the turnout threshold.** Nr. 10 (`rapgpl.htm`)
+14,522 of 39,910 (36.39%); Nr. 57 (`rapgpl2.htm`) 10,742 of 38,135 (28.17%),
+each closing "Rinkimai apygardoje neįvyko". `isrinktas` is a known `false` for
+all 11, and as with the November re-run the records carry no elected marker —
+that decision belongs to the family, and #24 is the last election of it.
 
 ### The 2026-08-26 build of the 1998 Nevėžio Seimo by-election
 

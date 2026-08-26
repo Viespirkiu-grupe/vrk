@@ -1395,7 +1395,7 @@ mayor was elected directly, so:
   missing declaration. `privaciu-interesu-deklaracija` is the
   roman-numbered record-table form of the 2007–2009 section above.
 
-## Appendix: Seimas archive (`1996-spalio-20-seimo`, `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`, `1998-lapkricio-15-seimo-pakartotiniai`)
+## Appendix: Seimas archive (`1996-spalio-20-seimo`, `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`, `1998-kovo-22-seimo-pakartotiniai`, `1998-lapkricio-15-seimo-pakartotiniai`)
 
 Records are written as `data/<election-id>/<candidate-id>-<election-id>.json`.
 1996 defines the parsers (`scraper/shared/seimo_archive_1990s.py`); the 1997
