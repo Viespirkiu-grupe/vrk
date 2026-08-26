@@ -1,12 +1,19 @@
 """Recover birthplaces from the 1996-1997 biographies already in the corpus.
 
-Those pages publish no birth-place field; the only source is the biography's
-opening sentence, whose text is already stored as `biografija.tekstas`. So
-this is a pure offline pass -- no page is fetched, and nothing but
-`anketa.gimimo-vieta` (plus its source marker) is touched.
+Historical: written when these cards were thought to publish no birth-place
+field at all. They do -- "Gimimo vieta" sits inside the malformed
+`<!--sql format>` comment alongside the residence, invisible to a DOM parser,
+and issue #69 taught `scraper/shared/seimo_archive_1990s.py` to read it. The
+card now supplies 852 of the family's 906 records; the biography's opening
+sentence is the fallback for the rest (7 of the 9 it reaches are people born
+outside Lithuania, whose card leaves the field blank).
 
-`scraper/shared/seimo_archive_1990s.py` does the same on a fresh scrape; this
-applies it to records built before the extractor existed. Both go through
+The parser applies that fallback inline on a fresh parse, so a re-parsed
+corpus leaves this script with nothing to do. It stays because it is the only
+way to apply the fallback to records that cannot be re-parsed, and because it
+records how the corpus got its prose-derived places. It is a pure offline
+pass -- no page is fetched, and nothing but `anketa.gimimo-vieta` (plus its
+source marker) is touched. Both paths go through
 `extract_biography_birth_place`, so there is one implementation.
 
 Run from the repo root:

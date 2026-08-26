@@ -1403,13 +1403,20 @@ repeat elections are thin wiring over the same machinery and share every
 shape below. These pages predate even the 2015 family — Teleport Pro
 snapshots of `lrs.lt/cgi-bin/ora7dbcgi/...` with no anketa tabs at all — so
 while the keys are the corpus's usual kebab-case and the sections it does
-publish keep their corpus names (`profilis`, `biografija`), the record is a
-**subset** of the shared body's shape: there is no `anketa` section and none
-of the declaration sections, because these pages carry no questionnaire.
+publish keep their corpus names (`profilis`, `anketa`, `biografija`), the
+record is a **subset** of the shared body's shape.
 
-- `rawData` section order: `profile`, `candidacies`, `residence`,
-  `biography`. `normalized` order: `profilis`, `kandidatavimas`,
-  `gyvenamoji-vieta`, `biografija`.
+There *is* a questionnaire, contrary to what this appendix said before
+2026-08-26: the card prints one below the candidacies, and three of its
+fields sit inside the malformed comment described below, invisible to a DOM
+parser. Issue #69 taught the parser to read all of it, so every one of the
+906 records now carries an `anketa` (the earlier text — "there is no `anketa`
+section … these pages carry no questionnaire" — was wrong).
+
+- `rawData` section order: `profile`, `candidacies`, `residence`, `personal`,
+  `biography`, `declaration`. `normalized` order: `profilis`, `anketa`,
+  `kandidatavimas`, `gyvenamoji-vieta`, `biografija`,
+  `turto-ir-pajamu-deklaracijos`.
 - `normalized.profilis` holds `vardas-pavarde`, `nuotrauka` (the external
   photo URL), `biografijos-nuoroda` and `pajamu-deklaracijos-nuoroda`. There
   is no `pastaba`: nothing on these pages marks a winner.
@@ -1433,9 +1440,56 @@ of the declaration sections, because these pages carry no questionnaire.
   `iskele`, `iskele-nuoroda`, `numeris-sarase`) — so unlike most elections,
   **`kandidatavimas` here is a list, and a consumer counting candidacies must
   not assume one per record.**
-- `rawData.residence` is recovered from inside a malformed HTML comment (see
-  the module docstring and `docs/CLI_REFERENCE.md`'s Seimas archive section)
-  rather than through normal DOM parsing.
+- **Three card fields sit inside a malformed HTML comment** (see the module
+  docstring and `docs/CLI_REFERENCE.md`'s Seimas archive section) and are
+  recovered by regex over the raw HTML rather than through DOM parsing:
+  `rawData.residence` (`Gyvenamoji vieta`), `rawData.personal.birthPlace`
+  (`Gimimo vieta`) and `rawData.personal.nationality` (`Tautybė`). Each is
+  `<b>`-delimited on every page that prints it — 1,730 label occurrences,
+  1,730 captures, 0 blank across all 906 cards. The eligibility Q&A caught in
+  the same comment is deliberately **not** stored: it is the failed query's
+  default rendering, identical on every page, not an answer.
+- **`rawData.personal` is the card's questionnaire**, keyed exactly as the
+  municipal archive family keys the same fields so the two are comparable:
+  `birthPlace`, `nationality`, `education`, `foreignLanguages`,
+  `academicDegree`, `academicTitle`, `previouslyElected`, `mainWorkplace`,
+  `publicActivity`, `aboutSelf`, `familyStatus`, `familyMembers`. Always
+  complete — a label the candidate left blank reads as `""` or `[]`, never a
+  missing key. (`residence` is the exception, kept at `rawData.residence`
+  where it has always been.) Outside the comment each label gets its own
+  paragraph: no card of the 906 puts two in one, so no stop list is needed on
+  this side, unlike the municipal card.
+- **`normalized.anketa`** carries those under the corpus's kebab-case concept
+  keys — `tautybe`, `issilavinimas`, `mokslo-laipsnis`, `pedagoginis-vardas`,
+  `uzsienio-kalbos`, `anksciau-isrinktas`, `pagrindine-darboviete`,
+  `visuomenine-veikla`, `kita-apie-save`, `seimine-padetis`,
+  `sutuoktinio-vardas-pavarde`, `vaiku-vardai-pavardes`, `seimos-nariai` —
+  the same names the 2000 Seimas card and the 2015/2016 eras use. A key is
+  **absent** when the card left that label blank, so the record says what the
+  page carried. Shapes worth naming:
+  - `issilavinimas` is the corpus's `{aprasas, irasai:[…]}` object with the
+    card's single controlled level ("Aukštasis", "Aukštesnysis", …) in the
+    entry's own `issilavinimas` field and the other three null. Not `aprasas`
+    — that slot is the modern form's free-text schooling description, and a
+    controlled level there would not compare. Same call the municipal family
+    made.
+  - `anksciau-isrinktas` is `{aprasas, irasai:[…]}` with one entry per body
+    named ("Lietuvos Respublikos Seimas", "Kauno miesto savivaldybė"); the
+    card publishes no term dates, so `laikotarpis` is null throughout —
+    exactly as the 2000 Seimas card's entries are.
+  - `seimos-nariai` is `[{name, relation}]`; `sutuoktinio-vardas-pavarde` and
+    `vaiku-vardai-pavardes` are the comma-joined subsets whose relation reads
+    "Sutuoktinis/sutuoktinė" and "Vaikas". Two "Augintinis (ė)" and two
+    "Anūkas (ė)" across the whole family belong to neither and appear only in
+    `seimos-nariai`.
+  - Per-field coverage over the 906 records (1996 / 1997-03 / 1997-12):
+    `gimimo-vieta` 837/21/3, `seimine-padetis` 751/19/2, `uzsienio-kalbos`
+    710/18/4, `seimos-nariai` 697/19/4, `tautybe` 421/23/4, `issilavinimas`
+    337/19/1, `anksciau-isrinktas` 319/11/2, `mokslo-laipsnis` 161/5/2,
+    `visuomenine-veikla` 100/11/2, `pedagoginis-vardas` 84/2/0,
+    `kita-apie-save` 38/0/0, `pagrindine-darboviete` 1/23/4. That last row is
+    not a typo: the 1996 general election's candidates left the workplace
+    line blank almost universally, while both 1997 repeats filled it in.
 - `rawData.biography` is `null` when the candidate page links no `Biografija`
   page (`astrauskas-vytautas` in the 1996 fixture set); otherwise
   `{"text", "birthDate", "birthYear"}` — the full free-text paragraph
@@ -1462,23 +1516,35 @@ of the declaration sections, because these pages carry no questionnaire.
     `privaloma-sumoketi-mokesciu-ir-sankciju`, `seimos-nariu-skaicius`,
     `islaikytiniu-skaicius`, `seimos-nariu-iki-18-metu`.
   - The key is **absent** when the candidate page links no declaration.
-- **`normalized.anketa.gimimo-vieta` is likewise recovered from the biography
-  sentence**, and marked `gimimo-vietos-saltinis: "biografijos-tekstas"`. The
-  prose prints it in the locative ("Kaune", "Šiaulių rajone") while the corpus
-  stores the nominative, and suffix rules cannot settle it alone — `-yje`
-  yields both *Panevėžys* and *Radviliškis* — so candidates are accepted only
-  if they appear in `scraper/shared/vietovardziai.json`, the place names the
-  rest of the corpus uses. That lookup is the precision guard: a mis-parsed
-  fragment produces no candidate and is dropped.
+- **`normalized.anketa.gimimo-vieta` comes from the card's `Gimimo vieta`
+  field when it has one, and from the biography's opening sentence when it
+  does not.** `gimimo-vietos-saltinis: "biografijos-tekstas"` marks *only* the
+  fallback: its presence means "derived from prose, weaker than a published
+  field", and its absence means the card published the value, exactly like
+  every other era. The card supplies **852 of 906** (1996: 830, 1997-03: 20,
+  1997-12: 2); prose reaches **9** more, seven of them people born outside
+  Lithuania (Rusija, Ukraina, Krasnojarsko kraštas), whose card leaves the
+  field blank. 45 records have neither.
 
-  Recovered on **447 of 906** records. Of the 459 without it, 25 have no
-  biography and the rest name a village, parish or region the corpus has no
-  nominative for, or name no place at all. Cross-checked against the same
-  people's later elections, where VRK publishes the field: **all 247
-  checkable values name the same place**, though often less specifically —
-  the district where a later form gives the village. The country name
-  ("Lietuvoje") is refused as too coarse; it was wrong on all three candidates
-  who had a specific birthplace published elsewhere.
+  The card's form is the same one the municipal archive family stores —
+  `"Melagėnų k. , Švenčionių raj."`, spacing included — because it is
+  literally the same field on the same card generation.
+
+  The prose fallback prints the place in the locative ("Kaune", "Šiaulių
+  rajone") while the corpus stores the nominative, and suffix rules cannot
+  settle it alone — `-yje` yields both *Panevėžys* and *Radviliškis* — so
+  candidates are accepted only if they appear in
+  `scraper/shared/vietovardziai.json`, the place names the rest of the corpus
+  uses. That lookup is the precision guard: a mis-parsed fragment produces no
+  candidate and is dropped.
+
+  **Before #69 this key was prose-derived on all 447 records that had it.**
+  Where the card now overrides a prose value (438 records), the two name the
+  same place on 433; of the 5 that differ, three are the same place at a
+  different granularity (*Smalininkai* → *Jurbarko raj.*) and two are cases
+  where the prose extractor had reached past the birth sentence
+  (*Joniškio rajonas* where the card says *Kaišiadorių raj.*). The card is the
+  published field and wins.
 
 - **Nothing else is extracted from the biography prose, on purpose.** Education
   and work history look extractable — "1972 m. baigė Vilniaus statybos
@@ -1499,7 +1565,10 @@ of the declaration sections, because these pages carry no questionnaire.
   index, `docs/concept-map.json` and the dashboard resolve it with no
   special case, and **`gimimo-data-saltinis: "biografijos-tekstas"` marks the
   provenance** — treat it as a weaker source than every other era's published
-  field. `anketa` is omitted entirely when the biography yields nothing.
+  field. Unlike the birthplace, this has no card field to fall back to: the
+  date is the one fact these pages genuinely never print. (`anketa` is
+  omitted entirely when neither the card nor the biography yields anything;
+  since #69 no record of this family is in that position.)
   - Coverage over the 906 records of this family: 692 full dates (76%), 157
     year-only, 61 neither.
   - `gimimo-metai` holds the year-only cases ("Gimė 1950 m."). A year is
@@ -1538,9 +1607,20 @@ field map all resolve them with no election-specific case.
 - `rawData` section order: `profile`, `candidacy`, `personal`. `normalized`
   order: `profilis`, `kandidatavimas`, `anketa`.
 - `normalized.anketa` carries `gimimo-data`, `gimimo-vieta`,
-  `gyvenamoji-vieta`, `tautybe`, `issilavinimas`, `uzsienio-kalbos`,
-  `pagrindine-darboviete`, `visuomenine-veikla`, `seimine-padetis` and
-  `seimos-nariai`. **`gimimo-data` is normalized from the source's
+  `gyvenamoji-vieta`, `tautybe`, `issilavinimas`, `mokslo-laipsnis`,
+  `pedagoginis-vardas`, `uzsienio-kalbos`, `anksciau-isrinktas`,
+  `pagrindine-darboviete`, `visuomenine-veikla`, `kita-apie-save`,
+  `seimine-padetis`, `sutuoktinio-vardas-pavarde`, `vaiku-vardai-pavardes`
+  and `seimos-nariai`. The last six arrived with issue #69: the shared label
+  list omitted "Moksliniai laipsniai" and "Moksliniai vardai", so this card's
+  **156 academic degrees and 112 academic titles** (general election;
+  Švenčionys prints none) were on the page and in no record. They sit in
+  their own paragraphs, so the gap was "never read", not "read wrong" — the
+  fix changed zero existing values across all 6,386 records.
+  `anksciau-isrinktas` and `kita-apie-save` are always null here: no
+  municipal page prints either label (0 of 6,380), and they are read only
+  because both archive families now share one card reader
+  (`scraper/shared/archive_1990s_card.py`). **`gimimo-data` is normalized from the source's
   `1944 03 04` to the corpus's `1944-03-04`** (in `rawData.personal` too):
   every era from 2015 on writes the hyphenated form, and
   `scripts/build_person_index.py` keys identity on the literal string, so the
@@ -1550,21 +1630,25 @@ field map all resolve them with no election-specific case.
   election print `Gimimo vieta`, for instance — so a field's value ends at
   whichever label comes next, not at a fixed successor. Getting that wrong
   put `1945 04 17 Gyvenamoji vieta: Kaunas Tautybė: Lietuvis (-ė)` into 91%
-  of birth dates; `abariunas-bronius` is the fixture that guards it. Note the last two: the source label reads *Šeimyninė
-  padėtis*, but the key is the corpus's `seimine-padetis`, and
-  `seimos-nariai` is a list of `{name, relation}` rather than the
-  `sutuoktinio-vardas-pavarde`/`vaiku-vardai-pavardes` split later eras use.
+  of birth dates; `abariunas-bronius` is the fixture that guards it. The
+  source label reads *Šeimyninė padėtis*, but the key is the corpus's
+  `seimine-padetis`; `seimos-nariai` is a list of `{name, relation}`, and
+  since #69 the two roles later eras key separately are also written out as
+  `sutuoktinio-vardas-pavarde` and `vaiku-vardai-pavardes`.
 - `normalized.kandidatavimas` is a single object here (contrast the Seimas
   archive's list): `savivaldybe`, `savivaldybes-numeris`,
   `savivaldybes-nuoroda`, `iskele`, `iskele-nuoroda`, `numeris-sarase`.
 - `rawData.candidacy` is a single object (not a list — this family has no
   multi-mandate-list concept): `{municipalityName, municipalityNumber,
   municipalityUrl, nominator, nominatorUrl, listNumber}`.
-- `rawData.personal` is this family's distinguishing richness over the Seimas
-  archive: `birthDate`, `birthPlace`, `residence`, `nationality`, `education`,
-  `foreignLanguages` (list), `mainWorkplace`, `publicActivity`,
-  `familyStatus`, `familyMembers` (list of `{name, relation}`) — all plain
-  labelled paragraphs on `kandvl.htm`, no comment-corruption quirk here. Any
+- `rawData.personal` holds `birthDate`, `birthPlace`, `residence`,
+  `nationality`, `education`, `foreignLanguages` (list), `mainWorkplace`,
+  `publicActivity`, `familyStatus`, `familyMembers` (list of
+  `{name, relation}`), `academicDegree`, `academicTitle`, `previouslyElected`
+  (list) and `aboutSelf` — all plain labelled paragraphs on `kandvl.htm`, no
+  comment-corruption quirk here (that is the Seimas card's problem, and the
+  reason this family looked the richer of the two until #69 showed the Seimas
+  card was hiding three fields in a comment). Any
   field genuinely absent from the source page (no matching label at all, not
   just an empty answer) normalizes to `null`/`[]` rather than an empty
   string — `pilvelis-algirdas`'s page has no "Tautybė:" line at all, for
@@ -1614,6 +1698,14 @@ field map all resolve them with no election-specific case.
   this era never published them. It was a bare string until 2026-08-22, the
   one concept in the corpus with two shapes; records already on disk were
   reshaped in place by `scripts/reshape_1997_education.py`.
+- The general election's records were **patched in place** rather than
+  re-parsed when #69 landed, by `scripts/backfill_1997_card_fields.py`:
+  `samples-full/1997-kovo-23-savivaldybiu-tarybu/` retained `candidate.html`
+  for all 6,270 candidates but **no `declaration.html` at all**, so a full
+  re-parse would have dropped 5,472 records' income declarations to gain the
+  new fields. The script replaces only `rawData.personal` and
+  `normalized.anketa`, the two blocks that come from the retained page. The
+  Švenčionys repeat kept its declarations and was re-parsed normally.
 - 46 candidate name collisions in the 6,276-candidate general election
   resolve with the corpus's standard positional `-2` suffix; see
   `docs/CLI_REFERENCE.md`'s municipal archive section for the concrete pair.

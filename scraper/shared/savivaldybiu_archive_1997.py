@@ -43,6 +43,16 @@ from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.archive_1990s_card import (
+    PREVIOUSLY_ELECTED_LABEL,
+    FIELD_LABELS as CARD_FIELD_LABELS,
+    bold_values,
+    education_record,
+    family_concepts,
+    family_members,
+    field_value,
+    previously_elected_record,
+)
 from scraper.shared.deklaracija_archive_1990s import parse_declaration
 from scraper.shared.files import slugify, write_candidate_record, write_json
 from scraper.shared.http import fetch_text
@@ -202,37 +212,16 @@ def parse_party_candidates_page(html: str, source_url: str) -> list[dict[str, An
     return candidates
 
 
-# Every labelled field these pages can print, in any paragraph. `_field` stops
-# at whichever of these comes next rather than at a caller-named successor:
-# most candidates omit some labels (only 582 of 6,276 in the 1997 general
-# election print "Gimimo vieta", for instance), and a stop list naming just
-# the expected next label silently ran to the end of the paragraph whenever
-# that label was absent -- which put "1945 04 17 Gyvenamoji vieta: Kaunas
-# Tautybė: Lietuvis (-ė)" into 91% of birth-date values.
-FIELD_LABELS = (
-    "Gimimo data",
-    "Gimimo vieta",
-    "Gyvenamoji vieta",
-    "Tautybė",
-    "Išsilavinimas",
-    "Užsienio kalbos",
-    "Pagrindinė darbovietė",
-    "Visuomeninė veikla",
-    "Šeimyninė padėtis",
-    "Šeimos nariai",
-    "Apygarda",
-    "Iškėlė",
-    "Numeris sąraše",
-)
-
 BIRTH_DATE_PATTERN = re.compile(r"^(\d{4})[\s.\-/](\d{1,2})[\s.\-/](\d{1,2})$")
 
-
-def _field(plain: str, label: str) -> str:
-    others = "|".join(re.escape(other) for other in FIELD_LABELS if other != label)
-    pattern = rf"{re.escape(label)}:\s*(.*?)(?:\s*(?:{others}):|$)"
-    match = re.search(pattern, plain)
-    return match.group(1).strip() if match else ""
+# The label list and the stop-list reader moved to
+# `scraper/shared/archive_1990s_card.py` when the Seimas archive family
+# started reading the same card (issue #69); it carries the union of both
+# cards' labels and the comment recording why the stop list has to name every
+# one of them. Re-exported here under their old names so existing callers and
+# tests are unaffected.
+FIELD_LABELS = CARD_FIELD_LABELS
+_field = field_value
 
 
 def normalize_birth_date(value: str) -> str:
@@ -283,6 +272,16 @@ def parse_candidate_detail(html: str, source_url: str) -> dict[str, Any]:
         "publicActivity": "",
         "familyStatus": "",
         "familyMembers": [],
+        # Absent from the label list until 2026-08-26 (issue #69), so this
+        # card's academic degree and title were never read: 156 and 112 of
+        # them in the 1997 general election, none in the Švenčionys repeat.
+        # `previouslyElected` and `aboutSelf` are the Seimas card's labels --
+        # no municipal page prints either (0 of 6,380) -- and are read here
+        # only so the two families share one reader.
+        "academicDegree": "",
+        "academicTitle": "",
+        "previouslyElected": [],
+        "aboutSelf": "",
     }
 
     for paragraph in paragraphs:
@@ -335,19 +334,24 @@ def parse_candidate_detail(html: str, source_url: str) -> dict[str, Any]:
             personal["familyStatus"] = _field(plain, "Šeimyninė padėtis")
 
         elif plain.startswith("Šeimos nariai:"):
-            members = []
-            for member_name in paragraph.find_all("b"):
-                relation = ""
-                trailing = member_name.next_sibling
-                if trailing is not None:
-                    relation = _clean_text(str(trailing)).lstrip("- ").strip()
-                members.append(
-                    {
-                        "name": _clean_text(member_name.get_text(" ", strip=True)),
-                        "relation": relation,
-                    }
-                )
-            personal["familyMembers"] = members
+            personal["familyMembers"] = family_members(paragraph)
+
+        elif plain.startswith("Moksliniai laipsniai:"):
+            personal["academicDegree"] = _field(plain, "Moksliniai laipsniai")
+
+        elif plain.startswith("Moksliniai vardai:"):
+            personal["academicTitle"] = _field(plain, "Moksliniai vardai")
+
+        elif plain.startswith(PREVIOUSLY_ELECTED_LABEL):
+            # "Buvo išrinktas į Lietuvos Respublikos Aukščiausiąją Tarybą,
+            # Seimą, savivaldybių tarybas:" -- one <b> per body, so the value
+            # is a list rather than the one string _field would return.
+            personal["previouslyElected"] = [
+                item["value"] for item in bold_values(paragraph)
+            ]
+
+        elif plain.startswith("Ką dar norėtų parašyti apie save:"):
+            personal["aboutSelf"] = _field(plain, "Ką dar norėtų parašyti apie save")
 
     return {
         "candidateDisplayName": name,
@@ -634,31 +638,46 @@ def fetch_first_candidate_sample(
     return fetch_candidate_sample(entry, samples_root, allow_new_candidate_dir, election_id)
 
 
-def education_record(education: str) -> dict[str, Any] | None:
-    """Wrap this era's one-word education level in the corpus's shape.
+def card_anketa(personal: dict[str, Any]) -> dict[str, Any]:
+    """The `normalized.anketa` block for one parsed card.
 
-    Every election from 2007 on publishes `issilavinimas` as
-    `{"aprasas", "irasai": [...]}`, each entry carrying `issilavinimas`,
-    `mokymo-istaigos-pavadinimas`, `specialybe` and `baigimo-metai`. These
-    1997 pages publish a single level from a controlled list instead --
-    "Aukštasis", "Aukštesnysis", "Specialus vidurinis", "Vidurinis",
-    "Nebaigtas aukštasis", "Nebaigtas vidurinis", "Aspirantūra",
-    "Doktorantūra" -- which is exactly the modern entry's `issilavinimas`
-    field, so it goes there and the three the page does not publish are null.
-    Same value, corpus shape, and one less special case downstream.
+    Its own function so `scripts/backfill_1997_card_fields.py` can rebuild an
+    already-stored record's anketa through exactly this code -- that script
+    exists because the general election's retained samples hold no
+    declaration pages, so it must patch records in place rather than re-parse
+    them.
+
+    The per-candidate facts live under `anketa` with the corpus's kebab-case
+    concept keys -- `gimimo-data`, `issilavinimas`, `uzsienio-kalbos`,
+    `pagrindine-darboviete`, `seimine-padetis` and the rest are the same names
+    the 2015 and 2016 eras use, so docs/concept-map.json, the dashboard's
+    field map and scripts/build_person_index.py all resolve them with no
+    election-specific special case. (The source page's label reads "Šeimyninė
+    padėtis"; the corpus concept key is `seimine-padetis`, so that is what is
+    written here.)
     """
-    if not education:
-        return None
+    # `sutuoktinio-vardas-pavarde` and `vaiku-vardai-pavardes` are the two
+    # family-member roles the corpus keys separately; the rest of the list
+    # (two "Augintinis (ė)", two "Anūkas (ė)" across the whole archive era)
+    # belongs to neither and stays in `seimos-nariai` only.
+    spouse, children = family_concepts(personal["familyMembers"])
     return {
-        "aprasas": None,
-        "irasai": [
-            {
-                "issilavinimas": education,
-                "mokymo-istaigos-pavadinimas": None,
-                "specialybe": None,
-                "baigimo-metai": None,
-            }
-        ],
+        "gimimo-data": personal["birthDate"] or None,
+        "gimimo-vieta": personal["birthPlace"] or None,
+        "gyvenamoji-vieta": personal["residence"] or None,
+        "tautybe": personal["nationality"] or None,
+        "issilavinimas": education_record(personal["education"]),
+        "mokslo-laipsnis": personal["academicDegree"] or None,
+        "pedagoginis-vardas": personal["academicTitle"] or None,
+        "uzsienio-kalbos": personal["foreignLanguages"],
+        "anksciau-isrinktas": previously_elected_record(personal["previouslyElected"]),
+        "pagrindine-darboviete": personal["mainWorkplace"] or None,
+        "visuomenine-veikla": personal["publicActivity"] or None,
+        "kita-apie-save": personal["aboutSelf"] or None,
+        "seimine-padetis": personal["familyStatus"] or None,
+        "sutuoktinio-vardas-pavarde": spouse,
+        "vaiku-vardai-pavardes": children,
+        "seimos-nariai": personal["familyMembers"],
     }
 
 
@@ -741,14 +760,6 @@ def build_candidate_record(
         "declaration": declaration,
     }
 
-    # The per-candidate facts live under `anketa` with the corpus's kebab-case
-    # concept keys -- `gimimo-data`, `issilavinimas`, `uzsienio-kalbos`,
-    # `pagrindine-darboviete`, `seimine-padetis` and the rest are the same
-    # names the 2015 and 2016 eras use, so docs/concept-map.json, the
-    # dashboard's field map and scripts/build_person_index.py all resolve them
-    # with no election-specific special case. (The source page's label reads
-    # "Šeimyninė padėtis"; the corpus concept key is `seimine-padetis`, so that
-    # is what is written here.)
     normalized = {
         "profilis": {
             "vardas-pavarde": detail["candidateDisplayName"],
@@ -762,18 +773,7 @@ def build_candidate_record(
             "iskele-nuoroda": candidacy["nominatorUrl"] or None,
             "numeris-sarase": candidacy["listNumber"],
         },
-        "anketa": {
-            "gimimo-data": personal["birthDate"] or None,
-            "gimimo-vieta": personal["birthPlace"] or None,
-            "gyvenamoji-vieta": personal["residence"] or None,
-            "tautybe": personal["nationality"] or None,
-            "issilavinimas": education_record(personal["education"]),
-            "uzsienio-kalbos": personal["foreignLanguages"],
-            "pagrindine-darboviete": personal["mainWorkplace"] or None,
-            "visuomenine-veikla": personal["publicActivity"] or None,
-            "seimine-padetis": personal["familyStatus"] or None,
-            "seimos-nariai": personal["familyMembers"],
-        },
+        "anketa": card_anketa(personal),
         # Same key the whole corpus declares under, so the person index,
         # concept map and dashboard need no special case for this era.
         **({"turto-ir-pajamu-deklaracijos": declaration} if declaration else {}),

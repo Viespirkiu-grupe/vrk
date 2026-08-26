@@ -39,6 +39,25 @@ class SeimoPakartotiniai1997KovoAnketaParserTests(unittest.TestCase):
             self.bologoviene["rawData"]["candidacies"][0]["nominator"], "Išsikėlė pati"
         )
 
+    def test_card_questionnaire_is_read(self) -> None:
+        # This election is the one where every candidate fills in "Pagrindinė
+        # darbovietė" (23 of 23, against 1 of 879 in the 1996 general).
+        anketa = self.baskas["normalized"]["anketa"]
+        self.assertEqual(anketa["pagrindine-darboviete"], "Matematikos ir informatikos institutas")
+        self.assertEqual(anketa["mokslo-laipsnis"], "Daktaras")
+        self.assertEqual(anketa["pedagoginis-vardas"], "Vyr. mokslinis bendradarbis")
+        self.assertEqual(anketa["gimimo-vieta"], "Marijampolė")
+        self.assertNotIn("gimimo-vietos-saltinis", anketa)
+
+    def test_a_blank_card_birthplace_falls_back_to_the_biography(self) -> None:
+        # Čobotas is one of the 9 records across this family whose card leaves
+        # "Gimimo vieta" blank. The biography's opening sentence still names a
+        # place, and the marker records that it is prose rather than a field.
+        anketa = self._parse("cobotas-medardas")["normalized"]["anketa"]
+        self.assertEqual(self._parse("cobotas-medardas")["rawData"]["personal"]["birthPlace"], "")
+        self.assertEqual(anketa["gimimo-vieta"], "Vilniaus rajonas")
+        self.assertEqual(anketa["gimimo-vietos-saltinis"], "biografijos-tekstas")
+
 
 if __name__ == "__main__":
     unittest.main()

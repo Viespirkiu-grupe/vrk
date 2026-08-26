@@ -192,11 +192,20 @@ blank or omitted source line before the full runs started.
 
 ### The 2026-08-23 recovery of 1996-1997 birthplaces
 
-GitHub issue #63. The 1996-1998 Seimas archive publishes no birth-place field,
-so its 881 biographies were the only source. The text was already stored as
-`biografija.tekstas`, making this a pure offline pass —
-`scripts/backfill_archive_birthplaces.py`, no page fetched, nothing but
-`anketa.gimimo-vieta` and its source marker touched.
+GitHub issue #63. The 1996-1998 Seimas archive was believed to publish no
+birth-place field, so its 881 biographies looked like the only source. The
+text was already stored as `biografija.tekstas`, making this a pure offline
+pass — `scripts/backfill_archive_birthplaces.py`, no page fetched, nothing
+but `anketa.gimimo-vieta` and its source marker touched.
+
+> **Superseded 2026-08-26 by issue #69.** The card *does* publish
+> "Gimimo vieta" — inside the malformed `<!--sql format>` comment, invisible
+> to a DOM parser, which is why the first pass over these pages missed it. It
+> now supplies **852 of 906** records and the biography covers **9** more (7
+> of them people born outside Lithuania, whose card leaves the field blank).
+> The section below describes the prose pass on its own terms; the
+> accuracy measurement it reports still stands, and where the card overrode a
+> prose value the two name the same place on **433 of 438**.
 
 **447 of 906 records gained a birthplace.** The conversion from the prose's
 locative to the corpus's nominative is settled by lookup against
@@ -266,6 +275,90 @@ In the same pass, `scripts/reshape_1997_education.py` reshaped
 string into the corpus's `{"aprasas", "irasai": [...]}` object -- a pure local
 reshape of a value already present, needing no fetch. `issilavinimas` was the
 last concept in the corpus with two shapes.
+
+### The 2026-08-26 recovery of the 1996-1998 archive card fields
+
+GitHub issue #69. Both 1990s archive families were reading only part of the
+`kandvl.htm` candidate card. The Seimas family read none of its
+questionnaire; the municipal family read most of it but its label list was
+missing four entries.
+
+**What the Seimas card was hiding.** Below the candidacies it prints a
+questionnaire as ordinary paragraphs, and three further fields —
+`Gimimo vieta`, `Gyvenamoji vieta`, `Tautybė` — inside the malformed
+`<!--sql format>` comment that a DOM parser drops whole. Only the residence
+was being recovered from it. `docs/OUTPUT_SCHEMA.md` said outright that
+"there is no `anketa` section … these pages carry no questionnaire"; that was
+wrong, and every one of the 906 records now carries one.
+
+Recovered per field, re-parsed offline from the retained pages
+(`samples-full/1996-spalio-20-seimo/` and both 1997 repeats' complete fixture
+sets — no page fetched):
+
+| `anketa` key | 1996 (879) | 1997-03 (23) | 1997-12 (4) | all 906 |
+|---|---:|---:|---:|---:|
+| `gimimo-vieta` | 837 | 21 | 3 | **861** |
+| `seimine-padetis` | 751 | 19 | 2 | **772** |
+| `uzsienio-kalbos` | 710 | 18 | 4 | **732** |
+| `seimos-nariai` | 697 | 19 | 4 | **720** |
+| `vaiku-vardai-pavardes` | 667 | 19 | 4 | **690** |
+| `sutuoktinio-vardas-pavarde` | 627 | 18 | 4 | **649** |
+| `tautybe` | 421 | 23 | 4 | **448** |
+| `issilavinimas` | 337 | 19 | 1 | **357** |
+| `anksciau-isrinktas` | 319 | 11 | 2 | **332** |
+| `mokslo-laipsnis` | 161 | 5 | 2 | **168** |
+| `visuomenine-veikla` | 100 | 11 | 2 | **113** |
+| `pedagoginis-vardas` | 84 | 2 | 0 | **86** |
+| `kita-apie-save` | 38 | 0 | 0 | **38** |
+| `pagrindine-darboviete` | 1 | 23 | 4 | **28** |
+
+That last row is not a transcription error: the 1996 general election's
+candidates left the workplace line blank almost universally, while both 1997
+repeats filled it in.
+
+**The birthplace was a published field all along.** `anketa.gimimo-vieta` had
+been derived from biography prose since issue #63 (447 of 906). The card
+supplies it on **852**, prose on **9** more — seven of those people born
+outside Lithuania (Rusija, Ukraina, Krasnojarsko kraštas), whose card leaves
+the field blank. `gimimo-vietos-saltinis: "biografijos-tekstas"` now marks
+only the fallback, so its absence means the value was published. Where the
+card overrode a prose value (438 records) the two name the same place on
+**433**; of the 5 that differ, three are the same place at a different
+granularity (*Smalininkai* → *Jurbarko raj.*) and two are cases where the
+prose extractor had reached past the birth sentence. The birth *date* has no
+card field to fall back to — it remains the one fact these pages never print.
+
+**The sibling gap.** `scraper/shared/savivaldybiu_archive_1997.py` never named
+`Moksliniai laipsniai`, `Moksliniai vardai`, `Buvo išrinktas …` or
+`Ką dar norėtų parašyti apie save` in its label list, so the municipal card's
+**156 academic degrees and 112 academic titles** (general election; Švenčionys
+prints none, and neither prints the other two labels) were on the page and in
+no record. Both families now read one shared grammar,
+`scraper/shared/archive_1990s_card.py`, which carries the union of their
+labels — a label missing from that list is not merely unread, it gets
+swallowed into the value before it, which is what once put
+`1945 04 17 Gyvenamoji vieta: Kaunas Tautybė: …` into 91% of municipal birth
+dates. The same pass split `Šeimos nariai` into the two roles the corpus keys
+separately, adding `sutuoktinio-vardas-pavarde` and `vaiku-vardai-pavardes` to
+4,151 / 4,268 general-election and 83 / 85 Švenčionys records.
+
+**The change is additive, measured not assumed.** Re-parsing all 6,386
+municipal records with the new parser changed **zero** existing values — the
+new labels sit in their own paragraphs, so the gap was "never read", not "read
+wrong". The only non-additive change anywhere is the Seimas birthplace
+described above.
+
+**Delivery differed by election, because of a retention gap.**
+`samples-full/1997-kovo-23-savivaldybiu-tarybu/` retained `candidate.html`
+for all 6,270 candidates but **no `declaration.html` at all**, so a full
+re-parse there would have dropped 5,472 records' income declarations to gain
+the new fields. `scripts/backfill_1997_card_fields.py` patches those records
+in place instead, replacing only `rawData.personal` and `normalized.anketa` —
+the two blocks that come from the retained page — through the same
+`card_anketa()` the parser uses, so the script cannot drift from it. The three
+Seimas elections and the Švenčionys repeat retained everything and were
+re-parsed normally. **Closing that retention gap would take a fresh fetch of
+5,477 `kpdl.htm` pages and has not been done.**
 
 ### The 2026-08-22 scrape of the 2011 municipal general election
 
@@ -1104,7 +1197,9 @@ each now has one.
 - The 1996-1998 Seimas archive pages (`1996-spalio-20-seimo`,
   `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`)
   publish no elected markers, no private-interest declarations, and — unlike
-  every other era, including 2015 — **no birth-date field**. (The linked
+  every other era, including 2015 — **no birth-date field**. They do publish a
+  questionnaire, which this family's parser did not read until 2026-08-26; see
+  the `#69` entry below. (The linked
   `kpdl.htm` income declaration *is* parsed, into the corpus's usual
   `turto-ir-pajamu-deklaracijos` key; see `docs/OUTPUT_SCHEMA.md` for how the
   1990s form's summed sections map onto it.) A birth date is instead recovered from the biography's opening
