@@ -10,7 +10,7 @@ alone, plus the two family-role concepts (`sutuoktinio-vardas-pavarde`,
 The obvious fix -- re-run `parse-anketa-samples` -- is not available for the
 general election: `samples-full/1997-kovo-23-savivaldybiu-tarybu/` retained
 `candidate.html` for all 6,270 candidates but no `declaration.html` at all, so
-a full re-parse would *drop* the income declarations of 5,472 records to gain
+a full re-parse would *drop* the income declarations of 5,471 records to gain
 these fields. This script reads the retained `candidate.html` and replaces
 only the two blocks that come from it -- `rawData.personal` and
 `normalized.anketa` -- leaving the declaration, the candidacy and everything

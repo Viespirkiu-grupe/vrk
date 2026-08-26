@@ -1702,10 +1702,19 @@ field map all resolve them with no election-specific case.
   re-parsed when #69 landed, by `scripts/backfill_1997_card_fields.py`:
   `samples-full/1997-kovo-23-savivaldybiu-tarybu/` retained `candidate.html`
   for all 6,270 candidates but **no `declaration.html` at all**, so a full
-  re-parse would have dropped 5,472 records' income declarations to gain the
+  re-parse would have dropped 5,471 records' income declarations to gain the
   new fields. The script replaces only `rawData.personal` and
   `normalized.anketa`, the two blocks that come from the retained page. The
   Švenčionys repeat kept its declarations and was re-parsed normally.
+- That retention gap has since been closed —
+  `scripts/backfill_archive_declarations.py --retain-only` fetched the 5,471
+  missing pages, 0 failures — and the election was then re-parsed offline for
+  the first time. The re-parse added `darboviete` (5,265 records), `pareigos`
+  (4,975), `nepagrindines-darbovietes` (790) and
+  `pareigos-nepagrindinese-darbovietese` (771): keys
+  `scraper/shared/deklaracija_archive_1990s.py` gained after the 1997 scrape,
+  so those records had simply never carried them. Nothing else moved — zero
+  values changed. See `docs/DATASET.md`.
 - 46 candidate name collisions in the 6,276-candidate general election
   resolve with the corpus's standard positional `-2` suffix; see
   `docs/CLI_REFERENCE.md`'s municipal archive section for the concrete pair.

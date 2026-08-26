@@ -351,14 +351,49 @@ described above.
 **Delivery differed by election, because of a retention gap.**
 `samples-full/1997-kovo-23-savivaldybiu-tarybu/` retained `candidate.html`
 for all 6,270 candidates but **no `declaration.html` at all**, so a full
-re-parse there would have dropped 5,472 records' income declarations to gain
+re-parse there would have dropped 5,471 records' income declarations to gain
 the new fields. `scripts/backfill_1997_card_fields.py` patches those records
 in place instead, replacing only `rawData.personal` and `normalized.anketa` —
 the two blocks that come from the retained page — through the same
 `card_anketa()` the parser uses, so the script cannot drift from it. The three
 Seimas elections and the Švenčionys repeat retained everything and were
-re-parsed normally. **Closing that retention gap would take a fresh fetch of
-5,477 `kpdl.htm` pages and has not been done.**
+re-parsed normally. **That gap was closed the same week — see the retention
+pass below — and the election has since been re-parsed properly.**
+
+### The 2026-08-26 retention pass over the archive declarations
+
+The 1997 municipal general election's `kpdl.htm` declarations were fetched and
+merged by `scripts/backfill_archive_declarations.py` before that script kept
+its HTML, so 5,471 of its records had been parsed from pages that existed
+nowhere locally. That is what forced issue #69 to patch the election in place
+rather than re-parse it, and it would have forced the same workaround on every
+future parser fix.
+
+`--retain-only` on the same script fetches exactly the pages whose
+`declaration.html` is missing and writes nothing but the file. **5,471 fetched,
+0 failures.** An audit of all 51 elections first confirmed this was the corpus's
+only retention gap: every other election's per-candidate pages are complete, and
+the two 2000 elections that retain only `candidate.html` are correct — their
+declarations are same-page anchors, so there is nothing separate to fetch.
+
+**The fetched pages agree with the corpus on every shared key — 0 differing
+values across all 5,477.** What they carry that the records did not is four
+keys those records predate: `darboviete` (5,265), `pareigos` (4,975),
+`nepagrindines-darbovietes` (790) and `pareigos-nepagrindinese-darbovietese`
+(771), all added to `deklaracija_archive_1990s.py` after the 1997 scrape. The
+mode reports that as *stale* rather than as a mismatch: comparing whole dicts
+flags all 5,471 records and says nothing, so only a **shared** key whose value
+moved counts as the page and the corpus disagreeing.
+
+With the pages on disk the election was re-parsed offline for the first time,
+which healed those four keys. The re-parse was purely additive — **zero values
+changed, zero removed** — and the person index rebuilds byte-identical.
+
+One bug this surfaced and fixed: a candidate can exist under *both*
+`samples/html/` (fixture) and `samples-full/` (batch), and writing the retained
+page to only one of them silently breaks a re-parse driven from the other. It
+dropped `abariunas-bronius`'s declaration on the very next re-parse. Retained
+pages now go to every root the candidate lives in.
 
 ### The 2026-08-22 scrape of the 2011 municipal general election
 
