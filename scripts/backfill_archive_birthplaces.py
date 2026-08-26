@@ -39,6 +39,7 @@ ELECTIONS = [
     "1996-spalio-20-seimo",
     "1997-kovo-23-seimo-pakartotiniai",
     "1997-gruodzio-21-seimo-pakartotiniai",
+    "1998-kovo-22-seimo-pakartotiniai",
     "1998-lapkricio-15-seimo-pakartotiniai",
 ]
 

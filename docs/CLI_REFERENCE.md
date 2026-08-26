@@ -922,13 +922,13 @@ Resumable full scrape, with the HTML retained for offline re-parses:
 KEEP_SAMPLES=1 scripts/run_election_batches.sh 2007-vasario-25-savivaldybiu
 ```
 
-## Seimas archive (`1996-spalio-20-seimo`, `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`, `1998-lapkricio-15-seimo-pakartotiniai`) Workflow
+## Seimas archive (`1996-spalio-20-seimo`, `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`, `1998-kovo-22-seimo-pakartotiniai`, `1998-lapkricio-15-seimo-pakartotiniai`) Workflow
 
 The 1996-10-20 Seimas general election and the 1997-1998 repeat votes are the
 oldest family in the repository — static pages captured by Teleport Pro from
 `lrs.lt/cgi-bin/ora7dbcgi/...`, older than the 2015 family and shaped nothing
 like it. The shared parser lives in `scraper/shared/seimo_archive_1990s.py`;
-these four modules differ only in which directory (`seim96` vs `seimpk`),
+these five modules differ only in which directory (`seim96` vs `seimpk`),
 "phase" prefix and constituency numbers they target.
 
 - The listing is a two-level walk: a directory page (`apgseiml.htm-1.htm` for
@@ -974,13 +974,18 @@ these four modules differ only in which directory (`seim96` vs `seimpk`),
   constituencies); the March 1997 repeat covers four constituencies (Naujosios
   Vilnios, Vilniaus-Šalčininkų, Vilniaus-Trakų, Trakų — 23 candidates,
   complete field); the December 1997 repeat is one constituency, Aukštaitijos
-  No. 28 (4 candidates, complete field); the November 1998 repeat is one
+  No. 28 (4 candidates, complete field); the March 1998 repeat is two
+  constituencies at once, Naujosios Vilnios No. 10 and Vilniaus Trakų No. 57,
+  phase prefix `8` (11 candidates, 5 + 6, complete field — VRK's index names
+  the pair as one election, so it is one module, and GitHub's #22 was closed
+  as a duplicate of #21 on that reading); the November 1998 repeat is one
   constituency, Nevėžio No. 26, phase prefix `10` (11 candidates, complete
   field).
 - How much each candidate links varies sharply by election, and a thin block
   is the source, not a scrape failure: biography/declaration coverage is
   854/879 and 879/879 for 1996, 23/23 and **1/23** for the March 1997 repeat,
-  4/4 and 4/4 for December 1997, 11/11 and 11/11 for November 1998.
+  4/4 and 4/4 for December 1997, 11/11 and **2/11** for March 1998, 11/11 and
+  11/11 for November 1998.
 - Each by-election's constituencies are hardcoded in its `sitemap.py`
   `CONSTITUENCIES`, so adding another is that list, the phase prefix and the
   usual five CLI dispatch points — no parser work. The 1998-11-15 Nevėžio
@@ -1000,6 +1005,10 @@ python -m scraper fetch-sample 1997-gruodzio-21-seimo-pakartotiniai
 python -m scraper sitemap 1997-gruodzio-21-seimo-pakartotiniai
 python -m scraper parse-anketa-samples 1997-gruodzio-21-seimo-pakartotiniai
 
+python -m scraper fetch-sample 1998-kovo-22-seimo-pakartotiniai
+python -m scraper sitemap 1998-kovo-22-seimo-pakartotiniai
+python -m scraper parse-anketa-samples 1998-kovo-22-seimo-pakartotiniai
+
 python -m scraper fetch-sample 1998-lapkricio-15-seimo-pakartotiniai
 python -m scraper sitemap 1998-lapkricio-15-seimo-pakartotiniai
 python -m scraper fetch-candidate-samples 1998-lapkricio-15-seimo-pakartotiniai --allow-new-samples \
@@ -1007,7 +1016,7 @@ python -m scraper fetch-candidate-samples 1998-lapkricio-15-seimo-pakartotiniai 
 python -m scraper parse-anketa-samples 1998-lapkricio-15-seimo-pakartotiniai
 ```
 
-Resumable full scrape (1996 general election only — the three by-elections
+Resumable full scrape (1996 general election only — the four by-elections
 are already small enough that `fetch-candidate-samples` covers the complete
 field in one call):
 

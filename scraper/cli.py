@@ -376,6 +376,18 @@ from scraper.elections.seimo_nevezio_1998_lapkricio.sitemap import (
     build_sitemap_from_sample as build_seimo_nevezio_1998_lapkricio_sitemap_from_sample,
     fetch_listing_sample as fetch_seimo_nevezio_1998_lapkricio_listing_sample,
 )
+from scraper.elections.seimo_pakartotiniai_1998_kovo.anketa_parser import (
+    parse_anketa_samples as parse_seimo_pakartotiniai_1998_kovo_anketa_samples,
+)
+from scraper.elections.seimo_pakartotiniai_1998_kovo.candidate_samples import (
+    fetch_candidates_with_tabs as fetch_seimo_pakartotiniai_1998_kovo_candidates_with_tabs,
+    fetch_first_candidate_with_tabs as fetch_seimo_pakartotiniai_1998_kovo_first_candidate_with_tabs,
+)
+from scraper.elections.seimo_pakartotiniai_1998_kovo.sitemap import (
+    ELECTION_ID as SEIMO_PAKARTOTINIAI_1998_KOVO_ELECTION_ID,
+    build_sitemap_from_sample as build_seimo_pakartotiniai_1998_kovo_sitemap_from_sample,
+    fetch_listing_sample as fetch_seimo_pakartotiniai_1998_kovo_listing_sample,
+)
 from scraper.elections.savivaldybiu_1997.anketa_parser import (
     parse_anketa_samples as parse_savivaldybiu_1997_anketa_samples,
 )
@@ -677,6 +689,7 @@ FETCHABLE_ELECTION_IDS = [
     SEIMO_PAKARTOTINIAI_1997_KOVO_ELECTION_ID,
     SEIMO_AUKSTAITIJOS_1997_GRUODZIO_ELECTION_ID,
     SEIMO_NEVEZIO_1998_LAPKRICIO_ELECTION_ID,
+    SEIMO_PAKARTOTINIAI_1998_KOVO_ELECTION_ID,
     SAVIVALDYBIU_1997_ELECTION_ID,
     SVENCIONIU_TARYBOS_1997_ELECTION_ID,
     PREZIDENTO_2014_ELECTION_ID,
@@ -731,6 +744,7 @@ PARSABLE_ELECTION_IDS = [
     SEIMO_PAKARTOTINIAI_1997_KOVO_ELECTION_ID,
     SEIMO_AUKSTAITIJOS_1997_GRUODZIO_ELECTION_ID,
     SEIMO_NEVEZIO_1998_LAPKRICIO_ELECTION_ID,
+    SEIMO_PAKARTOTINIAI_1998_KOVO_ELECTION_ID,
     SAVIVALDYBIU_1997_ELECTION_ID,
     SVENCIONIU_TARYBOS_1997_ELECTION_ID,
     PREZIDENTO_2014_ELECTION_ID,
@@ -886,6 +900,8 @@ def _fetch_listing_sample_for_election(election_id: str) -> Path:
         return fetch_seimo_aukstaitijos_1997_gruodzio_listing_sample()
     if election_id == SEIMO_NEVEZIO_1998_LAPKRICIO_ELECTION_ID:
         return fetch_seimo_nevezio_1998_lapkricio_listing_sample()
+    if election_id == SEIMO_PAKARTOTINIAI_1998_KOVO_ELECTION_ID:
+        return fetch_seimo_pakartotiniai_1998_kovo_listing_sample()
     if election_id == SAVIVALDYBIU_1997_ELECTION_ID:
         return fetch_savivaldybiu_1997_listing_sample()
     if election_id == SVENCIONIU_TARYBOS_1997_ELECTION_ID:
@@ -994,6 +1010,8 @@ def _build_sitemap_from_sample_for_election(election_id: str, sample_path: Path 
         return build_seimo_aukstaitijos_1997_gruodzio_sitemap_from_sample(sample_path=sample_path)
     if election_id == SEIMO_NEVEZIO_1998_LAPKRICIO_ELECTION_ID:
         return build_seimo_nevezio_1998_lapkricio_sitemap_from_sample(sample_path=sample_path)
+    if election_id == SEIMO_PAKARTOTINIAI_1998_KOVO_ELECTION_ID:
+        return build_seimo_pakartotiniai_1998_kovo_sitemap_from_sample(sample_path=sample_path)
     if election_id == SAVIVALDYBIU_1997_ELECTION_ID:
         return build_savivaldybiu_1997_sitemap_from_sample(sample_path=sample_path)
     if election_id == SVENCIONIU_TARYBOS_1997_ELECTION_ID:
@@ -1231,6 +1249,12 @@ def _fetch_first_candidate_with_tabs_for_election(
         )
     if election_id == SEIMO_NEVEZIO_1998_LAPKRICIO_ELECTION_ID:
         return fetch_seimo_nevezio_1998_lapkricio_first_candidate_with_tabs(
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
+    if election_id == SEIMO_PAKARTOTINIAI_1998_KOVO_ELECTION_ID:
+        return fetch_seimo_pakartotiniai_1998_kovo_first_candidate_with_tabs(
             sitemap_path=sitemap_path,
             samples_root=samples_root,
             allow_new_candidate_dir=allow_new_samples,
@@ -1589,6 +1613,13 @@ def _fetch_candidates_with_tabs_for_election(
             samples_root=samples_root,
             allow_new_candidate_dir=allow_new_samples,
         )
+    if election_id == SEIMO_PAKARTOTINIAI_1998_KOVO_ELECTION_ID:
+        return fetch_seimo_pakartotiniai_1998_kovo_candidates_with_tabs(
+            candidate_ids=candidate_ids,
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
     if election_id == SAVIVALDYBIU_1997_ELECTION_ID:
         return fetch_savivaldybiu_1997_candidates_with_tabs(
             candidate_ids=candidate_ids,
@@ -1926,6 +1957,12 @@ def _parse_anketa_samples_for_election(
         )
     if election_id == SEIMO_NEVEZIO_1998_LAPKRICIO_ELECTION_ID:
         return parse_seimo_nevezio_1998_lapkricio_anketa_samples(
+            candidate_ids=candidate_ids,
+            samples_root=samples_root,
+            output_root=output_root,
+        )
+    if election_id == SEIMO_PAKARTOTINIAI_1998_KOVO_ELECTION_ID:
+        return parse_seimo_pakartotiniai_1998_kovo_anketa_samples(
             candidate_ids=candidate_ids,
             samples_root=samples_root,
             output_root=output_root,
