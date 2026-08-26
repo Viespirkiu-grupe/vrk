@@ -47,10 +47,11 @@ class Seimo1996AnketaParserTests(unittest.TestCase):
     def test_record_section_order(self) -> None:
         self.assertEqual(
             list(self.asmolkov["rawData"].keys()),
-            ["profile", "candidacies", "residence", "biography", "declaration"],
+            ["profile", "candidacies", "residence", "personal", "biography", "declaration"],
         )
-        # `anketa` keeps the corpus's position right after `profilis`. Asmolkov's
-        # biography gives a year only, so his anketa holds `gimimo-metai` alone.
+        # `anketa` keeps the corpus's position right after `profilis`. Asmolkov
+        # answered none of the card's questions, so his anketa holds only the
+        # `gimimo-metai` his biography's opening sentence gives.
         self.assertEqual(
             list(self.asmolkov["normalized"].keys()),
             [
@@ -63,19 +64,105 @@ class Seimo1996AnketaParserTests(unittest.TestCase):
                 "turto-ir-pajamu-deklaracijos",
             ],
         )
-        # A candidate whose biography page is missing gets no anketa at all,
-        # rather than an empty one. The declaration is a separate page and is
-        # read regardless.
+        self.assertEqual(list(self.asmolkov["normalized"]["anketa"].keys()), ["gimimo-metai"])
+        # Astrauskas has no biography page at all, and used to get no anketa
+        # for that reason -- the card's own questionnaire is where the rest of
+        # this era's per-candidate data actually lives.
+        self.assertIsNone(self.astrauskas["rawData"]["biography"])
         self.assertEqual(
             list(self.astrauskas["normalized"].keys()),
             [
                 "profilis",
+                "anketa",
                 "kandidatavimas",
                 "gyvenamoji-vieta",
                 "biografija",
                 "turto-ir-pajamu-deklaracijos",
             ],
         )
+
+    def test_card_questionnaire_lands_under_the_corpus_anketa_keys(self) -> None:
+        # Astrauskas' card fills in most of the questionnaire. Every key here
+        # is the name the 2015/2016 eras use, so the concept map, the
+        # dashboard's field map and the person index resolve them unchanged.
+        anketa = self.astrauskas["normalized"]["anketa"]
+        self.assertEqual(anketa["tautybe"], "Lietuvis (-ė)")
+        self.assertEqual(anketa["mokslo-laipsnis"], "Habilituotas medicinos mokslų daktaras")
+        self.assertEqual(anketa["pedagoginis-vardas"], "Profesorius")
+        self.assertEqual(anketa["uzsienio-kalbos"], ["Rusų", "Anglų", "Vokiečių"])
+        self.assertEqual(anketa["seimine-padetis"], "Vedęs")
+        # "Buvo išrinktas į ... Aukščiausiąją Tarybą, Seimą, savivaldybių
+        # tarybas" names bodies with no term dates, so `laikotarpis` is null
+        # exactly as the 2000 Seimas card's entries are.
+        self.assertEqual(
+            anketa["anksciau-isrinktas"],
+            {
+                "aprasas": None,
+                "irasai": [
+                    {
+                        "institucijos-pavadinimas-pareigos": "Lietuvos Respublikos Seimas",
+                        "laikotarpis": None,
+                    }
+                ],
+            },
+        )
+        # A label the candidate left blank yields no key at all, rather than a
+        # null: the record says what the card carried.
+        for absent in ("issilavinimas", "pagrindine-darboviete", "visuomenine-veikla"):
+            with self.subTest(absent):
+                self.assertNotIn(absent, anketa)
+
+    def test_two_previous_mandates_become_two_entries(self) -> None:
+        # One <b> per body: Andriukaitis sat in both.
+        self.assertEqual(
+            [
+                entry["institucijos-pavadinimas-pareigos"]
+                for entry in self.andriukaitis["normalized"]["anketa"]["anksciau-isrinktas"]["irasai"]
+            ],
+            ["Lietuvos Respublikos Aukščiausioji Taryba", "Lietuvos Respublikos Seimas"],
+        )
+
+    def test_education_level_takes_the_modern_entry_shape(self) -> None:
+        # The card publishes one level from a controlled list, which is the
+        # modern form's per-entry `issilavinimas` field -- not its free-text
+        # `aprasas`. Same call the 1997 municipal family made.
+        self.assertEqual(
+            self.andriukaitis["normalized"]["anketa"]["issilavinimas"],
+            {
+                "aprasas": None,
+                "irasai": [
+                    {
+                        "issilavinimas": "Aukštasis",
+                        "mokymo-istaigos-pavadinimas": None,
+                        "specialybe": None,
+                        "baigimo-metai": None,
+                    }
+                ],
+            },
+        )
+
+    def test_family_members_split_into_the_two_keyed_roles(self) -> None:
+        anketa = self.butkevicius["normalized"]["anketa"]
+        self.assertEqual(anketa["sutuoktinio-vardas-pavarde"], "Vilija")
+        self.assertEqual(anketa["vaiku-vardai-pavardes"], "Aušrinė, Vytenis")
+        self.assertEqual(
+            anketa["seimos-nariai"],
+            [
+                {"name": "Vilija", "relation": "Sutuoktinis/sutuoktinė"},
+                {"name": "Aušrinė", "relation": "Vaikas"},
+                {"name": "Vytenis", "relation": "Vaikas"},
+            ],
+        )
+
+    def test_nationality_recovered_from_the_malformed_comment(self) -> None:
+        # Tautybė sits inside the same "<!--sql format>...-->" comment as the
+        # residence and the birthplace, so it is invisible to a DOM parser and
+        # only a regex over the raw HTML reaches it.
+        self.assertEqual(self.butkevicius["rawData"]["personal"]["nationality"], "Lietuvis (-ė)")
+        self.assertEqual(self.butkevicius["normalized"]["anketa"]["tautybe"], "Lietuvis (-ė)")
+        # Šaltienė's card leaves it blank; a blank field yields no key.
+        self.assertEqual(self.saltiene["rawData"]["personal"]["nationality"], "")
+        self.assertNotIn("tautybe", self.saltiene["normalized"]["anketa"])
 
     def test_dual_candidacy_carries_both_single_and_multi_mandate_entries(self) -> None:
         # Asmolkov ran both in his single-member constituency and on his
@@ -185,26 +272,33 @@ class Seimo1996BirthDateRecordTests(unittest.TestCase):
         self.assertNotIn("gimimo-data", anketa)
         self.assertNotIn("gimimo-data-saltinis", anketa)
 
-    def test_candidate_without_a_biography_page_gets_no_anketa_section(self) -> None:
+    def test_candidate_without_a_biography_page_still_gets_the_card_anketa(self) -> None:
+        # No biography means no birth date -- there is no date anywhere else on
+        # these pages -- but the card's own questionnaire is unaffected.
         record = self._parse("astrauskas-vytautas")
         self.assertIsNone(record["rawData"]["biography"])
-        self.assertNotIn("anketa", record["normalized"])
+        self.assertNotIn("gimimo-data", record["normalized"]["anketa"])
+        self.assertNotIn("gimimo-metai", record["normalized"]["anketa"])
+        self.assertEqual(record["normalized"]["anketa"]["pedagoginis-vardas"], "Profesorius")
 
 
 
 class BirthPlaceFromBiographyTests(unittest.TestCase):
-    """These pages publish no birth-place field; the prose is the only source.
+    """The prose birthplace, now the *fallback* for the 9 records of this
+    family whose card leaves "Gimimo vieta" blank (7 of them people born
+    outside Lithuania -- Rusija, Ukraina, Krasnojarsko kraštas).
+
+    The card does publish the field, inside the malformed comment; the first
+    pass over these pages missed it and read the biography instead. The
+    extractor stays because it still covers those 9, and because the 2002 and
+    2004 presidential families -- Word-document sources with no card at all --
+    import it.
 
     The sentence prints the place in the locative ("Kaune", "Klaipėdoje")
     while the rest of the corpus stores the nominative, and suffix rules alone
     cannot convert it -- "-yje" yields both Panevėžys and Radviliškis. So
     candidates are checked against scraper/shared/vietovardziai.json, and that
     lookup is what keeps a mis-parse out of the record.
-
-    Cross-checked against the same people's later elections, where VRK
-    publishes the field outright: all 247 recovered values that can be checked
-    name the same place. They are often less specific -- the district where a
-    later form gives the village -- but none contradicts.
     """
 
     def test_a_city_in_the_locative_becomes_the_nominative(self):
@@ -248,27 +342,33 @@ class BirthPlaceFromBiographyTests(unittest.TestCase):
         # three candidates who had a specific birthplace published elsewhere.
         self.assertIsNone(nominative_place("Lietuvoje"))
 
-    def test_a_parsed_record_carries_the_place_and_its_source_marker(self):
+    def _anketa(self, candidate_id: str) -> dict:
         with tempfile.TemporaryDirectory() as tmp:
-            results = parse_anketa_samples(
-                candidate_ids=["butkevicius-audrius"], output_root=Path(tmp)
-            )
-            anketa = json.loads(
+            results = parse_anketa_samples(candidate_ids=[candidate_id], output_root=Path(tmp))
+            return json.loads(
                 Path(results[0]["outputPath"]).read_text(encoding="utf-8")
             )["normalized"]["anketa"]
-        self.assertEqual(anketa["gimimo-vieta"], "Kaunas")
-        # Marked like the birth date is: a weaker source than a real field.
-        self.assertEqual(anketa["gimimo-vietos-saltinis"], "biografijos-tekstas")
 
-    def test_a_candidate_whose_prose_names_no_place_gets_no_key(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            results = parse_anketa_samples(
-                candidate_ids=["asmolkov-vasilij"], output_root=Path(tmp)
-            )
-            anketa = json.loads(
-                Path(results[0]["outputPath"]).read_text(encoding="utf-8")
-            )["normalized"]["anketa"]
+    def test_the_card_field_wins_and_carries_no_source_marker(self):
+        # Butkevičius' card and biography agree on Kaunas. The marker is what
+        # says "prose-derived, weaker than a published field", so a card value
+        # must not carry it -- its absence is what makes this record read like
+        # every other era's.
+        anketa = self._anketa("butkevicius-audrius")
+        self.assertEqual(anketa["gimimo-vieta"], "Kaunas")
+        self.assertNotIn("gimimo-vietos-saltinis", anketa)
+
+    def test_the_card_wins_even_where_it_is_more_specific_than_the_prose(self):
+        # The prose gave "Plungės rajonas"; the card names the village too.
+        # Across the family the two agree on 433 of 438 such records.
+        self.assertEqual(
+            self._anketa("astrauskas-vytautas")["gimimo-vieta"], "Macenių k. , Plungės raj."
+        )
+
+    def test_a_candidate_with_neither_source_gets_no_key(self):
+        anketa = self._anketa("asmolkov-vasilij")
         self.assertNotIn("gimimo-vieta", anketa)
+        self.assertNotIn("gimimo-vietos-saltinis", anketa)
 
 
 if __name__ == "__main__":

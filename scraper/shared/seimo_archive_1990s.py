@@ -14,14 +14,26 @@ structure across all of them.
 The candidate detail page (`kandvl.htm`) carries a data-corrupting quirk: a
 malformed HTML comment (opened by a broken `<!--sql format>` marker left by a
 failed backend query, closed by the next stray `-->` much later in the page)
-swallows the "Gyvenamoji vieta" (residence) line along with a block of
-boilerplate eligibility Q&A that is not real per-candidate data -- it always
-reads the same "Neturi"/"Nėra" answers, the failed query's default rendering,
-not an actual answer. Residence is recovered with a targeted regex over the
-raw HTML rather than through the parsed DOM (a normal HTML parser drops
-comment contents entirely); the eligibility junk is discarded on purpose, on
-the same precedent as the 2015-backlog elected-status investigation: a field
-that cannot be trusted is left out and documented, not guessed at.
+swallows three real fields -- "Gimimo vieta", "Gyvenamoji vieta" and
+"Tautybė" -- along with a block of boilerplate eligibility Q&A that is not
+real per-candidate data: it always reads the same "Neturi"/"Nėra" answers,
+the failed query's default rendering, not an actual answer. The three fields
+are recovered with targeted regexes over the raw HTML rather than through the
+parsed DOM (a normal HTML parser drops comment contents entirely); the
+eligibility junk is discarded on purpose, on the same precedent as the
+2015-backlog elected-status investigation: a field that cannot be trusted is
+left out and documented, not guessed at.
+
+Below the comment the card prints the rest of its questionnaire as ordinary
+paragraphs -- education level, foreign languages, academic degree and title,
+bodies previously elected to, main workplace, public activity, marital
+status, family members and a free-text "Ką dar norėtų parašyti apie save".
+Those share their grammar with the 1997 municipal card, so they are read
+through `scraper/shared/archive_1990s_card.py` and land under the corpus's
+usual `anketa.*` keys. This whole block went unread until 2026-08-26 (issue
+#69): the first pass over these pages read only the candidacies and the
+residence, which is also why the birthplace was being inferred from the
+biography's prose when the card had published it all along.
 
 The `kpdl.htm` income and asset declaration is fetched alongside the
 candidate page and read by `scraper/shared/deklaracija_archive_1990s.py`,
@@ -50,6 +62,14 @@ from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.archive_1990s_card import (
+    PREVIOUSLY_ELECTED_LABEL,
+    bold_values,
+    education_record,
+    family_concepts,
+    family_members,
+    previously_elected_record,
+)
 from scraper.shared.deklaracija_archive_1990s import parse_declaration
 from scraper.shared.files import slugify, write_candidate_record, write_json
 from scraper.shared.http import fetch_text
@@ -60,9 +80,41 @@ VRK_STATINIAI_BASE = "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/"
 # of dozens to hundreds of pages does not hammer VRK's archive.
 FETCH_DELAY_SECONDS = 0.2
 
-RESIDENCE_PATTERN = re.compile(r"Gyvenamoji\s+vieta:\s*<b>(.*?)</b>", re.IGNORECASE | re.DOTALL)
 CONSTITUENCY_NUMBER_PATTERN = re.compile(r"\(Nr\.\s*(\d+)\)")
 CONSTITUENCY_URL_NUMBER_PATTERN = re.compile(r"apgtl\.htm-\d+\+(\d+)\.htm")
+
+# The three card fields the malformed `<!--sql format>` comment swallows.
+# A DOM parser drops comment contents entirely, so these are the only fields
+# on the page that have to be recovered by regex over the raw HTML -- every
+# other label sits outside the comment in a real paragraph. Each value is
+# `<b>`-delimited on every page that prints it (measured across all 906
+# retained cards: 1,730 label occurrences, 1,730 bold captures, 0 empty), so
+# the closing tag is an exact stop and no label stop list is needed here.
+COMMENTED_FIELD_PATTERNS = {
+    label: re.compile(rf"{re.escape(label)}:\s*<b>(.*?)</b>", re.IGNORECASE | re.DOTALL)
+    for label in ("Gimimo vieta", "Gyvenamoji vieta", "Tautybė")
+}
+RESIDENCE_PATTERN = COMMENTED_FIELD_PATTERNS["Gyvenamoji vieta"]
+
+# The labels this card prints outside the comment, each in its own paragraph,
+# to the `rawData.personal` key the 1997 municipal family already uses for the
+# same field. Measured over all 906 retained cards: no paragraph carries two
+# of these labels, so a value runs to the end of its paragraph and the
+# municipal family's stop list is not needed on this side -- and every value
+# is inside a `<b>`, so `bold_values` reads them without touching the
+# surrounding text at all.
+CARD_LABEL_KEYS = {
+    "Išsilavinimas": "education",
+    "Užsienio kalbos": "foreignLanguages",
+    "Pagrindinė darbovietė": "mainWorkplace",
+    "Visuomeninė veikla": "publicActivity",
+    "Šeimyninė padėtis": "familyStatus",
+    "Šeimos nariai": "familyMembers",
+    "Moksliniai laipsniai": "academicDegree",
+    "Moksliniai vardai": "academicTitle",
+    PREVIOUSLY_ELECTED_LABEL: "previouslyElected",
+    "Ką dar norėtų parašyti apie save": "aboutSelf",
+}
 
 
 def utc_now_iso() -> str:
@@ -238,14 +290,48 @@ def parse_candidate_detail(html: str, source_url: str) -> dict[str, Any]:
         elif "eklaracija" in label:
             income_declaration_url = urljoin(source_url, anchor["href"])
 
+    commented = {
+        label: _clean_text(match.group(1)) if (match := pattern.search(html)) else ""
+        for label, pattern in COMMENTED_FIELD_PATTERNS.items()
+    }
+    # Same key names as the 1997 municipal family's `personal` block, so the
+    # two archive families' rawData are directly comparable. `residence` is
+    # the exception -- it has sat at rawData.residence since this module's
+    # first version and stays there.
+    personal: dict[str, Any] = {
+        "birthPlace": commented["Gimimo vieta"],
+        "nationality": commented["Tautybė"],
+        "education": "",
+        "foreignLanguages": [],
+        "academicDegree": "",
+        "academicTitle": "",
+        "previouslyElected": [],
+        "mainWorkplace": "",
+        "publicActivity": "",
+        "aboutSelf": "",
+        "familyStatus": "",
+        "familyMembers": [],
+    }
+
     candidacies: list[dict[str, Any]] = []
     for paragraph in soup.find_all("p"):
         text = _clean_text(paragraph.get_text(" ", strip=True))
         if text.startswith("Apygarda:"):
             candidacies.append(_parse_candidacy_paragraph(paragraph, source_url))
-
-    residence_match = RESIDENCE_PATTERN.search(html)
-    residence = _clean_text(residence_match.group(1)) if residence_match else ""
+            continue
+        for label, key in CARD_LABEL_KEYS.items():
+            if not text.startswith(label):
+                continue
+            if key == "familyMembers":
+                personal[key] = family_members(paragraph)
+            else:
+                values = [item["value"] for item in bold_values(paragraph)]
+                # Everything but the language list is a single value; joining
+                # keeps the scalar shape without silently dropping a second
+                # <b> if a card ever prints one (none of the 906 retained
+                # cards does).
+                personal[key] = values if isinstance(personal[key], list) else ", ".join(values)
+            break
 
     return {
         "candidateDisplayName": name,
@@ -253,7 +339,8 @@ def parse_candidate_detail(html: str, source_url: str) -> dict[str, Any]:
         "biographyUrl": biography_url,
         "incomeDeclarationUrl": income_declaration_url,
         "candidacies": candidacies,
-        "residence": residence,
+        "residence": commented["Gyvenamoji vieta"],
+        "personal": personal,
     }
 
 
@@ -744,6 +831,12 @@ def build_candidate_record(
         },
         "candidacies": detail["candidacies"],
         "residence": detail["residence"],
+        # The questionnaire the card prints below the candidacies: the two
+        # fields the malformed comment hides alongside the residence, then
+        # every labelled paragraph. Keyed as the 1997 municipal family keys
+        # the same fields, and always complete -- a label the candidate left
+        # blank reads as "" or [], not as a missing key.
+        "personal": detail["personal"],
         "biography": biography,
         "declaration": declaration,
     }
@@ -759,18 +852,55 @@ def build_candidate_record(
     # year-only cases, which are never promoted to a birth date.
     birth_date = biography.get("birthDate") if biography else None
     birth_year = biography.get("birthYear") if biography else None
-    birth_place = biography.get("birthPlace") if biography else None
     anketa: dict[str, Any] = {}
     if birth_date:
         anketa["gimimo-data"] = birth_date
         anketa["gimimo-data-saltinis"] = "biografijos-tekstas"
     if birth_year:
         anketa["gimimo-metai"] = birth_year
-    # Same story as the birth date: recovered from prose, so it is marked as
-    # such rather than passing for a field the page never had.
-    if birth_place:
-        anketa["gimimo-vieta"] = birth_place
+
+    # Birthplace, unlike the birth date, *is* a published field here -- it
+    # just sits inside the malformed comment, which is why the first pass over
+    # these pages concluded the card had none and fell back to the biography's
+    # opening sentence. The card field wins when present (852 of 906 records,
+    # against 447 the prose reached), and is written in the same form as the
+    # 1997 municipal family's, since it is literally the same field on the
+    # same card generation: "Melagėnų k. , Švenčionių raj.".
+    #
+    # `gimimo-vietos-saltinis` therefore now marks only the fallback. Its
+    # presence means "derived from prose, weaker than a published field"; its
+    # absence means the card published the value, exactly like every other era.
+    personal = detail["personal"]
+    prose_birth_place = biography.get("birthPlace") if biography else None
+    if personal["birthPlace"]:
+        anketa["gimimo-vieta"] = personal["birthPlace"]
+    elif prose_birth_place:
+        anketa["gimimo-vieta"] = prose_birth_place
         anketa["gimimo-vietos-saltinis"] = "biografijos-tekstas"
+
+    spouse, children = family_concepts(personal["familyMembers"])
+    # Assembled in a fixed order so every record of this family carries its
+    # anketa keys in one order, whichever labels the candidate filled in.
+    card_values: dict[str, Any] = {
+        "tautybe": personal["nationality"] or None,
+        "issilavinimas": education_record(personal["education"]),
+        "mokslo-laipsnis": personal["academicDegree"] or None,
+        "pedagoginis-vardas": personal["academicTitle"] or None,
+        "uzsienio-kalbos": personal["foreignLanguages"],
+        "anksciau-isrinktas": previously_elected_record(personal["previouslyElected"]),
+        "pagrindine-darboviete": personal["mainWorkplace"] or None,
+        "visuomenine-veikla": personal["publicActivity"] or None,
+        "kita-apie-save": personal["aboutSelf"] or None,
+        "seimine-padetis": personal["familyStatus"] or None,
+        "sutuoktinio-vardas-pavarde": spouse,
+        "vaiku-vardai-pavardes": children,
+        "seimos-nariai": personal["familyMembers"],
+    }
+    # A candidate who answered nothing gets no empty keys at all -- the same
+    # rule the birth-date block already followed, so a record's anketa says
+    # what the card actually carried. `uzsienio-kalbos` and `seimos-nariai`
+    # are lists, so emptiness is `[]` rather than None.
+    anketa.update({key: value for key, value in card_values.items() if value not in (None, [])})
 
     # Normalized keys are kebab-case throughout, matching every other election
     # module: `profilis.vardas-pavarde`, `profilis.nuotrauka` and the rest are

@@ -940,13 +940,24 @@ these three modules differ only in which directory (`seim96` vs `seimpk`),
   `sitemap.py` hardcodes them instead of crawling for them.
 - The candidate page (`kandvl.htm`) carries a data-corrupting quirk: a
   malformed `<!--sql format>` comment, left by a failed backend query, opens
-  after the real candidacy paragraphs and swallows the "Gyvenamoji vieta"
-  (residence) line along with a block of boilerplate eligibility Q&A that
-  always reads the same "Neturi"/"Nėra" — not real per-candidate data. A
-  normal HTML parser drops comment contents entirely, so residence is
-  recovered with a targeted regex over the raw HTML instead; the eligibility
-  junk is discarded on purpose. `tests/test_seimo_1996_anketa_parser.py`
-  guards this against regression.
+  after the real candidacy paragraphs and swallows **three real fields** —
+  "Gimimo vieta", "Gyvenamoji vieta" and "Tautybė" — along with a block of
+  boilerplate eligibility Q&A that always reads the same "Neturi"/"Nėra", not
+  real per-candidate data. A normal HTML parser drops comment contents
+  entirely, so the three are recovered with targeted regexes over the raw
+  HTML instead; the eligibility junk is discarded on purpose.
+  `tests/test_archive_1990s_card.py` and
+  `tests/test_seimo_1996_anketa_parser.py` guard this against regression.
+- Below the comment the card prints the rest of its questionnaire as ordinary
+  paragraphs — education level, foreign languages, academic degree and title,
+  bodies previously elected to, main workplace, public activity, marital
+  status, family members, and a free-text "Ką dar norėtų parašyti apie save".
+  This whole block went unread until issue #69 (2026-08-26). It shares its
+  `<p>Label: <b>value</b>` grammar with the 1997 municipal card, so both
+  families read it through `scraper/shared/archive_1990s_card.py`, and it
+  lands under the corpus's usual `anketa.*` keys. Unlike the municipal card,
+  no paragraph here carries two labels (measured over all 906 cards), so no
+  stop list is needed on this side.
 - A candidate can carry two candidacies — their single-member constituency
   and, optionally, a `Daugiamandatė` (multi-mandate party list) entry with its
   own list number — both are kept as separate objects in
@@ -1006,10 +1017,17 @@ reach a candidate:
   confirmed by diffing the two municipality pages, which differ only in
   filing dates and candidate rosters, not in page shape.
 - The candidate page has no comment-corruption quirk (unlike the Seimas
-  family) and is considerably richer: birth date/place, residence,
-  nationality, education, foreign languages, main workplace, public activity,
+  family): birth date/place, residence, nationality, education, academic
+  degree and title, foreign languages, main workplace, public activity,
   family status and family members are all plain labelled paragraphs, carried
-  into `rawData.personal`/`normalized.anketa`. As with the Seimas
+  into `rawData.personal`/`normalized.anketa`. The academic degree and title
+  went unread until issue #69 (156 and 112 records in the general election),
+  because the shared label list did not name them — and that list is a stop
+  list as well as a dispatch list, so an unnamed label can also be swallowed
+  into the value before it, which is what once put
+  `1945 04 17 Gyvenamoji vieta: Kaunas Tautybė: …` into 91% of birth dates.
+  Both families now share `scraper/shared/archive_1990s_card.py`, which
+  carries the union of their labels. As with the Seimas
   archive, `kpdl.htm` (income declaration) is fetched and parsed into
   `normalized.turto-ir-pajamu-deklaracijos`. This is the family whose section
   III "Iš viso" row usually prints 0 against a non-zero row 1, so most of its

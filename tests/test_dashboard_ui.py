@@ -199,5 +199,81 @@ class ComparisonTableRenderingTests(unittest.TestCase):
         self.assertEqual((row.group(1) or "").strip(" ,"), "educationCell")
 
 
+class ArchiveComparisonRowTests(unittest.TestCase):
+    """Four comparison rows read an em-dash for every 1996-1998 Seimas archive
+    record until issue #69, because that family's card questionnaire was never
+    parsed. This runs a real re-parsed record through the page's own
+    `resolvePath`/`compactValue`/`educationCell`, so it fails if either the
+    parser stops emitting those keys or the field map stops resolving them.
+    """
+
+    # astrauskas-vytautas, 1996-spalio-20-seimo: the fixture candidate with no
+    # biography page at all, whose whole anketa therefore comes from the card.
+    RECORD = {
+        "normalized": {
+            "anketa": {
+                "gimimo-vieta": "Macenių k. , Plungės raj.",
+                "tautybe": "Lietuvis (-ė)",
+                "mokslo-laipsnis": "Habilituotas medicinos mokslų daktaras",
+                "pedagoginis-vardas": "Profesorius",
+                "uzsienio-kalbos": ["Rusų", "Anglų", "Vokiečių"],
+                "seimine-padetis": "Vedęs",
+            }
+        }
+    }
+
+    def _cells(self, record):
+        helpers = "\n".join(
+            re.search(rf"^function {name}\(.*?^}}", SOURCE, re.S | re.M).group(0)
+            for name in ("resolvePath", "compactValue", "educationCell")
+        )
+        field_map = re.search(r"^const FIELD_MAP = \[.*?^\];", SOURCE, re.S | re.M).group(0)
+        script = (
+            f"{helpers}\n"
+            "function moneyCell() { return null; }\n"
+            f"{field_map}\n"
+            f"const r = {json.dumps(record)};\n"
+            "const out = {};\n"
+            "for (const [label, paths, format] of FIELD_MAP) {\n"
+            "  let v = null;\n"
+            "  for (const p of paths) { v = resolvePath(r.normalized || {}, p);"
+            " if (v != null && v !== '') break; }\n"
+            "  const c = format ? format(v, r) : compactValue(v);\n"
+            "  out[label] = c == null ? null : c;\n"
+            "}\n"
+            "console.log(JSON.stringify(out));"
+        )
+        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        return json.loads(out.stdout)
+
+    @unittest.skipUnless(NODE, "node not installed")
+    def test_the_card_questionnaire_reaches_the_comparison_table(self):
+        cells = self._cells(self.RECORD)
+        self.assertEqual(cells["Šeiminė padėtis"], "Vedęs")
+        self.assertEqual(cells["Užsienio kalbos"], "Rusų; Anglų; Vokiečių")
+
+    @unittest.skipUnless(NODE, "node not installed")
+    def test_the_cards_education_level_renders_as_its_level(self):
+        record = json.loads(json.dumps(self.RECORD))
+        record["normalized"]["anketa"]["issilavinimas"] = {
+            "aprasas": None,
+            "irasai": [{
+                "issilavinimas": "Aukštasis",
+                "mokymo-istaigos-pavadinimas": None,
+                "specialybe": None,
+                "baigimo-metai": None,
+            }],
+        }
+        self.assertEqual(self._cells(record)["Išsilavinimas"], "Aukštasis")
+
+    @unittest.skipUnless(NODE, "node not installed")
+    def test_a_label_the_card_omits_still_reads_as_nothing(self):
+        # Astrauskas' card leaves "Pagrindinė darbovietė" blank, so the parser
+        # writes no key and the cell must stay an em-dash rather than "null".
+        self.assertIsNone(self._cells(self.RECORD)["Pagrindinė darbovietė"])
+
+
 if __name__ == "__main__":
     unittest.main()
