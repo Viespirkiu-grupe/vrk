@@ -78,6 +78,7 @@ ARCHIVE_ELECTIONS = [
     "1997-kovo-23-seimo-pakartotiniai",
     "1997-birzelio-29-svenciniu-tarybos-pakartotiniai",
     "1997-gruodzio-21-seimo-pakartotiniai",
+    "1998-lapkricio-15-seimo-pakartotiniai",
 ]
 
 THROTTLE_SECONDS = 0.25

@@ -1395,12 +1395,12 @@ mayor was elected directly, so:
   missing declaration. `privaciu-interesu-deklaracija` is the
   roman-numbered record-table form of the 2007–2009 section above.
 
-## Appendix: Seimas archive (`1996-spalio-20-seimo`, `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`)
+## Appendix: Seimas archive (`1996-spalio-20-seimo`, `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`, `1998-lapkricio-15-seimo-pakartotiniai`)
 
 Records are written as `data/<election-id>/<candidate-id>-<election-id>.json`.
-1996 defines the parsers (`scraper/shared/seimo_archive_1990s.py`); both 1997
-repeat elections are thin wiring over the same machinery and share every
-shape below. These pages predate even the 2015 family — Teleport Pro
+1996 defines the parsers (`scraper/shared/seimo_archive_1990s.py`); the 1997
+and 1998 repeat elections are thin wiring over the same machinery and share
+every shape below. These pages predate even the 2015 family — Teleport Pro
 snapshots of `lrs.lt/cgi-bin/ora7dbcgi/...` with no anketa tabs at all — so
 while the keys are the corpus's usual kebab-case and the sections it does
 publish keep their corpus names (`profilis`, `anketa`, `biografija`), the
