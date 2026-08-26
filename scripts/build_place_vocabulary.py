@@ -22,11 +22,14 @@ from pathlib import Path
 DATA_ROOT = Path("data")
 OUTPUT_PATH = Path("scraper/shared/vietovardziai.json")
 
-# These publish no birth-place field; they are what the vocabulary serves.
+# The Seimas archive family, whose biography prose is the birthplace fallback
+# for the records whose card leaves "Gimimo vieta" blank (see issue #69);
+# converting that prose from the locative is what the vocabulary serves.
 ARCHIVE_ELECTIONS = {
     "1996-spalio-20-seimo",
     "1997-kovo-23-seimo-pakartotiniai",
     "1997-gruodzio-21-seimo-pakartotiniai",
+    "1998-lapkricio-15-seimo-pakartotiniai",
 }
 
 

@@ -18,7 +18,7 @@ never touched by a full run.
 
 ## Inventory
 
-113,002 candidate records across 51 elections, 1996–2025, with **zero fetch
+113,013 candidate records across 52 elections, 1996–2025, with **zero fetch
 failures** other than three 2011, three 2007, two 2000 and one 2002
 candidate pages VRK never published (see Known gaps).
 
@@ -81,6 +81,7 @@ election was re-parsed offline the same day.
 | `1996-spalio-20-seimo` | 879 | 0 | 0 | 0 |
 | `1997-kovo-23-seimo-pakartotiniai` | 23 | 0 | 0 | 0 |
 | `1997-gruodzio-21-seimo-pakartotiniai` | 4 | 0 | 0 | 0 |
+| `1998-lapkricio-15-seimo-pakartotiniai` | 11 | 0 | 0 | 0 |
 | `1997-kovo-23-savivaldybiu-tarybu` | 6276 | 0 | 0 | 0 |
 | `1997-birzelio-29-svenciniu-tarybos-pakartotiniai` | 110 | 0 | 0 | 0 |
 | `2012-seimo` | 1927 | 139 | 45 | 1927 |
@@ -359,6 +360,53 @@ the two blocks that come from the retained page — through the same
 Seimas elections and the Švenčionys repeat retained everything and were
 re-parsed normally. **That gap was closed the same week — see the retention
 pass below — and the election has since been re-parsed properly.**
+
+### The 2026-08-26 build of the 1998 Nevėžio Seimo by-election
+
+GitHub issue #23. VRK re-ran the Nevėžio (No. 26) vote on 1998-11-15 after
+Mečys Laurinkus's mandate ended. One constituency, **11 candidates, the
+complete field**, 0 fetch failures, 0 anomalies.
+
+Thin wiring on `scraper/shared/seimo_archive_1990s.py` — the same shape as
+`seimo_aukstaitijos_1997_gruodzio`, which is also a single constituency: the
+`seimpk` directory, phase prefix `10` (`apgtl.htm-10+26.htm`), and
+`CONSTITUENCIES = [26]`. No parser changed.
+
+**Born complete, which is the whole reason #69 came first.** These cards carry
+the questionnaire the shared parser learned to read that week, so the records
+have it from their first parse rather than needing a second one. This is also
+one of the well-populated ones: all 11 link both a biography and a
+declaration, where the March 1997 repeat manages only 1 of 23 declarations.
+(The March 1998 re-run of #21 links 2 of 11, and the March 1999 one of #24
+22 of 22 — measured live while surveying those two, neither built yet.) Coverage over the 11:
+
+| `anketa` key | of 11 | | `anketa` key | of 11 |
+|---|---:|---|---|---:|
+| `tautybe` | 10 | | `seimine-padetis` | 7 |
+| `issilavinimas` | 10 | | `anksciau-isrinktas` | 6 |
+| `uzsienio-kalbos` | 10 | | `gimimo-data` | 6 |
+| `pagrindine-darboviete` | 10 | | `gimimo-vieta` | 5 |
+| `seimos-nariai` | 10 | | `visuomenine-veikla` | 4 |
+| `gimimo-metai` | 10 | | `mokslo-laipsnis` | 3 |
+| `vaiku-vardai-pavardes` | 9 | | `pedagoginis-vardas` | 2 |
+| `sutuoktinio-vardas-pavarde` | 8 | | `kita-apie-save` | 0 |
+
+All 5 birthplaces come from the card's own `Gimimo vieta`; the biography
+fallback adds none here, so no record carries `gimimo-vietos-saltinis` for the
+place. The birth *date* is prose-derived as always in this family.
+
+All 11 declarations parse completely — turtas, total income and employment
+income all present on 11 of 11, which no other election in this family manages
+(the 1997 municipal general gets a usable total on 1,014 of 5,477).
+
+**The re-run failed too.** `rapgpl.htm-392+1.htm` records 11,651 of 38,358
+voters (30.37%) and closes "Rinkimai apygardoje neįvyko", so no one here was
+elected — `isrinktas` is a known `false` rather than a null. **The records
+carry no elected marker anyway**, because this family ships no `results.py`
+and none of its other three elections emits one. Adding results reading to the
+family is a decision shared with the other two 1998-1999 by-elections (#21,
+#24) and was left to that pass rather than taken here for one election; the
+votes are on VRK's page and nothing is lost by waiting.
 
 ### The 2026-08-26 retention pass over the archive declarations
 
