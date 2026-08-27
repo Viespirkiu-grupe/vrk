@@ -2080,6 +2080,108 @@ extracts). One record (Žiobakienė) has no section — VRK published no
 declarations page for her; one (Matkevičius) has the income extract only
 (`israsai.turto-deklaracija` null, the asset keys null).
 
+## Appendix: June 2003 new Seimo elections (`2003-birzelio-15-seimo-nauji`)
+
+The same four sections as the 2004 Seimas appendix above —
+`profilis`, `anketa`, `biografija`, `turto-ir-pajamu-deklaracijos`; no
+interest declaration, no `kita`, no campaign section — on VRK's
+`rinkimai/2003/seimas/` tree, the 2004 static site one generation early.
+Records are written as
+`data/2003-birzelio-15-seimo-nauji/<candidate-id>-2003-birzelio-15-seimo-nauji.json`.
+27 records, one per candidate in the four constituencies.
+
+### `kandidatavimas`
+
+The 2008/2012 Seimo shape narrowed to a constituency-only field:
+`vrkCandidateId`, `roles: ["vienmandate"]`, `vienmandate` (`apygarda`,
+`apygardosNumeris`, `apygardosId`, `iskele` — a party on all 27; nobody
+self-nominated), `daugiamandate` null. No lists, so no rank, preference
+votes or `numerisSarase`; no `savarankiskasKampanijosDalyvis` — the 2003
+cards carry no campaign registration line, that starts in 2004.
+
+- `isrinktas` is **`false` on every record, and known**: all four
+  constituencies fell below the turnout threshold and every results page
+  says so, so this is the 1996-1999 archive family's reading — a `false`
+  VRK's pages state, not a default. There is no `isrinktasKaip`,
+  `rezultatuTuras` or `rezultatuSaltinis`, because nobody was elected.
+- `turai` — the round's votes for this candidate, a one-entry list in the
+  1996-1999 / presidential shape: `turas`, `apygardos-numeris`,
+  `balsai-apylinkese`, `balsai-pastu`, `balsai`,
+  `procentai-nuo-galiojanciu`, `vieta` (the page's own order, descending)
+  and `saltinis`. Unlike 2004's, the 2003 constituency results pages row
+  candidates by the anketa id, so the join is by id.
+
+### `profilis`
+
+`vardas-pavarde` from the card's `<h2>` (surname in caps, "Vilija
+ALEKNAITĖ ABRAMIKIENĖ"), `pastaba` always null — these pages mark no
+winner — `nuotrauka` the photo URL, and `kita` exactly
+`apygarda`/`iskele` on all 27: the constituency ("Senamiesčio (Nr.2)",
+linking the constituency page) and the nominating party (linking the
+party page).
+
+**The photo URL contains the candidate's asmens kodas.** The filename is
+the national ID number (`…/kandidatai/45705040120_17.jpg` for a candidate
+born 1957-05-04; true on all 27). It is kept because it is the source
+link, and nothing in the record is derived from it — `vrkCandidateId` is
+VRK's internal record id from `kand_anketa_l-id=`, and `gimimo-data` is
+Q5. The published `src` has a stray space before the filename, which the
+reader strips; the URL 404s with it.
+
+### `normalized.anketa`
+
+The 2004 Seimas key set exactly, read off the same Seimo rinkimų
+įstatymo form, with one number moved: **the birth date is Q5**, not Q3.
+Q9.1-9.3 carry a `<sup>*</sup>` footnote marker between the number and
+the prompt, footnoted at the page bottom as "duomenys iš kandidato į
+Seimo narius anketos priedo" — a fact of the page, not of the record.
+All 21 questions are answered on all 27 pages, "Nenurodė" included,
+which the corpus's missing-value rule turns into null (so
+`mokslo-laipsnis` is filled on 7 records, `visuomenine-veikla` on 15,
+`kita-apie-save` on 5). `teisiniai-argumentai` — the unlabelled run the
+page prints after Q9.3, as the 2004 pages do — is filled on one record.
+`issilavinimas.aprasas` and `anksciau-isrinktas.aprasas` are null
+throughout: the question's answer is the table.
+
+`issilavinimas.irasai` and `anksciau-isrinktas.irasai` keep the 2004
+column keys (`issilavinimas`, `mokyklos-istaigos-pavadinimas`,
+`specialybe`, `baigimo-metai`; `institucijos-pavadinimas-pareigos`,
+`laikotarpis`) even though **the 2003 tables print no header row** —
+they are the same columns in the same order, keyed positionally. All 27
+have an education record (21 of them exactly one), 9 have prior
+mandates; the other 18 print "Nenurodė" at Q15.
+
+### `turto-ir-pajamu-deklaracijos`
+
+The **2002 municipal** extract, not the 2004 one: the numbered summary
+lines in litas that `savivaldybiu_2002` reads, so the same keys and the
+same caveat — the form sums registrable assets with securities, art and
+jewellery into one figure (III S1 + IV S1), so
+`privalomas-registruoti-turtas` and
+`vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai` are null on
+every record and the combined start/end figures keep the era keys
+(`turtas-ir-vertybiniai-popieriai-laikotarpio-pradzioje`/`-pabaigoje`),
+as do `pinigines-lesos-laikotarpio-pradzioje`/`-pabaigoje` and
+`bendros-pinigines-lesos-banke-laikotarpio-pradzioje`/`-pabaigoje`.
+`pinigines-lesos` is the end-of-period figure of item 8.
+
+Three keys are this election's own, beside `valiuta: "Lt"`:
+
+- `forma` — the form the page prints. Two are in use: "Lietuvos
+  Respublikos gyventojo turto ir pajamų deklaracija" (18 records, items
+  3-12 with joint bank accounts as 9) and "Lietuvos Respublikos šeimos
+  turto ir pajamų deklaracija" (9 records, items 3-11, no joint-accounts
+  item, every prompt in the plural). `bendros-pinigines-lesos-banke-*`
+  is null on all 27 either way — absent on the nine, printed as "-" on
+  the eighteen.
+- `israsa-isdave` — the issuing tax office, as 2004 keys it.
+- `isdavimo-data` — the page's "Išdavimo data", ISO.
+
+A prompt the key map does not recognise would appear as
+`nezinomos-eilutes`; none does on any of the 27, which is what the two
+2003 misspellings ("negražintų", "paskolintų (nesugražintų)") had to be
+added for. Every loan item reads "-" on 26 of the 27 records.
+
 ## Appendix: 2000 Seimas (`2000-seimo`)
 
 The 1996-1998 Seimas archive's candidate page with the 2004 Seimas

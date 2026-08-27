@@ -220,9 +220,15 @@ def _parse_record_table(table: Tag) -> list[dict[str, str]]:
     return records
 
 
-def _parse_anketa_row_cell(cell: Tag) -> list[dict[str, Any]]:
+def _parse_anketa_row_cell(cell: Tag, record_table_reader: Any = None) -> list[dict[str, Any]]:
     """The rows of one ``<td class="lt">``: the numbered question, and any
-    unnumbered "label: <b>…</b>" pair that trails it in the same cell."""
+    unnumbered "label: <b>…</b>" pair that trails it in the same cell.
+
+    `record_table_reader` reads a Q12/Q15 record table; the June 2003
+    election's tables print no header row, so that module supplies its own.
+    """
+    if record_table_reader is None:
+        record_table_reader = _parse_record_table
     rows: list[dict[str, Any]] = []
     current: dict[str, Any] | None = None
 
@@ -290,7 +296,7 @@ def _parse_anketa_row_cell(cell: Tag) -> list[dict[str, Any]]:
         if node.name == "table":
             if current is None:
                 _start(None, "")
-            current["records"] = _parse_record_table(node)
+            current["records"] = record_table_reader(node)
             current["answered"] = True
             continue
         if node.name == "b":

@@ -420,9 +420,19 @@ def parse_deklaracija_html(html: str) -> dict[str, Any]:
     return {"items": items, "found": True}
 
 
-def normalize_deklaracija(payload: dict[str, Any]) -> tuple[dict[str, Any], list[str]]:
+def normalize_deklaracija(
+    payload: dict[str, Any],
+    single_items: tuple[tuple[str, str], ...] = DEKLARACIJA_SINGLE_ITEMS,
+    range_items: tuple[tuple[str, str], ...] = DEKLARACIJA_RANGE_ITEMS,
+) -> tuple[dict[str, Any], list[str]]:
     """The corpus's ``turto-ir-pajamu-deklaracijos`` keys, plus the
-    prompts the tables above do not know."""
+    prompts the tables above do not know.
+
+    The item tables are arguments because the same form is printed with
+    other wordings elsewhere: the June 2003 Seimas election's pages carry
+    two of the items misspelled and its family variant in the plural, so
+    that module passes these tables extended with its own spellings.
+    """
     declaration: dict[str, Any] = {key: None for key in DEKLARACIJA_OUTPUT_ORDER}
     # The form sums registrable assets with securities (III S1 + IV S1),
     # so the modern split is unrecoverable; both keys stay null and the
@@ -435,14 +445,14 @@ def normalize_deklaracija(payload: dict[str, Any]) -> tuple[dict[str, Any], list
             declaration["darboviete"] = _normalize_text_value(item.get("value"))
             continue
         matched = False
-        for marker, key in DEKLARACIJA_SINGLE_ITEMS:
+        for marker, key in single_items:
             if marker in lowered:
                 declaration[key] = _parse_deklaracija_amount(item.get("value"))
                 matched = True
                 break
         if matched:
             continue
-        for marker, key_stem in DEKLARACIJA_RANGE_ITEMS:
+        for marker, key_stem in range_items:
             if marker in lowered:
                 periods = item.get("periods") or {}
                 declaration[f"{key_stem}-laikotarpio-pradzioje"] = _parse_deklaracija_amount(

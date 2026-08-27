@@ -544,6 +544,18 @@ from scraper.elections.seimo_2004.sitemap import (
     build_sitemap_from_sample as build_seimo_2004_sitemap_from_sample,
     fetch_listing_sample as fetch_seimo_2004_listing_sample,
 )
+from scraper.elections.seimo_nauji_2003.anketa_parser import (
+    parse_anketa_samples as parse_seimo_nauji_2003_anketa_samples,
+)
+from scraper.elections.seimo_nauji_2003.candidate_samples import (
+    fetch_candidates_with_tabs as fetch_seimo_nauji_2003_candidates_with_tabs,
+    fetch_first_candidate_with_tabs as fetch_seimo_nauji_2003_first_candidate_with_tabs,
+)
+from scraper.elections.seimo_nauji_2003.sitemap import (
+    ELECTION_ID as SEIMO_NAUJI_2003_ELECTION_ID,
+    build_sitemap_from_sample as build_seimo_nauji_2003_sitemap_from_sample,
+    fetch_listing_sample as fetch_seimo_nauji_2003_listing_sample,
+)
 from scraper.elections.seimo_kedainiu_2005.anketa_parser import (
     parse_anketa_samples as parse_seimo_kedainiu_2005_anketa_samples,
 )
@@ -653,6 +665,7 @@ from scraper.elections.ep_2004.results import build_results as build_ep_2004_res
 from scraper.elections.prezidento_2004.results import build_results as build_prezidento_2004_results
 from scraper.elections.prezidento_2002.results import build_results as build_prezidento_2002_results
 from scraper.elections.seimo_2004.results import build_results as build_seimo_2004_results
+from scraper.elections.seimo_nauji_2003.results import build_results as build_seimo_nauji_2003_results
 from scraper.elections.seimo_kedainiu_2005.results import build_results as build_seimo_kedainiu_2005_results
 from scraper.elections.seimo_2000.results import build_results as build_seimo_2000_results
 from scraper.elections.savivaldybiu_2000.results import build_results as build_savivaldybiu_2000_results
@@ -725,6 +738,7 @@ FETCHABLE_ELECTION_IDS = [
     PREZIDENTO_2004_ELECTION_ID,
     PREZIDENTO_2002_ELECTION_ID,
     SEIMO_2004_ELECTION_ID,
+    SEIMO_NAUJI_2003_ELECTION_ID,
     SEIMO_KEDAINIU_2005_ELECTION_ID,
     SEIMO_2000_ELECTION_ID,
     SAVIVALDYBIU_2000_ELECTION_ID,
@@ -781,6 +795,7 @@ PARSABLE_ELECTION_IDS = [
     PREZIDENTO_2004_ELECTION_ID,
     PREZIDENTO_2002_ELECTION_ID,
     SEIMO_2004_ELECTION_ID,
+    SEIMO_NAUJI_2003_ELECTION_ID,
     SEIMO_KEDAINIU_2005_ELECTION_ID,
     SEIMO_2000_ELECTION_ID,
     SAVIVALDYBIU_2000_ELECTION_ID,
@@ -812,6 +827,7 @@ RESULTS_ELECTION_IDS = [
     PREZIDENTO_2004_ELECTION_ID,
     PREZIDENTO_2002_ELECTION_ID,
     SEIMO_2004_ELECTION_ID,
+    SEIMO_NAUJI_2003_ELECTION_ID,
     SEIMO_KEDAINIU_2005_ELECTION_ID,
     SEIMO_2000_ELECTION_ID,
     SAVIVALDYBIU_2000_ELECTION_ID,
@@ -835,6 +851,7 @@ _RESULTS_BUILDERS = {
     PREZIDENTO_2004_ELECTION_ID: build_prezidento_2004_results,
     PREZIDENTO_2002_ELECTION_ID: build_prezidento_2002_results,
     SEIMO_2004_ELECTION_ID: build_seimo_2004_results,
+    SEIMO_NAUJI_2003_ELECTION_ID: build_seimo_nauji_2003_results,
     SEIMO_KEDAINIU_2005_ELECTION_ID: build_seimo_kedainiu_2005_results,
     SEIMO_2000_ELECTION_ID: build_seimo_2000_results,
     SAVIVALDYBIU_2000_ELECTION_ID: build_savivaldybiu_2000_results,
@@ -964,6 +981,8 @@ def _fetch_listing_sample_for_election(election_id: str) -> Path:
         return fetch_prezidento_2002_listing_sample()
     if election_id == SEIMO_2004_ELECTION_ID:
         return fetch_seimo_2004_listing_sample()
+    if election_id == SEIMO_NAUJI_2003_ELECTION_ID:
+        return fetch_seimo_nauji_2003_listing_sample()
     if election_id == SEIMO_KEDAINIU_2005_ELECTION_ID:
         return fetch_seimo_kedainiu_2005_listing_sample()
     if election_id == SEIMO_2000_ELECTION_ID:
@@ -1076,6 +1095,8 @@ def _build_sitemap_from_sample_for_election(election_id: str, sample_path: Path 
         return build_prezidento_2002_sitemap_from_sample(sample_path=sample_path)
     if election_id == SEIMO_2004_ELECTION_ID:
         return build_seimo_2004_sitemap_from_sample(sample_path=sample_path)
+    if election_id == SEIMO_NAUJI_2003_ELECTION_ID:
+        return build_seimo_nauji_2003_sitemap_from_sample(sample_path=sample_path)
     if election_id == SEIMO_KEDAINIU_2005_ELECTION_ID:
         return build_seimo_kedainiu_2005_sitemap_from_sample(sample_path=sample_path)
     if election_id == SEIMO_2000_ELECTION_ID:
@@ -1381,6 +1402,12 @@ def _fetch_first_candidate_with_tabs_for_election(
         )
     if election_id == SEIMO_2004_ELECTION_ID:
         return fetch_seimo_2004_first_candidate_with_tabs(
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
+    if election_id == SEIMO_NAUJI_2003_ELECTION_ID:
+        return fetch_seimo_nauji_2003_first_candidate_with_tabs(
             sitemap_path=sitemap_path,
             samples_root=samples_root,
             allow_new_candidate_dir=allow_new_samples,
@@ -1767,6 +1794,13 @@ def _fetch_candidates_with_tabs_for_election(
             samples_root=samples_root,
             allow_new_candidate_dir=allow_new_samples,
         )
+    if election_id == SEIMO_NAUJI_2003_ELECTION_ID:
+        return fetch_seimo_nauji_2003_candidates_with_tabs(
+            candidate_ids=candidate_ids,
+            sitemap_path=sitemap_path,
+            samples_root=samples_root,
+            allow_new_candidate_dir=allow_new_samples,
+        )
     if election_id == SEIMO_KEDAINIU_2005_ELECTION_ID:
         return fetch_seimo_kedainiu_2005_candidates_with_tabs(
             candidate_ids=candidate_ids,
@@ -2102,6 +2136,12 @@ def _parse_anketa_samples_for_election(
         )
     if election_id == SEIMO_2004_ELECTION_ID:
         return parse_seimo_2004_anketa_samples(
+            candidate_ids=candidate_ids,
+            samples_root=samples_root,
+            output_root=output_root,
+        )
+    if election_id == SEIMO_NAUJI_2003_ELECTION_ID:
+        return parse_seimo_nauji_2003_anketa_samples(
             candidate_ids=candidate_ids,
             samples_root=samples_root,
             output_root=output_root,
