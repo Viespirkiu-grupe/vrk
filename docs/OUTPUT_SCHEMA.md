@@ -1421,7 +1421,9 @@ section … these pages carry no questionnaire" — was wrong).
   `turto-ir-pajamu-deklaracijos`.
 - `normalized.profilis` holds `vardas-pavarde`, `nuotrauka` (the external
   photo URL), `biografijos-nuoroda` and `pajamu-deklaracijos-nuoroda`. There
-  is no `pastaba`: nothing on these pages marks a winner.
+  is no `pastaba`: nothing on the *candidate* page marks a winner. Elected
+  status lives on `kandidatavimas[].isrinktas`, joined from VRK's results
+  pages — see the candidacy bullet below.
 - `rawData.profile` holds `candidateDisplayName`, `photoUrl` (an external URL,
   never downloaded — unlike the base64-embedded-photo eras, this family's
   photos stay as source links), `biographyUrl` and `incomeDeclarationUrl`
@@ -1442,6 +1444,35 @@ section … these pages carry no questionnaire" — was wrong).
   `iskele`, `iskele-nuoroda`, `numeris-sarase`) — so unlike most elections,
   **`kandidatavimas` here is a list, and a consumer counting candidacies must
   not assume one per record.**
+- **The results join writes onto each `normalized.kandidatavimas` entry**
+  (issue #79, 2026-08-27), when the election's
+  `sitemaps/<election-id>.results.json` exists; without one the entry keeps
+  the six keys above and says nothing about the outcome.
+  - `isrinktas` — `true`/`false` on **every** candidacy, never null. These
+    results pages state an outcome for every constituency of the family,
+    `neįvyko` included, so "not elected" here is a read verdict rather than
+    an unread field. **It is per candidacy, not per record:** a record counts
+    as elected if any of its candidacies is. A constituency win marks every
+    candidacy for that constituency, so the three double-nominated 1996
+    winners carry two `true` rows for one seat — 123 elected records over 126
+    elected candidacies.
+  - On the elected candidacy only: `isrinktas-kaip` (`"vienmandate"` or
+    `"daugiamandate"`, the corpus-wide vocabulary), `rezultatu-saltinis`, and
+    `rezultatu-turas` (1 or 2) for a constituency seat.
+  - `turai` — on a constituency candidacy, that candidate's row on each
+    round's results page, oldest round first:
+    `{turas, apygardos-numeris, balsai-apygardoje, balsai-pastu, balsai,
+    vieta, saltinis}`. `vieta` is the placing on the page, which is sorted
+    by total votes. 1,002 candidacies carry it; a `Daugiamandatė` candidacy
+    never does.
+  - On a 1996 `Daugiamandatė` candidacy whose list VRK ranked:
+    `porinkiminis-numeris-sarase` (the post-preference order the seats
+    followed), `teigiami-balsai`, `neigiami-balsai`, `reitingo-balai` and
+    `reitingo-saltinis`, from `seim96/rkreitl.htm-<list>.htm`. 662 of the 818
+    list candidacies carry it; the other 156 sit on a list VRK never ranked,
+    or on a coalition member party that ran no list of its own. The by-
+    elections had no list seats at all, so none of their candidacies carries
+    these.
 - **Three card fields sit inside a malformed HTML comment** (see the module
   docstring and `docs/CLI_REFERENCE.md`'s Seimas archive section) and are
   recovered by regex over the raw HTML rather than through DOM parsing:

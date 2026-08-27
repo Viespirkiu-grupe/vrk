@@ -666,6 +666,12 @@ from scraper.elections.pakartotiniai_silutes_2015.results import build_results a
 from scraper.elections.savivaldybiu_2015.results import build_results as build_savivaldybiu_2015_results
 from scraper.elections.savivaldybiu_2011.results import build_results as build_savivaldybiu_2011_results
 from scraper.elections.savivaldybiu_2007.results import build_results as build_savivaldybiu_2007_results
+from scraper.elections.seimo_1996.results import build_results as build_seimo_1996_results
+from scraper.elections.seimo_pakartotiniai_1997_kovo.results import build_results as build_seimo_pakartotiniai_1997_kovo_results
+from scraper.elections.seimo_aukstaitijos_1997_gruodzio.results import build_results as build_seimo_aukstaitijos_1997_gruodzio_results
+from scraper.elections.seimo_pakartotiniai_1998_kovo.results import build_results as build_seimo_pakartotiniai_1998_kovo_results
+from scraper.elections.seimo_nevezio_1998_lapkricio.results import build_results as build_seimo_nevezio_1998_lapkricio_results
+from scraper.elections.seimo_pakartotiniai_1999_kovo.results import build_results as build_seimo_pakartotiniai_1999_kovo_results
 from scraper.shared.anomalies import write_jsonl
 
 FETCHABLE_ELECTION_IDS = [
@@ -810,6 +816,12 @@ RESULTS_ELECTION_IDS = [
     SEIMO_2000_ELECTION_ID,
     SAVIVALDYBIU_2000_ELECTION_ID,
     SAVIVALDYBIU_2002_ELECTION_ID,
+    SEIMO_1996_ELECTION_ID,
+    SEIMO_PAKARTOTINIAI_1997_KOVO_ELECTION_ID,
+    SEIMO_AUKSTAITIJOS_1997_GRUODZIO_ELECTION_ID,
+    SEIMO_PAKARTOTINIAI_1998_KOVO_ELECTION_ID,
+    SEIMO_NEVEZIO_1998_LAPKRICIO_ELECTION_ID,
+    SEIMO_PAKARTOTINIAI_1999_KOVO_ELECTION_ID,
 ]
 
 _RESULTS_BUILDERS = {
@@ -839,6 +851,12 @@ _RESULTS_BUILDERS = {
     SAVIVALDYBIU_2015_ELECTION_ID: build_savivaldybiu_2015_results,
     SAVIVALDYBIU_2011_ELECTION_ID: build_savivaldybiu_2011_results,
     SAVIVALDYBIU_2007_ELECTION_ID: build_savivaldybiu_2007_results,
+    SEIMO_1996_ELECTION_ID: build_seimo_1996_results,
+    SEIMO_PAKARTOTINIAI_1997_KOVO_ELECTION_ID: build_seimo_pakartotiniai_1997_kovo_results,
+    SEIMO_AUKSTAITIJOS_1997_GRUODZIO_ELECTION_ID: build_seimo_aukstaitijos_1997_gruodzio_results,
+    SEIMO_PAKARTOTINIAI_1998_KOVO_ELECTION_ID: build_seimo_pakartotiniai_1998_kovo_results,
+    SEIMO_NEVEZIO_1998_LAPKRICIO_ELECTION_ID: build_seimo_nevezio_1998_lapkricio_results,
+    SEIMO_PAKARTOTINIAI_1999_KOVO_ELECTION_ID: build_seimo_pakartotiniai_1999_kovo_results,
 }
 
 
@@ -2211,7 +2229,7 @@ def build_parser() -> argparse.ArgumentParser:
         "build-results",
         help=(
             "Fetch VRK's results pages for an election whose candidate pages mark no "
-            "winner (2012-2015) and write sitemaps/<election-id>.results.json; "
+            "winner (1996-2015) and write sitemaps/<election-id>.results.json; "
             "parse-anketa-samples joins it into kandidatavimas.isrinktas"
         ),
     )

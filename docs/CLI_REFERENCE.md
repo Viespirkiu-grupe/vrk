@@ -149,7 +149,7 @@ Output:
 ### `build-results`
 
 Fetch VRK's results pages for an election whose candidate pages mark no
-winner — the ten 2012–2015 elections — and write
+winner — every static-page family from 1996 to 2015 — and write
 `sitemaps/<election-id>.results.json`, the map of VRK candidate id → seat
 that `parse-anketa-samples` then joins into `kandidatavimas.isrinktas`.
 Pages are cached under `samples/results/<election-id>/` so a re-run is
@@ -1920,10 +1920,10 @@ python -m scraper sitemap 2012-seimo
 KEEP_SAMPLES=1 scripts/run_election_batches.sh 2012-seimo
 ```
 
-## Elected status for 2012–2015 (`build-results`) Workflow
+## Elected status for 1996–2015 (`build-results`) Workflow
 
-The 2007–2015 static pages carry no winner mark, so the eighteen elections of
-that family (`2007-vasario-25-savivaldybiu`, `2007-spalio-7-seimo-dzukija`, `2008-seimo`, `2009-prezidento`, `2009-ep`, `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai`, `2011-vasario-13-seimo-marijampole`, `2011-vasario-27-savivaldybiu`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`,
+The 1996–2015 static pages carry no winner mark, so the elections of those
+families (`2007-vasario-25-savivaldybiu`, `2007-spalio-7-seimo-dzukija`, `2008-seimo`, `2009-prezidento`, `2009-ep`, `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai`, `2011-vasario-13-seimo-marijampole`, `2011-vasario-27-savivaldybiu`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`,
 `2014-prezidento`, `2014-ep`, the six 2015 elections) get their
 `kandidatavimas.isrinktas` from VRK's results trees
 (`statiniai/puslapiai/<year>_<type>_rinkimai/output_lt/`). The walkers and
@@ -1957,6 +1957,12 @@ reconciliation looked like when the files were built (2026-08-21):
 | `2015-birzelio-7-pakartotiniai-sirvintos-trakai` | same walk, `2015_2_…` tree | 2 mayors, 24 council | clean |
 | `2015-birzelio-21-pakartotiniai-silutes` | `2015_3_…` tree | 1 mayor, 24 council | clean |
 | `2015-lapkricio-8-telsiu-mero` | `2015_4_…` tree | 1 mayor | clean |
+| `1996-spalio-20-seimo` | the `seim96` elected-members page (`rsnl.htm-1.htm`, ids on the row with the nominator and the seat), cross-checked against all 71 + 65 constituency pages, the list results page's mandate column and the 19 `rkreitl` ranking pages; built 2026-08-27 | 137 seated on the night (70 list, 67 constituency: 2 in round one, 65 in the runoff); 120 of them in the corpus | the constituency pages' own verdicts are exactly the members page's constituency half (`constituencyPageDiff` 0); mandate column = list seats; striking each list's constituency winners and taking its top *M* reproduces the published list winners for all 5 mandate-winning lists; all 879 records on a results page, 0 unresolved rows |
+| `1997-kovo-23-seimo-pakartotiniai` | 4 `rapgp20<n>` first-round pages plus the 1997-04-13 Trakų runoff (`rapgpl.htm-204+2.htm`); built 2026-08-27 | 2 (Senkevič outright in Nr. 56, Aleksiūnienė in the Nr. 58 runoff) | 23/23 rows resolved by id; 2 of 4 constituencies `neįvyko`; all four first-round pages are the mojibake capture and are repaired |
+| `1997-gruodzio-21-seimo-pakartotiniai` | `rapgpl.htm-324+1.htm` and `-324+2.htm` | 1 (Velikonis, runoff) | 4/4 rows resolved by id |
+| `1998-kovo-22-seimo-pakartotiniai` | `rapgpl.htm`, `rapgpl2.htm` | 0 (both constituencies `neįvyko`) | 11/11 rows resolved **by name** — the family's one capture whose rows carry no candidate id |
+| `1998-lapkricio-15-seimo-pakartotiniai` | `rapgpl.htm-392+1.htm` | 0 (`neįvyko`) | 11/11 rows resolved by id |
+| `1999-kovo-21-seimo-pakartotiniai` | three `19990321/rapgpl.htm-<n>+1.htm` pages | 0 (all three `neįvyko`) | 22/22 rows resolved by id |
 
 Traps the walkers encode, worth knowing before touching them:
 
@@ -1988,12 +1994,23 @@ Traps the walkers encode, worth knowing before touching them:
   (Trakai), Sp-126 (Šilutė) and Sp-121 (Širvintos mayoral race) are named
   in `savivaldybiu_2015/results.py`; the composition check cannot detect
   them because most of the annulled winners won again in June.
+- **The 1996-1999 archive family's flag is per candidacy**, because its
+  `kandidatavimas` is a list: a constituency win marks every candidacy for
+  that constituency (so a coalition-plus-member-party double nomination
+  carries two `true` rows for one seat), a list win every `Daugiamandatė`
+  one, and everything else is a `false` that VRK's page actually states.
+- **`seimpk/rapgp201.htm` … `204` are mojibake** — that one capture's
+  Windows-1257 bytes were re-encoded as Latin-1 HTML entities. The repair is
+  accepted only when the cp1257 round trip recovers Lithuanian letters, so a
+  correctly-encoded page cannot be damaged by it.
 
 ```bash
 for id in 2007-spalio-7-seimo-dzukija 2008-seimo 2009-prezidento 2009-ep 2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai 2011-vasario-13-seimo-marijampole 2012-seimo 2013-kovo-3-seimo-birzai-zarasai-ukmerge 2014-prezidento 2014-ep \
           2015-kovo-1-seimo-zirmunai 2015-birzelio-7-seimo-varena-eisiskes 2015-lapkricio-8-telsiu-mero \
           2015-birzelio-7-pakartotiniai-sirvintos-trakai 2015-birzelio-21-pakartotiniai-silutes 2015-kovo-1-savivaldybiu \
-          2011-vasario-27-savivaldybiu 2007-vasario-25-savivaldybiu 2002-prezidento 2004-ep 2004-prezidento 2004-seimo 2005-lapkricio-20-seimo-kedainiai; do
+          2011-vasario-27-savivaldybiu 2007-vasario-25-savivaldybiu 2002-prezidento 2004-ep 2004-prezidento 2004-seimo 2005-lapkricio-20-seimo-kedainiai \
+          1996-spalio-20-seimo 1997-kovo-23-seimo-pakartotiniai 1997-gruodzio-21-seimo-pakartotiniai \
+          1998-kovo-22-seimo-pakartotiniai 1998-lapkricio-15-seimo-pakartotiniai 1999-kovo-21-seimo-pakartotiniai; do
   python -m scraper build-results "$id"
 done
 # then re-parse offline; the wrappers pick up sitemaps/<id>.results.json by default

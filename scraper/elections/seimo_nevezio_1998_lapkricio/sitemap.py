@@ -10,10 +10,8 @@ under the `seimpk` directory and phase prefix `10` (`apgtl.htm-10+26.htm`).
 
 The re-run failed too: `rapgpl.htm-392+1.htm` records 11,651 of 38,358 voters
 (30.37%) and closes "Rinkimai apygardoje neįvyko." So no candidate here was
-elected -- but this family publishes no elected marker on the pages it does
-parse, and adding a results reader for it is a decision shared with the other
-1998-1999 by-elections rather than one to take in a single module; see
-`docs/DATASET.md`.
+elected, and every candidacy carries `isrinktas: false` -- a known false, read
+off that page by `results.py`, not an unread field.
 """
 
 from __future__ import annotations

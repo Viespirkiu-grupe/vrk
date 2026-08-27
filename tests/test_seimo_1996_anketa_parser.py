@@ -185,6 +185,26 @@ class Seimo1996AnketaParserTests(unittest.TestCase):
         self.assertEqual(candidacy["nominatorUrl"], "")
         self.assertIsNone(self.butkevicius["normalized"]["kandidatavimas"][0]["iskele-nuoroda"])
 
+    def test_the_results_join_marks_the_won_seat_only(self) -> None:
+        # Andriukaitis won Žirmūnų in the runoff; his list candidacy is a
+        # known false and carries the ranking figures instead of votes.
+        constituency, party_list = self.andriukaitis["normalized"]["kandidatavimas"]
+        self.assertTrue(constituency["isrinktas"])
+        self.assertEqual(constituency["isrinktas-kaip"], "vienmandate")
+        self.assertEqual(constituency["rezultatu-turas"], 2)
+        self.assertTrue(constituency["rezultatu-saltinis"].endswith("rsnl.htm-1.htm"))
+        self.assertEqual([r["turas"] for r in constituency["turai"]], [1, 2])
+        self.assertEqual(constituency["turai"][1]["balsai"], 10746)
+        self.assertIs(party_list["isrinktas"], False)
+        self.assertNotIn("turai", party_list)
+        self.assertEqual(party_list["porinkiminis-numeris-sarase"], 17)
+        self.assertEqual(party_list["teigiami-balsai"], 1739)
+
+    def test_a_candidate_who_won_nothing_is_false_on_every_candidacy(self) -> None:
+        candidacies = self.asmolkov["normalized"]["kandidatavimas"]
+        self.assertEqual([c["isrinktas"] for c in candidacies], [False, False])
+        self.assertEqual(candidacies[0]["turai"][0]["vieta"], 8)
+
     def test_biography_text_is_captured(self) -> None:
         self.assertIn("Gimė 1960", self.butkevicius["rawData"]["biography"]["text"])
         self.assertIn(

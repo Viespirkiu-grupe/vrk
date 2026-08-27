@@ -132,6 +132,13 @@ class SeimoNevezio1998LapkricioAnketaParserTests(unittest.TestCase):
         # carries the key at all.
         self.assertNotIn("kita-apie-save", counts)
 
+    def test_the_failed_election_makes_isrinktas_a_known_false(self) -> None:
+        terleckas = self._parse("terleckas-antanas")["normalized"]["kandidatavimas"][0]
+        self.assertIs(terleckas["isrinktas"], False)
+        self.assertEqual(terleckas["turai"][0]["turas"], 1)
+        self.assertEqual(terleckas["turai"][0]["balsai"], 5002)
+        self.assertEqual(terleckas["turai"][0]["vieta"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()

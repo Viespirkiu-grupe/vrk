@@ -189,17 +189,25 @@ every defect listed in `docs/DATASET.md`.
 
 ### If the pages mark no winner
 
-The 2009–2015 static layout carries no elected marker of any kind. For those
-elections electedness is a separate join: a `results.py` in the module
+Every static layout from 1996 to 2015 carries no elected marker of any kind.
+For those elections electedness is a separate join: a `results.py` in the module
 configures which VRK results tree to walk (`scraper/shared/election_results.py`
 has walkers for the Seimas elected-members page, constituency pages with
 rounds, the EP members page, the presidential final-results page and the
-municipal results/ranking pages), `python -m scraper build-results <id>`
+municipal results/ranking pages; `scraper/shared/seimo_archive_1990s_results.py`
+reads the 1996-1999 archive's `rapgpl` pages), `python -m scraper build-results <id>`
 writes `sitemaps/<id>.results.json`, and the era parser joins it into
 `kandidatavimas.isrinktas`. Read the builder's reconciliation stats before
 shipping: every winner must resolve to a VRK candidate id that is in the
 sitemap, and seat counts must match what VRK declares — or the difference
 must be a named annulment, not a guess.
+
+Whether a non-winner gets `false` or `null` is a question about the *source*,
+not a default. `null` means the results were never read; `false` means they
+were and this candidate is not among the winners. The 1996-1999 archive pages
+state an outcome for every constituency, `neįvyko` included, so that family
+emits `false` throughout — reading only the elections that seated someone
+would have made a null mean two different things depending on the election.
 
 ## 5. Tests and docs
 

@@ -25,9 +25,8 @@ this era.
 
 All three constituencies failed the turnout threshold; Nr. 10 drew 7,967 of
 40,215 (19.81%), the lowest of any election in this family. Each `rapgpl` page
-closes "Rinkimai apygardoje neįvyko", so `isrinktas` is a known `false` for
-all 22 -- but this family publishes no elected marker on the pages it parses;
-see `docs/DATASET.md` for where that decision stands.
+closes "Rinkimai apygardoje neįvyko", so all 22 candidacies carry a known
+`isrinktas: false`, read off those pages by `results.py`.
 """
 
 from __future__ import annotations

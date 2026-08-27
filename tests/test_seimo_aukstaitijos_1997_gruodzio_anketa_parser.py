@@ -36,6 +36,17 @@ class SeimoAukstaitijos1997GruodzioAnketaParserTests(unittest.TestCase):
         ):
             self._parse(candidate_id)
 
+    def test_the_runoff_winner_carries_the_results_join(self) -> None:
+        velikonis = self._parse("velikonis-virmantas")["normalized"]["kandidatavimas"][0]
+        self.assertTrue(velikonis["isrinktas"])
+        self.assertEqual(velikonis["isrinktas-kaip"], "vienmandate")
+        self.assertEqual(velikonis["rezultatu-turas"], 2)
+        self.assertEqual([r["turas"] for r in velikonis["turai"]], [1, 2])
+        self.assertEqual(velikonis["turai"][1]["balsai"], 16835)
+        # The candidate who lost the runoff is a known false, not a null.
+        zekoniene = self._parse("zekoniene-vanda")
+        self.assertIs(zekoniene["normalized"]["kandidatavimas"][0]["isrinktas"], False)
+
 
 if __name__ == "__main__":
     unittest.main()
