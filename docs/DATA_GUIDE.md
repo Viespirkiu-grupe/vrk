@@ -66,11 +66,19 @@ see the traps below.
 
 **Elected.** A candidate was elected iff `profilis.pastaba` starts with
 `Išrink` (`Išrinktas…`/`Išrinkta…`) **or** `kandidatavimas.isrinktas` is
-`true`. The second form is the 2012–2015 family, whose pages mark no winner:
+`true`. The second form is the 1996–2015 families, whose pages mark no winner:
 there `pastaba` is always null and the flag is joined in from VRK's results
 trees (`isrinktasKaip` names the seat, `rezultatuSaltinis` the page; a
 `false` means the results were consulted and the candidate is not among the
-winners, a `null` that no results file exists). Three traps:
+winners, a `null` that no results file exists). Four traps:
+
+- *`kandidatavimas` is a list in the 1996-1999 Seimas archive family*, one
+  entry per candidacy — a 1996 candidate could stand in a constituency and on
+  a party list at once. Read `any(c["isrinktas"] for c in kandidatavimas)`,
+  not `kandidatavimas["isrinktas"]`, and expect kebab-case keys there
+  (`isrinktas-kaip`, `rezultatu-saltinis`, `rezultatu-turas`) rather than the
+  camelCase the other families use. `isrinktas` is never null in that family:
+  its pages state an outcome for every constituency, `neįvyko` included.
 
 - *Presidential:* `pastaba` is non-null for every candidate (`Dalyvavo
   I ture` and the like), so non-null ≠ elected there.

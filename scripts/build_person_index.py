@@ -104,6 +104,14 @@ def elected_note_of(record: dict) -> str | None:
     if isinstance(candidacy, dict) and candidacy.get("isrinktas") is True:
         seat = candidacy.get("isrinktasKaip")
         return f"Išrinktas ({seat})" if seat else "Išrinktas"
+    # The 1996-1999 Seimas archive family carries the same flag, but its
+    # candidacy is a *list* under `normalized` — a 1996 candidate could stand
+    # in a constituency and on a party list at once — so the record is elected
+    # if any one of its candidacies is, and the seat is that candidacy's.
+    for entry in normalized.get("kandidatavimas") or []:
+        if isinstance(entry, dict) and entry.get("isrinktas") is True:
+            seat = entry.get("isrinktas-kaip")
+            return f"Išrinktas ({seat})" if seat else "Išrinktas"
     return None
 
 

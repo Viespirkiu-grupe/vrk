@@ -131,6 +131,12 @@ class SeimoPakartotiniai1999KovoAnketaParserTests(unittest.TestCase):
         # HTML), so no record carries the key.
         self.assertNotIn("kita-apie-save", counts)
 
+    def test_the_failed_election_makes_isrinktas_a_known_false(self) -> None:
+        sablinskas = self._parse("sablinskas-eduardas")["normalized"]["kandidatavimas"][0]
+        self.assertIs(sablinskas["isrinktas"], False)
+        self.assertEqual(sablinskas["turai"][0]["balsai"], 2735)
+        self.assertEqual(sablinskas["turai"][0]["apygardos-numeris"], 10)
+
 
 if __name__ == "__main__":
     unittest.main()

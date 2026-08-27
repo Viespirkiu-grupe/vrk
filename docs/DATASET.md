@@ -78,9 +78,9 @@ election was re-parsed offline the same day.
 | `2025-kovo-16-meru` | 14 | 2 | 0 | 10 |
 | `2023-kovo-5-savivaldybiu-tarybu-ir-meru` | 13796 | 1557 | 541 | 433 |
 | `2019-kovo-3-savivaldybiu-tarybu` | 13666 | 1502 | 244 | 410 |
-| `1996-spalio-20-seimo` | 879 | 0 | 0 | 0 |
-| `1997-kovo-23-seimo-pakartotiniai` | 23 | 0 | 0 | 0 |
-| `1997-gruodzio-21-seimo-pakartotiniai` | 4 | 0 | 0 | 0 |
+| `1996-spalio-20-seimo` | 879 | 120 | 0 | 0 |
+| `1997-kovo-23-seimo-pakartotiniai` | 23 | 2 | 0 | 0 |
+| `1997-gruodzio-21-seimo-pakartotiniai` | 4 | 1 | 0 | 0 |
 | `1998-kovo-22-seimo-pakartotiniai` | 11 | 0 | 0 | 0 |
 | `1998-lapkricio-15-seimo-pakartotiniai` | 11 | 0 | 0 | 0 |
 | `1999-kovo-21-seimo-pakartotiniai` | 22 | 0 | 0 | 0 |
@@ -106,7 +106,7 @@ election was re-parsed offline the same day.
 | `2005-lapkricio-20-seimo-kedainiai` | 5 | 1 | 0 | 0 |
 | `2000-seimo` | 1271 | 141 | 5 | 0 |
 | `2000-kovo-19-savivaldybiu-tarybu` | 9879 | 1433 | 9 | 0 |
-| **total** | **113002** | **11729** | **1634** | **20199** |
+| **total** | **113002** | **11852** | **1634** | **20199** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
@@ -115,13 +115,16 @@ the presidential elections**, where every candidate carries a participation
 note (`Dalyvavo I ture`, `Dalyvavo II ture`, or `Išrinktas II ture` for the
 winner). Counting non-null `pastaba` there reports 9 and 8 "elected" for a
 race one person won; match on the `Išrink` prefix, not on presence. The
-2007–2015 pages mark no winner at all, so for those seventeen elections the column
+1996–2015 pages mark no winner at all, so for those twenty-three elections the column
 counts `kandidatavimas.isrinktas == true` instead (and so does the 2000
 row: its cards do carry a winner note, on 139 of the 141 — the other two
 pages are VRK's pre-results capture — but the flag is the results join) — the flag joined in from
 VRK's results trees (`python -m scraper build-results <id>`; the
 reconciliation behind each file is in `docs/CLI_REFERENCE.md`'s results
-section). The 48 annulled March 2015 council winners in Šilutė and Trakai
+section). In the six 1996-1999 Seimas archive elections `kandidatavimas` is a
+**list**, so the column counts a record with *any* elected candidacy: 123
+records over 126 elected candidacies, the difference being three
+double-nominated constituency winners. The 48 annulled March 2015 council winners in Šilutė and Trakai
 are not counted; the June repeat elections' rows carry those seats. The
 2004 EP row counts 14 for 13 seats: Prunskienė, whose mandate VRK declared
 terminated at her request eight days after the vote, and Didžiokas, whom
@@ -396,29 +399,95 @@ corpus.
 All three constituencies failed the turnout threshold; Nr. 10 drew 7,967 of
 40,215 (**19.81%**), the lowest of any election in this family.
 
-### Elected status in the 1996-1999 Seimas archive: where it stands
+### The 2026-08-27 elected-status join for the 1996-1999 Seimas archive
 
-None of the family's six elections emits `isrinktas`, and this build did not
-change that. The reason is that the family is **mixed**, so the cheap half of
-the job would produce an inconsistent corpus:
+GitHub issue #79, and the last gap in the family. All six elections now emit
+`kandidatavimas[].isrinktas`, joined from VRK's own results pages by
+`python -m scraper build-results <id>`. **950 records, 1,820 candidacies, every
+one of them a read verdict; 123 records elected.** Nothing outside
+`kandidatavimas` changed on any record.
 
-- **1996 general** elected 141 members across two rounds
-  (`seim96/rapgs1l.htm`, `rapgs2l.htm`) *plus* a multi-mandate list allocation
-  (`rdl.htm`) — 71 constituencies, two rounds, and a party-list seat
-  distribution to resolve for 879 candidates.
-- **1997-12 Aukštaitijos repeat** went to a runoff and elected someone:
-  `seimpk/rapgpl.htm-324+2.htm` closes "Seimo nariu išrinktas ...".
-- **1998-03, 1998-11 and 1999-03** elected nobody; each `rapgpl` page states
-  "Rinkimai apygardoje neįvyko", so `isrinktas` is a known `false` for those
-  44 candidates.
+**The flag is per candidacy, not per record**, because this family's
+`kandidatavimas` is a list: a 1996 candidate could stand in a constituency
+*and* on a party list, and 51 of the 879 were nominated twice over — by a
+coalition and by one of its member parties — so the card prints four rows for
+two real candidacies. A constituency win marks every row for that constituency
+(both halves of a double nomination describe the same won seat); a list win
+marks every `Daugiamandatė` row. 123 elected records carry 126 elected
+candidacies, the three extra being double-nominated constituency winners.
 
-Reading only the three failures is a few hours and would leave 906 records
-with no elected marker beside 44 with one. Doing it properly means the 1996
-two-round-plus-list resolution, which is its own piece of work — so it is
-filed as its own ticket rather than folded into a by-election build. The
-results pages are simple and stable (per-candidate ballot-box / postal / total
-counts under a constituency heading), and every one of them is on VRK's static
-archive, so nothing is at risk by waiting.
+**Every non-winner is a known `false`, not a null.** These pages state an
+outcome for every constituency in the family, `neįvyko` included, which is
+what made reading them worth doing at all.
+
+| election | records | elected | source |
+|---|---:|---:|---|
+| `1996-spalio-20-seimo` | 879 | 120 | `seim96/rsnl.htm-1.htm` |
+| `1997-kovo-23-seimo-pakartotiniai` | 23 | 2 | `seimpk/rapgp20<n>.htm`, `rapgpl.htm-204+2.htm` |
+| `1997-gruodzio-21-seimo-pakartotiniai` | 4 | 1 | `seimpk/rapgpl.htm-324+2.htm` |
+| `1998-kovo-22-seimo-pakartotiniai` | 11 | 0 | `seimpk/rapgpl.htm`, `rapgpl2.htm` |
+| `1998-lapkricio-15-seimo-pakartotiniai` | 11 | 0 | `seimpk/rapgpl.htm-392+1.htm` |
+| `1999-kovo-21-seimo-pakartotiniai` | 22 | 0 | `19990321/rapgpl.htm-394+1.htm` and two more |
+
+**The 1997-03-23 repeat elected two people, and no earlier note on this family
+said so.** Jan Senkevič took Vilniaus-Šalčininkų (Nr. 56) outright — its page
+closes "Į Seimo narius išrinktas Jan Senkevič" — and Danutė Aleksiūnienė took
+Trakų (Nr. 58) in a runoff held three weeks later, on 1997-04-13
+(`rapgpl.htm-204+2.htm`). VRK's `seimpk` index lists that runoff as its own
+item; it is this election's second round, so it is read here. The issue's own
+table had the election down as an undecided runoff.
+
+**Two things about the pages turned out better and worse than #79 assumed.**
+
+- *Better:* the results rows carry VRK's candidate id (`kandvl.htm-<ID>.htm`,
+  the sitemap's own key), so the join is by id, not by name — 939 of the 950
+  records' rows, in fact. The exception is the 1998-03-22 pair
+  (`seimpk/rapgpl.htm`, `rapgpl2.htm`), a hand-built capture whose rows link
+  `kandvl.htm`, `kandvl2.htm`, … with no id at all; those 11 rows are matched
+  by name inside their own constituency, comparing the name as an unordered
+  token set because the results pages print it given-name-first and the
+  listing surname-first.
+- *Better again:* **the 1996 list allocation did not have to be derived.**
+  `seim96/rsnl.htm-1.htm`, "Kandidatai, išrinkti Seimo nariais", rows all 137
+  members with their anketa link, their nominator and their seat ("pagal
+  sąrašą", "I ture", "II ture"). It is the source; the allocation arithmetic
+  is only a cross-check, and it reconciles — striking each ranked list's
+  constituency winners and taking the top *M* of what is left reproduces the
+  published list winners for all five lists that won mandates.
+- *Worse:* the four 1997-03 pages (`seimpk/rapgp201.htm` … `204`) are
+  **mojibake**. That capture's Windows-1257 bytes were re-encoded as Latin-1
+  HTML entities, so "Mečislav Vaškovič" arrives as
+  `Me&egrave;islav Va&eth;kovi&egrave;`. `repair_baltic_text` reverses it, and
+  only accepts the round trip when it actually recovers Lithuanian letters, so
+  a correctly-encoded page cannot be damaged by it. They also head their table
+  "Paduotų balsų skaičius" instead of "Gautų balsų skaičius" and carry no
+  round heading at all.
+
+**137 members, not 141.** The four constituencies below the turnout threshold
+in 1996 — Naujosios Vilnios (10), Vilniaus-Šalčininkų (56), Vilniaus-Trakų
+(57), Trakų (58) — are *exactly* the four of the 1997-03-23 repeat, which is
+the cross-check that the two elections' pages agree with each other.
+
+**17 of the 137 are not in the corpus.** The sitemap is built from the
+constituency listings, so a member elected on a list alone has no candidate
+record to carry the flag. That is why 1996's elected count is 120 rather than
+137, and it is reported in the results file's `membersNotInSitemap` rather
+than silently dropped.
+
+**What else the join brings in.** Every constituency candidacy gets its votes
+per round (`turai`: ballot-box, postal, total, placing, source), 1,002 of them;
+every 1996 list candidacy on a ranked list gets its post-preference rank,
+positive and negative preference votes and rating points, 662 of them. The
+other 156 list candidacies sit on lists VRK never ranked (five of them) or on
+a coalition member party that did not run a list of its own (two), so the
+absence is the page's, not the parser's. The ranking page also reprints each
+candidate's pre-election list number: it agrees with the card on all 662.
+
+Reconciliation, all clean on the shipping build: `constituencyPageDiff` 0 (the
+71 + 65 constituency pages' own verdicts are exactly the members page's
+constituency half), `seatMismatches` 0, `listMandateMismatches` 0,
+`allocationMismatches` 0 over 5 lists, `unresolvedRows` 0 and
+`candidatesWithoutVotes` 0 across all six elections.
 
 ### The 2026-08-26 build of the 1998 March Seimo by-election
 
@@ -461,8 +530,9 @@ nothing at all.
 **Both constituencies failed the turnout threshold.** Nr. 10 (`rapgpl.htm`)
 14,522 of 39,910 (36.39%); Nr. 57 (`rapgpl2.htm`) 10,742 of 38,135 (28.17%),
 each closing "Rinkimai apygardoje neįvyko". `isrinktas` is a known `false` for
-all 11, and as with the November re-run the records carry no elected marker —
-that decision belongs to the family, and #24 is the last election of it.
+all 11 — carried on every candidacy since the family's results join landed on
+2026-08-27 (#79, below); at the time of this build the records carried no
+elected marker at all.
 
 ### The 2026-08-26 build of the 1998 Nevėžio Seimo by-election
 
@@ -504,12 +574,10 @@ income all present on 11 of 11, which no other election in this family manages
 
 **The re-run failed too.** `rapgpl.htm-392+1.htm` records 11,651 of 38,358
 voters (30.37%) and closes "Rinkimai apygardoje neįvyko", so no one here was
-elected — `isrinktas` is a known `false` rather than a null. **The records
-carry no elected marker anyway**, because this family ships no `results.py`
-and none of its other three elections emits one. Adding results reading to the
-family is a decision shared with the other two 1998-1999 by-elections (#21,
-#24) and was left to that pass rather than taken here for one election; the
-votes are on VRK's page and nothing is lost by waiting.
+elected — `isrinktas` is a known `false` rather than a null. The records
+carried no elected marker at the time of this build, because the family shipped
+no `results.py`; that was settled family-wide on 2026-08-27 (#79, below), and
+this election's page is now read for both the verdict and the votes.
 
 ### The 2026-08-26 retention pass over the archive declarations
 
@@ -1309,6 +1377,10 @@ each now has one.
   themselves still say nothing. The one derivation that is not VRK's own
   sentence is Žirmūnai 2015, whose round-two page states no verdict; the
   winner is the runoff plurality, recorded as such in the results file.
+- ~~The 1996-1999 Seimas archive family emits no `isrinktas` at all~~ —
+  closed 2026-08-27 by issue #79: all six elections now carry a per-candidacy
+  true/false on all 950 records, read from VRK's `rapgpl` results pages and,
+  for 1996, from its elected-members page. See the join's own section above.
 - One 2015 candidacy has no questionnaire at all: VRK published Marija Puč's
   Trakai council page as `Rengiama`. Its record keeps the profile card and
   carries the corpus's only `AnketaNotPublished` warning. The same person's
@@ -1382,7 +1454,9 @@ each now has one.
   and the name are in the same word order for these five elections.
 - The 1996-1998 Seimas archive pages (`1996-spalio-20-seimo`,
   `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`)
-  publish no elected markers, no private-interest declarations, and — unlike
+  publish no elected markers *on the candidate page* (elected status is joined
+  in from VRK's results pages since 2026-08-27, #79), no private-interest
+  declarations, and — unlike
   every other era, including 2015 — **no birth-date field**. They do publish a
   questionnaire, which this family's parser did not read until 2026-08-26; see
   the `#69` entry below. (The linked

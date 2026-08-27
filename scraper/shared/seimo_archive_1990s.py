@@ -52,6 +52,14 @@ own names; see that module for the mapping and for why section III's total is
 not always trusted. The free-text biography page (`biogr.htm`) is still
 captured and stored verbatim rather than structured.
 
+Nothing on the candidate page marks a winner. Elected status and votes come
+from VRK's `rapgpl` results pages instead, read by
+`scraper/shared/seimo_archive_1990s_results.py` and written onto each entry of
+`normalized.kandidatavimas` -- per candidacy, because a 1996 candidate could
+stand in a constituency and on a party list at once. The join happens here
+only when the election's `sitemaps/<id>.results.json` exists; without one the
+candidacies keep their pre-#79 shape rather than claiming a false.
+
 Callers pass in the directory, phase and constituency numbers explicitly
 rather than importing them, matching `scraper/shared/municipal_sitemap.py`.
 """
@@ -80,6 +88,11 @@ from scraper.shared.archive_1990s_card import (
 from scraper.shared.deklaracija_archive_1990s import parse_declaration
 from scraper.shared.files import slugify, write_candidate_record, write_json
 from scraper.shared.http import fetch_text
+from scraper.shared.seimo_archive_1990s_results import (
+    apply_results,
+    candidate_id_from_url,
+    load_results_details,
+)
 
 VRK_STATINIAI_BASE = "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/"
 
@@ -751,6 +764,7 @@ def build_candidate_record(
     entry: dict[str, Any],
     samples_root: Path,
     election_id: str,
+    results: dict[str, Any] | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     candidate_dir = samples_root / candidate_id
     candidate_html = (candidate_dir / "candidate.html").read_text(encoding="utf-8")
@@ -941,6 +955,30 @@ def build_candidate_record(
         **({"turto-ir-pajamu-deklaracijos": declaration} if declaration else {}),
     }
 
+    # Elected status, votes and (1996 only) the list ranking, joined in from
+    # VRK's results pages when `python -m scraper build-results <id>` has
+    # written the election's results file. Without one the candidacies keep
+    # their pre-#79 shape and say nothing about the outcome, rather than
+    # claiming a false; with one, every candidacy carries a `isrinktas` that
+    # is a read verdict on both sides -- these pages state an outcome for
+    # every constituency of the family, `neįvyko` included.
+    for problem in apply_results(
+        normalized["kandidatavimas"],
+        candidate_id_from_url(entry["url"]),
+        results or {},
+    ):
+        anomalies.append(
+            build_anomaly_event(
+                event_type=problem["eventType"],
+                severity="warning",
+                stage="parse",
+                election_id=election_id,
+                candidate_id=candidate_id,
+                source_url=entry["url"],
+                detail=problem["detail"],
+            )
+        )
+
     # The listing table is headed "Pavardė, vardas" and prints the name
     # surname-first ("Kubilius Andrius"); the candidate page's own heading
     # prints it given-name-first ("Andrius Kubilius"), which is the order
@@ -965,11 +1003,13 @@ def parse_anketa_samples(
     sitemap_path: Path,
     samples_root: Path,
     output_root: Path,
+    results_path: Path | None = None,
 ) -> list[dict[str, Any]]:
     # anomalies.jsonl is written by cli.py's generic parse-anketa-samples
     # handler (same as every other election module) from the `anomalies` key
     # in each returned result, not here.
     entries_by_id = _load_sitemap_entries_by_candidate_id(sitemap_path)
+    results_data = load_results_details(results_path)
 
     if candidate_ids:
         target_ids = candidate_ids
@@ -985,7 +1025,9 @@ def parse_anketa_samples(
         entry = entries_by_id.get(candidate_id)
         if entry is None:
             raise ValueError(f"Candidate id not found in sitemap: {candidate_id}")
-        record, anomalies = build_candidate_record(candidate_id, entry, samples_root, election_id)
+        record, anomalies = build_candidate_record(
+            candidate_id, entry, samples_root, election_id, results_data
+        )
         output_path = output_root / f"{candidate_id}-{election_id}.json"
         write_candidate_record(output_path, record)
 

@@ -135,6 +135,28 @@ class GroupingTests(unittest.TestCase):
         self.assertNotIn("w", entries[1])
         self.assertNotIn("w", entries[2])
 
+    def test_archive_family_list_shaped_candidacy_becomes_the_win_flag(self):
+        # The 1996-1999 Seimas archive family's kandidatavimas is a list under
+        # `normalized` — a 1996 candidate could stand in a constituency and on
+        # a list at once — so any elected candidacy wins the record, and a
+        # record whose candidacies are all false does not.
+        winner = _record("A B", "1970-01-01")
+        winner["normalized"]["kandidatavimas"] = [
+            {"apygarda": "Žirmūnų", "isrinktas": False},
+            {"apygarda": "Daugiamandatė", "isrinktas": True, "isrinktas-kaip": "daugiamandate"},
+        ]
+        loser = _record("A B", "1970-01-01")
+        loser["normalized"]["kandidatavimas"] = [
+            {"apygarda": "Naujosios Vilnios", "isrinktas": False},
+            {"apygarda": "Daugiamandatė", "isrinktas": False},
+        ]
+        index = self._build(
+            [("1996-spalio-20-seimo", "a-b", winner), ("1999-kovo-21-seimo-pakartotiniai", "a-b", loser)]
+        )
+        entries = index["people"][0]["e"]
+        self.assertTrue(entries[0].get("w"))
+        self.assertNotIn("w", entries[1])
+
     def test_litas_declarations_are_converted_to_euro_and_flagged(self):
         # The 2012-2015 pages declare in litas; the index converts at the
         # irrevocable 3.4528 Lt/€ changeover rate so a person's series stays

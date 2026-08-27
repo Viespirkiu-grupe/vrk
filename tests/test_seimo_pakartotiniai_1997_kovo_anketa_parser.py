@@ -58,6 +58,29 @@ class SeimoPakartotiniai1997KovoAnketaParserTests(unittest.TestCase):
         self.assertEqual(anketa["gimimo-vieta"], "Vilniaus rajonas")
         self.assertEqual(anketa["gimimo-vietos-saltinis"], "biografijos-tekstas")
 
+    def test_the_two_winners_and_a_loser_carry_the_results_join(self) -> None:
+        # This election seated two people: Senkevič outright in Nr. 56, and
+        # Aleksiūnienė in the Trakų (Nr. 58) runoff held on 1997-04-13.
+        senkevic = self._parse("senkevic-jan")["normalized"]["kandidatavimas"][0]
+        self.assertTrue(senkevic["isrinktas"])
+        self.assertEqual(senkevic["isrinktas-kaip"], "vienmandate")
+        self.assertEqual(senkevic["rezultatu-turas"], 1)
+        self.assertTrue(senkevic["rezultatu-saltinis"].endswith("rapgp202.htm"))
+
+        aleksiuniene = self._parse("aleksiuniene-danute")["normalized"]["kandidatavimas"][0]
+        self.assertTrue(aleksiuniene["isrinktas"])
+        self.assertEqual(aleksiuniene["rezultatu-turas"], 2)
+        self.assertEqual([r["turas"] for r in aleksiuniene["turai"]], [1, 2])
+        self.assertEqual(aleksiuniene["turai"][1]["balsai"], 7222)
+
+        # The mojibake capture's names are repaired before the join, so this
+        # candidate resolves at all: his row reads "Va&eth;kovi&egrave;".
+        vaskovic = self._parse("vaskovic-mecislav")["normalized"]["kandidatavimas"][0]
+        self.assertFalse(vaskovic["isrinktas"])
+        self.assertEqual(vaskovic["turai"][0]["balsai"], 5943)
+        self.assertEqual(vaskovic["turai"][0]["vieta"], 1)
+        self.assertNotIn("isrinktas-kaip", vaskovic)
+
 
 if __name__ == "__main__":
     unittest.main()

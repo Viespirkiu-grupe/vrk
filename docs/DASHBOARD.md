@@ -52,9 +52,13 @@ convention of reusing key names where questions match; biography-era splits
 the map. Extending the comparison is editing `FIELD_MAP` in the page.
 
 **Won flag.** A candidacy is marked won (`"w": true`) when the record's
-`profilis.pastaba` starts with `Išrink` or — for the 2012–2015 family, whose
+`profilis.pastaba` starts with `Išrink` or — for the 1996–2015 families, whose
 pages mark no winner — when `kandidatavimas.isrinktas` is `true`, the flag
 joined in from VRK's results trees (`python -m scraper build-results <id>`).
+In the 1996-1999 Seimas archive family `kandidatavimas` is a **list**, one
+entry per candidacy, so the record counts as won if any of its candidacies is;
+that is the one place the index reads the flag out of a list rather than an
+object.
 
 **Currency.** The 2012–2015 pages declare assets and income in litas
 (`turto-ir-pajamu-deklaracijos.valiuta` is `"Lt"` on those records); 2016 on

@@ -134,6 +134,17 @@ class SeimoPakartotiniai1998KovoAnketaParserTests(unittest.TestCase):
             with self.subTest(absent):
                 self.assertNotIn(absent, counts)
 
+    def test_the_failed_election_makes_isrinktas_a_known_false(self) -> None:
+        # Both constituencies closed "Rinkimai apygardoje neįvyko", so every
+        # candidacy is false rather than null. These two pages are also the
+        # family's only results capture with no candidate ids on its rows, so
+        # the votes below arrived through the name join.
+        paulauskas = self._parse("paulauskas-arturas")["normalized"]["kandidatavimas"][0]
+        self.assertIs(paulauskas["isrinktas"], False)
+        self.assertNotIn("isrinktas-kaip", paulauskas)
+        self.assertEqual(paulauskas["turai"][0]["balsai"], 12851)
+        self.assertEqual(paulauskas["turai"][0]["vieta"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()

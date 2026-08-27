@@ -25,9 +25,9 @@ Two things about this election that look like scrape failures and are not:
 - **Both constituencies failed the turnout threshold.** `rapgpl.htm` gives
   Nr. 10 14,522 of 39,910 (36.39%) and `rapgpl2.htm` gives Nr. 57 10,742 of
   38,135 (28.17%), each closing "Rinkimai apygardoje neįvyko." No one was
-  elected, so `isrinktas` is a known `false` -- but this family publishes no
-  elected marker on the pages it parses, and adding a results reader is a
-  decision for the family rather than for one module; see `docs/DATASET.md`.
+  elected, so every candidacy carries a known `isrinktas: false`, read off
+  those two pages by `results.py` -- which is also the family's one results
+  capture with no candidate ids on its rows.
 """
 
 from __future__ import annotations
