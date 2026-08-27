@@ -440,7 +440,7 @@ table had the election down as an undecided runoff.
 **Two things about the pages turned out better and worse than #79 assumed.**
 
 - *Better:* the results rows carry VRK's candidate id (`kandvl.htm-<ID>.htm`,
-  the sitemap's own key), so the join is by id, not by name — 949 of the 950
+  the sitemap's own key), so the join is by id, not by name — 939 of the 950
   records' rows, in fact. The exception is the 1998-03-22 pair
   (`seimpk/rapgpl.htm`, `rapgpl2.htm`), a hand-built capture whose rows link
   `kandvl.htm`, `kandvl2.htm`, … with no id at all; those 11 rows are matched
