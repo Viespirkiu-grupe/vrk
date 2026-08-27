@@ -1,15 +1,22 @@
-"""Shared parsing for the 1996-1998 archived Seimas election pages.
+"""Shared parsing for the 1996-1999 archived Seimas election pages.
 
 VRK's pre-2000 Seimas election pages (single-member constituency listings and
 candidate detail pages) live under a handful of static-HTML directories --
 `seim96` for the 1996 general election, `seimpk` for the 1997-1998 repeat
-elections in individual constituencies -- captured by Teleport Pro from the
-original Oracle-backed CGI site (`lrs.lt/cgi-bin/ora7dbcgi/...`). Three
-elections share this shape so far: the 1996 general election and the
-March/December 1997 by-elections. They differ only in which directory and
-which "phase" prefix (the first number in `apgtl.htm-<phase>+<constituency>.htm`)
-and constituency numbers they target -- the page markup itself is identical in
+elections in individual constituencies, and `19990321` for the March 1999 one
+-- captured by Teleport Pro from the original Oracle-backed CGI site
+(`lrs.lt/cgi-bin/ora7dbcgi/...`). Six elections share this shape: the 1996
+general election and the March/December 1997, March/November 1998 and March
+1999 by-elections. They differ only in which directory and which "phase"
+prefix (the first number in `apgtl.htm-<phase>+<constituency>.htm`) and
+constituency numbers they target -- the page markup itself is identical in
 structure across all of them.
+
+**A date-named directory says nothing about the page era.** `19990321` follows
+the same convention as `20000319` (`savivaldybiu_2000`) and `20001008`
+(`seimo_2000`), which are the *next* layout generation -- but its pages are
+these. Callers pass the directory in, so the two are independent; check the
+markup, not the directory name.
 
 The candidate detail page (`kandvl.htm`) carries a data-corrupting quirk: a
 malformed HTML comment (opened by a broken `<!--sql format>` marker left by a

@@ -18,7 +18,7 @@ never touched by a full run.
 
 ## Inventory
 
-113,024 candidate records across 53 elections, 1996–2025, with **zero fetch
+113,046 candidate records across 54 elections, 1996–2025, with **zero fetch
 failures** other than three 2011, three 2007, two 2000 and one 2002
 candidate pages VRK never published (see Known gaps).
 
@@ -83,6 +83,7 @@ election was re-parsed offline the same day.
 | `1997-gruodzio-21-seimo-pakartotiniai` | 4 | 0 | 0 | 0 |
 | `1998-kovo-22-seimo-pakartotiniai` | 11 | 0 | 0 | 0 |
 | `1998-lapkricio-15-seimo-pakartotiniai` | 11 | 0 | 0 | 0 |
+| `1999-kovo-21-seimo-pakartotiniai` | 22 | 0 | 0 | 0 |
 | `1997-kovo-23-savivaldybiu-tarybu` | 6276 | 0 | 0 | 0 |
 | `1997-birzelio-29-svenciniu-tarybos-pakartotiniai` | 110 | 0 | 0 | 0 |
 | `2012-seimo` | 1927 | 139 | 45 | 1927 |
@@ -361,6 +362,63 @@ the two blocks that come from the retained page — through the same
 Seimas elections and the Švenčionys repeat retained everything and were
 re-parsed normally. **That gap was closed the same week — see the retention
 pass below — and the election has since been re-parsed properly.**
+
+### The 2026-08-26 build of the 1999 Seimo by-election
+
+GitHub issue #24 — the last election of the 1996-1998 Seimas archive family.
+VRK re-ran the vote in three constituencies at once on 1999-03-21 (Naujosios
+Vilnios No. 10, Nevėžio No. 26, Vilniaus Trakų No. 57), named as one election
+on its own index page. **22 candidates (7 + 8 + 7), the complete field, 0 fetch
+failures, 0 anomalies.**
+
+**The family's first directory outside `seim96`/`seimpk`.** It is `19990321` —
+the date-named convention `savivaldybiu_2000` (`20000319`) and `seimo_2000`
+(`20001008`) also follow, which are the *next* layout generation. The pages are
+still this family's, so a date-named directory says nothing about the page era;
+the shared module takes the directory as a parameter and needed no change. A
+test pins that, because getting it backwards would send a future election to
+the wrong parsers.
+
+**The most complete of the four by-elections of this era**: all 22 link both a
+biography and a declaration, where March 1998 links only 2 declarations of 11.
+Coverage over the 22, each count reconciled against the raw cards:
+`gimimo-metai` 21; `issilavinimas` and `uzsienio-kalbos` 21; `tautybe`,
+`pagrindine-darboviete` and `seimos-nariai` 20; `vaiku-vardai-pavardes` 19;
+`gimimo-vieta` and `sutuoktinio-vardas-pavarde` and `visuomenine-veikla` 16;
+`gimimo-data` 15; `seimine-padetis` 12; `anksciau-isrinktas` 7;
+`mokslo-laipsnis` 2; `pedagoginis-vardas` 1. No card prints "Ką dar norėtų
+parašyti apie save" (0 of 22).
+
+Of the 16 birthplaces, 10 come from the card and **6 from the biography
+fallback** — the largest contribution that fallback makes anywhere in the
+corpus.
+
+All three constituencies failed the turnout threshold; Nr. 10 drew 7,967 of
+40,215 (**19.81%**), the lowest of any election in this family.
+
+### Elected status in the 1996-1999 Seimas archive: where it stands
+
+None of the family's six elections emits `isrinktas`, and this build did not
+change that. The reason is that the family is **mixed**, so the cheap half of
+the job would produce an inconsistent corpus:
+
+- **1996 general** elected 141 members across two rounds
+  (`seim96/rapgs1l.htm`, `rapgs2l.htm`) *plus* a multi-mandate list allocation
+  (`rdl.htm`) — 71 constituencies, two rounds, and a party-list seat
+  distribution to resolve for 879 candidates.
+- **1997-12 Aukštaitijos repeat** went to a runoff and elected someone:
+  `seimpk/rapgpl.htm-324+2.htm` closes "Seimo nariu išrinktas ...".
+- **1998-03, 1998-11 and 1999-03** elected nobody; each `rapgpl` page states
+  "Rinkimai apygardoje neįvyko", so `isrinktas` is a known `false` for those
+  44 candidates.
+
+Reading only the three failures is a few hours and would leave 906 records
+with no elected marker beside 44 with one. Doing it properly means the 1996
+two-round-plus-list resolution, which is its own piece of work — so it is
+filed as its own ticket rather than folded into a by-election build. The
+results pages are simple and stable (per-candidate ballot-box / postal / total
+counts under a constituency heading), and every one of them is on VRK's static
+archive, so nothing is at risk by waiting.
 
 ### The 2026-08-26 build of the 1998 March Seimo by-election
 

@@ -80,6 +80,7 @@ ARCHIVE_ELECTIONS = [
     "1997-gruodzio-21-seimo-pakartotiniai",
     "1998-kovo-22-seimo-pakartotiniai",
     "1998-lapkricio-15-seimo-pakartotiniai",
+    "1999-kovo-21-seimo-pakartotiniai",
 ]
 
 THROTTLE_SECONDS = 0.25
