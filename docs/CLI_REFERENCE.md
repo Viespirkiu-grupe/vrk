@@ -2082,10 +2082,56 @@ done
 python -m scraper parse-anketa-samples 2012-seimo --samples-root samples-full/2012-seimo
 ```
 
+## The re-parse gate (`scripts/reparse_diff.py`)
+
+A record is written by whichever parser existed the day its election was
+scraped. A fix that lands afterwards reaches `data/` only if something
+re-parses it, and until 2026-08-29 nothing did — issue #91 found 20,534
+records across 15 elections that no longer re-parsed to what was stored.
+
+This is that something. It re-parses an election from its retained HTML into a
+scratch tree and structurally diffs the result against `data/`, classifying
+every differing JSON path as `added` / `removed` / `changed` / `type` /
+`length` with list indices collapsed to `[]`.
+
+```bash
+python scripts/reparse_diff.py                      # all 55 elections, fixtures
+python scripts/reparse_diff.py 2019-ep 2020-seimo   # named elections
+python scripts/reparse_diff.py --full --jobs 8 2019-ep
+python scripts/reparse_diff.py --full --jobs 8 --apply 2019-kovo-3-savivaldybiu-tarybu
+```
+
+Options:
+
+- `--full`: parse every retained candidate (`samples-full/<id>/`) instead of
+  the fixture set. An election with no retained tree falls back to its
+  fixtures, which for the archive families is every candidate anyway; the
+  per-election line always states how many of the stored records the run
+  actually reached.
+- `--apply`: copy the freshly parsed records over `data/<id>/`, with any
+  photo sidecars the parse externalized. Only the records that differ are
+  written, so an election that re-parses identically is not touched at all.
+  Requires `--full` — applying a fixture run would rewrite five records and
+  leave the other 13,661 stale.
+- `--jobs N`: parser processes. The default is 1, which lets each module
+  enumerate its own sample tree; above 1 the script enumerates (a candidate
+  directory is one with an `index.json` in it) and cross-checks the count
+  against what the parsers returned.
+- `--top N`, `--repo-root`, `--work-root`.
+
+Exit status is the gate: **0** when nothing differs, **1** when something
+does, **2** when the run could not be made (a missing sample tree, a parser
+that raised).
+
+Without `--full` the whole corpus is checked in about ten seconds, which is
+what makes it a habit rather than an event. A full pass over all 113,073
+records takes about an hour on eight processes and needs no network.
+
 ## Helpful Checks
 
 ```bash
 python -m scraper --help
 python -m scraper parse-anketa-samples --help
+python scripts/reparse_diff.py          # the corpus still matches the parsers
 pytest tests/
 ```

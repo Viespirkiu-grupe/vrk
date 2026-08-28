@@ -14,6 +14,14 @@ Records live at `data/<election-id>/<candidateId>-<electionId>.json`, one
 file per candidacy. `data/` is not version controlled; see
 [DATASET.md](DATASET.md) for the inventory and how to regenerate it.
 
+Every record in the corpus is what today's parser produces from the page it
+was fetched from: `python scripts/reparse_diff.py` re-parses each election
+from its retained HTML and exits non-zero if any record disagrees. Two shape
+divergences this page used to list as traps — `anketa.teistumo-detales`'s
+flat/nested split and `privaciu-interesu-deklaracija.id001a`'s dict/list
+split — turned out to be stale data rather than era differences, so they were
+removed from the corpus instead of documented (issues #86 and #91).
+
 ## Record anatomy
 
 Six top-level fields on every record:
@@ -214,11 +222,6 @@ appears as two persons.
   2023 on) are different things under near-identical names. Since issue #86
   the key itself is uniform: `{irasai: [...]}` on every record of all 17
   elections that publish it.
-- **`privaciu-interesu-deklaracija.id001a` has two shapes.** A dict
-  `{tekstas}` in `2016-seimo`, `2018-rugsejo-16-seimo-zanavykai`,
-  `2019-rugsejo-8-seimo` and `2020-seimo`, but a *list* of row objects
-  (keyed by a 140-character sentence slug) in the 2017 mayoral elections,
-  `2019-ep`, `2019-prezidento` and `2019-kovo-3-savivaldybiu-tarybu`.
 - **`Neskelbiamas` saturates contact fields in the 2019/2020 eras.** VRK's
   own "withheld" token fills `anketa.adresas` (and in `2020-seimo` also
   `anketa.kontaktai.telefonas`/`el-pastas`) at 100% in `2019-kovo-3`,

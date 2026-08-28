@@ -248,3 +248,32 @@ HTML under `samples-full/<election-id>/` instead, making every future fix an
 offline re-parse (`parse-anketa-samples` with `--samples-root` pointed there).
 The price is disk on the order of the election itself — pay it for the large
 elections, where a re-scrape costs hours of polite traffic to vrk.lt.
+
+## 7. Changing a parser that already has a corpus
+
+A parser fix does not reach `data/`. The records were written by whichever
+parser existed the day that election was scraped, and nothing re-read them —
+which is how 20,534 records across 15 elections, 18% of the corpus, came to
+disagree with their own parsers for months (issue #91). Two of the shapes
+`docs/DATA_GUIDE.md` documented as inherent era divergence were that drift.
+
+So the rule: **a parser change is not done until the gate is green, or the
+elections it touches have been regenerated.**
+
+```bash
+python scripts/reparse_diff.py                       # ~10s, every election
+python scripts/reparse_diff.py --full --jobs 8 <id>  # what exactly changed
+python scripts/reparse_diff.py --full --jobs 8 --apply <id>
+```
+
+The first command re-parses every election's fixtures and diffs the result
+against `data/`; exit 0 means the corpus still matches the parsers. When it
+does not, read the path histogram before applying anything — the classes it
+prints are the change you meant plus, sometimes, one you did not. Then
+`--apply` regenerates the affected elections from their retained HTML,
+writing only the records that actually differ.
+
+An election with no retained HTML cannot be regenerated this way. Its repair
+is a `scripts/` backfill working from `rawData`
+(`scripts/renormalize_declarations.py` is the worked example), or a
+re-scrape. That is the cost `KEEP_SAMPLES=1` buys you out of.
