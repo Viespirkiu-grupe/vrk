@@ -268,14 +268,20 @@ def backfill_from_html(
             conflicts.append(f"{record_path.name}: fresh parse disagrees outside {CONVICTION_KEY}")
             continue
 
-        if stored == fresh and record["rawData"]["anketa"] == parsed["anketa"]:
+        # `parse_anketa_html` returns the parser's working dict -- rows,
+        # normalized and stats. Only `rows` belongs in a record: the module's
+        # own record assembly writes `{"rows": ...}`, and storing the whole
+        # dict duplicates `normalized.anketa` inside `rawData` (issue #91
+        # caught 13,666 records carrying that copy).
+        fresh_raw_anketa = {"rows": parsed["anketa"]["rows"]}
+        if stored == fresh and record["rawData"]["anketa"] == fresh_raw_anketa:
             counts["unchanged"] += 1
             continue
 
         _count_gain(counts, stored, fresh)
         # The recovered row belongs in rawData too: it is what the page said,
         # and a normalized value with no raw row behind it reads as invented.
-        record["rawData"]["anketa"] = parsed["anketa"]
+        record["rawData"]["anketa"] = fresh_raw_anketa
         record["normalized"]["anketa"] = fresh_anketa
         counts["updated"] += 1
         if not dry_run:

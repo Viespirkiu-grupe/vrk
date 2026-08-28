@@ -175,12 +175,18 @@ class Savivaldybiu2023AnketaParserTests(unittest.TestCase):
         self.assertEqual(kandidatavimas["roles"], ["tarybos-narys"])
         self.assertIsNone(kandidatavimas["meras"])
         self.assertFalse(kandidatavimas["isrinktas"])
+        # List 5, not 25: the number is the party's number in this
+        # municipality, and the two Akmenė fixtures pinned the group-header
+        # value the sitemap builder emitted before the 2026-08-17 fix. Their
+        # `index.json` carried it until issue #91's gate caught the
+        # disagreement with `sitemaps/`, which
+        # `tests/test_fixture_sitemap_agreement.py` now guards.
         self.assertEqual(
             kandidatavimas["tarybosNarys"],
             {
                 "partyList": {
                     "id": "32298",
-                    "number": 25,
+                    "number": 5,
                     "name": "Lietuvos socialdemokratų partija",
                 },
                 "listPosition": 30,

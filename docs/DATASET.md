@@ -1,8 +1,13 @@
 # Dataset Inventory and Review
 
-State of the scraped corpus after the full run of 2026-08-16 and the
-re-scrape of the five largest non-municipal elections on 2026-08-18, and the
-caveats worth knowing before analysing it.
+State of the scraped corpus after the full run of 2026-08-16, the re-scrape
+of the five largest non-municipal elections on 2026-08-18 and the offline
+re-parse of every election on 2026-08-29, and the caveats worth knowing before
+analysing it.
+
+Every record now equals what its own parser produces from the page it was
+fetched from — `python scripts/reparse_diff.py` is the check, and it is green
+across all 55 elections.
 
 Regenerate any part of it with:
 
@@ -151,6 +156,130 @@ the embedded-photo eras, externalized 2026-08-19 and verified byte-identical
 to a pre-migration sha256 manifest, file for file) and are **not** version
 controlled — `data/`, `sitemaps/` and `samples/` are gitignored, so the corpus is
 reproduced by running the scrapers rather than by cloning.
+
+### The 2026-08-29 corpus re-parse, and the gate that found it
+
+Issue #91: a record is written by whichever parser existed the day its
+election was scraped, and nothing ever re-read one afterwards. A fix in the
+"Correctness fixes" list below reached only the elections that happened to be
+scraped or re-parsed after it, and which those were was never checked.
+Re-parsing all
+55 elections from their retained HTML and diffing the result against `data/`
+found **15 elections in which 20,534 records no longer matched their own
+parsers** — 18.2% of the corpus, and everything in the gap was a fix the data
+never received:
+
+| election | records rewritten | of |
+|---|---:|---:|
+| `2019-kovo-3-savivaldybiu-tarybu` | 13,666 | 13,666 |
+| `2023-kovo-5-savivaldybiu-tarybu-ir-meru` | 6,757 | 13,796 |
+| `2019-rugsejo-8-seimo` | 27 | 27 |
+| `2021-spalio-10-meru` | 13 | 14 |
+| `2017-balandzio-23-meru` · `-seimo-anyksciai-panevezys` | 11 each | 11 each |
+| `2019-prezidento` | 9 | 9 |
+| `2017-rugsejo-10-marijampoles-mero` | 8 | 8 |
+| `2009-prezidento` | 7 | 7 |
+| `2018-rugsejo-16-seimo-zanavykai` · `2021-balandzio-11-radviliskio-mero` | 6 each | 6 · 7 |
+| `2023-spalio-8-kupiskio-mero` | 4 | 5 |
+| `2024-prezidento` · `2025-kovo-16-meru` · `2000-seimo` | 3 each | 8 · 14 · 1,271 |
+
+The other 40 elections — 92,539 records, the 2015 and 2011 municipal generals
+and both 1990s archive families among them — re-parsed **byte-identical**, and
+that is the other half of the result: the gate is meaningful because most of
+the corpus passes it. It covers the backfill scripts too. Parts of `2016-seimo`,
+`2020-seimo` and both 1990s archive families were written by a `scripts/`
+backfill rather than by a scrape, and all of those elections re-parse
+byte-identical — each backfill left behind exactly what the parsers produce.
+One did not, and the gate caught it: see the `rawData.anketa` item below.
+
+What the 20,534 records gained, all of it measured before it was applied:
+
+- **487 records stopped carrying their portrait inline.** A base64 `data:`
+  URI sat in `rawData.profile.photoSrc` *and* a byte-identical copy in
+  `normalized.profilis.nuotrauka` — 173 MB of base64, held twice by every one
+  of those records. They are now
+  `photos/<candidateId>.<ext>` sidecars (131 MB of files) with the
+  `photoMeta` hash beside them, which is what
+  `scraper/shared/files.py:externalize_record_photo` has done since
+  2026-08-17 for every election scraped after it. **No record in the corpus
+  carries a `data:` photo any more.**
+- **`privaciu-interesu-deklaracija.id001a` has one shape.** It was a dict
+  `{tekstas}` on 695 records and a *list* keyed by a 140-character sentence
+  slug on 419 — documented in DATA_GUIDE.md as inherent era divergence that
+  consumers had to handle. It was not inherent; it was half the corpus
+  predating the fold in `1fc52c4`. All 1,114 are `{tekstas}` now and the
+  trap is deleted rather than documented.
+- **Three dead columns are gone**, in the same 100%-empty state that got them
+  dropped from the parsers in `fdd9e59`: `rysiai-su-juridiniais-asmenimis[].rysys`
+  (11,678 occurrences), `rysiai-sudarius-sandorius[].rysys-sudarius-sandori`
+  (2,760) and `id001f[].asmens-kodas` (1,161). Verified before the rewrite:
+  not one of the 15,599 carried a value.
+- **`rawData.anketa` stopped duplicating `normalized.anketa`.** All 13,666
+  2019 municipal records carried a `normalized` key inside `rawData.anketa`
+  that was equal to `normalized.anketa` in every one of them, plus a `stats`
+  key derivable from `rawData.anketa.rows` in every one of them. The 2019
+  module has never written either; `scripts/backfill_conviction_details.py`
+  did, on 2026-08-28, by storing the parser's whole working dict where only
+  its `rows` belong — and because the stored envelope could then never equal
+  what the script compared it against, a second run would have rewritten
+  every record again. Fixed there too, with
+  `tests/test_backfill_conviction_details.py` pinning the envelope.
+- **99 `id001p` rows got their seven column names** instead of
+  `stulpelis-2`…`stulpelis-7` (the 2019 pages publish six of the seven
+  headers empty).
+- **Three 2000 Seimas declarations recovered a money figure** that was `null`:
+  Gintaras Budrys' and Sigitas Kaktys' income tax, Regina Lopienė's income.
+- **Two 2023 municipal records got their party list number back** — Vitalijus
+  Mitrofanovas and Ingrida Sakalauskienė carried Akmenė's group-header value
+  25 instead of list 5. This one was documented as already fixed; the fix had
+  reached a different checkout's `data/`, not this one.
+- Free-text private-interest rows across the 2024/2025 elections folded to
+  `{tekstas}` too, and NFC normalization reached the 2023/2025 campaign
+  contract URLs and biography fields it was written for.
+
+Nothing was lost: the record count is 113,073 before and after, and every
+`removed` path in the diff is one of the empty columns or the duplicated block
+above. The corpus is **370 MB smaller** (3,447.6 → 3,077.4 MB).
+
+Six elections' `anomalies.jsonl` were regenerated as well, since a complete
+re-parse reproduces the whole file and every anomaly in the corpus is a
+`parse`-stage event. Two were created (they had none on disk); `2000-seimo`
+went from 19 events to 16, the three recovered money figures no longer being
+anomalous; `2000-kovo-19-savivaldybiu-tarybu`'s 298 events were the same
+count against different columns, the diagnostics having drifted from the
+parser exactly as the records had.
+
+A second full pass after the rewrite re-parsed **112,977 of the 113,073
+records** — every record whose HTML is retained, 99.9% of the corpus — across
+all 55 elections and reported **zero differences and zero parse failures**.
+The 96 it could not reach are the candidates whose HTML was discarded by a
+`KEEP_SAMPLES=0` run before retention became the default; they are the only
+records in the corpus whose agreement with their parser is unverifiable
+without re-fetching them.
+
+**The gate is `scripts/reparse_diff.py`**, and it is the point of the exercise:
+
+```bash
+python scripts/reparse_diff.py                        # 55 elections, ~10 s
+python scripts/reparse_diff.py --full --jobs 8 <id>   # every retained record
+python scripts/reparse_diff.py --full --jobs 8 --apply <id>
+```
+
+It exits non-zero when any record differs, so "a parser change is not done
+until the gate is green" is checkable — see
+[ADDING_AN_ELECTION.md](ADDING_AN_ELECTION.md#7-changing-a-parser-that-already-has-a-corpus).
+Without `--full` it re-parses each election's fixtures, which is fast enough to
+run on every change; `--full` re-parses all 113,073 records from
+`samples-full/` in about an hour on eight processes, offline. Its fixture mode
+is only as good as the fixtures, which is why
+`tests/test_fixture_sitemap_agreement.py` now pins every fixture's
+`index.json` to its sitemap entry — the two stale ones it was written for are
+the party-list pair above.
+
+`--apply` writes only the records that actually differ, so an election that
+re-parses identically keeps its mtimes, and "when was this record last
+written" stays a usable provenance signal until issue #89 puts the parser
+version inside the record.
 
 ### The 2026-08-28 conviction-detail backfill
 
@@ -1196,6 +1325,10 @@ Measured against the archived pre-scrape copies:
   the last pre-fix remnants healing: both were written minutes before the
   `partyList.number` sitemap fix landed on 2026-08-17 and still carried the
   Akmenės group-header value (list 25); the fresh scrape corrected them to 5.
+  That correction reached the checkout the re-scrape ran in and not this one —
+  `data/` here still held list 25 until the 2026-08-29 re-parse above, which
+  is the caveat at the top of this file about the corpus having been scraped
+  from several checkouts, in its sharpest form.
 - The artifact scan over the fresh corpora matches the review baseline — no
   new artifact classes; the two known upstream quirks (one `&amp;`
   double-escape, the non-NFC file names) reproduce verbatim from VRK.
@@ -1450,9 +1583,10 @@ key list itself is election-specific.
 
 ## Correctness fixes behind this corpus
 
-Twenty-nine defects were found and fixed while building the newer modules. Each had
-been invisible because the affected elections had thin or no test coverage, and
-each was measured against live data after the fix:
+Thirty defects were found and fixed while building the newer modules, or by the
+re-parse gate afterwards. Each had been invisible because the affected
+elections had thin or no test coverage, and each was measured against live
+data after the fix:
 
 | fix | effect on the corpus |
 |---|---|
@@ -1486,6 +1620,7 @@ each was measured against live data after the fix:
 | the 2007–2008 interest declaration read as key/value pairs | the roman-numbered interest form of the 2007 and 2008 pages publishes each section as a record table — "Tipas \| Vienetų skaičius \| Vietovės pavadinimas \| Įsigijimo būdas" under II. Turtas — whose column-name row is bold `<td>` cells rather than `<th>`, so the era's interest parser saw no header and read every row as a label/value pair: a section collapsed to one entry per distinct first column with the last row winning, plus a spurious `tipas: "Vienetų skaičius"` from the header itself. Two flats became one, two employers the last. Found on the first 2007 municipal page; the header is now recognised by the emphasis (no key/value row of the family is bold whole — measured over 1,627 pages of 2007, 2008, 2011 and 2015) and the sections normalize as record lists in the 2016-era shape. Re-parsed offline: **1,593 records (1,584 of 2008 Seimo, 9 of 2007 Dzūkija), 5,357 sections, 13,198 rows** recovered; every other election byte-identical |
 | 2020 Seimas income keyed on the sentence VRK stopped using | the two money rows of the declaration were matched on a slug of VRK's whole label, GPM308 field numbers included (`Gautų pajamų suma (GPM308 formos 12, 13, 13a, 14, 20 laukelių …)`). `seimo_2020` reuses the 2016 normalizer, its pages state the same two figures in prose, so the alias missed and **all 1,753 of the election's declaration records** normalized to null income and null income tax while the figures sat in `rawData` — a 0 % fill against a 97.8–100 % floor everywhere else, with an empty `anomalies.jsonl` and a green suite. The money rows now match on their opening words instead: measured over every declaration row in the corpus, six spellings of the income row and four of the tax row exist, and the four prefixes match all ten and nothing else. Re-normalized offline from `rawData` (the election retains no HTML to re-parse): **3,506 figures recovered, both keys at 100 %**, with 2016 Seimo and 2017 Anykščiai–Panevėžys byte-identical (issue #81) |
 | an amount below one euro read as no figure | VRK's page formatter drops the leading zero of a sub-euro amount — the source of a live 2020 page reads `<td><b>,53 Eur</b></td>` — and `_parse_eur_amount`, shared by every modern module, returned null for it. Measured over the corpus: 102 declaration values are written that way and no election ever prints such an amount as `0,53`, so the zero is restored rather than the figure dropped. **95 further figures recovered** across five elections (59 in the 2023 municipal, 12 in 2024 Seimo, 11 in 2020 Seimo, 10 in the 2019 municipal, 3 in 2016 Seimo); the remaining 7 sit on declaration rows no election maps yet |
+| a backfill that stored the parser's working dict | `scripts/backfill_conviction_details.py` re-parses the 2019 municipal pages, and stored `parse_anketa_html`'s whole return value in `rawData.anketa`: `rows`, plus a `normalized` copy of `normalized.anketa` and a derived `stats`, where the module's own record assembly keeps only `rows`. All **13,666 records** of `2019-kovo-3-savivaldybiu-tarybu` carried the duplicate, and because the stored envelope could never equal what the script compared it against, every re-run would have rewritten every record. Found by `scripts/reparse_diff.py` the day after the backfill landed — the first thing the gate caught that was not already known (issue #91) |
 
 Every fix was verified by re-parsing all elections and confirming the diff was
 confined to the intended records.

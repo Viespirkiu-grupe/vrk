@@ -9,7 +9,10 @@ JSON file per candidacy.
 The corpus itself is not version controlled (`data/`, `sitemaps/` and
 `samples/` are gitignored); it is reproduced by running the scrapers, and
 every election's raw HTML is retained so parser fixes land by offline
-re-parse.
+re-parse. `python scripts/reparse_diff.py` is the check that they did: it
+re-parses every election and diffs the result against `data/`, and exits
+non-zero if any record no longer matches the parser that claims to produce
+it.
 
 Where to start:
 
