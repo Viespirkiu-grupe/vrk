@@ -633,7 +633,11 @@ One thing changed between April 2017 and these two: the asset rows keep the
 I.–V. labels, but the income rows switched to the modern wording (`Deklaruota
 apmokestinamųjų ir neapmokestinamųjų pajamų suma`) even though the section is
 still headed GPM308. Both modules therefore take the income aliases from the
-2024 EP module; with the 2016 aliases every income figure normalizes to null.
+2024 EP module; with the 2016 aliases as they then stood, every income figure
+normalized to null — which is exactly what happened to `2020-seimo`, whose
+module kept the 2016 wiring (issue #81). Since that fix the 2016 normalizer
+matches the two money rows on their opening words rather than on the slug of
+VRK's whole sentence, so either wiring reads the modern wording.
 
 The 2019 listing also has a candidate nominated by two parties. Her second
 nominator is a listing row of its own with no candidate link — correctly skipped
