@@ -53,9 +53,11 @@ per-role `elected` flags.
 - `gautos-pajamos`
 - `sumoketas-pajamu-mokestis`
 
-Values are parsed numbers in EUR — never strings — and `null` where VRK's
-own page renders the figure malformed (e.g. `,35 EUR` with the integer part
-missing; the source text stays in `rawData`).
+Values are parsed numbers in EUR — never strings. An amount VRK renders
+without its leading zero (`,35 EUR`) is read as the sub-euro figure it is —
+the page formatter drops the zero, and no election prints such an amount as
+`0,35` — with the source text kept in `rawData` either way. `null` means the
+row was not published or does not parse as a number.
 
 **Conviction declaration.**
 `anketa.pareiskimai.ar-buvote-pripazintas-kaltu` is the yes/no field to

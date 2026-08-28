@@ -21,15 +21,39 @@ MISSING_TEXT_VALUES = {
     "-",
 }
 
+# The five asset rows carry stable Roman-numeral labels, so they match on the
+# whole label.
 TURTO_PAJAMU_KEY_ALIASES = {
     "i-privalomas-registruoti-turtas": "privalomas-registruoti-turtas",
     "ii-vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
     "iii-pinigines-lesos": "pinigines-lesos",
     "iv-suteiktos-paskolos": "suteiktos-paskolos",
     "v-gautos-paskolos": "gautos-paskolos",
-    "gautu-pajamu-suma-gpm308-formos-12-13-13a-14-20-laukeliu-ir-gpm308-formos-v-priedo-v13-laukeliu-suma": "gautos-pajamos",
-    "isskaiciuota-sumoketa-pajamu-mokescio-suma-gpm308-formos-26-laukelis": "sumoketas-pajamu-mokestis",
 }
+
+# The two money rows do not. VRK restates them with every revision of the
+# income-tax form, and the label quotes the form number and the fields it sums
+# ("Gautų pajamų suma (GPM308 formos 12, 13, 13a, 14, 20 laukelių ...)"), so a
+# key made from the whole sentence silently loses any election filed on a newer
+# form. That is issue #81: `seimo_2020` reuses this normalizer, its pages say
+# "Deklaruota apmokestinamųjų ir neapmokestinamųjų pajamų suma", the 2016
+# sentence missed, and all 1,753 of its records normalized to null income while
+# the figures sat in rawData.
+#
+# So the money rows match on their opening words instead. Measured over the
+# declaration rows of all 113,046 records: six spellings of the income row and
+# four of the tax row exist, these four prefixes match all ten, and no other
+# declaration row in any election begins with them.
+TURTO_PAJAMU_MONEY_KEY_PREFIXES = (
+    # "Gautų pajamų suma (GPM302/GPM305/GPM308 ...)" up to 2017, then the
+    # prose wording the 2018-and-later pages use.
+    ("gautu-pajamu-suma", "gautos-pajamos"),
+    ("deklaruota-apmokestinamuju-ir-neapmokestinamuju-pajamu-suma", "gautos-pajamos"),
+    # "Išskaičiuota (sumokėta) pajamų mokesčio suma (GPM308 formos 26
+    # laukelis)" up to 2017, then its prose wording.
+    ("isskaiciuota-sumoketa-pajamu-mokescio-suma", "sumoketas-pajamu-mokestis"),
+    ("deklaruota-moketina-pajamu-mokescio-suma", "sumoketas-pajamu-mokestis"),
+)
 
 TURTO_PAJAMU_OUTPUT_ORDER = [
     "privalomas-registruoti-turtas",
@@ -1590,6 +1614,13 @@ def _parse_eur_amount(value: Any) -> int | float | None:
     compact = normalized_value.replace("\u00a0", " ")
     compact = re.sub(r"\beur\b", "", compact, flags=re.IGNORECASE)
     compact = compact.replace(" ", "").replace(",", ".")
+    # VRK renders an amount below one euro without its leading zero -- the page
+    # source itself reads "<b>,53 Eur</b>" -- so restore the zero rather than
+    # dropping the figure. Measured over the whole corpus: 102 declaration
+    # values are written that way, and no election ever prints a sub-euro
+    # amount in the "0,53" form, so this is a rendering quirk and not a
+    # truncated number.
+    compact = re.sub(r"^(-?)\.", r"\g<1>0.", compact)
 
     if not compact or not re.fullmatch(r"-?\d+(?:\.\d+)?", compact):
         return None
@@ -1598,6 +1629,18 @@ def _parse_eur_amount(value: Any) -> int | float | None:
     if amount.is_integer():
         return int(amount)
     return amount
+
+
+def _turto_pajamu_target_key(source_key: str) -> str | None:
+    target_key = TURTO_PAJAMU_KEY_ALIASES.get(source_key)
+    if target_key is not None:
+        return target_key
+
+    for prefix, money_key in TURTO_PAJAMU_MONEY_KEY_PREFIXES:
+        if source_key.startswith(prefix):
+            return money_key
+
+    return None
 
 
 def _normalize_turto_ir_pajamu_data(payload: dict[str, Any]) -> dict[str, Any]:
@@ -1616,7 +1659,7 @@ def _normalize_turto_ir_pajamu_data(payload: dict[str, Any]) -> dict[str, Any]:
 
             item_label = str(item.get("key", ""))
             source_key = _source_key(item_label)
-            target_key = TURTO_PAJAMU_KEY_ALIASES.get(source_key)
+            target_key = _turto_pajamu_target_key(source_key)
             if target_key is None:
                 continue
 

@@ -467,6 +467,20 @@ Despite the pages keeping the 2016-era layout, `profilis.nuotrauka` is a URL
 to the candidate photo (`kandImg/...`) on all 1,754 records — not the base64
 data URI the other 2016-era-layout elections embed.
 
+`turto-ir-pajamu-deklaracijos` is the corpus's seven-key shape, but the two
+money keys were **null on all 1,753 declaration records** until 2026-08-28:
+the election reuses the 2016 normalizer, whose income aliases named the
+GPM308 sentence 2016 prints, and these pages state the same two figures in
+prose ("Deklaruota apmokestinamųjų ir neapmokestinamųjų pajamų suma"). The
+figures were never lost — they sit in
+`rawData.turtoIrPajamuDeklaracijos.sections[1]` — so the records were
+**re-normalized in place** by `scripts/renormalize_declarations.py` rather
+than re-parsed: this election retains no HTML beyond its six fixture
+candidates, so `parse-anketa-samples` cannot rebuild it. Only
+`normalized.turto-ir-pajamu-deklaracijos` was rewritten, and only where a null
+became a figure; the script refuses to overwrite a value that is already
+there. Both keys are now populated on 1,753 of 1,753 (issue #81).
+
 ## Appendix: 2024 Seimo (`2024-seimo`)
 
 Records are written as `data/2024-seimo/<candidate-id>-2024-seimo.json` with the

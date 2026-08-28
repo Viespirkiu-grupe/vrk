@@ -1210,10 +1210,13 @@ Three nulls to expect, all traced to the source and all genuine:
   `anketa.tautybe` for 2,992 (21.9%), both published as `Nenurodė`.
 - Q9.2–Q9.4 for 110 candidates, whose pages print those questions with no
   answer between them.
-- `gautos-pajamos` for 10 candidates whose declared income VRK itself renders
-  malformed, with the integer part missing — `,35 EUR`, `,72 EUR` and so on.
-  Reading those as 0.35 would be inventing a figure, so they normalize to null
-  with the source text kept in `rawData`.
+- `gautos-pajamos` and `sumoketas-pajamu-mokestis` used to be null for the
+  candidates whose figure VRK renders without its integer part — `,35 EUR`,
+  `,72 EUR` and so on, 14 income and 45 tax rows in this election. That is the
+  page's own number formatter dropping a leading zero, not a truncated figure:
+  the cell holds nothing else (`<td><b>,53 Eur</b></td>` in the source), and no
+  election in the corpus ever prints a sub-euro amount in the `0,53` form. They
+  now read as 0.35, 0.72 and so on, with the source text still in `rawData`.
 
 Photo and free-text biography are role-dependent rather than sparse: measured
 across the corpus, they are published only for candidates standing for mayor,
@@ -1356,7 +1359,7 @@ key list itself is election-specific.
 
 ## Correctness fixes behind this corpus
 
-Twenty-one defects were found and fixed while building the newer modules. Each had
+Twenty-six defects were found and fixed while building the newer modules. Each had
 been invisible because the affected elections had thin or no test coverage, and
 each was measured against live data after the fix:
 
@@ -1387,6 +1390,8 @@ each was measured against live data after the fix:
 | a zero income stated in one sentence read as no declaration | thirty 2011 and March 2015 municipal pages put the GPM305 extract on the form's own line as prose — "GPM305 formos deklaracijos: Gauta 0 Lt, išskaičiuota pajamų mokesčio 0 Lt" — instead of the two labelled rows the aliases match, so `gautos-pajamos` and `sumoketas-pajamu-mokestis` were null while the page said zero. Every one of the thirty declares zero. The sentence now parses into both keys: **20 records in 2011 and 10 in March 2015** gained a 0/0, re-parsed in place from the retained HTML with nothing else changed |
 | the municipal conviction explanation never normalized | the same slot on the municipal form — an unnumbered row after Q9, "Jeigu į 9 p. klausimą atsakėte „Taip“ ir norite papildomai apie tai paaiškinti, tai įrašykite čia" — was read by the municipal mapping (`telsiu_mero_2015`, shared by the whole 2015 municipal family) no better than the Seimo one had been: the yes/no was kept, the explanation stayed in `rawData.anketa.rows`. Found on the 2011 municipal pages, which use the same form, and chased across the family: re-parsing it offline from the retained HTML gave **142 records their `pareiskimai.teisiniai-argumentai` text** (137 of the March 2015 general's 266 declared convictions, 4 of Šilutė's 12, 1 of Širvintos–Trakai's 2; Telšiai declares none), with every other field of all 15,849 records byte-identical |
 | the 2007–2008 interest declaration read as key/value pairs | the roman-numbered interest form of the 2007 and 2008 pages publishes each section as a record table — "Tipas \| Vienetų skaičius \| Vietovės pavadinimas \| Įsigijimo būdas" under II. Turtas — whose column-name row is bold `<td>` cells rather than `<th>`, so the era's interest parser saw no header and read every row as a label/value pair: a section collapsed to one entry per distinct first column with the last row winning, plus a spurious `tipas: "Vienetų skaičius"` from the header itself. Two flats became one, two employers the last. Found on the first 2007 municipal page; the header is now recognised by the emphasis (no key/value row of the family is bold whole — measured over 1,627 pages of 2007, 2008, 2011 and 2015) and the sections normalize as record lists in the 2016-era shape. Re-parsed offline: **1,593 records (1,584 of 2008 Seimo, 9 of 2007 Dzūkija), 5,357 sections, 13,198 rows** recovered; every other election byte-identical |
+| 2020 Seimas income keyed on the sentence VRK stopped using | the two money rows of the declaration were matched on a slug of VRK's whole label, GPM308 field numbers included (`Gautų pajamų suma (GPM308 formos 12, 13, 13a, 14, 20 laukelių …)`). `seimo_2020` reuses the 2016 normalizer, its pages state the same two figures in prose, so the alias missed and **all 1,753 of the election's declaration records** normalized to null income and null income tax while the figures sat in `rawData` — a 0 % fill against a 97.8–100 % floor everywhere else, with an empty `anomalies.jsonl` and a green suite. The money rows now match on their opening words instead: measured over every declaration row in the corpus, six spellings of the income row and four of the tax row exist, and the four prefixes match all ten and nothing else. Re-normalized offline from `rawData` (the election retains no HTML to re-parse): **3,506 figures recovered, both keys at 100 %**, with 2016 Seimo and 2017 Anykščiai–Panevėžys byte-identical (issue #81) |
+| an amount below one euro read as no figure | VRK's page formatter drops the leading zero of a sub-euro amount — the source of a live 2020 page reads `<td><b>,53 Eur</b></td>` — and `_parse_eur_amount`, shared by every modern module, returned null for it. Measured over the corpus: 102 declaration values are written that way and no election ever prints such an amount as `0,53`, so the zero is restored rather than the figure dropped. **95 further figures recovered** across five elections (59 in the 2023 municipal, 12 in 2024 Seimo, 11 in 2020 Seimo, 10 in the 2019 municipal, 3 in 2016 Seimo); the remaining 7 sit on declaration rows no election maps yet |
 
 Every fix was verified by re-parsing all elections and confirming the diff was
 confined to the intended records.
