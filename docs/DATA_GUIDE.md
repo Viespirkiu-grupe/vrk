@@ -106,7 +106,9 @@ unanswered. Account for them when counting.
 The questionnaire moved between VRK page eras, so the same concept lives
 under different paths. The machine-readable bridge is
 [concept-map.json](concept-map.json) — per concept, the exact normalized
-path for each election id.
+path for each election id, plus a `derived` section for the concepts no
+single path resolves (a conviction is published three different ways, so
+`teistumas` is a function rather than a path).
 
 **The table below covers the two modern eras only — 20 of the corpus's 48
 elections.** `concept-map.json` is the authority and is the thing to read
@@ -150,7 +152,7 @@ The two era groups:
 | nominator | `profilis.kita.<iskele-variant>.reiksme` | same | five key names — see below |
 | post-election list number | `profilis.kita.porinkiminis-eiles-numeris.reiksme` (Seimo family) / `…porinkiminis-numeris-sarase.reiksme` (municipal/EP family) | same split | absent in the presidential elections |
 | conviction declaration | `anketa.pareiskimai.ar-buvote-pripazintas-kaltu` | same | absent in `2019-prezidento` |
-| conviction details | — | `anketa.teistumo-detales.irasai` (2019/2021 flat) / `anketa.teistumo-detales` (2023 on, nested) | see traps |
+| conviction details | `anketa.teistumo-detales.irasai` | same | one shape in all 17 elections that publish the block, all 11 of the 2020 era and 6 of the 2016 era — the two 2017 mayoral elections and `2019-prezidento` publish no detail table. Resolve with the `teistumas` concept, not by hand |
 | money (×7) | `turto-ir-pajamu-deklaracijos.<key>` | same | identical in all 20 |
 
 The nominator's five key names, all under `profilis.kita`: `iskele` (Seimo
@@ -191,13 +193,27 @@ appears as two persons.
   13,666, so ~97% of records carry none of them); in `2023-kovo-5` the
   nominator keys exist only on the 433 mayoral-role records. Upstream
   behaviour, not sparseness.
-- **`teistumo-detales` has two shapes.** Flat `{irasai: [...]}` records in
-  2019/2021; a nested object whose `nusikalstamos-veikos.irasai` carries the
-  offences from 2023 on — and `nusikalstama-veika` (a string, the offence)
-  vs `nusikalstamos-veikos` (the wrapper) are different things under
-  near-identical names. 2016/2020 Seimo and 2019 EP publish their detail
-  tables only in `rawData.anketa.rows`, so counting the normalized key alone
-  under-reports; count the declaration field instead.
+- **A conviction has three published shapes; read the `teistumas`
+  concept.** `scraper/shared/conviction_details.py` resolves a record's
+  normalized `anketa` to one answer — `neklausta` / `ne` /
+  `deklaruota-be-detaliu` / `deklaruota` — over the structured table, the
+  free-text explanation and the bare yes/no. Doing it by hand has three
+  traps. **The affirmative follows the question's wording**: `Taip` on the
+  Seimas and municipal forms, `Yra` on the 2000 and 2004 static-site ones
+  (which ask whether there is anything to declare), `Buvo` and `Turiu` on
+  their neighbouring questions — filtering on `Taip` alone misses sixteen of
+  the main question's 1,630 declarers. **A conviction can be declared next
+  door**: the 2000–2014 forms ask separately about a grave crime, a foreign
+  court, political persecution and an unserved sentence, and 20 records
+  answer one of those affirmatively while denying the main question, so
+  1,650 records declare a conviction somewhere. `teistumas` returns them
+  under `kiti-pareiskimai`. **An absent key is not a "no"**:
+  `2019-prezidento` and the 1990s archive cards never ask the question.
+  **The entries differ inside** — `nusikalstama-veika` (a string, the
+  offence, 2016–2021) and `nusikalstamos-veikos` (a list of offence records,
+  2023 on) are different things under near-identical names. Since issue #86
+  the key itself is uniform: `{irasai: [...]}` on every record of all 17
+  elections that publish it.
 - **`privaciu-interesu-deklaracija.id001a` has two shapes.** A dict
   `{tekstas}` in `2016-seimo`, `2018-rugsejo-16-seimo-zanavykai`,
   `2019-rugsejo-8-seimo` and `2020-seimo`, but a *list* of row objects
@@ -228,7 +244,9 @@ appears as two persons.
 ## Going deeper
 
 - [concept-map.json](concept-map.json) — the machine-readable concept→path
-  bridge this page's era map is built from.
+  bridge this page's era map is built from. Its `derived` section covers the
+  concepts no single path resolves: today `teistumas`, whose resolver is
+  `scraper/shared/conviction_details.py`.
 - [OUTPUT_SCHEMA.md](OUTPUT_SCHEMA.md) — per-election schema appendices.
 - [DATASET.md](DATASET.md) — inventory, run history, analysis caveats.
 - [DASHBOARD.md](DASHBOARD.md) — the reference consumer: a local browser

@@ -25,16 +25,20 @@ SAMPLES_ROOT = REPO_ROOT / "samples" / "html" / "2019-ep"
 NESTED_CONVICTION_TABLE_CONTENT = """
 <div>
   <table border="0">
-    <tr><td>9. Ar buvote pripažintas kaltu? <b>Taip</b></td></tr>
+    <tr><td>9.2 Ar buvote pripažintas kaltu? <b>Taip</b></td></tr>
     <tr><td>
       <table border="1" class="partydata tableKand" id="table_apkalta">
         <thead><tr>
           <th>9.2.1 Apkaltinamojo nuosprendžio (sprendimo) data</th>
           <th>9.2.2 Apkaltinamojo nuosprendžio (sprendimo) priėmimo valstybė (vieta)</th>
+          <th>9.2.3 Nuosprendį (sprendimą) priėmusios institucijos pavadinimas</th>
+          <th>9.2.4 Nusikalstama veika, už kurią buvote nuteistas (pavadinimas)</th>
         </tr></thead>
         <tbody><tr>
           <td><strong>2008</strong></td>
           <td><strong>LIETUVA</strong></td>
+          <td><strong>Alytaus rajono apylinkės teismas</strong></td>
+          <td><strong>222 straipsnio 1 dalį</strong></td>
         </tr></tbody>
       </table>
     </td></tr>
@@ -59,6 +63,8 @@ class AnketaNestedConvictionTableTests(unittest.TestCase):
                 {
                     "9-2-1-apkaltinamojo-nuosprendzio-sprendimo-data": "2008",
                     "9-2-2-apkaltinamojo-nuosprendzio-sprendimo-priemimo-valstybe-vieta": "LIETUVA",
+                    "9-2-3-nuosprendi-sprendima-priemusios-institucijos-pavadinimas": "Alytaus rajono apylinkės teismas",
+                    "9-2-4-nusikalstama-veika-uz-kuria-buvote-nuteistas-pavadinimas": "222 straipsnio 1 dalį",
                 }
             ],
         )
@@ -68,8 +74,32 @@ class AnketaNestedConvictionTableTests(unittest.TestCase):
             for row in parsed["rows"]
             if row["questionNumber"]
         }
-        self.assertEqual(answers["9"], "Taip")
+        self.assertEqual(answers["9.2"], "Taip")
         self.assertEqual(answers["10"], "Lietuvis")
+
+    def test_nested_conviction_table_reaches_normalized(self) -> None:
+        # Capturing the table into rawData was half the fix. Until issue #86
+        # this module mapped no conviction key at all, so the six declarers of
+        # this election still published nothing about what they were convicted
+        # for. The columns arrive already slugified here, which the shared
+        # sub-question prefix match handles as it does the spelled-out
+        # headings of the Seimas pages.
+        content = BeautifulSoup(NESTED_CONVICTION_TABLE_CONTENT, "lxml").find("div")
+        parsed = _parse_anketa_content(content)
+
+        self.assertEqual(
+            parsed["normalized"]["teistumo-detales"],
+            {
+                "irasai": [
+                    {
+                        "nuosprendzio-data": "2008",
+                        "nuosprendzio-valstybe": "LIETUVA",
+                        "nuosprendzio-institucija": "Alytaus rajono apylinkės teismas",
+                        "nusikalstama-veika": "222 straipsnio 1 dalį",
+                    }
+                ]
+            },
+        )
 
 
 def _parse(candidate_id: str) -> dict:
@@ -95,6 +125,13 @@ class Ep2019AnketaParserTests(unittest.TestCase):
         self.assertTrue(
             self.daiva["source"]["candidateSourceUrl"].endswith("epKandidatasAnketa_rkndId-2415191.html")
         )
+
+    def test_every_candidate_carries_the_conviction_key(self) -> None:
+        for payload in (self.daiva, self.petras, self.laima):
+            with self.subTest(candidate=payload["candidateId"]):
+                anketa = payload["normalized"]["anketa"]
+                self.assertEqual(anketa["pareiskimai"]["ar-buvote-pripazintas-kaltu"], "Ne")
+                self.assertEqual(anketa["teistumo-detales"], {"irasai": []})
 
     def test_normalized_section_order(self) -> None:
         self.assertEqual(

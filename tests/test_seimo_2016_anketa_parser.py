@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from scraper.elections.seimo_2016.anketa_parser import (
+    _normalize_anketa_rows,
     _question_record_rows,
     parse_anketa_sample,
 )
@@ -105,6 +106,7 @@ class Seimo2016AnketaParserTests(unittest.TestCase):
                 "gimimo-data",
                 "adresas",
                 "pareiskimai",
+                "teistumo-detales",
                 "gimimo-vieta",
                 "tautybe",
                 "issilavinimas",
@@ -161,6 +163,65 @@ class Seimo2016AnketaParserTests(unittest.TestCase):
                 }
                 self.assertTrue(all(value == "Ne" for value in answered.values()))
                 self.assertIsNone(pareiskimai["teisiniai-argumentai"])
+
+    def test_conviction_details_are_normalized(self) -> None:
+        # Q9.2's "Taip" is followed by a table itemizing each conviction, which
+        # reached rawData from the start and was normalized nowhere until issue
+        # #86 — the corpus could say that 38 candidates of this election were
+        # found guilty and nothing about what for. No fixture candidate is a
+        # declarer (five of the election's 1,417), so the shape is guarded on
+        # the rows the parse produces for one.
+        rows = [
+            {"rowIndex": 10, "questionNumber": "9.2", "prompt": "9.2. Ar buvote ...", "answer": "Taip"},
+            {
+                "rowIndex": 12,
+                "questionNumber": None,
+                "prompt": "",
+                "answer": [
+                    {
+                        "9.2.1. Apkaltinamojo nuosprendžio (sprendimo) data": "2008-06-04",
+                        "9.2.2. Apkaltinamojo nuosprendžio (sprendimo) priėmimo valstybė (vieta)": "Lietuva",
+                        "9.2.3. Nuosprendį (sprendimą) priėmusios institucijos pavadinimas": "Ukmergės rajono apylinkės teismas",
+                        "9.2.4. Nusikalstama veika, už kurią buvote nuteistas (pavadinimas)": "BK 178 str. 1 d.",
+                    },
+                    {
+                        "9.2.1. Apkaltinamojo nuosprendžio (sprendimo) data": "1999-08-25",
+                        "9.2.2. Apkaltinamojo nuosprendžio (sprendimo) priėmimo valstybė (vieta)": "Lietuva",
+                        "9.2.3. Nuosprendį (sprendimą) priėmusios institucijos pavadinimas": "Ukmergės rajono apylinkės teismas",
+                        "9.2.4. Nusikalstama veika, už kurią buvote nuteistas (pavadinimas)": "BK 310 str. 3 d.",
+                    },
+                ],
+            },
+            {"rowIndex": 13, "questionNumber": "9.3", "prompt": "9.3. ...", "answer": ""},
+        ]
+        self.assertEqual(
+            _normalize_anketa_rows(rows)["teistumo-detales"],
+            {
+                "irasai": [
+                    {
+                        "nuosprendzio-data": "2008-06-04",
+                        "nuosprendzio-valstybe": "Lietuva",
+                        "nuosprendzio-institucija": "Ukmergės rajono apylinkės teismas",
+                        "nusikalstama-veika": "BK 178 str. 1 d.",
+                    },
+                    {
+                        "nuosprendzio-data": "1999-08-25",
+                        "nuosprendzio-valstybe": "Lietuva",
+                        "nuosprendzio-institucija": "Ukmergės rajono apylinkės teismas",
+                        "nusikalstama-veika": "BK 310 str. 3 d.",
+                    },
+                ]
+            },
+        )
+
+    def test_every_candidate_carries_the_conviction_key(self) -> None:
+        # Present on every record, as in the 2019/2021/2023 elections, so
+        # "no conviction declared" and "this election does not publish the
+        # block" stay distinguishable.
+        for payload in (self.agne, self.ingrida, self.regina, self.algirdas, self.gabrielius):
+            with self.subTest(candidate=payload["candidateId"]):
+                anketa = payload["normalized"]["anketa"]
+                self.assertEqual(anketa["teistumo-detales"], {"irasai": []})
 
     def test_education_records(self) -> None:
         issilavinimas = self.agne["normalized"]["anketa"]["issilavinimas"]

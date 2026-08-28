@@ -12,14 +12,12 @@ from scraper.elections.ep_2019.anketa_parser import (
     _select_profile_table,
 )
 from scraper.elections.ep_2024.anketa_parser import (
-    _conviction_entries,
     _find_photo_src,
     _normalize_privaciu_interesu_data,
     _normalize_turto_ir_pajamu_data,
     _parse_kita_html,
     _parse_privaciu_interesu_html,
     _parse_turto_ir_pajamu_html,
-    _record_groups_for_question,
     _records_for_question,
 )
 from scraper.elections.seimo_2020.anketa_parser import (
@@ -45,10 +43,9 @@ from scraper.elections.seimo_2016.anketa_parser import (
     _parse_politines_kampanijos_html,
     _parse_tabnav,
     _row_answer_text,
-    _source_key,
-    normalize_space,
 )
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.conviction_details import conviction_entries, conviction_records
 from scraper.shared.files import write_candidate_record, write_json
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2023-spalio-8-kupiskio-mero")
@@ -58,10 +55,6 @@ DEFAULT_OUTPUT_ROOT = Path("data/2023-spalio-8-kupiskio-mero")
 # ("10 . Ar einate ..."), which the shared strict question-number regex does not
 # accept. This tolerant pattern repairs those rows after the table is parsed.
 LOOSE_QUESTION_NUMBER_PATTERN = re.compile(r"^\s*(\d+(?:\.\d+)*)\s*\.")
-
-# Conviction detail lines ("Kaltės forma - Tyčia") use a plain hyphen here,
-# while the 2024 pages use an en dash.
-DASH_FIELD_SEPARATOR = re.compile(r"\s+[-–—](?:\s+|$)")
 
 
 # ---------------------------------------------------------------------------
@@ -77,38 +70,6 @@ def _repair_question_numbers(rows: list[dict[str, Any]]) -> list[dict[str, Any]]
         if match:
             row["questionNumber"] = match.group(1)
     return rows
-
-
-def _structure_dash_fields(values: list[Any]) -> dict[str, Any]:
-    # The Q13.4 conviction block renders one "Label - value" line per field;
-    # fold them into a single record.
-    record: dict[str, Any] = {}
-    for value in values:
-        if not isinstance(value, str):
-            continue
-        text = normalize_space(value)
-        if not text:
-            continue
-        parts = DASH_FIELD_SEPARATOR.split(text, maxsplit=1)
-        key = _source_key(parts[0])
-        if not key:
-            continue
-        record[key] = _normalize_text_value(parts[1]) if len(parts) > 1 else None
-    return record
-
-
-def _conviction_records(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    records: list[dict[str, Any]] = []
-    for group in _record_groups_for_question(rows, "13.4"):
-        if all(isinstance(value, str) for value in group):
-            record = _structure_dash_fields(group)
-            if record:
-                records.append(record)
-            continue
-        for normalized in _normalize_table_records(group):
-            if isinstance(normalized, dict):
-                records.append(normalized)
-    return records
 
 
 def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
@@ -148,11 +109,11 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
             # One entry per conviction; empty list when Q13 has no block. The
             # always-null 13.4 free-text aprasas (the table carries the data)
             # is retired with the old null-field skeleton.
-            "irasai": _conviction_entries(
+            "irasai": conviction_entries(
                 _answer("13.1"),
                 _answer("13.2"),
                 _answer("13.3"),
-                _conviction_records(rows),
+                conviction_records(rows, "13.4"),
             ),
         },
         # 14.1 appears only when Q14 is answered "Taip".

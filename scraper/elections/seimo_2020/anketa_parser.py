@@ -30,6 +30,7 @@ from scraper.elections.seimo_2016.anketa_parser import (
     _row_answer_text,
 )
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.conviction_details import conviction_field_keys, conviction_records
 from scraper.shared.files import slugify, write_candidate_record, write_json
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2020-seimo")
@@ -40,6 +41,12 @@ MISSING_TEXT_VALUES = {
     "nenurodė",
     "nenurode",
 }
+
+# As in 2016, Q9.2 is the conviction question and its "Taip" is followed by a
+# table itemizing each conviction. These pages print the block's lead-in
+# ("Jeigu buvote pripažintas kaltu, privalote nurodyti") as a row of its own
+# between the two, which the shared collector steps over.
+CONVICTION_QUESTION = "9.2"
 
 
 def normalize_space(value: str) -> str:
@@ -254,6 +261,13 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
             "ar-veika-dekriminalizuota": _answer("9.3"),
             "ar-buvote-pripazintas-kaltu-uzsienyje": _answer("9.4"),
             "ar-buvote-pripazintas-kaltu-del-politinio-persekiojimo": _answer("9.5"),
+        },
+        # One entry per conviction, in the shape every other era publishes;
+        # empty when Q9.2 is "Ne" or the block is absent.
+        "teistumo-detales": {
+            "irasai": conviction_records(
+                rows, CONVICTION_QUESTION, conviction_field_keys(CONVICTION_QUESTION)
+            ),
         },
     }
 

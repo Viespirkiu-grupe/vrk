@@ -84,6 +84,7 @@ class SeimoAnyksciuPanevezio2017AnketaParserTests(unittest.TestCase):
                 "gimimo-data",
                 "adresas",
                 "pareiskimai",
+                "teistumo-detales",
                 "gimimo-vieta",
                 "tautybe",
                 "issilavinimas",

@@ -3,6 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from scraper.elections.kupiskio_mero_2023.anketa_parser import _normalize_anketa_rows
 from scraper.elections.savivaldybiu_2023.anketa_parser import parse_anketa_sample
 from scraper.elections.savivaldybiu_2023.candidate_samples import expected_tabs_for
 
@@ -503,6 +504,41 @@ class Savivaldybiu2023AnketaParserTests(unittest.TestCase):
                 # list, not the old skeleton of null fields.
                 self.assertEqual(anketa["teistumo-detales"], {"irasai": []})
                 self.assertIsNone(anketa["mandato-netekimo-detales"])
+
+    def test_every_offence_block_is_kept(self) -> None:
+        # A candidate with more than one offence gets one Q13.4 block per
+        # offence, separated by an empty spacer row. The era's own collector
+        # stopped at the first non-table row, so every offence after the first
+        # was dropped — 243 of them across this election's 509 stored blocks,
+        # measured against rawData when the shared collector replaced it
+        # (issue #86). No fixture candidate declared a conviction, so the shape
+        # is guarded on the rows the parse produces for one.
+        rows = [
+            {"questionNumber": "13", "prompt": "13. Ar buvote pripažintas kaltu?", "answer": "Taip"},
+            {"questionNumber": "13.1", "prompt": "13.1. ...", "answer": "1995-12-28"},
+            {"questionNumber": "13.2", "prompt": "13.2. ...", "answer": "Lietuva"},
+            {"questionNumber": "13.3", "prompt": "13.3. ...", "answer": "LAZDIJŲ R. APYLINKĖS TEISMAS"},
+            {"questionNumber": "13.4", "prompt": "13.4. Nusikalstamos veikos rūšis ...", "answer": ""},
+            {
+                "questionNumber": None,
+                "prompt": "",
+                "answer": ["Kėsinimosi objektas - 16 str.(senas (iki 2003-05-01));"],
+            },
+            {"questionNumber": None, "prompt": "", "answer": ""},
+            {
+                "questionNumber": None,
+                "prompt": "",
+                "answer": ["Kėsinimosi objektas - 82 str. 1 d.(senas (iki 2003-05-01));"],
+            },
+            {"questionNumber": "13.5", "prompt": "13.5. ...", "answer": "Ne"},
+        ]
+        entries = _normalize_anketa_rows(rows)["teistumo-detales"]["irasai"]
+        self.assertEqual(len(entries), 1)
+        self.assertEqual(entries[0]["nuosprendzio-data"], "1995-12-28")
+        self.assertEqual(
+            [veika["kesinimosi-objektas"] for veika in entries[0]["nusikalstamos-veikos"]],
+            ["16 str.(senas (iki 2003-05-01));", "82 str. 1 d.(senas (iki 2003-05-01));"],
+        )
 
     # ------------------------------------------------------------------
     # biografija
