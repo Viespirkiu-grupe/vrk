@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Daukas Virginijus",
+    "candidateId": "daukas-virginijus",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64455.htm",
+    "constituencyName": "Nevėžio",
+    "constituencyNumber": 26,
+    "nominator": "Lietuvos liberalų sąjunga",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-223.htm"
+  },
+  "anketaPath": "samples/html/1998-lapkricio-15-seimo-pakartotiniai/daukas-virginijus/candidate.html",
+  "tabCount": 3,
+  "tabsSaved": 3,
+  "anomalies": []
+}

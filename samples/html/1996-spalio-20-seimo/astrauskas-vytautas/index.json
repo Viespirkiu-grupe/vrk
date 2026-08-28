@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Astrauskas Vytautas",
+    "candidateId": "astrauskas-vytautas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seim96/kandvl.htm-17148.htm",
+    "constituencyName": "Antakalnio",
+    "constituencyNumber": 3,
+    "nominator": "Krikščionių demokratų sąjunga",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seim96/partr2l.htm-24.htm"
+  },
+  "anketaPath": "samples/html/1996-spalio-20-seimo/astrauskas-vytautas/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

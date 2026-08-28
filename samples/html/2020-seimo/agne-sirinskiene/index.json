@@ -1,0 +1,67 @@
+{
+  "electionId": "2020-seimo",
+  "candidate": {
+    "candidateName": "Agnė ŠIRINSKIENĖ",
+    "candidateId": "agne-sirinskiene",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1104/rnk1424/kandidatai/lrsKandidatasAnketa_rkndId-2418546.html"
+  },
+  "anketaPath": "samples/html/2020-seimo/agne-sirinskiene/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1104/rnk1424/kandidatai/lrsKandidatasAnketa_rkndId-2418546.html",
+      "path": "samples/html/2020-seimo/agne-sirinskiene/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1104/rnk1424/kandidatai/lrsKandidatasBiografija_rkndId-2418546.html",
+      "path": "samples/html/2020-seimo/agne-sirinskiene/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1104/rnk1424/kandidatai/lrsKandidatasTurtas_rkndId-2418546.html",
+      "path": "samples/html/2020-seimo/agne-sirinskiene/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracija",
+      "slug": "privaciu-interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1104/rnk1424/kandidatai/lrsKandidatasInteresai_rkndId-2418546.html",
+      "path": "samples/html/2020-seimo/agne-sirinskiene/privaciu-interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1324/dalyviai/atstovaujamasis_pkdId-4688.html",
+      "path": "samples/html/2020-seimo/agne-sirinskiene/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1104/rnk1424/kandidatai/lrsKandidatasKita_rkndId-2418546.html",
+      "path": "samples/html/2020-seimo/agne-sirinskiene/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "atstovaujamasis-pkdid-4688",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1324/dalyviai/atstovaujamasis_pkdId-4688.html",
+      "campaignDir": "samples/html/2020-seimo/agne-sirinskiene/campaigns/atstovaujamasis-pkdid-4688",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2020-seimo/agne-sirinskiene/campaigns/atstovaujamasis-pkdid-4688/index.json"
+    }
+  ],
+  "anomalies": []
+}

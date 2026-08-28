@@ -1,0 +1,118 @@
+{
+  "electionId": "2023-kovo-5-savivaldybiu-tarybu-ir-meru",
+  "candidate": {
+    "candidateName": "Mykolas MAJAUSKAS",
+    "candidateId": "mykolas-majauskas-2420485",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasAnketa_2023_rkndId-2420485.html",
+    "candidateNote": "",
+    "vrkCandidateId": "2420485",
+    "municipality": {
+      "id": "21928",
+      "number": 57,
+      "name": "Vilniaus miesto"
+    },
+    "roles": [
+      "meras"
+    ],
+    "mayoralCandidacy": {
+      "round": "I",
+      "nominatedBy": "išsikėlė pats",
+      "elected": false
+    }
+  },
+  "anketaPath": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/mykolas-majauskas-2420485/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasAnketa_2023_rkndId-2420485.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/mykolas-majauskas-2420485/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasBiografija_rkndId-2420485.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/mykolas-majauskas-2420485/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasTurtoPajDekl_rkndId-2420485.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/mykolas-majauskas-2420485/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasPrivInterDekl_rkndId-2420485.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/mykolas-majauskas-2420485/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasIzdininkas_pkdId-17235.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/mykolas-majauskas-2420485/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasKt_rkndId-2420485.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/mykolas-majauskas-2420485/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "savarankiskasizdininkas-pkdid-17235",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasIzdininkas_pkdId-17235.html",
+      "campaignDir": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/mykolas-majauskas-2420485/campaigns/savarankiskasizdininkas-pkdid-17235",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasIzdininkas_pkdId-17235.html",
+          "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/mykolas-majauskas-2420485/campaigns/savarankiskasizdininkas-pkdid-17235/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasAuditorius_pkdId-17235.html",
+          "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/mykolas-majauskas-2420485/campaigns/savarankiskasizdininkas-pkdid-17235/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasAukotojai_pkdId-17235.html",
+          "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/mykolas-majauskas-2420485/campaigns/savarankiskasizdininkas-pkdid-17235/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasFinansavimas_pkdId-17235.html",
+          "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/mykolas-majauskas-2420485/campaigns/savarankiskasizdininkas-pkdid-17235/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasSutartys_pkdId-17235.html",
+          "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/mykolas-majauskas-2420485/campaigns/savarankiskasizdininkas-pkdid-17235/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/mykolas-majauskas-2420485/campaigns/savarankiskasizdininkas-pkdid-17235/index.json"
+    }
+  ],
+  "anomalies": []
+}

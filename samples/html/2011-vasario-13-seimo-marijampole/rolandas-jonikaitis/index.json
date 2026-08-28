@@ -1,0 +1,71 @@
+{
+  "electionId": "2011-vasario-13-seimo-marijampole",
+  "candidate": {
+    "candidateName": "Rolandas JONIKAITIS",
+    "candidateId": "rolandas-jonikaitis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26314/Kandidato26314Anketa.html",
+    "vrkCandidateId": "26314",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Marijampolės",
+      "apygardosNumeris": 29,
+      "apygardosId": "7192",
+      "iskele": "Partija Tvarka ir teisingumas"
+    }
+  },
+  "anketaPath": "samples/html/2011-vasario-13-seimo-marijampole/rolandas-jonikaitis/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26314/Kandidato26314Anketa.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/rolandas-jonikaitis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26314/Kandidato26314Biografija.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/rolandas-jonikaitis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26314/Kandidato26314Deklaracijos.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/rolandas-jonikaitis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26314/Kandidato26314InteresuDeklaracija.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/rolandas-jonikaitis/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26314/Kandidato26314Kita.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/rolandas-jonikaitis/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-5062",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis5062/Dalyvio5062Izdininkas.html",
+      "campaignDir": "samples/html/2011-vasario-13-seimo-marijampole/rolandas-jonikaitis/campaigns/dalyvis-5062",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2011-vasario-13-seimo-marijampole/rolandas-jonikaitis/campaigns/dalyvis-5062/index.json"
+    }
+  ],
+  "anomalies": []
+}

@@ -1,0 +1,107 @@
+{
+  "electionId": "2011-vasario-13-seimo-marijampole",
+  "candidate": {
+    "candidateName": "Vaida GIRAITYTĖ",
+    "candidateId": "vaida-giraityte",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26529/Kandidato26529Anketa.html",
+    "vrkCandidateId": "26529",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Marijampolės",
+      "apygardosNumeris": 29,
+      "apygardosId": "7192",
+      "iskele": "Darbo partija"
+    }
+  },
+  "anketaPath": "samples/html/2011-vasario-13-seimo-marijampole/vaida-giraityte/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26529/Kandidato26529Anketa.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/vaida-giraityte/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26529/Kandidato26529Biografija.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/vaida-giraityte/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26529/Kandidato26529Deklaracijos.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/vaida-giraityte/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26529/Kandidato26529InteresuDeklaracija.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/vaida-giraityte/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26529/Kandidato26529Kita.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/vaida-giraityte/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-5130",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis5130/Dalyvio5130Izdininkas.html",
+      "campaignDir": "samples/html/2011-vasario-13-seimo-marijampole/vaida-giraityte/campaigns/dalyvis-5130",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis5130/Dalyvio5130Izdininkas.html",
+          "path": "samples/html/2011-vasario-13-seimo-marijampole/vaida-giraityte/campaigns/dalyvis-5130/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis5130/Dalyvio5130Auditorius.html",
+          "path": "samples/html/2011-vasario-13-seimo-marijampole/vaida-giraityte/campaigns/dalyvis-5130/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis5130/Dalyvio5130AukotojuSarasas.html",
+          "path": "samples/html/2011-vasario-13-seimo-marijampole/vaida-giraityte/campaigns/dalyvis-5130/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis5130/Dalyvio5130FinansavimoAtaskaitos.html",
+          "path": "samples/html/2011-vasario-13-seimo-marijampole/vaida-giraityte/campaigns/dalyvis-5130/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis5130/Dalyvio5130Sutartys.html",
+          "path": "samples/html/2011-vasario-13-seimo-marijampole/vaida-giraityte/campaigns/dalyvis-5130/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2011-vasario-13-seimo-marijampole/vaida-giraityte/campaigns/dalyvis-5130/index.json"
+    }
+  ],
+  "anomalies": []
+}

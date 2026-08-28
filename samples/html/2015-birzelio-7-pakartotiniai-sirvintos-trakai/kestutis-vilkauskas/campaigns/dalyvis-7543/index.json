@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-7543",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7543/Dalyvio7543Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7543/Dalyvio7543Izdininkas.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/kestutis-vilkauskas/campaigns/dalyvis-7543/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7543/Dalyvio7543Auditorius.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/kestutis-vilkauskas/campaigns/dalyvis-7543/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7543/Dalyvio7543AukotojuSarasas.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/kestutis-vilkauskas/campaigns/dalyvis-7543/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7543/Dalyvio7543FinansavimoAtaskaitos.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/kestutis-vilkauskas/campaigns/dalyvis-7543/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7543/Dalyvio7543Sutartys.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/kestutis-vilkauskas/campaigns/dalyvis-7543/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

@@ -1,0 +1,56 @@
+{
+  "electionId": "2011-vasario-27-savivaldybiu",
+  "candidate": {
+    "candidateName": "Arūnas Burkšas",
+    "candidateId": "arunas-burksas-27707",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas27707/Kandidato27707Anketa.html",
+    "vrkCandidateId": "27707",
+    "municipality": "Neringos savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Koalicija \"Už mūsų Neringą\"",
+      "listKind": "partiju-koalicija",
+      "listNumber": 16,
+      "listPosition": 1,
+      "selfNominated": false
+    }
+  },
+  "anketaPath": "samples/html/2011-vasario-27-savivaldybiu/arunas-burksas-27707/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas27707/Kandidato27707Anketa.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/arunas-burksas-27707/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas27707/Kandidato27707Deklaracijos.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/arunas-burksas-27707/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas27707/Kandidato27707InteresuDeklaracija.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/arunas-burksas-27707/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas27707/Kandidato27707Kita.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/arunas-burksas-27707/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

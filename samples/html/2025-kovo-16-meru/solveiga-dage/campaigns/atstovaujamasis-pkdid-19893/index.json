@@ -1,0 +1,16 @@
+{
+  "campaignKey": "atstovaujamasis-pkdid-19893",
+  "campaignLabel": "",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1764/dalyviai/atstovaujamasis_pkdId-19893.html",
+  "tabCount": 1,
+  "tabSamples": [
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1764/dalyviai/savarankiskasAukotojai_pkdId-19893.html",
+      "path": "samples/html/2025-kovo-16-meru/solveiga-dage/campaigns/atstovaujamasis-pkdid-19893/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

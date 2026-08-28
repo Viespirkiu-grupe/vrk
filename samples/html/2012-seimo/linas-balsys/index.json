@@ -1,0 +1,106 @@
+{
+  "electionId": "2012-seimo",
+  "candidate": {
+    "candidateName": "Linas BALSYS",
+    "candidateId": "linas-balsys",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas67514/Kandidato67514Anketa.html",
+    "vrkCandidateId": "67514",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Karoliniškių",
+      "apygardosNumeris": 8,
+      "apygardosId": "7216",
+      "iskele": "Išsikėlė pats"
+    }
+  },
+  "anketaPath": "samples/html/2012-seimo/linas-balsys/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas67514/Kandidato67514Anketa.html",
+      "path": "samples/html/2012-seimo/linas-balsys/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas67514/Kandidato67514Biografija.html",
+      "path": "samples/html/2012-seimo/linas-balsys/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas67514/Kandidato67514Deklaracijos.html",
+      "path": "samples/html/2012-seimo/linas-balsys/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas67514/Kandidato67514InteresuDeklaracija.html",
+      "path": "samples/html/2012-seimo/linas-balsys/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas67514/Kandidato67514Kita.html",
+      "path": "samples/html/2012-seimo/linas-balsys/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-5605",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5605/Dalyvio5605Izdininkas.html",
+      "campaignDir": "samples/html/2012-seimo/linas-balsys/campaigns/dalyvis-5605",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5605/Dalyvio5605Izdininkas.html",
+          "path": "samples/html/2012-seimo/linas-balsys/campaigns/dalyvis-5605/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5605/Dalyvio5605Auditorius.html",
+          "path": "samples/html/2012-seimo/linas-balsys/campaigns/dalyvis-5605/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5605/Dalyvio5605AukotojuSarasas.html",
+          "path": "samples/html/2012-seimo/linas-balsys/campaigns/dalyvis-5605/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5605/Dalyvio5605FinansavimoAtaskaitos.html",
+          "path": "samples/html/2012-seimo/linas-balsys/campaigns/dalyvis-5605/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5605/Dalyvio5605Sutartys.html",
+          "path": "samples/html/2012-seimo/linas-balsys/campaigns/dalyvis-5605/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2012-seimo/linas-balsys/campaigns/dalyvis-5605/index.json"
+    }
+  ],
+  "anomalies": []
+}

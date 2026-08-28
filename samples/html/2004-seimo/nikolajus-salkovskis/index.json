@@ -1,0 +1,54 @@
+{
+  "electionId": "2004-seimo",
+  "candidate": {
+    "candidateName": "Nikolajus ŠALKOVSKIS",
+    "candidateId": "nikolajus-salkovskis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_295365.htm",
+    "vrkCandidateId": "295365",
+    "roles": [
+      "daugiamandate",
+      "vienmandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Lietuvos lenkų rinkimų akcija",
+      "sarasoNumeris": 12,
+      "sarasoId": "1832",
+      "numerisSarase": 26
+    },
+    "vienmandateCandidacy": {
+      "apygarda": "Karoliniškių",
+      "apygardosNumeris": 8,
+      "apygardosId": "1610",
+      "iskele": "Lietuvos rusų sąjunga"
+    }
+  },
+  "anketaPath": "samples/html/2004-seimo/nikolajus-salkovskis/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_295365.htm",
+      "path": "samples/html/2004-seimo/nikolajus-salkovskis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_biog_l_295365.htm",
+      "path": "samples/html/2004-seimo/nikolajus-salkovskis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_pajam_l_295365.htm",
+      "path": "samples/html/2004-seimo/nikolajus-salkovskis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

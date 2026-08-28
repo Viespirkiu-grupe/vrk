@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Čobotas Medardas",
+    "candidateId": "cobotas-medardas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-39587.htm",
+    "constituencyName": "Trakų",
+    "constituencyNumber": 58,
+    "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-104.htm"
+  },
+  "anketaPath": "samples/html/1997-kovo-23-seimo-pakartotiniai/cobotas-medardas/candidate.html",
+  "tabCount": 2,
+  "tabsSaved": 2,
+  "anomalies": []
+}

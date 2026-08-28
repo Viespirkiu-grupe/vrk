@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Bologovienė Regina",
+    "candidateId": "bologoviene-regina",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64300.htm",
+    "constituencyName": "Vilniaus Trakų",
+    "constituencyNumber": 57,
+    "nominator": "Lietuvos socialdemokratų partija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-198.htm"
+  },
+  "anketaPath": "samples/html/1998-kovo-22-seimo-pakartotiniai/bologoviene-regina/candidate.html",
+  "tabCount": 2,
+  "tabsSaved": 2,
+  "anomalies": []
+}

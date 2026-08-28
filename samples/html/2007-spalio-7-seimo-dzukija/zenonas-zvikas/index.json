@@ -1,0 +1,54 @@
+{
+  "electionId": "2007-spalio-7-seimo-dzukija",
+  "candidate": {
+    "candidateName": "Zenonas ŽVIKAS",
+    "candidateId": "zenonas-zvikas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19312/Kandidato19312Anketa.html",
+    "vrkCandidateId": "19312",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Dzūkijos",
+      "apygardosNumeris": 69,
+      "apygardosId": "6838",
+      "iskele": "Lietuvos socialdemokratų sąjunga"
+    }
+  },
+  "anketaPath": "samples/html/2007-spalio-7-seimo-dzukija/zenonas-zvikas/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19312/Kandidato19312Anketa.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/zenonas-zvikas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19312/Kandidato19312Biografija.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/zenonas-zvikas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19312/Kandidato19312Deklaracijos.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/zenonas-zvikas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19312/Kandidato19312InteresuDeklaracija.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/zenonas-zvikas/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

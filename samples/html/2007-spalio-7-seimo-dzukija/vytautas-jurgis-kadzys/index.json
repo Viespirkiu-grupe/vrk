@@ -1,0 +1,100 @@
+{
+  "electionId": "2007-spalio-7-seimo-dzukija",
+  "candidate": {
+    "candidateName": "Vytautas Jurgis KADŽYS",
+    "candidateId": "vytautas-jurgis-kadzys",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19311/Kandidato19311Anketa.html",
+    "vrkCandidateId": "19311",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Dzūkijos",
+      "apygardosNumeris": 69,
+      "apygardosId": "6838",
+      "iskele": "Pensininkų partija"
+    }
+  },
+  "anketaPath": "samples/html/2007-spalio-7-seimo-dzukija/vytautas-jurgis-kadzys/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19311/Kandidato19311Anketa.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/vytautas-jurgis-kadzys/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19311/Kandidato19311Biografija.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/vytautas-jurgis-kadzys/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19311/Kandidato19311Deklaracijos.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/vytautas-jurgis-kadzys/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19311/Kandidato19311InteresuDeklaracija.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/vytautas-jurgis-kadzys/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-3149",
+      "campaignLabel": "Politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3149/Dalyvio3149Izdininkas.html",
+      "campaignDir": "samples/html/2007-spalio-7-seimo-dzukija/vytautas-jurgis-kadzys/campaigns/dalyvis-3149",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3149/Dalyvio3149Izdininkas.html",
+          "path": "samples/html/2007-spalio-7-seimo-dzukija/vytautas-jurgis-kadzys/campaigns/dalyvis-3149/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3149/Dalyvio3149Auditorius.html",
+          "path": "samples/html/2007-spalio-7-seimo-dzukija/vytautas-jurgis-kadzys/campaigns/dalyvis-3149/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukotojų sąrašas",
+          "slug": "aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3149/Dalyvio3149AukotojuSarasas.html",
+          "path": "samples/html/2007-spalio-7-seimo-dzukija/vytautas-jurgis-kadzys/campaigns/dalyvis-3149/aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3149/Dalyvio3149FinansavimoAtaskaitos.html",
+          "path": "samples/html/2007-spalio-7-seimo-dzukija/vytautas-jurgis-kadzys/campaigns/dalyvis-3149/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3149/Dalyvio3149Sutartys.html",
+          "path": "samples/html/2007-spalio-7-seimo-dzukija/vytautas-jurgis-kadzys/campaigns/dalyvis-3149/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2007-spalio-7-seimo-dzukija/vytautas-jurgis-kadzys/campaigns/dalyvis-3149/index.json"
+    }
+  ],
+  "anomalies": []
+}

@@ -1,0 +1,103 @@
+{
+  "electionId": "2009-prezidento",
+  "candidate": {
+    "candidateName": "Česlovas JEZERSKAS",
+    "candidateId": "ceslovas-jezerskas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24941/Kandidato24941Anketa.html"
+  },
+  "anketaPath": "samples/html/2009-prezidento/ceslovas-jezerskas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24941/Kandidato24941Anketa.html",
+      "path": "samples/html/2009-prezidento/ceslovas-jezerskas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24941/Kandidato24941Biografija.html",
+      "path": "samples/html/2009-prezidento/ceslovas-jezerskas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24941/Kandidato24941Deklaracijos.html",
+      "path": "samples/html/2009-prezidento/ceslovas-jezerskas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24941/Kandidato24941InteresuDeklaracija.html",
+      "path": "samples/html/2009-prezidento/ceslovas-jezerskas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24941/Kandidato24941Kita.html",
+      "path": "samples/html/2009-prezidento/ceslovas-jezerskas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [
+    {
+      "label": "Patikėtiniai",
+      "slug": "patiketiniai",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24941/Kandidato24941Patiketiniai.html"
+    }
+  ],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-3983",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3983/Dalyvio3983Izdininkas.html",
+      "campaignDir": "samples/html/2009-prezidento/ceslovas-jezerskas/campaigns/dalyvis-3983",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3983/Dalyvio3983Izdininkas.html",
+          "path": "samples/html/2009-prezidento/ceslovas-jezerskas/campaigns/dalyvis-3983/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3983/Dalyvio3983Auditorius.html",
+          "path": "samples/html/2009-prezidento/ceslovas-jezerskas/campaigns/dalyvis-3983/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukotojų sąrašas",
+          "slug": "aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3983/Dalyvio3983AukotojuSarasas.html",
+          "path": "samples/html/2009-prezidento/ceslovas-jezerskas/campaigns/dalyvis-3983/aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3983/Dalyvio3983FinansavimoAtaskaitos.html",
+          "path": "samples/html/2009-prezidento/ceslovas-jezerskas/campaigns/dalyvis-3983/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3983/Dalyvio3983Sutartys.html",
+          "path": "samples/html/2009-prezidento/ceslovas-jezerskas/campaigns/dalyvis-3983/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2009-prezidento/ceslovas-jezerskas/campaigns/dalyvis-3983/index.json"
+    }
+  ],
+  "anomalies": []
+}

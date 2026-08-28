@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-4002",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4002/Dalyvio4002Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4002/Dalyvio4002Izdininkas.html",
+      "path": "samples/html/2009-ep/egidijus-skarbalius/campaigns/dalyvis-4002/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4002/Dalyvio4002Auditorius.html",
+      "path": "samples/html/2009-ep/egidijus-skarbalius/campaigns/dalyvis-4002/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukotojų sąrašas",
+      "slug": "aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4002/Dalyvio4002AukotojuSarasas.html",
+      "path": "samples/html/2009-ep/egidijus-skarbalius/campaigns/dalyvis-4002/aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4002/Dalyvio4002FinansavimoAtaskaitos.html",
+      "path": "samples/html/2009-ep/egidijus-skarbalius/campaigns/dalyvis-4002/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4002/Dalyvio4002Sutartys.html",
+      "path": "samples/html/2009-ep/egidijus-skarbalius/campaigns/dalyvis-4002/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

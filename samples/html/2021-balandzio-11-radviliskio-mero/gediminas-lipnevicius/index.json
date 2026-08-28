@@ -1,0 +1,110 @@
+{
+  "electionId": "2021-balandzio-11-radviliskio-mero",
+  "candidate": {
+    "candidateName": "Gediminas LIPNEVIČIUS",
+    "candidateId": "gediminas-lipnevicius",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasAnketa_rkndId-2420386.html"
+  },
+  "anketaPath": "samples/html/2021-balandzio-11-radviliskio-mero/gediminas-lipnevicius/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasAnketa_rkndId-2420386.html",
+      "path": "samples/html/2021-balandzio-11-radviliskio-mero/gediminas-lipnevicius/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasBiografija_rkndId-2420386.html",
+      "path": "samples/html/2021-balandzio-11-radviliskio-mero/gediminas-lipnevicius/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasTurtoPajDekl_rkndId-2420386.html",
+      "path": "samples/html/2021-balandzio-11-radviliskio-mero/gediminas-lipnevicius/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasPrivInterDekl_rkndId-2420386.html",
+      "path": "samples/html/2021-balandzio-11-radviliskio-mero/gediminas-lipnevicius/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1364/dalyviai/savarankiskasIzdininkas_pkdId-4805.html",
+      "path": "samples/html/2021-balandzio-11-radviliskio-mero/gediminas-lipnevicius/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasKt_rkndId-2420386.html",
+      "path": "samples/html/2021-balandzio-11-radviliskio-mero/gediminas-lipnevicius/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "savarankiskasizdininkas-pkdid-4805",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1364/dalyviai/savarankiskasIzdininkas_pkdId-4805.html",
+      "campaignDir": "samples/html/2021-balandzio-11-radviliskio-mero/gediminas-lipnevicius/campaigns/savarankiskasizdininkas-pkdid-4805",
+      "tabCount": 6,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1364/dalyviai/savarankiskasIzdininkas_pkdId-4805.html",
+          "path": "samples/html/2021-balandzio-11-radviliskio-mero/gediminas-lipnevicius/campaigns/savarankiskasizdininkas-pkdid-4805/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1364/dalyviai/savarankiskasAuditorius_pkdId-4805.html",
+          "path": "samples/html/2021-balandzio-11-radviliskio-mero/gediminas-lipnevicius/campaigns/savarankiskasizdininkas-pkdid-4805/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1364/dalyviai/savarankiskasAukotojai_pkdId-4805.html",
+          "path": "samples/html/2021-balandzio-11-radviliskio-mero/gediminas-lipnevicius/campaigns/savarankiskasizdininkas-pkdid-4805/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1364/dalyviai/savarankiskasFinansavimas_pkdId-4805.html",
+          "path": "samples/html/2021-balandzio-11-radviliskio-mero/gediminas-lipnevicius/campaigns/savarankiskasizdininkas-pkdid-4805/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1364/dalyviai/savarankiskasSutartys_pkdId-4805.html",
+          "path": "samples/html/2021-balandzio-11-radviliskio-mero/gediminas-lipnevicius/campaigns/savarankiskasizdininkas-pkdid-4805/sutartys.html",
+          "fetched": true
+        },
+        {
+          "label": "Sprendimai",
+          "slug": "sprendimai",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1364/dalyviai/savarankiskasSprendimai_pkdId-4805.html",
+          "path": "samples/html/2021-balandzio-11-radviliskio-mero/gediminas-lipnevicius/campaigns/savarankiskasizdininkas-pkdid-4805/sprendimai.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2021-balandzio-11-radviliskio-mero/gediminas-lipnevicius/campaigns/savarankiskasizdininkas-pkdid-4805/index.json"
+    }
+  ],
+  "anomalies": []
+}

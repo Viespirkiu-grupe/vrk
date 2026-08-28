@@ -1,0 +1,7 @@
+# Everything requirements.txt has, plus the test runner.
+#
+# The floor is pytest 8.4, which is where `unittest`'s subtests became separate
+# reports. The suite runs 979 of them, and on an older pytest a whole
+# `subTest` loop collapses into one failure that names none of the cases.
+-r requirements.txt
+pytest==9.1.1

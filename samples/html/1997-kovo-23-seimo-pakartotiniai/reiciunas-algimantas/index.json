@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Reičiūnas Algimantas",
+    "candidateId": "reiciunas-algimantas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-40435.htm",
+    "constituencyName": "Vilniaus Šalčininkų",
+    "constituencyNumber": 56,
+    "nominator": "Lietuvos liberalų sąjunga",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-102.htm"
+  },
+  "anketaPath": "samples/html/1997-kovo-23-seimo-pakartotiniai/reiciunas-algimantas/candidate.html",
+  "tabCount": 2,
+  "tabsSaved": 2,
+  "anomalies": []
+}

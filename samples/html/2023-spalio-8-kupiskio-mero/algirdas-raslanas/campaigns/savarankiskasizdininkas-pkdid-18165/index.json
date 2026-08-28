@@ -1,0 +1,44 @@
+{
+  "campaignKey": "savarankiskasizdininkas-pkdid-18165",
+  "campaignLabel": "",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1604/dalyviai/savarankiskasIzdininkas_pkdId-18165.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1604/dalyviai/savarankiskasIzdininkas_pkdId-18165.html",
+      "path": "samples/html/2023-spalio-8-kupiskio-mero/algirdas-raslanas/campaigns/savarankiskasizdininkas-pkdid-18165/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1604/dalyviai/savarankiskasAuditorius_pkdId-18165.html",
+      "path": "samples/html/2023-spalio-8-kupiskio-mero/algirdas-raslanas/campaigns/savarankiskasizdininkas-pkdid-18165/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1604/dalyviai/savarankiskasAukotojai_pkdId-18165.html",
+      "path": "samples/html/2023-spalio-8-kupiskio-mero/algirdas-raslanas/campaigns/savarankiskasizdininkas-pkdid-18165/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1604/dalyviai/savarankiskasFinansavimas_pkdId-18165.html",
+      "path": "samples/html/2023-spalio-8-kupiskio-mero/algirdas-raslanas/campaigns/savarankiskasizdininkas-pkdid-18165/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1604/dalyviai/savarankiskasSutartys_pkdId-18165.html",
+      "path": "samples/html/2023-spalio-8-kupiskio-mero/algirdas-raslanas/campaigns/savarankiskasizdininkas-pkdid-18165/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

@@ -19,6 +19,9 @@ import json
 import unittest
 from pathlib import Path
 
+from local_data import require
+
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FIXTURES_ROOT = REPO_ROOT / "samples" / "html"
 SITEMAPS_ROOT = REPO_ROOT / "sitemaps"
@@ -26,6 +29,7 @@ SITEMAPS_ROOT = REPO_ROOT / "sitemaps"
 
 class FixtureSitemapAgreementTests(unittest.TestCase):
     def test_every_fixture_index_matches_its_sitemap_entry(self) -> None:
+        require(SITEMAPS_ROOT)
         checked = 0
         mismatches: list[str] = []
         missing: list[str] = []

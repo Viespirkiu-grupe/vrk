@@ -1,0 +1,117 @@
+{
+  "electionId": "2019-prezidento",
+  "candidate": {
+    "candidateName": "Gitanas NAUSĖDA",
+    "candidateId": "gitanas-nauseda",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1184/kandidatai/preKandidatasAnketa_rkndId-2414888.html"
+  },
+  "anketaPath": "samples/html/2019-prezidento/gitanas-nauseda/anketa.html",
+  "tabCount": 7,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1184/kandidatai/preKandidatasAnketa_rkndId-2414888.html",
+      "path": "samples/html/2019-prezidento/gitanas-nauseda/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1184/kandidatai/preKandidatasBiografija_rkndId-2414888.html",
+      "path": "samples/html/2019-prezidento/gitanas-nauseda/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1184/kandidatai/preKandidatasTurtoPajDekl_rkndId-2414888.html",
+      "path": "samples/html/2019-prezidento/gitanas-nauseda/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1184/kandidatai/preKandidatasPrivInterDekl_rkndId-2414888.html",
+      "path": "samples/html/2019-prezidento/gitanas-nauseda/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Patikėtiniai",
+      "slug": "patiketiniai",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1184/kandidatai/preKandidatasPatiketiniai_rkndId-2414888.html",
+      "path": "samples/html/2019-prezidento/gitanas-nauseda/patiketiniai.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1124/dalyviai/savarankiskasIzdininkas_pkdId-2088.html",
+      "path": "samples/html/2019-prezidento/gitanas-nauseda/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1184/kandidatai/preKandidatasKt_rkndId-2414888.html",
+      "path": "samples/html/2019-prezidento/gitanas-nauseda/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "savarankiskasizdininkas-pkdid-2088",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1124/dalyviai/savarankiskasIzdininkas_pkdId-2088.html",
+      "campaignDir": "samples/html/2019-prezidento/gitanas-nauseda/campaigns/savarankiskasizdininkas-pkdid-2088",
+      "tabCount": 6,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1124/dalyviai/savarankiskasIzdininkas_pkdId-2088.html",
+          "path": "samples/html/2019-prezidento/gitanas-nauseda/campaigns/savarankiskasizdininkas-pkdid-2088/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1124/dalyviai/savarankiskasAuditorius_pkdId-2088.html",
+          "path": "samples/html/2019-prezidento/gitanas-nauseda/campaigns/savarankiskasizdininkas-pkdid-2088/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1124/dalyviai/savarankiskasAukotojai_pkdId-2088.html",
+          "path": "samples/html/2019-prezidento/gitanas-nauseda/campaigns/savarankiskasizdininkas-pkdid-2088/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1124/dalyviai/savarankiskasFinansavimas_pkdId-2088.html",
+          "path": "samples/html/2019-prezidento/gitanas-nauseda/campaigns/savarankiskasizdininkas-pkdid-2088/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1124/dalyviai/savarankiskasSutartys_pkdId-2088.html",
+          "path": "samples/html/2019-prezidento/gitanas-nauseda/campaigns/savarankiskasizdininkas-pkdid-2088/sutartys.html",
+          "fetched": true
+        },
+        {
+          "label": "Sprendimai",
+          "slug": "sprendimai",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1124/dalyviai/savarankiskasSprendimai_pkdId-2088.html",
+          "path": "samples/html/2019-prezidento/gitanas-nauseda/campaigns/savarankiskasizdininkas-pkdid-2088/sprendimai.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2019-prezidento/gitanas-nauseda/campaigns/savarankiskasizdininkas-pkdid-2088/index.json"
+    }
+  ],
+  "anomalies": []
+}

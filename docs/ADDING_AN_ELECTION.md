@@ -227,6 +227,12 @@ would have made a null mean two different things depending on the election.
   forms, record tables, and anything election-specific. Mutating the parser
   should make them fail; check that it does.
 - `tests/test_<module>_sample_allowlist.py` — the fixture set.
+- **`python scripts/tracked_fixtures.py --sync`** — `.gitignore` ignores
+  `samples/`, so a new fixture reaches git only through this. It tracks every
+  fixture unit at most 1 MiB and leaves the rest local, which is what lets the
+  suite run on a clone at all (issue #83); `tests/test_tracked_fixtures.py`
+  fails if git and the rule disagree, and again if the new election has no
+  candidate small enough to track.
 - `docs/CLI_REFERENCE.md`, `docs/FIXTURE_SAMPLES.md`, `docs/OUTPUT_SCHEMA.md`.
 - **`scraper/elections.json`** — add the election: id, first-round date,
   official Lithuanian name, short label for chart axes. This is what names it

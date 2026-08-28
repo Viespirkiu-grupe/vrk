@@ -1,0 +1,48 @@
+{
+  "electionId": "2002-gruodzio-22-savivaldybiu-tarybu",
+  "candidate": {
+    "candidateName": "Artūras Zuokas",
+    "candidateId": "arturas-zuokas-154491",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1410/kandidatai_anketa_jsp_ri_id_15_asm_kod_154491.htm",
+    "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1410/kandidatai_deklaracija_jsp_ri_id_15_asm_kod_154491.htm",
+    "vrkCandidateId": "154491",
+    "municipality": {
+      "pavadinimas": "Vilniaus miesto",
+      "numeris": 57,
+      "apygardosId": "1410"
+    },
+    "list": {
+      "pavadinimas": "A.Zuoko koalicija \"Už Vilnių, kuriame gera visiems\" Liberalai ir modernieji krikščionys demokratai",
+      "rusis": "koalicija",
+      "numeris": 26,
+      "koalicijosPartijos": [
+        "Moderniųjų krikščionių demokratų sąjunga",
+        "Lietuvos liberalų sąjunga"
+      ]
+    },
+    "listPosition": 1,
+    "koalicijosPartija": "Lietuvos liberalų sąjunga"
+  },
+  "anketaPath": "samples/html/2002-gruodzio-22-savivaldybiu-tarybu/arturas-zuokas-154491/anketa.html",
+  "tabCount": 2,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1410/kandidatai_anketa_jsp_ri_id_15_asm_kod_154491.htm",
+      "path": "samples/html/2002-gruodzio-22-savivaldybiu-tarybu/arturas-zuokas-154491/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1410/kandidatai_deklaracija_jsp_ri_id_15_asm_kod_154491.htm",
+      "path": "samples/html/2002-gruodzio-22-savivaldybiu-tarybu/arturas-zuokas-154491/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

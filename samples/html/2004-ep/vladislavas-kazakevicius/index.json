@@ -1,0 +1,47 @@
+{
+  "electionId": "2004-ep",
+  "candidate": {
+    "candidateName": "Vladislavas KAZAKEVIČIUS",
+    "candidateId": "vladislavas-kazakevicius",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260992.htm",
+    "vrkCandidateId": "260992",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+      "sarasoNumeris": 1,
+      "sarasoId": "1730",
+      "numerisSarase": 15
+    }
+  },
+  "anketaPath": "samples/html/2004-ep/vladislavas-kazakevicius/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260992.htm",
+      "path": "samples/html/2004-ep/vladislavas-kazakevicius/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_biog_l_260992.htm",
+      "path": "samples/html/2004-ep/vladislavas-kazakevicius/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų ir turto deklaracijų pagrindinių duomenų išrašai",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_pajam_l_260992.htm",
+      "path": "samples/html/2004-ep/vladislavas-kazakevicius/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

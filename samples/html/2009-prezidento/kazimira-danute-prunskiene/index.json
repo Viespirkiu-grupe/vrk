@@ -1,0 +1,103 @@
+{
+  "electionId": "2009-prezidento",
+  "candidate": {
+    "candidateName": "Kazimira Danutė PRUNSKIENĖ",
+    "candidateId": "kazimira-danute-prunskiene",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24930/Kandidato24930Anketa.html"
+  },
+  "anketaPath": "samples/html/2009-prezidento/kazimira-danute-prunskiene/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24930/Kandidato24930Anketa.html",
+      "path": "samples/html/2009-prezidento/kazimira-danute-prunskiene/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24930/Kandidato24930Biografija.html",
+      "path": "samples/html/2009-prezidento/kazimira-danute-prunskiene/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24930/Kandidato24930Deklaracijos.html",
+      "path": "samples/html/2009-prezidento/kazimira-danute-prunskiene/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24930/Kandidato24930InteresuDeklaracija.html",
+      "path": "samples/html/2009-prezidento/kazimira-danute-prunskiene/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24930/Kandidato24930Kita.html",
+      "path": "samples/html/2009-prezidento/kazimira-danute-prunskiene/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [
+    {
+      "label": "Patikėtiniai",
+      "slug": "patiketiniai",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24930/Kandidato24930Patiketiniai.html"
+    }
+  ],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-3988",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3988/Dalyvio3988Izdininkas.html",
+      "campaignDir": "samples/html/2009-prezidento/kazimira-danute-prunskiene/campaigns/dalyvis-3988",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3988/Dalyvio3988Izdininkas.html",
+          "path": "samples/html/2009-prezidento/kazimira-danute-prunskiene/campaigns/dalyvis-3988/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3988/Dalyvio3988Auditorius.html",
+          "path": "samples/html/2009-prezidento/kazimira-danute-prunskiene/campaigns/dalyvis-3988/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukotojų sąrašas",
+          "slug": "aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3988/Dalyvio3988AukotojuSarasas.html",
+          "path": "samples/html/2009-prezidento/kazimira-danute-prunskiene/campaigns/dalyvis-3988/aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3988/Dalyvio3988FinansavimoAtaskaitos.html",
+          "path": "samples/html/2009-prezidento/kazimira-danute-prunskiene/campaigns/dalyvis-3988/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3988/Dalyvio3988Sutartys.html",
+          "path": "samples/html/2009-prezidento/kazimira-danute-prunskiene/campaigns/dalyvis-3988/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2009-prezidento/kazimira-danute-prunskiene/campaigns/dalyvis-3988/index.json"
+    }
+  ],
+  "anomalies": []
+}

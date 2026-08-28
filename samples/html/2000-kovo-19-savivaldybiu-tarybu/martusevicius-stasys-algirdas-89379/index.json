@@ -1,0 +1,26 @@
+{
+  "candidate": {
+    "candidateName": "Martusevičius Stasys Algirdas",
+    "candidateId": "martusevicius-stasys-algirdas-89379",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20000319/kandvl.htm-89379.htm",
+    "vrkCandidateId": "89379",
+    "municipality": {
+      "pavadinimas": "Birštono miesto",
+      "numeris": 5,
+      "savivaldybesId": "553",
+      "mandatai": 21
+    },
+    "list": {
+      "pavadinimas": "Lietuvos socialdemokratų partija",
+      "rusis": "partija",
+      "numeris": 9,
+      "sarasoId": "8",
+      "vrkSprendimas": "2000 02 08, Nr.35"
+    },
+    "listPosition": 17
+  },
+  "anketaPath": "samples/html/2000-kovo-19-savivaldybiu-tarybu/martusevicius-stasys-algirdas-89379/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

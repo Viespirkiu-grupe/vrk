@@ -1,0 +1,30 @@
+{
+  "candidate": {
+    "candidateName": "Jusas Albertas",
+    "candidateId": "jusas-albertas-94748",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20000319/kandvl.htm-94748.htm",
+    "vrkCandidateId": "94748",
+    "municipality": {
+      "pavadinimas": "Alytaus rajono",
+      "numeris": 3,
+      "savivaldybesId": "564",
+      "mandatai": 25
+    },
+    "list": {
+      "pavadinimas": "Lietuvos valstiečių partijos ir Krikščionių demokratų sąjungos koalicija",
+      "rusis": "koalicija",
+      "numeris": 1,
+      "sarasoId": "2791",
+      "vrkSprendimas": null,
+      "koalicijosPartijos": [
+        "Lietuvos valstiečių partija",
+        "Krikščionių demokratų sąjunga"
+      ]
+    },
+    "listPosition": 1
+  },
+  "anketaPath": "samples/html/2000-kovo-19-savivaldybiu-tarybu/jusas-albertas-94748/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

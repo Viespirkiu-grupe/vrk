@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Vertelkienė Vanda",
+    "candidateId": "vertelkiene-vanda",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-40423.htm",
+    "constituencyName": "Vilniaus Trakų",
+    "constituencyNumber": 57,
+    "nominator": "Lietuvos politinių kalinių ir tremtinių sąjunga",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-103.htm"
+  },
+  "anketaPath": "samples/html/1997-kovo-23-seimo-pakartotiniai/vertelkiene-vanda/candidate.html",
+  "tabCount": 2,
+  "tabsSaved": 2,
+  "anomalies": []
+}

@@ -1,0 +1,72 @@
+{
+  "electionId": "2004-prezidento",
+  "candidate": {
+    "candidateName": "Vilija BLINKEVIČIŪTĖ",
+    "candidateId": "vilija-blinkeviciute",
+    "vrkCandidateId": "260443",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/kandidatai_l_19.htm",
+    "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/kand_pajam_l_260443.htm",
+    "vrkRegistrationId": "1815137",
+    "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/patiketiniai_l_1815137.htm",
+    "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/blinkeviciute.doc",
+    "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/prog_blinkeviciute.doc",
+    "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/p_blinkeviciute.gif",
+    "sveikatosPazymejimasUrl": null,
+    "nuotraukaPageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/nuotrauka_260443.htm",
+    "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/nuotraukos/19_46003030753.jpg",
+    "websiteUrl": "http://www.vilija.lt",
+    "registration": "2004 m. gegužės 14 dienos VRK sprendimu Nr. 130 registruota kandidate į Respublikos Prezidentus.",
+    "registeredDate": "2004-05-14",
+    "decision": "VRK sprendimu Nr. 130",
+    "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=233615&Condition2="
+  },
+  "anketaPath": "samples/html/2004-prezidento/vilija-blinkeviciute/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/kandidatai_l_19.htm",
+      "path": "samples/html/2004-prezidento/vilija-blinkeviciute/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/kand_pajam_l_260443.htm",
+      "path": "samples/html/2004-prezidento/vilija-blinkeviciute/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/blinkeviciute.doc",
+      "path": "samples/html/2004-prezidento/vilija-blinkeviciute/biografija.doc",
+      "fetched": true
+    },
+    {
+      "label": "Programa",
+      "slug": "programa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/prog_blinkeviciute.doc",
+      "path": "samples/html/2004-prezidento/vilija-blinkeviciute/programa.doc",
+      "fetched": true
+    },
+    {
+      "label": "Nuotrauka",
+      "slug": "nuotrauka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/nuotrauka_260443.htm",
+      "path": "samples/html/2004-prezidento/vilija-blinkeviciute/nuotrauka.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [
+    {
+      "label": "Patikėtiniai",
+      "slug": "patiketiniai",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/patiketiniai_l_1815137.htm"
+    }
+  ],
+  "campaignSamples": [],
+  "anomalies": []
+}

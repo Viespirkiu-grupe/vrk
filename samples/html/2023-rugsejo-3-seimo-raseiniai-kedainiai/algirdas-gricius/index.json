@@ -1,0 +1,75 @@
+{
+  "electionId": "2023-rugsejo-3-seimo-raseiniai-kedainiai",
+  "candidate": {
+    "candidateName": "Algirdas GRICIUS",
+    "candidateId": "algirdas-gricius",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasAnketa_rkndId-2435266.html"
+  },
+  "anketaPath": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/algirdas-gricius/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasAnketa_rkndId-2435266.html",
+      "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/algirdas-gricius/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasBiografija_rkndId-2435266.html",
+      "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/algirdas-gricius/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasTurtoPajDekl_rkndId-2435266.html",
+      "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/algirdas-gricius/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasPrivInterDekl_rkndId-2435266.html",
+      "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/algirdas-gricius/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1564/dalyviai/atstovaujamasis_pkdId-18169.html",
+      "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/algirdas-gricius/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasKita_rkndId-2435266.html",
+      "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/algirdas-gricius/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "atstovaujamasis-pkdid-18169",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1564/dalyviai/atstovaujamasis_pkdId-18169.html",
+      "campaignDir": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/algirdas-gricius/campaigns/atstovaujamasis-pkdid-18169",
+      "tabCount": 1,
+      "tabSamples": [
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1564/dalyviai/savarankiskasAukotojai_pkdId-18169.html",
+          "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/algirdas-gricius/campaigns/atstovaujamasis-pkdid-18169/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/algirdas-gricius/campaigns/atstovaujamasis-pkdid-18169/index.json"
+    }
+  ],
+  "anomalies": []
+}

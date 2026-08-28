@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-3995",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3995/Dalyvio3995Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3995/Dalyvio3995Izdininkas.html",
+      "path": "samples/html/2009-ep/saulius-stoma/campaigns/dalyvis-3995/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3995/Dalyvio3995Auditorius.html",
+      "path": "samples/html/2009-ep/saulius-stoma/campaigns/dalyvis-3995/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukotojų sąrašas",
+      "slug": "aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3995/Dalyvio3995AukotojuSarasas.html",
+      "path": "samples/html/2009-ep/saulius-stoma/campaigns/dalyvis-3995/aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3995/Dalyvio3995FinansavimoAtaskaitos.html",
+      "path": "samples/html/2009-ep/saulius-stoma/campaigns/dalyvis-3995/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3995/Dalyvio3995Sutartys.html",
+      "path": "samples/html/2009-ep/saulius-stoma/campaigns/dalyvis-3995/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

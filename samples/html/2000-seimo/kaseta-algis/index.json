@@ -1,0 +1,21 @@
+{
+  "candidate": {
+    "candidateName": "Kašėta Algis",
+    "candidateId": "kaseta-algis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20001008/kandvl.htm-153852.htm",
+    "vrkCandidateId": "153852",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Varėnos - Eišiškių",
+      "apygardosNumeris": 70,
+      "apygardosId": "826",
+      "iskele": "Moderniųjų krikščionių demokratų sąjunga"
+    }
+  },
+  "anketaPath": "samples/html/2000-seimo/kaseta-algis/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

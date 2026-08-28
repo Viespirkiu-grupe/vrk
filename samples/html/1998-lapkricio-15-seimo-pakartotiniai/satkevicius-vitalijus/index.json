@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Satkevičius Vitalijus",
+    "candidateId": "satkevicius-vitalijus",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64453.htm",
+    "constituencyName": "Nevėžio",
+    "constituencyNumber": 26,
+    "nominator": "Lietuvos krikščionių demokratų partija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-205.htm"
+  },
+  "anketaPath": "samples/html/1998-lapkricio-15-seimo-pakartotiniai/satkevicius-vitalijus/candidate.html",
+  "tabCount": 3,
+  "tabsSaved": 3,
+  "anomalies": []
+}

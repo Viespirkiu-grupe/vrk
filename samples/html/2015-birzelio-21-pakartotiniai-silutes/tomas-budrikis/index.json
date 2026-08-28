@@ -1,0 +1,74 @@
+{
+  "electionId": "2015-birzelio-21-pakartotiniai-silutes",
+  "candidate": {
+    "candidateName": "Tomas Budrikis",
+    "candidateId": "tomas-budrikis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87930/Kandidato87930Anketa.html",
+    "vrkCandidateId": "87930",
+    "municipality": "Šilutės rajono savivaldybė",
+    "roles": [
+      "meras",
+      "tarybos-narys"
+    ],
+    "mayoralCandidacy": {
+      "nominatedBy": "Darbo partija"
+    },
+    "councilCandidacy": {
+      "partyList": "Darbo partija",
+      "listNumber": 20,
+      "listPosition": 2
+    }
+  },
+  "anketaPath": "samples/html/2015-birzelio-21-pakartotiniai-silutes/tomas-budrikis/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87930/Kandidato87930Anketa.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/tomas-budrikis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87930/Kandidato87930Biografija.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/tomas-budrikis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87930/Kandidato87930Deklaracijos.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/tomas-budrikis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87930/Kandidato87930InteresuDeklaracija.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/tomas-budrikis/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87930/Kandidato87930Kita.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/tomas-budrikis/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-7591",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/PolitiniuKampanijuFinansavimas/Dalyvis7591/Dalyvio7591Izdininkas.html",
+      "campaignDir": "samples/html/2015-birzelio-21-pakartotiniai-silutes/tomas-budrikis/campaigns/dalyvis-7591",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2015-birzelio-21-pakartotiniai-silutes/tomas-budrikis/campaigns/dalyvis-7591/index.json"
+    }
+  ],
+  "anomalies": []
+}

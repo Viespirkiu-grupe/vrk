@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from scraper.elections.savivaldybiu_2002.anketa_parser import (
+    DEFAULT_RESULTS_PATH,
     build_candidacy,
     normalize_deklaracija,
     normalize_savivaldybiu_2002_anketa_rows,
@@ -30,6 +31,8 @@ from scraper.elections.savivaldybiu_2002.sitemap import (
     extract_party_links,
     parse_apygarda_page,
 )
+
+from local_data import require
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -426,6 +429,7 @@ class Savivaldybiu2002ResultsTests(unittest.TestCase):
 
 class Savivaldybiu2002RecordTests(unittest.TestCase):
     def test_elected_record(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         record, stats = _parse("anicetas-lupeika-132972")
         self.assertEqual(stats["anomalies"], [])
         candidacy = record["kandidatavimas"]
@@ -440,6 +444,7 @@ class Savivaldybiu2002RecordTests(unittest.TestCase):
         self.assertEqual(candidacy["tarybosNarys"]["sarasoMandatai"], 8)
 
     def test_substitute_record(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         # Elected no — but on the council from 2004-03-17, when a member
         # left and the list's next candidate took the seat.
         record, stats = _parse("jadvyga-daukantaite-204265")
@@ -451,6 +456,7 @@ class Savivaldybiu2002RecordTests(unittest.TestCase):
         self.assertEqual(candidacy["porinkiminisNumerisSarase"], 17)
 
     def test_coalition_record(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         record, stats = _parse("arturas-zuokas-154491")
         self.assertEqual(stats["anomalies"], [])
         council = record["kandidatavimas"]["tarybosNarys"]
@@ -466,6 +472,7 @@ class Savivaldybiu2002RecordTests(unittest.TestCase):
         )
 
     def test_sparse_record(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         record, stats = _parse("veronika-staneikiene-202013")
         self.assertEqual(stats["anomalies"], [])
         self.assertEqual((stats["rowCount"], stats["answeredRowCount"]), (13, 7))

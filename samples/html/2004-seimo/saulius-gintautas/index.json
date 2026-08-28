@@ -1,0 +1,56 @@
+{
+  "electionId": "2004-seimo",
+  "candidate": {
+    "candidateName": "Saulius GINTAUTAS",
+    "candidateId": "saulius-gintautas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_293971.htm",
+    "vrkCandidateId": "293971",
+    "roles": [
+      "daugiamandate",
+      "vienmandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Rolando Pakso koalicija \"Už tvarką ir teisingumą\"",
+      "sarasoNumeris": 8,
+      "sarasoId": "1874",
+      "numerisSarase": 55,
+      "koalicijosPartija": "Liberalų demokratų partija",
+      "numerisPartijosSarase": 49
+    },
+    "vienmandateCandidacy": {
+      "apygarda": "Rokiškio",
+      "apygardosNumeris": 50,
+      "apygardosId": "1652",
+      "iskele": "Išsikėlė pats"
+    }
+  },
+  "anketaPath": "samples/html/2004-seimo/saulius-gintautas/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_293971.htm",
+      "path": "samples/html/2004-seimo/saulius-gintautas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_biog_l_293971.htm",
+      "path": "samples/html/2004-seimo/saulius-gintautas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_pajam_l_293971.htm",
+      "path": "samples/html/2004-seimo/saulius-gintautas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

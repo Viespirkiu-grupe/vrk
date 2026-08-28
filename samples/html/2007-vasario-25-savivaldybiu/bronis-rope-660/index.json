@@ -1,0 +1,49 @@
+{
+  "electionId": "2007-vasario-25-savivaldybiu",
+  "candidate": {
+    "candidateName": "Bronis Ropė",
+    "candidateId": "bronis-rope-660",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas660/Kandidato660Anketa.html",
+    "vrkCandidateId": "660",
+    "municipality": "Ignalinos rajono savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Lietuvos valstiečių liaudininkų ir krikščionių demokratų koalicija",
+      "listKind": "partiju-koalicija",
+      "listNumber": 19,
+      "listPosition": 1,
+      "selfNominated": false
+    }
+  },
+  "anketaPath": "samples/html/2007-vasario-25-savivaldybiu/bronis-rope-660/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas660/Kandidato660Anketa.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/bronis-rope-660/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas660/Kandidato660Deklaracijos.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/bronis-rope-660/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas660/Kandidato660InteresuDeklaracija.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/bronis-rope-660/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

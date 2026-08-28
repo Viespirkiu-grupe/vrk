@@ -1,0 +1,62 @@
+{
+  "electionId": "2008-seimo",
+  "candidate": {
+    "candidateName": "Virginija BALTRAITIENĖ",
+    "candidateId": "virginija-baltraitiene",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas21261/Kandidato21261Anketa.html",
+    "vrkCandidateId": "21261",
+    "roles": [
+      "daugiamandate",
+      "vienmandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Koalicija Darbo partija + jaunimas",
+      "sarasoNumeris": 10,
+      "sarasoId": "3487",
+      "numerisSarase": 4,
+      "koalicijosPartija": "Darbo partija"
+    },
+    "vienmandateCandidacy": {
+      "apygarda": "Kėdainių",
+      "apygardosNumeris": 43,
+      "apygardosId": "6921",
+      "iskele": "Darbo partija"
+    }
+  },
+  "anketaPath": "samples/html/2008-seimo/virginija-baltraitiene/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas21261/Kandidato21261Anketa.html",
+      "path": "samples/html/2008-seimo/virginija-baltraitiene/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas21261/Kandidato21261Biografija.html",
+      "path": "samples/html/2008-seimo/virginija-baltraitiene/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas21261/Kandidato21261Deklaracijos.html",
+      "path": "samples/html/2008-seimo/virginija-baltraitiene/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas21261/Kandidato21261InteresuDeklaracija.html",
+      "path": "samples/html/2008-seimo/virginija-baltraitiene/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

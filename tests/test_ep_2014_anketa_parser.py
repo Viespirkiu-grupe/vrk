@@ -3,7 +3,11 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scraper.elections.ep_2014.anketa_parser import normalize_ep_anketa_rows, parse_anketa_sample
+from scraper.elections.ep_2014.anketa_parser import (
+    DEFAULT_RESULTS_PATH,
+    normalize_ep_anketa_rows,
+    parse_anketa_sample,
+)
 from scraper.elections.ep_2014.candidate_samples import EXPECTED_TABS
 from scraper.elections.ep_2014.sitemap import (
     ELECTION_ID,
@@ -11,6 +15,8 @@ from scraper.elections.ep_2014.sitemap import (
     build_sitemap_from_sample,
     extract_list_links,
 )
+
+from local_data import require
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -105,6 +111,7 @@ class Ep2014AnketaParserTests(unittest.TestCase):
         )
 
     def test_top_level_fields_and_candidacy(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         self.assertEqual(self.steponavicius["electionId"], "2014-ep")
         self.assertEqual(self.steponavicius["candidateName"], "Gintaras STEPONAVIČIUS")
         self.assertEqual(self.steponavicius_stats["anomalies"], [])

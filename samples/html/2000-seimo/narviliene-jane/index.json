@@ -1,0 +1,30 @@
+{
+  "candidate": {
+    "candidateName": "Narvilienė Janė",
+    "candidateId": "narviliene-jane",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20001008/kandvl.htm-153231.htm",
+    "vrkCandidateId": "153231",
+    "roles": [
+      "daugiamandate",
+      "vienmandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "A.Brazausko socialdemokratinė koalicija",
+      "sarasoNumeris": 9,
+      "sarasoId": "698",
+      "numerisSarase": 21,
+      "koalicijosPartija": "Naujosios demokratijos partija",
+      "numerisPartijosSarase": 2
+    },
+    "vienmandateCandidacy": {
+      "apygarda": "Kretingos",
+      "apygardosNumeris": 36,
+      "apygardosId": "792",
+      "iskele": "Naujosios demokratijos partija"
+    }
+  },
+  "anketaPath": "samples/html/2000-seimo/narviliene-jane/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

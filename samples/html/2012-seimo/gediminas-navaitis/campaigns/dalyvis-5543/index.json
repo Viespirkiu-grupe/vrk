@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-5543",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5543/Dalyvio5543Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5543/Dalyvio5543Izdininkas.html",
+      "path": "samples/html/2012-seimo/gediminas-navaitis/campaigns/dalyvis-5543/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5543/Dalyvio5543Auditorius.html",
+      "path": "samples/html/2012-seimo/gediminas-navaitis/campaigns/dalyvis-5543/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5543/Dalyvio5543AukotojuSarasas.html",
+      "path": "samples/html/2012-seimo/gediminas-navaitis/campaigns/dalyvis-5543/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5543/Dalyvio5543FinansavimoAtaskaitos.html",
+      "path": "samples/html/2012-seimo/gediminas-navaitis/campaigns/dalyvis-5543/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5543/Dalyvio5543Sutartys.html",
+      "path": "samples/html/2012-seimo/gediminas-navaitis/campaigns/dalyvis-5543/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

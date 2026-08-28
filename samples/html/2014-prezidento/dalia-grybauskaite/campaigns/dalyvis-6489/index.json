@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-6489",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6489/Dalyvio6489Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6489/Dalyvio6489Izdininkas.html",
+      "path": "samples/html/2014-prezidento/dalia-grybauskaite/campaigns/dalyvis-6489/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6489/Dalyvio6489Auditorius.html",
+      "path": "samples/html/2014-prezidento/dalia-grybauskaite/campaigns/dalyvis-6489/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6489/Dalyvio6489AukotojuSarasas.html",
+      "path": "samples/html/2014-prezidento/dalia-grybauskaite/campaigns/dalyvis-6489/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6489/Dalyvio6489FinansavimoAtaskaitos.html",
+      "path": "samples/html/2014-prezidento/dalia-grybauskaite/campaigns/dalyvis-6489/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6489/Dalyvio6489Sutartys.html",
+      "path": "samples/html/2014-prezidento/dalia-grybauskaite/campaigns/dalyvis-6489/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

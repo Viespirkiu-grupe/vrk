@@ -1,0 +1,26 @@
+{
+  "candidate": {
+    "candidateName": "Petkus Viktoras",
+    "candidateId": "petkus-viktoras-89850",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20000319/kandvl.htm-89850.htm",
+    "vrkCandidateId": "89850",
+    "municipality": {
+      "pavadinimas": "Vilniaus miesto",
+      "numeris": 57,
+      "savivaldybesId": "551",
+      "mandatai": 51
+    },
+    "list": {
+      "pavadinimas": "Krikščionių demokratų sąjunga",
+      "rusis": "partija",
+      "numeris": 21,
+      "sarasoId": "38",
+      "vrkSprendimas": "2000 02 08, Nr.36"
+    },
+    "listPosition": 1
+  },
+  "anketaPath": "samples/html/2000-kovo-19-savivaldybiu-tarybu/petkus-viktoras-89850/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

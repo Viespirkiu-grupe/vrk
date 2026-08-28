@@ -1,0 +1,47 @@
+{
+  "electionId": "2004-ep",
+  "candidate": {
+    "candidateName": "Gintaras DIDŽIOKAS",
+    "candidateId": "gintaras-didziokas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260979.htm",
+    "vrkCandidateId": "260979",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+      "sarasoNumeris": 1,
+      "sarasoId": "1730",
+      "numerisSarase": 2
+    }
+  },
+  "anketaPath": "samples/html/2004-ep/gintaras-didziokas/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260979.htm",
+      "path": "samples/html/2004-ep/gintaras-didziokas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_biog_l_260979.htm",
+      "path": "samples/html/2004-ep/gintaras-didziokas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų ir turto deklaracijų pagrindinių duomenų išrašai",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_pajam_l_260979.htm",
+      "path": "samples/html/2004-ep/gintaras-didziokas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

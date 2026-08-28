@@ -1,6 +1,8 @@
 import unittest
 from pathlib import Path
 
+from local_data import require
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SAMPLES_ROOT = REPO_ROOT / "samples" / "html" / "2011-vasario-27-savivaldybiu"
@@ -23,6 +25,10 @@ ALLOWED_CANDIDATE_DIRS = {
     "rimvydas-buinickas-59139",
 }
 ALLOWED_SUPPORT_DIRS = {"lists"}
+# A clone carries none of it: `lists/` is 5.3 MB across 599 party-list
+# pages, over the 1 MiB limit on a tracked fixture unit
+# (scripts/tracked_fixtures.py).
+TRACKED_SUPPORT_DIRS: set[str] = set()
 # The listing tree: VRK's municipality index, the three roll-ups used as
 # cross-checks (self-nominated candidates, party coalitions, coalitions of
 # self-nominated candidates), and one page per municipality.
@@ -37,7 +43,8 @@ ALLOWED_NON_CANDIDATE_FILES = {
 class Savivaldybiu2011SampleAllowlistTests(unittest.TestCase):
     def test_samples_directory_contains_only_allowlisted_candidates(self) -> None:
         actual_dirs = {child.name for child in SAMPLES_ROOT.iterdir() if child.is_dir()}
-        self.assertEqual(actual_dirs, ALLOWED_CANDIDATE_DIRS | ALLOWED_SUPPORT_DIRS)
+        self.assertEqual(actual_dirs - (ALLOWED_CANDIDATE_DIRS | ALLOWED_SUPPORT_DIRS), set())
+        self.assertLessEqual(ALLOWED_CANDIDATE_DIRS | TRACKED_SUPPORT_DIRS, actual_dirs)
 
     def test_every_municipality_page_is_captured(self) -> None:
         districts = sorted(SAMPLES_ROOT.glob("district-*.html"))
@@ -50,6 +57,7 @@ class Savivaldybiu2011SampleAllowlistTests(unittest.TestCase):
             self.assertIn(name, actual_files)
 
     def test_all_list_pages_are_captured(self) -> None:
+        require(SAMPLES_ROOT / "lists")
         # The sitemap is rebuilt from these offline; a missing one silently
         # drops its candidates.
         self.assertEqual(len(sorted((SAMPLES_ROOT / "lists").glob("list-*.html"))), 599)

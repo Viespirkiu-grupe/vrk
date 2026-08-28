@@ -1,0 +1,104 @@
+{
+  "electionId": "2015-kovo-1-savivaldybiu",
+  "candidate": {
+    "candidateName": "Skirmantas Mockevičius",
+    "candidateId": "skirmantas-mockevicius-71130",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas71130/Kandidato71130Anketa.html",
+    "vrkCandidateId": "71130",
+    "municipality": "Jurbarko rajono savivaldybė",
+    "roles": [
+      "meras"
+    ],
+    "mayoralCandidacy": {
+      "nominatedBy": null
+    }
+  },
+  "anketaPath": "samples/html/2015-kovo-1-savivaldybiu/skirmantas-mockevicius-71130/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas71130/Kandidato71130Anketa.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/skirmantas-mockevicius-71130/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas71130/Kandidato71130Biografija.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/skirmantas-mockevicius-71130/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas71130/Kandidato71130Deklaracijos.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/skirmantas-mockevicius-71130/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas71130/Kandidato71130InteresuDeklaracija.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/skirmantas-mockevicius-71130/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas71130/Kandidato71130Kita.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/skirmantas-mockevicius-71130/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-6718",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis6718/Dalyvio6718Izdininkas.html",
+      "campaignDir": "samples/html/2015-kovo-1-savivaldybiu/skirmantas-mockevicius-71130/campaigns/dalyvis-6718",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis6718/Dalyvio6718Izdininkas.html",
+          "path": "samples/html/2015-kovo-1-savivaldybiu/skirmantas-mockevicius-71130/campaigns/dalyvis-6718/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis6718/Dalyvio6718Auditorius.html",
+          "path": "samples/html/2015-kovo-1-savivaldybiu/skirmantas-mockevicius-71130/campaigns/dalyvis-6718/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis6718/Dalyvio6718AukotojuSarasas.html",
+          "path": "samples/html/2015-kovo-1-savivaldybiu/skirmantas-mockevicius-71130/campaigns/dalyvis-6718/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis6718/Dalyvio6718FinansavimoAtaskaitos.html",
+          "path": "samples/html/2015-kovo-1-savivaldybiu/skirmantas-mockevicius-71130/campaigns/dalyvis-6718/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis6718/Dalyvio6718Sutartys.html",
+          "path": "samples/html/2015-kovo-1-savivaldybiu/skirmantas-mockevicius-71130/campaigns/dalyvis-6718/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2015-kovo-1-savivaldybiu/skirmantas-mockevicius-71130/campaigns/dalyvis-6718/index.json"
+    }
+  ],
+  "anomalies": []
+}

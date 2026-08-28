@@ -1,0 +1,16 @@
+{
+  "campaignKey": "atstovaujamasis-pkdid-18168",
+  "campaignLabel": "",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1564/dalyviai/atstovaujamasis_pkdId-18168.html",
+  "tabCount": 1,
+  "tabSamples": [
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1564/dalyviai/savarankiskasAukotojai_pkdId-18168.html",
+      "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/edvinas-demidavicius/campaigns/atstovaujamasis-pkdid-18168/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

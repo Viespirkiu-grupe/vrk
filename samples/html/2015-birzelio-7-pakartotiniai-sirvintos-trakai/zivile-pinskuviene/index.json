@@ -1,0 +1,104 @@
+{
+  "electionId": "2015-birzelio-7-pakartotiniai-sirvintos-trakai",
+  "candidate": {
+    "candidateName": "Živilė Pinskuvienė",
+    "candidateId": "zivile-pinskuviene",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87565/Kandidato87565Anketa.html",
+    "vrkCandidateId": "87565",
+    "municipality": "Širvintų rajono savivaldybė",
+    "roles": [
+      "meras"
+    ],
+    "mayoralCandidacy": {
+      "nominatedBy": "Darbo partija"
+    }
+  },
+  "anketaPath": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/zivile-pinskuviene/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87565/Kandidato87565Anketa.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/zivile-pinskuviene/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87565/Kandidato87565Biografija.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/zivile-pinskuviene/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87565/Kandidato87565Deklaracijos.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/zivile-pinskuviene/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87565/Kandidato87565InteresuDeklaracija.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/zivile-pinskuviene/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87565/Kandidato87565Kita.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/zivile-pinskuviene/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-7552",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7552/Dalyvio7552Izdininkas.html",
+      "campaignDir": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/zivile-pinskuviene/campaigns/dalyvis-7552",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7552/Dalyvio7552Izdininkas.html",
+          "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/zivile-pinskuviene/campaigns/dalyvis-7552/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7552/Dalyvio7552Auditorius.html",
+          "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/zivile-pinskuviene/campaigns/dalyvis-7552/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7552/Dalyvio7552AukotojuSarasas.html",
+          "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/zivile-pinskuviene/campaigns/dalyvis-7552/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7552/Dalyvio7552FinansavimoAtaskaitos.html",
+          "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/zivile-pinskuviene/campaigns/dalyvis-7552/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7552/Dalyvio7552Sutartys.html",
+          "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/zivile-pinskuviene/campaigns/dalyvis-7552/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/zivile-pinskuviene/campaigns/dalyvis-7552/index.json"
+    }
+  ],
+  "anomalies": []
+}

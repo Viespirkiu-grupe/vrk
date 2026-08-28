@@ -1,0 +1,70 @@
+{
+  "electionId": "2023-kovo-5-savivaldybiu-tarybu-ir-meru",
+  "candidate": {
+    "candidateName": "Linas URMANAVIČIUS",
+    "candidateId": "linas-urmanavicius-2421676",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasAnketa_2023_rkndId-2421676.html",
+    "candidateNote": "",
+    "vrkCandidateId": "2421676",
+    "municipality": {
+      "id": "21916",
+      "number": 7,
+      "name": "Druskininkų"
+    },
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": {
+        "id": "32456",
+        "number": 16,
+        "name": "Politinis komitetas „Už Druskininkus“"
+      },
+      "listPosition": 2,
+      "postElectionPosition": 2,
+      "elected": true
+    }
+  },
+  "anketaPath": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/linas-urmanavicius-2421676/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasAnketa_2023_rkndId-2421676.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/linas-urmanavicius-2421676/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasBiografija_rkndId-2421676.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/linas-urmanavicius-2421676/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasTurtoPajDekl_rkndId-2421676.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/linas-urmanavicius-2421676/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasPrivInterDekl_rkndId-2421676.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/linas-urmanavicius-2421676/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasKt_rkndId-2421676.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/linas-urmanavicius-2421676/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

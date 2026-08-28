@@ -1,0 +1,49 @@
+{
+  "electionId": "2007-vasario-25-savivaldybiu",
+  "candidate": {
+    "candidateName": "Algirdas Strignatavičius",
+    "candidateId": "algirdas-strignatavicius-7436",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas7436/Kandidato7436Anketa.html",
+    "vrkCandidateId": "7436",
+    "municipality": "Elektrėnų savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Lietuvos socialdemokratų partija",
+      "listKind": "partija",
+      "listNumber": 13,
+      "listPosition": 33,
+      "selfNominated": false
+    }
+  },
+  "anketaPath": "samples/html/2007-vasario-25-savivaldybiu/algirdas-strignatavicius-7436/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas7436/Kandidato7436Anketa.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/algirdas-strignatavicius-7436/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas7436/Kandidato7436Deklaracijos.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/algirdas-strignatavicius-7436/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas7436/Kandidato7436InteresuDeklaracija.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/algirdas-strignatavicius-7436/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

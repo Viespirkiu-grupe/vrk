@@ -1,0 +1,75 @@
+{
+  "electionId": "2024-seimo",
+  "candidate": {
+    "candidateName": "Saulius SKVERNELIS",
+    "candidateId": "saulius-skvernelis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1544/rnk1870/kandidatai/KandidatasAnketa_rkndId-2436050.html"
+  },
+  "anketaPath": "samples/html/2024-seimo/saulius-skvernelis/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1544/rnk1870/kandidatai/KandidatasAnketa_rkndId-2436050.html",
+      "path": "samples/html/2024-seimo/saulius-skvernelis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1544/rnk1870/kandidatai/KandidatasBiografija_rkndId-2436050.html",
+      "path": "samples/html/2024-seimo/saulius-skvernelis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1544/rnk1870/kandidatai/KandidatasTurtoPajDekl_rkndId-2436050.html",
+      "path": "samples/html/2024-seimo/saulius-skvernelis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1544/rnk1870/kandidatai/KandidatasPrivInterDekl_rkndId-2436050.html",
+      "path": "samples/html/2024-seimo/saulius-skvernelis/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1726/dalyviai/atstovaujamasis_pkdId-19332.html",
+      "path": "samples/html/2024-seimo/saulius-skvernelis/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1544/rnk1870/kandidatai/KandidatasKita_rkndId-2436050.html",
+      "path": "samples/html/2024-seimo/saulius-skvernelis/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "atstovaujamasis-pkdid-19332",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1726/dalyviai/atstovaujamasis_pkdId-19332.html",
+      "campaignDir": "samples/html/2024-seimo/saulius-skvernelis/campaigns/atstovaujamasis-pkdid-19332",
+      "tabCount": 1,
+      "tabSamples": [
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1726/dalyviai/savarankiskasAukotojai_pkdId-19332.html",
+          "path": "samples/html/2024-seimo/saulius-skvernelis/campaigns/atstovaujamasis-pkdid-19332/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2024-seimo/saulius-skvernelis/campaigns/atstovaujamasis-pkdid-19332/index.json"
+    }
+  ],
+  "anomalies": []
+}

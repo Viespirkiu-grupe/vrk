@@ -1,0 +1,96 @@
+{
+  "electionId": "2015-kovo-1-seimo-zirmunai",
+  "candidate": {
+    "candidateId": "zydrunas-plytnikas",
+    "candidateName": "Žydrūnas PLYTNIKAS",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas85347/Kandidato85347Anketa.html"
+  },
+  "anketaPath": "samples/html/2015-kovo-1-seimo-zirmunai/zydrunas-plytnikas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas85347/Kandidato85347Anketa.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/zydrunas-plytnikas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas85347/Kandidato85347Biografija.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/zydrunas-plytnikas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas85347/Kandidato85347Deklaracijos.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/zydrunas-plytnikas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas85347/Kandidato85347InteresuDeklaracija.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/zydrunas-plytnikas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas85347/Kandidato85347Kita.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/zydrunas-plytnikas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-6729",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6729/Dalyvio6729Izdininkas.html",
+      "campaignDir": "samples/html/2015-kovo-1-seimo-zirmunai/zydrunas-plytnikas/campaigns/dalyvis-6729",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6729/Dalyvio6729Izdininkas.html",
+          "path": "samples/html/2015-kovo-1-seimo-zirmunai/zydrunas-plytnikas/campaigns/dalyvis-6729/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6729/Dalyvio6729Auditorius.html",
+          "path": "samples/html/2015-kovo-1-seimo-zirmunai/zydrunas-plytnikas/campaigns/dalyvis-6729/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6729/Dalyvio6729AukotojuSarasas.html",
+          "path": "samples/html/2015-kovo-1-seimo-zirmunai/zydrunas-plytnikas/campaigns/dalyvis-6729/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6729/Dalyvio6729FinansavimoAtaskaitos.html",
+          "path": "samples/html/2015-kovo-1-seimo-zirmunai/zydrunas-plytnikas/campaigns/dalyvis-6729/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6729/Dalyvio6729Sutartys.html",
+          "path": "samples/html/2015-kovo-1-seimo-zirmunai/zydrunas-plytnikas/campaigns/dalyvis-6729/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2015-kovo-1-seimo-zirmunai/zydrunas-plytnikas/campaigns/dalyvis-6729/index.json"
+    }
+  ],
+  "anomalies": []
+}

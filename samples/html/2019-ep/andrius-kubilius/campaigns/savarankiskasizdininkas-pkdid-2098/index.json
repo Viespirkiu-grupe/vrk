@@ -1,0 +1,51 @@
+{
+  "campaignKey": "savarankiskasizdininkas-pkdid-2098",
+  "campaignLabel": "",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1126/dalyviai/savarankiskasIzdininkas_pkdId-2098.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1126/dalyviai/savarankiskasIzdininkas_pkdId-2098.html",
+      "path": "samples/html/2019-ep/andrius-kubilius/campaigns/savarankiskasizdininkas-pkdid-2098/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1126/dalyviai/savarankiskasAuditorius_pkdId-2098.html",
+      "path": "samples/html/2019-ep/andrius-kubilius/campaigns/savarankiskasizdininkas-pkdid-2098/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1126/dalyviai/savarankiskasAukotojai_pkdId-2098.html",
+      "path": "samples/html/2019-ep/andrius-kubilius/campaigns/savarankiskasizdininkas-pkdid-2098/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1126/dalyviai/savarankiskasFinansavimas_pkdId-2098.html",
+      "path": "samples/html/2019-ep/andrius-kubilius/campaigns/savarankiskasizdininkas-pkdid-2098/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1126/dalyviai/savarankiskasSutartys_pkdId-2098.html",
+      "path": "samples/html/2019-ep/andrius-kubilius/campaigns/savarankiskasizdininkas-pkdid-2098/sutartys.html",
+      "fetched": true
+    },
+    {
+      "label": "Sprendimai",
+      "slug": "sprendimai",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1126/dalyviai/savarankiskasSprendimai_pkdId-2098.html",
+      "path": "samples/html/2019-ep/andrius-kubilius/campaigns/savarankiskasizdininkas-pkdid-2098/sprendimai.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

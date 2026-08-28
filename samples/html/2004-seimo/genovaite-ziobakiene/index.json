@@ -1,0 +1,57 @@
+{
+  "electionId": "2004-seimo",
+  "candidate": {
+    "candidateName": "Genovaitė ŽIOBAKIENĖ",
+    "candidateId": "genovaite-ziobakiene",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_295508.htm",
+    "vrkCandidateId": "295508",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+      "sarasoNumeris": 14,
+      "sarasoId": "1869",
+      "numerisSarase": 18
+    }
+  },
+  "anketaPath": "samples/html/2004-seimo/genovaite-ziobakiene/anketa.html",
+  "tabCount": 2,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_295508.htm",
+      "path": "samples/html/2004-seimo/genovaite-ziobakiene/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_biog_l_295508.htm",
+      "path": "samples/html/2004-seimo/genovaite-ziobakiene/biografija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [
+    "turto-ir-pajamu-deklaracijos"
+  ],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": [
+    {
+      "timestamp": "2026-08-23T08:54:29+00:00",
+      "eventType": "MissingExpectedTab",
+      "severity": "warning",
+      "stage": "fetch",
+      "electionId": "2004-seimo",
+      "candidateId": "genovaite-ziobakiene",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_295508.htm",
+      "detail": {
+        "missingTabs": [
+          "turto-ir-pajamu-deklaracijos"
+        ]
+      }
+    }
+  ]
+}

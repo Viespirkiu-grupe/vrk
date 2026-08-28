@@ -1,0 +1,53 @@
+{
+  "electionId": "2015-kovo-1-savivaldybiu",
+  "candidate": {
+    "candidateName": "Valius Micevičius",
+    "candidateId": "valius-micevicius-85875",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas85875/Kandidato85875Anketa.html",
+    "vrkCandidateId": "85875",
+    "municipality": "Alytaus miesto savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Visuomeninis rinkimų komitetas „Už Alytų“",
+      "listNumber": 1,
+      "listPosition": 2
+    }
+  },
+  "anketaPath": "samples/html/2015-kovo-1-savivaldybiu/valius-micevicius-85875/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas85875/Kandidato85875Anketa.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/valius-micevicius-85875/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas85875/Kandidato85875Deklaracijos.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/valius-micevicius-85875/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas85875/Kandidato85875InteresuDeklaracija.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/valius-micevicius-85875/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas85875/Kandidato85875Kita.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/valius-micevicius-85875/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

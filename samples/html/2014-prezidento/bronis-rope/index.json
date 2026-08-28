@@ -1,0 +1,103 @@
+{
+  "electionId": "2014-prezidento",
+  "candidate": {
+    "candidateName": "Bronis ROPĖ",
+    "candidateId": "bronis-rope",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70855/Kandidato70855Anketa.html"
+  },
+  "anketaPath": "samples/html/2014-prezidento/bronis-rope/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70855/Kandidato70855Anketa.html",
+      "path": "samples/html/2014-prezidento/bronis-rope/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70855/Kandidato70855Biografija.html",
+      "path": "samples/html/2014-prezidento/bronis-rope/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70855/Kandidato70855Deklaracijos.html",
+      "path": "samples/html/2014-prezidento/bronis-rope/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70855/Kandidato70855InteresuDeklaracija.html",
+      "path": "samples/html/2014-prezidento/bronis-rope/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Patikėtiniai",
+      "slug": "patiketiniai",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70855/Kandidato70855Patiketiniai.html",
+      "path": "samples/html/2014-prezidento/bronis-rope/patiketiniai.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70855/Kandidato70855Kita.html",
+      "path": "samples/html/2014-prezidento/bronis-rope/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-6492",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6492/Dalyvio6492Izdininkas.html",
+      "campaignDir": "samples/html/2014-prezidento/bronis-rope/campaigns/dalyvis-6492",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6492/Dalyvio6492Izdininkas.html",
+          "path": "samples/html/2014-prezidento/bronis-rope/campaigns/dalyvis-6492/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6492/Dalyvio6492Auditorius.html",
+          "path": "samples/html/2014-prezidento/bronis-rope/campaigns/dalyvis-6492/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6492/Dalyvio6492AukotojuSarasas.html",
+          "path": "samples/html/2014-prezidento/bronis-rope/campaigns/dalyvis-6492/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6492/Dalyvio6492FinansavimoAtaskaitos.html",
+          "path": "samples/html/2014-prezidento/bronis-rope/campaigns/dalyvis-6492/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6492/Dalyvio6492Sutartys.html",
+          "path": "samples/html/2014-prezidento/bronis-rope/campaigns/dalyvis-6492/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2014-prezidento/bronis-rope/campaigns/dalyvis-6492/index.json"
+    }
+  ],
+  "anomalies": []
+}

@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-6824",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6824/Dalyvio6824Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6824/Dalyvio6824Izdininkas.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/gediminas-vagnorius/campaigns/dalyvis-6824/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6824/Dalyvio6824Auditorius.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/gediminas-vagnorius/campaigns/dalyvis-6824/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6824/Dalyvio6824AukotojuSarasas.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/gediminas-vagnorius/campaigns/dalyvis-6824/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6824/Dalyvio6824FinansavimoAtaskaitos.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/gediminas-vagnorius/campaigns/dalyvis-6824/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6824/Dalyvio6824Sutartys.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/gediminas-vagnorius/campaigns/dalyvis-6824/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

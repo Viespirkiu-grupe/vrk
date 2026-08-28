@@ -1,0 +1,54 @@
+{
+  "electionId": "2004-seimo",
+  "candidate": {
+    "candidateName": "Jonas RAMONAS",
+    "candidateId": "jonas-ramonas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_295528.htm",
+    "vrkCandidateId": "295528",
+    "roles": [
+      "daugiamandate",
+      "vienmandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+      "sarasoNumeris": 3,
+      "sarasoId": "1859",
+      "numerisSarase": 3
+    },
+    "vienmandateCandidacy": {
+      "apygarda": "Šakių",
+      "apygardosNumeris": 64,
+      "apygardosId": "1666",
+      "iskele": "Valstiečių ir Naujosios demokratijos partijų sąjunga"
+    }
+  },
+  "anketaPath": "samples/html/2004-seimo/jonas-ramonas/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_295528.htm",
+      "path": "samples/html/2004-seimo/jonas-ramonas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_biog_l_295528.htm",
+      "path": "samples/html/2004-seimo/jonas-ramonas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_pajam_l_295528.htm",
+      "path": "samples/html/2004-seimo/jonas-ramonas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

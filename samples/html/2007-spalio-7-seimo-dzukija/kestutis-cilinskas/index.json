@@ -1,0 +1,100 @@
+{
+  "electionId": "2007-spalio-7-seimo-dzukija",
+  "candidate": {
+    "candidateName": "Kęstutis ČILINSKAS",
+    "candidateId": "kestutis-cilinskas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19310/Kandidato19310Anketa.html",
+    "vrkCandidateId": "19310",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Dzūkijos",
+      "apygardosNumeris": 69,
+      "apygardosId": "6838",
+      "iskele": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)"
+    }
+  },
+  "anketaPath": "samples/html/2007-spalio-7-seimo-dzukija/kestutis-cilinskas/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19310/Kandidato19310Anketa.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/kestutis-cilinskas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19310/Kandidato19310Biografija.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/kestutis-cilinskas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19310/Kandidato19310Deklaracijos.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/kestutis-cilinskas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19310/Kandidato19310InteresuDeklaracija.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/kestutis-cilinskas/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-3145",
+      "campaignLabel": "Politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3145/Dalyvio3145Izdininkas.html",
+      "campaignDir": "samples/html/2007-spalio-7-seimo-dzukija/kestutis-cilinskas/campaigns/dalyvis-3145",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3145/Dalyvio3145Izdininkas.html",
+          "path": "samples/html/2007-spalio-7-seimo-dzukija/kestutis-cilinskas/campaigns/dalyvis-3145/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3145/Dalyvio3145Auditorius.html",
+          "path": "samples/html/2007-spalio-7-seimo-dzukija/kestutis-cilinskas/campaigns/dalyvis-3145/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukotojų sąrašas",
+          "slug": "aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3145/Dalyvio3145AukotojuSarasas.html",
+          "path": "samples/html/2007-spalio-7-seimo-dzukija/kestutis-cilinskas/campaigns/dalyvis-3145/aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3145/Dalyvio3145FinansavimoAtaskaitos.html",
+          "path": "samples/html/2007-spalio-7-seimo-dzukija/kestutis-cilinskas/campaigns/dalyvis-3145/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3145/Dalyvio3145Sutartys.html",
+          "path": "samples/html/2007-spalio-7-seimo-dzukija/kestutis-cilinskas/campaigns/dalyvis-3145/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2007-spalio-7-seimo-dzukija/kestutis-cilinskas/campaigns/dalyvis-3145/index.json"
+    }
+  ],
+  "anomalies": []
+}

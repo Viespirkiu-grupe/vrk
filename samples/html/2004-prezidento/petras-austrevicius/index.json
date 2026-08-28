@@ -1,0 +1,65 @@
+{
+  "electionId": "2004-prezidento",
+  "candidate": {
+    "candidateName": "Petras AUŠTREVIČIUS",
+    "candidateId": "petras-austrevicius",
+    "vrkCandidateId": "244444",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/kandidatai_l_19.htm",
+    "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/kand_pajam_l_244444.htm",
+    "vrkRegistrationId": "1735240",
+    "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/patiketiniai_l_1735240.htm",
+    "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/austrevicius.doc",
+    "programaUrl": null,
+    "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/p_austrevicius.gif",
+    "sveikatosPazymejimasUrl": null,
+    "nuotraukaPageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/nuotrauka_244444.htm",
+    "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/nuotraukos/19_36305160162.jpg",
+    "websiteUrl": "http://www.austrevicius.lt",
+    "registration": "2004 m. gegužės 12 dienos VRK sprendimu Nr. 122 registruotas kandidatu į Respublikos Prezidentus.",
+    "registeredDate": "2004-05-12",
+    "decision": "VRK sprendimu Nr. 122",
+    "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=233613&Condition2="
+  },
+  "anketaPath": "samples/html/2004-prezidento/petras-austrevicius/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/kandidatai_l_19.htm",
+      "path": "samples/html/2004-prezidento/petras-austrevicius/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/kand_pajam_l_244444.htm",
+      "path": "samples/html/2004-prezidento/petras-austrevicius/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/austrevicius.doc",
+      "path": "samples/html/2004-prezidento/petras-austrevicius/biografija.doc",
+      "fetched": true
+    },
+    {
+      "label": "Nuotrauka",
+      "slug": "nuotrauka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/nuotrauka_244444.htm",
+      "path": "samples/html/2004-prezidento/petras-austrevicius/nuotrauka.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [
+    {
+      "label": "Patikėtiniai",
+      "slug": "patiketiniai",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/patiketiniai_l_1735240.htm"
+    }
+  ],
+  "campaignSamples": [],
+  "anomalies": []
+}

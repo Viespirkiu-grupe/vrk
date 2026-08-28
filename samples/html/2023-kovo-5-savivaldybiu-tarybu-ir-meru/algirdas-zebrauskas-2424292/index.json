@@ -1,0 +1,136 @@
+{
+  "electionId": "2023-kovo-5-savivaldybiu-tarybu-ir-meru",
+  "candidate": {
+    "candidateName": "Algirdas ŽEBRAUSKAS",
+    "candidateId": "algirdas-zebrauskas-2424292",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasAnketa_2023_rkndId-2424292.html",
+    "candidateNote": "",
+    "vrkCandidateId": "2424292",
+    "municipality": {
+      "id": "21926",
+      "number": 51,
+      "name": "Telšių rajono"
+    },
+    "roles": [
+      "tarybos-narys",
+      "meras"
+    ],
+    "councilCandidacy": {
+      "partyList": {
+        "id": "33292",
+        "number": 11,
+        "name": "Koalicija „Geriausias pasirinkimas“ (Partija „Laisvė ir teisingumas“, Laisvės partija, Liberalų sąjūdis)"
+      },
+      "listPosition": 1,
+      "postElectionPosition": 1,
+      "elected": true
+    },
+    "mayoralCandidacy": {
+      "round": "I",
+      "nominatedBy": "išsikėlė pats",
+      "elected": false
+    }
+  },
+  "anketaPath": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-zebrauskas-2424292/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasAnketa_2023_rkndId-2424292.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-zebrauskas-2424292/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasBiografija_rkndId-2424292.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-zebrauskas-2424292/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasTurtoPajDekl_rkndId-2424292.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-zebrauskas-2424292/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasPrivInterDekl_rkndId-2424292.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-zebrauskas-2424292/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasIzdininkas_pkdId-17229.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-zebrauskas-2424292/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasKt_rkndId-2424292.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-zebrauskas-2424292/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "savarankiskasizdininkas-pkdid-17229",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasIzdininkas_pkdId-17229.html",
+      "campaignDir": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-zebrauskas-2424292/campaigns/savarankiskasizdininkas-pkdid-17229",
+      "tabCount": 6,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasIzdininkas_pkdId-17229.html",
+          "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-zebrauskas-2424292/campaigns/savarankiskasizdininkas-pkdid-17229/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasAuditorius_pkdId-17229.html",
+          "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-zebrauskas-2424292/campaigns/savarankiskasizdininkas-pkdid-17229/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasAukotojai_pkdId-17229.html",
+          "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-zebrauskas-2424292/campaigns/savarankiskasizdininkas-pkdid-17229/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasFinansavimas_pkdId-17229.html",
+          "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-zebrauskas-2424292/campaigns/savarankiskasizdininkas-pkdid-17229/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasSutartys_pkdId-17229.html",
+          "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-zebrauskas-2424292/campaigns/savarankiskasizdininkas-pkdid-17229/sutartys.html",
+          "fetched": true
+        },
+        {
+          "label": "Sprendimai",
+          "slug": "sprendimai",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasSprendimai_pkdId-17229.html",
+          "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-zebrauskas-2424292/campaigns/savarankiskasizdininkas-pkdid-17229/sprendimai.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-zebrauskas-2424292/campaigns/savarankiskasizdininkas-pkdid-17229/index.json"
+    }
+  ],
+  "anomalies": []
+}

@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-7606",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/469_lt/PolitiniuKampanijuFinansavimas/Dalyvis7606/Dalyvio7606Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/469_lt/PolitiniuKampanijuFinansavimas/Dalyvis7606/Dalyvio7606Izdininkas.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/petras-kuizinas/campaigns/dalyvis-7606/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/469_lt/PolitiniuKampanijuFinansavimas/Dalyvis7606/Dalyvio7606Auditorius.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/petras-kuizinas/campaigns/dalyvis-7606/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/469_lt/PolitiniuKampanijuFinansavimas/Dalyvis7606/Dalyvio7606AukotojuSarasas.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/petras-kuizinas/campaigns/dalyvis-7606/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/469_lt/PolitiniuKampanijuFinansavimas/Dalyvis7606/Dalyvio7606FinansavimoAtaskaitos.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/petras-kuizinas/campaigns/dalyvis-7606/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/469_lt/PolitiniuKampanijuFinansavimas/Dalyvis7606/Dalyvio7606Sutartys.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/petras-kuizinas/campaigns/dalyvis-7606/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

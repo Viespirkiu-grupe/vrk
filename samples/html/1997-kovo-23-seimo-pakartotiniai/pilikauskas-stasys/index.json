@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Pilikauskas Stasys",
+    "candidateId": "pilikauskas-stasys",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-40431.htm",
+    "constituencyName": "Trakų",
+    "constituencyNumber": 58,
+    "nominator": "Lietuvos krikščionių demokratų partija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-99.htm"
+  },
+  "anketaPath": "samples/html/1997-kovo-23-seimo-pakartotiniai/pilikauskas-stasys/candidate.html",
+  "tabCount": 2,
+  "tabsSaved": 2,
+  "anomalies": []
+}

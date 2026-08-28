@@ -1,0 +1,110 @@
+{
+  "electionId": "2020-seimo",
+  "candidate": {
+    "candidateName": "Giedrius DRUKTEINIS",
+    "candidateId": "giedrius-drukteinis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1104/rnk1424/kandidatai/lrsKandidatasAnketa_rkndId-2418940.html"
+  },
+  "anketaPath": "samples/html/2020-seimo/giedrius-drukteinis/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1104/rnk1424/kandidatai/lrsKandidatasAnketa_rkndId-2418940.html",
+      "path": "samples/html/2020-seimo/giedrius-drukteinis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1104/rnk1424/kandidatai/lrsKandidatasBiografija_rkndId-2418940.html",
+      "path": "samples/html/2020-seimo/giedrius-drukteinis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1104/rnk1424/kandidatai/lrsKandidatasTurtas_rkndId-2418940.html",
+      "path": "samples/html/2020-seimo/giedrius-drukteinis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracija",
+      "slug": "privaciu-interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1104/rnk1424/kandidatai/lrsKandidatasInteresai_rkndId-2418940.html",
+      "path": "samples/html/2020-seimo/giedrius-drukteinis/privaciu-interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1324/dalyviai/savarankiskasIzdininkas_pkdId-4071.html",
+      "path": "samples/html/2020-seimo/giedrius-drukteinis/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1104/rnk1424/kandidatai/lrsKandidatasKita_rkndId-2418940.html",
+      "path": "samples/html/2020-seimo/giedrius-drukteinis/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "savarankiskasizdininkas-pkdid-4071",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1324/dalyviai/savarankiskasIzdininkas_pkdId-4071.html",
+      "campaignDir": "samples/html/2020-seimo/giedrius-drukteinis/campaigns/savarankiskasizdininkas-pkdid-4071",
+      "tabCount": 6,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1324/dalyviai/savarankiskasIzdininkas_pkdId-4071.html",
+          "path": "samples/html/2020-seimo/giedrius-drukteinis/campaigns/savarankiskasizdininkas-pkdid-4071/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1324/dalyviai/savarankiskasAuditorius_pkdId-4071.html",
+          "path": "samples/html/2020-seimo/giedrius-drukteinis/campaigns/savarankiskasizdininkas-pkdid-4071/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1324/dalyviai/savarankiskasAukotojai_pkdId-4071.html",
+          "path": "samples/html/2020-seimo/giedrius-drukteinis/campaigns/savarankiskasizdininkas-pkdid-4071/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1324/dalyviai/savarankiskasFinansavimas_pkdId-4071.html",
+          "path": "samples/html/2020-seimo/giedrius-drukteinis/campaigns/savarankiskasizdininkas-pkdid-4071/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1324/dalyviai/savarankiskasSutartys_pkdId-4071.html",
+          "path": "samples/html/2020-seimo/giedrius-drukteinis/campaigns/savarankiskasizdininkas-pkdid-4071/sutartys.html",
+          "fetched": true
+        },
+        {
+          "label": "Sprendimai",
+          "slug": "sprendimai",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1324/dalyviai/savarankiskasSprendimai_pkdId-4071.html",
+          "path": "samples/html/2020-seimo/giedrius-drukteinis/campaigns/savarankiskasizdininkas-pkdid-4071/sprendimai.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2020-seimo/giedrius-drukteinis/campaigns/savarankiskasizdininkas-pkdid-4071/index.json"
+    }
+  ],
+  "anomalies": []
+}

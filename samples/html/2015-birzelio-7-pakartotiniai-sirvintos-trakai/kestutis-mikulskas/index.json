@@ -1,0 +1,99 @@
+{
+  "electionId": "2015-birzelio-7-pakartotiniai-sirvintos-trakai",
+  "candidate": {
+    "candidateName": "Kęstutis Mikulskas",
+    "candidateId": "kestutis-mikulskas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87909/Kandidato87909Anketa.html",
+    "vrkCandidateId": "87909",
+    "municipality": "Trakų rajono savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Lietuvos žaliųjų partija",
+      "listNumber": 12,
+      "listPosition": 1
+    }
+  },
+  "anketaPath": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/kestutis-mikulskas/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87909/Kandidato87909Anketa.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/kestutis-mikulskas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87909/Kandidato87909Deklaracijos.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/kestutis-mikulskas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87909/Kandidato87909InteresuDeklaracija.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/kestutis-mikulskas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87909/Kandidato87909Kita.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/kestutis-mikulskas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-7531",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7531/Dalyvio7531Izdininkas.html",
+      "campaignDir": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/kestutis-mikulskas/campaigns/dalyvis-7531",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7531/Dalyvio7531Izdininkas.html",
+          "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/kestutis-mikulskas/campaigns/dalyvis-7531/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7531/Dalyvio7531Auditorius.html",
+          "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/kestutis-mikulskas/campaigns/dalyvis-7531/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7531/Dalyvio7531AukotojuSarasas.html",
+          "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/kestutis-mikulskas/campaigns/dalyvis-7531/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7531/Dalyvio7531FinansavimoAtaskaitos.html",
+          "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/kestutis-mikulskas/campaigns/dalyvis-7531/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7531/Dalyvio7531Sutartys.html",
+          "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/kestutis-mikulskas/campaigns/dalyvis-7531/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/kestutis-mikulskas/campaigns/dalyvis-7531/index.json"
+    }
+  ],
+  "anomalies": []
+}

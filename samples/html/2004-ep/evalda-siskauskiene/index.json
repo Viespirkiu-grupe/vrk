@@ -1,0 +1,47 @@
+{
+  "electionId": "2004-ep",
+  "candidate": {
+    "candidateName": "Evalda ŠIŠKAUSKIENĖ",
+    "candidateId": "evalda-siskauskiene",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260969.htm",
+    "vrkCandidateId": "260969",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Liberalų ir centro sąjunga",
+      "sarasoNumeris": 3,
+      "sarasoId": "1738",
+      "numerisSarase": 18
+    }
+  },
+  "anketaPath": "samples/html/2004-ep/evalda-siskauskiene/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260969.htm",
+      "path": "samples/html/2004-ep/evalda-siskauskiene/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_biog_l_260969.htm",
+      "path": "samples/html/2004-ep/evalda-siskauskiene/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų ir turto deklaracijų pagrindinių duomenų išrašai",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_pajam_l_260969.htm",
+      "path": "samples/html/2004-ep/evalda-siskauskiene/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

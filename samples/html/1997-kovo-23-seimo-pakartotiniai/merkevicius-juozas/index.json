@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Merkevičius Juozas",
+    "candidateId": "merkevicius-juozas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-39254.htm",
+    "constituencyName": "Trakų",
+    "constituencyNumber": 58,
+    "nominator": "Lietuvos liberalų sąjunga",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-102.htm"
+  },
+  "anketaPath": "samples/html/1997-kovo-23-seimo-pakartotiniai/merkevicius-juozas/candidate.html",
+  "tabCount": 2,
+  "tabsSaved": 2,
+  "anomalies": []
+}

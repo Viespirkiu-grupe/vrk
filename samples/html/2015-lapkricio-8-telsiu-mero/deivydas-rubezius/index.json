@@ -1,0 +1,60 @@
+{
+  "electionId": "2015-lapkricio-8-telsiu-mero",
+  "candidate": {
+    "candidateId": "deivydas-rubezius",
+    "candidateName": "Deivydas Rubežius",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88322/Kandidato88322Anketa.html"
+  },
+  "anketaPath": "samples/html/2015-lapkricio-8-telsiu-mero/deivydas-rubezius/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88322/Kandidato88322Anketa.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/deivydas-rubezius/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88322/Kandidato88322Biografija.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/deivydas-rubezius/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88322/Kandidato88322Deklaracijos.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/deivydas-rubezius/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88322/Kandidato88322InteresuDeklaracija.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/deivydas-rubezius/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88322/Kandidato88322Kita.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/deivydas-rubezius/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-7610",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/469_lt/PolitiniuKampanijuFinansavimas/Dalyvis7610/Dalyvio7610Izdininkas.html",
+      "campaignDir": "samples/html/2015-lapkricio-8-telsiu-mero/deivydas-rubezius/campaigns/dalyvis-7610",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2015-lapkricio-8-telsiu-mero/deivydas-rubezius/campaigns/dalyvis-7610/index.json"
+    }
+  ],
+  "anomalies": []
+}

@@ -1,0 +1,103 @@
+{
+  "electionId": "2023-spalio-8-kupiskio-mero",
+  "candidate": {
+    "candidateName": "Algirdas RASLANAS",
+    "candidateId": "algirdas-raslanas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1426/rnk1746/kandidatai/savKandidatasAnketa_2023_rkndId-2435285.html"
+  },
+  "anketaPath": "samples/html/2023-spalio-8-kupiskio-mero/algirdas-raslanas/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1426/rnk1746/kandidatai/savKandidatasAnketa_2023_rkndId-2435285.html",
+      "path": "samples/html/2023-spalio-8-kupiskio-mero/algirdas-raslanas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1426/rnk1746/kandidatai/savKandidatasBiografija_rkndId-2435285.html",
+      "path": "samples/html/2023-spalio-8-kupiskio-mero/algirdas-raslanas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1426/rnk1746/kandidatai/savKandidatasTurtoPajDekl_rkndId-2435285.html",
+      "path": "samples/html/2023-spalio-8-kupiskio-mero/algirdas-raslanas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1426/rnk1746/kandidatai/savKandidatasPrivInterDekl_rkndId-2435285.html",
+      "path": "samples/html/2023-spalio-8-kupiskio-mero/algirdas-raslanas/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1604/dalyviai/savarankiskasIzdininkas_pkdId-18165.html",
+      "path": "samples/html/2023-spalio-8-kupiskio-mero/algirdas-raslanas/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1426/rnk1746/kandidatai/savKandidatasKt_rkndId-2435285.html",
+      "path": "samples/html/2023-spalio-8-kupiskio-mero/algirdas-raslanas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "savarankiskasizdininkas-pkdid-18165",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1604/dalyviai/savarankiskasIzdininkas_pkdId-18165.html",
+      "campaignDir": "samples/html/2023-spalio-8-kupiskio-mero/algirdas-raslanas/campaigns/savarankiskasizdininkas-pkdid-18165",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1604/dalyviai/savarankiskasIzdininkas_pkdId-18165.html",
+          "path": "samples/html/2023-spalio-8-kupiskio-mero/algirdas-raslanas/campaigns/savarankiskasizdininkas-pkdid-18165/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1604/dalyviai/savarankiskasAuditorius_pkdId-18165.html",
+          "path": "samples/html/2023-spalio-8-kupiskio-mero/algirdas-raslanas/campaigns/savarankiskasizdininkas-pkdid-18165/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1604/dalyviai/savarankiskasAukotojai_pkdId-18165.html",
+          "path": "samples/html/2023-spalio-8-kupiskio-mero/algirdas-raslanas/campaigns/savarankiskasizdininkas-pkdid-18165/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1604/dalyviai/savarankiskasFinansavimas_pkdId-18165.html",
+          "path": "samples/html/2023-spalio-8-kupiskio-mero/algirdas-raslanas/campaigns/savarankiskasizdininkas-pkdid-18165/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1604/dalyviai/savarankiskasSutartys_pkdId-18165.html",
+          "path": "samples/html/2023-spalio-8-kupiskio-mero/algirdas-raslanas/campaigns/savarankiskasizdininkas-pkdid-18165/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2023-spalio-8-kupiskio-mero/algirdas-raslanas/campaigns/savarankiskasizdininkas-pkdid-18165/index.json"
+    }
+  ],
+  "anomalies": []
+}

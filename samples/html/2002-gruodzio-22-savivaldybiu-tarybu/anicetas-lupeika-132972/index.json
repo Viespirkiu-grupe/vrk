@@ -1,0 +1,43 @@
+{
+  "electionId": "2002-gruodzio-22-savivaldybiu-tarybu",
+  "candidate": {
+    "candidateName": "Anicetas Lupeika",
+    "candidateId": "anicetas-lupeika-132972",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1354/kandidatai_anketa_jsp_ri_id_15_asm_kod_132972.htm",
+    "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1354/kandidatai_deklaracija_jsp_ri_id_15_asm_kod_132972.htm",
+    "vrkCandidateId": "132972",
+    "municipality": {
+      "pavadinimas": "Akmenės rajono",
+      "numeris": 1,
+      "apygardosId": "1354"
+    },
+    "list": {
+      "pavadinimas": "Lietuvių tautininkų sąjunga",
+      "rusis": "partija",
+      "numeris": 15
+    },
+    "listPosition": 1
+  },
+  "anketaPath": "samples/html/2002-gruodzio-22-savivaldybiu-tarybu/anicetas-lupeika-132972/anketa.html",
+  "tabCount": 2,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1354/kandidatai_anketa_jsp_ri_id_15_asm_kod_132972.htm",
+      "path": "samples/html/2002-gruodzio-22-savivaldybiu-tarybu/anicetas-lupeika-132972/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1354/kandidatai_deklaracija_jsp_ri_id_15_asm_kod_132972.htm",
+      "path": "samples/html/2002-gruodzio-22-savivaldybiu-tarybu/anicetas-lupeika-132972/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

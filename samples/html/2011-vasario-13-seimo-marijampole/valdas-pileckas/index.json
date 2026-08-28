@@ -1,0 +1,107 @@
+{
+  "electionId": "2011-vasario-13-seimo-marijampole",
+  "candidate": {
+    "candidateName": "Valdas PILECKAS",
+    "candidateId": "valdas-pileckas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26490/Kandidato26490Anketa.html",
+    "vrkCandidateId": "26490",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Marijampolės",
+      "apygardosNumeris": 29,
+      "apygardosId": "7192",
+      "iskele": "Tėvynės sąjunga - Lietuvos krikščionys demokratai"
+    }
+  },
+  "anketaPath": "samples/html/2011-vasario-13-seimo-marijampole/valdas-pileckas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26490/Kandidato26490Anketa.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/valdas-pileckas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26490/Kandidato26490Biografija.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/valdas-pileckas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26490/Kandidato26490Deklaracijos.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/valdas-pileckas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26490/Kandidato26490InteresuDeklaracija.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/valdas-pileckas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26490/Kandidato26490Kita.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/valdas-pileckas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-4368",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4368/Dalyvio4368Izdininkas.html",
+      "campaignDir": "samples/html/2011-vasario-13-seimo-marijampole/valdas-pileckas/campaigns/dalyvis-4368",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4368/Dalyvio4368Izdininkas.html",
+          "path": "samples/html/2011-vasario-13-seimo-marijampole/valdas-pileckas/campaigns/dalyvis-4368/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4368/Dalyvio4368Auditorius.html",
+          "path": "samples/html/2011-vasario-13-seimo-marijampole/valdas-pileckas/campaigns/dalyvis-4368/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4368/Dalyvio4368AukotojuSarasas.html",
+          "path": "samples/html/2011-vasario-13-seimo-marijampole/valdas-pileckas/campaigns/dalyvis-4368/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4368/Dalyvio4368FinansavimoAtaskaitos.html",
+          "path": "samples/html/2011-vasario-13-seimo-marijampole/valdas-pileckas/campaigns/dalyvis-4368/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4368/Dalyvio4368Sutartys.html",
+          "path": "samples/html/2011-vasario-13-seimo-marijampole/valdas-pileckas/campaigns/dalyvis-4368/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2011-vasario-13-seimo-marijampole/valdas-pileckas/campaigns/dalyvis-4368/index.json"
+    }
+  ],
+  "anomalies": []
+}

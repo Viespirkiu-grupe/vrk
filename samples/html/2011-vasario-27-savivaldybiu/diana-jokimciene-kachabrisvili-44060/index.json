@@ -1,0 +1,56 @@
+{
+  "electionId": "2011-vasario-27-savivaldybiu",
+  "candidate": {
+    "candidateName": "Diana Jokimčienė-Kachabrišvili",
+    "candidateId": "diana-jokimciene-kachabrisvili-44060",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas44060/Kandidato44060Anketa.html",
+    "vrkCandidateId": "44060",
+    "municipality": "Akmenės rajono savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Lietuvos socialdemokratų partija",
+      "listKind": "partija",
+      "listNumber": 70,
+      "listPosition": 31,
+      "selfNominated": false
+    }
+  },
+  "anketaPath": "samples/html/2011-vasario-27-savivaldybiu/diana-jokimciene-kachabrisvili-44060/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas44060/Kandidato44060Anketa.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/diana-jokimciene-kachabrisvili-44060/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas44060/Kandidato44060Deklaracijos.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/diana-jokimciene-kachabrisvili-44060/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas44060/Kandidato44060InteresuDeklaracija.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/diana-jokimciene-kachabrisvili-44060/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas44060/Kandidato44060Kita.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/diana-jokimciene-kachabrisvili-44060/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

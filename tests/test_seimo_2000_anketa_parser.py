@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from scraper.elections.seimo_2000.anketa_parser import (
+    DEFAULT_RESULTS_PATH,
     FIELD_KEYS,
     finish_candidacy,
     normalize_anketa,
@@ -33,6 +34,8 @@ from scraper.elections.seimo_2000.sitemap import (
     resolve_party_kinds,
 )
 from scraper.shared.deklaracija_archive_1990s import parse_declaration
+
+from local_data import require
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -351,6 +354,7 @@ class Seimo2000CardParserTests(unittest.TestCase):
         self.assertEqual([q["questionNumber"] for q in parsed["questions"] if q["questionNumber"].count(".") == 1], ["8.1", "8.2", "8.3", "8.4", "9.1", "9.2", "9.3"])
 
     def test_pre_results_vintage_page_keeps_no_note(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         # 32 of the 1,271 pages are VRK's pre-results capture: the card
         # links the live CGI and carries no winner note even for a winner.
         record, stats = _parse("zukauskas-henrikas")
@@ -400,6 +404,7 @@ class Seimo2000CardParserTests(unittest.TestCase):
 
 class Seimo2000RecordTests(unittest.TestCase):
     def test_constituency_winner_on_a_coalition_list(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         record, stats = _parse("andriukaitis-vytenis-povilas")
         self.assertEqual(stats["anomalies"], [])
         self.assertEqual(record["candidateName"], "Vytenis Povilas ANDRIUKAITIS")
@@ -486,6 +491,7 @@ class Seimo2000RecordTests(unittest.TestCase):
         self.assertEqual(list(record["rawData"].keys()), ["profile", "candidacies", "anketa", "residence", "biography", "declaration"])
 
     def test_self_nominated_constituency_winner(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         record, stats = _parse("uspaskich-viktor")
         self.assertEqual(stats["anomalies"], [])
         candidacy = record["kandidatavimas"]
@@ -500,6 +506,7 @@ class Seimo2000RecordTests(unittest.TestCase):
         self.assertEqual((declaration["nepagrindines-darbovietes"], declaration["pareigos-nepagrindinese-darbovietese"]), ('UAB "Songailai"', "Komercijos direktorius"))
 
     def test_list_seat_without_photo_or_biography(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         record, stats = _parse("maldeikis-eugenijus")
         self.assertEqual(stats["anomalies"], [])
         candidacy = record["kandidatavimas"]
@@ -513,6 +520,7 @@ class Seimo2000RecordTests(unittest.TestCase):
         )
 
     def test_losers_and_the_gap(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         record, stats = _parse("petkus-viktoras")
         self.assertEqual(stats["anomalies"], [])
         self.assertEqual((record["kandidatavimas"]["isrinktas"], record["kandidatavimas"]["porinkiminisNumerisSarase"], record["kandidatavimas"]["pirmumoBalsai"]), (False, 3, 19111))

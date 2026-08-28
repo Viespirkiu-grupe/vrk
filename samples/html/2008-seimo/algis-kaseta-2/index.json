@@ -1,0 +1,54 @@
+{
+  "electionId": "2008-seimo",
+  "candidate": {
+    "candidateName": "Algis KAŠĖTA",
+    "candidateId": "algis-kaseta-2",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas20790/Kandidato20790Anketa.html",
+    "vrkCandidateId": "20790",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Varėnos - Eišiškių",
+      "apygardosNumeris": 70,
+      "apygardosId": "6915",
+      "iskele": "Lietuvos laisvės sąjunga"
+    }
+  },
+  "anketaPath": "samples/html/2008-seimo/algis-kaseta-2/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas20790/Kandidato20790Anketa.html",
+      "path": "samples/html/2008-seimo/algis-kaseta-2/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas20790/Kandidato20790Biografija.html",
+      "path": "samples/html/2008-seimo/algis-kaseta-2/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas20790/Kandidato20790Deklaracijos.html",
+      "path": "samples/html/2008-seimo/algis-kaseta-2/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas20790/Kandidato20790InteresuDeklaracija.html",
+      "path": "samples/html/2008-seimo/algis-kaseta-2/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

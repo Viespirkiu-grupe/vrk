@@ -1,0 +1,47 @@
+{
+  "electionId": "2004-seimo",
+  "candidate": {
+    "candidateName": "Alma VITKIENĖ",
+    "candidateId": "alma-vitkiene",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_293972.htm",
+    "vrkCandidateId": "293972",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Telšių",
+      "apygardosNumeris": 40,
+      "apygardosId": "1642",
+      "iskele": "Išsikėlė pati"
+    }
+  },
+  "anketaPath": "samples/html/2004-seimo/alma-vitkiene/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_293972.htm",
+      "path": "samples/html/2004-seimo/alma-vitkiene/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_biog_l_293972.htm",
+      "path": "samples/html/2004-seimo/alma-vitkiene/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_pajam_l_293972.htm",
+      "path": "samples/html/2004-seimo/alma-vitkiene/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

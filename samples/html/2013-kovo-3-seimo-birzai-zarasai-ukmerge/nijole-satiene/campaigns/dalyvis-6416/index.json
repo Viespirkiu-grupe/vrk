@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-6416",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6416/Dalyvio6416Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6416/Dalyvio6416Izdininkas.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/nijole-satiene/campaigns/dalyvis-6416/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6416/Dalyvio6416Auditorius.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/nijole-satiene/campaigns/dalyvis-6416/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6416/Dalyvio6416AukotojuSarasas.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/nijole-satiene/campaigns/dalyvis-6416/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6416/Dalyvio6416FinansavimoAtaskaitos.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/nijole-satiene/campaigns/dalyvis-6416/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6416/Dalyvio6416Sutartys.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/nijole-satiene/campaigns/dalyvis-6416/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

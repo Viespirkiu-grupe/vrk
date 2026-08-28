@@ -1,0 +1,16 @@
+{
+  "campaignKey": "atstovaujamasis-pkdid-17376",
+  "campaignLabel": "",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/atstovaujamasis_pkdId-17376.html",
+  "tabCount": 1,
+  "tabSamples": [
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasAukotojai_pkdId-17376.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/rasa-vitkauskiene-2423015/campaigns/atstovaujamasis-pkdid-17376/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

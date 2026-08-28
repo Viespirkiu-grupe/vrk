@@ -16,6 +16,7 @@ from bs4 import BeautifulSoup
 from scraper.elections.ep_2004.anketa_parser import _parse_record_table as ep_2004_record_table
 from scraper.elections.savivaldybiu_2002.anketa_parser import normalize_deklaracija
 from scraper.elections.seimo_nauji_2003.anketa_parser import (
+    DEFAULT_RESULTS_PATH,
     DEKLARACIJA_RANGE_ITEMS,
     DEKLARACIJA_SINGLE_ITEMS,
     _parse_record_table,
@@ -39,6 +40,8 @@ from scraper.elections.seimo_nauji_2003.sitemap import (
     build_sitemap_from_sample,
 )
 from scraper.shared.election_results import page_path
+
+from local_data import require
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SAMPLES_ROOT = REPO_ROOT / "samples" / "html" / ELECTION_ID
@@ -274,6 +277,7 @@ class SeimoNauji2003AnketaParserTests(unittest.TestCase):
         self.assertEqual(counts.count(1), 21)
 
     def test_record(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         record, stats = _parse("vilija-aleknaite-abramikiene")
         self.assertEqual(record["electionId"], ELECTION_ID)
         self.assertEqual(stats["anomalies"], [])

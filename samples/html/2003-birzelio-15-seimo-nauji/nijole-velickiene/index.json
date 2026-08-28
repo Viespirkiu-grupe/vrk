@@ -1,0 +1,47 @@
+{
+  "electionId": "2003-birzelio-15-seimo-nauji",
+  "candidate": {
+    "candidateName": "Nijolė Veličkienė",
+    "candidateId": "nijole-velickiene",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241246.htm",
+    "vrkCandidateId": "241246",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Senamiesčio",
+      "apygardosNumeris": 2,
+      "apygardosId": "1476",
+      "iskele": "Liberalų demokratų partija"
+    }
+  },
+  "anketaPath": "samples/html/2003-birzelio-15-seimo-nauji/nijole-velickiene/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241246.htm",
+      "path": "samples/html/2003-birzelio-15-seimo-nauji/nijole-velickiene/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Autobiografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_biog_l-id=241246.htm",
+      "path": "samples/html/2003-birzelio-15-seimo-nauji/nijole-velickiene/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_pajam_l-id=241246.htm",
+      "path": "samples/html/2003-birzelio-15-seimo-nauji/nijole-velickiene/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

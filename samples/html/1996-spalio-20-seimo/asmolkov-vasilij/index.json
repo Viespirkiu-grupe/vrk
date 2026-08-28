@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Asmolkov Vasilij",
+    "candidateId": "asmolkov-vasilij",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seim96/kandvl.htm-17109.htm",
+    "constituencyName": "Naujamiesčio",
+    "constituencyNumber": 1,
+    "nominator": "Lietuvos ūkio partija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seim96/partr2l.htm-79.htm"
+  },
+  "anketaPath": "samples/html/1996-spalio-20-seimo/asmolkov-vasilij/candidate.html",
+  "tabCount": 2,
+  "tabsSaved": 2,
+  "anomalies": []
+}

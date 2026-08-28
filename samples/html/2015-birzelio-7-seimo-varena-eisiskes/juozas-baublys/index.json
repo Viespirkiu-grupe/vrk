@@ -1,0 +1,60 @@
+{
+  "electionId": "2015-birzelio-7-seimo-varena-eisiskes",
+  "candidate": {
+    "candidateId": "juozas-baublys",
+    "candidateName": "Juozas BAUBLYS",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87928/Kandidato87928Anketa.html"
+  },
+  "anketaPath": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/juozas-baublys/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87928/Kandidato87928Anketa.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/juozas-baublys/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87928/Kandidato87928Biografija.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/juozas-baublys/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87928/Kandidato87928Deklaracijos.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/juozas-baublys/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87928/Kandidato87928InteresuDeklaracija.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/juozas-baublys/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87928/Kandidato87928Kita.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/juozas-baublys/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-7574",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/PolitiniuKampanijuFinansavimas/Dalyvis7574/Dalyvio7574Izdininkas.html",
+      "campaignDir": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/juozas-baublys/campaigns/dalyvis-7574",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/juozas-baublys/campaigns/dalyvis-7574/index.json"
+    }
+  ],
+  "anomalies": []
+}

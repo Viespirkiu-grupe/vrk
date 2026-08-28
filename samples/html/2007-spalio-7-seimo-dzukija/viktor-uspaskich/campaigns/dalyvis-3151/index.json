@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-3151",
+  "campaignLabel": "Politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3151/Dalyvio3151Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3151/Dalyvio3151Izdininkas.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/viktor-uspaskich/campaigns/dalyvis-3151/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3151/Dalyvio3151Auditorius.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/viktor-uspaskich/campaigns/dalyvis-3151/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukotojų sąrašas",
+      "slug": "aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3151/Dalyvio3151AukotojuSarasas.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/viktor-uspaskich/campaigns/dalyvis-3151/aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3151/Dalyvio3151FinansavimoAtaskaitos.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/viktor-uspaskich/campaigns/dalyvis-3151/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3151/Dalyvio3151Sutartys.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/viktor-uspaskich/campaigns/dalyvis-3151/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

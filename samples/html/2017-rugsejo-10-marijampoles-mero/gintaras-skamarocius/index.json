@@ -1,0 +1,103 @@
+{
+  "electionId": "2017-rugsejo-10-marijampoles-mero",
+  "candidate": {
+    "candidateName": "Gintaras SKAMAROČIUS",
+    "candidateId": "gintaras-skamarocius",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasAnketa_rkndId-2399778.html"
+  },
+  "anketaPath": "samples/html/2017-rugsejo-10-marijampoles-mero/gintaras-skamarocius/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasAnketa_rkndId-2399778.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/gintaras-skamarocius/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasBiografija_rkndId-2399778.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/gintaras-skamarocius/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasTurtoPajDekl_rkndId-2399778.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/gintaras-skamarocius/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasPrivInterDekl_rkndId-2399778.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/gintaras-skamarocius/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/savarankiskasIzdininkas_pkdId-1667.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/gintaras-skamarocius/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasKt_rkndId-2399778.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/gintaras-skamarocius/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "savarankiskasizdininkas-pkdid-1667",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/savarankiskasIzdininkas_pkdId-1667.html",
+      "campaignDir": "samples/html/2017-rugsejo-10-marijampoles-mero/gintaras-skamarocius/campaigns/savarankiskasizdininkas-pkdid-1667",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/savarankiskasIzdininkas_pkdId-1667.html",
+          "path": "samples/html/2017-rugsejo-10-marijampoles-mero/gintaras-skamarocius/campaigns/savarankiskasizdininkas-pkdid-1667/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/savarankiskasAuditorius_pkdId-1667.html",
+          "path": "samples/html/2017-rugsejo-10-marijampoles-mero/gintaras-skamarocius/campaigns/savarankiskasizdininkas-pkdid-1667/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/savarankiskasAukotojai_pkdId-1667.html",
+          "path": "samples/html/2017-rugsejo-10-marijampoles-mero/gintaras-skamarocius/campaigns/savarankiskasizdininkas-pkdid-1667/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/savarankiskasFinansavimas_pkdId-1667.html",
+          "path": "samples/html/2017-rugsejo-10-marijampoles-mero/gintaras-skamarocius/campaigns/savarankiskasizdininkas-pkdid-1667/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/savarankiskasSutartys_pkdId-1667.html",
+          "path": "samples/html/2017-rugsejo-10-marijampoles-mero/gintaras-skamarocius/campaigns/savarankiskasizdininkas-pkdid-1667/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2017-rugsejo-10-marijampoles-mero/gintaras-skamarocius/campaigns/savarankiskasizdininkas-pkdid-1667/index.json"
+    }
+  ],
+  "anomalies": []
+}

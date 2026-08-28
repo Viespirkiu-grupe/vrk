@@ -1,0 +1,56 @@
+{
+  "electionId": "2004-seimo",
+  "candidate": {
+    "candidateName": "Remigijus AČAS",
+    "candidateId": "remigijus-acas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_294429.htm",
+    "vrkCandidateId": "294429",
+    "roles": [
+      "daugiamandate",
+      "vienmandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Rolando Pakso koalicija \"Už tvarką ir teisingumą\"",
+      "sarasoNumeris": 8,
+      "sarasoId": "1874",
+      "numerisSarase": 15,
+      "koalicijosPartija": "Liberalų demokratų partija",
+      "numerisPartijosSarase": 13
+    },
+    "vienmandateCandidacy": {
+      "apygarda": "Raseinių",
+      "apygardosNumeris": 42,
+      "apygardosId": "1644",
+      "iskele": "Liberalų demokratų partija"
+    }
+  },
+  "anketaPath": "samples/html/2004-seimo/remigijus-acas/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_294429.htm",
+      "path": "samples/html/2004-seimo/remigijus-acas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_biog_l_294429.htm",
+      "path": "samples/html/2004-seimo/remigijus-acas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_pajam_l_294429.htm",
+      "path": "samples/html/2004-seimo/remigijus-acas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

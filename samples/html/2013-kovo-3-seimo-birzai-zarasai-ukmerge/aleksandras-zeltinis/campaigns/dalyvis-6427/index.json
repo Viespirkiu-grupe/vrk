@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-6427",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6427/Dalyvio6427Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6427/Dalyvio6427Izdininkas.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/aleksandras-zeltinis/campaigns/dalyvis-6427/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6427/Dalyvio6427Auditorius.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/aleksandras-zeltinis/campaigns/dalyvis-6427/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6427/Dalyvio6427AukotojuSarasas.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/aleksandras-zeltinis/campaigns/dalyvis-6427/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6427/Dalyvio6427FinansavimoAtaskaitos.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/aleksandras-zeltinis/campaigns/dalyvis-6427/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6427/Dalyvio6427Sutartys.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/aleksandras-zeltinis/campaigns/dalyvis-6427/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

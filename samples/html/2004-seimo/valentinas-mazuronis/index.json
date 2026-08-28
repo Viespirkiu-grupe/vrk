@@ -1,0 +1,56 @@
+{
+  "electionId": "2004-seimo",
+  "candidate": {
+    "candidateName": "Valentinas MAZURONIS",
+    "candidateId": "valentinas-mazuronis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_294409.htm",
+    "vrkCandidateId": "294409",
+    "roles": [
+      "daugiamandate",
+      "vienmandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Rolando Pakso koalicija \"Už tvarką ir teisingumą\"",
+      "sarasoNumeris": 8,
+      "sarasoId": "1874",
+      "numerisSarase": 1,
+      "koalicijosPartija": "Liberalų demokratų partija",
+      "numerisPartijosSarase": 1
+    },
+    "vienmandateCandidacy": {
+      "apygarda": "Dainų",
+      "apygardosNumeris": 25,
+      "apygardosId": "1627",
+      "iskele": "Liberalų demokratų partija"
+    }
+  },
+  "anketaPath": "samples/html/2004-seimo/valentinas-mazuronis/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_294409.htm",
+      "path": "samples/html/2004-seimo/valentinas-mazuronis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_biog_l_294409.htm",
+      "path": "samples/html/2004-seimo/valentinas-mazuronis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_pajam_l_294409.htm",
+      "path": "samples/html/2004-seimo/valentinas-mazuronis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

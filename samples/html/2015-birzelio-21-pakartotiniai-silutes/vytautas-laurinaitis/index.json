@@ -1,0 +1,74 @@
+{
+  "electionId": "2015-birzelio-21-pakartotiniai-silutes",
+  "candidate": {
+    "candidateName": "Vytautas Laurinaitis",
+    "candidateId": "vytautas-laurinaitis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88167/Kandidato88167Anketa.html",
+    "vrkCandidateId": "88167",
+    "municipality": "Šilutės rajono savivaldybė",
+    "roles": [
+      "meras",
+      "tarybos-narys"
+    ],
+    "mayoralCandidacy": {
+      "nominatedBy": "Partija Tvarka ir teisingumas"
+    },
+    "councilCandidacy": {
+      "partyList": "Partija Tvarka ir teisingumas",
+      "listNumber": 25,
+      "listPosition": 1
+    }
+  },
+  "anketaPath": "samples/html/2015-birzelio-21-pakartotiniai-silutes/vytautas-laurinaitis/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88167/Kandidato88167Anketa.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/vytautas-laurinaitis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88167/Kandidato88167Biografija.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/vytautas-laurinaitis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88167/Kandidato88167Deklaracijos.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/vytautas-laurinaitis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88167/Kandidato88167InteresuDeklaracija.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/vytautas-laurinaitis/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88167/Kandidato88167Kita.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/vytautas-laurinaitis/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-7594",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/PolitiniuKampanijuFinansavimas/Dalyvis7594/Dalyvio7594Izdininkas.html",
+      "campaignDir": "samples/html/2015-birzelio-21-pakartotiniai-silutes/vytautas-laurinaitis/campaigns/dalyvis-7594",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2015-birzelio-21-pakartotiniai-silutes/vytautas-laurinaitis/campaigns/dalyvis-7594/index.json"
+    }
+  ],
+  "anomalies": []
+}

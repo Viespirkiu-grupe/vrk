@@ -1,0 +1,43 @@
+{
+  "electionId": "2002-gruodzio-22-savivaldybiu-tarybu",
+  "candidate": {
+    "candidateName": "Rimvydas Vytautas Kliūčius",
+    "candidateId": "rimvydas-vytautas-kliucius-135195",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1358/kandidatai_anketa_jsp_ri_id_15_asm_kod_135195.htm",
+    "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1358/kandidatai_deklaracija_jsp_ri_id_15_asm_kod_135195.htm",
+    "vrkCandidateId": "135195",
+    "municipality": {
+      "pavadinimas": "Birštono",
+      "numeris": 5,
+      "apygardosId": "1358"
+    },
+    "list": {
+      "pavadinimas": "Lietuvos liberalų sąjunga",
+      "rusis": "partija",
+      "numeris": 26
+    },
+    "listPosition": 8
+  },
+  "anketaPath": "samples/html/2002-gruodzio-22-savivaldybiu-tarybu/rimvydas-vytautas-kliucius-135195/anketa.html",
+  "tabCount": 2,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1358/kandidatai_anketa_jsp_ri_id_15_asm_kod_135195.htm",
+      "path": "samples/html/2002-gruodzio-22-savivaldybiu-tarybu/rimvydas-vytautas-kliucius-135195/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1358/kandidatai_deklaracija_jsp_ri_id_15_asm_kod_135195.htm",
+      "path": "samples/html/2002-gruodzio-22-savivaldybiu-tarybu/rimvydas-vytautas-kliucius-135195/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

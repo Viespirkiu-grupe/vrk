@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-5130",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis5130/Dalyvio5130Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis5130/Dalyvio5130Izdininkas.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/vaida-giraityte/campaigns/dalyvis-5130/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis5130/Dalyvio5130Auditorius.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/vaida-giraityte/campaigns/dalyvis-5130/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis5130/Dalyvio5130AukotojuSarasas.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/vaida-giraityte/campaigns/dalyvis-5130/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis5130/Dalyvio5130FinansavimoAtaskaitos.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/vaida-giraityte/campaigns/dalyvis-5130/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis5130/Dalyvio5130Sutartys.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/vaida-giraityte/campaigns/dalyvis-5130/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

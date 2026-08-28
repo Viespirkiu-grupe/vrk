@@ -1,0 +1,74 @@
+{
+  "electionId": "2015-kovo-1-savivaldybiu",
+  "candidate": {
+    "candidateName": "Adelė Dimšienė",
+    "candidateId": "adele-dimsiene-85873",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas85873/Kandidato85873Anketa.html",
+    "vrkCandidateId": "85873",
+    "municipality": "Alytaus miesto savivaldybė",
+    "roles": [
+      "meras",
+      "tarybos-narys"
+    ],
+    "mayoralCandidacy": {
+      "nominatedBy": "Visuomeninis rinkimų komitetas „Už Alytų“"
+    },
+    "councilCandidacy": {
+      "partyList": "Visuomeninis rinkimų komitetas „Už Alytų“",
+      "listNumber": 1,
+      "listPosition": 1
+    }
+  },
+  "anketaPath": "samples/html/2015-kovo-1-savivaldybiu/adele-dimsiene-85873/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas85873/Kandidato85873Anketa.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/adele-dimsiene-85873/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas85873/Kandidato85873Biografija.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/adele-dimsiene-85873/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas85873/Kandidato85873Deklaracijos.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/adele-dimsiene-85873/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas85873/Kandidato85873InteresuDeklaracija.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/adele-dimsiene-85873/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas85873/Kandidato85873Kita.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/adele-dimsiene-85873/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-7137",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis7137/Dalyvio7137Izdininkas.html",
+      "campaignDir": "samples/html/2015-kovo-1-savivaldybiu/adele-dimsiene-85873/campaigns/dalyvis-7137",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2015-kovo-1-savivaldybiu/adele-dimsiene-85873/campaigns/dalyvis-7137/index.json"
+    }
+  ],
+  "anomalies": []
+}

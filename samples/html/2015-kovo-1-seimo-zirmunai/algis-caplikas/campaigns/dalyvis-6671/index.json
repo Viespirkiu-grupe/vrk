@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-6671",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6671/Dalyvio6671Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6671/Dalyvio6671Izdininkas.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/algis-caplikas/campaigns/dalyvis-6671/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6671/Dalyvio6671Auditorius.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/algis-caplikas/campaigns/dalyvis-6671/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6671/Dalyvio6671AukotojuSarasas.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/algis-caplikas/campaigns/dalyvis-6671/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6671/Dalyvio6671FinansavimoAtaskaitos.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/algis-caplikas/campaigns/dalyvis-6671/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6671/Dalyvio6671Sutartys.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/algis-caplikas/campaigns/dalyvis-6671/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

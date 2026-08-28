@@ -1,0 +1,67 @@
+{
+  "electionId": "2021-balandzio-11-radviliskio-mero",
+  "candidate": {
+    "candidateName": "Kazimieras RAČKAUSKIS",
+    "candidateId": "kazimieras-rackauskis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasAnketa_rkndId-2420394.html"
+  },
+  "anketaPath": "samples/html/2021-balandzio-11-radviliskio-mero/kazimieras-rackauskis/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasAnketa_rkndId-2420394.html",
+      "path": "samples/html/2021-balandzio-11-radviliskio-mero/kazimieras-rackauskis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasBiografija_rkndId-2420394.html",
+      "path": "samples/html/2021-balandzio-11-radviliskio-mero/kazimieras-rackauskis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasTurtoPajDekl_rkndId-2420394.html",
+      "path": "samples/html/2021-balandzio-11-radviliskio-mero/kazimieras-rackauskis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasPrivInterDekl_rkndId-2420394.html",
+      "path": "samples/html/2021-balandzio-11-radviliskio-mero/kazimieras-rackauskis/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1364/dalyviai/atstovaujamasis_pkdId-4867.html",
+      "path": "samples/html/2021-balandzio-11-radviliskio-mero/kazimieras-rackauskis/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasKt_rkndId-2420394.html",
+      "path": "samples/html/2021-balandzio-11-radviliskio-mero/kazimieras-rackauskis/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "atstovaujamasis-pkdid-4867",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1364/dalyviai/atstovaujamasis_pkdId-4867.html",
+      "campaignDir": "samples/html/2021-balandzio-11-radviliskio-mero/kazimieras-rackauskis/campaigns/atstovaujamasis-pkdid-4867",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2021-balandzio-11-radviliskio-mero/kazimieras-rackauskis/campaigns/atstovaujamasis-pkdid-4867/index.json"
+    }
+  ],
+  "anomalies": []
+}

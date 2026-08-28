@@ -1,0 +1,47 @@
+{
+  "electionId": "2004-ep",
+  "candidate": {
+    "candidateName": "Viktor BALAKIN",
+    "candidateId": "viktor-balakin",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260703.htm",
+    "vrkCandidateId": "260703",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+      "sarasoNumeris": 6,
+      "sarasoId": "1785",
+      "numerisSarase": 8
+    }
+  },
+  "anketaPath": "samples/html/2004-ep/viktor-balakin/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260703.htm",
+      "path": "samples/html/2004-ep/viktor-balakin/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_biog_l_260703.htm",
+      "path": "samples/html/2004-ep/viktor-balakin/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų ir turto deklaracijų pagrindinių duomenų išrašai",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_pajam_l_260703.htm",
+      "path": "samples/html/2004-ep/viktor-balakin/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

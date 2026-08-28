@@ -1,0 +1,93 @@
+{
+  "electionId": "2002-prezidento",
+  "candidate": {
+    "candidateName": "Vytautas Antanas Matulevičius",
+    "candidateId": "vytautas-antanas-matulevicius",
+    "vrkCandidateId": "168288",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+    "vrkRegistrationId": "948555",
+    "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948555.htm",
+    "registration": "2002 m lapkričio 12 dienos VRK sprendimu Nr. 136 registruotas kandidatu į Respublikos Prezidentus.",
+    "registeredDate": "2002-11-12",
+    "decision": "VRK sprendimu Nr. 136",
+    "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=193138",
+    "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/VMatuleviciaus_biografija.htm",
+    "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/VMatuleviciaus_programa.doc",
+    "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Matulevicius_pareiskimas.jpg",
+    "anketosSkenaiUrls": [
+      "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Matulevicius_anketa1.jpg",
+      "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Matulevicius_anketa2.jpg"
+    ],
+    "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Matulevicius_deklaracija.jpg",
+    "deklaracijaLabel": "Šeimos turto pajamų deklaracija",
+    "sveikatosSkenaiUrls": [],
+    "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/VA_Matulevicius_nuotrauka.jpg",
+    "websiteUrls": [
+      "http://www.krantas.uni.cc",
+      "http://www.geocities.com/krantasvyt"
+    ]
+  },
+  "anketaPath": "samples/html/2002-prezidento/vytautas-antanas-matulevicius/anketa.html",
+  "tabCount": 7,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "path": "samples/html/2002-prezidento/vytautas-antanas-matulevicius/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/VMatuleviciaus_biografija.htm",
+      "path": "samples/html/2002-prezidento/vytautas-antanas-matulevicius/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Programa",
+      "slug": "programa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/VMatuleviciaus_programa.doc",
+      "path": "samples/html/2002-prezidento/vytautas-antanas-matulevicius/programa.doc",
+      "fetched": true
+    },
+    {
+      "label": "Pareiškimas",
+      "slug": "pareiskimas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Matulevicius_pareiskimas.jpg",
+      "path": "samples/html/2002-prezidento/vytautas-antanas-matulevicius/pareiskimas.jpg",
+      "fetched": true
+    },
+    {
+      "label": "Duomenų anketa 1",
+      "slug": "duomenu-anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Matulevicius_anketa1.jpg",
+      "path": "samples/html/2002-prezidento/vytautas-antanas-matulevicius/duomenu-anketa-1.jpg",
+      "fetched": true
+    },
+    {
+      "label": "Duomenų anketa 2",
+      "slug": "duomenu-anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Matulevicius_anketa2.jpg",
+      "path": "samples/html/2002-prezidento/vytautas-antanas-matulevicius/duomenu-anketa-2.jpg",
+      "fetched": true
+    },
+    {
+      "label": "Šeimos turto pajamų deklaracija",
+      "slug": "deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Matulevicius_deklaracija.jpg",
+      "path": "samples/html/2002-prezidento/vytautas-antanas-matulevicius/deklaracija.jpg",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [
+    {
+      "label": "Patikėtiniai",
+      "slug": "patiketiniai",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948555.htm"
+    }
+  ],
+  "campaignSamples": [],
+  "anomalies": []
+}

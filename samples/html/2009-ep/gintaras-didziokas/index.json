@@ -1,0 +1,107 @@
+{
+  "electionId": "2009-ep",
+  "candidate": {
+    "candidateName": "Gintaras DIDŽIOKAS",
+    "candidateId": "gintaras-didziokas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25528/Kandidato25528Anketa.html",
+    "vrkCandidateId": "25528",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+      "sarasoNumeris": 15,
+      "sarasoId": "3557",
+      "numerisSarase": 1
+    }
+  },
+  "anketaPath": "samples/html/2009-ep/gintaras-didziokas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25528/Kandidato25528Anketa.html",
+      "path": "samples/html/2009-ep/gintaras-didziokas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25528/Kandidato25528Biografija.html",
+      "path": "samples/html/2009-ep/gintaras-didziokas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25528/Kandidato25528Deklaracijos.html",
+      "path": "samples/html/2009-ep/gintaras-didziokas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25528/Kandidato25528InteresuDeklaracija.html",
+      "path": "samples/html/2009-ep/gintaras-didziokas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25528/Kandidato25528Kita.html",
+      "path": "samples/html/2009-ep/gintaras-didziokas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-4004",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4004/Dalyvio4004Izdininkas.html",
+      "campaignDir": "samples/html/2009-ep/gintaras-didziokas/campaigns/dalyvis-4004",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4004/Dalyvio4004Izdininkas.html",
+          "path": "samples/html/2009-ep/gintaras-didziokas/campaigns/dalyvis-4004/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4004/Dalyvio4004Auditorius.html",
+          "path": "samples/html/2009-ep/gintaras-didziokas/campaigns/dalyvis-4004/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukotojų sąrašas",
+          "slug": "aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4004/Dalyvio4004AukotojuSarasas.html",
+          "path": "samples/html/2009-ep/gintaras-didziokas/campaigns/dalyvis-4004/aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4004/Dalyvio4004FinansavimoAtaskaitos.html",
+          "path": "samples/html/2009-ep/gintaras-didziokas/campaigns/dalyvis-4004/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4004/Dalyvio4004Sutartys.html",
+          "path": "samples/html/2009-ep/gintaras-didziokas/campaigns/dalyvis-4004/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2009-ep/gintaras-didziokas/campaigns/dalyvis-4004/index.json"
+    }
+  ],
+  "anomalies": []
+}

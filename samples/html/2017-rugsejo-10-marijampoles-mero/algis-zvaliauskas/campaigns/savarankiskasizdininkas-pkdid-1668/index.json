@@ -1,0 +1,44 @@
+{
+  "campaignKey": "savarankiskasizdininkas-pkdid-1668",
+  "campaignLabel": "",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/savarankiskasIzdininkas_pkdId-1668.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/savarankiskasIzdininkas_pkdId-1668.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/algis-zvaliauskas/campaigns/savarankiskasizdininkas-pkdid-1668/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/savarankiskasAuditorius_pkdId-1668.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/algis-zvaliauskas/campaigns/savarankiskasizdininkas-pkdid-1668/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/savarankiskasAukotojai_pkdId-1668.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/algis-zvaliauskas/campaigns/savarankiskasizdininkas-pkdid-1668/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/savarankiskasFinansavimas_pkdId-1668.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/algis-zvaliauskas/campaigns/savarankiskasizdininkas-pkdid-1668/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/savarankiskasSutartys_pkdId-1668.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/algis-zvaliauskas/campaigns/savarankiskasizdininkas-pkdid-1668/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

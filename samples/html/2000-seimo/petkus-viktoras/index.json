@@ -1,0 +1,21 @@
+{
+  "candidate": {
+    "candidateName": "Petkus Viktoras",
+    "candidateId": "petkus-viktoras",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20001008/kandvl.htm-154484.htm",
+    "vrkCandidateId": "154484",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Krikščionių demokratų sąjunga",
+      "sarasoNumeris": 12,
+      "sarasoId": "642",
+      "numerisSarase": 3
+    }
+  },
+  "anketaPath": "samples/html/2000-seimo/petkus-viktoras/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

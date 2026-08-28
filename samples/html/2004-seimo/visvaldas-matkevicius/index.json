@@ -1,0 +1,49 @@
+{
+  "electionId": "2004-seimo",
+  "candidate": {
+    "candidateName": "Visvaldas MATKEVIČIUS",
+    "candidateId": "visvaldas-matkevicius",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_295224.htm",
+    "vrkCandidateId": "295224",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "A.Brazausko ir A.Paulausko koalicija \"Už darbą Lietuvai\"",
+      "sarasoNumeris": 6,
+      "sarasoId": "1871",
+      "numerisSarase": 100,
+      "koalicijosPartija": "Naujoji sąjunga (socialliberalai)",
+      "numerisPartijosSarase": 31
+    }
+  },
+  "anketaPath": "samples/html/2004-seimo/visvaldas-matkevicius/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_295224.htm",
+      "path": "samples/html/2004-seimo/visvaldas-matkevicius/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_biog_l_295224.htm",
+      "path": "samples/html/2004-seimo/visvaldas-matkevicius/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_pajam_l_295224.htm",
+      "path": "samples/html/2004-seimo/visvaldas-matkevicius/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-6729",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6729/Dalyvio6729Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6729/Dalyvio6729Izdininkas.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/zydrunas-plytnikas/campaigns/dalyvis-6729/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6729/Dalyvio6729Auditorius.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/zydrunas-plytnikas/campaigns/dalyvis-6729/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6729/Dalyvio6729AukotojuSarasas.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/zydrunas-plytnikas/campaigns/dalyvis-6729/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6729/Dalyvio6729FinansavimoAtaskaitos.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/zydrunas-plytnikas/campaigns/dalyvis-6729/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6729/Dalyvio6729Sutartys.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/zydrunas-plytnikas/campaigns/dalyvis-6729/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

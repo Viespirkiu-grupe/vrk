@@ -1,0 +1,38 @@
+# The suite, on every push and pull request.
+#
+# It runs on a clone and nothing else: `samples/` carries the tracked fixture
+# subset (`scripts/tracked_fixtures.py`), and the tests that need the rest of
+# the scrape -- the larger fixtures, `sitemaps/`, `data/` -- skip themselves
+# with the command that would produce it. About 1,000 tests run here; the whole
+# job is a couple of minutes.
+
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # The floor from .python-version, and the newest release the code is
+        # known to run on.
+        python-version: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+      - run: pip install -r requirements-dev.txt
+      - run: python -m pytest

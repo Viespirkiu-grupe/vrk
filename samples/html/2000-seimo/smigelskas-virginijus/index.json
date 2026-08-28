@@ -1,0 +1,21 @@
+{
+  "candidate": {
+    "candidateName": "Šmigelskas Virginijus",
+    "candidateId": "smigelskas-virginijus",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20001008/kandvl.htm-154438.htm",
+    "vrkCandidateId": "154438",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Širvintų - Vilniaus",
+      "apygardosNumeris": 55,
+      "apygardosId": "811",
+      "iskele": "Lietuvos centro sąjunga"
+    }
+  },
+  "anketaPath": "samples/html/2000-seimo/smigelskas-virginijus/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

@@ -1,0 +1,23 @@
+{
+  "candidate": {
+    "candidateName": "Šedžius Alvydas",
+    "candidateId": "sedzius-alvydas-2",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20001008/kandvl.htm-152007.htm",
+    "vrkCandidateId": "152007",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "A.Brazausko socialdemokratinė koalicija",
+      "sarasoNumeris": 9,
+      "sarasoId": "698",
+      "numerisSarase": 113,
+      "koalicijosPartija": "Lietuvos demokratinė darbo partija",
+      "numerisPartijosSarase": 47
+    }
+  },
+  "anketaPath": "samples/html/2000-seimo/sedzius-alvydas-2/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

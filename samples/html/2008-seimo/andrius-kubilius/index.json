@@ -1,0 +1,61 @@
+{
+  "electionId": "2008-seimo",
+  "candidate": {
+    "candidateName": "Andrius KUBILIUS",
+    "candidateId": "andrius-kubilius",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas19520/Kandidato19520Anketa.html",
+    "vrkCandidateId": "19520",
+    "roles": [
+      "daugiamandate",
+      "vienmandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+      "sarasoNumeris": 5,
+      "sarasoId": "3433",
+      "numerisSarase": 1
+    },
+    "vienmandateCandidacy": {
+      "apygarda": "Antakalnio",
+      "apygardosNumeris": 3,
+      "apygardosId": "6875",
+      "iskele": "Tėvynės sąjunga - Lietuvos krikščionys demokratai"
+    }
+  },
+  "anketaPath": "samples/html/2008-seimo/andrius-kubilius/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas19520/Kandidato19520Anketa.html",
+      "path": "samples/html/2008-seimo/andrius-kubilius/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas19520/Kandidato19520Biografija.html",
+      "path": "samples/html/2008-seimo/andrius-kubilius/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas19520/Kandidato19520Deklaracijos.html",
+      "path": "samples/html/2008-seimo/andrius-kubilius/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas19520/Kandidato19520InteresuDeklaracija.html",
+      "path": "samples/html/2008-seimo/andrius-kubilius/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

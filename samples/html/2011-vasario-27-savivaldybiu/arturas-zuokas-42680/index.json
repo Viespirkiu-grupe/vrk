@@ -1,0 +1,56 @@
+{
+  "electionId": "2011-vasario-27-savivaldybiu",
+  "candidate": {
+    "candidateName": "Artūras Zuokas",
+    "candidateId": "arturas-zuokas-42680",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas42680/Kandidato42680Anketa.html",
+    "vrkCandidateId": "42680",
+    "municipality": "Vilniaus miesto savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Artūro Zuoko ir Vilniaus koalicija",
+      "listKind": "issikelusiu-kandidatu-koalicija",
+      "listNumber": 2,
+      "listPosition": 1,
+      "selfNominated": false
+    }
+  },
+  "anketaPath": "samples/html/2011-vasario-27-savivaldybiu/arturas-zuokas-42680/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas42680/Kandidato42680Anketa.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/arturas-zuokas-42680/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas42680/Kandidato42680Deklaracijos.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/arturas-zuokas-42680/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas42680/Kandidato42680InteresuDeklaracija.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/arturas-zuokas-42680/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas42680/Kandidato42680Kita.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/arturas-zuokas-42680/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

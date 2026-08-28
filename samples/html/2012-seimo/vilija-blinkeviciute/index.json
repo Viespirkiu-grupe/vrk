@@ -1,0 +1,106 @@
+{
+  "electionId": "2012-seimo",
+  "candidate": {
+    "candidateName": "Vilija BLINKEVIČIŪTĖ",
+    "candidateId": "vilija-blinkeviciute",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas66815/Kandidato66815Anketa.html",
+    "vrkCandidateId": "66815",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Lietuvos socialdemokratų partija",
+      "sarasoNumeris": 8,
+      "sarasoId": "4136-1",
+      "numerisSarase": 2
+    }
+  },
+  "anketaPath": "samples/html/2012-seimo/vilija-blinkeviciute/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas66815/Kandidato66815Anketa.html",
+      "path": "samples/html/2012-seimo/vilija-blinkeviciute/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas66815/Kandidato66815Biografija.html",
+      "path": "samples/html/2012-seimo/vilija-blinkeviciute/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas66815/Kandidato66815Deklaracijos.html",
+      "path": "samples/html/2012-seimo/vilija-blinkeviciute/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas66815/Kandidato66815InteresuDeklaracija.html",
+      "path": "samples/html/2012-seimo/vilija-blinkeviciute/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas66815/Kandidato66815Kita.html",
+      "path": "samples/html/2012-seimo/vilija-blinkeviciute/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-5332",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5332/Dalyvio5332Izdininkas.html",
+      "campaignDir": "samples/html/2012-seimo/vilija-blinkeviciute/campaigns/dalyvis-5332",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5332/Dalyvio5332Izdininkas.html",
+          "path": "samples/html/2012-seimo/vilija-blinkeviciute/campaigns/dalyvis-5332/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5332/Dalyvio5332Auditorius.html",
+          "path": "samples/html/2012-seimo/vilija-blinkeviciute/campaigns/dalyvis-5332/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5332/Dalyvio5332AukotojuSarasas.html",
+          "path": "samples/html/2012-seimo/vilija-blinkeviciute/campaigns/dalyvis-5332/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5332/Dalyvio5332FinansavimoAtaskaitos.html",
+          "path": "samples/html/2012-seimo/vilija-blinkeviciute/campaigns/dalyvis-5332/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5332/Dalyvio5332Sutartys.html",
+          "path": "samples/html/2012-seimo/vilija-blinkeviciute/campaigns/dalyvis-5332/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2012-seimo/vilija-blinkeviciute/campaigns/dalyvis-5332/index.json"
+    }
+  ],
+  "anomalies": []
+}

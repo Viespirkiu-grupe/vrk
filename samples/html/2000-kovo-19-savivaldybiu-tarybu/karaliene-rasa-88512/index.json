@@ -1,0 +1,26 @@
+{
+  "candidate": {
+    "candidateName": "Karalienė Rasa",
+    "candidateId": "karaliene-rasa-88512",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20000319/kandvl.htm-88512.htm",
+    "vrkCandidateId": "88512",
+    "municipality": {
+      "pavadinimas": "Jurbarko rajono",
+      "numeris": 12,
+      "savivaldybesId": "570",
+      "mandatai": 25
+    },
+    "list": {
+      "pavadinimas": "Lietuvos centro sąjunga",
+      "rusis": "partija",
+      "numeris": 25,
+      "sarasoId": "30",
+      "vrkSprendimas": "2000 02 08, Nr.39"
+    },
+    "listPosition": 13
+  },
+  "anketaPath": "samples/html/2000-kovo-19-savivaldybiu-tarybu/karaliene-rasa-88512/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

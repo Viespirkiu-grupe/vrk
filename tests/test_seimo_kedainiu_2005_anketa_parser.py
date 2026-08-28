@@ -3,7 +3,10 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scraper.elections.seimo_kedainiu_2005.anketa_parser import parse_anketa_sample
+from scraper.elections.seimo_kedainiu_2005.anketa_parser import (
+    DEFAULT_RESULTS_PATH,
+    parse_anketa_sample,
+)
 from scraper.elections.seimo_kedainiu_2005.candidate_samples import EXPECTED_TABS
 from scraper.elections.seimo_kedainiu_2005.results import MEMBERS_PAGE, RESULTS_ROOT, build_results
 from scraper.elections.seimo_kedainiu_2005.sitemap import (
@@ -12,6 +15,8 @@ from scraper.elections.seimo_kedainiu_2005.sitemap import (
     PARTIES_URL,
     build_sitemap_from_sample,
 )
+
+from local_data import require
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -71,6 +76,7 @@ class SeimoKedainiu2005AnketaParserTests(unittest.TestCase):
         self.assertEqual(EXPECTED_TABS, {"anketa", "biografija", "turto-ir-pajamu-deklaracijos"})
 
     def test_winner_record(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         record, stats = _parse("virginija-baltraitiene")
         self.assertEqual(record["electionId"], ELECTION_ID)
         self.assertEqual(stats["anomalies"], [])

@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Filipovič Tadeuš",
+    "candidateId": "filipovic-tadeus",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-63860.htm",
+    "constituencyName": "Naujosios Vilnios",
+    "constituencyNumber": 10,
+    "nominator": "Lietuvos lenkų rinkimų akcija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-185.htm"
+  },
+  "anketaPath": "samples/html/1998-kovo-22-seimo-pakartotiniai/filipovic-tadeus/candidate.html",
+  "tabCount": 3,
+  "tabsSaved": 3,
+  "anomalies": []
+}

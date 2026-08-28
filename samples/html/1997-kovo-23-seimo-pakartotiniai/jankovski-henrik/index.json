@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Jankovski Henrik",
+    "candidateId": "jankovski-henrik",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-39781.htm",
+    "constituencyName": "Trakų",
+    "constituencyNumber": 58,
+    "nominator": "Lietuvos lenkų rinkimų akcija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-97.htm"
+  },
+  "anketaPath": "samples/html/1997-kovo-23-seimo-pakartotiniai/jankovski-henrik/candidate.html",
+  "tabCount": 2,
+  "tabsSaved": 2,
+  "anomalies": []
+}

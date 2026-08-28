@@ -46,6 +46,8 @@ from scraper.elections.savivaldybiu_2023.sitemap import (
     MAYOR_MARKER_PATTERN as MAYOR_MARKER_PATTERN_2023,
 )
 
+from local_data import require
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SAMPLES_ROOT = REPO_ROOT / "samples" / "html" / ELECTION_ID
@@ -148,6 +150,9 @@ class Savivaldybiu2019SitemapTestBase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
+        # The council half of the sitemap is walked out of lists/, and
+        # build_sitemap_from_sample reports what it found rather than failing.
+        require(LISTS_SAMPLE_DIR)
         cls._tmp_dir = tempfile.TemporaryDirectory()
         output_path = Path(cls._tmp_dir.name) / "sitemap.json"
 

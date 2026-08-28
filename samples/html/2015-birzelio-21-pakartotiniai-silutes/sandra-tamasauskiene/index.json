@@ -1,0 +1,74 @@
+{
+  "electionId": "2015-birzelio-21-pakartotiniai-silutes",
+  "candidate": {
+    "candidateName": "Sandra Tamašauskienė",
+    "candidateId": "sandra-tamasauskiene",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88116/Kandidato88116Anketa.html",
+    "vrkCandidateId": "88116",
+    "municipality": "Šilutės rajono savivaldybė",
+    "roles": [
+      "meras",
+      "tarybos-narys"
+    ],
+    "mayoralCandidacy": {
+      "nominatedBy": "Tėvynės sąjunga - Lietuvos krikščionys demokratai"
+    },
+    "councilCandidacy": {
+      "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+      "listNumber": 3,
+      "listPosition": 1
+    }
+  },
+  "anketaPath": "samples/html/2015-birzelio-21-pakartotiniai-silutes/sandra-tamasauskiene/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88116/Kandidato88116Anketa.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/sandra-tamasauskiene/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88116/Kandidato88116Biografija.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/sandra-tamasauskiene/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88116/Kandidato88116Deklaracijos.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/sandra-tamasauskiene/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88116/Kandidato88116InteresuDeklaracija.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/sandra-tamasauskiene/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88116/Kandidato88116Kita.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/sandra-tamasauskiene/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-7588",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/PolitiniuKampanijuFinansavimas/Dalyvis7588/Dalyvio7588Izdininkas.html",
+      "campaignDir": "samples/html/2015-birzelio-21-pakartotiniai-silutes/sandra-tamasauskiene/campaigns/dalyvis-7588",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2015-birzelio-21-pakartotiniai-silutes/sandra-tamasauskiene/campaigns/dalyvis-7588/index.json"
+    }
+  ],
+  "anomalies": []
+}

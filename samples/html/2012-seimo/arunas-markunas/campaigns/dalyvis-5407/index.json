@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-5407",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5407/Dalyvio5407Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5407/Dalyvio5407Izdininkas.html",
+      "path": "samples/html/2012-seimo/arunas-markunas/campaigns/dalyvis-5407/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5407/Dalyvio5407Auditorius.html",
+      "path": "samples/html/2012-seimo/arunas-markunas/campaigns/dalyvis-5407/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5407/Dalyvio5407AukotojuSarasas.html",
+      "path": "samples/html/2012-seimo/arunas-markunas/campaigns/dalyvis-5407/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5407/Dalyvio5407FinansavimoAtaskaitos.html",
+      "path": "samples/html/2012-seimo/arunas-markunas/campaigns/dalyvis-5407/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5407/Dalyvio5407Sutartys.html",
+      "path": "samples/html/2012-seimo/arunas-markunas/campaigns/dalyvis-5407/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

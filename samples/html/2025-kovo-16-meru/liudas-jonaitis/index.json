@@ -1,0 +1,104 @@
+{
+  "electionId": "2025-kovo-16-meru",
+  "candidate": {
+    "candidateName": "Liudas JONAITIS",
+    "candidateId": "liudas-jonaitis",
+    "candidateNote": "",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437788.html"
+  },
+  "anketaPath": "samples/html/2025-kovo-16-meru/liudas-jonaitis/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437788.html",
+      "path": "samples/html/2025-kovo-16-meru/liudas-jonaitis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasBiografija_rkndId-2437788.html",
+      "path": "samples/html/2025-kovo-16-meru/liudas-jonaitis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasTurtoPajDekl_rkndId-2437788.html",
+      "path": "samples/html/2025-kovo-16-meru/liudas-jonaitis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasPrivInterDekl_rkndId-2437788.html",
+      "path": "samples/html/2025-kovo-16-meru/liudas-jonaitis/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1764/dalyviai/savarankiskasIzdininkas_pkdId-19868.html",
+      "path": "samples/html/2025-kovo-16-meru/liudas-jonaitis/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasKita_rkndId-2437788.html",
+      "path": "samples/html/2025-kovo-16-meru/liudas-jonaitis/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "savarankiskasizdininkas-pkdid-19868",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1764/dalyviai/savarankiskasIzdininkas_pkdId-19868.html",
+      "campaignDir": "samples/html/2025-kovo-16-meru/liudas-jonaitis/campaigns/savarankiskasizdininkas-pkdid-19868",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1764/dalyviai/savarankiskasIzdininkas_pkdId-19868.html",
+          "path": "samples/html/2025-kovo-16-meru/liudas-jonaitis/campaigns/savarankiskasizdininkas-pkdid-19868/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1764/dalyviai/savarankiskasAuditorius_pkdId-19868.html",
+          "path": "samples/html/2025-kovo-16-meru/liudas-jonaitis/campaigns/savarankiskasizdininkas-pkdid-19868/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1764/dalyviai/savarankiskasAukotojai_pkdId-19868.html",
+          "path": "samples/html/2025-kovo-16-meru/liudas-jonaitis/campaigns/savarankiskasizdininkas-pkdid-19868/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1764/dalyviai/savarankiskasFinansavimas_pkdId-19868.html",
+          "path": "samples/html/2025-kovo-16-meru/liudas-jonaitis/campaigns/savarankiskasizdininkas-pkdid-19868/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1764/dalyviai/savarankiskasSutartys_pkdId-19868.html",
+          "path": "samples/html/2025-kovo-16-meru/liudas-jonaitis/campaigns/savarankiskasizdininkas-pkdid-19868/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2025-kovo-16-meru/liudas-jonaitis/campaigns/savarankiskasizdininkas-pkdid-19868/index.json"
+    }
+  ],
+  "anomalies": []
+}

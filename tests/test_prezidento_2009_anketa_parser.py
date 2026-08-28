@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from scraper.elections.prezidento_2009.anketa_parser import (
+    DEFAULT_RESULTS_PATH,
     normalize_presidential_anketa_rows,
     parse_anketa_sample,
 )
@@ -14,6 +15,8 @@ from scraper.elections.prezidento_2009.sitemap import (
     LISTING_URL,
     build_sitemap_from_sample,
 )
+
+from local_data import require
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -111,6 +114,7 @@ class Prezidento2009AnketaParserTests(unittest.TestCase):
         self.assertNotIn("patiketiniai", self.grybauskaite["rawData"])
 
     def test_top_level_fields_and_elected_join(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         self.assertEqual(self.grybauskaite["electionId"], "2009-prezidento")
         self.assertEqual(self.grybauskaite["candidateId"], "dalia-grybauskaite")
         self.assertEqual(self.grybauskaite["candidateName"], "Dalia GRYBAUSKAITĖ")

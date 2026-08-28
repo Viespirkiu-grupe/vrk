@@ -33,6 +33,10 @@ ALLOWED_NON_CANDIDATE_DIRS = {
     "lists",
     "districts",
 }
+# Of the two, the one a clone carries: `lists/` is 1.1 MB across the 29
+# party-list pages, over the 1 MiB limit on a tracked fixture unit
+# (scripts/tracked_fixtures.py).
+TRACKED_SUPPORT_DIRS = {"districts"}
 
 
 class Seimo2012SampleAllowlistTests(unittest.TestCase):
@@ -43,7 +47,8 @@ class Seimo2012SampleAllowlistTests(unittest.TestCase):
             if child.is_dir()
         }
 
-        self.assertEqual(actual_dirs, ALLOWED_CANDIDATE_DIRS | ALLOWED_NON_CANDIDATE_DIRS)
+        self.assertEqual(actual_dirs - (ALLOWED_CANDIDATE_DIRS | ALLOWED_NON_CANDIDATE_DIRS), set())
+        self.assertLessEqual(ALLOWED_CANDIDATE_DIRS | TRACKED_SUPPORT_DIRS, actual_dirs)
 
     def test_samples_directory_contains_expected_top_level_files(self) -> None:
         actual_files = {

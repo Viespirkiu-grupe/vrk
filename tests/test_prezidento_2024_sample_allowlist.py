@@ -18,6 +18,10 @@ ALLOWED_NON_CANDIDATE_FILES = {
     "list.html",
     "page.html",
 }
+# `page.html` is the only top-level file a clone carries: `list.html` is
+# 3.2 MB of embedded portraits, over the 1 MiB limit on a tracked fixture
+# unit (scripts/tracked_fixtures.py).
+TRACKED_NON_CANDIDATE_FILES = {"page.html"}
 
 
 class Prezidento2024SampleAllowlistTests(unittest.TestCase):
@@ -37,7 +41,8 @@ class Prezidento2024SampleAllowlistTests(unittest.TestCase):
             if child.is_file()
         }
 
-        self.assertEqual(actual_files, ALLOWED_NON_CANDIDATE_FILES)
+        self.assertEqual(actual_files - ALLOWED_NON_CANDIDATE_FILES, set())
+        self.assertLessEqual(TRACKED_NON_CANDIDATE_FILES, actual_files)
 
 
 if __name__ == "__main__":

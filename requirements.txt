@@ -1,3 +1,9 @@
-requests
-beautifulsoup4
-lxml
+# Runtime dependencies of the scraper, pinned so a clone, CI and this laptop
+# parse the same fixtures the same way. Python 3.11 or newer (see
+# .python-version); the suite is run on 3.11 and 3.13 by
+# .github/workflows/tests.yml.
+#
+# To move a pin: bump it here, run the suite, and commit both.
+beautifulsoup4==4.15.0
+lxml==6.1.2
+requests==2.34.2

@@ -1,0 +1,67 @@
+{
+  "electionId": "2016-seimo",
+  "candidate": {
+    "candidateName": "Agnė ŠIRINSKIENĖ",
+    "candidateId": "agne-sirinskiene",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/102/rnk426/kandidatai/lrsKandidatasAnketa_rkndId-1102466.html"
+  },
+  "anketaPath": "samples/html/2016-seimo/agne-sirinskiene/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/102/rnk426/kandidatai/lrsKandidatasAnketa_rkndId-1102466.html",
+      "path": "samples/html/2016-seimo/agne-sirinskiene/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/102/rnk426/kandidatai/lrsKandidatasBiografija_rkndId-1102466.html",
+      "path": "samples/html/2016-seimo/agne-sirinskiene/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/102/rnk426/kandidatai/lrsKandidatasTurtas_rkndId-1102466.html",
+      "path": "samples/html/2016-seimo/agne-sirinskiene/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracija",
+      "slug": "privaciu-interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/102/rnk426/kandidatai/lrsKandidatasInteresai_rkndId-1102466.html",
+      "path": "samples/html/2016-seimo/agne-sirinskiene/privaciu-interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/686/dalyviai/atstovaujamasis_pkdId-1123.html",
+      "path": "samples/html/2016-seimo/agne-sirinskiene/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/102/rnk426/kandidatai/lrsKandidatasKita_rkndId-1102466.html",
+      "path": "samples/html/2016-seimo/agne-sirinskiene/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "atstovaujamasis-pkdid-1123",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/686/dalyviai/atstovaujamasis_pkdId-1123.html",
+      "campaignDir": "samples/html/2016-seimo/agne-sirinskiene/campaigns/atstovaujamasis-pkdid-1123",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2016-seimo/agne-sirinskiene/campaigns/atstovaujamasis-pkdid-1123/index.json"
+    }
+  ],
+  "anomalies": []
+}

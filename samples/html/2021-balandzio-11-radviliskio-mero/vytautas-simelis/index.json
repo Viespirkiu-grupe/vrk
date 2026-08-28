@@ -1,0 +1,67 @@
+{
+  "electionId": "2021-balandzio-11-radviliskio-mero",
+  "candidate": {
+    "candidateName": "Vytautas SIMELIS",
+    "candidateId": "vytautas-simelis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasAnketa_rkndId-2420390.html"
+  },
+  "anketaPath": "samples/html/2021-balandzio-11-radviliskio-mero/vytautas-simelis/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasAnketa_rkndId-2420390.html",
+      "path": "samples/html/2021-balandzio-11-radviliskio-mero/vytautas-simelis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasBiografija_rkndId-2420390.html",
+      "path": "samples/html/2021-balandzio-11-radviliskio-mero/vytautas-simelis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasTurtoPajDekl_rkndId-2420390.html",
+      "path": "samples/html/2021-balandzio-11-radviliskio-mero/vytautas-simelis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasPrivInterDekl_rkndId-2420390.html",
+      "path": "samples/html/2021-balandzio-11-radviliskio-mero/vytautas-simelis/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1364/dalyviai/atstovaujamasis_pkdId-4869.html",
+      "path": "samples/html/2021-balandzio-11-radviliskio-mero/vytautas-simelis/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasKt_rkndId-2420390.html",
+      "path": "samples/html/2021-balandzio-11-radviliskio-mero/vytautas-simelis/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "atstovaujamasis-pkdid-4869",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1364/dalyviai/atstovaujamasis_pkdId-4869.html",
+      "campaignDir": "samples/html/2021-balandzio-11-radviliskio-mero/vytautas-simelis/campaigns/atstovaujamasis-pkdid-4869",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2021-balandzio-11-radviliskio-mero/vytautas-simelis/campaigns/atstovaujamasis-pkdid-4869/index.json"
+    }
+  ],
+  "anomalies": []
+}

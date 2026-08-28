@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-7546",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/PolitiniuKampanijuFinansavimas/Dalyvis7546/Dalyvio7546Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/PolitiniuKampanijuFinansavimas/Dalyvis7546/Dalyvio7546Izdininkas.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/jonas-sakurskis/campaigns/dalyvis-7546/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/PolitiniuKampanijuFinansavimas/Dalyvis7546/Dalyvio7546Auditorius.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/jonas-sakurskis/campaigns/dalyvis-7546/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/PolitiniuKampanijuFinansavimas/Dalyvis7546/Dalyvio7546AukotojuSarasas.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/jonas-sakurskis/campaigns/dalyvis-7546/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/PolitiniuKampanijuFinansavimas/Dalyvis7546/Dalyvio7546FinansavimoAtaskaitos.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/jonas-sakurskis/campaigns/dalyvis-7546/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/PolitiniuKampanijuFinansavimas/Dalyvis7546/Dalyvio7546Sutartys.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/jonas-sakurskis/campaigns/dalyvis-7546/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

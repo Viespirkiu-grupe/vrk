@@ -1,0 +1,47 @@
+{
+  "electionId": "2003-birzelio-15-seimo-nauji",
+  "candidate": {
+    "candidateName": "Alfonsas Butė",
+    "candidateId": "alfonsas-bute",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241228.htm",
+    "vrkCandidateId": "241228",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Senamiesčio",
+      "apygardosNumeris": 2,
+      "apygardosId": "1476",
+      "iskele": "Lietuvos krikščionys demokratai"
+    }
+  },
+  "anketaPath": "samples/html/2003-birzelio-15-seimo-nauji/alfonsas-bute/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241228.htm",
+      "path": "samples/html/2003-birzelio-15-seimo-nauji/alfonsas-bute/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Autobiografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_biog_l-id=241228.htm",
+      "path": "samples/html/2003-birzelio-15-seimo-nauji/alfonsas-bute/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_pajam_l-id=241228.htm",
+      "path": "samples/html/2003-birzelio-15-seimo-nauji/alfonsas-bute/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

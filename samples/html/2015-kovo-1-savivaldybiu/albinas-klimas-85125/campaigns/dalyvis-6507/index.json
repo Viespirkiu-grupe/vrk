@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-6507",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis6507/Dalyvio6507Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis6507/Dalyvio6507Izdininkas.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/albinas-klimas-85125/campaigns/dalyvis-6507/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis6507/Dalyvio6507Auditorius.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/albinas-klimas-85125/campaigns/dalyvis-6507/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis6507/Dalyvio6507AukotojuSarasas.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/albinas-klimas-85125/campaigns/dalyvis-6507/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis6507/Dalyvio6507FinansavimoAtaskaitos.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/albinas-klimas-85125/campaigns/dalyvis-6507/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis6507/Dalyvio6507Sutartys.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/albinas-klimas-85125/campaigns/dalyvis-6507/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

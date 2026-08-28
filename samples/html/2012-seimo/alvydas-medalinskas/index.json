@@ -1,0 +1,78 @@
+{
+  "electionId": "2012-seimo",
+  "candidate": {
+    "candidateName": "Alvydas MEDALINSKAS",
+    "candidateId": "alvydas-medalinskas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas68029/Kandidato68029Anketa.html",
+    "vrkCandidateId": "68029",
+    "roles": [
+      "daugiamandate",
+      "vienmandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Nacionalinis susivienijimas „Už Lietuvą Lietuvoje“ (Lietuvos centro partijos, Lietuvos socialdemokratų sąjungos, Tautininkų sąjungos ir Tautos vienybės sąjungos koalicija)",
+      "sarasoNumeris": 10,
+      "sarasoId": "4566-2",
+      "numerisSarase": 2,
+      "koalicijosPartija": "Lietuvos centro partija"
+    },
+    "vienmandateCandidacy": {
+      "apygarda": "Karoliniškių",
+      "apygardosNumeris": 8,
+      "apygardosId": "7216",
+      "iskele": "Lietuvos centro partija"
+    }
+  },
+  "anketaPath": "samples/html/2012-seimo/alvydas-medalinskas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas68029/Kandidato68029Anketa.html",
+      "path": "samples/html/2012-seimo/alvydas-medalinskas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas68029/Kandidato68029Biografija.html",
+      "path": "samples/html/2012-seimo/alvydas-medalinskas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas68029/Kandidato68029Deklaracijos.html",
+      "path": "samples/html/2012-seimo/alvydas-medalinskas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas68029/Kandidato68029InteresuDeklaracija.html",
+      "path": "samples/html/2012-seimo/alvydas-medalinskas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas68029/Kandidato68029Kita.html",
+      "path": "samples/html/2012-seimo/alvydas-medalinskas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-6042",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis6042/Dalyvio6042Izdininkas.html",
+      "campaignDir": "samples/html/2012-seimo/alvydas-medalinskas/campaigns/dalyvis-6042",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2012-seimo/alvydas-medalinskas/campaigns/dalyvis-6042/index.json"
+    }
+  ],
+  "anomalies": []
+}

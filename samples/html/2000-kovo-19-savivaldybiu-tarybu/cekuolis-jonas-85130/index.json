@@ -1,0 +1,26 @@
+{
+  "candidate": {
+    "candidateName": "Čekuolis Jonas",
+    "candidateId": "cekuolis-jonas-85130",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20000319/kandvl.htm-85130.htm",
+    "vrkCandidateId": "85130",
+    "municipality": {
+      "pavadinimas": "Vilniaus miesto",
+      "numeris": 57,
+      "savivaldybesId": "551",
+      "mandatai": 51
+    },
+    "list": {
+      "pavadinimas": "Lietuvos liberalų sąjunga",
+      "rusis": "partija",
+      "numeris": 17,
+      "sarasoId": "28",
+      "vrkSprendimas": "2000 01 21, Nr.13"
+    },
+    "listPosition": 52
+  },
+  "anketaPath": "samples/html/2000-kovo-19-savivaldybiu-tarybu/cekuolis-jonas-85130/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

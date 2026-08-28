@@ -1,0 +1,49 @@
+{
+  "electionId": "2007-vasario-25-savivaldybiu",
+  "candidate": {
+    "candidateName": "Vigantas Giedraitis",
+    "candidateId": "vigantas-giedraitis-2544",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas2544/Kandidato2544Anketa.html",
+    "vrkCandidateId": "2544",
+    "municipality": "Neringos savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Koalicija \"Už Neringos ateitį\"",
+      "listKind": "partiju-koalicija",
+      "listNumber": 3,
+      "listPosition": 1,
+      "selfNominated": false
+    }
+  },
+  "anketaPath": "samples/html/2007-vasario-25-savivaldybiu/vigantas-giedraitis-2544/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas2544/Kandidato2544Anketa.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/vigantas-giedraitis-2544/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas2544/Kandidato2544Deklaracijos.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/vigantas-giedraitis-2544/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas2544/Kandidato2544InteresuDeklaracija.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/vigantas-giedraitis-2544/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

@@ -1,0 +1,74 @@
+{
+  "electionId": "2015-kovo-1-savivaldybiu",
+  "candidate": {
+    "candidateName": "Albinas Klimas",
+    "candidateId": "albinas-klimas-79174",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas79174/Kandidato79174Anketa.html",
+    "vrkCandidateId": "79174",
+    "municipality": "Plungės rajono savivaldybė",
+    "roles": [
+      "meras",
+      "tarybos-narys"
+    ],
+    "mayoralCandidacy": {
+      "nominatedBy": "Partija Tvarka ir teisingumas"
+    },
+    "councilCandidacy": {
+      "partyList": "Partija Tvarka ir teisingumas",
+      "listNumber": 25,
+      "listPosition": 1
+    }
+  },
+  "anketaPath": "samples/html/2015-kovo-1-savivaldybiu/albinas-klimas-79174/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas79174/Kandidato79174Anketa.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/albinas-klimas-79174/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas79174/Kandidato79174Biografija.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/albinas-klimas-79174/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas79174/Kandidato79174Deklaracijos.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/albinas-klimas-79174/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas79174/Kandidato79174InteresuDeklaracija.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/albinas-klimas-79174/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas79174/Kandidato79174Kita.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/albinas-klimas-79174/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-7362",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis7362/Dalyvio7362Izdininkas.html",
+      "campaignDir": "samples/html/2015-kovo-1-savivaldybiu/albinas-klimas-79174/campaigns/dalyvis-7362",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2015-kovo-1-savivaldybiu/albinas-klimas-79174/campaigns/dalyvis-7362/index.json"
+    }
+  ],
+  "anomalies": []
+}

@@ -1,0 +1,44 @@
+{
+  "campaignKey": "savarankiskasizdininkas-pkdid-17235",
+  "campaignLabel": "",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasIzdininkas_pkdId-17235.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasIzdininkas_pkdId-17235.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/mykolas-majauskas-2420485/campaigns/savarankiskasizdininkas-pkdid-17235/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasAuditorius_pkdId-17235.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/mykolas-majauskas-2420485/campaigns/savarankiskasizdininkas-pkdid-17235/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasAukotojai_pkdId-17235.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/mykolas-majauskas-2420485/campaigns/savarankiskasizdininkas-pkdid-17235/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasFinansavimas_pkdId-17235.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/mykolas-majauskas-2420485/campaigns/savarankiskasizdininkas-pkdid-17235/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasSutartys_pkdId-17235.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/mykolas-majauskas-2420485/campaigns/savarankiskasizdininkas-pkdid-17235/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

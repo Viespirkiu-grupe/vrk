@@ -1,0 +1,16 @@
+{
+  "campaignKey": "atstovaujamasis-pkdid-18187",
+  "campaignLabel": "",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1604/dalyviai/atstovaujamasis_pkdId-18187.html",
+  "tabCount": 1,
+  "tabSamples": [
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1604/dalyviai/savarankiskasAukotojai_pkdId-18187.html",
+      "path": "samples/html/2023-spalio-8-kupiskio-mero/edmundas-jonutis/campaigns/atstovaujamasis-pkdid-18187/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

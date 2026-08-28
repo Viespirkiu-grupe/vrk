@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Antanaitis Audrys",
+    "candidateId": "antanaitis-audrys",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64298.htm",
+    "constituencyName": "Naujosios Vilnios",
+    "constituencyNumber": 10,
+    "nominator": "Lietuvos krikščionių demokratų partija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-187.htm"
+  },
+  "anketaPath": "samples/html/1998-kovo-22-seimo-pakartotiniai/antanaitis-audrys/candidate.html",
+  "tabCount": 2,
+  "tabsSaved": 2,
+  "anomalies": []
+}

@@ -1,0 +1,21 @@
+{
+  "candidate": {
+    "candidateName": "Oželytė Nijolė",
+    "candidateId": "ozelyte-nijole",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20001008/kandvl.htm-133889.htm",
+    "vrkCandidateId": "133889",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Naujamiesčio",
+      "apygardosNumeris": 1,
+      "apygardosId": "757",
+      "iskele": "Išsikėlė pati"
+    }
+  },
+  "anketaPath": "samples/html/2000-seimo/ozelyte-nijole/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

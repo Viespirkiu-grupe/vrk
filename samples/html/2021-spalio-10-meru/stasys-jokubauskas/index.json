@@ -1,0 +1,103 @@
+{
+  "electionId": "2021-spalio-10-meru",
+  "candidate": {
+    "candidateName": "Stasys JOKUBAUSKAS",
+    "candidateId": "stasys-jokubauskas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasAnketa_rkndId-2420406.html"
+  },
+  "anketaPath": "samples/html/2021-spalio-10-meru/stasys-jokubauskas/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasAnketa_rkndId-2420406.html",
+      "path": "samples/html/2021-spalio-10-meru/stasys-jokubauskas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasBiografija_rkndId-2420406.html",
+      "path": "samples/html/2021-spalio-10-meru/stasys-jokubauskas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasTurtoPajDekl_rkndId-2420406.html",
+      "path": "samples/html/2021-spalio-10-meru/stasys-jokubauskas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasPrivInterDekl_rkndId-2420406.html",
+      "path": "samples/html/2021-spalio-10-meru/stasys-jokubauskas/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1404/dalyviai/savarankiskasIzdininkas_pkdId-4949.html",
+      "path": "samples/html/2021-spalio-10-meru/stasys-jokubauskas/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasKt_rkndId-2420406.html",
+      "path": "samples/html/2021-spalio-10-meru/stasys-jokubauskas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "savarankiskasizdininkas-pkdid-4949",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1404/dalyviai/savarankiskasIzdininkas_pkdId-4949.html",
+      "campaignDir": "samples/html/2021-spalio-10-meru/stasys-jokubauskas/campaigns/savarankiskasizdininkas-pkdid-4949",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1404/dalyviai/savarankiskasIzdininkas_pkdId-4949.html",
+          "path": "samples/html/2021-spalio-10-meru/stasys-jokubauskas/campaigns/savarankiskasizdininkas-pkdid-4949/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1404/dalyviai/savarankiskasAuditorius_pkdId-4949.html",
+          "path": "samples/html/2021-spalio-10-meru/stasys-jokubauskas/campaigns/savarankiskasizdininkas-pkdid-4949/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1404/dalyviai/savarankiskasAukotojai_pkdId-4949.html",
+          "path": "samples/html/2021-spalio-10-meru/stasys-jokubauskas/campaigns/savarankiskasizdininkas-pkdid-4949/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1404/dalyviai/savarankiskasFinansavimas_pkdId-4949.html",
+          "path": "samples/html/2021-spalio-10-meru/stasys-jokubauskas/campaigns/savarankiskasizdininkas-pkdid-4949/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1404/dalyviai/savarankiskasSutartys_pkdId-4949.html",
+          "path": "samples/html/2021-spalio-10-meru/stasys-jokubauskas/campaigns/savarankiskasizdininkas-pkdid-4949/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2021-spalio-10-meru/stasys-jokubauskas/campaigns/savarankiskasizdininkas-pkdid-4949/index.json"
+    }
+  ],
+  "anomalies": []
+}

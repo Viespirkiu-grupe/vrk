@@ -3,8 +3,13 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scraper.elections.savivaldybiu_2015.anketa_parser import parse_anketa_sample
+from scraper.elections.savivaldybiu_2015.anketa_parser import (
+    DEFAULT_RESULTS_PATH,
+    parse_anketa_sample,
+)
 from scraper.elections.savivaldybiu_2015.sitemap import ELECTION_ID
+
+from local_data import require
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -36,6 +41,7 @@ class Savivaldybiu2015AnketaParserTests(unittest.TestCase):
         self.assertEqual(self.dimsiene["candidateId"], "adele-dimsiene-85873")
 
     def test_kandidatavimas_carries_the_listing_only_facts(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         k = self.dimsiene["kandidatavimas"]
         self.assertEqual(k["vrkCandidateId"], "85873")
         self.assertEqual(k["savivaldybe"], "Alytaus miesto savivaldybė")

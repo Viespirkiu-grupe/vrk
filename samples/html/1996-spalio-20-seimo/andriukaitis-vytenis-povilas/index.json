@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Andriukaitis Vytenis Povilas",
+    "candidateId": "andriukaitis-vytenis-povilas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seim96/kandvl.htm-16907.htm",
+    "constituencyName": "Žirmūnų",
+    "constituencyNumber": 4,
+    "nominator": "Lietuvos socialdemokratų partija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seim96/partr2l.htm-7.htm"
+  },
+  "anketaPath": "samples/html/1996-spalio-20-seimo/andriukaitis-vytenis-povilas/candidate.html",
+  "tabCount": 2,
+  "tabsSaved": 2,
+  "anomalies": []
+}

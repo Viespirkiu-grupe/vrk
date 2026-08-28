@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from scraper.elections.savivaldybiu_2007.anketa_parser import (
+    DEFAULT_RESULTS_PATH,
     normalize_municipal_2007_anketa_rows,
     parse_anketa_sample,
     split_family_members,
@@ -16,6 +17,8 @@ from scraper.elections.seimo_zirmunu_2015.anketa_parser import (
     _parse_interesu_html,
     parse_anketa_html,
 )
+
+from local_data import require
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -64,6 +67,7 @@ class Savivaldybiu2007AnketaParserTests(unittest.TestCase):
         )
 
     def test_elected_status_comes_from_the_mandates_page(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         # Every winner is on VRK's "Mandatus gavę kandidatai" page of their
         # municipality, with an anketa link: an id join, no ranking arithmetic.
         k = self.zuokas["kandidatavimas"]

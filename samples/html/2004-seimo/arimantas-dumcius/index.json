@@ -1,0 +1,54 @@
+{
+  "electionId": "2004-seimo",
+  "candidate": {
+    "candidateName": "Arimantas DUMČIUS",
+    "candidateId": "arimantas-dumcius",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_294689.htm",
+    "vrkCandidateId": "294689",
+    "roles": [
+      "daugiamandate",
+      "vienmandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+      "sarasoNumeris": 7,
+      "sarasoId": "1867",
+      "numerisSarase": 22
+    },
+    "vienmandateCandidacy": {
+      "apygarda": "Kalniečių",
+      "apygardosNumeris": 15,
+      "apygardosId": "1617",
+      "iskele": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)"
+    }
+  },
+  "anketaPath": "samples/html/2004-seimo/arimantas-dumcius/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_294689.htm",
+      "path": "samples/html/2004-seimo/arimantas-dumcius/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_biog_l_294689.htm",
+      "path": "samples/html/2004-seimo/arimantas-dumcius/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_pajam_l_294689.htm",
+      "path": "samples/html/2004-seimo/arimantas-dumcius/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

@@ -1,0 +1,103 @@
+{
+  "electionId": "2014-prezidento",
+  "candidate": {
+    "candidateName": "Artūras PAULAUSKAS",
+    "candidateId": "arturas-paulauskas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70875/Kandidato70875Anketa.html"
+  },
+  "anketaPath": "samples/html/2014-prezidento/arturas-paulauskas/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70875/Kandidato70875Anketa.html",
+      "path": "samples/html/2014-prezidento/arturas-paulauskas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70875/Kandidato70875Biografija.html",
+      "path": "samples/html/2014-prezidento/arturas-paulauskas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70875/Kandidato70875Deklaracijos.html",
+      "path": "samples/html/2014-prezidento/arturas-paulauskas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70875/Kandidato70875InteresuDeklaracija.html",
+      "path": "samples/html/2014-prezidento/arturas-paulauskas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Patikėtiniai",
+      "slug": "patiketiniai",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70875/Kandidato70875Patiketiniai.html",
+      "path": "samples/html/2014-prezidento/arturas-paulauskas/patiketiniai.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70875/Kandidato70875Kita.html",
+      "path": "samples/html/2014-prezidento/arturas-paulauskas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-6473",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6473/Dalyvio6473Izdininkas.html",
+      "campaignDir": "samples/html/2014-prezidento/arturas-paulauskas/campaigns/dalyvis-6473",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6473/Dalyvio6473Izdininkas.html",
+          "path": "samples/html/2014-prezidento/arturas-paulauskas/campaigns/dalyvis-6473/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6473/Dalyvio6473Auditorius.html",
+          "path": "samples/html/2014-prezidento/arturas-paulauskas/campaigns/dalyvis-6473/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6473/Dalyvio6473AukotojuSarasas.html",
+          "path": "samples/html/2014-prezidento/arturas-paulauskas/campaigns/dalyvis-6473/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6473/Dalyvio6473FinansavimoAtaskaitos.html",
+          "path": "samples/html/2014-prezidento/arturas-paulauskas/campaigns/dalyvis-6473/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6473/Dalyvio6473Sutartys.html",
+          "path": "samples/html/2014-prezidento/arturas-paulauskas/campaigns/dalyvis-6473/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2014-prezidento/arturas-paulauskas/campaigns/dalyvis-6473/index.json"
+    }
+  ],
+  "anomalies": []
+}

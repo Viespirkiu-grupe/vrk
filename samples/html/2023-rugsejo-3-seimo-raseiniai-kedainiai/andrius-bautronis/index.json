@@ -1,0 +1,110 @@
+{
+  "electionId": "2023-rugsejo-3-seimo-raseiniai-kedainiai",
+  "candidate": {
+    "candidateName": "Andrius BAUTRONIS",
+    "candidateId": "andrius-bautronis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasAnketa_rkndId-2435268.html"
+  },
+  "anketaPath": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/andrius-bautronis/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasAnketa_rkndId-2435268.html",
+      "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/andrius-bautronis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasBiografija_rkndId-2435268.html",
+      "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/andrius-bautronis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasTurtoPajDekl_rkndId-2435268.html",
+      "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/andrius-bautronis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasPrivInterDekl_rkndId-2435268.html",
+      "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/andrius-bautronis/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1564/dalyviai/savarankiskasIzdininkas_pkdId-18085.html",
+      "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/andrius-bautronis/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasKita_rkndId-2435268.html",
+      "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/andrius-bautronis/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "savarankiskasizdininkas-pkdid-18085",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1564/dalyviai/savarankiskasIzdininkas_pkdId-18085.html",
+      "campaignDir": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/andrius-bautronis/campaigns/savarankiskasizdininkas-pkdid-18085",
+      "tabCount": 6,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1564/dalyviai/savarankiskasIzdininkas_pkdId-18085.html",
+          "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/andrius-bautronis/campaigns/savarankiskasizdininkas-pkdid-18085/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1564/dalyviai/savarankiskasAuditorius_pkdId-18085.html",
+          "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/andrius-bautronis/campaigns/savarankiskasizdininkas-pkdid-18085/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1564/dalyviai/savarankiskasAukotojai_pkdId-18085.html",
+          "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/andrius-bautronis/campaigns/savarankiskasizdininkas-pkdid-18085/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1564/dalyviai/savarankiskasFinansavimas_pkdId-18085.html",
+          "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/andrius-bautronis/campaigns/savarankiskasizdininkas-pkdid-18085/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1564/dalyviai/savarankiskasSutartys_pkdId-18085.html",
+          "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/andrius-bautronis/campaigns/savarankiskasizdininkas-pkdid-18085/sutartys.html",
+          "fetched": true
+        },
+        {
+          "label": "Sprendimai",
+          "slug": "sprendimai",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1564/dalyviai/savarankiskasSprendimai_pkdId-18085.html",
+          "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/andrius-bautronis/campaigns/savarankiskasizdininkas-pkdid-18085/sprendimai.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/andrius-bautronis/campaigns/savarankiskasizdininkas-pkdid-18085/index.json"
+    }
+  ],
+  "anomalies": []
+}

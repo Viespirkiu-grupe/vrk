@@ -1,0 +1,71 @@
+{
+  "electionId": "2011-vasario-13-seimo-marijampole",
+  "candidate": {
+    "candidateName": "Paulius ULECKAS",
+    "candidateId": "paulius-uleckas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26316/Kandidato26316Anketa.html",
+    "vrkCandidateId": "26316",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Marijampolės",
+      "apygardosNumeris": 29,
+      "apygardosId": "7192",
+      "iskele": "Lietuvos Respublikos liberalų sąjūdis"
+    }
+  },
+  "anketaPath": "samples/html/2011-vasario-13-seimo-marijampole/paulius-uleckas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26316/Kandidato26316Anketa.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/paulius-uleckas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26316/Kandidato26316Biografija.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/paulius-uleckas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26316/Kandidato26316Deklaracijos.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/paulius-uleckas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26316/Kandidato26316InteresuDeklaracija.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/paulius-uleckas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26316/Kandidato26316Kita.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/paulius-uleckas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-4186",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4186/Dalyvio4186Izdininkas.html",
+      "campaignDir": "samples/html/2011-vasario-13-seimo-marijampole/paulius-uleckas/campaigns/dalyvis-4186",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2011-vasario-13-seimo-marijampole/paulius-uleckas/campaigns/dalyvis-4186/index.json"
+    }
+  ],
+  "anomalies": []
+}

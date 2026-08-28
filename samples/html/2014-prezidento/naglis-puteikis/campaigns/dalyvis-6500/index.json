@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-6500",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6500/Dalyvio6500Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6500/Dalyvio6500Izdininkas.html",
+      "path": "samples/html/2014-prezidento/naglis-puteikis/campaigns/dalyvis-6500/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6500/Dalyvio6500Auditorius.html",
+      "path": "samples/html/2014-prezidento/naglis-puteikis/campaigns/dalyvis-6500/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6500/Dalyvio6500AukotojuSarasas.html",
+      "path": "samples/html/2014-prezidento/naglis-puteikis/campaigns/dalyvis-6500/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6500/Dalyvio6500FinansavimoAtaskaitos.html",
+      "path": "samples/html/2014-prezidento/naglis-puteikis/campaigns/dalyvis-6500/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6500/Dalyvio6500Sutartys.html",
+      "path": "samples/html/2014-prezidento/naglis-puteikis/campaigns/dalyvis-6500/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

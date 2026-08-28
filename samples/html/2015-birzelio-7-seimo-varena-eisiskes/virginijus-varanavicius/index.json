@@ -1,0 +1,60 @@
+{
+  "electionId": "2015-birzelio-7-seimo-varena-eisiskes",
+  "candidate": {
+    "candidateId": "virginijus-varanavicius",
+    "candidateName": "Virginijus VARANAVIČIUS",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas88017/Kandidato88017Anketa.html"
+  },
+  "anketaPath": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/virginijus-varanavicius/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas88017/Kandidato88017Anketa.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/virginijus-varanavicius/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas88017/Kandidato88017Biografija.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/virginijus-varanavicius/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas88017/Kandidato88017Deklaracijos.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/virginijus-varanavicius/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas88017/Kandidato88017InteresuDeklaracija.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/virginijus-varanavicius/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas88017/Kandidato88017Kita.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/virginijus-varanavicius/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-7579",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/PolitiniuKampanijuFinansavimas/Dalyvis7579/Dalyvio7579Izdininkas.html",
+      "campaignDir": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/virginijus-varanavicius/campaigns/dalyvis-7579",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/virginijus-varanavicius/campaigns/dalyvis-7579/index.json"
+    }
+  ],
+  "anomalies": []
+}

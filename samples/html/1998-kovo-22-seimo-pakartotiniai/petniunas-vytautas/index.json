@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Petniūnas Vytautas",
+    "candidateId": "petniunas-vytautas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64299.htm",
+    "constituencyName": "Naujosios Vilnios",
+    "constituencyNumber": 10,
+    "nominator": "Lietuvos socialdemokratų partija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-198.htm"
+  },
+  "anketaPath": "samples/html/1998-kovo-22-seimo-pakartotiniai/petniunas-vytautas/candidate.html",
+  "tabCount": 2,
+  "tabsSaved": 2,
+  "anomalies": []
+}

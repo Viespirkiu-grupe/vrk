@@ -149,7 +149,12 @@ Current suite includes:
 6. `tests/test_seimo_2016_privaciu_normalization.py` for private-interest normalization.
 7. `tests/test_seimo_2016_turto_normalization.py` for asset/income normalization.
 
-Run with `pytest tests/` or a focused subset while iterating.
+Run with `pytest` or a focused subset while iterating. `pip install -r
+requirements-dev.txt` is the whole setup; the fixtures the suite needs are in
+the clone, up to the 1 MiB per unit that `scripts/tracked_fixtures.py` tracks,
+and a test that needs more than that skips with the command that would produce
+it. `.github/workflows/tests.yml` runs the suite on every push and pull
+request.
 
 ## Code Structure
 

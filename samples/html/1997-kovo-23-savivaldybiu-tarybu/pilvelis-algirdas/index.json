@@ -1,0 +1,16 @@
+{
+  "candidate": {
+    "candidateName": "Pilvelis Algirdas",
+    "candidateId": "pilvelis-algirdas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-39993.htm",
+    "municipalityName": "Vilniaus miesto",
+    "municipalityNumber": 1,
+    "listNumber": 1,
+    "nominator": "Lietuvos reformų partija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-144+2029.htm"
+  },
+  "anketaPath": "samples/html/1997-kovo-23-savivaldybiu-tarybu/pilvelis-algirdas/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}
