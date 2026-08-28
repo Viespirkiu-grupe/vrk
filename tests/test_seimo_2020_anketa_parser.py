@@ -3,7 +3,10 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scraper.elections.seimo_2020.anketa_parser import parse_anketa_sample
+from scraper.elections.seimo_2020.anketa_parser import (
+    _normalize_anketa_rows,
+    parse_anketa_sample,
+)
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -50,6 +53,7 @@ class Seimo2020AnketaParserTests(unittest.TestCase):
                 "einamos-pareigos",
                 "narystes-politinese-organizacijose",
                 "pareiskimai",
+                "teistumo-detales",
             ],
         )
 
@@ -119,6 +123,56 @@ class Seimo2020AnketaParserTests(unittest.TestCase):
         self.assertEqual(
             pareiskimai["ar-buvote-pripazintas-kaltu-del-politinio-persekiojimo"], "Ne"
         )
+
+    def test_conviction_details_are_normalized(self) -> None:
+        # These pages print the block's lead-in ("Jeigu buvote pripažintas
+        # kaltu, privalote nurodyti") as an unnumbered row between Q9.2 and its
+        # table, so a collector that stops at the first non-table row finds
+        # nothing — which is why all 41 declarers of this election had a yes/no
+        # answer and no details until issue #86. No fixture candidate is a
+        # declarer, so the shape is guarded on the rows the parse produces.
+        rows = [
+            {"rowIndex": 15, "questionNumber": "9.2", "prompt": "9.2. Ar po 1990-03-11 ...", "answer": "Taip"},
+            {
+                "rowIndex": 16,
+                "questionNumber": None,
+                "prompt": "Jeigu buvote pripažintas kaltu, privalote nurodyti (dėl kiekvieno nuosprendžio atskirai):",
+                "answer": "",
+            },
+            {
+                "rowIndex": 17,
+                "questionNumber": None,
+                "prompt": "",
+                "answer": [
+                    {
+                        "9.2.1. Apkaltinamojo nuosprendžio (sprendimo) data:": "2015",
+                        "9.2.2. Apkaltinamojo nuosprendžio (sprendimo) priėmimo valstybė (vieta):": "LIETUVA",
+                        "9.2.3. Nuosprendį (sprendimą) priėmusios institucijos pavadinimas:": "Vilniaus apygardos teismas",
+                        "9.2.4. Nusikalstama veika, už kurią buvote nuteistas (pavadinimas)": "Šmeižtas",
+                    }
+                ],
+            },
+            {"rowIndex": 18, "questionNumber": "9.3", "prompt": "9.3. ...", "answer": "Ne"},
+        ]
+        self.assertEqual(
+            _normalize_anketa_rows(rows)["teistumo-detales"],
+            {
+                "irasai": [
+                    {
+                        "nuosprendzio-data": "2015",
+                        "nuosprendzio-valstybe": "LIETUVA",
+                        "nuosprendzio-institucija": "Vilniaus apygardos teismas",
+                        "nusikalstama-veika": "Šmeižtas",
+                    }
+                ]
+            },
+        )
+
+    def test_every_candidate_carries_the_conviction_key(self) -> None:
+        for payload in (self.agne, self.gabrielius, self.regina):
+            with self.subTest(candidate=payload["candidateId"]):
+                anketa = payload["normalized"]["anketa"]
+                self.assertEqual(anketa["teistumo-detales"], {"irasai": []})
 
     def test_raw_rows_keep_every_question(self) -> None:
         rows = self.agne["rawData"]["anketa"]["rows"]

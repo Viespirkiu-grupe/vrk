@@ -146,6 +146,12 @@ carries them.
   (Q8.1–Q8.4) and the 98 str. 1 ir 3 d. ones (Q9.1, Q9.2, Q9.3.1–Q9.3.3), plus
   `teisiniai-argumentai` (Q9.3.4), the free-text justification filled only when
   Q9.2 is answered "Taip"
+- `teistumo-detales` — `{"irasai": [...]}`, one entry per conviction from the
+  Q9.2 detail table (`nuosprendzio-data`, `-valstybe`, `-institucija`,
+  `nusikalstama-veika`), present on every record and empty for all but the 38
+  declarers. The table has always been in `rawData.anketa.rows`; it reached
+  `normalized` in issue #86 (2026-08-28), through the shared
+  `scraper/shared/conviction_details.py`
 - `gimimo-vieta` (Q10), `tautybe` (Q11), `issilavinimas` (Q12, `aprasas` plus an
   `irasai` record table), `uzsienio-kalbos` (Q13, split into a list),
   `politine-organizacija` (Q14), `anksciau-isrinktas` (Q15, same
@@ -304,6 +310,13 @@ EP-specific notes:
   to the heading row that precedes them.
 - `normalized.anketa.pareiskimai` carries the EP declaration questions
   (`8.1`–`8.3`, `9.1`–`9.5`); there is no `8.4`/`teisiniai-argumentai` field.
+- `normalized.anketa.teistumo-detales` is the Q9.2 detail table in the shared
+  `{"irasai": [...]}` shape — present on every record, non-empty for the six
+  declarers. These pages slugify the column headings before printing them
+  (`9-2-1-apkaltinamojo-nuosprendzio-sprendimo-data`), which the shared
+  sub-question prefix match handles like the spelled-out headings elsewhere.
+  Added in issue #86; before that the table reached `rawData` only, and before
+  the nested-row capture fix, neither layer.
 - `normalized.anketa` adds `mokslo-laipsnis` (Q12.1) and keeps
   `pedagoginis-vardas` (Q12.2). Marital status and spouse are split from the
   single Q19 row into `seimine-padetis` and `sutuoktinio-vardas-pavarde`.
@@ -332,9 +345,11 @@ the party lists), so the `normalized` section order is `profilis`, `anketa`,
 - `normalized.anketa.pareiskimai` carries the Rinkimų kodekso 76 str.
   declarations (Q9–Q16, including the `13.5`–`13.7` sub-questions).
 - `teistumo-detales` holds the conditional Q13.1–Q13.4 conviction details
-  (only filled when Q13 is "Taip"); each conviction table is folded into one
-  record under `nusikalstamos-veikos.irasai`. `mandato-netekimo-detales`
-  holds the conditional Q14.1 answer.
+  (only filled when Q13 is "Taip") in the shape every election shares:
+  `{"irasai": [...]}`, empty when nothing was declared, and one entry
+  carrying Q13.1–Q13.3 plus a `nusikalstamos-veikos` list of the Q13.4
+  offence records. `mandato-netekimo-detales` holds the conditional Q14.1
+  answer.
 - `biografija` is a structured questionnaire (unlike the 2019 free text):
   `gimimo-data`/`gimimo-vieta` (Q1), `issilavinimas.irasai` (Q2),
   `mokslo-laipsnis` (Q2.1), `pedagoginis-vardas` (Q2.2), `uzsienio-kalbos`
@@ -450,7 +465,14 @@ its own, much smaller, shape:
   (Q8.1–Q8.4 plus `ar-savanoriskos-karo-tarnybos-karys` for Q8.2.1) and the
   98 str. 1 ir 3 d. declarations (Q9.1–Q9.5). Answers are worded as
   `Neturiu`/`Nesu`/`Nesu/nebuvau`/`Ne` rather than the `Taip`/`Ne` of later
-  elections.
+  elections — except Q9.2 itself, which is answered `Taip`/`Ne`.
+- `teistumo-detales` — `{"irasai": [...]}`, one entry per conviction from the
+  Q9.2 detail table, present on every record and non-empty for the 41
+  declarers. These pages print the block's lead-in ("Jeigu buvote pripažintas
+  kaltu, privalote nurodyti") as an unnumbered row between the question and
+  its table, which the shared collector steps over. Added in issue #86
+  (2026-08-28); the table had been in `rawData.anketa.rows` since the
+  election was first scraped.
 
 There are no birth, education, language, hobby or family questions on the 2020
 anketa — those live on the biography tab and are normalized under `biografija`,
@@ -545,8 +567,9 @@ Election-specific notes:
   whitespace-tolerant pattern before normalization.
 - `teistumo-detales` holds the conditional Q13.1–Q13.4 conviction details and
   `mandato-netekimo-detales` the conditional Q14.1 answer. The Q13.4 detail
-  table separates label from value with a plain hyphen rather than the 2024 en
-  dash.
+  block separates label from value with a plain hyphen rather than the 2024 en
+  dash; the shared splitter accepts both, measured identical to each era's own
+  on all 931 such lines in the corpus.
 - `biografija` keeps the 2020 Seimo numbering: `gimimo-data`/`gimimo-vieta`
   (Q1), `tautybe` (Q2), `issilavinimas.irasai` (Q3), `mokslo-laipsnis` (Q3.1),
   `pedagoginis-vardas` (Q3.2), `uzsienio-kalbos` (Q4), `darbo-patirtis.irasai`
@@ -765,8 +788,12 @@ collected.
   inline) and `irasai` (empty unless a membership table appears), the Rinkimų
   kodekso 76 str. declarations Q9–Q14 under `pareiskimai`, plus
   `teistumo-detales` and `mandato-netekimo-detales`. No fixture candidate
-  answered Q13 or Q14 "Taip", so both are null/empty in the sampled output; with
-  13,796 candidates in the field the full run will not be.
+  answered Q13 or Q14 "Taip", so both are null/empty in the sampled output; in
+  the full field 539 of the 13,796 carry a conviction. A candidate convicted of
+  more than one offence gets one Q13.4 block per offence, separated by an empty
+  spacer row: all of them land in the single entry's `nusikalstamos-veikos`
+  list, which is what issue #86 fixed — the era's own collector stopped at the
+  first block and lost 243 offence records across 124 candidates.
 - `privaciu-interesu-deklaracija` follows the 2024 shape. Its `kiti-duomenys`
   section is free text published without a label, so it lands under a `tekstas`
   key inside the record rather than as a named field.
@@ -842,7 +869,14 @@ wider than that module's:
   (`nuosprendzio-data`, `nuosprendzio-valstybe`, `nuosprendzio-institucija`,
   `nusikalstama-veika`), one record per conviction and an empty list when Q9
   is not answered `Taip`. It is the last top-level anketa key. Everything the
-  page publishes is normalized.
+  page publishes is normalized. **The corpus got it late**: the parser that
+  captures the table landed hours after this election's records were written
+  and was never re-run against them, so all 244 declarers carried the yes/no
+  alone until `scripts/backfill_conviction_details.py` re-parsed the retained
+  anketa pages on 2026-08-28 (issue #86). Because the detail row reached
+  neither stored layer, that backfill rewrote `rawData.anketa` as well, and
+  refused any record whose fresh parse disagreed anywhere else — it found
+  none.
 
 A candidate who answers Q9 `Taip` is worth checking against when changing this
 module: VRK nests the conviction-detail table inside the anketa table for
@@ -1095,7 +1129,9 @@ Election-specific notes:
 (Žirmūnai No. 4, Gargždai No. 31, Žiemgala No. 46) both follow the 2016 Seimo
 layout, so `normalized.anketa` carries the 2016 key set described under
 "`normalized.anketa` (2016)", `biografija` is free text, `profilis.nuotrauka` is
-a base64 data URI and `privaciu-interesu-deklaracija` is keyed by section id.
+a base64 data URI and `privaciu-interesu-deklaracija` is keyed by section id. That key set includes `teistumo-detales`: nobody in the
+2018 by-election declared a conviction, and the two who did in 2019 —
+Gintautas Paluckas and Kazimieras Juraitis — carry one entry each.
 
 Election-specific notes:
 

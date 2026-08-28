@@ -9,8 +9,6 @@ from bs4 import BeautifulSoup, Tag
 from scraper.elections.prezidento_2024.sitemap import ELECTION_ID
 from scraper.elections.ep_2019.anketa_parser import _select_profile_table
 from scraper.elections.ep_2024.anketa_parser import (
-    _conviction_entries,
-    _conviction_records,
     _find_photo_src,
     _normalize_biografija_data,
     _normalize_privaciu_interesu_data,
@@ -41,6 +39,7 @@ from scraper.elections.seimo_2016.anketa_parser import (
     normalize_space,
 )
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.conviction_details import conviction_entries, conviction_records
 from scraper.shared.files import write_candidate_record, write_json
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2024-prezidento")
@@ -164,11 +163,11 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
             # One entry per conviction; empty list when Q13 has no block. The
             # always-null 13.4 free-text aprasas (the table carries the data)
             # is retired with the old null-field skeleton.
-            "irasai": _conviction_entries(
+            "irasai": conviction_entries(
                 _answer("13.1"),
                 _answer("13.2"),
                 _answer("13.3"),
-                _conviction_records(rows),
+                conviction_records(rows, "13.4"),
             ),
         },
         # 14.1 appears only when Q14 is answered "Taip".

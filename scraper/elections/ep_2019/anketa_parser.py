@@ -38,10 +38,18 @@ from scraper.elections.seimo_2016.anketa_parser import (
     normalize_space,
 )
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.conviction_details import conviction_field_keys, conviction_records
 from scraper.shared.files import write_candidate_record, write_json
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2019-ep")
 DEFAULT_OUTPUT_ROOT = Path("data/2019-ep")
+
+# Q9.2 is the conviction question here too, and its detail table is the one the
+# 2019-era row loop used to drop entirely (see `_parse_anketa_content`). These
+# pages slugify the column headings before printing them
+# ("9-2-1-apkaltinamojo-nuosprendzio-sprendimo-data"), which the sub-question
+# prefix match handles as it does the spelled-out headings elsewhere.
+CONVICTION_QUESTION = "9.2"
 
 # Asset section labels match the Seimo declarations (I.–V.); the income
 # section labels differ, so the EP module carries its own alias table.
@@ -334,6 +342,13 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
             "ar-buvote-pripazintas-kaltu-uzsienyje": _normalize_text_value(_row_answer_text(q9_4)),
             "ar-buvote-pripazintas-kaltu-del-politinio-persekiojimo": _normalize_text_value(
                 _row_answer_text(q9_5)
+            ),
+        },
+        # One entry per conviction, in the shape every other era publishes;
+        # empty when Q9.2 is "Ne" or the block is absent.
+        "teistumo-detales": {
+            "irasai": conviction_records(
+                rows, CONVICTION_QUESTION, conviction_field_keys(CONVICTION_QUESTION)
             ),
         },
         "gimimo-vieta": _normalize_text_value(_row_answer_text(q10)),

@@ -26,6 +26,8 @@ class Seimo2019AnketaParserTests(unittest.TestCase):
         self.kuzmickiene = _parse("paule-kuzmickiene")
         self.janutiene = _parse("ruta-janutiene")
         self.bilkstyte = _parse("ruta-bilkstyte")
+        self.paluckas = _parse("gintautas-paluckas")
+        self.juraitis = _parse("kazimieras-juraitis")
 
     def test_top_level_fields(self) -> None:
         self.assertEqual(self.jonaitis["electionId"], "2019-rugsejo-8-seimo")
@@ -86,6 +88,37 @@ class Seimo2019AnketaParserTests(unittest.TestCase):
                 self.assertTrue(
                     all(v is not None for k, v in answers.items() if k != "teisiniai-argumentai")
                 )
+
+    def test_conviction_details_are_normalized(self) -> None:
+        # Two of this election's 28 candidates answered Q9.2 "Taip". The detail
+        # table reached rawData from the first run and was normalized nowhere
+        # until issue #86, so the corpus could say they had been convicted and
+        # nothing about what for.
+        self.assertEqual(
+            self.paluckas["normalized"]["anketa"]["teistumo-detales"],
+            {
+                "irasai": [
+                    {
+                        "nuosprendzio-data": "2012-04-03",
+                        "nuosprendzio-valstybe": "Lietuva",
+                        "nuosprendzio-institucija": "Lietuvos Aukščiausiasis Teismas",
+                        "nusikalstama-veika": "Piktnaudžiavimas tarnybine padėtimi",
+                    }
+                ]
+            },
+        )
+        self.assertEqual(
+            self.juraitis["normalized"]["anketa"]["teistumo-detales"]["irasai"][0][
+                "nusikalstama-veika"
+            ],
+            "Oficialaus dokumento suklastojimas ir panaudojimas",
+        )
+        # Everyone else carries the key, empty.
+        for payload in (self.jonaitis, self.kuzmickiene, self.janutiene, self.bilkstyte):
+            with self.subTest(candidate=payload["candidateId"]):
+                anketa = payload["normalized"]["anketa"]
+                self.assertEqual(anketa["pareiskimai"]["ar-buvote-pripazintas-kaltu"], "Ne")
+                self.assertEqual(anketa["teistumo-detales"], {"irasai": []})
 
     def test_prior_mandate_records(self) -> None:
         self.assertEqual(

@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup, NavigableString, Tag
 
 from scraper.elections.seimo_2016.sitemap import ELECTION_ID, resolve_candidate_url
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.conviction_details import conviction_field_keys, conviction_records
 from scraper.shared.files import slugify, write_candidate_record, write_json
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2016-seimo")
@@ -20,6 +21,13 @@ MISSING_TEXT_VALUES = {
     "nenurode",
     "-",
 }
+
+# Q9.2 asks whether the candidate has been found guilty; a "Taip" is followed by
+# a table itemizing each conviction, whose columns are named after the
+# sub-questions ("9.2.1. Apkaltinamojo nuosprendžio (sprendimo) data"). The
+# table reached rawData from the start and was normalized nowhere until issue
+# #86 — the yes/no answer was the whole of what the corpus could be asked.
+CONVICTION_QUESTION = "9.2"
 
 # The five asset rows carry stable Roman-numeral labels, so they match on the
 # whole label.
@@ -515,6 +523,13 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
             ),
             "ar-buvote-pripazintas-kaltu-uzsienyje-del-politinio-persekiojimo": _normalize_text_value(_row_answer_text(q9_3_3)),
             "teisiniai-argumentai": _normalize_text_value(_row_answer_text(q9_3_4)),
+        },
+        # One entry per conviction, in the shape every other era publishes;
+        # empty when Q9.2 is "Ne" or the block is absent.
+        "teistumo-detales": {
+            "irasai": conviction_records(
+                rows, CONVICTION_QUESTION, conviction_field_keys(CONVICTION_QUESTION)
+            ),
         },
         "gimimo-vieta": _normalize_text_value(_row_answer_text(q10)),
         "tautybe": _normalize_text_value(_row_answer_text(q11)),

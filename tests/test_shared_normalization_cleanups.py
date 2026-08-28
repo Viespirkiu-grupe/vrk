@@ -146,14 +146,14 @@ class NfcNormalizationTests(unittest.TestCase):
 
 class ConvictionEntriesTests(unittest.TestCase):
     def test_empty_block_is_an_empty_list(self) -> None:
-        from scraper.elections.ep_2024.anketa_parser import _conviction_entries
+        from scraper.shared.conviction_details import conviction_entries
 
-        self.assertEqual(_conviction_entries(None, None, None, []), [])
+        self.assertEqual(conviction_entries(None, None, None, []), [])
 
     def test_populated_block_is_one_entry(self) -> None:
-        from scraper.elections.ep_2024.anketa_parser import _conviction_entries
+        from scraper.shared.conviction_details import conviction_entries
 
-        entries = _conviction_entries(
+        entries = conviction_entries(
             "2022-06-30", "Lietuva", "TEISMAS", [{"kaltes-forma": "Tyčinis"}]
         )
         self.assertEqual(

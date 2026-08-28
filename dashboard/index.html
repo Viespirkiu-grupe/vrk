@@ -132,6 +132,73 @@ function educationCell(value) {
   return lines.length ? lines.join("\n") : null;
 }
 
+// A criminal conviction is published in three shapes across the corpus -- a
+// structured detail table (2016 on), a free-text explanation (2000-2015), and
+// a bare yes/no -- so the compare row used to print the yes/no alone and lose
+// the substance. This mirrors scraper/shared/conviction_details.teistumas():
+// the same four states, resolved the same way. "Neklausta" is printed rather
+// than left blank because a question VRK never asked is not a denial, and the
+// two used to render identically.
+// Each question is worded to suit its own paragraph, and the answer follows the
+// wording: Taip/Ne, Yra/Nėra, Buvo/Nebuvo, Turiu/Neturiu.
+const AFFIRMATIVE_ANSWERS = ["taip", "yra", "buvo", "turiu"];
+const isAffirmative = (v) => typeof v === "string" && AFFIRMATIVE_ANSWERS.includes(v.trim().toLowerCase());
+
+const RELATED_DECLARATIONS = {
+  "ar-buvote-pripazintas-kaltu-del-sunkaus-nusikaltimo": "sunkus nusikaltimas",
+  "ar-buvote-pripazintas-kaltu-uzsienyje": "užsienio teismas",
+  "ar-buvote-pripazintas-kaltu-uzsienyje-del-politinio-persekiojimo": "užsienio teismas, politinis persekiojimas",
+  "ar-buvote-pripazintas-kaltu-del-politinio-persekiojimo": "politinis persekiojimas",
+  "ar-nebaigta-teismo-paskirta-bausme": "neatlikta bausmė",
+};
+
+function convictionCell(_value, record) {
+  const anketa = (record.normalized || {}).anketa || {};
+  const pareiskimai = anketa["pareiskimai"] || {};
+  const declaration = pareiskimai["ar-buvote-pripazintas-kaltu"];
+  const freeText = pareiskimai["teisiniai-argumentai"] || null;
+  const entries = ((anketa["teistumo-detales"] || {}).irasai || []).filter(e => e && typeof e === "object");
+  const declared = isAffirmative(declaration);
+  // The neighbouring paragraphs of the 2000-2014 forms: a different question,
+  // so it does not turn a "Ne" into a "Taip", but 20 records in the corpus
+  // declare a conviction there and deny the main question, and printing the
+  // "Ne" alone calls all 20 unconvicted.
+  const related = Object.entries(RELATED_DECLARATIONS)
+    .filter(([key]) => isAffirmative(pareiskimai[key]))
+    .map(([, label]) => label);
+
+  if (typeof declaration !== "string" || !declaration.trim()) {
+    if (entries.length) return convictionLines(declaration, entries, freeText, related);
+    return related.length ? ["Neklausta", `Taip: ${related.join("; ")}`].join("\n") : "Neklausta";
+  }
+  if (!declared) {
+    return related.length ? [declaration, `Taip: ${related.join("; ")}`].join("\n") : declaration;
+  }
+  if (!entries.length && !freeText) {
+    return convictionLines(`${declaration} — detalių nepaskelbta`, [], null, related);
+  }
+  return convictionLines(declaration, entries, freeText, related);
+}
+
+
+// The offence sits under one name in the 2016-2021 tables and another inside
+// the nested offence records of the Rinkimų kodekso block.
+const OFFENCE_KEYS = ["nusikalstama-veika", "kesinimosi-objektas-baudziamojo-kodekso-skyriaus-ir-straipsnio-pavadinimas"];
+
+function convictionLines(declaration, entries, freeText, related) {
+  const lines = [declaration];
+  for (const entry of entries) {
+    const offences = [entry, ...(entry["nusikalstamos-veikos"] || [])]
+      .filter(o => o && typeof o === "object")
+      .flatMap(o => OFFENCE_KEYS.map(k => o[k]).filter(v => typeof v === "string" && v));
+    const where = [entry["nuosprendzio-data"], entry["nuosprendzio-institucija"]].filter(Boolean).join(", ");
+    lines.push([where, offences.join("; ")].filter(Boolean).join(" — ") || "—");
+  }
+  if (freeText) lines.push(freeText);
+  if (related && related.length) lines.push(`Taip: ${related.join("; ")}`);
+  return lines.join("\n");
+}
+
 // Comparison concepts: label -> normalized paths tried in order per election,
 // plus an optional formatter (value, record) -> string for concepts a bare
 // compactValue() renders wrongly.
@@ -152,7 +219,7 @@ const FIELD_MAP = [
   ["Turtas ir piniginės lėšos (metų pradžioje)", ["turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pradzioje"], moneyCell],
   ["Per metus įsigytas turtas", ["turto-ir-pajamu-deklaracijos.kalendoriniais-metais-isigytas-turtas"], moneyCell],
   ["Gautos pajamos (darbo santykiai)", ["turto-ir-pajamu-deklaracijos.gautos-pajamos-darbo-santykiu"], moneyCell],
-  ["Teistumas (deklaracija)", ["anketa.pareiskimai.ar-buvote-pripazintas-kaltu"]],
+  ["Teistumas", ["anketa.pareiskimai.ar-buvote-pripazintas-kaltu"], convictionCell],
 ];
 
 let INDEX = null;

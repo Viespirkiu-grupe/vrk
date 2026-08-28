@@ -38,12 +38,18 @@ from scraper.elections.seimo_2016.anketa_parser import (
     _split_list_value,
 )
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.conviction_details import conviction_field_keys, conviction_records
 from scraper.shared.files import write_candidate_record, write_json
 
 from bs4 import BeautifulSoup
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2017-balandzio-23-seimo-anyksciai-panevezys")
 DEFAULT_OUTPUT_ROOT = Path("data/2017-balandzio-23-seimo-anyksciai-panevezys")
+
+# The 2016 question set, so the conviction detail table hangs off Q9.2. This
+# module also serves the 2018 Zanavykai and September 2019 by-elections; the
+# key is emitted for all three, and only the 2019 one has a declarer.
+CONVICTION_QUESTION = "9.2"
 
 
 # ---------------------------------------------------------------------------
@@ -76,6 +82,13 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
             "ar-buvote-pripazintas-kaltu-uzsienyje": _answer("9.3.2"),
             "ar-buvote-pripazintas-kaltu-uzsienyje-del-politinio-persekiojimo": _answer("9.3.3"),
             "teisiniai-argumentai": _answer("9.3.4"),
+        },
+        # One entry per conviction, in the shape every other era publishes;
+        # empty when Q9.2 is "Ne" or the block is absent.
+        "teistumo-detales": {
+            "irasai": conviction_records(
+                rows, CONVICTION_QUESTION, conviction_field_keys(CONVICTION_QUESTION)
+            ),
         },
         "gimimo-vieta": _answer("10"),
         "tautybe": _answer("11"),

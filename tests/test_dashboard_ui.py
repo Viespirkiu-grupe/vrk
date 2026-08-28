@@ -29,6 +29,18 @@ UNCOMMENTED = "\n".join(
 )
 NODE = shutil.which("node")
 
+# The module-level constants `convictionCell` closes over, lifted with it
+# whenever the page's conviction helpers are run under node.
+CONVICTION_CONSTANTS = "\n".join(
+    re.search(pattern, SOURCE, flags).group(0)
+    for pattern, flags in (
+        (r"^const AFFIRMATIVE_ANSWERS = .*;$", re.M),
+        (r"^const isAffirmative = .*;$", re.M),
+        (r"^const RELATED_DECLARATIONS = \{.*?^\};$", re.S | re.M),
+        (r"^const OFFENCE_KEYS = .*;$", re.M),
+    )
+)
+
 
 class DocumentTests(unittest.TestCase):
     def test_the_page_declares_itself_lithuanian(self):
@@ -171,6 +183,143 @@ class EducationCellTests(unittest.TestCase):
         self.assertEqual(self._render([value])[0], "Savarankiškos studijos")
 
 
+@unittest.skipIf(NODE is None, "node not installed — behavioural checks skipped")
+class ConvictionCellTests(unittest.TestCase):
+    """One conviction concept over the three shapes the corpus publishes.
+
+    The row used to print the yes/no answer alone, so a candidate's actual
+    conviction record -- the most consequential fact on their page -- never
+    reached the screen, and "VRK never asked" rendered exactly like "no".
+    Mirrors scraper/shared/conviction_details.teistumas(); see GitHub issue #86.
+    """
+
+    def _render(self, anketa):
+        functions = "\n".join(
+            re.search(rf"^function {name}\(.*?^}}", SOURCE, re.S | re.M).group(0)
+            for name in ("convictionCell", "convictionLines")
+        )
+        record = json.dumps({"normalized": {"anketa": anketa}})
+        script = (
+            f"{CONVICTION_CONSTANTS}\n{functions}\n"
+            f"console.log(JSON.stringify(convictionCell(null, {record})));"
+        )
+        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        return json.loads(out.stdout)
+
+    def test_a_question_never_asked_does_not_read_as_a_denial(self):
+        self.assertEqual(self._render({"pareiskimai": {}}), "Neklausta")
+
+    def test_a_denial_is_the_answer_itself(self):
+        self.assertEqual(
+            self._render({"pareiskimai": {"ar-buvote-pripazintas-kaltu": "Ne"}}), "Ne"
+        )
+        # The 2000/2004 forms spell the same answer "Nėra".
+        self.assertEqual(
+            self._render({"pareiskimai": {"ar-buvote-pripazintas-kaltu": "Nėra"}}), "Nėra"
+        )
+
+    def test_declared_with_nothing_published_says_so(self):
+        self.assertEqual(
+            self._render(
+                {
+                    "pareiskimai": {"ar-buvote-pripazintas-kaltu": "Taip"},
+                    "teistumo-detales": {"irasai": []},
+                }
+            ),
+            "Taip — detalių nepaskelbta",
+        )
+
+    def test_one_line_per_conviction(self):
+        self.assertEqual(
+            self._render(
+                {
+                    "pareiskimai": {"ar-buvote-pripazintas-kaltu": "Taip"},
+                    "teistumo-detales": {
+                        "irasai": [
+                            {
+                                "nuosprendzio-data": "2008-06-04",
+                                "nuosprendzio-valstybe": "Lietuva",
+                                "nuosprendzio-institucija": "Ukmergės rajono apylinkės teismas",
+                                "nusikalstama-veika": "BK 178 str. 1 d.",
+                            }
+                        ]
+                    },
+                }
+            ),
+            "Taip\n2008-06-04, Ukmergės rajono apylinkės teismas — BK 178 str. 1 d.",
+        )
+
+    def test_the_nested_offence_shape_renders_the_same_way(self):
+        self.assertEqual(
+            self._render(
+                {
+                    "pareiskimai": {"ar-buvote-pripazintas-kaltu": "Taip"},
+                    "teistumo-detales": {
+                        "irasai": [
+                            {
+                                "nuosprendzio-data": "1995-12-28",
+                                "nuosprendzio-institucija": "LAZDIJŲ R. APYLINKĖS TEISMAS",
+                                "nusikalstamos-veikos": [
+                                    {"kesinimosi-objektas-baudziamojo-kodekso-skyriaus-ir-straipsnio-pavadinimas": "16 str."},
+                                    {"kesinimosi-objektas-baudziamojo-kodekso-skyriaus-ir-straipsnio-pavadinimas": "82 str. 1 d."},
+                                ],
+                            }
+                        ]
+                    },
+                }
+            ),
+            "Taip\n1995-12-28, LAZDIJŲ R. APYLINKĖS TEISMAS — 16 str.; 82 str. 1 d.",
+        )
+
+    def test_a_conviction_under_a_neighbouring_question_is_not_hidden_by_a_no(self):
+        # The 2000-2014 forms ask separately about a grave crime. It is a
+        # different question, so the answer to this one stands — but printing
+        # the "Ne" alone reads as "no conviction" for the 20 records that
+        # declared one there.
+        self.assertEqual(
+            self._render(
+                {
+                    "pareiskimai": {
+                        "ar-buvote-pripazintas-kaltu": "Ne",
+                        "ar-buvote-pripazintas-kaltu-del-sunkaus-nusikaltimo": "Buvo",
+                    }
+                }
+            ),
+            "Ne\nTaip: sunkus nusikaltimas",
+        )
+
+    def test_a_denied_neighbouring_question_adds_nothing(self):
+        self.assertEqual(
+            self._render(
+                {
+                    "pareiskimai": {
+                        "ar-buvote-pripazintas-kaltu": "Ne",
+                        "ar-buvote-pripazintas-kaltu-del-sunkaus-nusikaltimo": "Nebuvo",
+                        "ar-nebaigta-teismo-paskirta-bausme": "Neturiu",
+                    }
+                }
+            ),
+            "Ne",
+        )
+
+    def test_a_free_text_explanation_is_the_detail_where_that_is_all_there_is(self):
+        # 2000-2015: no detail table, an explanation instead — and the 2000 and
+        # 2004 forms answer the question "Yra", not "Taip".
+        self.assertEqual(
+            self._render(
+                {
+                    "pareiskimai": {
+                        "ar-buvote-pripazintas-kaltu": "Yra",
+                        "teisiniai-argumentai": "Teistumas panaikintas (2003)",
+                    }
+                }
+            ),
+            "Yra\nTeistumas panaikintas (2003)",
+        )
+
+
 class FreshnessTests(unittest.TestCase):
     """Both fetches must bypass the browser cache.
 
@@ -192,6 +341,11 @@ class ComparisonTableRenderingTests(unittest.TestCase):
         # if the cell does not collapse whitespace.
         rule = re.search(r"table\.cmp th, table\.cmp td \{[^}]*\}", SOURCE).group(0)
         self.assertIn("white-space: pre-line", rule)
+
+    def test_conviction_uses_the_formatter(self):
+        row = re.search(r'\["Teistumas", \[[^\]]*\](, *\w+)?\]', SOURCE)
+        self.assertIsNotNone(row)
+        self.assertEqual((row.group(1) or "").strip(" ,"), "convictionCell")
 
     def test_education_uses_the_formatter(self):
         row = re.search(r'\["Išsilavinimas", \[[^\]]*\](, *\w+)?\]', SOURCE)
@@ -225,11 +379,12 @@ class ArchiveComparisonRowTests(unittest.TestCase):
     def _cells(self, record):
         helpers = "\n".join(
             re.search(rf"^function {name}\(.*?^}}", SOURCE, re.S | re.M).group(0)
-            for name in ("resolvePath", "compactValue", "educationCell")
+            for name in ("resolvePath", "compactValue", "educationCell", "convictionCell", "convictionLines")
         )
+
         field_map = re.search(r"^const FIELD_MAP = \[.*?^\];", SOURCE, re.S | re.M).group(0)
         script = (
-            f"{helpers}\n"
+            f"{CONVICTION_CONSTANTS}\n{helpers}\n"
             "function moneyCell() { return null; }\n"
             f"{field_map}\n"
             f"const r = {json.dumps(record)};\n"

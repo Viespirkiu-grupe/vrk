@@ -15,7 +15,6 @@ from scraper.elections.ep_2024.anketa_parser import (
     _find_photo_src,
     _normalize_privaciu_interesu_data,
     _normalize_turto_ir_pajamu_data,
-    _records_for_question,
 )
 # The pages have the same shape as the 2023 mayoral ones — tab bodies wrapped in
 # their own <div>, the same profile card, and a biography questionnaire that
@@ -29,7 +28,6 @@ from scraper.elections.kupiskio_mero_2023.anketa_parser import (
 from scraper.elections.seimo_2020.anketa_parser import _parse_biografija_html
 from scraper.elections.seimo_2016.anketa_parser import (
     _find_row_by_question_number,
-    _source_key,
     _load_candidate_meta,
     _normalize_campaigns,
     _normalize_kita_data,
@@ -44,19 +42,15 @@ from scraper.elections.seimo_2016.anketa_parser import (
     _row_answer_text,
 )
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.conviction_details import conviction_field_keys, conviction_records
 from scraper.shared.files import write_candidate_record, write_json
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2021-spalio-10-meru")
 DEFAULT_OUTPUT_ROOT = Path("data/2021-spalio-10-meru")
 
-# Q9.1 conviction columns, keyed by the sub-question number that starts each
-# column heading.
-CONVICTION_FIELD_KEYS = {
-    "9-1-1": "nuosprendzio-data",
-    "9-1-2": "nuosprendzio-valstybe",
-    "9-1-3": "nuosprendzio-institucija",
-    "9-1-4": "nusikalstama-veika",
-}
+# The savivaldybių tarybų rinkimų įstatymo pages ask for the conviction details
+# under Q9.1, one table row per conviction.
+CONVICTION_QUESTION = "9.1"
 
 
 # ---------------------------------------------------------------------------
@@ -74,25 +68,6 @@ def _repair_question_numbers(rows: list[dict[str, Any]]) -> list[dict[str, Any]]
         if number:
             row["questionNumber"] = number
     return rows
-
-
-def _conviction_records(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    # The Q9.1 table names its columns after the sub-question numbers
-    # ("9.1.1. Apkaltinamojo nuosprendžio (sprendimo) data:"); map them to the
-    # field names the other elections use.
-    records: list[dict[str, Any]] = []
-    for record in _records_for_question(rows, "9.1"):
-        if not isinstance(record, dict):
-            continue
-        mapped: dict[str, Any] = {}
-        for label, value in record.items():
-            key = CONVICTION_FIELD_KEYS.get(_source_key(str(label))[:5])
-            if key is None:
-                continue
-            mapped[key] = _normalize_text_value(value)
-        if mapped:
-            records.append({key: mapped.get(key) for key in CONVICTION_FIELD_KEYS.values()})
-    return records
 
 
 def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
@@ -131,7 +106,9 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         # Q9.1 is a record table listing each conviction, present only when Q9
         # is answered "Taip".
         "teistumo-detales": {
-            "irasai": _conviction_records(rows),
+            "irasai": conviction_records(
+                rows, CONVICTION_QUESTION, conviction_field_keys(CONVICTION_QUESTION)
+            ),
         },
     }
 

@@ -37,6 +37,7 @@ from scraper.elections.seimo_2016.anketa_parser import (
     parse_question_number,
 )
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.conviction_details import conviction_entries, conviction_records
 from scraper.shared.files import write_candidate_record, write_json
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2024-ep")
@@ -112,63 +113,6 @@ def _records_for_question(rows: list[dict[str, Any]], question_number: str) -> l
     return records
 
 
-def _structure_dash_fields(values: list[Any]) -> dict[str, Any]:
-    # Detail tables such as the Q13.4 conviction block render one
-    # "Label – value" line per field; fold them into a single record.
-    record: dict[str, Any] = {}
-    for value in values:
-        if not isinstance(value, str):
-            continue
-        text = normalize_space(value)
-        if not text:
-            continue
-        label, _, field_value = text.partition("–")
-        key = _source_key(label)
-        if not key:
-            continue
-        record[key] = _normalize_text_value(field_value)
-    return record
-
-
-def _conviction_records(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    records: list[dict[str, Any]] = []
-    for group in _record_groups_for_question(rows, "13.4"):
-        if all(isinstance(value, str) for value in group):
-            record = _structure_dash_fields(group)
-            if record:
-                records.append(record)
-            continue
-        for normalized in _normalize_table_records(group):
-            if isinstance(normalized, dict):
-                records.append(normalized)
-    return records
-
-
-def _conviction_entries(
-    date: str | None,
-    country: str | None,
-    court: str | None,
-    veikos: list[dict[str, Any]],
-) -> list[dict[str, Any]]:
-    # Every election publishes teistumo-detales as {"irasai": [...]} with one
-    # entry per conviction. The Rinkimų kodekso pages carry a single
-    # conviction block (dates and court as flat rows, offences in a nested
-    # table), so the list holds one entry there — and none when the block is
-    # empty, instead of the null-field skeleton this shape replaced. The
-    # 2019/2021 municipal-law elections list one four-field record per
-    # conviction in the same irasai list.
-    if date is None and country is None and court is None and not veikos:
-        return []
-    return [
-        {
-            "nuosprendzio-data": date,
-            "nuosprendzio-valstybe": country,
-            "nuosprendzio-institucija": court,
-            "nusikalstamos-veikos": veikos,
-        }
-    ]
-
-
 def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     def _answer(question_number: str) -> str | None:
         return _normalize_text_value(
@@ -199,11 +143,11 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
             # One entry per conviction; empty list when Q13 has no block. The
             # always-null 13.4 free-text aprasas (the table carries the data)
             # is retired with the old null-field skeleton.
-            "irasai": _conviction_entries(
+            "irasai": conviction_entries(
                 _answer("13.1"),
                 _answer("13.2"),
                 _answer("13.3"),
-                _conviction_records(rows),
+                conviction_records(rows, "13.4"),
             ),
         },
         # 14.1 appears only when Q14 is answered "Taip".

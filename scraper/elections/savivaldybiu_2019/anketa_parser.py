@@ -27,11 +27,11 @@ from scraper.elections.seimo_2016.anketa_parser import (
     _order_dict_keys,
     _parse_eur_amount,
     _parse_nested_campaign_samples,
-    _question_record_rows,
     _row_answer_text,
     _source_key,
 )
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.conviction_details import conviction_field_keys, conviction_records
 from scraper.shared.files import write_candidate_record, write_json
 
 DEFAULT_SAMPLES_ROOT = Path(f"samples/html/{ELECTION_ID}")
@@ -56,34 +56,9 @@ TURTO_PAJAMU_KEY_ALIASES = {
     "deklaruota-moketina-pajamu-mokescio-suma": "sumoketas-pajamu-mokestis",
 }
 
-# Q9.1 conviction columns, keyed by the sub-question number that starts each
-# column heading. Keys match meru_2021, which asks the same questions under
-# the same statute.
-CONVICTION_FIELD_KEYS = {
-    "9-1-1": "nuosprendzio-data",
-    "9-1-2": "nuosprendzio-valstybe",
-    "9-1-3": "nuosprendzio-institucija",
-    "9-1-4": "nusikalstama-veika",
-}
-
-
-def _conviction_records(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    # The Q9.1 table names its columns after the sub-question numbers
-    # ("9.1.1 Apkaltinamojo nuosprendžio (sprendimo) data"); map them to the
-    # field names the other elections use.
-    records: list[dict[str, Any]] = []
-    for record in _question_record_rows(rows, "9.1"):
-        if not isinstance(record, dict):
-            continue
-        mapped: dict[str, Any] = {}
-        for label, value in record.items():
-            key = CONVICTION_FIELD_KEYS.get(_source_key(str(label))[:5])
-            if key is None:
-                continue
-            mapped[key] = _normalize_text_value(value)
-        if mapped:
-            records.append({key: mapped.get(key) for key in CONVICTION_FIELD_KEYS.values()})
-    return records
+# The 2019 pages ask for the conviction details under Q9.1, as the 2021 mayoral
+# ones do: same statute, same question, one table row per conviction.
+CONVICTION_QUESTION = "9.1"
 
 
 def parse_anketa_html(html: str) -> dict[str, Any]:
@@ -127,7 +102,9 @@ def parse_anketa_html(html: str) -> dict[str, Any]:
     # and offence — present only when Q9 is answered "Taip". The shared parse
     # captures it as a records row; fold it into the meru_2021 shape.
     normalized["teistumo-detales"] = {
-        "irasai": _conviction_records(rows),
+        "irasai": conviction_records(
+            rows, CONVICTION_QUESTION, conviction_field_keys(CONVICTION_QUESTION)
+        ),
     }
 
     # Q21 is "21. Be jau išvardintų atsakymų, ką dar norėtumėte parašyti apie
