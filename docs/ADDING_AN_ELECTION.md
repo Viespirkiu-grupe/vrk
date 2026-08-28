@@ -34,6 +34,18 @@ it before writing anything. The layout families are:
   registration, and its own two-structure listing walk (lists and
   constituencies, as 2008/2012, on the 2004 template); the November 2005
   Kėdainiai by-election (`seimo_kedainiu_2005`) is thin wiring over it.
+  The June 2003 new elections in four constituencies
+  (`seimo_nauji_2003`) are the same site one generation *early*
+  (`rinkimai/2003/seimas/`, the servlet's own
+  `w3_smn_kand.<view>_l-id=<ID>.htm` names): the row reader, the Seimas
+  question mapping and — because the declaration is the 2002 municipal
+  form, not the 2004 one — `savivaldybiu_2002`'s key map are reused, and
+  the page readers are the module's own for four deltas. Three of them
+  are the kind worth looking for in any new member of a family: a card
+  that is *inside* the question table and classed like a question, a
+  question number that moved (birth date at Q5, not Q3), and record
+  tables that print no header row — that last one is silent, and would
+  have dropped the entire education record of 21 of the 27 candidates.
   The June 2004 presidential election (`prezidento_2004`) is the third
   member, with a different publication shape: one shared listing of five
   profile cards instead of per-candidate pages, the biography and

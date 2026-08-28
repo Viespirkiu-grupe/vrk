@@ -18,7 +18,7 @@ never touched by a full run.
 
 ## Inventory
 
-113,046 candidate records across 54 elections, 1996–2025, with **zero fetch
+113,073 candidate records across 55 elections, 1996–2025, with **zero fetch
 failures** other than three 2011, three 2007, two 2000 and one 2002
 candidate pages VRK never published (see Known gaps).
 
@@ -103,10 +103,11 @@ election was re-parsed offline the same day.
 | `2004-ep` | 241 | 14 | 3 | 0 |
 | `2004-prezidento` | 5 | 1 | 0 | 0 |
 | `2004-seimo` | 1251 | 141 | 8 | 0 |
+| `2003-birzelio-15-seimo-nauji` | 27 | 0 | 0 | 0 |
 | `2005-lapkricio-20-seimo-kedainiai` | 5 | 1 | 0 | 0 |
 | `2000-seimo` | 1271 | 141 | 5 | 0 |
 | `2000-kovo-19-savivaldybiu-tarybu` | 9879 | 1433 | 9 | 0 |
-| **total** | **113002** | **11852** | **1634** | **20199** |
+| **total** | **113073** | **11852** | **1634** | **20199** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
@@ -753,6 +754,57 @@ the candidate left as an empty `<b></b>`; three cards name a second
 constituency nominator (`kitiIskelejai` — self-nominated beside the
 party), 46 list seats went to people who also stood in a constituency.
 Fixtures are 18 candidates chosen by shape.
+
+### The 2026-08-28 build of the June 2003 new Seimo elections
+
+GitHub issue #29; VRK's `rinkimai/2003/seimas/` tree (2003-06-15), four
+seats that fell vacant in the 2000-2004 Seimas voted on together —
+Senamiesčio Nr. 2, Antakalnio Nr. 3, Šeškinės Nr. 6, Nevėžio Nr. 26.
+**27 candidates, 27 records, 0 anomalies, 0 fetch failures**; the
+fixture set is the whole field. All twelve nominators are parties —
+nobody self-nominated — and there are no lists, so every record has one
+constituency candidacy.
+
+**Nobody was elected.** All four constituencies came in below the
+turnout threshold (Senamiesčio lowest at 9.26%, 3,476 of 37,523;
+Antakalnio 20.17%, Šeškinės 12.47%, Nevėžio 13.30%), every page closes
+"Rinkimai apygardoje neįvyko", the index footnotes all four, and there
+is no members page and no second round. So `isrinktas` is a known
+`false` on all 27, not a null — the same reading the 1996-1999 archive
+family's `neįvyko` elections get. These pages row candidates by the
+anketa id (2004's do not), so each record also carries the round's votes
+as `kandidatavimas.turai`; every page's rows sum to its declared valid
+ballots.
+
+The pages are the 2004 static site one generation early, so
+`seimo_nauji_2003` reuses `ep_2004`'s row reader, `seimo_2004`'s question
+mapping and `savivaldybiu_2002`'s declaration key map, and owns the four
+readers the deltas require. The one that would have lost data silently
+is the record tables: they print no header row, and 21 of the 27
+education tables are a single row, so the era's reader would have taken
+that row for column names and left the candidate with no education
+record at all. The declaration comes in two forms — "gyventojo" on 18
+pages, "šeimos" on 9, the family form dropping the joint-bank-accounts
+item and putting every prompt in the plural — and misspells two prompts
+relative to 2002 ("negražintų", "paskolintų (nesugražintų)"); with those
+spellings added, 0 of the 27 pages leave an unrecognised line. Every
+loan item but one reads "-": Račkovskis is the only candidate declaring
+a repaid loan (16,000 Lt).
+
+Facts the field carries: all 27 have all three pages, a photo and every
+one of the 21 questions answered (a candidate who answered nothing still
+gets "Nenurodė", the corpus's missing-value marker, which is why
+`mokslo-laipsnis` is filled on 7 and `visuomenine-veikla` on 15); 27
+education records, 9 prior-mandate tables, 1 Q9 explanation (Balakin's
+KGB disclosure, printed unlabelled after Q9.3 as the 2004 pages print
+theirs), 0 declared convictions. Person index: 25 of the 27 merge into
+people already in the corpus; two appear only here — Jonas Kaliačius
+(Lietuvos liaudies sąjunga "Už teisingą Lietuvą") and Nijolė
+Veličkienė (Liberalų demokratų partija).
+
+**The photo URL is the candidate's asmens kodas.** The filename is the
+national ID number, checked on all 27, so it is kept as a source link
+and nothing is derived from it.
 
 ### The 2026-08-23 build of the 2005 Kėdainiai Seimo by-election
 

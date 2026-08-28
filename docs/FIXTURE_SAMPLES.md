@@ -657,6 +657,20 @@ directory holds both indexes (`list.html`,
 constituency pages under `districts/`. The field is scraped by
 `scripts/run_election_batches.sh`.
 
+For `2003-birzelio-15-seimo-nauji` the allowlist
+(`tests/test_seimo_nauji_2003_sample_allowlist.py`) is the complete
+27-candidate field of the four constituencies — Senamiesčio Nr. 2 (7),
+Antakalnio Nr. 3 (7), Šeškinės Nr. 6 (8) and Nevėžio Nr. 26 (5) — so the
+fixture capture is the whole scrape. The samples directory holds the
+constituency index (`districts.html`), the party index (`list.html`), the
+four constituency pages under `districts/` and the 12 party pages under
+`lists/`; the party pages are the cross-check, not a source, because they
+restate the same 27 rows with each candidate's constituency. Shapes the
+field covers without being chosen for them: `viktor-balakin` (the one Q9
+explanation), `zigfrid-rackovskis` (the one non-"-" loan figure), the
+nine "šeimos" declaration forms and the eighteen "gyventojo" ones, and
+the six candidates whose Q12 table has more than one education row.
+
 For `2005-lapkricio-20-seimo-kedainiai` the allowlist
 (`tests/test_seimo_kedainiu_2005_sample_allowlist.py`) is the complete
 five-candidate field — `tomas-bakucionis`, `virginija-baltraitiene` (the
