@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from scraper.elections.prezidento_2004.anketa_parser import (
+    DEFAULT_RESULTS_PATH,
     parse_anketa_sample,
     parse_listing_card,
 )
@@ -23,6 +24,8 @@ from scraper.elections.prezidento_2004.sitemap import (
     build_sitemap_from_sample,
 )
 from scraper.shared.word_doc import WordDocError, extract_text
+
+from local_data import require
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -150,6 +153,7 @@ class Prezidento2004CardTests(unittest.TestCase):
 
 class Prezidento2004RecordTests(unittest.TestCase):
     def test_winner_record(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         record, stats = _parse("valdas-adamkus")
         candidacy = record["kandidatavimas"]
         self.assertTrue(candidacy["isrinktas"])
@@ -188,6 +192,7 @@ class Prezidento2004RecordTests(unittest.TestCase):
         self.assertEqual(stats["anomalies"], [])
 
     def test_runoff_loser_and_first_round_losers(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         record, _ = _parse("kazimira-danute-prunskiene")
         candidacy = record["kandidatavimas"]
         self.assertFalse(candidacy["isrinktas"])

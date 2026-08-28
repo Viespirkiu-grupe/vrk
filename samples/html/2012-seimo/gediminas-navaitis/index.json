@@ -1,0 +1,114 @@
+{
+  "electionId": "2012-seimo",
+  "candidate": {
+    "candidateName": "Gediminas NAVAITIS",
+    "candidateId": "gediminas-navaitis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas68296/Kandidato68296Anketa.html",
+    "vrkCandidateId": "68296",
+    "roles": [
+      "daugiamandate",
+      "vienmandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Nacionalinis susivienijimas „Už Lietuvą Lietuvoje“ (Lietuvos centro partijos, Lietuvos socialdemokratų sąjungos, Tautininkų sąjungos ir Tautos vienybės sąjungos koalicija)",
+      "sarasoNumeris": 10,
+      "sarasoId": "4566-2",
+      "numerisSarase": 10,
+      "koalicijosPartija": "Tautininkų sąjunga"
+    },
+    "vienmandateCandidacy": {
+      "apygarda": "Justiniškių",
+      "apygardosNumeris": 7,
+      "apygardosId": "7215",
+      "iskele": "Išsikėlė pats"
+    }
+  },
+  "anketaPath": "samples/html/2012-seimo/gediminas-navaitis/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas68296/Kandidato68296Anketa.html",
+      "path": "samples/html/2012-seimo/gediminas-navaitis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas68296/Kandidato68296Biografija.html",
+      "path": "samples/html/2012-seimo/gediminas-navaitis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas68296/Kandidato68296Deklaracijos.html",
+      "path": "samples/html/2012-seimo/gediminas-navaitis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas68296/Kandidato68296InteresuDeklaracija.html",
+      "path": "samples/html/2012-seimo/gediminas-navaitis/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas68296/Kandidato68296Kita.html",
+      "path": "samples/html/2012-seimo/gediminas-navaitis/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-5543",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5543/Dalyvio5543Izdininkas.html",
+      "campaignDir": "samples/html/2012-seimo/gediminas-navaitis/campaigns/dalyvis-5543",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5543/Dalyvio5543Izdininkas.html",
+          "path": "samples/html/2012-seimo/gediminas-navaitis/campaigns/dalyvis-5543/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5543/Dalyvio5543Auditorius.html",
+          "path": "samples/html/2012-seimo/gediminas-navaitis/campaigns/dalyvis-5543/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5543/Dalyvio5543AukotojuSarasas.html",
+          "path": "samples/html/2012-seimo/gediminas-navaitis/campaigns/dalyvis-5543/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5543/Dalyvio5543FinansavimoAtaskaitos.html",
+          "path": "samples/html/2012-seimo/gediminas-navaitis/campaigns/dalyvis-5543/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5543/Dalyvio5543Sutartys.html",
+          "path": "samples/html/2012-seimo/gediminas-navaitis/campaigns/dalyvis-5543/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2012-seimo/gediminas-navaitis/campaigns/dalyvis-5543/index.json"
+    }
+  ],
+  "anomalies": []
+}

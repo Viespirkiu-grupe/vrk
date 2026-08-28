@@ -1,0 +1,106 @@
+{
+  "electionId": "2013-kovo-3-seimo-birzai-zarasai-ukmerge",
+  "candidate": {
+    "candidateName": "Genrich SARBAJ",
+    "candidateId": "genrich-sarbaj",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70569/Kandidato70569Anketa.html",
+    "vrkCandidateId": "70569",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Zarasų - Visagino",
+      "apygardosNumeris": 52,
+      "apygardosId": "7434",
+      "iskele": "Socialistinis liaudies Frontas"
+    }
+  },
+  "anketaPath": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/genrich-sarbaj/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70569/Kandidato70569Anketa.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/genrich-sarbaj/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70569/Kandidato70569Biografija.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/genrich-sarbaj/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70569/Kandidato70569Deklaracijos.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/genrich-sarbaj/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70569/Kandidato70569InteresuDeklaracija.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/genrich-sarbaj/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70569/Kandidato70569Kita.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/genrich-sarbaj/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-6430",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6430/Dalyvio6430Izdininkas.html",
+      "campaignDir": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/genrich-sarbaj/campaigns/dalyvis-6430",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6430/Dalyvio6430Izdininkas.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/genrich-sarbaj/campaigns/dalyvis-6430/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6430/Dalyvio6430Auditorius.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/genrich-sarbaj/campaigns/dalyvis-6430/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6430/Dalyvio6430AukotojuSarasas.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/genrich-sarbaj/campaigns/dalyvis-6430/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6430/Dalyvio6430FinansavimoAtaskaitos.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/genrich-sarbaj/campaigns/dalyvis-6430/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6430/Dalyvio6430Sutartys.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/genrich-sarbaj/campaigns/dalyvis-6430/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/genrich-sarbaj/campaigns/dalyvis-6430/index.json"
+    }
+  ],
+  "anomalies": []
+}

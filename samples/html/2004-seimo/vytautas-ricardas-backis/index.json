@@ -1,0 +1,47 @@
+{
+  "electionId": "2004-seimo",
+  "candidate": {
+    "candidateName": "Vytautas Ričardas BAČKIS",
+    "candidateId": "vytautas-ricardas-backis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_296165.htm",
+    "vrkCandidateId": "296165",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Kaišiadorių - Elektrėnų",
+      "apygardosNumeris": 59,
+      "apygardosId": "1661",
+      "iskele": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)"
+    }
+  },
+  "anketaPath": "samples/html/2004-seimo/vytautas-ricardas-backis/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_296165.htm",
+      "path": "samples/html/2004-seimo/vytautas-ricardas-backis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_biog_l_296165.htm",
+      "path": "samples/html/2004-seimo/vytautas-ricardas-backis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_pajam_l_296165.htm",
+      "path": "samples/html/2004-seimo/vytautas-ricardas-backis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

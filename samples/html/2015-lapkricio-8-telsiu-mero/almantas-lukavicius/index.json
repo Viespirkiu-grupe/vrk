@@ -1,0 +1,60 @@
+{
+  "electionId": "2015-lapkricio-8-telsiu-mero",
+  "candidate": {
+    "candidateId": "almantas-lukavicius",
+    "candidateName": "Almantas Lukavičius",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88324/Kandidato88324Anketa.html"
+  },
+  "anketaPath": "samples/html/2015-lapkricio-8-telsiu-mero/almantas-lukavicius/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88324/Kandidato88324Anketa.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/almantas-lukavicius/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88324/Kandidato88324Biografija.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/almantas-lukavicius/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88324/Kandidato88324Deklaracijos.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/almantas-lukavicius/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88324/Kandidato88324InteresuDeklaracija.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/almantas-lukavicius/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88324/Kandidato88324Kita.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/almantas-lukavicius/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-7609",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/469_lt/PolitiniuKampanijuFinansavimas/Dalyvis7609/Dalyvio7609Izdininkas.html",
+      "campaignDir": "samples/html/2015-lapkricio-8-telsiu-mero/almantas-lukavicius/campaigns/dalyvis-7609",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2015-lapkricio-8-telsiu-mero/almantas-lukavicius/campaigns/dalyvis-7609/index.json"
+    }
+  ],
+  "anomalies": []
+}

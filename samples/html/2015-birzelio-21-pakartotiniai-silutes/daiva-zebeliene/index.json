@@ -1,0 +1,74 @@
+{
+  "electionId": "2015-birzelio-21-pakartotiniai-silutes",
+  "candidate": {
+    "candidateName": "Daiva Žebelienė",
+    "candidateId": "daiva-zebeliene",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88260/Kandidato88260Anketa.html",
+    "vrkCandidateId": "88260",
+    "municipality": "Šilutės rajono savivaldybė",
+    "roles": [
+      "meras",
+      "tarybos-narys"
+    ],
+    "mayoralCandidacy": {
+      "nominatedBy": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“"
+    },
+    "councilCandidacy": {
+      "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+      "listNumber": 23,
+      "listPosition": 1
+    }
+  },
+  "anketaPath": "samples/html/2015-birzelio-21-pakartotiniai-silutes/daiva-zebeliene/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88260/Kandidato88260Anketa.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/daiva-zebeliene/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88260/Kandidato88260Biografija.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/daiva-zebeliene/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88260/Kandidato88260Deklaracijos.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/daiva-zebeliene/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88260/Kandidato88260InteresuDeklaracija.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/daiva-zebeliene/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88260/Kandidato88260Kita.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/daiva-zebeliene/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-7600",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/PolitiniuKampanijuFinansavimas/Dalyvis7600/Dalyvio7600Izdininkas.html",
+      "campaignDir": "samples/html/2015-birzelio-21-pakartotiniai-silutes/daiva-zebeliene/campaigns/dalyvis-7600",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2015-birzelio-21-pakartotiniai-silutes/daiva-zebeliene/campaigns/dalyvis-7600/index.json"
+    }
+  ],
+  "anomalies": []
+}

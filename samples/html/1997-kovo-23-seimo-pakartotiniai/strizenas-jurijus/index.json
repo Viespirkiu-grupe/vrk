@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Strižėnas Jurijus",
+    "candidateId": "strizenas-jurijus",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-41052.htm",
+    "constituencyName": "Naujosios Vilnios",
+    "constituencyNumber": 10,
+    "nominator": "Krikščionių demokratų sąjunga",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-111.htm"
+  },
+  "anketaPath": "samples/html/1997-kovo-23-seimo-pakartotiniai/strizenas-jurijus/candidate.html",
+  "tabCount": 2,
+  "tabsSaved": 2,
+  "anomalies": []
+}

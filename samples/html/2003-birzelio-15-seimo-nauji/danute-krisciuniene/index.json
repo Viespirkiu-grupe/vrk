@@ -1,0 +1,47 @@
+{
+  "electionId": "2003-birzelio-15-seimo-nauji",
+  "candidate": {
+    "candidateName": "Danutė Kriščiūnienė",
+    "candidateId": "danute-krisciuniene",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=239960.htm",
+    "vrkCandidateId": "239960",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Nevėžio",
+      "apygardosNumeris": 26,
+      "apygardosId": "1479",
+      "iskele": "Lietuvos krikščionys demokratai"
+    }
+  },
+  "anketaPath": "samples/html/2003-birzelio-15-seimo-nauji/danute-krisciuniene/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=239960.htm",
+      "path": "samples/html/2003-birzelio-15-seimo-nauji/danute-krisciuniene/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Autobiografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_biog_l-id=239960.htm",
+      "path": "samples/html/2003-birzelio-15-seimo-nauji/danute-krisciuniene/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_pajam_l-id=239960.htm",
+      "path": "samples/html/2003-birzelio-15-seimo-nauji/danute-krisciuniene/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

@@ -1,0 +1,26 @@
+{
+  "candidate": {
+    "candidateName": "Zairys Aloyzas",
+    "candidateId": "zairys-aloyzas-86350",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20000319/kandvl.htm-86350.htm",
+    "vrkCandidateId": "86350",
+    "municipality": {
+      "pavadinimas": "Jurbarko rajono",
+      "numeris": 12,
+      "savivaldybesId": "570",
+      "mandatai": 25
+    },
+    "list": {
+      "pavadinimas": "Lietuvos valstiečių partija",
+      "rusis": "partija",
+      "numeris": 1,
+      "sarasoId": "25",
+      "vrkSprendimas": "2000 01 27, Nr.20"
+    },
+    "listPosition": 1
+  },
+  "anketaPath": "samples/html/2000-kovo-19-savivaldybiu-tarybu/zairys-aloyzas-86350/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

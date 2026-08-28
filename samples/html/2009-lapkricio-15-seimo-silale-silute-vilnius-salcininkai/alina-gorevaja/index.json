@@ -1,0 +1,107 @@
+{
+  "electionId": "2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai",
+  "candidate": {
+    "candidateName": "Alina GOREVAJA",
+    "candidateId": "alina-gorevaja",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26281/Kandidato26281Anketa.html",
+    "vrkCandidateId": "26281",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Vilniaus - Šalčininkų",
+      "apygardosNumeris": 56,
+      "apygardosId": "7125",
+      "iskele": "Darbo partija"
+    }
+  },
+  "anketaPath": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/alina-gorevaja/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26281/Kandidato26281Anketa.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/alina-gorevaja/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26281/Kandidato26281Biografija.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/alina-gorevaja/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26281/Kandidato26281Deklaracijos.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/alina-gorevaja/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26281/Kandidato26281InteresuDeklaracija.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/alina-gorevaja/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26281/Kandidato26281Kita.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/alina-gorevaja/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-4031",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4031/Dalyvio4031Izdininkas.html",
+      "campaignDir": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/alina-gorevaja/campaigns/dalyvis-4031",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4031/Dalyvio4031Izdininkas.html",
+          "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/alina-gorevaja/campaigns/dalyvis-4031/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4031/Dalyvio4031Auditorius.html",
+          "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/alina-gorevaja/campaigns/dalyvis-4031/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukotojų sąrašas",
+          "slug": "aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4031/Dalyvio4031AukotojuSarasas.html",
+          "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/alina-gorevaja/campaigns/dalyvis-4031/aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4031/Dalyvio4031FinansavimoAtaskaitos.html",
+          "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/alina-gorevaja/campaigns/dalyvis-4031/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4031/Dalyvio4031Sutartys.html",
+          "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/alina-gorevaja/campaigns/dalyvis-4031/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/alina-gorevaja/campaigns/dalyvis-4031/index.json"
+    }
+  ],
+  "anomalies": []
+}

@@ -1,0 +1,67 @@
+{
+  "electionId": "2021-spalio-10-meru",
+  "candidate": {
+    "candidateName": "Andrius ŠATEVIČIUS",
+    "candidateId": "andrius-satevicius",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasAnketa_rkndId-2420412.html"
+  },
+  "anketaPath": "samples/html/2021-spalio-10-meru/andrius-satevicius/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasAnketa_rkndId-2420412.html",
+      "path": "samples/html/2021-spalio-10-meru/andrius-satevicius/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasBiografija_rkndId-2420412.html",
+      "path": "samples/html/2021-spalio-10-meru/andrius-satevicius/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasTurtoPajDekl_rkndId-2420412.html",
+      "path": "samples/html/2021-spalio-10-meru/andrius-satevicius/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasPrivInterDekl_rkndId-2420412.html",
+      "path": "samples/html/2021-spalio-10-meru/andrius-satevicius/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1404/dalyviai/atstovaujamasis_pkdId-16850.html",
+      "path": "samples/html/2021-spalio-10-meru/andrius-satevicius/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasKt_rkndId-2420412.html",
+      "path": "samples/html/2021-spalio-10-meru/andrius-satevicius/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "atstovaujamasis-pkdid-16850",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1404/dalyviai/atstovaujamasis_pkdId-16850.html",
+      "campaignDir": "samples/html/2021-spalio-10-meru/andrius-satevicius/campaigns/atstovaujamasis-pkdid-16850",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2021-spalio-10-meru/andrius-satevicius/campaigns/atstovaujamasis-pkdid-16850/index.json"
+    }
+  ],
+  "anomalies": []
+}

@@ -1,0 +1,103 @@
+{
+  "electionId": "2009-prezidento",
+  "candidate": {
+    "candidateName": "Valdemar TOMAŠEVSKI",
+    "candidateId": "valdemar-tomasevski",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24931/Kandidato24931Anketa.html"
+  },
+  "anketaPath": "samples/html/2009-prezidento/valdemar-tomasevski/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24931/Kandidato24931Anketa.html",
+      "path": "samples/html/2009-prezidento/valdemar-tomasevski/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24931/Kandidato24931Biografija.html",
+      "path": "samples/html/2009-prezidento/valdemar-tomasevski/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24931/Kandidato24931Deklaracijos.html",
+      "path": "samples/html/2009-prezidento/valdemar-tomasevski/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24931/Kandidato24931InteresuDeklaracija.html",
+      "path": "samples/html/2009-prezidento/valdemar-tomasevski/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24931/Kandidato24931Kita.html",
+      "path": "samples/html/2009-prezidento/valdemar-tomasevski/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [
+    {
+      "label": "Patikėtiniai",
+      "slug": "patiketiniai",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24931/Kandidato24931Patiketiniai.html"
+    }
+  ],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-4000",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis4000/Dalyvio4000Izdininkas.html",
+      "campaignDir": "samples/html/2009-prezidento/valdemar-tomasevski/campaigns/dalyvis-4000",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis4000/Dalyvio4000Izdininkas.html",
+          "path": "samples/html/2009-prezidento/valdemar-tomasevski/campaigns/dalyvis-4000/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis4000/Dalyvio4000Auditorius.html",
+          "path": "samples/html/2009-prezidento/valdemar-tomasevski/campaigns/dalyvis-4000/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukotojų sąrašas",
+          "slug": "aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis4000/Dalyvio4000AukotojuSarasas.html",
+          "path": "samples/html/2009-prezidento/valdemar-tomasevski/campaigns/dalyvis-4000/aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis4000/Dalyvio4000FinansavimoAtaskaitos.html",
+          "path": "samples/html/2009-prezidento/valdemar-tomasevski/campaigns/dalyvis-4000/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis4000/Dalyvio4000Sutartys.html",
+          "path": "samples/html/2009-prezidento/valdemar-tomasevski/campaigns/dalyvis-4000/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2009-prezidento/valdemar-tomasevski/campaigns/dalyvis-4000/index.json"
+    }
+  ],
+  "anomalies": []
+}

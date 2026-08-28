@@ -1,0 +1,67 @@
+{
+  "electionId": "2017-balandzio-23-seimo-anyksciai-panevezys",
+  "candidate": {
+    "candidateName": "Antanas BAURA",
+    "candidateId": "antanas-baura",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasAnketa_rkndId-1106688.html"
+  },
+  "anketaPath": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/antanas-baura/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasAnketa_rkndId-1106688.html",
+      "path": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/antanas-baura/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasBiografija_rkndId-1106688.html",
+      "path": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/antanas-baura/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasTurtas_rkndId-1106688.html",
+      "path": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/antanas-baura/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracija",
+      "slug": "privaciu-interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasInteresai_rkndId-1106688.html",
+      "path": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/antanas-baura/privaciu-interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/844/dalyviai/atstovaujamasis_pkdId-1632.html",
+      "path": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/antanas-baura/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasKita_rkndId-1106688.html",
+      "path": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/antanas-baura/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "atstovaujamasis-pkdid-1632",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/844/dalyviai/atstovaujamasis_pkdId-1632.html",
+      "campaignDir": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/antanas-baura/campaigns/atstovaujamasis-pkdid-1632",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/antanas-baura/campaigns/atstovaujamasis-pkdid-1632/index.json"
+    }
+  ],
+  "anomalies": []
+}

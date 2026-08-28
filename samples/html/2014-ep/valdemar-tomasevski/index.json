@@ -1,0 +1,106 @@
+{
+  "electionId": "2014-ep",
+  "candidate": {
+    "candidateName": "Valdemar TOMAŠEVSKI",
+    "candidateId": "valdemar-tomasevski",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/Kandidatai/Kandidatas70789/Kandidato70789Anketa.html",
+    "vrkCandidateId": "70789",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+      "sarasoNumeris": 3,
+      "sarasoId": "5087",
+      "numerisSarase": 1
+    }
+  },
+  "anketaPath": "samples/html/2014-ep/valdemar-tomasevski/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/Kandidatai/Kandidatas70789/Kandidato70789Anketa.html",
+      "path": "samples/html/2014-ep/valdemar-tomasevski/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/Kandidatai/Kandidatas70789/Kandidato70789Biografija.html",
+      "path": "samples/html/2014-ep/valdemar-tomasevski/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/Kandidatai/Kandidatas70789/Kandidato70789Deklaracijos.html",
+      "path": "samples/html/2014-ep/valdemar-tomasevski/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/Kandidatai/Kandidatas70789/Kandidato70789InteresuDeklaracija.html",
+      "path": "samples/html/2014-ep/valdemar-tomasevski/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/Kandidatai/Kandidatas70789/Kandidato70789Kita.html",
+      "path": "samples/html/2014-ep/valdemar-tomasevski/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-6471",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/PolitiniuKampanijuFinansavimas/Dalyvis6471/Dalyvio6471Izdininkas.html",
+      "campaignDir": "samples/html/2014-ep/valdemar-tomasevski/campaigns/dalyvis-6471",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/PolitiniuKampanijuFinansavimas/Dalyvis6471/Dalyvio6471Izdininkas.html",
+          "path": "samples/html/2014-ep/valdemar-tomasevski/campaigns/dalyvis-6471/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/PolitiniuKampanijuFinansavimas/Dalyvis6471/Dalyvio6471Auditorius.html",
+          "path": "samples/html/2014-ep/valdemar-tomasevski/campaigns/dalyvis-6471/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/PolitiniuKampanijuFinansavimas/Dalyvis6471/Dalyvio6471AukotojuSarasas.html",
+          "path": "samples/html/2014-ep/valdemar-tomasevski/campaigns/dalyvis-6471/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/PolitiniuKampanijuFinansavimas/Dalyvis6471/Dalyvio6471FinansavimoAtaskaitos.html",
+          "path": "samples/html/2014-ep/valdemar-tomasevski/campaigns/dalyvis-6471/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/PolitiniuKampanijuFinansavimas/Dalyvis6471/Dalyvio6471Sutartys.html",
+          "path": "samples/html/2014-ep/valdemar-tomasevski/campaigns/dalyvis-6471/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2014-ep/valdemar-tomasevski/campaigns/dalyvis-6471/index.json"
+    }
+  ],
+  "anomalies": []
+}

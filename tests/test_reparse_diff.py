@@ -156,8 +156,13 @@ class RoundTripTests(unittest.TestCase):
         self.assertEqual(histogram[("normalized.profilis.nuotrauka", "changed")], 1)
 
     def test_apply_repairs_only_the_record_that_drifted(self) -> None:
-        target = self._records()[0]
-        untouched = self._records()[1]
+        records = self._records()
+        if len(records) < 2:
+            raise unittest.SkipTest(
+                f"only one {ELECTION_ID} fixture candidate is in this checkout; "
+                "showing that the other records are untouched needs two"
+            )
+        target, untouched = records[0], records[1]
         before = {path: path.stat().st_mtime_ns for path in self._records()}
 
         record = json.loads(target.read_text(encoding="utf-8"))

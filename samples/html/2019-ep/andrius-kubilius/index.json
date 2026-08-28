@@ -1,0 +1,110 @@
+{
+  "electionId": "2019-ep",
+  "candidate": {
+    "candidateName": "Andrius KUBILIUS",
+    "candidateId": "andrius-kubilius",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415309.html"
+  },
+  "anketaPath": "samples/html/2019-ep/andrius-kubilius/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415309.html",
+      "path": "samples/html/2019-ep/andrius-kubilius/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasBiografija_rkndId-2415309.html",
+      "path": "samples/html/2019-ep/andrius-kubilius/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasTurtoPajDekl_rkndId-2415309.html",
+      "path": "samples/html/2019-ep/andrius-kubilius/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasPrivInterDekl_rkndId-2415309.html",
+      "path": "samples/html/2019-ep/andrius-kubilius/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1126/dalyviai/savarankiskasIzdininkas_pkdId-2098.html",
+      "path": "samples/html/2019-ep/andrius-kubilius/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasKt_rkndId-2415309.html",
+      "path": "samples/html/2019-ep/andrius-kubilius/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "savarankiskasizdininkas-pkdid-2098",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1126/dalyviai/savarankiskasIzdininkas_pkdId-2098.html",
+      "campaignDir": "samples/html/2019-ep/andrius-kubilius/campaigns/savarankiskasizdininkas-pkdid-2098",
+      "tabCount": 6,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1126/dalyviai/savarankiskasIzdininkas_pkdId-2098.html",
+          "path": "samples/html/2019-ep/andrius-kubilius/campaigns/savarankiskasizdininkas-pkdid-2098/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1126/dalyviai/savarankiskasAuditorius_pkdId-2098.html",
+          "path": "samples/html/2019-ep/andrius-kubilius/campaigns/savarankiskasizdininkas-pkdid-2098/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1126/dalyviai/savarankiskasAukotojai_pkdId-2098.html",
+          "path": "samples/html/2019-ep/andrius-kubilius/campaigns/savarankiskasizdininkas-pkdid-2098/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1126/dalyviai/savarankiskasFinansavimas_pkdId-2098.html",
+          "path": "samples/html/2019-ep/andrius-kubilius/campaigns/savarankiskasizdininkas-pkdid-2098/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1126/dalyviai/savarankiskasSutartys_pkdId-2098.html",
+          "path": "samples/html/2019-ep/andrius-kubilius/campaigns/savarankiskasizdininkas-pkdid-2098/sutartys.html",
+          "fetched": true
+        },
+        {
+          "label": "Sprendimai",
+          "slug": "sprendimai",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1126/dalyviai/savarankiskasSprendimai_pkdId-2098.html",
+          "path": "samples/html/2019-ep/andrius-kubilius/campaigns/savarankiskasizdininkas-pkdid-2098/sprendimai.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2019-ep/andrius-kubilius/campaigns/savarankiskasizdininkas-pkdid-2098/index.json"
+    }
+  ],
+  "anomalies": []
+}

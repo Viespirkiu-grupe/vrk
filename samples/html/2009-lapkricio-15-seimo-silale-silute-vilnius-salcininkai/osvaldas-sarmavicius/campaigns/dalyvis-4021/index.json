@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-4021",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4021/Dalyvio4021Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4021/Dalyvio4021Izdininkas.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/osvaldas-sarmavicius/campaigns/dalyvis-4021/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4021/Dalyvio4021Auditorius.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/osvaldas-sarmavicius/campaigns/dalyvis-4021/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukotojų sąrašas",
+      "slug": "aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4021/Dalyvio4021AukotojuSarasas.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/osvaldas-sarmavicius/campaigns/dalyvis-4021/aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4021/Dalyvio4021FinansavimoAtaskaitos.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/osvaldas-sarmavicius/campaigns/dalyvis-4021/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4021/Dalyvio4021Sutartys.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/osvaldas-sarmavicius/campaigns/dalyvis-4021/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

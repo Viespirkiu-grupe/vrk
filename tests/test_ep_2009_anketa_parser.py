@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from scraper.elections.ep_2009.anketa_parser import (
+    DEFAULT_RESULTS_PATH,
     normalize_ep_anketa_rows,
     parse_anketa_sample,
 )
@@ -17,6 +18,8 @@ from scraper.elections.ep_2009.sitemap import (
 from scraper.elections.seimo_birzu_zarasu_ukmerges_2013.anketa_parser import (
     normalize_seimo_2012_anketa_rows,
 )
+
+from local_data import require
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -97,6 +100,7 @@ class Ep2009AnketaParserTests(unittest.TestCase):
         )
 
     def test_top_level_fields_and_candidacy(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         self.assertEqual(self.landsbergis["electionId"], "2009-ep")
         self.assertEqual(self.landsbergis["candidateName"], "Vytautas LANDSBERGIS")
         self.assertEqual(

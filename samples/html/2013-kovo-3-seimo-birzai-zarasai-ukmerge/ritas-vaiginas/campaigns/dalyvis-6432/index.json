@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-6432",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6432/Dalyvio6432Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6432/Dalyvio6432Izdininkas.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/ritas-vaiginas/campaigns/dalyvis-6432/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6432/Dalyvio6432Auditorius.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/ritas-vaiginas/campaigns/dalyvis-6432/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6432/Dalyvio6432AukotojuSarasas.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/ritas-vaiginas/campaigns/dalyvis-6432/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6432/Dalyvio6432FinansavimoAtaskaitos.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/ritas-vaiginas/campaigns/dalyvis-6432/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6432/Dalyvio6432Sutartys.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/ritas-vaiginas/campaigns/dalyvis-6432/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

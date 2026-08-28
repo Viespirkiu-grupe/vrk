@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from scraper.elections.savivaldybiu_2000.anketa_parser import (
+    DEFAULT_RESULTS_PATH,
     FIELD_KEYS,
     build_candidacy,
     finish_candidacy,
@@ -30,6 +31,8 @@ from scraper.elections.savivaldybiu_2000.sitemap import (
     parse_municipality_page,
     parse_party_page,
 )
+
+from local_data import require
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -80,6 +83,7 @@ class Savivaldybiu2000SitemapTests(unittest.TestCase):
         self.assertEqual(page["candidates"][0], {"listNumber": 1, "candidateName": "Petkus Viktoras", "url": SITE_ROOT + "kandvl.htm-89850.htm"})
 
     def test_three_hops_reconcile_with_the_party_pages(self) -> None:
+        require(SAMPLES_ROOT / "lists")
         with tempfile.TemporaryDirectory() as tmp:
             _, stats = build_sitemap_from_sample(sample_path=SAMPLES_ROOT, output_path=Path(tmp) / "sitemap.json")
             payload = json.loads((Path(tmp) / "sitemap.json").read_text(encoding="utf-8"))
@@ -258,6 +262,7 @@ class Savivaldybiu2000CardParserTests(unittest.TestCase):
 
 class Savivaldybiu2000RecordTests(unittest.TestCase):
     def test_list_leader_elected(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         record, stats = _parse("paksas-rolandas-84817")
         self.assertEqual(stats["anomalies"], [])
         self.assertEqual(record["candidateName"], "Rolandas PAKSAS")
@@ -316,6 +321,7 @@ class Savivaldybiu2000RecordTests(unittest.TestCase):
         self.assertEqual(list(record["rawData"].keys()), ["profile", "candidacy", "anketa", "residence", "declaration"])
 
     def test_climber_coalition_member_and_loser(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         record, stats = _parse("cekuolis-jonas-85130")
         self.assertEqual(stats["anomalies"], [])
         self.assertEqual((record["kandidatavimas"]["tarybosNarys"]["listPosition"], record["kandidatavimas"]["porinkiminisNumerisSarase"], record["kandidatavimas"]["isrinktas"]), (52, 6, True))
@@ -329,6 +335,7 @@ class Savivaldybiu2000RecordTests(unittest.TestCase):
         self.assertEqual((record["kandidatavimas"]["isrinktas"], record["kandidatavimas"]["tarybosNarys"]["sarasoMandatai"], record["kandidatavimas"]["porinkiminisNumerisSarase"], record["kandidatavimas"]["pirmumoBalsai"]), (False, 0, 1, 234))
 
     def test_results_unavailable_municipality_keeps_elected_unknown(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         record, stats = _parse("zairys-aloyzas-86350")
         self.assertEqual(stats["anomalies"], [])
         candidacy = record["kandidatavimas"]

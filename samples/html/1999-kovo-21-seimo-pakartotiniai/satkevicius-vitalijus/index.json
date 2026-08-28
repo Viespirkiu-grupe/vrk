@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Satkevičius Vitalijus",
+    "candidateId": "satkevicius-vitalijus",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65117.htm",
+    "constituencyName": "Nevėžio",
+    "constituencyNumber": 26,
+    "nominator": "Lietuvos krikščionių demokratų partija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-393.htm"
+  },
+  "anketaPath": "samples/html/1999-kovo-21-seimo-pakartotiniai/satkevicius-vitalijus/candidate.html",
+  "tabCount": 3,
+  "tabsSaved": 3,
+  "anomalies": []
+}

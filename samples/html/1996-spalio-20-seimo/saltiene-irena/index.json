@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Šaltienė Irena",
+    "candidateId": "saltiene-irena",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seim96/kandvl.htm-17971.htm",
+    "constituencyName": "Ignalinos Švenčionių",
+    "constituencyNumber": 53,
+    "nominator": "Lietuvos socialdemokratų partija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seim96/partr2l.htm-7.htm"
+  },
+  "anketaPath": "samples/html/1996-spalio-20-seimo/saltiene-irena/candidate.html",
+  "tabCount": 2,
+  "tabsSaved": 2,
+  "anomalies": []
+}

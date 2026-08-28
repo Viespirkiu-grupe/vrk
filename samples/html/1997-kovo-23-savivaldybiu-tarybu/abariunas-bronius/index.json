@@ -1,0 +1,16 @@
+{
+  "candidate": {
+    "candidateName": "Abariūnas Bronius",
+    "candidateId": "abariunas-bronius",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-39923.htm",
+    "municipalityName": "Vilniaus miesto",
+    "municipalityNumber": 1,
+    "listNumber": 9,
+    "nominator": "Lietuvos liaudies partija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-144+2703.htm"
+  },
+  "anketaPath": "/Volumes/Disk 1/IT/scraping/vrk/.claude/worktrees/workflow-memory-update-bdefc8/samples-full/1997-kovo-23-savivaldybiu-tarybu/abariunas-bronius/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

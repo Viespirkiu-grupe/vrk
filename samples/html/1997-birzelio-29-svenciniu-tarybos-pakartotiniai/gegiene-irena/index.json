@@ -1,0 +1,16 @@
+{
+  "candidate": {
+    "candidateName": "Gegienė Irena",
+    "candidateId": "gegiene-irena",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43540.htm",
+    "municipalityName": "Švenčionių rajono",
+    "municipalityNumber": 47,
+    "listNumber": 6,
+    "nominator": "Lietuvos krikščionių demokratų partija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+5.htm"
+  },
+  "anketaPath": "samples/html/1997-birzelio-29-svenciniu-tarybos-pakartotiniai/gegiene-irena/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import errno
 from pathlib import Path
 import re
 from typing import Any
@@ -593,7 +594,7 @@ def parse_anketa_sample(
     candidate_dir = samples_root / candidate_id
     anketa_path = candidate_dir / "anketa.html"
     if not anketa_path.exists():
-        raise FileNotFoundError(f"Missing anketa sample: {anketa_path}")
+        raise FileNotFoundError(errno.ENOENT, "Missing anketa sample", str(anketa_path))
 
     html = anketa_path.read_text(encoding="utf-8")
     parsed = parse_anketa_html(html)

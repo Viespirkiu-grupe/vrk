@@ -1,0 +1,107 @@
+{
+  "electionId": "2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai",
+  "candidate": {
+    "candidateName": "Osvaldas ŠARMAVIČIUS",
+    "candidateId": "osvaldas-sarmavicius",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26237/Kandidato26237Anketa.html",
+    "vrkCandidateId": "26237",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Šilalės - Šilutės",
+      "apygardosNumeris": 33,
+      "apygardosId": "7126",
+      "iskele": "Lietuvos socialdemokratų partija"
+    }
+  },
+  "anketaPath": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/osvaldas-sarmavicius/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26237/Kandidato26237Anketa.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/osvaldas-sarmavicius/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26237/Kandidato26237Biografija.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/osvaldas-sarmavicius/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26237/Kandidato26237Deklaracijos.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/osvaldas-sarmavicius/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26237/Kandidato26237InteresuDeklaracija.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/osvaldas-sarmavicius/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26237/Kandidato26237Kita.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/osvaldas-sarmavicius/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-4021",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4021/Dalyvio4021Izdininkas.html",
+      "campaignDir": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/osvaldas-sarmavicius/campaigns/dalyvis-4021",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4021/Dalyvio4021Izdininkas.html",
+          "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/osvaldas-sarmavicius/campaigns/dalyvis-4021/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4021/Dalyvio4021Auditorius.html",
+          "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/osvaldas-sarmavicius/campaigns/dalyvis-4021/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukotojų sąrašas",
+          "slug": "aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4021/Dalyvio4021AukotojuSarasas.html",
+          "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/osvaldas-sarmavicius/campaigns/dalyvis-4021/aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4021/Dalyvio4021FinansavimoAtaskaitos.html",
+          "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/osvaldas-sarmavicius/campaigns/dalyvis-4021/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4021/Dalyvio4021Sutartys.html",
+          "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/osvaldas-sarmavicius/campaigns/dalyvis-4021/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/osvaldas-sarmavicius/campaigns/dalyvis-4021/index.json"
+    }
+  ],
+  "anomalies": []
+}

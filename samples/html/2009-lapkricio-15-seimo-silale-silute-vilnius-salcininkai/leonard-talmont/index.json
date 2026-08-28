@@ -1,0 +1,71 @@
+{
+  "electionId": "2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai",
+  "candidate": {
+    "candidateName": "Leonard TALMONT",
+    "candidateId": "leonard-talmont",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26261/Kandidato26261Anketa.html",
+    "vrkCandidateId": "26261",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Vilniaus - Šalčininkų",
+      "apygardosNumeris": 56,
+      "apygardosId": "7125",
+      "iskele": "Lietuvos lenkų rinkimų akcija"
+    }
+  },
+  "anketaPath": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/leonard-talmont/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26261/Kandidato26261Anketa.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/leonard-talmont/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26261/Kandidato26261Biografija.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/leonard-talmont/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26261/Kandidato26261Deklaracijos.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/leonard-talmont/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26261/Kandidato26261InteresuDeklaracija.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/leonard-talmont/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26261/Kandidato26261Kita.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/leonard-talmont/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-4024",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4024/Dalyvio4024Izdininkas.html",
+      "campaignDir": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/leonard-talmont/campaigns/dalyvis-4024",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/leonard-talmont/campaigns/dalyvis-4024/index.json"
+    }
+  ],
+  "anomalies": []
+}

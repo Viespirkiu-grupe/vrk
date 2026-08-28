@@ -1,0 +1,50 @@
+{
+  "electionId": "2024-ep",
+  "candidate": {
+    "candidateName": "Tomas BARANAUSKAS",
+    "candidateId": "tomas-baranauskas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1546/rnk1866/kandidatai/KandidatasAnketa_rkndId-2435807.html"
+  },
+  "anketaPath": "samples/html/2024-ep/tomas-baranauskas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1546/rnk1866/kandidatai/KandidatasAnketa_rkndId-2435807.html",
+      "path": "samples/html/2024-ep/tomas-baranauskas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1546/rnk1866/kandidatai/KandidatasBiografija_rkndId-2435807.html",
+      "path": "samples/html/2024-ep/tomas-baranauskas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1546/rnk1866/kandidatai/KandidatasTurtoPajDekl_rkndId-2435807.html",
+      "path": "samples/html/2024-ep/tomas-baranauskas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1546/rnk1866/kandidatai/KandidatasPrivInterDekl_rkndId-2435807.html",
+      "path": "samples/html/2024-ep/tomas-baranauskas/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1546/rnk1866/kandidatai/KandidatasKita_rkndId-2435807.html",
+      "path": "samples/html/2024-ep/tomas-baranauskas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

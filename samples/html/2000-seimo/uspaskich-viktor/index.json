@@ -1,0 +1,21 @@
+{
+  "candidate": {
+    "candidateName": "Uspaskich Viktor",
+    "candidateId": "uspaskich-viktor",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20001008/kandvl.htm-133960.htm",
+    "vrkCandidateId": "133960",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Kėdainių",
+      "apygardosNumeris": 43,
+      "apygardosId": "799",
+      "iskele": "Išsikėlė pats"
+    }
+  },
+  "anketaPath": "samples/html/2000-seimo/uspaskich-viktor/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

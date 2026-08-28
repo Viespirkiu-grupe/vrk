@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from scraper.elections.seimo_birzu_zarasu_ukmerges_2013.anketa_parser import (
+    DEFAULT_RESULTS_PATH,
     build_candidacy,
     normalize_seimo_2012_anketa_rows,
     parse_anketa_sample,
@@ -14,6 +15,8 @@ from scraper.elections.seimo_birzu_zarasu_ukmerges_2013.sitemap import (
     build_sitemap_from_sample,
     extract_district_links,
 )
+
+from local_data import require
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -90,6 +93,7 @@ class SeimoBirzuZarasuUkmerges2013AnketaParserTests(unittest.TestCase):
         self.dumbrava, _ = _parse("algimantas-dumbrava")
 
     def test_top_level_fields_and_candidacy(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         self.assertEqual(self.bitaitis["electionId"], ELECTION_ID)
         self.assertEqual(self.bitaitis["candidateName"], "Dalius BITAITIS")
         self.assertEqual(self.bitaitis_stats["anomalies"], [])

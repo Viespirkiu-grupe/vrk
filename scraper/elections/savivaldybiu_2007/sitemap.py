@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections import Counter
+import errno
 from pathlib import Path
 import re
 import time
@@ -123,7 +124,9 @@ def _read_index(samples_dir: Path) -> str:
     index_path = samples_dir / INDEX_SAMPLE_NAME
     if not index_path.exists():
         raise FileNotFoundError(
-            f"Missing municipality index sample: {index_path}. Run fetch-sample first."
+            errno.ENOENT,
+            "Missing municipality index sample (run fetch-sample first)",
+            str(index_path),
         )
     return index_path.read_text(encoding="utf-8")
 

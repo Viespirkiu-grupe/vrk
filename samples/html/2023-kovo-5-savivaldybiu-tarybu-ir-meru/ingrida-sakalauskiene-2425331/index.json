@@ -1,0 +1,70 @@
+{
+  "electionId": "2023-kovo-5-savivaldybiu-tarybu-ir-meru",
+  "candidate": {
+    "candidateName": "Ingrida SAKALAUSKIENĖ",
+    "candidateId": "ingrida-sakalauskiene-2425331",
+    "candidateNote": "",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasAnketa_2023_rkndId-2425331.html",
+    "vrkCandidateId": "2425331",
+    "municipality": {
+      "id": "21944",
+      "number": 1,
+      "name": "Akmenės rajono"
+    },
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": {
+        "id": "32298",
+        "number": 5,
+        "name": "Lietuvos socialdemokratų partija"
+      },
+      "listPosition": 30,
+      "postElectionPosition": 17,
+      "elected": false
+    }
+  },
+  "anketaPath": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/ingrida-sakalauskiene-2425331/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasAnketa_2023_rkndId-2425331.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/ingrida-sakalauskiene-2425331/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasBiografija_rkndId-2425331.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/ingrida-sakalauskiene-2425331/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasTurtoPajDekl_rkndId-2425331.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/ingrida-sakalauskiene-2425331/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasPrivInterDekl_rkndId-2425331.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/ingrida-sakalauskiene-2425331/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasKt_rkndId-2425331.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/ingrida-sakalauskiene-2425331/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

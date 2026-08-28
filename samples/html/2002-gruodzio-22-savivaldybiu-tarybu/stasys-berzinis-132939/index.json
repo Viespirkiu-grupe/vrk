@@ -1,0 +1,43 @@
+{
+  "electionId": "2002-gruodzio-22-savivaldybiu-tarybu",
+  "candidate": {
+    "candidateName": "Stasys Beržinis",
+    "candidateId": "stasys-berzinis-132939",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1354/kandidatai_anketa_jsp_ri_id_15_asm_kod_132939.htm",
+    "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1354/kandidatai_deklaracija_jsp_ri_id_15_asm_kod_132939.htm",
+    "vrkCandidateId": "132939",
+    "municipality": {
+      "pavadinimas": "Akmenės rajono",
+      "numeris": 1,
+      "apygardosId": "1354"
+    },
+    "list": {
+      "pavadinimas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+      "rusis": "partija",
+      "numeris": 1
+    },
+    "listPosition": 2
+  },
+  "anketaPath": "samples/html/2002-gruodzio-22-savivaldybiu-tarybu/stasys-berzinis-132939/anketa.html",
+  "tabCount": 2,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1354/kandidatai_anketa_jsp_ri_id_15_asm_kod_132939.htm",
+      "path": "samples/html/2002-gruodzio-22-savivaldybiu-tarybu/stasys-berzinis-132939/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1354/kandidatai_deklaracija_jsp_ri_id_15_asm_kod_132939.htm",
+      "path": "samples/html/2002-gruodzio-22-savivaldybiu-tarybu/stasys-berzinis-132939/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

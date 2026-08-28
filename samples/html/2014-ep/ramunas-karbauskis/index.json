@@ -1,0 +1,106 @@
+{
+  "electionId": "2014-ep",
+  "candidate": {
+    "candidateName": "Ramūnas KARBAUSKIS",
+    "candidateId": "ramunas-karbauskis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/Kandidatai/Kandidatas70767/Kandidato70767Anketa.html",
+    "vrkCandidateId": "70767",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Lietuvos valstiečių ir žaliųjų sąjunga",
+      "sarasoNumeris": 9,
+      "sarasoId": "4938",
+      "numerisSarase": 1
+    }
+  },
+  "anketaPath": "samples/html/2014-ep/ramunas-karbauskis/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/Kandidatai/Kandidatas70767/Kandidato70767Anketa.html",
+      "path": "samples/html/2014-ep/ramunas-karbauskis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/Kandidatai/Kandidatas70767/Kandidato70767Biografija.html",
+      "path": "samples/html/2014-ep/ramunas-karbauskis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/Kandidatai/Kandidatas70767/Kandidato70767Deklaracijos.html",
+      "path": "samples/html/2014-ep/ramunas-karbauskis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/Kandidatai/Kandidatas70767/Kandidato70767InteresuDeklaracija.html",
+      "path": "samples/html/2014-ep/ramunas-karbauskis/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/Kandidatai/Kandidatas70767/Kandidato70767Kita.html",
+      "path": "samples/html/2014-ep/ramunas-karbauskis/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-6472",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/PolitiniuKampanijuFinansavimas/Dalyvis6472/Dalyvio6472Izdininkas.html",
+      "campaignDir": "samples/html/2014-ep/ramunas-karbauskis/campaigns/dalyvis-6472",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/PolitiniuKampanijuFinansavimas/Dalyvis6472/Dalyvio6472Izdininkas.html",
+          "path": "samples/html/2014-ep/ramunas-karbauskis/campaigns/dalyvis-6472/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/PolitiniuKampanijuFinansavimas/Dalyvis6472/Dalyvio6472Auditorius.html",
+          "path": "samples/html/2014-ep/ramunas-karbauskis/campaigns/dalyvis-6472/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/PolitiniuKampanijuFinansavimas/Dalyvis6472/Dalyvio6472AukotojuSarasas.html",
+          "path": "samples/html/2014-ep/ramunas-karbauskis/campaigns/dalyvis-6472/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/PolitiniuKampanijuFinansavimas/Dalyvis6472/Dalyvio6472FinansavimoAtaskaitos.html",
+          "path": "samples/html/2014-ep/ramunas-karbauskis/campaigns/dalyvis-6472/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/PolitiniuKampanijuFinansavimas/Dalyvis6472/Dalyvio6472Sutartys.html",
+          "path": "samples/html/2014-ep/ramunas-karbauskis/campaigns/dalyvis-6472/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2014-ep/ramunas-karbauskis/campaigns/dalyvis-6472/index.json"
+    }
+  ],
+  "anomalies": []
+}

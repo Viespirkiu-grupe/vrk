@@ -1,0 +1,92 @@
+{
+  "electionId": "2002-prezidento",
+  "candidate": {
+    "candidateName": "Eugenijus Gentvilas",
+    "candidateId": "eugenijus-gentvilas",
+    "vrkCandidateId": "168283",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+    "vrkRegistrationId": "948550",
+    "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948550.htm",
+    "registration": "2002 m spalio 29 dienos VRK sprendimu Nr. 92 registruotas kandidatu į Respublikos Prezidentus.",
+    "registeredDate": "2002-10-29",
+    "decision": "VRK sprendimu Nr. 92",
+    "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=189545",
+    "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Gentvilo_biografija.htm",
+    "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Gentvilo_programa_v2.doc",
+    "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Gentvilas_pareiskimas.jpg",
+    "anketosSkenaiUrls": [
+      "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Gentvilas_anketa1.jpg",
+      "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Gentvilas_anketa2.jpg"
+    ],
+    "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Gentvilas_deklaracija.jpg",
+    "deklaracijaLabel": "Gyventojo turto pajamų deklaracija",
+    "sveikatosSkenaiUrls": [],
+    "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Gentvilas_nuotrauka.jpg",
+    "websiteUrls": [
+      "http://www.gentvilas.lt/"
+    ]
+  },
+  "anketaPath": "samples/html/2002-prezidento/eugenijus-gentvilas/anketa.html",
+  "tabCount": 7,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "path": "samples/html/2002-prezidento/eugenijus-gentvilas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Gentvilo_biografija.htm",
+      "path": "samples/html/2002-prezidento/eugenijus-gentvilas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Programa",
+      "slug": "programa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Gentvilo_programa_v2.doc",
+      "path": "samples/html/2002-prezidento/eugenijus-gentvilas/programa.doc",
+      "fetched": true
+    },
+    {
+      "label": "Pareiškimas",
+      "slug": "pareiskimas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Gentvilas_pareiskimas.jpg",
+      "path": "samples/html/2002-prezidento/eugenijus-gentvilas/pareiskimas.jpg",
+      "fetched": true
+    },
+    {
+      "label": "Duomenų anketa 1",
+      "slug": "duomenu-anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Gentvilas_anketa1.jpg",
+      "path": "samples/html/2002-prezidento/eugenijus-gentvilas/duomenu-anketa-1.jpg",
+      "fetched": true
+    },
+    {
+      "label": "Duomenų anketa 2",
+      "slug": "duomenu-anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Gentvilas_anketa2.jpg",
+      "path": "samples/html/2002-prezidento/eugenijus-gentvilas/duomenu-anketa-2.jpg",
+      "fetched": true
+    },
+    {
+      "label": "Gyventojo turto pajamų deklaracija",
+      "slug": "deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Gentvilas_deklaracija.jpg",
+      "path": "samples/html/2002-prezidento/eugenijus-gentvilas/deklaracija.jpg",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [
+    {
+      "label": "Patikėtiniai",
+      "slug": "patiketiniai",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948550.htm"
+    }
+  ],
+  "campaignSamples": [],
+  "anomalies": []
+}

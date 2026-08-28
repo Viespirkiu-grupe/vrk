@@ -1,0 +1,28 @@
+{
+  "candidate": {
+    "candidateName": "Terleckas Antanas",
+    "candidateId": "terleckas-antanas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20001008/kandvl.htm-139679.htm",
+    "vrkCandidateId": "139679",
+    "roles": [
+      "daugiamandate",
+      "vienmandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Lietuvių tautininkų sąjunga",
+      "sarasoNumeris": 1,
+      "sarasoId": "657",
+      "numerisSarase": 1
+    },
+    "vienmandateCandidacy": {
+      "apygarda": "Nevėžio",
+      "apygardosNumeris": 26,
+      "apygardosId": "782",
+      "iskele": "Lietuvos laisvės lyga"
+    }
+  },
+  "anketaPath": "samples/html/2000-seimo/terleckas-antanas/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

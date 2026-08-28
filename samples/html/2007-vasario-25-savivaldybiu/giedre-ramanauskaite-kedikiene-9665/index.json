@@ -1,0 +1,49 @@
+{
+  "electionId": "2007-vasario-25-savivaldybiu",
+  "candidate": {
+    "candidateName": "Giedrė Ramanauskaitė-Kedikienė",
+    "candidateId": "giedre-ramanauskaite-kedikiene-9665",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas9665/Kandidato9665Anketa.html",
+    "vrkCandidateId": "9665",
+    "municipality": "Jonavos rajono savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Liberalų ir centro sąjunga",
+      "listKind": "partija",
+      "listNumber": 4,
+      "listPosition": 21,
+      "selfNominated": false
+    }
+  },
+  "anketaPath": "samples/html/2007-vasario-25-savivaldybiu/giedre-ramanauskaite-kedikiene-9665/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas9665/Kandidato9665Anketa.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/giedre-ramanauskaite-kedikiene-9665/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas9665/Kandidato9665Deklaracijos.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/giedre-ramanauskaite-kedikiene-9665/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas9665/Kandidato9665InteresuDeklaracija.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/giedre-ramanauskaite-kedikiene-9665/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

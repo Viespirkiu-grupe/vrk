@@ -1,0 +1,60 @@
+{
+  "electionId": "2015-birzelio-7-seimo-varena-eisiskes",
+  "candidate": {
+    "candidateId": "vidas-mikalauskas",
+    "candidateName": "Vidas MIKALAUSKAS",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87929/Kandidato87929Anketa.html"
+  },
+  "anketaPath": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/vidas-mikalauskas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87929/Kandidato87929Anketa.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/vidas-mikalauskas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87929/Kandidato87929Biografija.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/vidas-mikalauskas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87929/Kandidato87929Deklaracijos.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/vidas-mikalauskas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87929/Kandidato87929InteresuDeklaracija.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/vidas-mikalauskas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87929/Kandidato87929Kita.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/vidas-mikalauskas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-7577",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/PolitiniuKampanijuFinansavimas/Dalyvis7577/Dalyvio7577Izdininkas.html",
+      "campaignDir": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/vidas-mikalauskas/campaigns/dalyvis-7577",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/vidas-mikalauskas/campaigns/dalyvis-7577/index.json"
+    }
+  ],
+  "anomalies": []
+}

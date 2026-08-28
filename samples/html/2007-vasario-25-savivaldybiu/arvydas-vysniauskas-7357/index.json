@@ -1,0 +1,49 @@
+{
+  "electionId": "2007-vasario-25-savivaldybiu",
+  "candidate": {
+    "candidateName": "Arvydas Vyšniauskas",
+    "candidateId": "arvydas-vysniauskas-7357",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas7357/Kandidato7357Anketa.html",
+    "vrkCandidateId": "7357",
+    "municipality": "Elektrėnų savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Lietuvos socialdemokratų partija",
+      "listKind": "partija",
+      "listNumber": 13,
+      "listPosition": 1,
+      "selfNominated": false
+    }
+  },
+  "anketaPath": "samples/html/2007-vasario-25-savivaldybiu/arvydas-vysniauskas-7357/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas7357/Kandidato7357Anketa.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/arvydas-vysniauskas-7357/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas7357/Kandidato7357Deklaracijos.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/arvydas-vysniauskas-7357/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas7357/Kandidato7357InteresuDeklaracija.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/arvydas-vysniauskas-7357/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

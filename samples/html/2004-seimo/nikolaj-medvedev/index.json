@@ -1,0 +1,47 @@
+{
+  "electionId": "2004-seimo",
+  "candidate": {
+    "candidateName": "Nikolaj MEDVEDEV",
+    "candidateId": "nikolaj-medvedev",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_295083.htm",
+    "vrkCandidateId": "295083",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Centro",
+      "apygardosNumeris": 13,
+      "apygardosId": "1615",
+      "iskele": "Lietuvos rusų sąjunga"
+    }
+  },
+  "anketaPath": "samples/html/2004-seimo/nikolaj-medvedev/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_295083.htm",
+      "path": "samples/html/2004-seimo/nikolaj-medvedev/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_biog_l_295083.htm",
+      "path": "samples/html/2004-seimo/nikolaj-medvedev/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_pajam_l_295083.htm",
+      "path": "samples/html/2004-seimo/nikolaj-medvedev/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

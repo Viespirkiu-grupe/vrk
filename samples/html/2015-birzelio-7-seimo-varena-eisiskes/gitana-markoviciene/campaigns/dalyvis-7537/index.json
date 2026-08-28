@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-7537",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/PolitiniuKampanijuFinansavimas/Dalyvis7537/Dalyvio7537Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/PolitiniuKampanijuFinansavimas/Dalyvis7537/Dalyvio7537Izdininkas.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/gitana-markoviciene/campaigns/dalyvis-7537/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/PolitiniuKampanijuFinansavimas/Dalyvis7537/Dalyvio7537Auditorius.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/gitana-markoviciene/campaigns/dalyvis-7537/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/PolitiniuKampanijuFinansavimas/Dalyvis7537/Dalyvio7537AukotojuSarasas.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/gitana-markoviciene/campaigns/dalyvis-7537/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/PolitiniuKampanijuFinansavimas/Dalyvis7537/Dalyvio7537FinansavimoAtaskaitos.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/gitana-markoviciene/campaigns/dalyvis-7537/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/PolitiniuKampanijuFinansavimas/Dalyvis7537/Dalyvio7537Sutartys.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/gitana-markoviciene/campaigns/dalyvis-7537/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

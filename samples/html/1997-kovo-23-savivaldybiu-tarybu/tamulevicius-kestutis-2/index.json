@@ -1,0 +1,16 @@
+{
+  "candidate": {
+    "candidateName": "Tamulevičius Kęstutis",
+    "candidateId": "tamulevicius-kestutis-2",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-37809.htm",
+    "municipalityName": "Druskininkų miesto",
+    "municipalityNumber": 4,
+    "listNumber": 6,
+    "nominator": "Lietuvos liberalų sąjunga",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-147+28.htm"
+  },
+  "anketaPath": "samples/html/1997-kovo-23-savivaldybiu-tarybu/tamulevicius-kestutis-2/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

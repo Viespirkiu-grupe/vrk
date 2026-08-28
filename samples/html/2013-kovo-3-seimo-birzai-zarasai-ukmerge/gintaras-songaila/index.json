@@ -1,0 +1,70 @@
+{
+  "electionId": "2013-kovo-3-seimo-birzai-zarasai-ukmerge",
+  "candidate": {
+    "candidateName": "Gintaras SONGAILA",
+    "candidateId": "gintaras-songaila",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70565/Kandidato70565Anketa.html",
+    "vrkCandidateId": "70565",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Ukmergės",
+      "apygardosNumeris": 61,
+      "apygardosId": "7435",
+      "iskele": "Tautininkų sąjunga"
+    }
+  },
+  "anketaPath": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/gintaras-songaila/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70565/Kandidato70565Anketa.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/gintaras-songaila/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70565/Kandidato70565Biografija.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/gintaras-songaila/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70565/Kandidato70565Deklaracijos.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/gintaras-songaila/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70565/Kandidato70565InteresuDeklaracija.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/gintaras-songaila/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70565/Kandidato70565Kita.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/gintaras-songaila/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-6461",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6461/Dalyvio6461Izdininkas.html",
+      "campaignDir": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/gintaras-songaila/campaigns/dalyvis-6461",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/gintaras-songaila/campaigns/dalyvis-6461/index.json"
+    }
+  ],
+  "anomalies": []
+}

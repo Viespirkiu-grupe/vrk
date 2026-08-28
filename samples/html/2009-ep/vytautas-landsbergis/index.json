@@ -1,0 +1,107 @@
+{
+  "electionId": "2009-ep",
+  "candidate": {
+    "candidateName": "Vytautas LANDSBERGIS",
+    "candidateId": "vytautas-landsbergis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25370/Kandidato25370Anketa.html",
+    "vrkCandidateId": "25370",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+      "sarasoNumeris": 11,
+      "sarasoId": "3565",
+      "numerisSarase": 1
+    }
+  },
+  "anketaPath": "samples/html/2009-ep/vytautas-landsbergis/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25370/Kandidato25370Anketa.html",
+      "path": "samples/html/2009-ep/vytautas-landsbergis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25370/Kandidato25370Biografija.html",
+      "path": "samples/html/2009-ep/vytautas-landsbergis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25370/Kandidato25370Deklaracijos.html",
+      "path": "samples/html/2009-ep/vytautas-landsbergis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25370/Kandidato25370InteresuDeklaracija.html",
+      "path": "samples/html/2009-ep/vytautas-landsbergis/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25370/Kandidato25370Kita.html",
+      "path": "samples/html/2009-ep/vytautas-landsbergis/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-3987",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3987/Dalyvio3987Izdininkas.html",
+      "campaignDir": "samples/html/2009-ep/vytautas-landsbergis/campaigns/dalyvis-3987",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3987/Dalyvio3987Izdininkas.html",
+          "path": "samples/html/2009-ep/vytautas-landsbergis/campaigns/dalyvis-3987/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3987/Dalyvio3987Auditorius.html",
+          "path": "samples/html/2009-ep/vytautas-landsbergis/campaigns/dalyvis-3987/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukotojų sąrašas",
+          "slug": "aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3987/Dalyvio3987AukotojuSarasas.html",
+          "path": "samples/html/2009-ep/vytautas-landsbergis/campaigns/dalyvis-3987/aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3987/Dalyvio3987FinansavimoAtaskaitos.html",
+          "path": "samples/html/2009-ep/vytautas-landsbergis/campaigns/dalyvis-3987/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3987/Dalyvio3987Sutartys.html",
+          "path": "samples/html/2009-ep/vytautas-landsbergis/campaigns/dalyvis-3987/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2009-ep/vytautas-landsbergis/campaigns/dalyvis-3987/index.json"
+    }
+  ],
+  "anomalies": []
+}

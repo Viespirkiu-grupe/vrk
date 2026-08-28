@@ -1,0 +1,107 @@
+{
+  "electionId": "2009-ep",
+  "candidate": {
+    "candidateName": "Viktor USPASKICH",
+    "candidateId": "viktor-uspaskich",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25574/Kandidato25574Anketa.html",
+    "vrkCandidateId": "25574",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Darbo partija",
+      "sarasoNumeris": 12,
+      "sarasoId": "3566",
+      "numerisSarase": 1
+    }
+  },
+  "anketaPath": "samples/html/2009-ep/viktor-uspaskich/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25574/Kandidato25574Anketa.html",
+      "path": "samples/html/2009-ep/viktor-uspaskich/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25574/Kandidato25574Biografija.html",
+      "path": "samples/html/2009-ep/viktor-uspaskich/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25574/Kandidato25574Deklaracijos.html",
+      "path": "samples/html/2009-ep/viktor-uspaskich/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25574/Kandidato25574InteresuDeklaracija.html",
+      "path": "samples/html/2009-ep/viktor-uspaskich/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25574/Kandidato25574Kita.html",
+      "path": "samples/html/2009-ep/viktor-uspaskich/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-4001",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4001/Dalyvio4001Izdininkas.html",
+      "campaignDir": "samples/html/2009-ep/viktor-uspaskich/campaigns/dalyvis-4001",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4001/Dalyvio4001Izdininkas.html",
+          "path": "samples/html/2009-ep/viktor-uspaskich/campaigns/dalyvis-4001/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4001/Dalyvio4001Auditorius.html",
+          "path": "samples/html/2009-ep/viktor-uspaskich/campaigns/dalyvis-4001/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukotojų sąrašas",
+          "slug": "aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4001/Dalyvio4001AukotojuSarasas.html",
+          "path": "samples/html/2009-ep/viktor-uspaskich/campaigns/dalyvis-4001/aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4001/Dalyvio4001FinansavimoAtaskaitos.html",
+          "path": "samples/html/2009-ep/viktor-uspaskich/campaigns/dalyvis-4001/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4001/Dalyvio4001Sutartys.html",
+          "path": "samples/html/2009-ep/viktor-uspaskich/campaigns/dalyvis-4001/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2009-ep/viktor-uspaskich/campaigns/dalyvis-4001/index.json"
+    }
+  ],
+  "anomalies": []
+}

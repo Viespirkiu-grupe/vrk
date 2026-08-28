@@ -1,0 +1,49 @@
+{
+  "electionId": "2007-vasario-25-savivaldybiu",
+  "candidate": {
+    "candidateName": "Zigfridas Herbertas Pilvinis",
+    "candidateId": "zigfridas-herbertas-pilvinis-996",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas996/Kandidato996Anketa.html",
+    "vrkCandidateId": "996",
+    "municipality": "Akmenės rajono savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Liberalų ir centro sąjunga",
+      "listKind": "partija",
+      "listNumber": 4,
+      "listPosition": 3,
+      "selfNominated": false
+    }
+  },
+  "anketaPath": "samples/html/2007-vasario-25-savivaldybiu/zigfridas-herbertas-pilvinis-996/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas996/Kandidato996Anketa.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/zigfridas-herbertas-pilvinis-996/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas996/Kandidato996Deklaracijos.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/zigfridas-herbertas-pilvinis-996/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas996/Kandidato996InteresuDeklaracija.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/zigfridas-herbertas-pilvinis-996/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

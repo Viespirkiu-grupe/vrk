@@ -1,0 +1,72 @@
+{
+  "electionId": "2004-prezidento",
+  "candidate": {
+    "candidateName": "Česlovas JURŠĖNAS",
+    "candidateId": "ceslovas-jursenas",
+    "vrkCandidateId": "242353",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/kandidatai_l_19.htm",
+    "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/kand_pajam_l_242353.htm",
+    "vrkRegistrationId": "1727763",
+    "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/patiketiniai_l_1727763.htm",
+    "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/jursenas.doc",
+    "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/prog_jursenas.doc",
+    "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/p_jursenas.gif",
+    "sveikatosPazymejimasUrl": null,
+    "nuotraukaPageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/nuotrauka_242353.htm",
+    "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/nuotraukos/19_33805180065.jpg",
+    "websiteUrl": "http://www.jursenas.lt",
+    "registration": "2004 m. gegužės 4 dienos VRK sprendimu Nr. 90 registruotas kandidatu į Respublikos Prezidentus.",
+    "registeredDate": "2004-05-04",
+    "decision": "VRK sprendimu Nr. 90",
+    "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=232872&Condition2="
+  },
+  "anketaPath": "samples/html/2004-prezidento/ceslovas-jursenas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/kandidatai_l_19.htm",
+      "path": "samples/html/2004-prezidento/ceslovas-jursenas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/kand_pajam_l_242353.htm",
+      "path": "samples/html/2004-prezidento/ceslovas-jursenas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/jursenas.doc",
+      "path": "samples/html/2004-prezidento/ceslovas-jursenas/biografija.doc",
+      "fetched": true
+    },
+    {
+      "label": "Programa",
+      "slug": "programa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/prog_jursenas.doc",
+      "path": "samples/html/2004-prezidento/ceslovas-jursenas/programa.doc",
+      "fetched": true
+    },
+    {
+      "label": "Nuotrauka",
+      "slug": "nuotrauka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/nuotrauka_242353.htm",
+      "path": "samples/html/2004-prezidento/ceslovas-jursenas/nuotrauka.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [
+    {
+      "label": "Patikėtiniai",
+      "slug": "patiketiniai",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/patiketiniai_l_1727763.htm"
+    }
+  ],
+  "campaignSamples": [],
+  "anomalies": []
+}

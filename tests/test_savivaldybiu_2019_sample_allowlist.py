@@ -22,6 +22,17 @@ ALLOWED_CANDIDATE_DIRS = {
 ALLOWED_SUPPORT_DIRS = {
     "lists",
 }
+# What a clone carries. `lists/` is 12.4 MB across the 465 party-list pages
+# and five of the ten candidates embed a base64 portrait, each of them over
+# the 1 MiB limit on a tracked fixture unit (scripts/tracked_fixtures.py).
+TRACKED_CANDIDATE_DIRS = {
+    "agne-aleksejevaite-2409490",
+    "gintas-orda-2400958",
+    "judita-ziliene-2409466",
+    "kestutis-armonas-2404237",
+    "vitalijus-mitrofanovas-2406746",
+}
+TRACKED_SUPPORT_DIRS: set[str] = set()
 ALLOWED_NON_CANDIDATE_FILES = {
     "list.html",
     "lists-index.html",
@@ -40,15 +51,14 @@ class Savivaldybiu2019SampleAllowlistTests(unittest.TestCase):
             if child.is_dir() and child.name not in ALLOWED_SUPPORT_DIRS
         }
 
-        self.assertEqual(actual_dirs, ALLOWED_CANDIDATE_DIRS)
+        self.assertEqual(actual_dirs - ALLOWED_CANDIDATE_DIRS, set())
+        self.assertLessEqual(TRACKED_CANDIDATE_DIRS, actual_dirs)
 
     def test_samples_directory_contains_expected_support_directories(self) -> None:
         actual_dirs = {child.name for child in SAMPLES_ROOT.iterdir() if child.is_dir()}
 
-        self.assertEqual(
-            actual_dirs,
-            ALLOWED_CANDIDATE_DIRS | ALLOWED_SUPPORT_DIRS,
-        )
+        self.assertEqual(actual_dirs - (ALLOWED_CANDIDATE_DIRS | ALLOWED_SUPPORT_DIRS), set())
+        self.assertLessEqual(TRACKED_CANDIDATE_DIRS | TRACKED_SUPPORT_DIRS, actual_dirs)
 
     def test_samples_directory_contains_expected_top_level_files(self) -> None:
         actual_files = {
@@ -89,6 +99,7 @@ class Savivaldybiu2019SampleAllowlistTests(unittest.TestCase):
         # the 13,666 candidates collide on the bare name slug.
         for name in ALLOWED_CANDIDATE_DIRS:
             self.assertRegex(name, r"^[a-z0-9-]+-\d{7}$")
+        for name in TRACKED_CANDIDATE_DIRS:
             self.assertTrue((SAMPLES_ROOT / name / "anketa.html").exists(), name)
 
 

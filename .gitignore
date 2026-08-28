@@ -31,6 +31,8 @@ dist/
 .run-state/
 data/
 sitemaps/
+# `samples/` is ignored, but the fixture subset inside it is tracked and
+# stays tracked -- see scripts/tracked_fixtures.py, which force-adds it.
 samples/
 samples-full/
 # Dashboard-generated index

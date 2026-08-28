@@ -1,0 +1,47 @@
+{
+  "electionId": "2004-ep",
+  "candidate": {
+    "candidateName": "Juozas IMBRASAS",
+    "candidateId": "juozas-imbrasas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260904.htm",
+    "vrkCandidateId": "260904",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Liberalų demokratų partija",
+      "sarasoNumeris": 12,
+      "sarasoId": "1737",
+      "numerisSarase": 11
+    }
+  },
+  "anketaPath": "samples/html/2004-ep/juozas-imbrasas/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260904.htm",
+      "path": "samples/html/2004-ep/juozas-imbrasas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_biog_l_260904.htm",
+      "path": "samples/html/2004-ep/juozas-imbrasas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų ir turto deklaracijų pagrindinių duomenų išrašai",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_pajam_l_260904.htm",
+      "path": "samples/html/2004-ep/juozas-imbrasas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

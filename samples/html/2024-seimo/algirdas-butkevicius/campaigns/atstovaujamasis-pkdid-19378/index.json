@@ -1,0 +1,16 @@
+{
+  "campaignKey": "atstovaujamasis-pkdid-19378",
+  "campaignLabel": "",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1726/dalyviai/atstovaujamasis_pkdId-19378.html",
+  "tabCount": 1,
+  "tabSamples": [
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1726/dalyviai/savarankiskasAukotojai_pkdId-19378.html",
+      "path": "samples/html/2024-seimo/algirdas-butkevicius/campaigns/atstovaujamasis-pkdid-19378/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

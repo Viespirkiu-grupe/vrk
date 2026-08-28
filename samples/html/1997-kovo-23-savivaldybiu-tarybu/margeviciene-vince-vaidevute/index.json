@@ -1,0 +1,16 @@
+{
+  "candidate": {
+    "candidateName": "Margevičienė Vincė Vaidevutė",
+    "candidateId": "margeviciene-vince-vaidevute",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-37581.htm",
+    "municipalityName": "Kauno miesto",
+    "municipalityNumber": 5,
+    "listNumber": 1,
+    "nominator": "Lietuvos politinių kalinių ir tremtinių sąjunga",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-148+6.htm"
+  },
+  "anketaPath": "samples/html/1997-kovo-23-savivaldybiu-tarybu/margeviciene-vince-vaidevute/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

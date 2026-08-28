@@ -1,0 +1,104 @@
+{
+  "electionId": "2025-kovo-16-meru",
+  "candidate": {
+    "candidateName": "Ignas GAIŽIŪNAS",
+    "candidateId": "ignas-gaiziunas",
+    "candidateNote": "",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437792.html"
+  },
+  "anketaPath": "samples/html/2025-kovo-16-meru/ignas-gaiziunas/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437792.html",
+      "path": "samples/html/2025-kovo-16-meru/ignas-gaiziunas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasBiografija_rkndId-2437792.html",
+      "path": "samples/html/2025-kovo-16-meru/ignas-gaiziunas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasTurtoPajDekl_rkndId-2437792.html",
+      "path": "samples/html/2025-kovo-16-meru/ignas-gaiziunas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasPrivInterDekl_rkndId-2437792.html",
+      "path": "samples/html/2025-kovo-16-meru/ignas-gaiziunas/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1764/dalyviai/savarankiskasIzdininkas_pkdId-19870.html",
+      "path": "samples/html/2025-kovo-16-meru/ignas-gaiziunas/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasKita_rkndId-2437792.html",
+      "path": "samples/html/2025-kovo-16-meru/ignas-gaiziunas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "savarankiskasizdininkas-pkdid-19870",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1764/dalyviai/savarankiskasIzdininkas_pkdId-19870.html",
+      "campaignDir": "samples/html/2025-kovo-16-meru/ignas-gaiziunas/campaigns/savarankiskasizdininkas-pkdid-19870",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1764/dalyviai/savarankiskasIzdininkas_pkdId-19870.html",
+          "path": "samples/html/2025-kovo-16-meru/ignas-gaiziunas/campaigns/savarankiskasizdininkas-pkdid-19870/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1764/dalyviai/savarankiskasAuditorius_pkdId-19870.html",
+          "path": "samples/html/2025-kovo-16-meru/ignas-gaiziunas/campaigns/savarankiskasizdininkas-pkdid-19870/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1764/dalyviai/savarankiskasAukotojai_pkdId-19870.html",
+          "path": "samples/html/2025-kovo-16-meru/ignas-gaiziunas/campaigns/savarankiskasizdininkas-pkdid-19870/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1764/dalyviai/savarankiskasFinansavimas_pkdId-19870.html",
+          "path": "samples/html/2025-kovo-16-meru/ignas-gaiziunas/campaigns/savarankiskasizdininkas-pkdid-19870/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1764/dalyviai/savarankiskasSutartys_pkdId-19870.html",
+          "path": "samples/html/2025-kovo-16-meru/ignas-gaiziunas/campaigns/savarankiskasizdininkas-pkdid-19870/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2025-kovo-16-meru/ignas-gaiziunas/campaigns/savarankiskasizdininkas-pkdid-19870/index.json"
+    }
+  ],
+  "anomalies": []
+}

@@ -1,0 +1,7 @@
+# The repository is not a package -- there is nothing to build or install, only
+# `python -m scraper` and `pytest`. This file exists so pytest has a rootdir it
+# cannot mistake and one place that says where the tests are.
+
+[tool.pytest.ini_options]
+minversion = "8.4"
+testpaths = ["tests"]

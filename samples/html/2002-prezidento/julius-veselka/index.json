@@ -1,0 +1,90 @@
+{
+  "electionId": "2002-prezidento",
+  "candidate": {
+    "candidateName": "Julius Veselka",
+    "candidateId": "julius-veselka",
+    "vrkCandidateId": "168298",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+    "vrkRegistrationId": "948564",
+    "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948564.htm",
+    "registration": "2002 m lapkričio 17 dienos VRK sprendimu Nr. 171 registruotas kandidatu į Respublikos Prezidentus.",
+    "registeredDate": "2002-11-17",
+    "decision": "VRK sprendimu Nr. 171",
+    "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=193459",
+    "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Veselkos_biografija.htm",
+    "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Veselkos_programa.doc",
+    "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Veselka_pareiskimas.jpg",
+    "anketosSkenaiUrls": [
+      "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Veselka_anketa1.jpg",
+      "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Veselka_anketa2.jpg"
+    ],
+    "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Veselka_deklaracija.jpg",
+    "deklaracijaLabel": "Šeimos turto pajamų deklaracija",
+    "sveikatosSkenaiUrls": [],
+    "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Veselka_nuotrauka.jpg",
+    "websiteUrls": []
+  },
+  "anketaPath": "samples/html/2002-prezidento/julius-veselka/anketa.html",
+  "tabCount": 7,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "path": "samples/html/2002-prezidento/julius-veselka/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Veselkos_biografija.htm",
+      "path": "samples/html/2002-prezidento/julius-veselka/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Programa",
+      "slug": "programa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Veselkos_programa.doc",
+      "path": "samples/html/2002-prezidento/julius-veselka/programa.doc",
+      "fetched": true
+    },
+    {
+      "label": "Pareiškimas",
+      "slug": "pareiskimas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Veselka_pareiskimas.jpg",
+      "path": "samples/html/2002-prezidento/julius-veselka/pareiskimas.jpg",
+      "fetched": true
+    },
+    {
+      "label": "Duomenų anketa 1",
+      "slug": "duomenu-anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Veselka_anketa1.jpg",
+      "path": "samples/html/2002-prezidento/julius-veselka/duomenu-anketa-1.jpg",
+      "fetched": true
+    },
+    {
+      "label": "Duomenų anketa 2",
+      "slug": "duomenu-anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Veselka_anketa2.jpg",
+      "path": "samples/html/2002-prezidento/julius-veselka/duomenu-anketa-2.jpg",
+      "fetched": true
+    },
+    {
+      "label": "Šeimos turto pajamų deklaracija",
+      "slug": "deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Veselka_deklaracija.jpg",
+      "path": "samples/html/2002-prezidento/julius-veselka/deklaracija.jpg",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [
+    {
+      "label": "Patikėtiniai",
+      "slug": "patiketiniai",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948564.htm"
+    }
+  ],
+  "campaignSamples": [],
+  "anomalies": []
+}

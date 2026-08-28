@@ -1,0 +1,54 @@
+{
+  "electionId": "2007-spalio-7-seimo-dzukija",
+  "candidate": {
+    "candidateName": "Gediminas JEGELEVIČIUS",
+    "candidateId": "gediminas-jegelevicius",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19307/Kandidato19307Anketa.html",
+    "vrkCandidateId": "19307",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Dzūkijos",
+      "apygardosNumeris": 69,
+      "apygardosId": "6838",
+      "iskele": "Liberalų ir centro sąjunga"
+    }
+  },
+  "anketaPath": "samples/html/2007-spalio-7-seimo-dzukija/gediminas-jegelevicius/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19307/Kandidato19307Anketa.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/gediminas-jegelevicius/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19307/Kandidato19307Biografija.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/gediminas-jegelevicius/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19307/Kandidato19307Deklaracijos.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/gediminas-jegelevicius/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19307/Kandidato19307InteresuDeklaracija.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/gediminas-jegelevicius/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

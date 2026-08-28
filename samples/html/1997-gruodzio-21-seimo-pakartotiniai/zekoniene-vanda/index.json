@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Žekonienė Vanda",
+    "candidateId": "zekoniene-vanda",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-61720.htm",
+    "constituencyName": "Aukštaitijos",
+    "constituencyNumber": 28,
+    "nominator": "Lietuvos krikščionių demokratų partija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-135.htm"
+  },
+  "anketaPath": "samples/html/1997-gruodzio-21-seimo-pakartotiniai/zekoniene-vanda/candidate.html",
+  "tabCount": 2,
+  "tabsSaved": 2,
+  "anomalies": []
+}

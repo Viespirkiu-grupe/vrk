@@ -1,0 +1,54 @@
+{
+  "electionId": "2008-seimo",
+  "candidate": {
+    "candidateName": "Vytautas Aleksas LAZINKA",
+    "candidateId": "vytautas-aleksas-lazinka",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas20805/Kandidato20805Anketa.html",
+    "vrkCandidateId": "20805",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Naujosios Vilnios",
+      "apygardosNumeris": 10,
+      "apygardosId": "6879",
+      "iskele": "Lietuvos liaudies sąjunga \"Už teisingą Lietuvą\""
+    }
+  },
+  "anketaPath": "samples/html/2008-seimo/vytautas-aleksas-lazinka/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas20805/Kandidato20805Anketa.html",
+      "path": "samples/html/2008-seimo/vytautas-aleksas-lazinka/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas20805/Kandidato20805Biografija.html",
+      "path": "samples/html/2008-seimo/vytautas-aleksas-lazinka/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas20805/Kandidato20805Deklaracijos.html",
+      "path": "samples/html/2008-seimo/vytautas-aleksas-lazinka/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas20805/Kandidato20805InteresuDeklaracija.html",
+      "path": "samples/html/2008-seimo/vytautas-aleksas-lazinka/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

@@ -1,0 +1,44 @@
+{
+  "campaignKey": "savarankiskasizdininkas-pkdid-1612",
+  "campaignLabel": "",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/844/dalyviai/savarankiskasIzdininkas_pkdId-1612.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/844/dalyviai/savarankiskasIzdininkas_pkdId-1612.html",
+      "path": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/mindaugas-pauliukas/campaigns/savarankiskasizdininkas-pkdid-1612/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/844/dalyviai/savarankiskasAuditorius_pkdId-1612.html",
+      "path": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/mindaugas-pauliukas/campaigns/savarankiskasizdininkas-pkdid-1612/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/844/dalyviai/savarankiskasAukotojai_pkdId-1612.html",
+      "path": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/mindaugas-pauliukas/campaigns/savarankiskasizdininkas-pkdid-1612/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/844/dalyviai/savarankiskasFinansavimas_pkdId-1612.html",
+      "path": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/mindaugas-pauliukas/campaigns/savarankiskasizdininkas-pkdid-1612/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/844/dalyviai/savarankiskasSutartys_pkdId-1612.html",
+      "path": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/mindaugas-pauliukas/campaigns/savarankiskasizdininkas-pkdid-1612/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

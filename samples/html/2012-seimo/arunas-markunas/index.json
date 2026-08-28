@@ -1,0 +1,106 @@
+{
+  "electionId": "2012-seimo",
+  "candidate": {
+    "candidateName": "Arūnas MARKŪNAS",
+    "candidateId": "arunas-markunas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas68904/Kandidato68904Anketa.html",
+    "vrkCandidateId": "68904",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Krikščionių partija",
+      "sarasoNumeris": 11,
+      "sarasoId": "4154-1",
+      "numerisSarase": 74
+    }
+  },
+  "anketaPath": "samples/html/2012-seimo/arunas-markunas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas68904/Kandidato68904Anketa.html",
+      "path": "samples/html/2012-seimo/arunas-markunas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas68904/Kandidato68904Biografija.html",
+      "path": "samples/html/2012-seimo/arunas-markunas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas68904/Kandidato68904Deklaracijos.html",
+      "path": "samples/html/2012-seimo/arunas-markunas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas68904/Kandidato68904InteresuDeklaracija.html",
+      "path": "samples/html/2012-seimo/arunas-markunas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas68904/Kandidato68904Kita.html",
+      "path": "samples/html/2012-seimo/arunas-markunas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-5407",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5407/Dalyvio5407Izdininkas.html",
+      "campaignDir": "samples/html/2012-seimo/arunas-markunas/campaigns/dalyvis-5407",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5407/Dalyvio5407Izdininkas.html",
+          "path": "samples/html/2012-seimo/arunas-markunas/campaigns/dalyvis-5407/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5407/Dalyvio5407Auditorius.html",
+          "path": "samples/html/2012-seimo/arunas-markunas/campaigns/dalyvis-5407/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5407/Dalyvio5407AukotojuSarasas.html",
+          "path": "samples/html/2012-seimo/arunas-markunas/campaigns/dalyvis-5407/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5407/Dalyvio5407FinansavimoAtaskaitos.html",
+          "path": "samples/html/2012-seimo/arunas-markunas/campaigns/dalyvis-5407/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5407/Dalyvio5407Sutartys.html",
+          "path": "samples/html/2012-seimo/arunas-markunas/campaigns/dalyvis-5407/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2012-seimo/arunas-markunas/campaigns/dalyvis-5407/index.json"
+    }
+  ],
+  "anomalies": []
+}

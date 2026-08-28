@@ -1,0 +1,54 @@
+{
+  "electionId": "2007-spalio-7-seimo-dzukija",
+  "candidate": {
+    "candidateName": "Monika RAŽANAUSKIENĖ",
+    "candidateId": "monika-razanauskiene",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19314/Kandidato19314Anketa.html",
+    "vrkCandidateId": "19314",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Dzūkijos",
+      "apygardosNumeris": 69,
+      "apygardosId": "6838",
+      "iskele": "Lietuvos valstiečių liaudininkų sąjunga"
+    }
+  },
+  "anketaPath": "samples/html/2007-spalio-7-seimo-dzukija/monika-razanauskiene/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19314/Kandidato19314Anketa.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/monika-razanauskiene/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19314/Kandidato19314Biografija.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/monika-razanauskiene/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19314/Kandidato19314Deklaracijos.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/monika-razanauskiene/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19314/Kandidato19314InteresuDeklaracija.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/monika-razanauskiene/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

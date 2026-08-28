@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-7608",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/469_lt/PolitiniuKampanijuFinansavimas/Dalyvis7608/Dalyvio7608Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/469_lt/PolitiniuKampanijuFinansavimas/Dalyvis7608/Dalyvio7608Izdininkas.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/algirdas-bacevicius/campaigns/dalyvis-7608/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/469_lt/PolitiniuKampanijuFinansavimas/Dalyvis7608/Dalyvio7608Auditorius.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/algirdas-bacevicius/campaigns/dalyvis-7608/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/469_lt/PolitiniuKampanijuFinansavimas/Dalyvis7608/Dalyvio7608AukotojuSarasas.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/algirdas-bacevicius/campaigns/dalyvis-7608/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/469_lt/PolitiniuKampanijuFinansavimas/Dalyvis7608/Dalyvio7608FinansavimoAtaskaitos.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/algirdas-bacevicius/campaigns/dalyvis-7608/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/469_lt/PolitiniuKampanijuFinansavimas/Dalyvis7608/Dalyvio7608Sutartys.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/algirdas-bacevicius/campaigns/dalyvis-7608/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

@@ -1,0 +1,99 @@
+{
+  "electionId": "2015-birzelio-7-pakartotiniai-sirvintos-trakai",
+  "candidate": {
+    "candidateName": "Julija Meškauskienė",
+    "candidateId": "julija-meskauskiene",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87721/Kandidato87721Anketa.html",
+    "vrkCandidateId": "87721",
+    "municipality": "Trakų rajono savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Partija Tvarka ir teisingumas",
+      "listNumber": 25,
+      "listPosition": 2
+    }
+  },
+  "anketaPath": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/julija-meskauskiene/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87721/Kandidato87721Anketa.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/julija-meskauskiene/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87721/Kandidato87721Deklaracijos.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/julija-meskauskiene/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87721/Kandidato87721InteresuDeklaracija.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/julija-meskauskiene/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87721/Kandidato87721Kita.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/julija-meskauskiene/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-7530",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7530/Dalyvio7530Izdininkas.html",
+      "campaignDir": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/julija-meskauskiene/campaigns/dalyvis-7530",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7530/Dalyvio7530Izdininkas.html",
+          "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/julija-meskauskiene/campaigns/dalyvis-7530/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7530/Dalyvio7530Auditorius.html",
+          "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/julija-meskauskiene/campaigns/dalyvis-7530/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7530/Dalyvio7530AukotojuSarasas.html",
+          "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/julija-meskauskiene/campaigns/dalyvis-7530/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7530/Dalyvio7530FinansavimoAtaskaitos.html",
+          "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/julija-meskauskiene/campaigns/dalyvis-7530/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7530/Dalyvio7530Sutartys.html",
+          "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/julija-meskauskiene/campaigns/dalyvis-7530/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/julija-meskauskiene/campaigns/dalyvis-7530/index.json"
+    }
+  ],
+  "anomalies": []
+}

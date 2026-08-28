@@ -1,0 +1,106 @@
+{
+  "electionId": "2013-kovo-3-seimo-birzai-zarasai-ukmerge",
+  "candidate": {
+    "candidateName": "Dangirdas MIKŠYS",
+    "candidateId": "dangirdas-miksys",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70573/Kandidato70573Anketa.html",
+    "vrkCandidateId": "70573",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Biržų - Kupiškio",
+      "apygardosNumeris": 48,
+      "apygardosId": "7433",
+      "iskele": "Tautinė partija Lietuvos kelias"
+    }
+  },
+  "anketaPath": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/dangirdas-miksys/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70573/Kandidato70573Anketa.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/dangirdas-miksys/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70573/Kandidato70573Biografija.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/dangirdas-miksys/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70573/Kandidato70573Deklaracijos.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/dangirdas-miksys/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70573/Kandidato70573InteresuDeklaracija.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/dangirdas-miksys/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70573/Kandidato70573Kita.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/dangirdas-miksys/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-6428",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6428/Dalyvio6428Izdininkas.html",
+      "campaignDir": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/dangirdas-miksys/campaigns/dalyvis-6428",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6428/Dalyvio6428Izdininkas.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/dangirdas-miksys/campaigns/dalyvis-6428/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6428/Dalyvio6428Auditorius.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/dangirdas-miksys/campaigns/dalyvis-6428/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6428/Dalyvio6428AukotojuSarasas.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/dangirdas-miksys/campaigns/dalyvis-6428/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6428/Dalyvio6428FinansavimoAtaskaitos.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/dangirdas-miksys/campaigns/dalyvis-6428/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6428/Dalyvio6428Sutartys.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/dangirdas-miksys/campaigns/dalyvis-6428/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/dangirdas-miksys/campaigns/dalyvis-6428/index.json"
+    }
+  ],
+  "anomalies": []
+}

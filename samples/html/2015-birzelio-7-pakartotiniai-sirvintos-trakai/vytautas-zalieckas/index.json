@@ -1,0 +1,74 @@
+{
+  "electionId": "2015-birzelio-7-pakartotiniai-sirvintos-trakai",
+  "candidate": {
+    "candidateName": "Vytautas Zalieckas",
+    "candidateId": "vytautas-zalieckas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87809/Kandidato87809Anketa.html",
+    "vrkCandidateId": "87809",
+    "municipality": "Trakų rajono savivaldybė",
+    "roles": [
+      "meras",
+      "tarybos-narys"
+    ],
+    "mayoralCandidacy": {
+      "nominatedBy": "Lietuvos socialdemokratų partija"
+    },
+    "councilCandidacy": {
+      "partyList": "Lietuvos socialdemokratų partija",
+      "listNumber": 2,
+      "listPosition": 1
+    }
+  },
+  "anketaPath": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/vytautas-zalieckas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87809/Kandidato87809Anketa.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/vytautas-zalieckas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87809/Kandidato87809Biografija.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/vytautas-zalieckas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87809/Kandidato87809Deklaracijos.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/vytautas-zalieckas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87809/Kandidato87809InteresuDeklaracija.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/vytautas-zalieckas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87809/Kandidato87809Kita.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/vytautas-zalieckas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-7572",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7572/Dalyvio7572Izdininkas.html",
+      "campaignDir": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/vytautas-zalieckas/campaigns/dalyvis-7572",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/vytautas-zalieckas/campaigns/dalyvis-7572/index.json"
+    }
+  ],
+  "anomalies": []
+}

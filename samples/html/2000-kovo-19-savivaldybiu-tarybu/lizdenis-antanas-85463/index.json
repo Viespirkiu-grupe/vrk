@@ -1,0 +1,26 @@
+{
+  "candidate": {
+    "candidateName": "Lizdenis Antanas",
+    "candidateId": "lizdenis-antanas-85463",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20000319/kandvl.htm-85463.htm",
+    "vrkCandidateId": "85463",
+    "municipality": {
+      "pavadinimas": "Akmenės rajono",
+      "numeris": 1,
+      "savivaldybesId": "563",
+      "mandatai": 25
+    },
+    "list": {
+      "pavadinimas": "Lietuvos krikščionių demokratų partija",
+      "rusis": "partija",
+      "numeris": 24,
+      "sarasoId": "5",
+      "vrkSprendimas": "2000 02 04, Nr.30"
+    },
+    "listPosition": 1
+  },
+  "anketaPath": "samples/html/2000-kovo-19-savivaldybiu-tarybu/lizdenis-antanas-85463/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

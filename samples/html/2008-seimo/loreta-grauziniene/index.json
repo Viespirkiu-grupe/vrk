@@ -1,0 +1,62 @@
+{
+  "electionId": "2008-seimo",
+  "candidate": {
+    "candidateName": "Loreta GRAUŽINIENĖ",
+    "candidateId": "loreta-grauziniene",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas21260/Kandidato21260Anketa.html",
+    "vrkCandidateId": "21260",
+    "roles": [
+      "daugiamandate",
+      "vienmandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Koalicija Darbo partija + jaunimas",
+      "sarasoNumeris": 10,
+      "sarasoId": "3487",
+      "numerisSarase": 2,
+      "koalicijosPartija": "Leiboristų partija"
+    },
+    "vienmandateCandidacy": {
+      "apygarda": "Ukmergės",
+      "apygardosNumeris": 61,
+      "apygardosId": "6910",
+      "iskele": "Leiboristų partija"
+    }
+  },
+  "anketaPath": "samples/html/2008-seimo/loreta-grauziniene/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas21260/Kandidato21260Anketa.html",
+      "path": "samples/html/2008-seimo/loreta-grauziniene/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas21260/Kandidato21260Biografija.html",
+      "path": "samples/html/2008-seimo/loreta-grauziniene/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas21260/Kandidato21260Deklaracijos.html",
+      "path": "samples/html/2008-seimo/loreta-grauziniene/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/400_lt/Kandidatai/Kandidatas21260/Kandidato21260InteresuDeklaracija.html",
+      "path": "samples/html/2008-seimo/loreta-grauziniene/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

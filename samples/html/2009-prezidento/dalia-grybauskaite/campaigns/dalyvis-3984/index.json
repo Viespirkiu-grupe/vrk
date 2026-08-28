@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-3984",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3984/Dalyvio3984Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3984/Dalyvio3984Izdininkas.html",
+      "path": "samples/html/2009-prezidento/dalia-grybauskaite/campaigns/dalyvis-3984/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3984/Dalyvio3984Auditorius.html",
+      "path": "samples/html/2009-prezidento/dalia-grybauskaite/campaigns/dalyvis-3984/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukotojų sąrašas",
+      "slug": "aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3984/Dalyvio3984AukotojuSarasas.html",
+      "path": "samples/html/2009-prezidento/dalia-grybauskaite/campaigns/dalyvis-3984/aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3984/Dalyvio3984FinansavimoAtaskaitos.html",
+      "path": "samples/html/2009-prezidento/dalia-grybauskaite/campaigns/dalyvis-3984/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3984/Dalyvio3984Sutartys.html",
+      "path": "samples/html/2009-prezidento/dalia-grybauskaite/campaigns/dalyvis-3984/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

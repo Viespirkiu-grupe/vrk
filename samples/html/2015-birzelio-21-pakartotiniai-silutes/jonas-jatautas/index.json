@@ -1,0 +1,74 @@
+{
+  "electionId": "2015-birzelio-21-pakartotiniai-silutes",
+  "candidate": {
+    "candidateName": "Jonas Jatautas",
+    "candidateId": "jonas-jatautas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88069/Kandidato88069Anketa.html",
+    "vrkCandidateId": "88069",
+    "municipality": "Šilutės rajono savivaldybė",
+    "roles": [
+      "meras",
+      "tarybos-narys"
+    ],
+    "mayoralCandidacy": {
+      "nominatedBy": "Lietuvos Respublikos liberalų sąjūdis"
+    },
+    "councilCandidacy": {
+      "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+      "listNumber": 26,
+      "listPosition": 2
+    }
+  },
+  "anketaPath": "samples/html/2015-birzelio-21-pakartotiniai-silutes/jonas-jatautas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88069/Kandidato88069Anketa.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/jonas-jatautas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88069/Kandidato88069Biografija.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/jonas-jatautas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88069/Kandidato88069Deklaracijos.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/jonas-jatautas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88069/Kandidato88069InteresuDeklaracija.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/jonas-jatautas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88069/Kandidato88069Kita.html",
+      "path": "samples/html/2015-birzelio-21-pakartotiniai-silutes/jonas-jatautas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-7595",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/PolitiniuKampanijuFinansavimas/Dalyvis7595/Dalyvio7595Izdininkas.html",
+      "campaignDir": "samples/html/2015-birzelio-21-pakartotiniai-silutes/jonas-jatautas/campaigns/dalyvis-7595",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2015-birzelio-21-pakartotiniai-silutes/jonas-jatautas/campaigns/dalyvis-7595/index.json"
+    }
+  ],
+  "anomalies": []
+}

@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Tryk Zdislav",
+    "candidateId": "tryk-zdislav",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65108.htm",
+    "constituencyName": "Vilniaus Trakų",
+    "constituencyNumber": 57,
+    "nominator": "Lietuvos liberalų sąjunga",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-400.htm"
+  },
+  "anketaPath": "samples/html/1999-kovo-21-seimo-pakartotiniai/tryk-zdislav/candidate.html",
+  "tabCount": 3,
+  "tabsSaved": 3,
+  "anomalies": []
+}

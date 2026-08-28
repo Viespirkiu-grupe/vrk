@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Kriščiūnas Edvardas",
+    "candidateId": "krisciunas-edvardas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64460.htm",
+    "constituencyName": "Nevėžio",
+    "constituencyNumber": 26,
+    "nominator": "Lietuvių nacionalinė partija - \"Jaunoji Lietuva\"",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-225.htm"
+  },
+  "anketaPath": "samples/html/1998-lapkricio-15-seimo-pakartotiniai/krisciunas-edvardas/candidate.html",
+  "tabCount": 3,
+  "tabsSaved": 3,
+  "anomalies": []
+}

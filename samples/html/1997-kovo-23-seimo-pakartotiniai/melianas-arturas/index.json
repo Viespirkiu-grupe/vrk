@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Melianas Artūras",
+    "candidateId": "melianas-arturas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-39256.htm",
+    "constituencyName": "Naujosios Vilnios",
+    "constituencyNumber": 10,
+    "nominator": "Lietuvos liberalų sąjunga",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-102.htm"
+  },
+  "anketaPath": "samples/html/1997-kovo-23-seimo-pakartotiniai/melianas-arturas/candidate.html",
+  "tabCount": 2,
+  "tabsSaved": 2,
+  "anomalies": []
+}

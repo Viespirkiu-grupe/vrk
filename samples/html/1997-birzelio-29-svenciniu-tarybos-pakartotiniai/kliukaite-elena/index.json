@@ -1,0 +1,16 @@
+{
+  "candidate": {
+    "candidateName": "Kliukaitė Elena",
+    "candidateId": "kliukaite-elena",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43513.htm",
+    "municipalityName": "Švenčionių rajono",
+    "municipalityNumber": 47,
+    "listNumber": 3,
+    "nominator": "Lietuvos demokratinė darbo partija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+4.htm"
+  },
+  "anketaPath": "samples/html/1997-birzelio-29-svenciniu-tarybos-pakartotiniai/kliukaite-elena/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

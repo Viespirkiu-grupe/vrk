@@ -1,0 +1,86 @@
+{
+  "electionId": "2009-ep",
+  "candidate": {
+    "candidateName": "Valdemar TOMAŠEVSKI",
+    "candidateId": "valdemar-tomasevski",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25297/Kandidato25297Anketa.html",
+    "vrkCandidateId": "25297",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Lietuvos lenkų rinkimų akcija",
+      "sarasoNumeris": 8,
+      "sarasoId": "3585",
+      "numerisSarase": 1
+    }
+  },
+  "anketaPath": "samples/html/2009-ep/valdemar-tomasevski/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25297/Kandidato25297Anketa.html",
+      "path": "samples/html/2009-ep/valdemar-tomasevski/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25297/Kandidato25297Biografija.html",
+      "path": "samples/html/2009-ep/valdemar-tomasevski/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25297/Kandidato25297Deklaracijos.html",
+      "path": "samples/html/2009-ep/valdemar-tomasevski/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25297/Kandidato25297InteresuDeklaracija.html",
+      "path": "samples/html/2009-ep/valdemar-tomasevski/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25297/Kandidato25297Kita.html",
+      "path": "samples/html/2009-ep/valdemar-tomasevski/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-4000",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4000/Dalyvio4000Izdininkas.html",
+      "campaignDir": "samples/html/2009-ep/valdemar-tomasevski/campaigns/dalyvis-4000",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": ""
+    }
+  ],
+  "anomalies": [
+    {
+      "timestamp": "2026-08-21T22:16:02+00:00",
+      "eventType": "CampaignRootFetchFailed",
+      "severity": "error",
+      "stage": "fetch",
+      "electionId": "2009-ep",
+      "candidateId": "valdemar-tomasevski",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25297/Kandidato25297Anketa.html",
+      "detail": {
+        "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4000/Dalyvio4000Izdininkas.html",
+        "campaignKey": "dalyvis-4000",
+        "error": "404 Client Error: Not Found for url: https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4000/Dalyvio4000Izdininkas.html"
+      }
+    }
+  ]
+}

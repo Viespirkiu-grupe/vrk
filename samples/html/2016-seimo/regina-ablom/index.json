@@ -1,0 +1,50 @@
+{
+  "electionId": "2016-seimo",
+  "candidate": {
+    "candidateName": "Regina ABLOM",
+    "candidateId": "regina-ablom",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/102/rnk426/kandidatai/lrsKandidatasAnketa_rkndId-1103268.html"
+  },
+  "anketaPath": "samples/html/2016-seimo/regina-ablom/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/102/rnk426/kandidatai/lrsKandidatasAnketa_rkndId-1103268.html",
+      "path": "samples/html/2016-seimo/regina-ablom/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/102/rnk426/kandidatai/lrsKandidatasBiografija_rkndId-1103268.html",
+      "path": "samples/html/2016-seimo/regina-ablom/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/102/rnk426/kandidatai/lrsKandidatasTurtas_rkndId-1103268.html",
+      "path": "samples/html/2016-seimo/regina-ablom/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracija",
+      "slug": "privaciu-interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/102/rnk426/kandidatai/lrsKandidatasInteresai_rkndId-1103268.html",
+      "path": "samples/html/2016-seimo/regina-ablom/privaciu-interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/102/rnk426/kandidatai/lrsKandidatasKita_rkndId-1103268.html",
+      "path": "samples/html/2016-seimo/regina-ablom/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-6428",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6428/Dalyvio6428Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6428/Dalyvio6428Izdininkas.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/dangirdas-miksys/campaigns/dalyvis-6428/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6428/Dalyvio6428Auditorius.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/dangirdas-miksys/campaigns/dalyvis-6428/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6428/Dalyvio6428AukotojuSarasas.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/dangirdas-miksys/campaigns/dalyvis-6428/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6428/Dalyvio6428FinansavimoAtaskaitos.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/dangirdas-miksys/campaigns/dalyvis-6428/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6428/Dalyvio6428Sutartys.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/dangirdas-miksys/campaigns/dalyvis-6428/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

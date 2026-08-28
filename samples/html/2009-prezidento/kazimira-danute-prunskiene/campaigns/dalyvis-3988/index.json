@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-3988",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3988/Dalyvio3988Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3988/Dalyvio3988Izdininkas.html",
+      "path": "samples/html/2009-prezidento/kazimira-danute-prunskiene/campaigns/dalyvis-3988/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3988/Dalyvio3988Auditorius.html",
+      "path": "samples/html/2009-prezidento/kazimira-danute-prunskiene/campaigns/dalyvis-3988/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukotojų sąrašas",
+      "slug": "aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3988/Dalyvio3988AukotojuSarasas.html",
+      "path": "samples/html/2009-prezidento/kazimira-danute-prunskiene/campaigns/dalyvis-3988/aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3988/Dalyvio3988FinansavimoAtaskaitos.html",
+      "path": "samples/html/2009-prezidento/kazimira-danute-prunskiene/campaigns/dalyvis-3988/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3988/Dalyvio3988Sutartys.html",
+      "path": "samples/html/2009-prezidento/kazimira-danute-prunskiene/campaigns/dalyvis-3988/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

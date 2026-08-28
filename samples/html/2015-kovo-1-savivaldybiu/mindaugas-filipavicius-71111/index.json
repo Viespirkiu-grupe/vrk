@@ -1,0 +1,104 @@
+{
+  "electionId": "2015-kovo-1-savivaldybiu",
+  "candidate": {
+    "candidateName": "Mindaugas Filipavičius",
+    "candidateId": "mindaugas-filipavicius-71111",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas71111/Kandidato71111Anketa.html",
+    "vrkCandidateId": "71111",
+    "municipality": "Kaišiadorių rajono savivaldybė",
+    "roles": [
+      "meras"
+    ],
+    "mayoralCandidacy": {
+      "nominatedBy": null
+    }
+  },
+  "anketaPath": "samples/html/2015-kovo-1-savivaldybiu/mindaugas-filipavicius-71111/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas71111/Kandidato71111Anketa.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/mindaugas-filipavicius-71111/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas71111/Kandidato71111Biografija.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/mindaugas-filipavicius-71111/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas71111/Kandidato71111Deklaracijos.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/mindaugas-filipavicius-71111/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas71111/Kandidato71111InteresuDeklaracija.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/mindaugas-filipavicius-71111/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas71111/Kandidato71111Kita.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/mindaugas-filipavicius-71111/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-6753",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis6753/Dalyvio6753Izdininkas.html",
+      "campaignDir": "samples/html/2015-kovo-1-savivaldybiu/mindaugas-filipavicius-71111/campaigns/dalyvis-6753",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis6753/Dalyvio6753Izdininkas.html",
+          "path": "samples/html/2015-kovo-1-savivaldybiu/mindaugas-filipavicius-71111/campaigns/dalyvis-6753/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis6753/Dalyvio6753Auditorius.html",
+          "path": "samples/html/2015-kovo-1-savivaldybiu/mindaugas-filipavicius-71111/campaigns/dalyvis-6753/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis6753/Dalyvio6753AukotojuSarasas.html",
+          "path": "samples/html/2015-kovo-1-savivaldybiu/mindaugas-filipavicius-71111/campaigns/dalyvis-6753/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis6753/Dalyvio6753FinansavimoAtaskaitos.html",
+          "path": "samples/html/2015-kovo-1-savivaldybiu/mindaugas-filipavicius-71111/campaigns/dalyvis-6753/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis6753/Dalyvio6753Sutartys.html",
+          "path": "samples/html/2015-kovo-1-savivaldybiu/mindaugas-filipavicius-71111/campaigns/dalyvis-6753/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2015-kovo-1-savivaldybiu/mindaugas-filipavicius-71111/campaigns/dalyvis-6753/index.json"
+    }
+  ],
+  "anomalies": []
+}

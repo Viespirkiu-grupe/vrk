@@ -1,0 +1,56 @@
+{
+  "electionId": "2011-vasario-27-savivaldybiu",
+  "candidate": {
+    "candidateName": "Arūnas Karlonas",
+    "candidateId": "arunas-karlonas-43800",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas43800/Kandidato43800Anketa.html",
+    "vrkCandidateId": "43800",
+    "municipality": "Kauno rajono savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Pakaunės krašto koalicija (Naujoji sąjunga (socialliberalai) ir Liberalų ir centro sąjunga)",
+      "listKind": "partiju-koalicija",
+      "listNumber": 16,
+      "listPosition": 1,
+      "selfNominated": false
+    }
+  },
+  "anketaPath": "samples/html/2011-vasario-27-savivaldybiu/arunas-karlonas-43800/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas43800/Kandidato43800Anketa.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/arunas-karlonas-43800/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas43800/Kandidato43800Deklaracijos.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/arunas-karlonas-43800/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas43800/Kandidato43800InteresuDeklaracija.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/arunas-karlonas-43800/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas43800/Kandidato43800Kita.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/arunas-karlonas-43800/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

@@ -1,0 +1,56 @@
+{
+  "electionId": "2011-vasario-27-savivaldybiu",
+  "candidate": {
+    "candidateName": "Rimvydas Buinickas",
+    "candidateId": "rimvydas-buinickas-59139",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas59139/Kandidato59139Anketa.html",
+    "vrkCandidateId": "59139",
+    "municipality": "Kauno miesto savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+      "listKind": "partija",
+      "listNumber": 94,
+      "listPosition": 60,
+      "selfNominated": false
+    }
+  },
+  "anketaPath": "samples/html/2011-vasario-27-savivaldybiu/rimvydas-buinickas-59139/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas59139/Kandidato59139Anketa.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/rimvydas-buinickas-59139/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas59139/Kandidato59139Deklaracijos.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/rimvydas-buinickas-59139/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas59139/Kandidato59139InteresuDeklaracija.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/rimvydas-buinickas-59139/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas59139/Kandidato59139Kita.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/rimvydas-buinickas-59139/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

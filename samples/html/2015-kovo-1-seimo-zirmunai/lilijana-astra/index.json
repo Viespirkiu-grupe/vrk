@@ -1,0 +1,96 @@
+{
+  "electionId": "2015-kovo-1-seimo-zirmunai",
+  "candidate": {
+    "candidateId": "lilijana-astra",
+    "candidateName": "Lilijana ASTRA",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas80423/Kandidato80423Anketa.html"
+  },
+  "anketaPath": "samples/html/2015-kovo-1-seimo-zirmunai/lilijana-astra/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas80423/Kandidato80423Anketa.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/lilijana-astra/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas80423/Kandidato80423Biografija.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/lilijana-astra/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas80423/Kandidato80423Deklaracijos.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/lilijana-astra/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas80423/Kandidato80423InteresuDeklaracija.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/lilijana-astra/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas80423/Kandidato80423Kita.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/lilijana-astra/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-6822",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6822/Dalyvio6822Izdininkas.html",
+      "campaignDir": "samples/html/2015-kovo-1-seimo-zirmunai/lilijana-astra/campaigns/dalyvis-6822",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6822/Dalyvio6822Izdininkas.html",
+          "path": "samples/html/2015-kovo-1-seimo-zirmunai/lilijana-astra/campaigns/dalyvis-6822/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6822/Dalyvio6822Auditorius.html",
+          "path": "samples/html/2015-kovo-1-seimo-zirmunai/lilijana-astra/campaigns/dalyvis-6822/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6822/Dalyvio6822AukotojuSarasas.html",
+          "path": "samples/html/2015-kovo-1-seimo-zirmunai/lilijana-astra/campaigns/dalyvis-6822/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6822/Dalyvio6822FinansavimoAtaskaitos.html",
+          "path": "samples/html/2015-kovo-1-seimo-zirmunai/lilijana-astra/campaigns/dalyvis-6822/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6822/Dalyvio6822Sutartys.html",
+          "path": "samples/html/2015-kovo-1-seimo-zirmunai/lilijana-astra/campaigns/dalyvis-6822/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2015-kovo-1-seimo-zirmunai/lilijana-astra/campaigns/dalyvis-6822/index.json"
+    }
+  ],
+  "anomalies": []
+}

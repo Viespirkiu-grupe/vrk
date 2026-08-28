@@ -1,0 +1,107 @@
+{
+  "electionId": "2009-ep",
+  "candidate": {
+    "candidateName": "Artūras ZUOKAS",
+    "candidateId": "arturas-zuokas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25414/Kandidato25414Anketa.html",
+    "vrkCandidateId": "25414",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Liberalų ir centro sąjunga",
+      "sarasoNumeris": 14,
+      "sarasoId": "3560",
+      "numerisSarase": 1
+    }
+  },
+  "anketaPath": "samples/html/2009-ep/arturas-zuokas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25414/Kandidato25414Anketa.html",
+      "path": "samples/html/2009-ep/arturas-zuokas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25414/Kandidato25414Biografija.html",
+      "path": "samples/html/2009-ep/arturas-zuokas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25414/Kandidato25414Deklaracijos.html",
+      "path": "samples/html/2009-ep/arturas-zuokas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25414/Kandidato25414InteresuDeklaracija.html",
+      "path": "samples/html/2009-ep/arturas-zuokas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25414/Kandidato25414Kita.html",
+      "path": "samples/html/2009-ep/arturas-zuokas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-4007",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4007/Dalyvio4007Izdininkas.html",
+      "campaignDir": "samples/html/2009-ep/arturas-zuokas/campaigns/dalyvis-4007",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4007/Dalyvio4007Izdininkas.html",
+          "path": "samples/html/2009-ep/arturas-zuokas/campaigns/dalyvis-4007/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4007/Dalyvio4007Auditorius.html",
+          "path": "samples/html/2009-ep/arturas-zuokas/campaigns/dalyvis-4007/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukotojų sąrašas",
+          "slug": "aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4007/Dalyvio4007AukotojuSarasas.html",
+          "path": "samples/html/2009-ep/arturas-zuokas/campaigns/dalyvis-4007/aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4007/Dalyvio4007FinansavimoAtaskaitos.html",
+          "path": "samples/html/2009-ep/arturas-zuokas/campaigns/dalyvis-4007/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4007/Dalyvio4007Sutartys.html",
+          "path": "samples/html/2009-ep/arturas-zuokas/campaigns/dalyvis-4007/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2009-ep/arturas-zuokas/campaigns/dalyvis-4007/index.json"
+    }
+  ],
+  "anomalies": []
+}

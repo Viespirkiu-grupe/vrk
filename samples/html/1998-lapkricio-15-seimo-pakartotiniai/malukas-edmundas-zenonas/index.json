@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Malūkas Edmundas Zenonas",
+    "candidateId": "malukas-edmundas-zenonas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64459.htm",
+    "constituencyName": "Nevėžio",
+    "constituencyNumber": 26,
+    "nominator": "Naujoji sąjunga (socialliberalai)",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-226.htm"
+  },
+  "anketaPath": "samples/html/1998-lapkricio-15-seimo-pakartotiniai/malukas-edmundas-zenonas/candidate.html",
+  "tabCount": 3,
+  "tabsSaved": 3,
+  "anomalies": []
+}

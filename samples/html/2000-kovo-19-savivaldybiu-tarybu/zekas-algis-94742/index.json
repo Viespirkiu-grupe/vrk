@@ -1,0 +1,30 @@
+{
+  "candidate": {
+    "candidateName": "Žėkas Algis",
+    "candidateId": "zekas-algis-94742",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20000319/kandvl.htm-94742.htm",
+    "vrkCandidateId": "94742",
+    "municipality": {
+      "pavadinimas": "Alytaus rajono",
+      "numeris": 3,
+      "savivaldybesId": "564",
+      "mandatai": 25
+    },
+    "list": {
+      "pavadinimas": "Lietuvos valstiečių partijos ir Krikščionių demokratų sąjungos koalicija",
+      "rusis": "koalicija",
+      "numeris": 1,
+      "sarasoId": "2791",
+      "vrkSprendimas": null,
+      "koalicijosPartijos": [
+        "Lietuvos valstiečių partija",
+        "Krikščionių demokratų sąjunga"
+      ]
+    },
+    "listPosition": 5
+  },
+  "anketaPath": "samples/html/2000-kovo-19-savivaldybiu-tarybu/zekas-algis-94742/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

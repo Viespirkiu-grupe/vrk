@@ -1,0 +1,75 @@
+{
+  "electionId": "2023-rugsejo-3-seimo-raseiniai-kedainiai",
+  "candidate": {
+    "candidateName": "Antanas TAUTKUS",
+    "candidateId": "antanas-tautkus",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasAnketa_rkndId-2435267.html"
+  },
+  "anketaPath": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/antanas-tautkus/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasAnketa_rkndId-2435267.html",
+      "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/antanas-tautkus/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasBiografija_rkndId-2435267.html",
+      "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/antanas-tautkus/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasTurtoPajDekl_rkndId-2435267.html",
+      "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/antanas-tautkus/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasPrivInterDekl_rkndId-2435267.html",
+      "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/antanas-tautkus/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1564/dalyviai/atstovaujamasis_pkdId-18170.html",
+      "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/antanas-tautkus/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasKita_rkndId-2435267.html",
+      "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/antanas-tautkus/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "atstovaujamasis-pkdid-18170",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1564/dalyviai/atstovaujamasis_pkdId-18170.html",
+      "campaignDir": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/antanas-tautkus/campaigns/atstovaujamasis-pkdid-18170",
+      "tabCount": 1,
+      "tabSamples": [
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1564/dalyviai/savarankiskasAukotojai_pkdId-18170.html",
+          "path": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/antanas-tautkus/campaigns/atstovaujamasis-pkdid-18170/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2023-rugsejo-3-seimo-raseiniai-kedainiai/antanas-tautkus/campaigns/atstovaujamasis-pkdid-18170/index.json"
+    }
+  ],
+  "anomalies": []
+}

@@ -1,0 +1,51 @@
+{
+  "electionId": "2025-kovo-16-meru",
+  "candidate": {
+    "candidateName": "Romanas STEPONAVIČIUS",
+    "candidateId": "romanas-steponavicius",
+    "candidateNote": "išbrauktas - Seimo nutarimu",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437795.html"
+  },
+  "anketaPath": "samples/html/2025-kovo-16-meru/romanas-steponavicius/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437795.html",
+      "path": "samples/html/2025-kovo-16-meru/romanas-steponavicius/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasBiografija_rkndId-2437795.html",
+      "path": "samples/html/2025-kovo-16-meru/romanas-steponavicius/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasTurtoPajDekl_rkndId-2437795.html",
+      "path": "samples/html/2025-kovo-16-meru/romanas-steponavicius/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasPrivInterDekl_rkndId-2437795.html",
+      "path": "samples/html/2025-kovo-16-meru/romanas-steponavicius/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasKita_rkndId-2437795.html",
+      "path": "samples/html/2025-kovo-16-meru/romanas-steponavicius/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

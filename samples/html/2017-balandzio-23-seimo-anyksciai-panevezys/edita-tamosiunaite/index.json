@@ -1,0 +1,67 @@
+{
+  "electionId": "2017-balandzio-23-seimo-anyksciai-panevezys",
+  "candidate": {
+    "candidateName": "Edita TAMOŠIŪNAITĖ",
+    "candidateId": "edita-tamosiunaite",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasAnketa_rkndId-1106664.html"
+  },
+  "anketaPath": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/edita-tamosiunaite/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasAnketa_rkndId-1106664.html",
+      "path": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/edita-tamosiunaite/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasBiografija_rkndId-1106664.html",
+      "path": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/edita-tamosiunaite/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasTurtas_rkndId-1106664.html",
+      "path": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/edita-tamosiunaite/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracija",
+      "slug": "privaciu-interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasInteresai_rkndId-1106664.html",
+      "path": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/edita-tamosiunaite/privaciu-interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/844/dalyviai/atstovaujamasis_pkdId-1630.html",
+      "path": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/edita-tamosiunaite/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasKita_rkndId-1106664.html",
+      "path": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/edita-tamosiunaite/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "atstovaujamasis-pkdid-1630",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/844/dalyviai/atstovaujamasis_pkdId-1630.html",
+      "campaignDir": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/edita-tamosiunaite/campaigns/atstovaujamasis-pkdid-1630",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2017-balandzio-23-seimo-anyksciai-panevezys/edita-tamosiunaite/campaigns/atstovaujamasis-pkdid-1630/index.json"
+    }
+  ],
+  "anomalies": []
+}

@@ -1,0 +1,107 @@
+{
+  "electionId": "2011-vasario-13-seimo-marijampole",
+  "candidate": {
+    "candidateName": "Albinas MITRULEVIČIUS",
+    "candidateId": "albinas-mitrulevicius",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26312/Kandidato26312Anketa.html",
+    "vrkCandidateId": "26312",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Marijampolės",
+      "apygardosNumeris": 29,
+      "apygardosId": "7192",
+      "iskele": "Lietuvos socialdemokratų partija"
+    }
+  },
+  "anketaPath": "samples/html/2011-vasario-13-seimo-marijampole/albinas-mitrulevicius/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26312/Kandidato26312Anketa.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/albinas-mitrulevicius/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26312/Kandidato26312Biografija.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/albinas-mitrulevicius/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26312/Kandidato26312Deklaracijos.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/albinas-mitrulevicius/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26312/Kandidato26312InteresuDeklaracija.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/albinas-mitrulevicius/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26312/Kandidato26312Kita.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/albinas-mitrulevicius/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-4570",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4570/Dalyvio4570Izdininkas.html",
+      "campaignDir": "samples/html/2011-vasario-13-seimo-marijampole/albinas-mitrulevicius/campaigns/dalyvis-4570",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4570/Dalyvio4570Izdininkas.html",
+          "path": "samples/html/2011-vasario-13-seimo-marijampole/albinas-mitrulevicius/campaigns/dalyvis-4570/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4570/Dalyvio4570Auditorius.html",
+          "path": "samples/html/2011-vasario-13-seimo-marijampole/albinas-mitrulevicius/campaigns/dalyvis-4570/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4570/Dalyvio4570AukotojuSarasas.html",
+          "path": "samples/html/2011-vasario-13-seimo-marijampole/albinas-mitrulevicius/campaigns/dalyvis-4570/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4570/Dalyvio4570FinansavimoAtaskaitos.html",
+          "path": "samples/html/2011-vasario-13-seimo-marijampole/albinas-mitrulevicius/campaigns/dalyvis-4570/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4570/Dalyvio4570Sutartys.html",
+          "path": "samples/html/2011-vasario-13-seimo-marijampole/albinas-mitrulevicius/campaigns/dalyvis-4570/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2011-vasario-13-seimo-marijampole/albinas-mitrulevicius/campaigns/dalyvis-4570/index.json"
+    }
+  ],
+  "anomalies": []
+}

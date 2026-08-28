@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Davydovas Sergiejus",
+    "candidateId": "davydovas-sergiejus",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65087.htm",
+    "constituencyName": "Nevėžio",
+    "constituencyNumber": 26,
+    "nominator": "Lietuvos demokratinė darbo partija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-392.htm"
+  },
+  "anketaPath": "samples/html/1999-kovo-21-seimo-pakartotiniai/davydovas-sergiejus/candidate.html",
+  "tabCount": 3,
+  "tabsSaved": 3,
+  "anomalies": []
+}

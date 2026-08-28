@@ -3,10 +3,15 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scraper.elections.savivaldybiu_2011.anketa_parser import parse_anketa_sample
+from scraper.elections.savivaldybiu_2011.anketa_parser import (
+    DEFAULT_RESULTS_PATH,
+    parse_anketa_sample,
+)
 from scraper.elections.savivaldybiu_2011.candidate_samples import EXPECTED_TABS
 from scraper.elections.savivaldybiu_2011.sitemap import ELECTION_ID
 from scraper.elections.seimo_zirmunu_2015.anketa_parser import _normalize_turto_ir_pajamu_data
+
+from local_data import require
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -41,6 +46,7 @@ class Savivaldybiu2011AnketaParserTests(unittest.TestCase):
         self.assertEqual(self.norkus["candidateName"], "Darius Norkus")
 
     def test_self_nominated_individual(self) -> None:
+        require(SAMPLES_ROOT / "lists")
         k = self.norkus["kandidatavimas"]
         self.assertEqual(k["vrkCandidateId"], "42302")
         self.assertEqual(k["savivaldybe"], "Vilniaus miesto savivaldybė")
@@ -89,6 +95,7 @@ class Savivaldybiu2011AnketaParserTests(unittest.TestCase):
         self.assertEqual(self.karlonas["kandidatavimas"]["tarybosNarys"]["listKind"], "partiju-koalicija")
 
     def test_party_list_candidate_and_elected_status(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         kita = self.uspaskich["normalized"]["profilis"]["kita"]
         self.assertEqual(kita["iskele"]["reiksme"], "Darbo partija")
         self.assertNotIn("iskele-2", kita)

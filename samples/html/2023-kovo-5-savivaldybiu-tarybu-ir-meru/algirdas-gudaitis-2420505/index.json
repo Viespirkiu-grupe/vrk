@@ -1,0 +1,70 @@
+{
+  "electionId": "2023-kovo-5-savivaldybiu-tarybu-ir-meru",
+  "candidate": {
+    "candidateName": "Algirdas GUDAITIS",
+    "candidateId": "algirdas-gudaitis-2420505",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasAnketa_2023_rkndId-2420505.html",
+    "candidateNote": "",
+    "vrkCandidateId": "2420505",
+    "municipality": {
+      "id": "22012",
+      "number": 12,
+      "name": "Jurbarko rajono"
+    },
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": {
+        "id": "32528",
+        "number": 7,
+        "name": "Demokratų sąjunga „Vardan Lietuvos“"
+      },
+      "listPosition": 1,
+      "postElectionPosition": 2,
+      "elected": true
+    }
+  },
+  "anketaPath": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-gudaitis-2420505/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasAnketa_2023_rkndId-2420505.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-gudaitis-2420505/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasBiografija_rkndId-2420505.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-gudaitis-2420505/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasTurtoPajDekl_rkndId-2420505.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-gudaitis-2420505/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasPrivInterDekl_rkndId-2420505.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-gudaitis-2420505/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasKt_rkndId-2420505.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-gudaitis-2420505/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

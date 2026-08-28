@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Šablinskas Eduardas",
+    "candidateId": "sablinskas-eduardas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65088.htm",
+    "constituencyName": "Naujosios Vilnios",
+    "constituencyNumber": 10,
+    "nominator": "Naujoji sąjunga (socialliberalai)",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-404.htm"
+  },
+  "anketaPath": "samples/html/1999-kovo-21-seimo-pakartotiniai/sablinskas-eduardas/candidate.html",
+  "tabCount": 3,
+  "tabsSaved": 3,
+  "anomalies": []
+}

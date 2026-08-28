@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-3987",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3987/Dalyvio3987Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3987/Dalyvio3987Izdininkas.html",
+      "path": "samples/html/2009-ep/vytautas-landsbergis/campaigns/dalyvis-3987/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3987/Dalyvio3987Auditorius.html",
+      "path": "samples/html/2009-ep/vytautas-landsbergis/campaigns/dalyvis-3987/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukotojų sąrašas",
+      "slug": "aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3987/Dalyvio3987AukotojuSarasas.html",
+      "path": "samples/html/2009-ep/vytautas-landsbergis/campaigns/dalyvis-3987/aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3987/Dalyvio3987FinansavimoAtaskaitos.html",
+      "path": "samples/html/2009-ep/vytautas-landsbergis/campaigns/dalyvis-3987/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3987/Dalyvio3987Sutartys.html",
+      "path": "samples/html/2009-ep/vytautas-landsbergis/campaigns/dalyvis-3987/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

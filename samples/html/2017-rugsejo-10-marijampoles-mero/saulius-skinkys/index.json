@@ -1,0 +1,67 @@
+{
+  "electionId": "2017-rugsejo-10-marijampoles-mero",
+  "candidate": {
+    "candidateName": "Saulius SKINKYS",
+    "candidateId": "saulius-skinkys",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasAnketa_rkndId-2399777.html"
+  },
+  "anketaPath": "samples/html/2017-rugsejo-10-marijampoles-mero/saulius-skinkys/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasAnketa_rkndId-2399777.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/saulius-skinkys/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasBiografija_rkndId-2399777.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/saulius-skinkys/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasTurtoPajDekl_rkndId-2399777.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/saulius-skinkys/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasPrivInterDekl_rkndId-2399777.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/saulius-skinkys/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/atstovaujamasis_pkdId-1687.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/saulius-skinkys/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasKt_rkndId-2399777.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/saulius-skinkys/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "atstovaujamasis-pkdid-1687",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/atstovaujamasis_pkdId-1687.html",
+      "campaignDir": "samples/html/2017-rugsejo-10-marijampoles-mero/saulius-skinkys/campaigns/atstovaujamasis-pkdid-1687",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2017-rugsejo-10-marijampoles-mero/saulius-skinkys/campaigns/atstovaujamasis-pkdid-1687/index.json"
+    }
+  ],
+  "anomalies": []
+}

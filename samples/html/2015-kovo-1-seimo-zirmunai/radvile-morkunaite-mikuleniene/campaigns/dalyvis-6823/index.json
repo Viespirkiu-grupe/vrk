@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-6823",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6823/Dalyvio6823Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6823/Dalyvio6823Izdininkas.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/radvile-morkunaite-mikuleniene/campaigns/dalyvis-6823/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6823/Dalyvio6823Auditorius.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/radvile-morkunaite-mikuleniene/campaigns/dalyvis-6823/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6823/Dalyvio6823AukotojuSarasas.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/radvile-morkunaite-mikuleniene/campaigns/dalyvis-6823/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6823/Dalyvio6823FinansavimoAtaskaitos.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/radvile-morkunaite-mikuleniene/campaigns/dalyvis-6823/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6823/Dalyvio6823Sutartys.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/radvile-morkunaite-mikuleniene/campaigns/dalyvis-6823/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

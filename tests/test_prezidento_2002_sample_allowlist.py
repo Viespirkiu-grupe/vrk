@@ -45,23 +45,29 @@ class Prezidento2002SampleAllowlistTests(unittest.TestCase):
         # scans four cards link are 404 on VRK's mirror, so no candidate
         # holds one — and Šustauskas's second questionnaire page was a
         # 404 on the original site already, so his set is one scan short.
-        expected = {
+        parsed = {
             "anketa.html",
             "biografija.html",
             "programa.doc",
+            "index.json",
+        }
+        # Nothing reads the scans -- the record links them by path and there is
+        # no OCR -- so they are outside the tracked fixture subset
+        # (scripts/tracked_fixtures.py) and a clone does not carry them.
+        scans = {
             "pareiskimas.jpg",
             "duomenu-anketa-1.jpg",
             "duomenu-anketa-2.jpg",
             "deklaracija.jpg",
-            "index.json",
         }
         for candidate_id in ALLOWED_CANDIDATE_DIRS:
             with self.subTest(candidate_id):
                 files = {child.name for child in (SAMPLES_ROOT / candidate_id).iterdir()}
+                expected = parsed | scans
                 if candidate_id == "vytautas-sustauskas":
-                    self.assertEqual(files, expected - {"duomenu-anketa-2.jpg"})
-                else:
-                    self.assertEqual(files, expected)
+                    expected -= {"duomenu-anketa-2.jpg"}
+                self.assertEqual(files - expected, set())
+                self.assertLessEqual(parsed, files)
 
 
 if __name__ == "__main__":

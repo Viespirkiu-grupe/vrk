@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Lazinko Vytautas Aleksas",
+    "candidateId": "lazinko-vytautas-aleksas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-40108.htm",
+    "constituencyName": "Naujosios Vilnios",
+    "constituencyNumber": 10,
+    "nominator": "Lietuvos liaudies partija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-101.htm"
+  },
+  "anketaPath": "samples/html/1997-kovo-23-seimo-pakartotiniai/lazinko-vytautas-aleksas/candidate.html",
+  "tabCount": 2,
+  "tabsSaved": 2,
+  "anomalies": []
+}

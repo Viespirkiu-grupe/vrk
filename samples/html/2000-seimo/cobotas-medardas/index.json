@@ -1,0 +1,28 @@
+{
+  "candidate": {
+    "candidateName": "Čobotas Medardas",
+    "candidateId": "cobotas-medardas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20001008/kandvl.htm-154491.htm",
+    "vrkCandidateId": "154491",
+    "roles": [
+      "daugiamandate",
+      "vienmandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Krikščionių demokratų sąjunga",
+      "sarasoNumeris": 12,
+      "sarasoId": "642",
+      "numerisSarase": 10
+    },
+    "vienmandateCandidacy": {
+      "apygarda": "Naujamiesčio",
+      "apygardosNumeris": 1,
+      "apygardosId": "757",
+      "iskele": "Krikščionių demokratų sąjunga"
+    }
+  },
+  "anketaPath": "samples/html/2000-seimo/cobotas-medardas/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

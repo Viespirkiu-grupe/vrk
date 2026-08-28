@@ -1,0 +1,93 @@
+{
+  "electionId": "2019-kovo-3-savivaldybiu-tarybu",
+  "candidate": {
+    "candidateName": "Vitalijus MITROFANOVAS",
+    "candidateId": "vitalijus-mitrofanovas-2406746",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/864/rnk1144/kandidatai/savKandidatasAnketa_rkndId-2406746.html",
+    "candidateNote": "",
+    "vrkCandidateId": "2406746",
+    "municipality": {
+      "id": "19982",
+      "number": 1,
+      "name": "Akmenės rajono"
+    },
+    "roles": [
+      "tarybos-narys",
+      "meras"
+    ],
+    "councilCandidacy": {
+      "partyList": {
+        "id": "28232",
+        "number": 4,
+        "name": "Lietuvos socialdemokratų partija"
+      },
+      "listPosition": 1,
+      "postElectionPosition": 1,
+      "elected": false
+    },
+    "mayoralCandidacy": {
+      "round": "I",
+      "nominatedBy": "Lietuvos socialdemokratų partija",
+      "elected": true
+    }
+  },
+  "anketaPath": "samples/html/2019-kovo-3-savivaldybiu-tarybu/vitalijus-mitrofanovas-2406746/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/864/rnk1144/kandidatai/savKandidatasAnketa_rkndId-2406746.html",
+      "path": "samples/html/2019-kovo-3-savivaldybiu-tarybu/vitalijus-mitrofanovas-2406746/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/864/rnk1144/kandidatai/savKandidatasBiografija_rkndId-2406746.html",
+      "path": "samples/html/2019-kovo-3-savivaldybiu-tarybu/vitalijus-mitrofanovas-2406746/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/864/rnk1144/kandidatai/savKandidatasTurtoPajDekl_rkndId-2406746.html",
+      "path": "samples/html/2019-kovo-3-savivaldybiu-tarybu/vitalijus-mitrofanovas-2406746/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/864/rnk1144/kandidatai/savKandidatasPrivInterDekl_rkndId-2406746.html",
+      "path": "samples/html/2019-kovo-3-savivaldybiu-tarybu/vitalijus-mitrofanovas-2406746/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1084/dalyviai/atstovaujamasis_pkdId-2607.html",
+      "path": "samples/html/2019-kovo-3-savivaldybiu-tarybu/vitalijus-mitrofanovas-2406746/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/864/rnk1144/kandidatai/savKandidatasKt_rkndId-2406746.html",
+      "path": "samples/html/2019-kovo-3-savivaldybiu-tarybu/vitalijus-mitrofanovas-2406746/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "atstovaujamasis-pkdid-2607",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1084/dalyviai/atstovaujamasis_pkdId-2607.html",
+      "campaignDir": "samples/html/2019-kovo-3-savivaldybiu-tarybu/vitalijus-mitrofanovas-2406746/campaigns/atstovaujamasis-pkdid-2607",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2019-kovo-3-savivaldybiu-tarybu/vitalijus-mitrofanovas-2406746/campaigns/atstovaujamasis-pkdid-2607/index.json"
+    }
+  ],
+  "anomalies": []
+}

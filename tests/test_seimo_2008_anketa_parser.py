@@ -5,7 +5,10 @@ from pathlib import Path
 
 from bs4 import BeautifulSoup
 
-from scraper.elections.seimo_2008.anketa_parser import parse_anketa_sample
+from scraper.elections.seimo_2008.anketa_parser import (
+    DEFAULT_RESULTS_PATH,
+    parse_anketa_sample,
+)
 from scraper.elections.seimo_2008.candidate_samples import EXPECTED_TABS
 from scraper.elections.seimo_2008.results import RESULTS_TREE
 from scraper.elections.seimo_2008.sitemap import (
@@ -15,6 +18,8 @@ from scraper.elections.seimo_2008.sitemap import (
     build_sitemap_from_sample,
 )
 from scraper.elections.seimo_2012.sitemap import _coalition_member_from_row, extract_side_links
+
+from local_data import require
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -189,6 +194,7 @@ class Seimo2008AnketaParserTests(unittest.TestCase):
         self.assertEqual(index["anomalies"], [])
 
     def test_top_level_fields_and_candidacy(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         self.assertEqual(self.kubilius["electionId"], "2008-seimo")
         self.assertEqual(self.kubilius["candidateName"], "Andrius KUBILIUS")
         self.assertEqual(self.kubilius_stats["anomalies"], [])

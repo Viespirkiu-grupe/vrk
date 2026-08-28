@@ -1,0 +1,90 @@
+{
+  "electionId": "2002-prezidento",
+  "candidate": {
+    "candidateName": "Rimantas Jonas Dagys",
+    "candidateId": "rimantas-jonas-dagys",
+    "vrkCandidateId": "168294",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+    "vrkRegistrationId": "948560",
+    "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948560.htm",
+    "registration": "2002 m lapkričio 12 dienos VRK sprendimu Nr. 134 registruotas kandidatu į Respublikos Prezidentus.",
+    "registeredDate": "2002-11-12",
+    "decision": "VRK sprendimu Nr. 134",
+    "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=193130",
+    "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Dagio_biografija.htm",
+    "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Dagio_programa.doc",
+    "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Dagys_pareiskimas.jpg",
+    "anketosSkenaiUrls": [
+      "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Dagys_anketa.jpg",
+      "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Dagys_anketa2.jpg"
+    ],
+    "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Dagys_deklaracija.jpg",
+    "deklaracijaLabel": "Šeimos turto pajamų deklaracija",
+    "sveikatosSkenaiUrls": [],
+    "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Dagys_nuotrauka.jpg",
+    "websiteUrls": []
+  },
+  "anketaPath": "samples/html/2002-prezidento/rimantas-jonas-dagys/anketa.html",
+  "tabCount": 7,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "path": "samples/html/2002-prezidento/rimantas-jonas-dagys/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Dagio_biografija.htm",
+      "path": "samples/html/2002-prezidento/rimantas-jonas-dagys/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Programa",
+      "slug": "programa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Dagio_programa.doc",
+      "path": "samples/html/2002-prezidento/rimantas-jonas-dagys/programa.doc",
+      "fetched": true
+    },
+    {
+      "label": "Pareiškimas",
+      "slug": "pareiskimas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Dagys_pareiskimas.jpg",
+      "path": "samples/html/2002-prezidento/rimantas-jonas-dagys/pareiskimas.jpg",
+      "fetched": true
+    },
+    {
+      "label": "Duomenų anketa 1",
+      "slug": "duomenu-anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Dagys_anketa.jpg",
+      "path": "samples/html/2002-prezidento/rimantas-jonas-dagys/duomenu-anketa-1.jpg",
+      "fetched": true
+    },
+    {
+      "label": "Duomenų anketa 2",
+      "slug": "duomenu-anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Dagys_anketa2.jpg",
+      "path": "samples/html/2002-prezidento/rimantas-jonas-dagys/duomenu-anketa-2.jpg",
+      "fetched": true
+    },
+    {
+      "label": "Šeimos turto pajamų deklaracija",
+      "slug": "deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Dagys_deklaracija.jpg",
+      "path": "samples/html/2002-prezidento/rimantas-jonas-dagys/deklaracija.jpg",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [
+    {
+      "label": "Patikėtiniai",
+      "slug": "patiketiniai",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948560.htm"
+    }
+  ],
+  "campaignSamples": [],
+  "anomalies": []
+}

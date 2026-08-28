@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Tomaševski Valdemar",
+    "candidateId": "tomasevski-valdemar",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-39684.htm",
+    "constituencyName": "Vilniaus Trakų",
+    "constituencyNumber": 57,
+    "nominator": "Lietuvos lenkų rinkimų akcija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-97.htm"
+  },
+  "anketaPath": "samples/html/1997-kovo-23-seimo-pakartotiniai/tomasevski-valdemar/candidate.html",
+  "tabCount": 2,
+  "tabsSaved": 2,
+  "anomalies": []
+}

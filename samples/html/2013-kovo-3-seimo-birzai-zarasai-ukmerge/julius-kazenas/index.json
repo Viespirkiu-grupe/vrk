@@ -1,0 +1,106 @@
+{
+  "electionId": "2013-kovo-3-seimo-birzai-zarasai-ukmerge",
+  "candidate": {
+    "candidateName": "Julius KAZĖNAS",
+    "candidateId": "julius-kazenas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70575/Kandidato70575Anketa.html",
+    "vrkCandidateId": "70575",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Ukmergės",
+      "apygardosNumeris": 61,
+      "apygardosId": "7435",
+      "iskele": "Išsikėlė pats"
+    }
+  },
+  "anketaPath": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/julius-kazenas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70575/Kandidato70575Anketa.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/julius-kazenas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70575/Kandidato70575Biografija.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/julius-kazenas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70575/Kandidato70575Deklaracijos.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/julius-kazenas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70575/Kandidato70575InteresuDeklaracija.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/julius-kazenas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70575/Kandidato70575Kita.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/julius-kazenas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-6426",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6426/Dalyvio6426Izdininkas.html",
+      "campaignDir": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/julius-kazenas/campaigns/dalyvis-6426",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6426/Dalyvio6426Izdininkas.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/julius-kazenas/campaigns/dalyvis-6426/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6426/Dalyvio6426Auditorius.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/julius-kazenas/campaigns/dalyvis-6426/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6426/Dalyvio6426AukotojuSarasas.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/julius-kazenas/campaigns/dalyvis-6426/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6426/Dalyvio6426FinansavimoAtaskaitos.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/julius-kazenas/campaigns/dalyvis-6426/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6426/Dalyvio6426Sutartys.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/julius-kazenas/campaigns/dalyvis-6426/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/julius-kazenas/campaigns/dalyvis-6426/index.json"
+    }
+  ],
+  "anomalies": []
+}

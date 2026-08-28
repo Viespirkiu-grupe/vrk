@@ -1,0 +1,106 @@
+{
+  "electionId": "2014-ep",
+  "candidate": {
+    "candidateName": "Zigmantas BALČYTIS",
+    "candidateId": "zigmantas-balcytis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/Kandidatai/Kandidatas70635/Kandidato70635Anketa.html",
+    "vrkCandidateId": "70635",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Lietuvos socialdemokratų partija",
+      "sarasoNumeris": 10,
+      "sarasoId": "4895",
+      "numerisSarase": 1
+    }
+  },
+  "anketaPath": "samples/html/2014-ep/zigmantas-balcytis/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/Kandidatai/Kandidatas70635/Kandidato70635Anketa.html",
+      "path": "samples/html/2014-ep/zigmantas-balcytis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/Kandidatai/Kandidatas70635/Kandidato70635Biografija.html",
+      "path": "samples/html/2014-ep/zigmantas-balcytis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/Kandidatai/Kandidatas70635/Kandidato70635Deklaracijos.html",
+      "path": "samples/html/2014-ep/zigmantas-balcytis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/Kandidatai/Kandidatas70635/Kandidato70635InteresuDeklaracija.html",
+      "path": "samples/html/2014-ep/zigmantas-balcytis/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/Kandidatai/Kandidatas70635/Kandidato70635Kita.html",
+      "path": "samples/html/2014-ep/zigmantas-balcytis/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-6477",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/PolitiniuKampanijuFinansavimas/Dalyvis6477/Dalyvio6477Izdininkas.html",
+      "campaignDir": "samples/html/2014-ep/zigmantas-balcytis/campaigns/dalyvis-6477",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/PolitiniuKampanijuFinansavimas/Dalyvis6477/Dalyvio6477Izdininkas.html",
+          "path": "samples/html/2014-ep/zigmantas-balcytis/campaigns/dalyvis-6477/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/PolitiniuKampanijuFinansavimas/Dalyvis6477/Dalyvio6477Auditorius.html",
+          "path": "samples/html/2014-ep/zigmantas-balcytis/campaigns/dalyvis-6477/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/PolitiniuKampanijuFinansavimas/Dalyvis6477/Dalyvio6477AukotojuSarasas.html",
+          "path": "samples/html/2014-ep/zigmantas-balcytis/campaigns/dalyvis-6477/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/PolitiniuKampanijuFinansavimas/Dalyvis6477/Dalyvio6477FinansavimoAtaskaitos.html",
+          "path": "samples/html/2014-ep/zigmantas-balcytis/campaigns/dalyvis-6477/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/426_lt/PolitiniuKampanijuFinansavimas/Dalyvis6477/Dalyvio6477Sutartys.html",
+          "path": "samples/html/2014-ep/zigmantas-balcytis/campaigns/dalyvis-6477/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2014-ep/zigmantas-balcytis/campaigns/dalyvis-6477/index.json"
+    }
+  ],
+  "anomalies": []
+}

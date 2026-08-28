@@ -2,6 +2,47 @@
 
 Sample HTML fixtures under `samples/html/2016-seimo/` are intentionally versioned and test-protected.
 
+## What git carries
+
+`samples/` on the machine that scraped it is 427 MB, two thirds of which is
+base64 portraits embedded in the HTML. That never belonged in git, and for a
+long time none of it was: `.gitignore` ignored `samples/` wholesale, so a fresh
+clone failed 990 tests and errored 194 more, purely because the fixtures were
+absent (issue #83).
+
+What git carries now is a subset, chosen by one rule:
+
+> a fixture unit is tracked when it is at most 1 MiB.
+
+A *unit* is a candidate directory with all its files together, a listing
+subdirectory (`lists/`, `districts/`, `municipalities/`, ...), one election's
+`samples/results/<election-id>/` tree, or a single top-level listing file. Only
+the extensions a parser opens count — `.html`, `.htm`, `.json`, `.doc` — so
+the 2002 presidential declaration scans (`.jpg`, about 1 MB per candidate,
+recorded by path and never read) stay local.
+
+That is 5,344 files and 43 MiB, and it leaves every election with at least one
+candidate to parse; `tests/test_tracked_fixtures.py` asserts exactly that,
+along with git and the rule still agreeing. What a clone does *not* get is 48
+candidates, all of them 2018-2019 pages carrying the portrait as a base64 data
+URI, ten listing trees, nine `results/` trees and four `list.html` listings.
+`scripts/tracked_fixtures.py` is the rule in code:
+
+```bash
+python scripts/tracked_fixtures.py            # what the rule selects
+python scripts/tracked_fixtures.py --check    # does git agree?
+python scripts/tracked_fixtures.py --sync     # make git agree
+```
+
+`--sync` force-adds past the `samples/` ignore rule, which is why new fixtures
+need it: `git add` alone will not see them.
+
+A test that needs something outside the subset — or `sitemaps/`, or `data/`,
+or `samples-full/` — skips rather than fails, naming the command that would
+produce it. `tests/local_data.py` holds that machinery and the root
+`conftest.py` applies it. On a clone the suite is about 1,014 passed and 372
+skipped; here, with everything scraped, 1,383 passed and none skipped.
+
 ## Why fixtures are versioned
 
 Fixtures are used for:
@@ -855,11 +896,24 @@ To intentionally add a new fixture directory, pass:
 2. Validate parser output and anomaly behavior.
 3. Update allowlist test if fixture set is intentionally changed.
 4. Keep fixture set small and representative.
+5. `python scripts/tracked_fixtures.py --sync`, so the fixture reaches git and
+   CI rather than only this laptop.
+
+If the new fixture is over the 1 MiB unit limit, step 5 leaves it untracked on
+purpose. Name it in the election's allowlist test as one a clone does not carry
+(`TRACKED_CANDIDATE_DIRS` in `tests/test_ep_2019_sample_allowlist.py` is the
+worked example), and if it is the only fixture that covers a shape, consider
+whether a smaller candidate covers the same one.
 
 ## Recommended baseline checks
 
 ```bash
+pytest                                        # the suite, about 100 s
+pytest tests/test_tracked_fixtures.py         # git and the 1 MiB rule agree
 pytest tests/test_seimo_2016_sample_allowlist.py
 pytest tests/test_seimo_2016_candidate_samples.py
 pytest tests/test_seimo_2016_campaign_parser.py
 ```
+
+`.github/workflows/tests.yml` runs the whole suite on every push and pull
+request, on Python 3.11 and 3.13.

@@ -21,6 +21,10 @@ ALLOWED_CANDIDATE_DIRS = {
 ALLOWED_SUPPORT_DIRS = {
     "lists",
 }
+# A clone carries none of it: `lists/` is 12.4 MB across the 467 party-list
+# pages, over the 1 MiB limit on a tracked fixture unit
+# (scripts/tracked_fixtures.py).
+TRACKED_SUPPORT_DIRS: set[str] = set()
 ALLOWED_NON_CANDIDATE_FILES = {
     "list.html",
     "lists-index.html",
@@ -42,10 +46,8 @@ class Savivaldybiu2023SampleAllowlistTests(unittest.TestCase):
     def test_samples_directory_contains_expected_support_directories(self) -> None:
         actual_dirs = {child.name for child in SAMPLES_ROOT.iterdir() if child.is_dir()}
 
-        self.assertEqual(
-            actual_dirs,
-            ALLOWED_CANDIDATE_DIRS | ALLOWED_SUPPORT_DIRS,
-        )
+        self.assertEqual(actual_dirs - (ALLOWED_CANDIDATE_DIRS | ALLOWED_SUPPORT_DIRS), set())
+        self.assertLessEqual(ALLOWED_CANDIDATE_DIRS | TRACKED_SUPPORT_DIRS, actual_dirs)
 
     def test_samples_directory_contains_expected_top_level_files(self) -> None:
         actual_files = {

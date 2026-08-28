@@ -1,0 +1,28 @@
+{
+  "candidate": {
+    "candidateName": "Žukauskas Henrikas",
+    "candidateId": "zukauskas-henrikas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20001008/kandvl.htm-151774.htm",
+    "vrkCandidateId": "151774",
+    "roles": [
+      "daugiamandate",
+      "vienmandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Lietuvos liberalų sąjunga",
+      "sarasoNumeris": 8,
+      "sarasoId": "654",
+      "numerisSarase": 15
+    },
+    "vienmandateCandidacy": {
+      "apygarda": "Žaliakalnio",
+      "apygardosNumeris": 14,
+      "apygardosId": "770",
+      "iskele": "Lietuvos liberalų sąjunga"
+    }
+  },
+  "anketaPath": "/Volumes/Disk 1/IT/scraping/vrk/.claude/worktrees/workflow-memory-update-bdefc8/samples-full/2000-seimo/zukauskas-henrikas/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

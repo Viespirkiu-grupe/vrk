@@ -1,0 +1,60 @@
+{
+  "electionId": "2015-birzelio-7-seimo-varena-eisiskes",
+  "candidate": {
+    "candidateId": "miroslavas-monkevicius",
+    "candidateName": "Miroslavas MONKEVIČIUS",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87927/Kandidato87927Anketa.html"
+  },
+  "anketaPath": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/miroslavas-monkevicius/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87927/Kandidato87927Anketa.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/miroslavas-monkevicius/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87927/Kandidato87927Biografija.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/miroslavas-monkevicius/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87927/Kandidato87927Deklaracijos.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/miroslavas-monkevicius/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87927/Kandidato87927InteresuDeklaracija.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/miroslavas-monkevicius/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87927/Kandidato87927Kita.html",
+      "path": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/miroslavas-monkevicius/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-7578",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/PolitiniuKampanijuFinansavimas/Dalyvis7578/Dalyvio7578Izdininkas.html",
+      "campaignDir": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/miroslavas-monkevicius/campaigns/dalyvis-7578",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2015-birzelio-7-seimo-varena-eisiskes/miroslavas-monkevicius/campaigns/dalyvis-7578/index.json"
+    }
+  ],
+  "anomalies": []
+}

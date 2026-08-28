@@ -1,0 +1,107 @@
+{
+  "electionId": "2009-ep",
+  "candidate": {
+    "candidateName": "Rolandas PAKSAS",
+    "candidateId": "rolandas-paksas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25071/Kandidato25071Anketa.html",
+    "vrkCandidateId": "25071",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Partija Tvarka ir teisingumas",
+      "sarasoNumeris": 3,
+      "sarasoId": "3574",
+      "numerisSarase": 1
+    }
+  },
+  "anketaPath": "samples/html/2009-ep/rolandas-paksas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25071/Kandidato25071Anketa.html",
+      "path": "samples/html/2009-ep/rolandas-paksas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25071/Kandidato25071Biografija.html",
+      "path": "samples/html/2009-ep/rolandas-paksas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25071/Kandidato25071Deklaracijos.html",
+      "path": "samples/html/2009-ep/rolandas-paksas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25071/Kandidato25071InteresuDeklaracija.html",
+      "path": "samples/html/2009-ep/rolandas-paksas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25071/Kandidato25071Kita.html",
+      "path": "samples/html/2009-ep/rolandas-paksas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-3982",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3982/Dalyvio3982Izdininkas.html",
+      "campaignDir": "samples/html/2009-ep/rolandas-paksas/campaigns/dalyvis-3982",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3982/Dalyvio3982Izdininkas.html",
+          "path": "samples/html/2009-ep/rolandas-paksas/campaigns/dalyvis-3982/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3982/Dalyvio3982Auditorius.html",
+          "path": "samples/html/2009-ep/rolandas-paksas/campaigns/dalyvis-3982/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukotojų sąrašas",
+          "slug": "aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3982/Dalyvio3982AukotojuSarasas.html",
+          "path": "samples/html/2009-ep/rolandas-paksas/campaigns/dalyvis-3982/aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3982/Dalyvio3982FinansavimoAtaskaitos.html",
+          "path": "samples/html/2009-ep/rolandas-paksas/campaigns/dalyvis-3982/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis3982/Dalyvio3982Sutartys.html",
+          "path": "samples/html/2009-ep/rolandas-paksas/campaigns/dalyvis-3982/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2009-ep/rolandas-paksas/campaigns/dalyvis-3982/index.json"
+    }
+  ],
+  "anomalies": []
+}

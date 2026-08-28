@@ -5,6 +5,7 @@ from pathlib import Path
 
 from scraper.elections.ep_2004.anketa_parser import parse_anketa_html
 from scraper.elections.seimo_2004.anketa_parser import (
+    DEFAULT_RESULTS_PATH,
     finish_candidacy,
     normalize_seimo_2004_anketa_rows,
     parse_anketa_sample,
@@ -20,6 +21,8 @@ from scraper.elections.seimo_2004.sitemap import (
     extract_party_links,
     party_page_records,
 )
+
+from local_data import require
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -223,6 +226,7 @@ class Seimo2004AnketaParserTests(unittest.TestCase):
         self.assertEqual(EXPECTED_TABS, {"anketa", "biografija", "turto-ir-pajamu-deklaracijos"})
 
     def test_top_level_fields_and_candidacy(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         self.assertEqual(self.mazuronis["electionId"], "2004-seimo")
         self.assertEqual(self.mazuronis["candidateName"], "Valentinas MAZURONIS")
         self.assertEqual(
@@ -255,6 +259,7 @@ class Seimo2004AnketaParserTests(unittest.TestCase):
         self.assertEqual(list(self.mazuronis["normalized"].keys()), ["profilis", "anketa", "biografija", "turto-ir-pajamu-deklaracijos"])
 
     def test_constituency_seats_carry_the_round(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         degutiene = self.degutiene["kandidatavimas"]
         self.assertEqual((degutiene["isrinktas"], degutiene["isrinktasKaip"], degutiene["rezultatuTuras"]), (True, "vienmandate", 2))
         balcytis = self.balcytis["kandidatavimas"]
@@ -264,6 +269,7 @@ class Seimo2004AnketaParserTests(unittest.TestCase):
         self.assertNotIn("rezultatuTuras", self.mazuronis["kandidatavimas"])
 
     def test_unranked_list_has_rank_but_no_votes(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         tomasevski = self.tomasevski["kandidatavimas"]
         self.assertEqual(tomasevski["daugiamandate"]["sarasas"], "Lietuvos lenkų rinkimų akcija")
         self.assertEqual(tomasevski["porinkiminisNumerisSarase"], 1)

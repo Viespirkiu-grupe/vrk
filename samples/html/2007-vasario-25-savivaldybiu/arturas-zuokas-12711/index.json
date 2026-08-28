@@ -1,0 +1,49 @@
+{
+  "electionId": "2007-vasario-25-savivaldybiu",
+  "candidate": {
+    "candidateName": "Artūras Zuokas",
+    "candidateId": "arturas-zuokas-12711",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas12711/Kandidato12711Anketa.html",
+    "vrkCandidateId": "12711",
+    "municipality": "Vilniaus miesto savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Liberalų ir centro sąjunga",
+      "listKind": "partija",
+      "listNumber": 4,
+      "listPosition": 1,
+      "selfNominated": false
+    }
+  },
+  "anketaPath": "samples/html/2007-vasario-25-savivaldybiu/arturas-zuokas-12711/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas12711/Kandidato12711Anketa.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/arturas-zuokas-12711/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas12711/Kandidato12711Deklaracijos.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/arturas-zuokas-12711/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas12711/Kandidato12711InteresuDeklaracija.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/arturas-zuokas-12711/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

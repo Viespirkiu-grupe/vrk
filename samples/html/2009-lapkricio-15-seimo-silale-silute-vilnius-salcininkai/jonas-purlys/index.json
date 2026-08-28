@@ -1,0 +1,71 @@
+{
+  "electionId": "2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai",
+  "candidate": {
+    "candidateName": "Jonas PURLYS",
+    "candidateId": "jonas-purlys",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26256/Kandidato26256Anketa.html",
+    "vrkCandidateId": "26256",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Šilalės - Šilutės",
+      "apygardosNumeris": 33,
+      "apygardosId": "7126",
+      "iskele": "Lietuvos Respublikos liberalų sąjūdis"
+    }
+  },
+  "anketaPath": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/jonas-purlys/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26256/Kandidato26256Anketa.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/jonas-purlys/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26256/Kandidato26256Biografija.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/jonas-purlys/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26256/Kandidato26256Deklaracijos.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/jonas-purlys/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26256/Kandidato26256InteresuDeklaracija.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/jonas-purlys/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26256/Kandidato26256Kita.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/jonas-purlys/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-4029",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4029/Dalyvio4029Izdininkas.html",
+      "campaignDir": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/jonas-purlys/campaigns/dalyvis-4029",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/jonas-purlys/campaigns/dalyvis-4029/index.json"
+    }
+  ],
+  "anomalies": []
+}

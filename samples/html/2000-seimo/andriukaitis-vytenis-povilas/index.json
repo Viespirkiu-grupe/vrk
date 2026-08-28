@@ -1,0 +1,30 @@
+{
+  "candidate": {
+    "candidateName": "Andriukaitis Vytenis Povilas",
+    "candidateId": "andriukaitis-vytenis-povilas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20001008/kandvl.htm-154044.htm",
+    "vrkCandidateId": "154044",
+    "roles": [
+      "daugiamandate",
+      "vienmandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "A.Brazausko socialdemokratinė koalicija",
+      "sarasoNumeris": 9,
+      "sarasoId": "698",
+      "numerisSarase": 1,
+      "koalicijosPartija": "Lietuvos socialdemokratų partija",
+      "numerisPartijosSarase": 1
+    },
+    "vienmandateCandidacy": {
+      "apygarda": "Žirmūnų",
+      "apygardosNumeris": 4,
+      "apygardosId": "760",
+      "iskele": "Lietuvos socialdemokratų partija"
+    }
+  },
+  "anketaPath": "samples/html/2000-seimo/andriukaitis-vytenis-povilas/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

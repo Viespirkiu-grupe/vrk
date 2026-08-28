@@ -1,0 +1,54 @@
+{
+  "electionId": "2007-spalio-7-seimo-dzukija",
+  "candidate": {
+    "candidateName": "Antanas TERLECKAS",
+    "candidateId": "antanas-terleckas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19309/Kandidato19309Anketa.html",
+    "vrkCandidateId": "19309",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Dzūkijos",
+      "apygardosNumeris": 69,
+      "apygardosId": "6838",
+      "iskele": "Partija Tvarka ir teisingumas (liberalai demokratai)"
+    }
+  },
+  "anketaPath": "samples/html/2007-spalio-7-seimo-dzukija/antanas-terleckas/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19309/Kandidato19309Anketa.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/antanas-terleckas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19309/Kandidato19309Biografija.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/antanas-terleckas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19309/Kandidato19309Deklaracijos.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/antanas-terleckas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19309/Kandidato19309InteresuDeklaracija.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/antanas-terleckas/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

@@ -1,0 +1,76 @@
+{
+  "electionId": "2025-kovo-16-meru",
+  "candidate": {
+    "candidateName": "Julius LIMANTAS",
+    "candidateId": "julius-limantas",
+    "candidateNote": "",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437798.html"
+  },
+  "anketaPath": "samples/html/2025-kovo-16-meru/julius-limantas/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437798.html",
+      "path": "samples/html/2025-kovo-16-meru/julius-limantas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasBiografija_rkndId-2437798.html",
+      "path": "samples/html/2025-kovo-16-meru/julius-limantas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasTurtoPajDekl_rkndId-2437798.html",
+      "path": "samples/html/2025-kovo-16-meru/julius-limantas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasPrivInterDekl_rkndId-2437798.html",
+      "path": "samples/html/2025-kovo-16-meru/julius-limantas/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1764/dalyviai/atstovaujamasis_pkdId-19891.html",
+      "path": "samples/html/2025-kovo-16-meru/julius-limantas/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasKita_rkndId-2437798.html",
+      "path": "samples/html/2025-kovo-16-meru/julius-limantas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "atstovaujamasis-pkdid-19891",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1764/dalyviai/atstovaujamasis_pkdId-19891.html",
+      "campaignDir": "samples/html/2025-kovo-16-meru/julius-limantas/campaigns/atstovaujamasis-pkdid-19891",
+      "tabCount": 1,
+      "tabSamples": [
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1764/dalyviai/savarankiskasAukotojai_pkdId-19891.html",
+          "path": "samples/html/2025-kovo-16-meru/julius-limantas/campaigns/atstovaujamasis-pkdid-19891/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2025-kovo-16-meru/julius-limantas/campaigns/atstovaujamasis-pkdid-19891/index.json"
+    }
+  ],
+  "anomalies": []
+}

@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Gudas Kęstutis",
+    "candidateId": "gudas-kestutis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64452.htm",
+    "constituencyName": "Nevėžio",
+    "constituencyNumber": 26,
+    "nominator": "Lietuvos centro sąjunga",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-211.htm"
+  },
+  "anketaPath": "samples/html/1998-lapkricio-15-seimo-pakartotiniai/gudas-kestutis/candidate.html",
+  "tabCount": 3,
+  "tabsSaved": 3,
+  "anomalies": []
+}

@@ -1,0 +1,51 @@
+{
+  "campaignKey": "savarankiskasizdininkas-pkdid-1745",
+  "campaignLabel": "",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1044/dalyviai/savarankiskasIzdininkas_pkdId-1745.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1044/dalyviai/savarankiskasIzdininkas_pkdId-1745.html",
+      "path": "samples/html/2018-rugsejo-16-seimo-zanavykai/vigilijus-jukna/campaigns/savarankiskasizdininkas-pkdid-1745/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1044/dalyviai/savarankiskasAuditorius_pkdId-1745.html",
+      "path": "samples/html/2018-rugsejo-16-seimo-zanavykai/vigilijus-jukna/campaigns/savarankiskasizdininkas-pkdid-1745/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1044/dalyviai/savarankiskasAukotojai_pkdId-1745.html",
+      "path": "samples/html/2018-rugsejo-16-seimo-zanavykai/vigilijus-jukna/campaigns/savarankiskasizdininkas-pkdid-1745/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1044/dalyviai/savarankiskasFinansavimas_pkdId-1745.html",
+      "path": "samples/html/2018-rugsejo-16-seimo-zanavykai/vigilijus-jukna/campaigns/savarankiskasizdininkas-pkdid-1745/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1044/dalyviai/savarankiskasSutartys_pkdId-1745.html",
+      "path": "samples/html/2018-rugsejo-16-seimo-zanavykai/vigilijus-jukna/campaigns/savarankiskasizdininkas-pkdid-1745/sutartys.html",
+      "fetched": true
+    },
+    {
+      "label": "Sprendimai",
+      "slug": "sprendimai",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1044/dalyviai/savarankiskasSprendimai_pkdId-1745.html",
+      "path": "samples/html/2018-rugsejo-16-seimo-zanavykai/vigilijus-jukna/campaigns/savarankiskasizdininkas-pkdid-1745/sprendimai.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

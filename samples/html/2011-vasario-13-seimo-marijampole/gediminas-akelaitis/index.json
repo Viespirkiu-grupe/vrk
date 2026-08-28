@@ -1,0 +1,107 @@
+{
+  "electionId": "2011-vasario-13-seimo-marijampole",
+  "candidate": {
+    "candidateName": "Gediminas AKELAITIS",
+    "candidateId": "gediminas-akelaitis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26527/Kandidato26527Anketa.html",
+    "vrkCandidateId": "26527",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Marijampolės",
+      "apygardosNumeris": 29,
+      "apygardosId": "7192",
+      "iskele": "Lietuvos socialdemokratų sąjunga"
+    }
+  },
+  "anketaPath": "samples/html/2011-vasario-13-seimo-marijampole/gediminas-akelaitis/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26527/Kandidato26527Anketa.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/gediminas-akelaitis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26527/Kandidato26527Biografija.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/gediminas-akelaitis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26527/Kandidato26527Deklaracijos.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/gediminas-akelaitis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26527/Kandidato26527InteresuDeklaracija.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/gediminas-akelaitis/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26527/Kandidato26527Kita.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/gediminas-akelaitis/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-4639",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4639/Dalyvio4639Izdininkas.html",
+      "campaignDir": "samples/html/2011-vasario-13-seimo-marijampole/gediminas-akelaitis/campaigns/dalyvis-4639",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4639/Dalyvio4639Izdininkas.html",
+          "path": "samples/html/2011-vasario-13-seimo-marijampole/gediminas-akelaitis/campaigns/dalyvis-4639/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4639/Dalyvio4639Auditorius.html",
+          "path": "samples/html/2011-vasario-13-seimo-marijampole/gediminas-akelaitis/campaigns/dalyvis-4639/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4639/Dalyvio4639AukotojuSarasas.html",
+          "path": "samples/html/2011-vasario-13-seimo-marijampole/gediminas-akelaitis/campaigns/dalyvis-4639/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4639/Dalyvio4639FinansavimoAtaskaitos.html",
+          "path": "samples/html/2011-vasario-13-seimo-marijampole/gediminas-akelaitis/campaigns/dalyvis-4639/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4639/Dalyvio4639Sutartys.html",
+          "path": "samples/html/2011-vasario-13-seimo-marijampole/gediminas-akelaitis/campaigns/dalyvis-4639/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2011-vasario-13-seimo-marijampole/gediminas-akelaitis/campaigns/dalyvis-4639/index.json"
+    }
+  ],
+  "anomalies": []
+}

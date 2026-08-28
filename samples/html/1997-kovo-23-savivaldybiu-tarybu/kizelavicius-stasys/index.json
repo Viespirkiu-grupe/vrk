@@ -1,0 +1,16 @@
+{
+  "candidate": {
+    "candidateName": "Kizelavičius Stasys",
+    "candidateId": "kizelavicius-stasys",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-37945.htm",
+    "municipalityName": "Alytaus miesto",
+    "municipalityNumber": 2,
+    "listNumber": 1,
+    "nominator": "Lietuvos politinių kalinių ir tremtinių sąjunga",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-145+6.htm"
+  },
+  "anketaPath": "samples/html/1997-kovo-23-savivaldybiu-tarybu/kizelavicius-stasys/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

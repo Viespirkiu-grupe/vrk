@@ -1,0 +1,60 @@
+{
+  "electionId": "2015-lapkricio-8-telsiu-mero",
+  "candidate": {
+    "candidateId": "jolanta-rupeikiene",
+    "candidateName": "Jolanta Rupeikienė",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88321/Kandidato88321Anketa.html"
+  },
+  "anketaPath": "samples/html/2015-lapkricio-8-telsiu-mero/jolanta-rupeikiene/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88321/Kandidato88321Anketa.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/jolanta-rupeikiene/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88321/Kandidato88321Biografija.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/jolanta-rupeikiene/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88321/Kandidato88321Deklaracijos.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/jolanta-rupeikiene/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88321/Kandidato88321InteresuDeklaracija.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/jolanta-rupeikiene/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88321/Kandidato88321Kita.html",
+      "path": "samples/html/2015-lapkricio-8-telsiu-mero/jolanta-rupeikiene/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-7613",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/469_lt/PolitiniuKampanijuFinansavimas/Dalyvis7613/Dalyvio7613Izdininkas.html",
+      "campaignDir": "samples/html/2015-lapkricio-8-telsiu-mero/jolanta-rupeikiene/campaigns/dalyvis-7613",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2015-lapkricio-8-telsiu-mero/jolanta-rupeikiene/campaigns/dalyvis-7613/index.json"
+    }
+  ],
+  "anomalies": []
+}

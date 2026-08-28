@@ -1,0 +1,21 @@
+{
+  "candidate": {
+    "candidateName": "Gaižauskas Raimundas",
+    "candidateId": "gaizauskas-raimundas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20001008/kandvl.htm-154474.htm",
+    "vrkCandidateId": "154474",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Šeškinės",
+      "apygardosNumeris": 6,
+      "apygardosId": "762",
+      "iskele": "Lietuvos centro sąjunga"
+    }
+  },
+  "anketaPath": "samples/html/2000-seimo/gaizauskas-raimundas/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

@@ -1,0 +1,54 @@
+{
+  "electionId": "2004-seimo",
+  "candidate": {
+    "candidateName": "Irena DEGUTIENĖ",
+    "candidateId": "irena-degutiene",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_294653.htm",
+    "vrkCandidateId": "294653",
+    "roles": [
+      "daugiamandate",
+      "vienmandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+      "sarasoNumeris": 7,
+      "sarasoId": "1867",
+      "numerisSarase": 4
+    },
+    "vienmandateCandidacy": {
+      "apygarda": "Naujamiesčio",
+      "apygardosNumeris": 1,
+      "apygardosId": "1603",
+      "iskele": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)"
+    }
+  },
+  "anketaPath": "samples/html/2004-seimo/irena-degutiene/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_anketa_l_294653.htm",
+      "path": "samples/html/2004-seimo/irena-degutiene/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_biog_l_294653.htm",
+      "path": "samples/html/2004-seimo/irena-degutiene/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/kandidatai/kand_pajam_l_294653.htm",
+      "path": "samples/html/2004-seimo/irena-degutiene/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

@@ -1,0 +1,43 @@
+{
+  "electionId": "2002-gruodzio-22-savivaldybiu-tarybu",
+  "candidate": {
+    "candidateName": "Vytautas Juozapavičius",
+    "candidateId": "vytautas-juozapavicius-132963",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1354/kandidatai_anketa_jsp_ri_id_15_asm_kod_132963.htm",
+    "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1354/kandidatai_deklaracija_jsp_ri_id_15_asm_kod_132963.htm",
+    "vrkCandidateId": "132963",
+    "municipality": {
+      "pavadinimas": "Akmenės rajono",
+      "numeris": 1,
+      "apygardosId": "1354"
+    },
+    "list": {
+      "pavadinimas": "Lietuvių tautininkų sąjunga",
+      "rusis": "partija",
+      "numeris": 15
+    },
+    "listPosition": 22
+  },
+  "anketaPath": "samples/html/2002-gruodzio-22-savivaldybiu-tarybu/vytautas-juozapavicius-132963/anketa.html",
+  "tabCount": 2,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1354/kandidatai_anketa_jsp_ri_id_15_asm_kod_132963.htm",
+      "path": "samples/html/2002-gruodzio-22-savivaldybiu-tarybu/vytautas-juozapavicius-132963/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1354/kandidatai_deklaracija_jsp_ri_id_15_asm_kod_132963.htm",
+      "path": "samples/html/2002-gruodzio-22-savivaldybiu-tarybu/vytautas-juozapavicius-132963/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

@@ -1,0 +1,50 @@
+{
+  "electionId": "2024-prezidento",
+  "candidate": {
+    "candidateName": "Andrius MAZURONIS",
+    "candidateId": "andrius-mazuronis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1504/rnk1786/kandidatai/KandidatasAnketa_rkndId-2435329.html"
+  },
+  "anketaPath": "samples/html/2024-prezidento/andrius-mazuronis/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1504/rnk1786/kandidatai/KandidatasAnketa_rkndId-2435329.html",
+      "path": "samples/html/2024-prezidento/andrius-mazuronis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1504/rnk1786/kandidatai/KandidatasBiografija_rkndId-2435329.html",
+      "path": "samples/html/2024-prezidento/andrius-mazuronis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1504/rnk1786/kandidatai/KandidatasTurtoPajDekl_rkndId-2435329.html",
+      "path": "samples/html/2024-prezidento/andrius-mazuronis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1504/rnk1786/kandidatai/KandidatasPrivInterDekl_rkndId-2435329.html",
+      "path": "samples/html/2024-prezidento/andrius-mazuronis/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1504/rnk1786/kandidatai/KandidatasKita_rkndId-2435329.html",
+      "path": "samples/html/2024-prezidento/andrius-mazuronis/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

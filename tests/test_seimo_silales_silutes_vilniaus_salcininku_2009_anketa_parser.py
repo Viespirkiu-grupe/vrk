@@ -3,7 +3,10 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scraper.elections.seimo_silales_silutes_vilniaus_salcininku_2009.anketa_parser import parse_anketa_sample
+from scraper.elections.seimo_silales_silutes_vilniaus_salcininku_2009.anketa_parser import (
+    DEFAULT_RESULTS_PATH,
+    parse_anketa_sample,
+)
 from scraper.elections.seimo_silales_silutes_vilniaus_salcininku_2009.candidate_samples import EXPECTED_TABS
 from scraper.elections.seimo_silales_silutes_vilniaus_salcininku_2009.results import RESULTS_TREE
 from scraper.elections.seimo_silales_silutes_vilniaus_salcininku_2009.sitemap import (
@@ -12,6 +15,8 @@ from scraper.elections.seimo_silales_silutes_vilniaus_salcininku_2009.sitemap im
     build_sitemap_from_sample,
 )
 from scraper.elections.seimo_birzu_zarasu_ukmerges_2013.sitemap import extract_district_links
+
+from local_data import require
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -80,6 +85,7 @@ class SeimoSilalesSilutesVilniausSalcininku2009AnketaParserTests(unittest.TestCa
         )
 
     def test_top_level_fields_and_candidacy(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         self.assertEqual(self.winner["electionId"], "2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai")
         self.assertEqual(self.winner_stats["anomalies"], [])
         self.assertEqual(

@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-6826",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6826/Dalyvio6826Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6826/Dalyvio6826Izdininkas.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/ricardas-garuolis/campaigns/dalyvis-6826/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6826/Dalyvio6826Auditorius.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/ricardas-garuolis/campaigns/dalyvis-6826/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6826/Dalyvio6826AukotojuSarasas.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/ricardas-garuolis/campaigns/dalyvis-6826/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6826/Dalyvio6826FinansavimoAtaskaitos.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/ricardas-garuolis/campaigns/dalyvis-6826/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6826/Dalyvio6826Sutartys.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/ricardas-garuolis/campaigns/dalyvis-6826/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

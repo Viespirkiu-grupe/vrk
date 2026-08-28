@@ -1,0 +1,67 @@
+{
+  "electionId": "2017-balandzio-23-meru",
+  "candidate": {
+    "candidateName": "Vidas CIKANA",
+    "candidateId": "vidas-cikana",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk948/kandidatai/savKandidatasAnketa_rkndId-1106682.html"
+  },
+  "anketaPath": "samples/html/2017-balandzio-23-meru/vidas-cikana/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk948/kandidatai/savKandidatasAnketa_rkndId-1106682.html",
+      "path": "samples/html/2017-balandzio-23-meru/vidas-cikana/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk948/kandidatai/savKandidatasBiografija_rkndId-1106682.html",
+      "path": "samples/html/2017-balandzio-23-meru/vidas-cikana/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk948/kandidatai/savKandidatasTurtoPajDekl_rkndId-1106682.html",
+      "path": "samples/html/2017-balandzio-23-meru/vidas-cikana/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk948/kandidatai/savKandidatasPrivInterDekl_rkndId-1106682.html",
+      "path": "samples/html/2017-balandzio-23-meru/vidas-cikana/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/804/dalyviai/atstovaujamasis_pkdId-1628.html",
+      "path": "samples/html/2017-balandzio-23-meru/vidas-cikana/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk948/kandidatai/savKandidatasKt_rkndId-1106682.html",
+      "path": "samples/html/2017-balandzio-23-meru/vidas-cikana/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "atstovaujamasis-pkdid-1628",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/804/dalyviai/atstovaujamasis_pkdId-1628.html",
+      "campaignDir": "samples/html/2017-balandzio-23-meru/vidas-cikana/campaigns/atstovaujamasis-pkdid-1628",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2017-balandzio-23-meru/vidas-cikana/campaigns/atstovaujamasis-pkdid-1628/index.json"
+    }
+  ],
+  "anomalies": []
+}

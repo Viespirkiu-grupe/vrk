@@ -1,0 +1,107 @@
+{
+  "electionId": "2009-ep",
+  "candidate": {
+    "candidateName": "Algirdas PALECKIS",
+    "candidateId": "algirdas-paleckis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25502/Kandidato25502Anketa.html",
+    "vrkCandidateId": "25502",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "\"FRONTO\" PARTIJA",
+      "sarasoNumeris": 2,
+      "sarasoId": "3553",
+      "numerisSarase": 1
+    }
+  },
+  "anketaPath": "samples/html/2009-ep/algirdas-paleckis/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25502/Kandidato25502Anketa.html",
+      "path": "samples/html/2009-ep/algirdas-paleckis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25502/Kandidato25502Biografija.html",
+      "path": "samples/html/2009-ep/algirdas-paleckis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25502/Kandidato25502Deklaracijos.html",
+      "path": "samples/html/2009-ep/algirdas-paleckis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25502/Kandidato25502InteresuDeklaracija.html",
+      "path": "samples/html/2009-ep/algirdas-paleckis/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25502/Kandidato25502Kita.html",
+      "path": "samples/html/2009-ep/algirdas-paleckis/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-4011",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4011/Dalyvio4011Izdininkas.html",
+      "campaignDir": "samples/html/2009-ep/algirdas-paleckis/campaigns/dalyvis-4011",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4011/Dalyvio4011Izdininkas.html",
+          "path": "samples/html/2009-ep/algirdas-paleckis/campaigns/dalyvis-4011/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4011/Dalyvio4011Auditorius.html",
+          "path": "samples/html/2009-ep/algirdas-paleckis/campaigns/dalyvis-4011/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukotojų sąrašas",
+          "slug": "aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4011/Dalyvio4011AukotojuSarasas.html",
+          "path": "samples/html/2009-ep/algirdas-paleckis/campaigns/dalyvis-4011/aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4011/Dalyvio4011FinansavimoAtaskaitos.html",
+          "path": "samples/html/2009-ep/algirdas-paleckis/campaigns/dalyvis-4011/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4011/Dalyvio4011Sutartys.html",
+          "path": "samples/html/2009-ep/algirdas-paleckis/campaigns/dalyvis-4011/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2009-ep/algirdas-paleckis/campaigns/dalyvis-4011/index.json"
+    }
+  ],
+  "anomalies": []
+}

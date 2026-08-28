@@ -1,0 +1,49 @@
+{
+  "electionId": "2007-vasario-25-savivaldybiu",
+  "candidate": {
+    "candidateName": "Rolandas Paksas",
+    "candidateId": "rolandas-paksas-1537",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas1537/Kandidato1537Anketa.html",
+    "vrkCandidateId": "1537",
+    "municipality": "Vilniaus miesto savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Partija Tvarka ir teisingumas (liberalai demokratai)",
+      "listKind": "partija",
+      "listNumber": 5,
+      "listPosition": 1,
+      "selfNominated": false
+    }
+  },
+  "anketaPath": "samples/html/2007-vasario-25-savivaldybiu/rolandas-paksas-1537/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas1537/Kandidato1537Anketa.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/rolandas-paksas-1537/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas1537/Kandidato1537Deklaracijos.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/rolandas-paksas-1537/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas1537/Kandidato1537InteresuDeklaracija.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/rolandas-paksas-1537/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

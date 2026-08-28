@@ -1,0 +1,100 @@
+{
+  "electionId": "2007-spalio-7-seimo-dzukija",
+  "candidate": {
+    "candidateName": "Aurimas TRUNCĖ",
+    "candidateId": "aurimas-trunce",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19296/Kandidato19296Anketa.html",
+    "vrkCandidateId": "19296",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Dzūkijos",
+      "apygardosNumeris": 69,
+      "apygardosId": "6838",
+      "iskele": "Naujoji sąjunga (socialliberalai)"
+    }
+  },
+  "anketaPath": "samples/html/2007-spalio-7-seimo-dzukija/aurimas-trunce/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19296/Kandidato19296Anketa.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/aurimas-trunce/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19296/Kandidato19296Biografija.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/aurimas-trunce/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19296/Kandidato19296Deklaracijos.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/aurimas-trunce/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19296/Kandidato19296InteresuDeklaracija.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/aurimas-trunce/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-3152",
+      "campaignLabel": "Politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3152/Dalyvio3152Izdininkas.html",
+      "campaignDir": "samples/html/2007-spalio-7-seimo-dzukija/aurimas-trunce/campaigns/dalyvis-3152",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3152/Dalyvio3152Izdininkas.html",
+          "path": "samples/html/2007-spalio-7-seimo-dzukija/aurimas-trunce/campaigns/dalyvis-3152/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3152/Dalyvio3152Auditorius.html",
+          "path": "samples/html/2007-spalio-7-seimo-dzukija/aurimas-trunce/campaigns/dalyvis-3152/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukotojų sąrašas",
+          "slug": "aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3152/Dalyvio3152AukotojuSarasas.html",
+          "path": "samples/html/2007-spalio-7-seimo-dzukija/aurimas-trunce/campaigns/dalyvis-3152/aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3152/Dalyvio3152FinansavimoAtaskaitos.html",
+          "path": "samples/html/2007-spalio-7-seimo-dzukija/aurimas-trunce/campaigns/dalyvis-3152/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3152/Dalyvio3152Sutartys.html",
+          "path": "samples/html/2007-spalio-7-seimo-dzukija/aurimas-trunce/campaigns/dalyvis-3152/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2007-spalio-7-seimo-dzukija/aurimas-trunce/campaigns/dalyvis-3152/index.json"
+    }
+  ],
+  "anomalies": []
+}

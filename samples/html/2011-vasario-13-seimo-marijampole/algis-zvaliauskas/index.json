@@ -1,0 +1,71 @@
+{
+  "electionId": "2011-vasario-13-seimo-marijampole",
+  "candidate": {
+    "candidateName": "Algis ŽVALIAUSKAS",
+    "candidateId": "algis-zvaliauskas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26535/Kandidato26535Anketa.html",
+    "vrkCandidateId": "26535",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Marijampolės",
+      "apygardosNumeris": 29,
+      "apygardosId": "7192",
+      "iskele": "Krikščionių partija"
+    }
+  },
+  "anketaPath": "samples/html/2011-vasario-13-seimo-marijampole/algis-zvaliauskas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26535/Kandidato26535Anketa.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/algis-zvaliauskas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26535/Kandidato26535Biografija.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/algis-zvaliauskas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26535/Kandidato26535Deklaracijos.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/algis-zvaliauskas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26535/Kandidato26535InteresuDeklaracija.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/algis-zvaliauskas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26535/Kandidato26535Kita.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/algis-zvaliauskas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-5129",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis5129/Dalyvio5129Izdininkas.html",
+      "campaignDir": "samples/html/2011-vasario-13-seimo-marijampole/algis-zvaliauskas/campaigns/dalyvis-5129",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2011-vasario-13-seimo-marijampole/algis-zvaliauskas/campaigns/dalyvis-5129/index.json"
+    }
+  ],
+  "anomalies": []
+}

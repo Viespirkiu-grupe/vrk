@@ -1,0 +1,21 @@
+{
+  "candidate": {
+    "candidateName": "Vaitas Vilimantas Stanislovas",
+    "candidateId": "vaitas-vilimantas-stanislovas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20001008/kandvl.htm-154634.htm",
+    "vrkCandidateId": "154634",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Krikščionių demokratų sąjunga",
+      "sarasoNumeris": 12,
+      "sarasoId": "642",
+      "numerisSarase": 32
+    }
+  },
+  "anketaPath": "/Volumes/Disk 1/IT/scraping/vrk/.claude/worktrees/workflow-memory-update-bdefc8/samples-full/2000-seimo/vaitas-vilimantas-stanislovas/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

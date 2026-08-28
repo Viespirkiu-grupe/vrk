@@ -12,6 +12,10 @@ ALLOWED_CANDIDATE_DIRS = {
     "paulius-visockas",
     "vigilijus-jukna",
 }
+# The candidate directories a clone carries. The rest embed the portrait as a
+# base64 data URI in the page itself, putting the directory over the 1 MiB
+# limit on a tracked fixture unit (scripts/tracked_fixtures.py).
+TRACKED_CANDIDATE_DIRS = {"mindaugas-tarnauskas", "vigilijus-jukna"}
 ALLOWED_NON_CANDIDATE_FILES = {
     "list.html",
     "page.html",
@@ -26,7 +30,8 @@ class SeimoZanavyku2018SampleAllowlistTests(unittest.TestCase):
             if child.is_dir()
         }
 
-        self.assertEqual(actual_dirs, ALLOWED_CANDIDATE_DIRS)
+        self.assertEqual(actual_dirs - ALLOWED_CANDIDATE_DIRS, set())
+        self.assertLessEqual(TRACKED_CANDIDATE_DIRS, actual_dirs)
 
     def test_samples_directory_contains_expected_top_level_files(self) -> None:
         actual_files = {

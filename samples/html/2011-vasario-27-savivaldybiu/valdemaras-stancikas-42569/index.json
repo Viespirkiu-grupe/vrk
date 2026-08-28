@@ -1,0 +1,56 @@
+{
+  "electionId": "2011-vasario-27-savivaldybiu",
+  "candidate": {
+    "candidateName": "Valdemaras Stančikas",
+    "candidateId": "valdemaras-stancikas-42569",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas42569/Kandidato42569Anketa.html",
+    "vrkCandidateId": "42569",
+    "municipality": "Vilniaus miesto savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Nepartinių kandidatų koalicija \"Vilnius - mūsų reikalas\"",
+      "listKind": "issikelusiu-kandidatu-koalicija",
+      "listNumber": 1,
+      "listPosition": 1,
+      "selfNominated": false
+    }
+  },
+  "anketaPath": "samples/html/2011-vasario-27-savivaldybiu/valdemaras-stancikas-42569/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas42569/Kandidato42569Anketa.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/valdemaras-stancikas-42569/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas42569/Kandidato42569Deklaracijos.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/valdemaras-stancikas-42569/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas42569/Kandidato42569InteresuDeklaracija.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/valdemaras-stancikas-42569/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas42569/Kandidato42569Kita.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/valdemaras-stancikas-42569/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

@@ -1,0 +1,96 @@
+{
+  "electionId": "2015-kovo-1-seimo-zirmunai",
+  "candidate": {
+    "candidateId": "algis-caplikas",
+    "candidateName": "Algis ČAPLIKAS",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas83782/Kandidato83782Anketa.html"
+  },
+  "anketaPath": "samples/html/2015-kovo-1-seimo-zirmunai/algis-caplikas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas83782/Kandidato83782Anketa.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/algis-caplikas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas83782/Kandidato83782Biografija.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/algis-caplikas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas83782/Kandidato83782Deklaracijos.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/algis-caplikas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas83782/Kandidato83782InteresuDeklaracija.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/algis-caplikas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas83782/Kandidato83782Kita.html",
+      "path": "samples/html/2015-kovo-1-seimo-zirmunai/algis-caplikas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-6671",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6671/Dalyvio6671Izdininkas.html",
+      "campaignDir": "samples/html/2015-kovo-1-seimo-zirmunai/algis-caplikas/campaigns/dalyvis-6671",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6671/Dalyvio6671Izdininkas.html",
+          "path": "samples/html/2015-kovo-1-seimo-zirmunai/algis-caplikas/campaigns/dalyvis-6671/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6671/Dalyvio6671Auditorius.html",
+          "path": "samples/html/2015-kovo-1-seimo-zirmunai/algis-caplikas/campaigns/dalyvis-6671/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6671/Dalyvio6671AukotojuSarasas.html",
+          "path": "samples/html/2015-kovo-1-seimo-zirmunai/algis-caplikas/campaigns/dalyvis-6671/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6671/Dalyvio6671FinansavimoAtaskaitos.html",
+          "path": "samples/html/2015-kovo-1-seimo-zirmunai/algis-caplikas/campaigns/dalyvis-6671/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/PolitiniuKampanijuFinansavimas/Dalyvis6671/Dalyvio6671Sutartys.html",
+          "path": "samples/html/2015-kovo-1-seimo-zirmunai/algis-caplikas/campaigns/dalyvis-6671/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2015-kovo-1-seimo-zirmunai/algis-caplikas/campaigns/dalyvis-6671/index.json"
+    }
+  ],
+  "anomalies": []
+}

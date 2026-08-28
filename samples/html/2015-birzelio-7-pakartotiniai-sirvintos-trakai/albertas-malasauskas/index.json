@@ -1,0 +1,99 @@
+{
+  "electionId": "2015-birzelio-7-pakartotiniai-sirvintos-trakai",
+  "candidate": {
+    "candidateName": "Albertas Malašauskas",
+    "candidateId": "albertas-malasauskas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87629/Kandidato87629Anketa.html",
+    "vrkCandidateId": "87629",
+    "municipality": "Trakų rajono savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+      "listNumber": 13,
+      "listPosition": 2
+    }
+  },
+  "anketaPath": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/albertas-malasauskas/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87629/Kandidato87629Anketa.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/albertas-malasauskas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87629/Kandidato87629Deklaracijos.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/albertas-malasauskas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87629/Kandidato87629InteresuDeklaracija.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/albertas-malasauskas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87629/Kandidato87629Kita.html",
+      "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/albertas-malasauskas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-7532",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7532/Dalyvio7532Izdininkas.html",
+      "campaignDir": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/albertas-malasauskas/campaigns/dalyvis-7532",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7532/Dalyvio7532Izdininkas.html",
+          "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/albertas-malasauskas/campaigns/dalyvis-7532/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7532/Dalyvio7532Auditorius.html",
+          "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/albertas-malasauskas/campaigns/dalyvis-7532/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7532/Dalyvio7532AukotojuSarasas.html",
+          "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/albertas-malasauskas/campaigns/dalyvis-7532/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7532/Dalyvio7532FinansavimoAtaskaitos.html",
+          "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/albertas-malasauskas/campaigns/dalyvis-7532/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/PolitiniuKampanijuFinansavimas/Dalyvis7532/Dalyvio7532Sutartys.html",
+          "path": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/albertas-malasauskas/campaigns/dalyvis-7532/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2015-birzelio-7-pakartotiniai-sirvintos-trakai/albertas-malasauskas/campaigns/dalyvis-7532/index.json"
+    }
+  ],
+  "anomalies": []
+}

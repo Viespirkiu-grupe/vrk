@@ -1,0 +1,49 @@
+{
+  "electionId": "2007-vasario-25-savivaldybiu",
+  "candidate": {
+    "candidateName": "Viktor Uspaskich",
+    "candidateId": "viktor-uspaskich-9852",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas9852/Kandidato9852Anketa.html",
+    "vrkCandidateId": "9852",
+    "municipality": "Kėdainių rajono savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Darbo partija",
+      "listKind": "partija",
+      "listNumber": 21,
+      "listPosition": 25,
+      "selfNominated": false
+    }
+  },
+  "anketaPath": "samples/html/2007-vasario-25-savivaldybiu/viktor-uspaskich-9852/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas9852/Kandidato9852Anketa.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/viktor-uspaskich-9852/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas9852/Kandidato9852Deklaracijos.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/viktor-uspaskich-9852/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas9852/Kandidato9852InteresuDeklaracija.html",
+      "path": "samples/html/2007-vasario-25-savivaldybiu/viktor-uspaskich-9852/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

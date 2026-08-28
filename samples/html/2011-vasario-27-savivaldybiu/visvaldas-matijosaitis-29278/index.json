@@ -1,0 +1,56 @@
+{
+  "electionId": "2011-vasario-27-savivaldybiu",
+  "candidate": {
+    "candidateName": "Visvaldas Matijošaitis",
+    "candidateId": "visvaldas-matijosaitis-29278",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas29278/Kandidato29278Anketa.html",
+    "vrkCandidateId": "29278",
+    "municipality": "Kauno miesto savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Koalicija \"Vieningas Kaunas\"",
+      "listKind": "issikelusiu-kandidatu-koalicija",
+      "listNumber": 1,
+      "listPosition": 1,
+      "selfNominated": false
+    }
+  },
+  "anketaPath": "samples/html/2011-vasario-27-savivaldybiu/visvaldas-matijosaitis-29278/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas29278/Kandidato29278Anketa.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/visvaldas-matijosaitis-29278/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas29278/Kandidato29278Deklaracijos.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/visvaldas-matijosaitis-29278/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas29278/Kandidato29278InteresuDeklaracija.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/visvaldas-matijosaitis-29278/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas29278/Kandidato29278Kita.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/visvaldas-matijosaitis-29278/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

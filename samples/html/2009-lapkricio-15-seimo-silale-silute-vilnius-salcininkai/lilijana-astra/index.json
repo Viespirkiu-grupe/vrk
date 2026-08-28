@@ -1,0 +1,71 @@
+{
+  "electionId": "2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai",
+  "candidate": {
+    "candidateName": "Lilijana ASTRA",
+    "candidateId": "lilijana-astra",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26285/Kandidato26285Anketa.html",
+    "vrkCandidateId": "26285",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Vilniaus - Šalčininkų",
+      "apygardosNumeris": 56,
+      "apygardosId": "7125",
+      "iskele": "Tautinė partija LIETUVOS KELIAS"
+    }
+  },
+  "anketaPath": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/lilijana-astra/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26285/Kandidato26285Anketa.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/lilijana-astra/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26285/Kandidato26285Biografija.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/lilijana-astra/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26285/Kandidato26285Deklaracijos.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/lilijana-astra/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26285/Kandidato26285InteresuDeklaracija.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/lilijana-astra/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26285/Kandidato26285Kita.html",
+      "path": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/lilijana-astra/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-4034",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/PolitiniuKampanijuFinansavimas/Dalyvis4034/Dalyvio4034Izdininkas.html",
+      "campaignDir": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/lilijana-astra/campaigns/dalyvis-4034",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai/lilijana-astra/campaigns/dalyvis-4034/index.json"
+    }
+  ],
+  "anomalies": []
+}

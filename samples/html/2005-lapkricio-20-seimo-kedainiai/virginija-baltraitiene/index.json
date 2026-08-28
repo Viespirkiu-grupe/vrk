@@ -1,0 +1,47 @@
+{
+  "electionId": "2005-lapkricio-20-seimo-kedainiai",
+  "candidate": {
+    "candidateName": "Virginija BALTRAITIENĖ",
+    "candidateId": "virginija-baltraitiene",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2005/seimas/kandidatai/kand_anketa_l_315628.htm",
+    "vrkCandidateId": "315628",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Kėdainių",
+      "apygardosNumeris": 43,
+      "apygardosId": "1675",
+      "iskele": "Darbo partija"
+    }
+  },
+  "anketaPath": "samples/html/2005-lapkricio-20-seimo-kedainiai/virginija-baltraitiene/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2005/seimas/kandidatai/kand_anketa_l_315628.htm",
+      "path": "samples/html/2005-lapkricio-20-seimo-kedainiai/virginija-baltraitiene/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2005/seimas/kandidatai/kand_biog_l_315628.htm",
+      "path": "samples/html/2005-lapkricio-20-seimo-kedainiai/virginija-baltraitiene/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2005/seimas/kandidatai/kand_pajam_l_315628.htm",
+      "path": "samples/html/2005-lapkricio-20-seimo-kedainiai/virginija-baltraitiene/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

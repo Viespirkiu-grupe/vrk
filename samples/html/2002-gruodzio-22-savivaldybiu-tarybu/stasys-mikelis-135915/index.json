@@ -1,0 +1,48 @@
+{
+  "electionId": "2002-gruodzio-22-savivaldybiu-tarybu",
+  "candidate": {
+    "candidateName": "Stasys Mikelis",
+    "candidateId": "stasys-mikelis-135915",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1381/kandidatai_anketa_jsp_ri_id_15_asm_kod_135915.htm",
+    "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1381/kandidatai_deklaracija_jsp_ri_id_15_asm_kod_135915.htm",
+    "vrkCandidateId": "135915",
+    "municipality": {
+      "pavadinimas": "Neringos",
+      "numeris": 28,
+      "apygardosId": "1381"
+    },
+    "list": {
+      "pavadinimas": "Koalicija \"Už Neringos ateitį\"",
+      "rusis": "koalicija",
+      "numeris": 20,
+      "koalicijosPartijos": [
+        "Lietuvos krikščionys demokratai",
+        "Tėvynės sąjunga (Lietuvos konservatoriai)"
+      ]
+    },
+    "listPosition": 1,
+    "koalicijosPartija": "Tėvynės sąjunga (Lietuvos konservatoriai)"
+  },
+  "anketaPath": "samples/html/2002-gruodzio-22-savivaldybiu-tarybu/stasys-mikelis-135915/anketa.html",
+  "tabCount": 2,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1381/kandidatai_anketa_jsp_ri_id_15_asm_kod_135915.htm",
+      "path": "samples/html/2002-gruodzio-22-savivaldybiu-tarybu/stasys-mikelis-135915/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/savivaldybes/kandidatai/1381/kandidatai_deklaracija_jsp_ri_id_15_asm_kod_135915.htm",
+      "path": "samples/html/2002-gruodzio-22-savivaldybiu-tarybu/stasys-mikelis-135915/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

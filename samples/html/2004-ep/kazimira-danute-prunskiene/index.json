@@ -1,0 +1,47 @@
+{
+  "electionId": "2004-ep",
+  "candidate": {
+    "candidateName": "Kazimira Danutė PRUNSKIENĖ",
+    "candidateId": "kazimira-danute-prunskiene",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260978.htm",
+    "vrkCandidateId": "260978",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+      "sarasoNumeris": 1,
+      "sarasoId": "1730",
+      "numerisSarase": 1
+    }
+  },
+  "anketaPath": "samples/html/2004-ep/kazimira-danute-prunskiene/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260978.htm",
+      "path": "samples/html/2004-ep/kazimira-danute-prunskiene/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_biog_l_260978.htm",
+      "path": "samples/html/2004-ep/kazimira-danute-prunskiene/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų ir turto deklaracijų pagrindinių duomenų išrašai",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_pajam_l_260978.htm",
+      "path": "samples/html/2004-ep/kazimira-danute-prunskiene/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

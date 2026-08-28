@@ -3,8 +3,13 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scraper.elections.pakartotiniai_silutes_2015.anketa_parser import parse_anketa_sample
+from scraper.elections.pakartotiniai_silutes_2015.anketa_parser import (
+    DEFAULT_RESULTS_PATH,
+    parse_anketa_sample,
+)
 from scraper.elections.pakartotiniai_silutes_2015.sitemap import ELECTION_ID
+
+from local_data import require
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -33,6 +38,7 @@ class PakartotiniaiSilutes2015AnketaParserTests(unittest.TestCase):
         self.assertEqual(self.nauseda["normalized"]["profilis"]["vardas-pavarde"], "Alfredas Stasys Nausėda")
 
     def test_kandidatavimas_carries_the_listing_only_facts(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         # Which list and seat order someone stood on appears on the listing
         # and nowhere on the candidate page — for a dual candidate the profile
         # card does not even print a list number.

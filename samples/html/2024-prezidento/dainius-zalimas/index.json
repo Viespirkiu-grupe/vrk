@@ -1,0 +1,50 @@
+{
+  "electionId": "2024-prezidento",
+  "candidate": {
+    "candidateName": "Dainius ŽALIMAS",
+    "candidateId": "dainius-zalimas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1504/rnk1786/kandidatai/KandidatasAnketa_rkndId-2435333.html"
+  },
+  "anketaPath": "samples/html/2024-prezidento/dainius-zalimas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1504/rnk1786/kandidatai/KandidatasAnketa_rkndId-2435333.html",
+      "path": "samples/html/2024-prezidento/dainius-zalimas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1504/rnk1786/kandidatai/KandidatasBiografija_rkndId-2435333.html",
+      "path": "samples/html/2024-prezidento/dainius-zalimas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1504/rnk1786/kandidatai/KandidatasTurtoPajDekl_rkndId-2435333.html",
+      "path": "samples/html/2024-prezidento/dainius-zalimas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1504/rnk1786/kandidatai/KandidatasPrivInterDekl_rkndId-2435333.html",
+      "path": "samples/html/2024-prezidento/dainius-zalimas/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1504/rnk1786/kandidatai/KandidatasKita_rkndId-2435333.html",
+      "path": "samples/html/2024-prezidento/dainius-zalimas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

@@ -1,0 +1,47 @@
+{
+  "electionId": "2005-lapkricio-20-seimo-kedainiai",
+  "candidate": {
+    "candidateName": "Steponas NAVAJAUSKAS",
+    "candidateId": "steponas-navajauskas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2005/seimas/kandidatai/kand_anketa_l_315627.htm",
+    "vrkCandidateId": "315627",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Kėdainių",
+      "apygardosNumeris": 43,
+      "apygardosId": "1675",
+      "iskele": "Liberalų ir centro sąjunga"
+    }
+  },
+  "anketaPath": "samples/html/2005-lapkricio-20-seimo-kedainiai/steponas-navajauskas/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2005/seimas/kandidatai/kand_anketa_l_315627.htm",
+      "path": "samples/html/2005-lapkricio-20-seimo-kedainiai/steponas-navajauskas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2005/seimas/kandidatai/kand_biog_l_315627.htm",
+      "path": "samples/html/2005-lapkricio-20-seimo-kedainiai/steponas-navajauskas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Pajamų deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2005/seimas/kandidatai/kand_pajam_l_315627.htm",
+      "path": "samples/html/2005-lapkricio-20-seimo-kedainiai/steponas-navajauskas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

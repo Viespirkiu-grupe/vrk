@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Petkevičius Juozapas",
+    "candidateId": "petkevicius-juozapas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65086.htm",
+    "constituencyName": "Naujosios Vilnios",
+    "constituencyNumber": 10,
+    "nominator": "Lietuvos demokratinė darbo partija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-392.htm"
+  },
+  "anketaPath": "samples/html/1999-kovo-21-seimo-pakartotiniai/petkevicius-juozapas/candidate.html",
+  "tabCount": 3,
+  "tabsSaved": 3,
+  "anomalies": []
+}

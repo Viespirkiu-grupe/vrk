@@ -1,0 +1,70 @@
+{
+  "electionId": "2012-seimo",
+  "candidate": {
+    "candidateName": "Tirkišas AMANOVAS",
+    "candidateId": "tirkisas-amanovas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas67211/Kandidato67211Anketa.html",
+    "vrkCandidateId": "67211",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Fabijoniškių",
+      "apygardosNumeris": 5,
+      "apygardosId": "7213",
+      "iskele": "Kovotojų už Lietuvą sąjunga"
+    }
+  },
+  "anketaPath": "samples/html/2012-seimo/tirkisas-amanovas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas67211/Kandidato67211Anketa.html",
+      "path": "samples/html/2012-seimo/tirkisas-amanovas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas67211/Kandidato67211Biografija.html",
+      "path": "samples/html/2012-seimo/tirkisas-amanovas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas67211/Kandidato67211Deklaracijos.html",
+      "path": "samples/html/2012-seimo/tirkisas-amanovas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas67211/Kandidato67211InteresuDeklaracija.html",
+      "path": "samples/html/2012-seimo/tirkisas-amanovas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/Kandidatai/Kandidatas67211/Kandidato67211Kita.html",
+      "path": "samples/html/2012-seimo/tirkisas-amanovas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-5998",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/416_lt/PolitiniuKampanijuFinansavimas/Dalyvis5998/Dalyvio5998Izdininkas.html",
+      "campaignDir": "samples/html/2012-seimo/tirkisas-amanovas/campaigns/dalyvis-5998",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2012-seimo/tirkisas-amanovas/campaigns/dalyvis-5998/index.json"
+    }
+  ],
+  "anomalies": []
+}

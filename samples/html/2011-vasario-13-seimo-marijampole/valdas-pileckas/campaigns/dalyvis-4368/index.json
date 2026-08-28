@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-4368",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4368/Dalyvio4368Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4368/Dalyvio4368Izdininkas.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/valdas-pileckas/campaigns/dalyvis-4368/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4368/Dalyvio4368Auditorius.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/valdas-pileckas/campaigns/dalyvis-4368/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4368/Dalyvio4368AukotojuSarasas.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/valdas-pileckas/campaigns/dalyvis-4368/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4368/Dalyvio4368FinansavimoAtaskaitos.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/valdas-pileckas/campaigns/dalyvis-4368/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4368/Dalyvio4368Sutartys.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/valdas-pileckas/campaigns/dalyvis-4368/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

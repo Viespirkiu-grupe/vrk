@@ -1,0 +1,16 @@
+{
+  "candidate": {
+    "candidateName": "Kasinskas Jonas",
+    "candidateId": "kasinskas-jonas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43518.htm",
+    "municipalityName": "Švenčionių rajono",
+    "municipalityNumber": 47,
+    "listNumber": 8,
+    "nominator": "Lietuvos demokratinė darbo partija",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+4.htm"
+  },
+  "anketaPath": "samples/html/1997-birzelio-29-svenciniu-tarybos-pakartotiniai/kasinskas-jonas/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

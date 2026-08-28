@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-3149",
+  "campaignLabel": "Politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3149/Dalyvio3149Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3149/Dalyvio3149Izdininkas.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/vytautas-jurgis-kadzys/campaigns/dalyvis-3149/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3149/Dalyvio3149Auditorius.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/vytautas-jurgis-kadzys/campaigns/dalyvis-3149/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukotojų sąrašas",
+      "slug": "aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3149/Dalyvio3149AukotojuSarasas.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/vytautas-jurgis-kadzys/campaigns/dalyvis-3149/aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3149/Dalyvio3149FinansavimoAtaskaitos.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/vytautas-jurgis-kadzys/campaigns/dalyvis-3149/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3149/Dalyvio3149Sutartys.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/vytautas-jurgis-kadzys/campaigns/dalyvis-3149/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

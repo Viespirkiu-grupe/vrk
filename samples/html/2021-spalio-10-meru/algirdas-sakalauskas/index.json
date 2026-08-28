@@ -1,0 +1,67 @@
+{
+  "electionId": "2021-spalio-10-meru",
+  "candidate": {
+    "candidateName": "Algirdas SAKALAUSKAS",
+    "candidateId": "algirdas-sakalauskas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasAnketa_rkndId-2420430.html"
+  },
+  "anketaPath": "samples/html/2021-spalio-10-meru/algirdas-sakalauskas/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasAnketa_rkndId-2420430.html",
+      "path": "samples/html/2021-spalio-10-meru/algirdas-sakalauskas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasBiografija_rkndId-2420430.html",
+      "path": "samples/html/2021-spalio-10-meru/algirdas-sakalauskas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasTurtoPajDekl_rkndId-2420430.html",
+      "path": "samples/html/2021-spalio-10-meru/algirdas-sakalauskas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasPrivInterDekl_rkndId-2420430.html",
+      "path": "samples/html/2021-spalio-10-meru/algirdas-sakalauskas/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1404/dalyviai/atstovaujamasis_pkdId-16847.html",
+      "path": "samples/html/2021-spalio-10-meru/algirdas-sakalauskas/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasKt_rkndId-2420430.html",
+      "path": "samples/html/2021-spalio-10-meru/algirdas-sakalauskas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "atstovaujamasis-pkdid-16847",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1404/dalyviai/atstovaujamasis_pkdId-16847.html",
+      "campaignDir": "samples/html/2021-spalio-10-meru/algirdas-sakalauskas/campaigns/atstovaujamasis-pkdid-16847",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2021-spalio-10-meru/algirdas-sakalauskas/campaigns/atstovaujamasis-pkdid-16847/index.json"
+    }
+  ],
+  "anomalies": []
+}

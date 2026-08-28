@@ -1,0 +1,28 @@
+{
+  "candidate": {
+    "candidateName": "Laugalis Victor Vitold Vytautas",
+    "candidateId": "laugalis-victor-vitold-vytautas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20001008/kandvl.htm-153202.htm",
+    "vrkCandidateId": "153202",
+    "roles": [
+      "daugiamandate",
+      "vienmandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "sarasoNumeris": 6,
+      "sarasoId": "648",
+      "numerisSarase": 59
+    },
+    "vienmandateCandidacy": {
+      "apygarda": "Vilniaus - Šalčininkų",
+      "apygardosNumeris": 56,
+      "apygardosId": "812",
+      "iskele": "Lietuvos politinių kalinių ir tremtinių sąjunga"
+    }
+  },
+  "anketaPath": "/Volumes/Disk 1/IT/scraping/vrk/.claude/worktrees/workflow-memory-update-bdefc8/samples-full/2000-seimo/laugalis-victor-vitold-vytautas/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

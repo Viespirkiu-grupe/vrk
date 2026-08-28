@@ -1,0 +1,103 @@
+{
+  "electionId": "2009-prezidento",
+  "candidate": {
+    "candidateName": "Loreta GRAUŽINIENĖ",
+    "candidateId": "loreta-grauziniene",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24901/Kandidato24901Anketa.html"
+  },
+  "anketaPath": "samples/html/2009-prezidento/loreta-grauziniene/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24901/Kandidato24901Anketa.html",
+      "path": "samples/html/2009-prezidento/loreta-grauziniene/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24901/Kandidato24901Biografija.html",
+      "path": "samples/html/2009-prezidento/loreta-grauziniene/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24901/Kandidato24901Deklaracijos.html",
+      "path": "samples/html/2009-prezidento/loreta-grauziniene/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24901/Kandidato24901InteresuDeklaracija.html",
+      "path": "samples/html/2009-prezidento/loreta-grauziniene/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24901/Kandidato24901Kita.html",
+      "path": "samples/html/2009-prezidento/loreta-grauziniene/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [
+    {
+      "label": "Patikėtiniai",
+      "slug": "patiketiniai",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24901/Kandidato24901Patiketiniai.html"
+    }
+  ],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-3999",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3999/Dalyvio3999Izdininkas.html",
+      "campaignDir": "samples/html/2009-prezidento/loreta-grauziniene/campaigns/dalyvis-3999",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3999/Dalyvio3999Izdininkas.html",
+          "path": "samples/html/2009-prezidento/loreta-grauziniene/campaigns/dalyvis-3999/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3999/Dalyvio3999Auditorius.html",
+          "path": "samples/html/2009-prezidento/loreta-grauziniene/campaigns/dalyvis-3999/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukotojų sąrašas",
+          "slug": "aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3999/Dalyvio3999AukotojuSarasas.html",
+          "path": "samples/html/2009-prezidento/loreta-grauziniene/campaigns/dalyvis-3999/aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3999/Dalyvio3999FinansavimoAtaskaitos.html",
+          "path": "samples/html/2009-prezidento/loreta-grauziniene/campaigns/dalyvis-3999/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/PolitiniuKampanijuFinansavimas/Dalyvis3999/Dalyvio3999Sutartys.html",
+          "path": "samples/html/2009-prezidento/loreta-grauziniene/campaigns/dalyvis-3999/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2009-prezidento/loreta-grauziniene/campaigns/dalyvis-3999/index.json"
+    }
+  ],
+  "anomalies": []
+}

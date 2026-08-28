@@ -1,0 +1,44 @@
+{
+  "campaignKey": "dalyvis-6492",
+  "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6492/Dalyvio6492Izdininkas.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6492/Dalyvio6492Izdininkas.html",
+      "path": "samples/html/2014-prezidento/bronis-rope/campaigns/dalyvis-6492/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6492/Dalyvio6492Auditorius.html",
+      "path": "samples/html/2014-prezidento/bronis-rope/campaigns/dalyvis-6492/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6492/Dalyvio6492AukotojuSarasas.html",
+      "path": "samples/html/2014-prezidento/bronis-rope/campaigns/dalyvis-6492/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6492/Dalyvio6492FinansavimoAtaskaitos.html",
+      "path": "samples/html/2014-prezidento/bronis-rope/campaigns/dalyvis-6492/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6492/Dalyvio6492Sutartys.html",
+      "path": "samples/html/2014-prezidento/bronis-rope/campaigns/dalyvis-6492/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

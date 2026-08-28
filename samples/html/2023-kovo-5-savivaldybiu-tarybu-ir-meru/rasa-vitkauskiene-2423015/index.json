@@ -1,0 +1,101 @@
+{
+  "electionId": "2023-kovo-5-savivaldybiu-tarybu-ir-meru",
+  "candidate": {
+    "candidateName": "Rasa VITKAUSKIENĖ",
+    "candidateId": "rasa-vitkauskiene-2423015",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasAnketa_2023_rkndId-2423015.html",
+    "candidateNote": "",
+    "vrkCandidateId": "2423015",
+    "municipality": {
+      "id": "21814",
+      "number": 3,
+      "name": "Alytaus rajono"
+    },
+    "roles": [
+      "tarybos-narys",
+      "meras"
+    ],
+    "councilCandidacy": {
+      "partyList": {
+        "id": "32530",
+        "number": 7,
+        "name": "Demokratų sąjunga „Vardan Lietuvos“"
+      },
+      "listPosition": 1,
+      "postElectionPosition": 1,
+      "elected": false
+    },
+    "mayoralCandidacy": {
+      "round": "II",
+      "nominatedBy": "Demokratų sąjunga „Vardan Lietuvos“",
+      "elected": true
+    }
+  },
+  "anketaPath": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/rasa-vitkauskiene-2423015/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasAnketa_2023_rkndId-2423015.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/rasa-vitkauskiene-2423015/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasBiografija_rkndId-2423015.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/rasa-vitkauskiene-2423015/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasTurtoPajDekl_rkndId-2423015.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/rasa-vitkauskiene-2423015/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasPrivInterDekl_rkndId-2423015.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/rasa-vitkauskiene-2423015/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/atstovaujamasis_pkdId-17376.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/rasa-vitkauskiene-2423015/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasKt_rkndId-2423015.html",
+      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/rasa-vitkauskiene-2423015/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "atstovaujamasis-pkdid-17376",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/atstovaujamasis_pkdId-17376.html",
+      "campaignDir": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/rasa-vitkauskiene-2423015/campaigns/atstovaujamasis-pkdid-17376",
+      "tabCount": 1,
+      "tabSamples": [
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasAukotojai_pkdId-17376.html",
+          "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/rasa-vitkauskiene-2423015/campaigns/atstovaujamasis-pkdid-17376/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/rasa-vitkauskiene-2423015/campaigns/atstovaujamasis-pkdid-17376/index.json"
+    }
+  ],
+  "anomalies": []
+}

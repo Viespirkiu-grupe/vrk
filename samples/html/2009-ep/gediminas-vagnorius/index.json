@@ -1,0 +1,107 @@
+{
+  "electionId": "2009-ep",
+  "candidate": {
+    "candidateName": "Gediminas VAGNORIUS",
+    "candidateId": "gediminas-vagnorius",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25492/Kandidato25492Anketa.html",
+    "vrkCandidateId": "25492",
+    "roles": [
+      "daugiamandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+      "sarasoNumeris": 10,
+      "sarasoId": "3567",
+      "numerisSarase": 1
+    }
+  },
+  "anketaPath": "samples/html/2009-ep/gediminas-vagnorius/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25492/Kandidato25492Anketa.html",
+      "path": "samples/html/2009-ep/gediminas-vagnorius/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25492/Kandidato25492Biografija.html",
+      "path": "samples/html/2009-ep/gediminas-vagnorius/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25492/Kandidato25492Deklaracijos.html",
+      "path": "samples/html/2009-ep/gediminas-vagnorius/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25492/Kandidato25492InteresuDeklaracija.html",
+      "path": "samples/html/2009-ep/gediminas-vagnorius/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25492/Kandidato25492Kita.html",
+      "path": "samples/html/2009-ep/gediminas-vagnorius/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-4006",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4006/Dalyvio4006Izdininkas.html",
+      "campaignDir": "samples/html/2009-ep/gediminas-vagnorius/campaigns/dalyvis-4006",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4006/Dalyvio4006Izdininkas.html",
+          "path": "samples/html/2009-ep/gediminas-vagnorius/campaigns/dalyvis-4006/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4006/Dalyvio4006Auditorius.html",
+          "path": "samples/html/2009-ep/gediminas-vagnorius/campaigns/dalyvis-4006/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukotojų sąrašas",
+          "slug": "aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4006/Dalyvio4006AukotojuSarasas.html",
+          "path": "samples/html/2009-ep/gediminas-vagnorius/campaigns/dalyvis-4006/aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4006/Dalyvio4006FinansavimoAtaskaitos.html",
+          "path": "samples/html/2009-ep/gediminas-vagnorius/campaigns/dalyvis-4006/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/PolitiniuKampanijuFinansavimas/Dalyvis4006/Dalyvio4006Sutartys.html",
+          "path": "samples/html/2009-ep/gediminas-vagnorius/campaigns/dalyvis-4006/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2009-ep/gediminas-vagnorius/campaigns/dalyvis-4006/index.json"
+    }
+  ],
+  "anomalies": []
+}

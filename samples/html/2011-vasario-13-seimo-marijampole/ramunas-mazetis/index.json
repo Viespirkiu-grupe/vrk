@@ -1,0 +1,71 @@
+{
+  "electionId": "2011-vasario-13-seimo-marijampole",
+  "candidate": {
+    "candidateName": "Ramūnas MAŽĖTIS",
+    "candidateId": "ramunas-mazetis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26313/Kandidato26313Anketa.html",
+    "vrkCandidateId": "26313",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Marijampolės",
+      "apygardosNumeris": 29,
+      "apygardosId": "7192",
+      "iskele": "Naujoji sąjunga (socialliberalai)"
+    }
+  },
+  "anketaPath": "samples/html/2011-vasario-13-seimo-marijampole/ramunas-mazetis/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26313/Kandidato26313Anketa.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/ramunas-mazetis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26313/Kandidato26313Biografija.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/ramunas-mazetis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26313/Kandidato26313Deklaracijos.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/ramunas-mazetis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26313/Kandidato26313InteresuDeklaracija.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/ramunas-mazetis/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26313/Kandidato26313Kita.html",
+      "path": "samples/html/2011-vasario-13-seimo-marijampole/ramunas-mazetis/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-4436",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/PolitiniuKampanijuFinansavimas/Dalyvis4436/Dalyvio4436Izdininkas.html",
+      "campaignDir": "samples/html/2011-vasario-13-seimo-marijampole/ramunas-mazetis/campaigns/dalyvis-4436",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2011-vasario-13-seimo-marijampole/ramunas-mazetis/campaigns/dalyvis-4436/index.json"
+    }
+  ],
+  "anomalies": []
+}

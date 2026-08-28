@@ -1,0 +1,105 @@
+{
+  "electionId": "2002-prezidento",
+  "candidate": {
+    "candidateName": "Vytautas Šerėnas",
+    "candidateId": "vytautas-serenas",
+    "vrkCandidateId": "168286",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+    "vrkRegistrationId": "948553",
+    "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948553.htm",
+    "registration": "2002 m lapkričio 8 dienos VRK sprendimu Nr. 117 registruotas kandidatu į Respublikos Prezidentus.",
+    "registeredDate": "2002-11-08",
+    "decision": "VRK sprendimu Nr. 117",
+    "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=192829",
+    "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Sereno_biografija.htm",
+    "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Sereno_programa.doc",
+    "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Serenas_pareiskimas.jpg",
+    "anketosSkenaiUrls": [
+      "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Serenas_anketa1.jpg",
+      "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Serenas_anketa2.jpg"
+    ],
+    "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Serenas_deklaracija.jpg",
+    "deklaracijaLabel": "Šeimos turto pajamų deklaracija",
+    "sveikatosSkenaiUrls": [
+      "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Serenas_sveikata1.jpg",
+      "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Serenas_sveikata2.jpg"
+    ],
+    "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/serenas_nuotrauka.jpg",
+    "websiteUrls": [
+      "http://www.lnk.lt/prezidentas"
+    ]
+  },
+  "anketaPath": "samples/html/2002-prezidento/vytautas-serenas/anketa.html",
+  "tabCount": 7,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "path": "samples/html/2002-prezidento/vytautas-serenas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Sereno_biografija.htm",
+      "path": "samples/html/2002-prezidento/vytautas-serenas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Programa",
+      "slug": "programa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Sereno_programa.doc",
+      "path": "samples/html/2002-prezidento/vytautas-serenas/programa.doc",
+      "fetched": true
+    },
+    {
+      "label": "Pareiškimas",
+      "slug": "pareiskimas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Serenas_pareiskimas.jpg",
+      "path": "samples/html/2002-prezidento/vytautas-serenas/pareiskimas.jpg",
+      "fetched": true
+    },
+    {
+      "label": "Duomenų anketa 1",
+      "slug": "duomenu-anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Serenas_anketa1.jpg",
+      "path": "samples/html/2002-prezidento/vytautas-serenas/duomenu-anketa-1.jpg",
+      "fetched": true
+    },
+    {
+      "label": "Duomenų anketa 2",
+      "slug": "duomenu-anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Serenas_anketa2.jpg",
+      "path": "samples/html/2002-prezidento/vytautas-serenas/duomenu-anketa-2.jpg",
+      "fetched": true
+    },
+    {
+      "label": "Šeimos turto pajamų deklaracija",
+      "slug": "deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Serenas_deklaracija.jpg",
+      "path": "samples/html/2002-prezidento/vytautas-serenas/deklaracija.jpg",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [
+    {
+      "label": "Patikėtiniai",
+      "slug": "patiketiniai",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948553.htm"
+    },
+    {
+      "label": "Sveikatos pažyma",
+      "slug": "sveikata",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Serenas_sveikata1.jpg"
+    },
+    {
+      "label": "Sveikatos pažyma",
+      "slug": "sveikata",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Serenas_sveikata2.jpg"
+    }
+  ],
+  "campaignSamples": [],
+  "anomalies": []
+}

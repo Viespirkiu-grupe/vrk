@@ -1,0 +1,97 @@
+{
+  "electionId": "2002-prezidento",
+  "candidate": {
+    "candidateName": "Rolandas Paksas",
+    "candidateId": "rolandas-paksas",
+    "vrkCandidateId": "168284",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+    "vrkRegistrationId": "948551",
+    "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948551.htm",
+    "registration": "2002 m lapkričio 12 dienos VRK sprendimu Nr. 130 registruotas kandidatu į Respublikos Prezidentus.",
+    "registeredDate": "2002-11-12",
+    "decision": "VRK sprendimu Nr. 130",
+    "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=193116",
+    "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Pakso_biografija.htm",
+    "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Pakso_programa.doc",
+    "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paksas_pareiskimas.jpg",
+    "anketosSkenaiUrls": [
+      "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paksas_anketa1.jpg",
+      "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paksas_anketa2.jpg"
+    ],
+    "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paksas_deklaracija.jpg",
+    "deklaracijaLabel": "Šeimos turto pajamų deklaracija",
+    "sveikatosSkenaiUrls": [
+      "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paksas_sveikata.jpg"
+    ],
+    "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paksas_nuotrauka.jpg",
+    "websiteUrls": []
+  },
+  "anketaPath": "samples/html/2002-prezidento/rolandas-paksas/anketa.html",
+  "tabCount": 7,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "path": "samples/html/2002-prezidento/rolandas-paksas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Pakso_biografija.htm",
+      "path": "samples/html/2002-prezidento/rolandas-paksas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Programa",
+      "slug": "programa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Pakso_programa.doc",
+      "path": "samples/html/2002-prezidento/rolandas-paksas/programa.doc",
+      "fetched": true
+    },
+    {
+      "label": "Pareiškimas",
+      "slug": "pareiskimas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paksas_pareiskimas.jpg",
+      "path": "samples/html/2002-prezidento/rolandas-paksas/pareiskimas.jpg",
+      "fetched": true
+    },
+    {
+      "label": "Duomenų anketa 1",
+      "slug": "duomenu-anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paksas_anketa1.jpg",
+      "path": "samples/html/2002-prezidento/rolandas-paksas/duomenu-anketa-1.jpg",
+      "fetched": true
+    },
+    {
+      "label": "Duomenų anketa 2",
+      "slug": "duomenu-anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paksas_anketa2.jpg",
+      "path": "samples/html/2002-prezidento/rolandas-paksas/duomenu-anketa-2.jpg",
+      "fetched": true
+    },
+    {
+      "label": "Šeimos turto pajamų deklaracija",
+      "slug": "deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paksas_deklaracija.jpg",
+      "path": "samples/html/2002-prezidento/rolandas-paksas/deklaracija.jpg",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [
+    {
+      "label": "Patikėtiniai",
+      "slug": "patiketiniai",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948551.htm"
+    },
+    {
+      "label": "Sveikatos pažyma",
+      "slug": "sveikata",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paksas_sveikata.jpg"
+    }
+  ],
+  "campaignSamples": [],
+  "anomalies": []
+}

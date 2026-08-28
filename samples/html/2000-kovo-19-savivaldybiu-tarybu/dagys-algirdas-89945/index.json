@@ -1,0 +1,30 @@
+{
+  "candidate": {
+    "candidateName": "Dagys Algirdas",
+    "candidateId": "dagys-algirdas-89945",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20000319/kandvl.htm-89945.htm",
+    "vrkCandidateId": "89945",
+    "municipality": {
+      "pavadinimas": "Vilniaus miesto",
+      "numeris": 57,
+      "savivaldybesId": "551",
+      "mandatai": 51
+    },
+    "list": {
+      "pavadinimas": "Tėvynės sąjungos (Lietuvos konservatorių) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicija",
+      "rusis": "koalicija",
+      "numeris": 22,
+      "sarasoId": "2799",
+      "vrkSprendimas": null,
+      "koalicijosPartijos": [
+        "Lietuvos politinių kalinių ir tremtinių sąjunga",
+        "Tėvynės sąjunga (Lietuvos konservatoriai)"
+      ]
+    },
+    "listPosition": 49
+  },
+  "anketaPath": "samples/html/2000-kovo-19-savivaldybiu-tarybu/dagys-algirdas-89945/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

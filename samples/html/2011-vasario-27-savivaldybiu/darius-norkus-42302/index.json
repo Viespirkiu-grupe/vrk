@@ -1,0 +1,56 @@
+{
+  "electionId": "2011-vasario-27-savivaldybiu",
+  "candidate": {
+    "candidateName": "Darius Norkus",
+    "candidateId": "darius-norkus-42302",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas42302/Kandidato42302Anketa.html",
+    "vrkCandidateId": "42302",
+    "municipality": "Vilniaus miesto savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": null,
+      "listKind": null,
+      "listNumber": 3,
+      "listPosition": null,
+      "selfNominated": true
+    }
+  },
+  "anketaPath": "samples/html/2011-vasario-27-savivaldybiu/darius-norkus-42302/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas42302/Kandidato42302Anketa.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/darius-norkus-42302/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas42302/Kandidato42302Deklaracijos.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/darius-norkus-42302/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas42302/Kandidato42302InteresuDeklaracija.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/darius-norkus-42302/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/409_lt/Kandidatai/Kandidatas42302/Kandidato42302Kita.html",
+      "path": "samples/html/2011-vasario-27-savivaldybiu/darius-norkus-42302/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

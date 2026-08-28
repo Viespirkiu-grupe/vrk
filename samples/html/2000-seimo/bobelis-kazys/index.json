@@ -1,0 +1,28 @@
+{
+  "candidate": {
+    "candidateName": "Bobelis Kazys",
+    "candidateId": "bobelis-kazys",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20001008/kandvl.htm-154482.htm",
+    "vrkCandidateId": "154482",
+    "roles": [
+      "daugiamandate",
+      "vienmandate"
+    ],
+    "daugiamandateCandidacy": {
+      "sarasas": "Krikščionių demokratų sąjunga",
+      "sarasoNumeris": 12,
+      "sarasoId": "642",
+      "numerisSarase": 1
+    },
+    "vienmandateCandidacy": {
+      "apygarda": "Marijampolės",
+      "apygardosNumeris": 29,
+      "apygardosId": "785",
+      "iskele": "Krikščionių demokratų sąjunga"
+    }
+  },
+  "anketaPath": "samples/html/2000-seimo/bobelis-kazys/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

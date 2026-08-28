@@ -1,0 +1,106 @@
+{
+  "electionId": "2013-kovo-3-seimo-birzai-zarasai-ukmerge",
+  "candidate": {
+    "candidateName": "Nikolajus GUSEVAS",
+    "candidateId": "nikolajus-gusevas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70543/Kandidato70543Anketa.html",
+    "vrkCandidateId": "70543",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Zarasų - Visagino",
+      "apygardosNumeris": 52,
+      "apygardosId": "7434",
+      "iskele": "Lietuvos socialdemokratų partija"
+    }
+  },
+  "anketaPath": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/nikolajus-gusevas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70543/Kandidato70543Anketa.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/nikolajus-gusevas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70543/Kandidato70543Biografija.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/nikolajus-gusevas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70543/Kandidato70543Deklaracijos.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/nikolajus-gusevas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70543/Kandidato70543InteresuDeklaracija.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/nikolajus-gusevas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70543/Kandidato70543Kita.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/nikolajus-gusevas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-6412",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6412/Dalyvio6412Izdininkas.html",
+      "campaignDir": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/nikolajus-gusevas/campaigns/dalyvis-6412",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6412/Dalyvio6412Izdininkas.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/nikolajus-gusevas/campaigns/dalyvis-6412/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6412/Dalyvio6412Auditorius.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/nikolajus-gusevas/campaigns/dalyvis-6412/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6412/Dalyvio6412AukotojuSarasas.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/nikolajus-gusevas/campaigns/dalyvis-6412/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6412/Dalyvio6412FinansavimoAtaskaitos.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/nikolajus-gusevas/campaigns/dalyvis-6412/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6412/Dalyvio6412Sutartys.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/nikolajus-gusevas/campaigns/dalyvis-6412/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/nikolajus-gusevas/campaigns/dalyvis-6412/index.json"
+    }
+  ],
+  "anomalies": []
+}

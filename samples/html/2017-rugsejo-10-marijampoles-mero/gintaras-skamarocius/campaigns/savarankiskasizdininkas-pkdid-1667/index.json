@@ -1,0 +1,44 @@
+{
+  "campaignKey": "savarankiskasizdininkas-pkdid-1667",
+  "campaignLabel": "",
+  "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/savarankiskasIzdininkas_pkdId-1667.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/savarankiskasIzdininkas_pkdId-1667.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/gintaras-skamarocius/campaigns/savarankiskasizdininkas-pkdid-1667/izdininkas.html",
+      "fetched": false
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/savarankiskasAuditorius_pkdId-1667.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/gintaras-skamarocius/campaigns/savarankiskasizdininkas-pkdid-1667/auditorius.html",
+      "fetched": true
+    },
+    {
+      "label": "Aukų ir aukotojų sąrašas",
+      "slug": "auku-ir-aukotoju-sarasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/savarankiskasAukotojai_pkdId-1667.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/gintaras-skamarocius/campaigns/savarankiskasizdininkas-pkdid-1667/auku-ir-aukotoju-sarasas.html",
+      "fetched": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/savarankiskasFinansavimas_pkdId-1667.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/gintaras-skamarocius/campaigns/savarankiskasizdininkas-pkdid-1667/finansavimo-ataskaitos.html",
+      "fetched": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/savarankiskasSutartys_pkdId-1667.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/gintaras-skamarocius/campaigns/savarankiskasizdininkas-pkdid-1667/sutartys.html",
+      "fetched": true
+    }
+  ],
+  "campaignRootPath": ""
+}

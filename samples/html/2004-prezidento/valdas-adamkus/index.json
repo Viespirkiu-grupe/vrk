@@ -1,0 +1,72 @@
+{
+  "electionId": "2004-prezidento",
+  "candidate": {
+    "candidateName": "Valdas ADAMKUS",
+    "candidateId": "valdas-adamkus",
+    "vrkCandidateId": "250279",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/kandidatai_l_19.htm",
+    "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/kand_pajam_l_250279.htm",
+    "vrkRegistrationId": "1759632",
+    "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/patiketiniai_l_1759632.htm",
+    "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/adamkus.doc",
+    "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/prog_adamkus.doc",
+    "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/p_adamkus.gif",
+    "sveikatosPazymejimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/s_adamkus.gif",
+    "nuotraukaPageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/nuotrauka_250279.htm",
+    "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/nuotraukos/19_32611030033.jpg",
+    "websiteUrl": "http://www.adamkus.lt",
+    "registration": "2004 m. gegužės 12 dienos VRK sprendimu Nr. 120 registruotas kandidatu į Respublikos Prezidentus.",
+    "registeredDate": "2004-05-12",
+    "decision": "VRK sprendimu Nr. 120",
+    "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=233611&Condition2="
+  },
+  "anketaPath": "samples/html/2004-prezidento/valdas-adamkus/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/kandidatai_l_19.htm",
+      "path": "samples/html/2004-prezidento/valdas-adamkus/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Deklaracija",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/kand_pajam_l_250279.htm",
+      "path": "samples/html/2004-prezidento/valdas-adamkus/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/adamkus.doc",
+      "path": "samples/html/2004-prezidento/valdas-adamkus/biografija.doc",
+      "fetched": true
+    },
+    {
+      "label": "Programa",
+      "slug": "programa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/prog_adamkus.doc",
+      "path": "samples/html/2004-prezidento/valdas-adamkus/programa.doc",
+      "fetched": true
+    },
+    {
+      "label": "Nuotrauka",
+      "slug": "nuotrauka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/nuotrauka_250279.htm",
+      "path": "samples/html/2004-prezidento/valdas-adamkus/nuotrauka.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [
+    {
+      "label": "Patikėtiniai",
+      "slug": "patiketiniai",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/kandidatai/patiketiniai_l_1759632.htm"
+    }
+  ],
+  "campaignSamples": [],
+  "anomalies": []
+}

@@ -1,0 +1,106 @@
+{
+  "electionId": "2013-kovo-3-seimo-birzai-zarasai-ukmerge",
+  "candidate": {
+    "candidateName": "Valdemaras VALKIŪNAS",
+    "candidateId": "valdemaras-valkiunas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70548/Kandidato70548Anketa.html",
+    "vrkCandidateId": "70548",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Biržų - Kupiškio",
+      "apygardosNumeris": 48,
+      "apygardosId": "7433",
+      "iskele": "Respublikonų partija"
+    }
+  },
+  "anketaPath": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/valdemaras-valkiunas/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70548/Kandidato70548Anketa.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/valdemaras-valkiunas/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70548/Kandidato70548Biografija.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/valdemaras-valkiunas/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70548/Kandidato70548Deklaracijos.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/valdemaras-valkiunas/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70548/Kandidato70548InteresuDeklaracija.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/valdemaras-valkiunas/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70548/Kandidato70548Kita.html",
+      "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/valdemaras-valkiunas/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-6411",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6411/Dalyvio6411Izdininkas.html",
+      "campaignDir": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/valdemaras-valkiunas/campaigns/dalyvis-6411",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6411/Dalyvio6411Izdininkas.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/valdemaras-valkiunas/campaigns/dalyvis-6411/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6411/Dalyvio6411Auditorius.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/valdemaras-valkiunas/campaigns/dalyvis-6411/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6411/Dalyvio6411AukotojuSarasas.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/valdemaras-valkiunas/campaigns/dalyvis-6411/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6411/Dalyvio6411FinansavimoAtaskaitos.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/valdemaras-valkiunas/campaigns/dalyvis-6411/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/PolitiniuKampanijuFinansavimas/Dalyvis6411/Dalyvio6411Sutartys.html",
+          "path": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/valdemaras-valkiunas/campaigns/dalyvis-6411/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2013-kovo-3-seimo-birzai-zarasai-ukmerge/valdemaras-valkiunas/campaigns/dalyvis-6411/index.json"
+    }
+  ],
+  "anomalies": []
+}

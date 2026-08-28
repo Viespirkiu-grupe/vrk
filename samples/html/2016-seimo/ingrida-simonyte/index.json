@@ -1,0 +1,103 @@
+{
+  "electionId": "2016-seimo",
+  "candidate": {
+    "candidateName": "Ingrida ŠIMONYTĖ",
+    "candidateId": "ingrida-simonyte",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/102/rnk426/kandidatai/lrsKandidatasAnketa_rkndId-1104184.html"
+  },
+  "anketaPath": "samples/html/2016-seimo/ingrida-simonyte/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/102/rnk426/kandidatai/lrsKandidatasAnketa_rkndId-1104184.html",
+      "path": "samples/html/2016-seimo/ingrida-simonyte/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/102/rnk426/kandidatai/lrsKandidatasBiografija_rkndId-1104184.html",
+      "path": "samples/html/2016-seimo/ingrida-simonyte/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/102/rnk426/kandidatai/lrsKandidatasTurtas_rkndId-1104184.html",
+      "path": "samples/html/2016-seimo/ingrida-simonyte/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracija",
+      "slug": "privaciu-interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/102/rnk426/kandidatai/lrsKandidatasInteresai_rkndId-1104184.html",
+      "path": "samples/html/2016-seimo/ingrida-simonyte/privaciu-interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/686/dalyviai/savarankiskasIzdininkas_pkdId-826.html",
+      "path": "samples/html/2016-seimo/ingrida-simonyte/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/102/rnk426/kandidatai/lrsKandidatasKita_rkndId-1104184.html",
+      "path": "samples/html/2016-seimo/ingrida-simonyte/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "savarankiskasizdininkas-pkdid-826",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/686/dalyviai/savarankiskasIzdininkas_pkdId-826.html",
+      "campaignDir": "samples/html/2016-seimo/ingrida-simonyte/campaigns/savarankiskasizdininkas-pkdid-826",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/686/dalyviai/savarankiskasIzdininkas_pkdId-826.html",
+          "path": "samples/html/2016-seimo/ingrida-simonyte/campaigns/savarankiskasizdininkas-pkdid-826/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/686/dalyviai/savarankiskasAuditorius_pkdId-826.html",
+          "path": "samples/html/2016-seimo/ingrida-simonyte/campaigns/savarankiskasizdininkas-pkdid-826/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/686/dalyviai/savarankiskasAukotojai_pkdId-826.html",
+          "path": "samples/html/2016-seimo/ingrida-simonyte/campaigns/savarankiskasizdininkas-pkdid-826/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/686/dalyviai/savarankiskasFinansavimas_pkdId-826.html",
+          "path": "samples/html/2016-seimo/ingrida-simonyte/campaigns/savarankiskasizdininkas-pkdid-826/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/686/dalyviai/savarankiskasSutartys_pkdId-826.html",
+          "path": "samples/html/2016-seimo/ingrida-simonyte/campaigns/savarankiskasizdininkas-pkdid-826/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2016-seimo/ingrida-simonyte/campaigns/savarankiskasizdininkas-pkdid-826/index.json"
+    }
+  ],
+  "anomalies": []
+}

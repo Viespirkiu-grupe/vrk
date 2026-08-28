@@ -1,0 +1,16 @@
+{
+  "candidate": {
+    "candidateName": "Cesliak Leokadija",
+    "candidateId": "cesliak-leokadija",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43559.htm",
+    "municipalityName": "Švenčionių rajono",
+    "municipalityNumber": 47,
+    "listNumber": 17,
+    "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+  },
+  "anketaPath": "samples/html/1997-birzelio-29-svenciniu-tarybos-pakartotiniai/cesliak-leokadija/candidate.html",
+  "tabCount": 1,
+  "tabsSaved": 1,
+  "anomalies": []
+}

@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Remeika Rimantas",
+    "candidateId": "remeika-rimantas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-40437.htm",
+    "constituencyName": "Vilniaus Trakų",
+    "constituencyNumber": 57,
+    "nominator": "Lietuvos centro sąjunga",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-105.htm"
+  },
+  "anketaPath": "samples/html/1997-kovo-23-seimo-pakartotiniai/remeika-rimantas/candidate.html",
+  "tabCount": 2,
+  "tabsSaved": 2,
+  "anomalies": []
+}

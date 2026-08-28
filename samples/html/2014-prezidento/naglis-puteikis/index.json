@@ -1,0 +1,103 @@
+{
+  "electionId": "2014-prezidento",
+  "candidate": {
+    "candidateName": "Naglis PUTEIKIS",
+    "candidateId": "naglis-puteikis",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70872/Kandidato70872Anketa.html"
+  },
+  "anketaPath": "samples/html/2014-prezidento/naglis-puteikis/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70872/Kandidato70872Anketa.html",
+      "path": "samples/html/2014-prezidento/naglis-puteikis/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70872/Kandidato70872Biografija.html",
+      "path": "samples/html/2014-prezidento/naglis-puteikis/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70872/Kandidato70872Deklaracijos.html",
+      "path": "samples/html/2014-prezidento/naglis-puteikis/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70872/Kandidato70872InteresuDeklaracija.html",
+      "path": "samples/html/2014-prezidento/naglis-puteikis/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Patikėtiniai",
+      "slug": "patiketiniai",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70872/Kandidato70872Patiketiniai.html",
+      "path": "samples/html/2014-prezidento/naglis-puteikis/patiketiniai.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70872/Kandidato70872Kita.html",
+      "path": "samples/html/2014-prezidento/naglis-puteikis/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-6500",
+      "campaignLabel": "Savarankiško politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6500/Dalyvio6500Izdininkas.html",
+      "campaignDir": "samples/html/2014-prezidento/naglis-puteikis/campaigns/dalyvis-6500",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6500/Dalyvio6500Izdininkas.html",
+          "path": "samples/html/2014-prezidento/naglis-puteikis/campaigns/dalyvis-6500/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6500/Dalyvio6500Auditorius.html",
+          "path": "samples/html/2014-prezidento/naglis-puteikis/campaigns/dalyvis-6500/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukų ir aukotojų sąrašas",
+          "slug": "auku-ir-aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6500/Dalyvio6500AukotojuSarasas.html",
+          "path": "samples/html/2014-prezidento/naglis-puteikis/campaigns/dalyvis-6500/auku-ir-aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6500/Dalyvio6500FinansavimoAtaskaitos.html",
+          "path": "samples/html/2014-prezidento/naglis-puteikis/campaigns/dalyvis-6500/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/423_lt/PolitiniuKampanijuFinansavimas/Dalyvis6500/Dalyvio6500Sutartys.html",
+          "path": "samples/html/2014-prezidento/naglis-puteikis/campaigns/dalyvis-6500/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2014-prezidento/naglis-puteikis/campaigns/dalyvis-6500/index.json"
+    }
+  ],
+  "anomalies": []
+}

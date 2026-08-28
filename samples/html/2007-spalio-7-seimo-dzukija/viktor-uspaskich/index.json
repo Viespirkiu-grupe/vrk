@@ -1,0 +1,100 @@
+{
+  "electionId": "2007-spalio-7-seimo-dzukija",
+  "candidate": {
+    "candidateName": "Viktor USPASKICH",
+    "candidateId": "viktor-uspaskich",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19297/Kandidato19297Anketa.html",
+    "vrkCandidateId": "19297",
+    "roles": [
+      "vienmandate"
+    ],
+    "vienmandateCandidacy": {
+      "apygarda": "Dzūkijos",
+      "apygardosNumeris": 69,
+      "apygardosId": "6838",
+      "iskele": "Darbo partija"
+    }
+  },
+  "anketaPath": "samples/html/2007-spalio-7-seimo-dzukija/viktor-uspaskich/anketa.html",
+  "tabCount": 4,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19297/Kandidato19297Anketa.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/viktor-uspaskich/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19297/Kandidato19297Biografija.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/viktor-uspaskich/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19297/Kandidato19297Deklaracijos.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/viktor-uspaskich/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19297/Kandidato19297InteresuDeklaracija.html",
+      "path": "samples/html/2007-spalio-7-seimo-dzukija/viktor-uspaskich/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-3151",
+      "campaignLabel": "Politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3151/Dalyvio3151Izdininkas.html",
+      "campaignDir": "samples/html/2007-spalio-7-seimo-dzukija/viktor-uspaskich/campaigns/dalyvis-3151",
+      "tabCount": 5,
+      "tabSamples": [
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3151/Dalyvio3151Izdininkas.html",
+          "path": "samples/html/2007-spalio-7-seimo-dzukija/viktor-uspaskich/campaigns/dalyvis-3151/izdininkas.html",
+          "fetched": false
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3151/Dalyvio3151Auditorius.html",
+          "path": "samples/html/2007-spalio-7-seimo-dzukija/viktor-uspaskich/campaigns/dalyvis-3151/auditorius.html",
+          "fetched": true
+        },
+        {
+          "label": "Aukotojų sąrašas",
+          "slug": "aukotoju-sarasas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3151/Dalyvio3151AukotojuSarasas.html",
+          "path": "samples/html/2007-spalio-7-seimo-dzukija/viktor-uspaskich/campaigns/dalyvis-3151/aukotoju-sarasas.html",
+          "fetched": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3151/Dalyvio3151FinansavimoAtaskaitos.html",
+          "path": "samples/html/2007-spalio-7-seimo-dzukija/viktor-uspaskich/campaigns/dalyvis-3151/finansavimo-ataskaitos.html",
+          "fetched": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/PolitiniuKampanijuFinansavimas/Dalyvis3151/Dalyvio3151Sutartys.html",
+          "path": "samples/html/2007-spalio-7-seimo-dzukija/viktor-uspaskich/campaigns/dalyvis-3151/sutartys.html",
+          "fetched": true
+        }
+      ],
+      "indexPath": "samples/html/2007-spalio-7-seimo-dzukija/viktor-uspaskich/campaigns/dalyvis-3151/index.json"
+    }
+  ],
+  "anomalies": []
+}

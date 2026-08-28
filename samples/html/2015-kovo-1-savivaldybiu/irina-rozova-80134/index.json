@@ -1,0 +1,74 @@
+{
+  "electionId": "2015-kovo-1-savivaldybiu",
+  "candidate": {
+    "candidateName": "Irina Rozova",
+    "candidateId": "irina-rozova-80134",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas80134/Kandidato80134Anketa.html",
+    "vrkCandidateId": "80134",
+    "municipality": "Klaipėdos miesto savivaldybė",
+    "roles": [
+      "meras",
+      "tarybos-narys"
+    ],
+    "mayoralCandidacy": {
+      "nominatedBy": "Lietuvos lenkų rinkimų akcija, Politinė partija Rusų aljansas"
+    },
+    "councilCandidacy": {
+      "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+      "listNumber": 14,
+      "listPosition": 1
+    }
+  },
+  "anketaPath": "samples/html/2015-kovo-1-savivaldybiu/irina-rozova-80134/anketa.html",
+  "tabCount": 5,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas80134/Kandidato80134Anketa.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/irina-rozova-80134/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas80134/Kandidato80134Biografija.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/irina-rozova-80134/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas80134/Kandidato80134Deklaracijos.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/irina-rozova-80134/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas80134/Kandidato80134InteresuDeklaracija.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/irina-rozova-80134/interesu-deklaracija.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/Kandidatai/Kandidatas80134/Kandidato80134Kita.html",
+      "path": "samples/html/2015-kovo-1-savivaldybiu/irina-rozova-80134/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "dalyvis-7507",
+      "campaignLabel": "Atstovaujamojo politinės kampanijos dalyvio duomenys",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/440_lt/PolitiniuKampanijuFinansavimas/Dalyvis7507/Dalyvio7507Izdininkas.html",
+      "campaignDir": "samples/html/2015-kovo-1-savivaldybiu/irina-rozova-80134/campaigns/dalyvis-7507",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2015-kovo-1-savivaldybiu/irina-rozova-80134/campaigns/dalyvis-7507/index.json"
+    }
+  ],
+  "anomalies": []
+}

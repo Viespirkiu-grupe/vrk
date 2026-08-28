@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from scraper.elections.ep_2004.anketa_parser import (
+    DEFAULT_RESULTS_PATH,
     _parse_deklaracijos_html,
     normalize_ep_2004_anketa_rows,
     parse_anketa_html,
@@ -23,6 +24,8 @@ from scraper.elections.ep_2004.sitemap import (
     LISTING_URL,
     build_sitemap_from_sample,
 )
+
+from local_data import require
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -196,6 +199,7 @@ class Ep2004AnketaParserTests(unittest.TestCase):
         self.kundrotas, self.kundrotas_stats = _parse("marius-kundrotas")
 
     def test_top_level_fields_and_candidacy(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         self.assertEqual(self.paleckis["electionId"], "2004-ep")
         self.assertEqual(self.paleckis["candidateName"], "Justas Vincas PALECKIS")
         self.assertEqual(
@@ -231,6 +235,7 @@ class Ep2004AnketaParserTests(unittest.TestCase):
         self.assertEqual(self.paleckis["source"]["candidateSourceUrl"], CANDIDATES + "kand_anketa_l_260848.htm")
 
     def test_the_substitution_is_on_both_records(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
         # VRK's members page lists Prunskienė with a footnote: at her request
         # her mandate was declared terminated (decision Nr. 180) and the
         # list's next member recognised as elected (Nr. 181). Both records

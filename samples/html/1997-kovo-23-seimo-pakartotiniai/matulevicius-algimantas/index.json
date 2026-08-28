@@ -1,0 +1,15 @@
+{
+  "candidate": {
+    "candidateName": "Matulevičius Algimantas",
+    "candidateId": "matulevicius-algimantas",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-41050.htm",
+    "constituencyName": "Trakų",
+    "constituencyNumber": 58,
+    "nominator": "Krikščionių demokratų sąjunga",
+    "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-111.htm"
+  },
+  "anketaPath": "samples/html/1997-kovo-23-seimo-pakartotiniai/matulevicius-algimantas/candidate.html",
+  "tabCount": 2,
+  "tabsSaved": 2,
+  "anomalies": []
+}

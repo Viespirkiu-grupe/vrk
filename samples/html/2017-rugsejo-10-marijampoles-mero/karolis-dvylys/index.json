@@ -1,0 +1,67 @@
+{
+  "electionId": "2017-rugsejo-10-marijampoles-mero",
+  "candidate": {
+    "candidateName": "Karolis DVYLYS",
+    "candidateId": "karolis-dvylys",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasAnketa_rkndId-2399785.html"
+  },
+  "anketaPath": "samples/html/2017-rugsejo-10-marijampoles-mero/karolis-dvylys/anketa.html",
+  "tabCount": 6,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasAnketa_rkndId-2399785.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/karolis-dvylys/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Biografija",
+      "slug": "biografija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasBiografija_rkndId-2399785.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/karolis-dvylys/biografija.html",
+      "fetched": true
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasTurtoPajDekl_rkndId-2399785.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/karolis-dvylys/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Privačių interesų deklaracijos",
+      "slug": "privaciu-interesu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasPrivInterDekl_rkndId-2399785.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/karolis-dvylys/privaciu-interesu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Politinės kampanijos dalyvio duomenys",
+      "slug": "politines-kampanijos-dalyvio-duomenys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/atstovaujamasis_pkdId-1685.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/karolis-dvylys/politines-kampanijos-dalyvio-duomenys.html",
+      "fetched": true
+    },
+    {
+      "label": "Kita",
+      "slug": "kita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasKt_rkndId-2399785.html",
+      "path": "samples/html/2017-rugsejo-10-marijampoles-mero/karolis-dvylys/kita.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "campaignSamples": [
+    {
+      "campaignKey": "atstovaujamasis-pkdid-1685",
+      "campaignLabel": "",
+      "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/964/dalyviai/atstovaujamasis_pkdId-1685.html",
+      "campaignDir": "samples/html/2017-rugsejo-10-marijampoles-mero/karolis-dvylys/campaigns/atstovaujamasis-pkdid-1685",
+      "tabCount": 0,
+      "tabSamples": [],
+      "indexPath": "samples/html/2017-rugsejo-10-marijampoles-mero/karolis-dvylys/campaigns/atstovaujamasis-pkdid-1685/index.json"
+    }
+  ],
+  "anomalies": []
+}
