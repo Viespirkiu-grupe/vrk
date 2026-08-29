@@ -142,10 +142,19 @@ Options:
 - `--sitemap <path>`: Defaults to `sitemaps/2016-seimo.json`.
 - `--samples-root <path>`: Defaults to `samples/html/2016-seimo`.
 - `--allow-new-samples`: Allows creating new candidate directories. Disabled by default.
+- `--anomalies-path <path>`: Optional, and there is no default. The fetch
+  stage's events (`TabDownloadFailed`, `MissingExpectedTab`,
+  `CampaignRootFetchFailed`, ...) are written there as JSONL. Without it they
+  are named on stdout and dropped, which is why the corpus holds 8,949 anomaly
+  events and not one of them says `stage: "fetch"` (issue #85). No default,
+  because `data/<election-id>/anomalies.jsonl` belongs to the parse command,
+  which writes it whole; `scripts/run_election_batches.sh` passes a
+  per-candidate path and appends.
 
 Output:
 
 - Updates candidate sample directories and prints per-candidate tab stats.
+- Writes the fetch stage's anomalies when `--anomalies-path` is given.
 
 ### `build-results`
 
@@ -190,6 +199,32 @@ Output:
 - Writes one JSON file per parsed candidate in output root.
 - Writes anomalies JSONL summary file.
 - Prints parsed row counts and anomaly summary.
+
+### `anomalies-report`
+
+Read the corpus's `anomalies.jsonl` files back: counts per event type per
+election, worst severity first, and a diff against `docs/anomaly-baseline.tsv`
+so a new failure stands out against the 8,598 known ones.
+
+```bash
+python -m scraper anomalies-report                    # every election
+python -m scraper anomalies-report 2020-seimo         # one election
+python -m scraper anomalies-report --errors-only      # a page lost, not a page doubted
+python -m scraper anomalies-report --update-baseline  # after a deliberate change
+```
+
+Options:
+
+- `election_id`: Optional, repeatable. Defaults to every election under the data root.
+- `--data-root <path>`: Defaults to `data`.
+- `--errors-only`: Only `severity: "error"` events.
+- `--baseline <path>`: Defaults to `docs/anomaly-baseline.tsv`.
+- `--update-baseline`: Rewrite the baseline from this run. Refused when the run
+  is narrowed to some elections or one severity.
+
+Exit status: 1 when the run holds an event type the baseline does not name, or
+more of one than it records; 0 otherwise. Fewer events than the baseline is
+progress — printed, not failed. See `docs/ANOMALY_DETECTION.md`.
 
 ## European Parliament (`2019-ep`) Workflow
 

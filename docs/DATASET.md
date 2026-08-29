@@ -1647,6 +1647,47 @@ candidate in a new module and treating each null or empty value as a question
 rather than a result. All three sat in shared code with no test coverage, and
 each now has one.
 
+## What detects the next one
+
+Every fix above was found by a person reading fields. Two of them —
+`2020-seimo`'s null income and the 2015 family's GPM305 income — were whole
+elections' worth of a field arriving as `null`, and in both cases the keys were
+all present, every fixture passed and `anomalies.jsonl` was empty. Nothing in
+the repository measured field fill, and nothing read the anomaly files back, so
+there was nothing that could have said a word (issue #85).
+
+Both now exist, and both are checked-in baselines rather than thresholds
+somebody has to remember:
+
+- **`python scripts/field_coverage.py`** resolves every `docs/concept-map.json`
+  path against every record — 1,096 cells, 28 concepts, 55 elections, about 30
+  seconds — and fails on a mapped path no record fills or a fill rate more than
+  five points below `docs/coverage-baseline.tsv`. Twenty-four cells are empty
+  today and each carries a status word and a measured reason;
+  `docs/FIELD_COVERAGE.md` has the vocabulary. Building it turned up two
+  further things: four cells the concept map had at 0 % were a resolver
+  problem, not a corpus one (`kandidatavimas` sits at the record root in some
+  eras and inside `normalized` in the two 1997 municipal ones), and
+  `2002-gruodzio-22-savivaldybiu-tarybu` and `2003-birzelio-15-seimo-nauji` —
+  10,165 records — had reached the corpus with no concept mapped at all, which
+  made them invisible to the new gate on its first run. Both are mapped now, 40
+  cells between them, validated against every record.
+- **`python -m scraper anomalies-report`** reads `data/*/anomalies.jsonl` back
+  and diffs it against `docs/anomaly-baseline.tsv`. Before this the fetch
+  stage's events were computed, counted and dropped: 8,949 events in the corpus
+  and not one saying `stage: "fetch"`, against the 147 fetch-stage call sites that
+  can raise them. `fetch-candidate-samples` now takes `--anomalies-path` and the
+  batch runner appends it, so a failed tab download will surface in the same
+  file the parse stage's findings do.
+
+The same pass reclassified the corpus's loudest event. 8,598 of the 8,949 are
+one archive declaration page contradicting its own totals *below VRK's own
+"Klaida užklausoje" banner* — the source saying its query failed. Those are now
+`info` rather than `warning`, which leaves 351 events somebody should look at
+and makes `STOP_ON_ANOMALY=1` usable on an archive election for the first time.
+The five affected elections were re-parsed from their retained HTML to
+regenerate their anomaly files; all 18,415 records came back byte-identical.
+
 ## Known gaps
 
 - The corpus covers the elections implemented so far. VRK publishes further

@@ -3,8 +3,8 @@
 [![tests](https://github.com/Viespirkiu-grupe/vrk/actions/workflows/tests.yml/badge.svg)](https://github.com/Viespirkiu-grupe/vrk/actions/workflows/tests.yml)
 
 A scraper for the candidate pages of the Lithuanian Central Electoral
-Commission (VRK), and the corpus it produces: **113,002 candidate records
-across 51 elections, 1996–2025** — questionnaires, asset and income
+Commission (VRK), and the corpus it produces: **113,073 candidate records
+across 55 elections, 1996–2025** — questionnaires, asset and income
 declarations, private-interest declarations and campaign finance data, one
 JSON file per candidacy.
 
@@ -12,10 +12,26 @@ The corpus itself is not version controlled (`data/`, `sitemaps/` and all but
 a fixture subset of `samples/` are gitignored); it is reproduced by running the
 scrapers, and
 every election's raw HTML is retained so parser fixes land by offline
-re-parse. `python scripts/reparse_diff.py` is the check that they did: it
-re-parses every election and diffs the result against `data/`, and exits
-non-zero if any record no longer matches the parser that claims to produce
-it.
+re-parse.
+
+Three commands check that a change left the corpus in one piece, and each
+answers a question the other two cannot:
+
+```bash
+python scripts/reparse_diff.py       # is the corpus what the parsers produce?
+python scripts/field_coverage.py     # did a field stop arriving?
+python -m scraper anomalies-report   # did a page go wrong?
+```
+
+`reparse_diff.py` re-parses every election and diffs the result against
+`data/`. `field_coverage.py` resolves every `docs/concept-map.json` path
+against every record and gates the fill rates against a checked-in baseline —
+`2020-seimo` once shipped with income `null` on all 1,753 records and a green
+suite ([docs/FIELD_COVERAGE.md](docs/FIELD_COVERAGE.md)).
+`anomalies-report` reads back what the scrapers recorded going wrong and diffs
+that against its own baseline
+([docs/ANOMALY_DETECTION.md](docs/ANOMALY_DETECTION.md)). All three exit
+non-zero on a finding.
 
 Getting the tests to run takes a clone and three dependencies:
 

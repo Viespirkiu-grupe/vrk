@@ -118,6 +118,14 @@ path for each election id, plus a `derived` section for the concepts no
 single path resolves (a conviction is published three different ways, so
 `teistumas` is a function rather than a path).
 
+**How often each of those paths is actually filled is measured**, not assumed:
+`data/coverage.tsv` (from `python scripts/field_coverage.py`) carries a
+records / keyPresent / nonNull count for all 1,096 mapped cells, and
+[coverage-baseline.tsv](coverage-baseline.tsv) carries the checked-in rate and,
+for the 24 cells no record fills, a status word saying why. Read it before
+concluding a field is missing from an era —
+[FIELD_COVERAGE.md](FIELD_COVERAGE.md) explains the vocabulary.
+
 **The table below covers the two modern eras only — 20 of the corpus's 48
 elections.** `concept-map.json` is the authority and is the thing to read
 programmatically; this table is a human summary of the 2016 and 2020 eras.
@@ -250,6 +258,9 @@ appears as two persons.
   bridge this page's era map is built from. Its `derived` section covers the
   concepts no single path resolves: today `teistumas`, whose resolver is
   `scraper/shared/conviction_details.py`.
+- [FIELD_COVERAGE.md](FIELD_COVERAGE.md) and
+  [coverage-baseline.tsv](coverage-baseline.tsv) — how often every mapped path
+  is filled, and which cells are empty on purpose.
 - [OUTPUT_SCHEMA.md](OUTPUT_SCHEMA.md) — per-election schema appendices.
 - [DATASET.md](DATASET.md) — inventory, run history, analysis caveats.
 - [DASHBOARD.md](DASHBOARD.md) — the reference consumer: a local browser
