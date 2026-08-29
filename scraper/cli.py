@@ -1,4 +1,5 @@
 import argparse
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -685,7 +686,10 @@ from scraper.elections.seimo_aukstaitijos_1997_gruodzio.results import build_res
 from scraper.elections.seimo_pakartotiniai_1998_kovo.results import build_results as build_seimo_pakartotiniai_1998_kovo_results
 from scraper.elections.seimo_nevezio_1998_lapkricio.results import build_results as build_seimo_nevezio_1998_lapkricio_results
 from scraper.elections.seimo_pakartotiniai_1999_kovo.results import build_results as build_seimo_pakartotiniai_1999_kovo_results
+from scraper.shared import anomaly_report
 from scraper.shared.anomalies import write_jsonl
+
+ANOMALY_BASELINE = anomaly_report.BASELINE
 
 FETCHABLE_ELECTION_IDS = [
     SEIMO_2016_ELECTION_ID,
@@ -2264,6 +2268,15 @@ def build_parser() -> argparse.ArgumentParser:
             "Disabled by default so sample fixtures stay fixed."
         ),
     )
+    targeted_sample_parser.add_argument(
+        "--anomalies-path",
+        type=Path,
+        default=None,
+        help=(
+            "Path to write fetch-stage anomalies JSONL. Without it the events are "
+            "counted and thrown away, which is how a failed tab download became invisible."
+        ),
+    )
 
     results_parser = subparsers.add_parser(
         "build-results",
@@ -2305,6 +2318,42 @@ def build_parser() -> argparse.ArgumentParser:
         help="Path to write anomalies JSONL. Defaults to <output-root>/anomalies.jsonl",
     )
 
+    anomalies_report_parser = subparsers.add_parser(
+        "anomalies-report",
+        help=(
+            "Read the corpus's anomalies.jsonl files: counts per event type per "
+            "election, and a diff against docs/anomaly-baseline.tsv so a new "
+            "failure stands out against the known ones"
+        ),
+    )
+    anomalies_report_parser.add_argument(
+        "election_id",
+        nargs="*",
+        help="Elections to report on. Defaults to every election under the data root.",
+    )
+    anomalies_report_parser.add_argument(
+        "--data-root",
+        type=Path,
+        default=Path("data"),
+        help="Corpus root holding <election-id>/anomalies.jsonl. Defaults to data/.",
+    )
+    anomalies_report_parser.add_argument(
+        "--errors-only",
+        action="store_true",
+        help="Report only severity=error events -- a page lost, not a page doubted.",
+    )
+    anomalies_report_parser.add_argument(
+        "--baseline",
+        type=Path,
+        default=None,
+        help=f"Baseline TSV to diff against. Defaults to {ANOMALY_BASELINE}.",
+    )
+    anomalies_report_parser.add_argument(
+        "--update-baseline",
+        action="store_true",
+        help="Rewrite the baseline from this run. Requires a run over every election.",
+    )
+
     return parser
 
 
@@ -2317,6 +2366,30 @@ def _summarize_anomalies(anomalies: list[dict[str, Any]]) -> tuple[dict[str, int
         by_type[event_type] = by_type.get(event_type, 0) + 1
         by_severity[severity] = by_severity.get(severity, 0) + 1
     return by_type, by_severity
+
+
+def _write_and_report_anomalies(path: Path, anomalies: list[dict[str, Any]]) -> None:
+    """Persist a run's anomaly events and print what they were.
+
+    Both the fetch and the parse command end here. Until issue #85 only parse
+    did: `fetch-candidate-samples` counted its events and dropped them, so the
+    corpus held 8,949 anomalies of which not one was a `fetch` event, against
+    the 147 fetch-stage call sites that can raise them.
+    """
+    write_jsonl(path, anomalies)
+    by_type, by_severity = _summarize_anomalies(anomalies)
+    print(f"Anomalies saved: {path}")
+    print(f"Total anomalies: {len(anomalies)}")
+    if by_severity:
+        print(
+            "By severity: "
+            + ", ".join(
+                f"{name}={count}" for name, count in sorted(by_severity.items(), key=lambda item: item[0])
+            )
+        )
+    if by_type:
+        top_types = sorted(by_type.items(), key=lambda item: (-item[1], item[0]))[:10]
+        print("Top anomaly types: " + ", ".join(f"{name}={count}" for name, count in top_types))
 
 
 def main() -> int:
@@ -2384,6 +2457,7 @@ def main() -> int:
             allow_new_samples=args.allow_new_samples,
         )
         print(f"Fetched candidates: {payload['count']}")
+        all_anomalies: list[dict[str, Any]] = []
         for result in payload["results"]:
             candidate = result["candidate"]
             print(f"- {candidate['candidateName']} ({candidate['candidateId']})")
@@ -2399,9 +2473,23 @@ def main() -> int:
             else:
                 print("  All expected candidate tabs found")
             anomalies = result.get("anomalies", [])
+            all_anomalies.extend(anomalies)
             if anomalies:
                 print(f"  Anomalies: {len(anomalies)}")
             print(f"  Index: {result['index_path']}")
+        if args.anomalies_path is not None:
+            _write_and_report_anomalies(args.anomalies_path, all_anomalies)
+        elif all_anomalies:
+            # No default path: the parse command owns
+            # data/<election-id>/anomalies.jsonl and writes it whole, so a
+            # fetch that defaulted there would truncate it. The batch runner
+            # passes a per-candidate path and appends.
+            by_type, _ = _summarize_anomalies(all_anomalies)
+            print(
+                f"Fetch anomalies: {len(all_anomalies)} "
+                + ", ".join(f"{name}={count}" for name, count in sorted(by_type.items()))
+                + " (pass --anomalies-path to keep them)"
+            )
         return 0
 
     if args.command == "parse-anketa-samples":
@@ -2435,24 +2523,115 @@ def main() -> int:
                 print(f"  anomalies={len(anomalies)}")
 
         anomalies_path = args.anomalies_path or (output_root / "anomalies.jsonl")
-        write_jsonl(anomalies_path, all_anomalies)
-        by_type, by_severity = _summarize_anomalies(all_anomalies)
-        print(f"Anomalies saved: {anomalies_path}")
-        print(f"Total anomalies: {len(all_anomalies)}")
-        if by_severity:
-            print(
-                "By severity: "
-                + ", ".join(
-                    f"{name}={count}" for name, count in sorted(by_severity.items(), key=lambda item: item[0])
-                )
-            )
-        if by_type:
-            top_types = sorted(by_type.items(), key=lambda item: (-item[1], item[0]))[:10]
-            print(
-                "Top anomaly types: "
-                + ", ".join(f"{name}={count}" for name, count in top_types)
-            )
+        _write_and_report_anomalies(anomalies_path, all_anomalies)
         return 0
 
+    if args.command == "anomalies-report":
+        return _anomalies_report(
+            data_root=args.data_root,
+            election_ids=args.election_id or None,
+            errors_only=args.errors_only,
+            baseline_path=args.baseline or ANOMALY_BASELINE,
+            update_baseline=args.update_baseline,
+        )
+
     parser.error("Unknown command")
+    return 1
+
+
+def _anomalies_report(
+    *,
+    data_root: Path,
+    election_ids: list[str] | None,
+    errors_only: bool,
+    baseline_path: Path,
+    update_baseline: bool,
+) -> int:
+    """Print the corpus's anomalies and diff them against the baseline.
+
+    Exit 1 when the run holds an event type the baseline does not name, or
+    more of one than it records. Fewer is progress: it is printed and does not
+    fail, so that a parser fix does not have to touch the baseline in the same
+    commit as the fix.
+    """
+    if not data_root.is_dir():
+        print(f"No such data root: {data_root}", file=sys.stderr)
+        return 2
+
+    absent = [eid for eid in election_ids or [] if not (data_root / eid).is_dir()]
+    if absent:
+        print(f"Not under {data_root}: " + ", ".join(absent), file=sys.stderr)
+        return 2
+
+    events = list(anomaly_report.read_events(data_root, election_ids))
+    if errors_only:
+        events = [event for event in events if event.get("severity") == "error"]
+    counts = anomaly_report.tally(events)
+
+    for election_id, rows in anomaly_report.by_election(counts).items():
+        total = sum(count for _, count in rows)
+        print(f"{election_id}  ({total} event{'' if total == 1 else 's'})")
+        for key, count in rows:
+            print(f"    {count:>6}  {key.event_type:<38} {key.severity}")
+
+    totals = anomaly_report.severity_totals(counts)
+    print(
+        f"\n{len(events)} event(s) across {len({key.election for key in counts})} election(s)"
+        + (": " + ", ".join(f"{name}={count}" for name, count in totals.items()) if totals else "")
+    )
+
+    if update_baseline:
+        if election_ids or errors_only:
+            print(
+                "--update-baseline rewrites the whole file, so it cannot be narrowed"
+                " to some elections or to one severity",
+                file=sys.stderr,
+            )
+            return 2
+        anomaly_report.write_baseline(baseline_path, counts)
+        print(f"Baseline rewritten: {baseline_path} ({len(counts)} row(s))")
+        return 0
+
+    baseline = anomaly_report.read_baseline(baseline_path)
+    if not baseline:
+        print(
+            f"\nNo baseline at {baseline_path}; nothing to compare against."
+            " Write one with --update-baseline.",
+            file=sys.stderr,
+        )
+        return 0
+
+    # A narrowed run only ever sees part of the baseline, so it compares
+    # against that part rather than reporting every unvisited row as resolved.
+    if election_ids:
+        baseline = {key: count for key, count in baseline.items() if key.election in election_ids}
+    if errors_only:
+        baseline = {key: count for key, count in baseline.items() if key.severity == "error"}
+
+    new, regressed, improved = anomaly_report.diff(counts, baseline)
+
+    if improved:
+        print(f"\n{len(improved)} row(s) below the baseline:")
+        for key, count, was in improved:
+            print(f"    {key.election}  {key.event_type} [{key.severity}]  {was} -> {count}")
+
+    if not new and not regressed:
+        print("\nNothing new against the baseline.")
+        return 0
+
+    if new:
+        print(f"\n{len(new)} event type(s) the baseline does not name:", file=sys.stderr)
+        for key, count in new:
+            print(
+                f"    {key.election}  {key.event_type} [{key.severity}]  {count}",
+                file=sys.stderr,
+            )
+    if regressed:
+        print(f"\n{len(regressed)} row(s) above the baseline:", file=sys.stderr)
+        for key, count, was in regressed:
+            print(
+                f"    {key.election}  {key.event_type} [{key.severity}]"
+                f"  {was} -> {count} (+{count - was})",
+                file=sys.stderr,
+            )
     return 1

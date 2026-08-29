@@ -150,6 +150,15 @@ class MunicipalLayoutTests(unittest.TestCase):
         self.assertEqual(events[0]["detail"]["row1Employment"], 153)
         self.assertTrue(events[0]["detail"]["queryErrorBanner"])
 
+    def test_a_page_that_says_its_own_query_failed_reports_at_info(self):
+        # Issue #85: 8,598 of the corpus's 8,949 anomaly events are this one,
+        # from pages carrying VRK's own "Klaida užklausoje." banner. They are
+        # honest reports of source corruption, and at `warning` they drowned
+        # the other 24 events and made STOP_ON_ANOMALY useless here.
+        events = [a for a in self.result["anomalies"]
+                  if a["eventType"] == "DeclarationTotalBelowItsOwnRow"]
+        self.assertEqual(events[0]["severity"], "info")
+
     def test_a_tax_total_equal_to_its_row_is_still_trusted(self):
         # Both are 0 here, so the page does not contradict itself.
         self.assertEqual(self.d["sumoketas-pajamu-mokestis"], 0)
@@ -158,7 +167,7 @@ class MunicipalLayoutTests(unittest.TestCase):
 class TotalTrustRuleTests(unittest.TestCase):
     """The rule is >=, the weakest check that catches a self-contradiction."""
 
-    def _income(self, row1: int, row20: int):
+    def _parse(self, row1: int, row20: int):
         page = f"""<body>
  <table>
   <tr><td>1. Susijusios su darbo santykiais pajamos (pinigais, natūra ar lengvatinėmis paslaugomis)</td><td><b>{row1} Lt</b></td><td><b>0 Lt</b></td></tr>
@@ -166,7 +175,10 @@ class TotalTrustRuleTests(unittest.TestCase):
  </table>
  <table><tr><td><b>IV.</b> Kalendoriniais metais įsigytas turtas ir paskolintos piniginės lėšos. Bendra suma pagal šios deklaracijos dalies 1, 2, 3 ir 4 punktus: <b>0 Lt</b></td></tr></table>
 </body>"""
-        return parse_declaration(page)["declaration"]["gautos-pajamos"]
+        return parse_declaration(page)
+
+    def _income(self, row1: int, row20: int):
+        return self._parse(row1, row20)["declaration"]["gautos-pajamos"]
 
     def test_a_total_larger_than_its_row_is_kept(self):
         # Other income categories exist; rows 2-19 are simply not printed.
@@ -177,6 +189,14 @@ class TotalTrustRuleTests(unittest.TestCase):
 
     def test_a_total_below_its_row_is_dropped(self):
         self.assertIsNone(self._income(861, 0))
+
+    def test_a_page_that_did_not_say_its_query_failed_still_warns(self):
+        # The other 327 of them: a readable page that contradicts itself is a
+        # finding, and stays at `warning`.
+        events = [a for a in self._parse(861, 0)["anomalies"]
+                  if a["eventType"] == "DeclarationTotalBelowItsOwnRow"]
+        self.assertEqual([e["severity"] for e in events], ["warning"])
+        self.assertFalse(events[0]["detail"]["queryErrorBanner"])
 
 
 class UnreadablePageTests(unittest.TestCase):

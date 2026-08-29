@@ -13,10 +13,14 @@
 #   BATCH_SIZE         candidates per batch (default 200)
 #   MAX_BATCHES        batches per invocation, 0 for "until finished" (default 0)
 #   THROTTLE_SECONDS   pause between candidates (default 0.4)
-#   STOP_ON_ANOMALY    1 to stop after a batch that recorded anomalies (default 0).
-#                      The per-election scripts stop by default; a full unattended
-#                      run does not, because anomalies are recorded to
-#                      anomalies.jsonl for review either way.
+#   STOP_ON_ANOMALY    1 to stop after a batch that recorded an anomaly above
+#                      `info` (default 0). The per-election scripts stop by
+#                      default; a full unattended run does not, because anomalies
+#                      are recorded to anomalies.jsonl for review either way.
+#                      `info` events do not stop a run: 8,598 of the corpus's
+#                      8,949 are one archive page printing VRK's own query-error
+#                      banner, and counting those made this switch unusable on
+#                      every archive election (issue #85).
 #   SAMPLES_ROOT       reuse a samples directory instead of a temporary one
 #   KEEP_SAMPLES       1 to keep every candidate's fetched HTML instead of
 #                      deleting it after parsing (default 0). Defaults
@@ -151,28 +155,74 @@ report_failures() {
   return 0
 }
 
+# What STOP_ON_ANOMALY counts: the events somebody has to look at. `info` is
+# for a problem the source has already confessed to -- a page carrying VRK's
+# own "Klaida uzklausoje" banner -- and there are 8,598 of those in the corpus
+# against 351 of everything else (issue #85).
+count_actionable_anomalies() {
+  if [[ ! -f "$ANOMALIES_PATH" ]]; then
+    echo 0
+    return
+  fi
+  "$PYTHON_BIN" - "$ANOMALIES_PATH" <<'COUNT_PY'
+import json, sys
+count = 0
+with open(sys.argv[1], encoding="utf-8") as handle:
+    for line in handle:
+        line = line.strip()
+        if line and json.loads(line).get("severity") != "info":
+            count += 1
+print(count)
+COUNT_PY
+}
+
+# Both stages write their events to a per-candidate file; this appends it to
+# the election's and clears it.
+collect_anomalies() {
+  local candidate_anomalies_path="$1"
+  if [[ -s "$candidate_anomalies_path" ]]; then
+    cat "$candidate_anomalies_path" >> "$ANOMALIES_PATH"
+  fi
+  rm -f "$candidate_anomalies_path"
+}
+
+# A failed tab download means a whole record section is missing, so the fetch
+# stage's anomalies go into the same file the parse stage's do. Until issue #85
+# this call sent its output to /dev/null and the events with it.
+#
+# Both this and parse_candidate capture the command's exit status first and
+# return it last: they are called as `if fetch_candidate ... && parse_candidate
+# ...`, and ending on the `rm` inside collect_anomalies would report every
+# failure as a success.
 fetch_candidate() {
+  local candidate_id="$1"
+  local candidate_anomalies_path="$STATE_DIR/fetch-anomalies-${candidate_id}.jsonl"
+  local status=0
+
   "$PYTHON_BIN" -m scraper fetch-candidate-samples "$ELECTION_ID" \
     --sitemap "$SITEMAP_PATH" \
     --samples-root "$SAMPLES_ROOT" \
     --allow-new-samples \
-    --candidate-id "$1" >/dev/null
+    --anomalies-path "$candidate_anomalies_path" \
+    --candidate-id "$candidate_id" >/dev/null || status=$?
+
+  collect_anomalies "$candidate_anomalies_path"
+  return $status
 }
 
 parse_candidate() {
   local candidate_id="$1"
   local candidate_anomalies_path="$STATE_DIR/anomalies-${candidate_id}.jsonl"
+  local status=0
 
   "$PYTHON_BIN" -m scraper parse-anketa-samples "$ELECTION_ID" \
     --samples-root "$SAMPLES_ROOT" \
     --output-root "$OUTPUT_ROOT" \
     --anomalies-path "$candidate_anomalies_path" \
-    --candidate-id "$candidate_id" >/dev/null
+    --candidate-id "$candidate_id" >/dev/null || status=$?
 
-  if [[ -s "$candidate_anomalies_path" ]]; then
-    cat "$candidate_anomalies_path" >> "$ANOMALIES_PATH"
-  fi
-  rm -f "$candidate_anomalies_path"
+  collect_anomalies "$candidate_anomalies_path"
+  return $status
 }
 
 batch_counter=0
@@ -200,10 +250,7 @@ while (( MAX_BATCHES == 0 || batch_counter < MAX_BATCHES )); do
 
   cp "$tmp_batch" "$LAST_BATCH_PATH"
 
-  anomalies_before=0
-  if [[ -f "$ANOMALIES_PATH" ]]; then
-    anomalies_before=$(wc -l < "$ANOMALIES_PATH" | tr -d ' ')
-  fi
+  anomalies_before=$(count_actionable_anomalies)
 
   while IFS= read -r candidate_id; do
     if fetch_candidate "$candidate_id" && parse_candidate "$candidate_id" \
@@ -224,10 +271,7 @@ while (( MAX_BATCHES == 0 || batch_counter < MAX_BATCHES )); do
   sort -u -o "$DONE_IDS_PATH" "$DONE_IDS_PATH"
   sort -u -o "$FAILED_IDS_PATH" "$FAILED_IDS_PATH"
 
-  anomalies_after=0
-  if [[ -f "$ANOMALIES_PATH" ]]; then
-    anomalies_after=$(wc -l < "$ANOMALIES_PATH" | tr -d ' ')
-  fi
+  anomalies_after=$(count_actionable_anomalies)
   new_anomalies=$((anomalies_after - anomalies_before))
 
   batch_finished_at=$(date -u +"%Y-%m-%dT%H:%M:%SZ")

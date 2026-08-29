@@ -234,6 +234,12 @@ would have made a null mean two different things depending on the election.
   fails if git and the rule disagree, and again if the new election has no
   candidate small enough to track.
 - `docs/CLI_REFERENCE.md`, `docs/FIXTURE_SAMPLES.md`, `docs/OUTPUT_SCHEMA.md`.
+- **`docs/concept-map.json`** — every concept the election publishes, with the
+  path it lives at and a sentence in `verified` saying what you measured it
+  against. An election that maps nothing is invisible to the coverage gate,
+  which is exactly how two of them reached the corpus unmeasured (issue #85);
+  `tests/test_field_coverage.py` now fails when a mapped cell has no measured
+  fill rate, so this and `docs/coverage-baseline.tsv` move together.
 - **`scraper/elections.json`** — add the election: id, first-round date,
   official Lithuanian name, short label for chart axes. This is what names it
   in the dashboard and places it in the cross-election chronology. Skipping it
@@ -248,6 +254,11 @@ would have made a null mean two different things depending on the election.
 scripts/run_election_batches.sh <election-id>
 ```
 
+`STOP_ON_ANOMALY=1` stops the run after a batch that recorded anything above
+`info` — worth using on a first run, when the module is least trusted. Either
+way the events land in `data/<election-id>/anomalies.jsonl`, from both the
+fetch and the parse stage, and you read them back afterwards (see step 7).
+
 By default the runner deletes each candidate's fetched HTML after parsing it,
 so a later parser fix costs a full re-scrape. `KEEP_SAMPLES=1` retains the
 HTML under `samples-full/<election-id>/` instead, making every future fix an
@@ -255,7 +266,46 @@ offline re-parse (`parse-anketa-samples` with `--samples-root` pointed there).
 The price is disk on the order of the election itself — pay it for the large
 elections, where a re-scrape costs hours of polite traffic to vrk.lt.
 
-## 7. Changing a parser that already has a corpus
+## 7. Before you open the PR
+
+Three commands, and the first two produce numbers that go in the PR body. A
+reviewer cannot see a field that silently stopped arriving; these can.
+
+```bash
+python scripts/field_coverage.py --update-baseline   # then paste your election's rows
+python -m scraper anomalies-report <election-id>
+python scripts/reparse_diff.py
+```
+
+**Paste your election's per-concept fill rates into the PR body.** They are the
+rows for your id in `data/coverage.tsv`:
+
+```bash
+awk -F'\t' '$2 == "<election-id>"' data/coverage.tsv
+```
+
+Every cell you mapped in `docs/concept-map.json` gets a line, and every line is
+a claim: *this concept is filled on this share of this election's records*. A
+concept at 0 % has to be classified in `docs/coverage-baseline.tsv` — with a
+note saying why — before the run passes at all, and a rate far below the same
+concept's other elections is a question for the reviewer even when it does. See
+[FIELD_COVERAGE.md](FIELD_COVERAGE.md).
+
+This step is here because `2020-seimo` shipped with candidate income `null` on
+all 1,753 records, an empty `anomalies.jsonl` and a green suite. Nothing in the
+review could have caught it; a table of fill rates would have made the PR
+unmergeable on sight (issue #85).
+
+**Read the anomalies back.** `anomalies-report` prints your election's events by
+type and diffs the whole corpus against `docs/anomaly-baseline.tsv`; a type the
+baseline does not name exits 1. New elections add rows to that baseline —
+`--update-baseline` writes them, and each one is something you are asserting is
+expected. See [ANOMALY_DETECTION.md](ANOMALY_DETECTION.md).
+
+**Leave the corpus equal to the parsers.** `reparse_diff.py` exits 0 when it is;
+step 8 is what to do when it does not.
+
+## 8. Changing a parser that already has a corpus
 
 A parser fix does not reach `data/`. The records were written by whichever
 parser existed the day that election was scraped, and nothing re-read them —

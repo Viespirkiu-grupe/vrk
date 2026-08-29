@@ -208,13 +208,24 @@ def parse_declaration(html: str) -> dict[str, Any]:
     total_income = _int(total.group(1)) if total else None
     total_tax = _int(total.group(2)) if total else None
 
+    query_error_banner = QUERY_ERROR_BANNER in text
+
     def trusted(total_value, row_value, column: str):
         """A total the page's own row 1 contradicts is not a total.
 
         The 2000 pages print the figures to the centas but row 20 with
         the centai dropped ("10042.00 Lt" against a row 1 of
         "10042.32 Lt"), so a shortfall under one litas is the page's own
-        truncation, not a contradiction, and the total stands."""
+        truncation, not a contradiction, and the total stands.
+
+        A page carrying VRK's own "Klaida užklausoje" banner reports the
+        contradiction at `info`, not `warning`: the source has said in so
+        many words that its query failed, so the figures below it are its
+        problem and not a parse loss. That distinction is what makes
+        STOP_ON_ANOMALY usable on the archive elections -- issue #85 found
+        8,598 of the corpus's 8,949 anomaly events to be this one banner,
+        drowning the other 24 completely.
+        """
         if total_value is None or row_value is None:
             return total_value
         if row_value - total_value < 1:
@@ -222,12 +233,12 @@ def parse_declaration(html: str) -> dict[str, Any]:
         anomalies.append(
             {
                 "eventType": "DeclarationTotalBelowItsOwnRow",
-                "severity": "warning",
+                "severity": "info" if query_error_banner else "warning",
                 "detail": {
                     "column": column,
                     "row20Total": total_value,
                     "row1Employment": row_value,
-                    "queryErrorBanner": QUERY_ERROR_BANNER in text,
+                    "queryErrorBanner": query_error_banner,
                 },
             }
         )
