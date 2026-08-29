@@ -1,0 +1,842 @@
+{
+  "$doc": [
+    "Hand-reviewed identity decisions the name+birth key cannot make on its own (issue #96).",
+    "One entry per reviewed pair (or larger set): `keys` lists the natural `NAME|birth` keys",
+    "exactly as scripts/build_person_index.py forms them, `decision` is `merge` (one human,",
+    "fold the fragments into one person) or `distinct` (reviewed, genuinely two people),",
+    "and `why` records the evidence. `merge` is applied by scripts/build_person_index.py —",
+    "the canonical fragment is the one with the chronologically earliest candidacy, the",
+    "others land in people.json's `ak` so old deep links keep resolving. Both decisions are",
+    "read back by scripts/find_identity_merge_candidates.py so reviewed pairs stop",
+    "resurfacing. A key that matches no person fails the build: fix it here, never ignore it."
+  ],
+  "decisions": [
+    {
+      "decision": "merge",
+      "keys": [
+        "ADELĖ DAUKANTAITĖ ŠEŠKAUSKIENĖ|1958-12-27",
+        "ADELĖ DAUKANTAITĖ|1958-12-27"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Klaipėda / Potrių km., Klaipėdos raj.); same school entry (siauliu k.preikso pedagoginis institutas, 1989)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "AGNĖ JAKAVIČIUTĖ-MILIAUSKIENĖ|1987-07-24",
+        "AGNĖ JAKAVIČIUTĖ|1987-07-24"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Varniai / Telšiai); same school entry (klaipedos universitetas, 2018)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "AIDA STRIAUKAITĖ-GUMULIAUSKIENĖ|1969-07-26",
+        "AIDA STRIAUKAITĖ|1969-07-26"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (LIETUVA / Alytus); same spouse (Arunas); children's names agree; same school entry (siauliu pedagoginis institutas, 1992)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ANTANAS BASKAS|1936-02-22",
+        "ANTANAS BASKAS|?",
+        "ANTANAS BASKAS|~1936"
+      ],
+      "why": "the 1996-1998 archive pages publish no full birth date; same spouse (Gražina Marija), son Simas, Marijampolė and the Matematikos ir informatikos institutas on every fragment"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ANTANAS JUOZAS PETUŠKA|1947-01-04",
+        "ANTANAS PETUŠKA|1947-01-04"
+      ],
+      "why": "one name is the other plus appended tokens"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ASTA PILYPAITĖ-ZARECKIENĖ|1971-01-16",
+        "ASTA PILYPAITĖ|1971-01-16"
+      ],
+      "why": "one name is the other plus appended tokens; children's names agree"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "AUDRONĖ PRANSKEVIČIENĖ-DAUTARTIENĖ|1966-04-23",
+        "AUDRONĖ PRANSKEVIČIENĖ|1966-04-23"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Kybartai / Vilkaviškio raj.); same school entry (siauliu universitetas, 2002)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "AUKSUTĖ RAMANAUSKAITĖ-SKOKAUSKIENĖ|1948-12-14",
+        "AUKSUTĖ SKOKAUSKIENĖ|1948-12-14"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Prienai, Lietuva / Prienai); children's names agree; same school entry (kauno politechnikos institutas, 1973)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "AURELIJA VINGRIENĖ-ŠIMKŪNIENĖ|1966-12-05",
+        "AURELIJA VINGRIENĖ|1966-12-05"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Kauno raj.); children's names agree; same school entry (vilniaus universitetas, 1991)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "AURELIJA ČIŽAUSKAITĖ-BUTKALIUK|1980-07-22",
+        "AURELIJA ČIŽAUSKAITĖ|1980-07-22"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Šiauliai); same spouse (Ruslanas)"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "BENEDIKTAS ALGIRDAS GRAŽYS|1963-03-21",
+        "BENEDIKTAS ALGIRDAS ČIUKŠYS|1963-03-21"
+      ],
+      "why": "only the shared middle given name Algirdas links them — the surnames are unrelated, the 2024 side publishes no spouse or children to compare, and no source documents a Čiukšys→Gražys change; left unmerged for lack of evidence, not proven different"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "DAINA SVIRSKYTĖ-ŠVAMBARIENĖ|1965-07-01",
+        "DAINA SVIRSKYTĖ|1965-07-01"
+      ],
+      "why": "one name is the other plus appended tokens"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "DAIVA TAMOŠIŪNAITĖ-BUDRĖ|1966-01-09",
+        "DAIVA TAMOŠIŪNAITĖ|1966-01-09"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Plungės raj., Vydeikių km. / Plungė); same spouse (Dainius); children's names agree"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "DALIA LŪŽIENĖ-MALIJONIENĖ|1966-01-30",
+        "DALIA LŪŽIENĖ|1966-01-30"
+      ],
+      "why": "one name is the other plus appended tokens; both sides publish the same odd gimimo-vieta value (the birth date)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "DANUTĖ BARDAUSKIENĖ-BAUŽIENĖ|1960-02-23",
+        "DANUTĖ BARDAUSKIENĖ|1960-02-23"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Plaškių k., Stoniškių apyl. Šilutės raj. / Plaškių kaimas, Stoniškių seniūnija, Pagėgių sav.)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "DAUMANTĖ KONTAUTAITĖ-MIŠEIKĖ|1986-09-27",
+        "DAUMANTĖ KONTAUTAITĖ|1986-09-27"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Mažeikiai); same school entry (vilniaus kolegija, 2008)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "DEIMANTĖ KUCONYTĖ-BŪDELIENĖ|1992-03-19",
+        "DEIMANTĖ KUCONYTĖ|1992-03-19"
+      ],
+      "why": "one name is the other plus appended tokens; both sides publish the same odd gimimo-vieta value (the birth date)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "DONALDA MEIŽELYTĖ SVILIENĖ|1975-08-07",
+        "DONALDA MEIŽELYTĖ|1975-08-07"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (ŠILUTĖ); same school entry (vu, 1997)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "EDITA PUPKEVIČIŪTĖ-BAČĖNĖ|1987-03-15",
+        "EDITA PUPKEVIČIŪTĖ-KIGUOLĖ|1987-03-15"
+      ],
+      "why": "gimimo-vieta compatible (Jurbarko r. Eržvilko mst. Dirvonų km. / Jurbarkas)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "EDITA VAITKUTĖ-ZINKĖ|1969-06-05",
+        "EDITA VAITKUTĖ|1969-06-05"
+      ],
+      "why": "one name is the other plus appended tokens"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "EDMUND ŠOT|1950-10-10",
+        "EDMUND ŠOT|1950-10-11",
+        "EDMUND SZOT|1950-10-11"
+      ],
+      "why": "one Vilnius-district LLRA career, 1996-2023: same spouse (Ana/Anna), same son Leon everywhere; the 1996 archive date is the biography prose's known one-day slip, and Szot is the Polish spelling of Šot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "EDVARDAS BRONISLOVAS KERŠIS|1936-06-27",
+        "EDVARDAS BRONISLOVAS KERŠYS|1936-06-27"
+      ],
+      "why": "same spouse (Aldona); children's names agree; same school entry (kauno politechnikos institutas, 1966)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "EGLĖ AMBRAZIŪNAITĖ PĖTELIENĖ|1961-12-26",
+        "EGLĖ AMBRAZIŪNAITĖ|1961-12-26"
+      ],
+      "why": "one name is the other plus appended tokens; children's names agree"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "EGLĖ VEGYTĖ-ANILIONĖ|1987-12-27",
+        "EGLĖ VEGYTĖ|1987-12-27"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Pasvalys)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ELŽBIETA ŽUROVSKA-PUODŽIŪNIENĖ|1981-12-19",
+        "ELŽBIETA ŽUROVSKA|1981-12-19"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Gganskas, Lenkija / Gdanskas, Lenkija); same school entry (vilniaus universitetas, 2004)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ERNESTAS ŠLIUŽAS-MAŽUOLIS|1984-10-12",
+        "ERNESTAS ŠLIUŽAS|1984-10-12"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Kauno raj.)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "EUGENIJA TERESĖ ČIUPLIENĖ|1949-11-02",
+        "EUGENIJA ČIUPLIENĖ|1949-11-02"
+      ],
+      "why": "one name is the other plus appended tokens; same spouse (Juozapas); children's names agree"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "GABRIELĖ GRIAUZDAITĖ-PATUMSIENĖ|1990-12-22",
+        "GABRIELĖ GRIAUZDAITĖ|1990-12-22"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Pasvalys); same school entry (vilniaus gedimino technikos universitetas, 2014)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "GAILUTĖ TAMAŠIŪNIENĖ-LATVĖ|1970-08-26",
+        "GAILUTĖ TAMAŠIŪNIENĖ|1970-08-26"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Alizava, Kupiškio r.); children's names agree; same school entry (vilniaus kooperacijos technikumas, 1991)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "GINTARĖ NARKEVIČIŪTĖ-JURGELIONĖ|1988-07-17",
+        "GINTARĖ NARKEVIČIŪTĖ|1988-07-17"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Kaunas)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "GINTARĖ PAVALKYTĖ-VASILIAUSKIENĖ|1989-05-21",
+        "GINTARĖ PAVALKYTĖ|1989-05-21"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Šakių r. / Šakiai)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "IEVA KAČINSKAITĖ-URBONIENĖ|1990-08-25",
+        "IEVA KAČINSKAITĖ|1990-08-25"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Kėdainiai / Kėdainių rajonas, Lietuva)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ILONA GRIŠKEVIČ-SAVICKIENĖ|1979-02-07",
+        "ILONA GRIŠKEVIČ|1979-02-07"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Vilniaus r. Nemėžis / Nemėžio k., Vilniaus r. savivaldybė); same spouse (Simonas)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ILONA REINBOLD-TIREVIČIENĖ|1962-09-06",
+        "ILONA TIREVIČIENĖ|1962-09-06"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (KLAIPĖDA)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "INDRA DREVINSKAITĖ-ŽILINSKIENĖ|1978-06-05",
+        "INDRA DREVINSKAITĖ|1978-06-05"
+      ],
+      "why": "one name is the other plus appended tokens; same school entry (Vytauto Didžiojo universitetas, 2010); both sides publish the same odd gimimo-vieta value"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "INGA BILIŪNAITĖ-RUŠINSKĖ|1982-11-30",
+        "INGA BILIŪNAITĖ|1982-11-30"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Kretinga); same school entry (kauno technologijos universitetas, 2007)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "INGRIDA BALTUŠYTĖ-ČETRAUSKIENĖ|1983-01-21",
+        "INGRIDA BALTUŠYTĖ|1983-01-21"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Kaišiadorių rajonas / Kaišiadorių raj.); same school entry (ktu, 2007)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "INGRIDA KISELIŪNAITĖ-BUDRĖ|1988-11-28",
+        "INGRIDA KISELIŪNAITĖ|1988-11-28"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Panevėžys); same spouse (Mantas); same school entry (vytauto didziojo universitetas, 2011)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "IRENA STRAŽINSKAITĖ-GLINSKIENĖ|1963-08-06",
+        "IRENA STRAŽINSKAITĖ|1963-08-06"
+      ],
+      "why": "one name is the other plus appended tokens"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JACEVIČ MEDART|1947-05-20",
+        "MEDART JACEVIČ|1947-05-20"
+      ],
+      "why": "gimimo-vieta compatible (Magūnų k. , Švenčionių raj. / Magūnų km,Švenčionių rajonas); same spouse (Janina); children's names agree"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JURGA KUBILIŪNAITĖ-ZAKRIENĖ|1978-03-13",
+        "JURGA KUBILIŪNAITĖ|1978-03-13"
+      ],
+      "why": "one name is the other plus appended tokens"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JURGITA JANUŠEVIČIŪTĖ-TARALĖ|1987-04-26",
+        "JURGITA JANUŠEVIČIŪTĖ|1987-04-26"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Šiauliai / ŠIAULIŲ RAJ.)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JURGITA ČINAUSKAITĖ-CETINER|1977-01-09",
+        "JURGITA ČINAUSKAITĖ|1977-01-09"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Naujoji Akmenė); children's names agree; same school entry (klaipedos universitetas, 1999)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JURIJUS STRIŽĖNAS|1960-01-01",
+        "JURIJUS STRIŽĖNAS|?",
+        "JURIJUS STRIŽĖNAS|~1960"
+      ],
+      "why": "the 1996-1997 archive pages publish no full birth date; same spouse (Tatjana), son Eugenijus/Jevgenijus, Vilnius on every fragment"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JUSTINA KAŠĖTAITĖ|1986-05-25",
+        "JUSTINA KAŠĖTIENĖ|1986-05-25"
+      ],
+      "why": "gimimo-vieta agrees (Varėna); children's names agree; same school entry (vilniaus kolegija, 2011)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JUSTINA VITKAUSKAITĖ BERNARD|1978-01-11",
+        "JUSTINA VITKAUSKAITĖ|1978-01-11"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Kretinga); same school entry (lietuvos teises universitetas, 2002)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JŪRATĖ ANA GRIGOLIENĖ|1979-04-09",
+        "JŪRATĖ GRIGOLIENĖ|1979-04-09"
+      ],
+      "why": "one name is the other plus appended tokens"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JŪRATĖ JUKNIENĖ-STADALNYKIENĖ|1971-11-30",
+        "JŪRATĖ JUKNIENĖ|1971-11-30"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Alytus)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JŪRATĖ KRUKAUSKAITĖ - AUŠROTIENĖ|1966-06-19",
+        "JŪRATĖ KRUKAUSKAITĖ|1966-06-19"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (N. Akmenė); children's names agree; same school entry (kuno kulturos institutas, 1993)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JŪRATĖ OVERAITYTĖ-JAKUBAVIČIENĖ|1972-01-23",
+        "JŪRATĖ OVERAITYTĖ|1972-01-23"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Alytus); same school entry (lietuvos sveikatos mokslu universitetas, 1999)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "KARINA GRAŽEVIČ-RUSINOVA|1990-08-16",
+        "KARINA GRAŽEVIČ|1990-08-16"
+      ],
+      "why": "one name is the other plus appended tokens"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "KLAUDIJA JAGMINAITĖ-ŠČUKINA|1995-02-26",
+        "KLAUDIJA JAGMINAITĖ|1995-02-26"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Šiauliai); same school entry (lietuvos verslo kolegija, 2020)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "KRISTINA LIPINYTĖ-DEREVIAŠKINA|1989-10-20",
+        "KRISTINA LIPINYTĖ|1989-10-20"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Rusija / Kaliningrado sritis, Rusija); children's names agree; same school entry (kauno kolegija, 2016)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "KRISTINA LUKAUSKAITĖ-VALATKĖ|1976-05-18",
+        "KRISTINA LUKAUSKAITĖ|1976-05-18"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (PLUNGĖ)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "KRISTINA ULEVIČIŪTĖ-ROGĖ|1971-08-11",
+        "KRISTINA ULEVIČIŪTĖ|1971-08-11"
+      ],
+      "why": "one name is the other plus appended tokens"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "LAIMA MOGENIENĖ|1959-10-07",
+        "LAIMA VYSKUPAITYTĖ-MOGENIENĖ|1959-10-07"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Krasnojarskas, Rusija / Sibiras, Krasnojarsko m.)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "LAURA ENDRIEKUTĖ-MAKULAVIČIENĖ|1990-01-26",
+        "LAURA ENDRIEKUTĖ-ŠAKINĖ|1990-01-26"
+      ],
+      "why": "gimimo-vieta agrees (Kretinga)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "LAURA RAMANAUSKAITĖ-STAŠIAUSKIENĖ|1982-09-06",
+        "LAURA RAMANAUSKAITĖ|1982-09-06"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Kaunas); same school entry (kauno m. mazvydo vid. m-kla, 2001)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "LAURA TELYČĖNIENĖ-KUPSTĖ|1977-09-21",
+        "LAURA TELYČĖNIENĖ|1977-09-21"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Panevėžys)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "LEILA URMANOVA-VNUKOVA|1963-04-07",
+        "LEILA URMANOVA|1963-04-07"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Taškentas, Uzbekistanas / UZBEKISTANAS)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "LIJANA SIMONAITYTĖ-SINUŠIENĖ|1963-03-06",
+        "LIJANA SIMONAITYTĖ|1963-03-06"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (JAKŲ KM., KLAIPĖDOS RAJ. / Klaipėdos r.)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "LINA DULIŪNAITĖ-NIKIPORAVIČIENĖ|1983-02-19",
+        "LINA DULIŪNAITĖ|1983-02-19"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Širvintos); same school entry (kauno kolegija, 2005)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "LINA GRIGAITĖ-RAIŽIENĖ|1981-08-10",
+        "LINA GRIGAITĖ|1981-08-10"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Biržai / Biržų r.)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "LINA KYBARTAITĖ-JOKUBAUSKIENĖ|1981-05-07",
+        "LINA KYBARTAITĖ|1981-05-07"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Telšiai); same spouse (Gediminas); children's names agree"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "LINA MEILUTĖ-DATKŪNIENĖ|1988-10-12",
+        "LINA MEILUTĖ|1988-10-12"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Juodupė)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "LINA ŠUKYTĖ-KORSAKĖ|1970-11-17",
+        "LINA ŠUKYTĖ|1970-11-17"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Šilalės raj.); same school entry (kauno aukstesnioji medicinos mokykla, 1993)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "LORETA KERUCKIENĖ|1970-01-17",
+        "LORETA KERUCKYTĖ|1970-01-17"
+      ],
+      "why": "maiden Keruckytė → married Keruckienė on the same rare stem, same full birth date, and both candidacies are Kauno miesto council lists; the 2015 page publishes no questionnaire to compare further"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "LORETA PUNIENĖ-VIRGAILĖ-MEČKAUSKĖ|1956-06-19",
+        "LORETA PUNIENĖ|1956-06-19"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Pamūšio k. Pakruojo r. / Pakruojo r., Linkuvos sen., Girbutkių k.)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "MAREK JOZEF PAKULA|1954-09-10",
+        "MAREK JUZEF PAKULA|1954-09-10"
+      ],
+      "why": "Jozef/Juzef is one Polish middle name in two spellings; same first name, surname and full birth date, both Vilnius municipal candidacies; the 2011 page publishes no questionnaire to compare further"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "NINA LILIA GALICKĖ|1964-02-21",
+        "NINA LILIA ZAKARKIENĖ|1964-02-21"
+      ],
+      "why": "gimimo-vieta compatible (SANKT PETERBURGAS, RUSIJA / Leningradas, Rusija); children's names agree"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "RADVILĖ MORKŪNAITĖ-MIKULĖNIENĖ|1984-01-02",
+        "RADVILĖ MORKŪNAITĖ|1984-01-02"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Kaunas); same school entry (lietuvos muzikos ir teatro akademija, 2006)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "RAIMONDA MARIJA GASPERAVIČIENĖ|1947-09-06",
+        "RAIMONDA MARIJA GERASIMOVIČIENĖ|1947-09-06"
+      ],
+      "why": "two marriages, one career: children (Artūras, Ingrida) and the workplace (Žeimelio vidurinė mokykla, direktoriaus pavaduotoja) agree across the Gerasimovičienė→Gasperavičienė change"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "RAMUNĖ OLŠAUSKAITĖ URBONIENĖ|1975-02-11",
+        "RAMUNĖ OLŠAUSKAITĖ|1975-02-11"
+      ],
+      "why": "one name is the other plus appended tokens"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "RASA MEILYTĖ-JURJONIENĖ|1967-06-01",
+        "RASA MEILYTĖ|1967-06-01"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Rūdaičių kaimas, Klaipėdos rajonas / Rudaičių k., Klaipėdos r.); children's names agree; same school entry (siauliu pedagoginis institutas, 1989)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "RASITA KRAUJELYTĖ -NOREIKIENĖ|1965-01-13",
+        "RASITA KRAUJELYTĖ|1965-01-13"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Molėtų R. Rašelės VNS. / Molėtai); children's names agree; same school entry (lietuvos zemes ukio akademija, 1988)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "REGINA KULPIENĖ-JAUNIENĖ|1952-08-15",
+        "REGINA KULPIENĖ|1952-08-15"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Šilutė); children's names agree"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "REGINA MIKŠTAITĖ-ČIČIURKIENĖ|1970-03-06",
+        "REGINA ČIČIURKIENĖ|1970-03-06"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Trečiūnų k., Švenčionių r.); children's names agree; same school entry (vytauto didziojo universitetas, 2007)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "RENATA SOBIESKA-MONKEVIČ|1984-12-24",
+        "RENATA SOBIESKA|1984-12-24"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Rudaminos k., Vilniaus r.); children's names agree; same school entry (vilniaus universitetas, 2007)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "RIMA ŠPAKAUSKAITĖ-KUČINSKIENĖ|1979-05-23",
+        "RIMA ŠPAKAUSKAITĖ|1979-05-23"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Kauno r.); same school entry (vdu, 2006)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "RIMVYDAS STANISLOVAS BUTAUTAS KUDIRKA|1941-08-28",
+        "RIMVYDAS STANISLOVAS BUTAUTAS|1941-08-28"
+      ],
+      "why": "one name is the other plus appended tokens; same spouse (Aldona); children's names agree"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "RITA DIANA DAPKUTĖ LUMBIENĖ|1961-09-20",
+        "RITA DIANA DAPKUTĖ|1961-09-20"
+      ],
+      "why": "one name is the other plus appended tokens; same spouse (Raimundas)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "RITA KAIRYTĖ-OVČARIKIENĖ|1972-05-04",
+        "RITA KAIRYTĖ|1972-05-04"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Pasvalys / Pasvalio m.)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ROBERTA DUBOSAITĖ-LEPEŠKEVIČĖ|1985-04-17",
+        "ROBERTA DUBOSAITĖ|1985-04-17"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Šiauliai)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "RUSNĖ ERMINAITĖ-MOCKĖ|1992-03-01",
+        "RUSNĖ ERMINAITĖ|1992-03-01"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Plungė); same school entry (zemaitijos kolegija, 2014)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "SANTA PAKENYTĖ-ČEPULĖ|1990-12-11",
+        "SANTA PAKENYTĖ|1990-12-11"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Šiauliai); same school entry (lietuvos sporto universitetas, 2016)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "SIGITAS TALLAT KELPŠA|1977-03-19",
+        "SIGITAS TALLAT-KELPŠA|1977-03-19"
+      ],
+      "why": "gimimo-vieta agrees (Ukmergė); same spouse (Giedre); children's names agree; same school entry (vilniaus dailes akademija, 2000)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "SIMONA VAICEKAUSKAITĖ-ŠALČĖ|1988-09-07",
+        "SIMONA VAICEKAUSKAITĖ|1988-09-07"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Prienai); same school entry (vytauto didziojo universitetas, 2011)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "TOMA KARVELYTĖ-JANULIONIENĖ|1996-12-15",
+        "TOMA KARVELYTĖ|1996-12-15"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Biržai)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "UGNĖ MEŠKUTYTĖ-TUNČIKIENĖ|1985-05-21",
+        "UGNĖ MEŠKUTYTĖ|1985-05-21"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Trakai / Senieji Trakai , Trakų raj.)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VAIDA DŽEVEČKAITĖ-KLEPECKIENĖ|1985-03-21",
+        "VAIDA DŽEVEČKAITĖ|1985-03-21"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Biržai)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VAIDA GIRAITYTĖ-JUŠKEVIČIENĖ|1983-02-09",
+        "VAIDA GIRAITYTĖ|1983-02-09"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Marijampolė); same school entry (kauno technologijos universitetas, 2012)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VAIDA MIKELYTĖ-SMIRNOVA|1981-02-03",
+        "VAIDA MIKELYTĖ|1981-02-03"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Ukmergė / Ukmergė, Lietuva); same school entry (ukmerges aukstesnioji verslo mokykla, 2002)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VALERIJA BRAZIENĖ GITELMAN|1958-09-22",
+        "VALERIJA BRAZIENĖ|1958-09-22"
+      ],
+      "why": "one name is the other plus appended tokens; same spouse (Davidas); children's names agree"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VESLAVA KODZ-BEREZINA|1985-07-05",
+        "VESLAVA KODZ|1985-07-05"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Vilnius)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VIKTORIJA BUČIŪTĖ-JAKIMAVIČIENĖ|1991-01-15",
+        "VIKTORIJA BUČIŪTĖ|1991-01-15"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Alytus)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VIKTORIJA ČMILYTĖ-NIELSEN|1983-08-06",
+        "VIKTORIJA ČMILYTĖ|1983-08-06"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Šiauliai); children's names agree; same school entry (latvijos universitetas, 2007)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VILIJA VENCKUTĖ-PALAITIENĖ|1975-03-20",
+        "VILIJA VENCKUTĖ|1975-03-20"
+      ],
+      "why": "one name is the other plus appended tokens"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VILMA BIEKŠAITĖ-RAMOŠKIENĖ|1985-08-29",
+        "VILMA BIEKŠAITĖ|1985-08-29"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Trakai)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VILMA MEDEIŠYTĖ-GASPARAVIČIENĖ|1978-10-16",
+        "VILMA MEDEIŠYTĖ|1978-10-16"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Bečionių k., Ignalinos r. / Ignalina)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VILMA MIČANAITĖ-VALAITIENĖ|1992-01-21",
+        "VILMA MIČANAITĖ|1992-01-21"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Ignalina / Krivasalio k., Linkmenų sen., Ignalinos raj. savivaldybė)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VILMA MULEVIČIŪTĖ-SABALIAUSKIENĖ|1966-05-05",
+        "VILMA MULEVIČIŪTĖ|1966-05-05"
+      ],
+      "why": "one name is the other plus appended tokens"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VIRGINIJA TUPIKAITĖ-JASUTIENĖ|1977-06-24",
+        "VIRGINIJA TUPIKAITĖ|1977-06-24"
+      ],
+      "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Akmenės r. / AKMENĖ); same school entry (siauliu universitetas, 1999)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VYTAUTAS ALEKSAS LAZINKA|1962-11-12",
+        "VYTAUTAS ALEKSAS LAZINKO|1962-11-12"
+      ],
+      "why": "surname respelt Lazinko (1996-1997) → Lazinka; same spouse (Jurgita), same children (Vita, Laura), Vilnius, the same Liaudies party line throughout"
+    }
+  ]
+}

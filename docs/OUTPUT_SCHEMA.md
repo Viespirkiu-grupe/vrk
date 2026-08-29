@@ -1834,9 +1834,10 @@ section … these pages carry no questionnaire" — was wrong).
   - Coverage over the 906 records of this family: 692 full dates (76%), 157
     year-only, 61 neither.
   - `gimimo-metai` holds the year-only cases ("Gimė 1950 m."). A year is
-    **never** promoted to a birth date — name plus year would merge namesakes
-    wholesale — so those records still group by name alone in the person
-    index.
+    **never** promoted to a birth date — it would masquerade as a stronger
+    fact than it is — but since issue #96 the person index keys those
+    records by name + `~year`, which keeps same-named archive candidates
+    born in different years apart.
   - Accuracy, measured: of the 149 extracted dates whose candidate shares a
     name with a modern candidate who has a published birth date, 133 (89%)
     match exactly. 13 of the 16 that differ are plainly different people

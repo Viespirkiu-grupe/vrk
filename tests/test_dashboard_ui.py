@@ -331,6 +331,36 @@ class FreshnessTests(unittest.TestCase):
     def test_the_index_is_fetched_no_store(self):
         self.assertRegex(SOURCE, r'fetch\("people\.json",\s*\{\s*cache:\s*"no-store"')
 
+
+class DeepLinkTests(unittest.TestCase):
+    """The pid is the durable deep link (issue #96); old links must not rot.
+
+    Before the pid the hash was the raw name|birth key, and every merge or
+    rename silently broke a shared URL. The page now writes the pid but still
+    resolves a legacy key and a merged-away fragment's key from `ak`.
+    """
+
+    def test_the_page_writes_the_pid_into_the_hash(self):
+        self.assertIn("location.hash = p.pid;", SOURCE)
+        self.assertNotIn("location.hash = encodeURIComponent(p.k)", SOURCE)
+
+    def test_a_legacy_or_merged_away_hash_still_resolves(self):
+        self.assertRegex(
+            SOURCE,
+            r"p\.pid === hashKey \|\| p\.k === hashKey \|\| \(p\.ak \|\| \[\]\)\.includes\(hashKey\)",
+        )
+
+    def test_every_name_a_person_ran_under_is_searchable(self):
+        # A merged person's other names live in the canonical key and "ak" —
+        # the display name follows the latest election and can differ from
+        # both (the Gerasimovičienė→Gasperavičienė remarriage displays only
+        # the second name). The haystack must fold in all of them or a
+        # former-name search finds nobody.
+        self.assertRegex(
+            SOURCE,
+            r"\[p\.k, \.\.\.\(p\.ak \|\| \[\]\)\]\.map\(k => k\.slice\(0, k\.lastIndexOf\(\"\|\"\)\)",
+        )
+
     def test_candidate_records_are_fetched_no_store(self):
         self.assertRegex(SOURCE, r'fetch\("\.\./"\s*\+\s*file,\s*\{\s*cache:\s*"no-store"')
 

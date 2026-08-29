@@ -20,26 +20,55 @@ python3 -m http.server 8791            # serve the repo root
 
 Then open <http://127.0.0.1:8791/dashboard/>. Both commands run from the repo
 root — the index builder reads `data/`, and the page fetches candidate JSONs
-relative to the server root. A person page is deep-linkable via the URL hash.
+relative to the server root. A person page is deep-linkable via the URL hash,
+which is the person's `pid` (below); a pre-pid `name|birth` hash and a
+merged-away fragment's key still resolve and are rewritten to the pid.
 
 ## Identity: how candidacies become persons
 
 VRK publishes no cross-election person identifier — the `rkndId` in candidate
 URLs is a per-election registration id — so identity is resolved by
-**normalized name + birth date**. Measured over the 33,119-record corpus:
+**normalized name + birth key**. Measured over the 113,073-record corpus:
 
-- birth date is present on **33,118 records (100.0%)**; the one exception
-  (`jonas-korsakas`, 2020 Seimas) groups by name alone,
+- birth date is present on all but 234 records; 170 of those (the 1996-1998
+  Seimas archive, which publishes no birth date) carry a birth *year* and
+  group by name + `~year`, and the 64 left group by name alone,
 - the pair collides for **zero** same-election record pairs,
-- **305 names** are shared by people with distinct birth dates — real
+- **1,989 names** are shared by people with distinct birth keys — real
   namesakes that name-only grouping would have merged wrongly,
-- the join yields **23,358 persons**, 7,253 of them in more than one election.
+- the join yields **60,725 persons**, 23,163 of them in more than one
+  election.
 
 Names are NFC-normalized, uppercased and whitespace-collapsed; diacritics are
 preserved in the identity key (ŠIMONYTĖ ≠ SIMONYTE) and folded only in the
-search box. Known limitation: a person who changes their surname between
-elections (marriage) appears as two persons; same-birth-date same-first-name
-pairs would be the starting point for a merge review if that ever matters.
+search box.
+
+**The pid** (issue #96). Every person carries `"pid"` — `p` + 12 hex digits
+of blake2s over the natural `name|birth` key — which is what the page writes
+into the URL hash. It survives a rebuild and a new election: for a merged
+person it derives from the fragment holding the chronologically earliest
+candidacy, and elections are only added at the recent end now that the
+historical sweep is done. The old `name|birth` deep links keep resolving —
+the page accepts a pid, a natural key, or a merged-away fragment's key (from
+`"ak"`) and rewrites the hash to the pid.
+
+**Surname changes are healed by hand, not by rule.** The natural key splits
+anyone who changed surname between elections — marriage, mostly — into two
+persons. `scripts/find_identity_merge_candidates.py` finds the plausible
+splits: within each birth key it pairs persons sharing a first name and
+scores each pair `strong` (a surname token or the maiden→married stem links
+them), `given-name` (only a shared middle given name — the scorer's known
+false-positive shape) or `weak`, marks the pairs where one name is the other
+plus appended tokens, and prints whatever is still undecided. Decisions live
+in `scraper/person_overrides.json` — checked in, one entry per reviewed pair
+with the evidence written down: `merge` folds the fragments into one person
+(the former keys land in `"ak"`, so old links and maiden-name searches still
+work), `distinct` records that the pair is genuinely two people. The
+2026-08-30 review worked through all 99 strong pairs of the corpus plus the
+token-order, transliteration and no-birth-date splits: 102 merges, 1 pair
+left distinct for lack of evidence. Merging another pair is a one-line edit
+of the override file, not a code change; the builder fails if an override
+key stops matching, so the file cannot rot silently.
 
 ## The comparison table
 
@@ -149,11 +178,22 @@ repeat municipal votes and there is no other order between them.
 ## Files
 
 - `scraper/elections.json` — the election registry (version controlled).
+- `scraper/person_overrides.json` — the hand-reviewed identity decisions
+  (version controlled): every accepted merge and rejected pair, with the
+  evidence.
 - `scripts/build_person_index.py` — builds `dashboard/people.json`
-  (gitignored); prints the audit counts on every run.
+  (gitignored); applies the override merges, assigns pids, prints the audit
+  counts on every run.
+- `scripts/find_identity_merge_candidates.py` — scores possible
+  surname-change splits and prints the undecided ones; writes
+  `dashboard/merge-review.csv` (gitignored — the record of decisions is the
+  override file, this is derived output).
 - `dashboard/index.html` — the whole app: no dependencies, vanilla JS, served
   statically next to `data/`.
-- `tests/test_person_index.py` — pins the grouping rules on synthetic records.
+- `tests/test_person_index.py` — pins the grouping rules, the pid and the
+  override merges on synthetic records.
+- `tests/test_identity_merge_review.py` — pins the review scorer's tiers on
+  the real shapes from the issue #96 review.
 - `tests/test_elections_registry.py` — pins the registry's shape, its
   chronology, and that every scraped election has an entry.
 - `tests/test_dashboard_money_rendering.py` — pins that both renderers

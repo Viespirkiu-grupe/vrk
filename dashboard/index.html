@@ -256,12 +256,28 @@ async function boot() {
     `${fmtInt(s.persons)} ${plural(s.persons, "asmuo", "asmenys", "asmenų")} · ` +
     `${fmtInt(s.records)} ${plural(s.records, "kandidatavimas", "kandidatavimai", "kandidatavimų")} · ` +
     `${fmtInt(s.personsInMultipleElections)} dalyvavo 2+ rinkimuose`;
-  for (const p of INDEX.people) p._f = fold(p.n);
+  // A merged person answers to every name they ran under, so the search
+  // haystack folds in each natural key's name — the canonical key's (the
+  // display name follows the latest election and can differ from it: the
+  // Gerasimovičienė→Gasperavičienė remarriage displays only the second
+  // name) and every merged-away fragment's from "ak".
+  for (const p of INDEX.people) {
+    const names = [p.k, ...(p.ak || [])].map(k => k.slice(0, k.lastIndexOf("|")));
+    p._f = fold([...new Set([p.n, ...names])].join(" "));
+  }
   document.getElementById("search").addEventListener("input", renderList);
   document.getElementById("moversBtn").addEventListener("click", showMovers);
   renderList();
+  // The pid is the durable deep link (issue #96). A pre-pid name|birth hash
+  // and a merged-away fragment's key both still resolve — showPerson then
+  // rewrites the URL to the pid, so old shared links keep working.
   const hashKey = decodeURIComponent(location.hash.slice(1));
-  if (hashKey) { const p = INDEX.people.find(p => p.k === hashKey); if (p) showPerson(p); }
+  if (hashKey) {
+    const p = INDEX.people.find(
+      p => p.pid === hashKey || p.k === hashKey || (p.ak || []).includes(hashKey)
+    );
+    if (p) showPerson(p);
+  }
 }
 
 // Matching stops at MATCH_CAP so a bare search does not walk all 47k people;
@@ -289,7 +305,7 @@ function renderList() {
   for (const p of out.slice(0, RENDER_LIMIT)) {
     const div = document.createElement("div");
     div.className = "row";
-    div.dataset.key = p.k;
+    div.dataset.key = p.pid;
     div.innerHTML = `<span><span class="nm"></span> <span class="bd"></span></span>` +
       `<span class="cnt">Rinkimų: ${p.e.length}</span>`;
     div.querySelector(".nm").textContent = p.n;
@@ -376,8 +392,8 @@ function renderValue(v) {
 }
 
 async function showPerson(p) {
-  location.hash = encodeURIComponent(p.k);
-  for (const el of document.querySelectorAll(".row")) el.classList.toggle("active", el.dataset.key === p.k);
+  location.hash = p.pid;
+  for (const el of document.querySelectorAll(".row")) el.classList.toggle("active", el.dataset.key === p.pid);
   const root = document.getElementById("person");
   root.innerHTML = `<div class="loading">Kraunami įrašai (${p.e.length})…</div>`;
   const records = await Promise.all(p.e.map(e => fetchRecord(e).then(r => [e, r])));
@@ -527,7 +543,7 @@ function showMovers() {
       tr.insertCell().textContent = String(i + 1);
       const nameCell = tr.insertCell();
       const a = document.createElement("a");
-      a.href = "#" + encodeURIComponent(r.p.k);
+      a.href = "#" + r.p.pid;
       a.textContent = `${r.p.n} · ${r.p.b || "?"}`;
       a.addEventListener("click", (ev) => { ev.preventDefault(); showPerson(r.p); });
       nameCell.appendChild(a);
