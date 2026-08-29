@@ -39,6 +39,7 @@ from scraper.elections.seimo_2016.anketa_parser import (
     normalize_space,
 )
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.election_results import candidacy_from_elected_note
 from scraper.shared.conviction_details import conviction_field_keys, conviction_records
 from scraper.shared.deklaracijos import normalize_declaration
 from scraper.shared.files import write_candidate_record, write_json
@@ -138,6 +139,17 @@ def _parse_profile_table(table: Tag | None) -> dict[str, Any]:
         "photoSrc": photo_src,
         "fields": fields,
     }
+
+
+def parse_office_heading(soup: BeautifulSoup) -> str:
+    """The office line above the profile card — "Kandidatas į Seimo narius
+    (dokumentai pateikti 2024-07-16)", "Kandidatė į savivaldybės tarybos
+    narius ir merus" — printed as the page's only <h4 class="h4apgKom">
+    on the 2017-2025 layouts (the 2016 and 2020 Seimo pages have none).
+    It is the one place the page says which office the candidate seeks
+    and, on the 2024 Seimo pages, when the documents were submitted."""
+    heading = soup.find("h4", class_="h4apgKom")
+    return _tag_text(heading) if heading is not None else ""
 
 
 def _select_profile_table(soup: BeautifulSoup, tabnav: Tag | None) -> Tag | None:
@@ -381,6 +393,7 @@ def parse_anketa_html(html: str) -> dict[str, Any]:
     content = _find_main_content_after_tabnav(soup)
 
     profile = _parse_profile_table(profile_table)
+    profile["officeHeading"] = parse_office_heading(soup)
     tabs = _parse_tabnav(tabnav)
     anketa = _parse_anketa_content(content)
 
@@ -734,6 +747,9 @@ def parse_anketa_sample(
         "electionId": ELECTION_ID,
         "candidateId": candidate_id,
         "candidateName": candidate_name,
+        # Elected status exists on these pages only as the profile's prose
+        # note; the derived flag pair keeps it queryable (issue #100).
+        "kandidatavimas": candidacy_from_elected_note(normalized["profilis"].get("pastaba")),
         "source": {
             "candidateSourceUrl": candidate_source_url,
         },

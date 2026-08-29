@@ -300,7 +300,20 @@ class Savivaldybiu2000RecordTests(unittest.TestCase):
         self.assertIsNone(normalized["profilis"]["nuotrauka"])
         self.assertEqual(
             list(normalized["anketa"].keys()),
-            ["gimimo-data", "adresas", "pareiskimai", "gimimo-vieta", "issilavinimas", "mokslo-laipsnis", "pedagoginis-vardas", "uzsienio-kalbos", "anksciau-isrinktas", "pagrindine-darboviete", "visuomenine-veikla", "seimine-padetis", "kita-apie-save"],
+            ["gimimo-data", "adresas", "pareiskimai", "gimimo-vieta", "issilavinimas", "mokslo-laipsnis", "pedagoginis-vardas", "uzsienio-kalbos", "anksciau-isrinktas", "pagrindine-darboviete", "visuomenine-veikla", "seimine-padetis", "sutuoktinio-vardas-pavarde", "vaiku-vardai-pavardes", "seimos-nariai", "kita-apie-save"],
+        )
+        # The card glues the family into the marital-status paragraph;
+        # the record splits it back out the way the Seimas records do.
+        self.assertEqual(normalized["anketa"]["seimine-padetis"], "Vedęs")
+        self.assertEqual(normalized["anketa"]["sutuoktinio-vardas-pavarde"], "Laima")
+        self.assertEqual(normalized["anketa"]["vaiku-vardai-pavardes"], "Inga, Mindaugas")
+        self.assertEqual(
+            normalized["anketa"]["seimos-nariai"],
+            [
+                {"vardas": "Laima", "rysys": "sutuoktinis/sutuoktinė"},
+                {"vardas": "Inga", "rysys": "vaikas"},
+                {"vardas": "Mindaugas", "rysys": "vaikas"},
+            ],
         )
         self.assertEqual(
             normalized["anketa"]["pareiskimai"],

@@ -95,6 +95,37 @@ COMPOSITION_PATTERN = re.compile(r"rapg_(\d+)\.html$")
 SELF_NOMINATED_RESULT_PATTERN = re.compile(r"savkand(\d+)_gauti_balsai_apygardoje\d+\.html$")
 MAYOR_ELECT_MARKER = "išrinktas(-a) meru(-e)"
 
+# The 2016-2025 candidate pages publish no results tree the scraper walks;
+# their only elected signal is the profile's prose note ("Išrinktas pagal
+# sąrašą", "Išrinkta vienmandatėje Zanavykų (Nr.64) apygardoje II ture",
+# "Išrinktas Kupiškio rajono (Nr.23) savivaldybėje II ture", "Išrinktas II
+# ture"). Measured across the corpus, the notes name the complete winner
+# set — 141 of 141 Seimas seats in 2016, 2020 and 2024, 11 of 11 EP seats
+# in 2019 and 2024 — so a record without one is a real non-winner, not a
+# gap, and `isrinktas` may say `false`. Each prose form determines the
+# seat; first match wins.
+ELECTED_NOTE_SEAT_PATTERNS: tuple[tuple[re.Pattern[str], str], ...] = (
+    (re.compile(r"\bvienmandatėje\b"), "vienmandate"),
+    (re.compile(r"\bpagal\b.+\bsąrašą\b"), "daugiamandate"),
+    (re.compile(r"\bsavivaldybėje\b"), "meras"),
+    (re.compile(r"^Išrinkt(?:as|a) I{1,2} ture$"), "prezidentas"),
+)
+
+
+def candidacy_from_elected_note(pastaba: Any) -> dict[str, Any]:
+    """A minimal `kandidatavimas` block — `isrinktas` and `isrinktasKaip` —
+    derived from `profilis.pastaba` for the elections whose pages carry
+    elected status only as that prose (docs/OUTPUT_SCHEMA.md). A note the
+    seat table does not recognise still counts the winner, with the seat
+    left unknown rather than guessed."""
+    note = normalize_space(str(pastaba or ""))
+    if not note.startswith("Išrink"):
+        return {"isrinktas": False}
+    for pattern, seat in ELECTED_NOTE_SEAT_PATTERNS:
+        if pattern.search(note):
+            return {"isrinktas": True, "isrinktasKaip": seat}
+    return {"isrinktas": True, "isrinktasKaip": None}
+
 
 def utc_now_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()

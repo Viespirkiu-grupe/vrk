@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup, NavigableString, Tag
 
 from scraper.elections.seimo_2016.sitemap import ELECTION_ID, resolve_candidate_url
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.election_results import candidacy_from_elected_note
 from scraper.shared.conviction_details import conviction_field_keys, conviction_records
 from scraper.shared.deklaracijos import normalize_declaration
 from scraper.shared.files import slugify, write_candidate_record, write_json
@@ -1420,6 +1421,12 @@ def _index_sections_by_id(sections: list[dict[str, Any]]) -> dict[str, Any]:
     return by_section_id
 
 
+# The parenthesised clause of the office heading: "Kandidatas į Seimo
+# narius (dokumentai pateikti 2024-07-29)". Only the 2024 Seimo pages
+# print it; every candidate has their own date.
+OFFICE_HEADING_DATE_PATTERN = re.compile(r"\s*\(dokumentai pateikti\s+(\d{4}-\d{2}-\d{2})\)")
+
+
 def _normalize_profile_data(profile: dict[str, Any]) -> dict[str, Any]:
     normalized_fields: dict[str, Any] = {}
     fields = profile.get("fields") if isinstance(profile.get("fields"), list) else []
@@ -1447,12 +1454,25 @@ def _normalize_profile_data(profile: dict[str, Any]) -> dict[str, Any]:
             "nuorodos": _normalize_links(field.get("urls")),
         }
 
-    return {
+    normalized_profile = {
         "vardas-pavarde": _normalize_text_value(profile.get("candidateDisplayName")),
         "pastaba": _normalize_text_value(profile.get("electedNote")),
         "nuotrauka": _normalize_photo_reference(profile.get("photoSrc")),
         "kita": normalized_fields,
     }
+    # The 2017-2025 pages open with an office line above the profile card
+    # ("Kandidatas į savivaldybės tarybos narius ir merus"; the 2024 Seimo
+    # pages append each candidate's own submission date). Parsers that
+    # capture it put `officeHeading` on the raw profile; the pair of keys
+    # appears only for those elections.
+    if "officeHeading" in profile:
+        heading = normalize_space(str(profile.get("officeHeading") or ""))
+        date_match = OFFICE_HEADING_DATE_PATTERN.search(heading)
+        normalized_profile["kandidatuoja-i"] = _normalize_text_value(
+            OFFICE_HEADING_DATE_PATTERN.sub("", heading)
+        )
+        normalized_profile["dokumentu-pateikimo-data"] = date_match.group(1) if date_match else None
+    return normalized_profile
 
 
 def _normalize_biografija_data(payload: dict[str, Any]) -> dict[str, Any]:
@@ -1479,23 +1499,47 @@ ID001P_COLUMN_KEYS = [
 def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]:
     sections = payload.get("sections") if isinstance(payload.get("sections"), list) else []
     result: dict[str, Any] = {}
+    # A section's `description` — the static form sentence VRK prints under
+    # the heading ("Deklaruojančiojo asmens ir jo sutuoktinio (partnerio)
+    # turimas privalomas registruoti nekilnojamasis turtas:" and its kin on
+    # the 2007-2015 pages) — is deliberately not normalized: it is the
+    # declaration form's own boilerplate, identical on every candidate, and
+    # stays in rawData only.
     for index, section in enumerate(sections, start=1):
         if not isinstance(section, dict):
             continue
         section_title = str(section.get("title", "")).strip()
         section_id = str(section.get("sectionId", "")).strip()
+        section_items = section.get("items") if isinstance(section.get("items"), list) else None
+        if not section_title and not section_id and section_items:
+            # The 2016-era pages print the spouse block's heading
+            # ("Deklaruojančio asmens sutuoktinis, sugyventinis, partneris")
+            # as the table's first row rather than an <h4>, so the section
+            # arrives untitled with the heading as an empty-valued item.
+            # Promote that row to the title — the same section the 2020-era
+            # parse titles from its first row — instead of letting the whole
+            # block fall into the sekcija-N fallback and be dropped.
+            for item in section_items:
+                if (
+                    isinstance(item, dict)
+                    and not _normalize_text_value(item.get("value"))
+                    and _source_key(str(item.get("key", ""))).startswith("deklaruojancio-asmens-sutuoktinis")
+                ):
+                    section_title = str(item.get("key", "")).strip()
+                    section_items = [other for other in section_items if other is not item]
+                    break
         section_key = _source_key(section_id or section_title) or f"sekcija-{index}"
 
         normalized_section: dict[str, Any] = {}
 
-        if isinstance(section.get("items"), list):
+        if isinstance(section_items, list):
             item_values: dict[str, Any] = {}
             # A declaration section can be free text rather than key/value
             # pairs — ID001A KITI DUOMENYS is published as an unlabelled
             # sentence. Those rows reach here with an empty key; dropping them
             # for want of a key silently loses the whole declared text.
             free_text: list[str] = []
-            for item in section["items"]:
+            for item in section_items:
                 if not isinstance(item, dict):
                     continue
                 item_label = str(item.get("key", ""))
@@ -1581,12 +1625,19 @@ def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]
             if normalized_rows:
                 normalized_section = normalized_rows
 
-        # Hoist declarant fields (deklaruojantis-asmuo) to the top level
-        if isinstance(normalized_section, dict) and "deklaruojantis-asmuo" in normalized_section:
+        # Hoist declarant fields to the top level. The 2008 form says
+        # "Deklaruojantysis asmuo" where every later year says
+        # "Deklaruojantis asmuo"; both name the same block, which on the
+        # 2008 pages also carries the two workplace lines ("Darbovietė ir
+        # pareigos valstybinėje tarnyboje", "Kitos darbovietės, pareigos").
+        if isinstance(normalized_section, dict) and (
+            "deklaruojantis-asmuo" in normalized_section or "deklaruojantysis-asmuo" in normalized_section
+        ):
             result.update(normalized_section)
             continue
 
-        # Drop sections with no id/title (spouse/secondary blocks with fallback keys)
+        # Drop sections that still have no id/title after the promotions
+        # above — by measurement those are only empty shells.
         if section_key.startswith("sekcija-"):
             continue
 
@@ -2321,6 +2372,9 @@ def parse_anketa_sample(
         "electionId": ELECTION_ID,
         "candidateId": candidate_id,
         "candidateName": candidate_name,
+        # Elected status exists on these pages only as the profile's prose
+        # note; the derived flag pair keeps it queryable (issue #100).
+        "kandidatavimas": candidacy_from_elected_note(normalized["profilis"].get("pastaba")),
         "source": {
             "candidateSourceUrl": candidate_source_url,
         },

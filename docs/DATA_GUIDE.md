@@ -118,13 +118,15 @@ questionnaire asks constitutional eligibility questions instead and has no
 conviction declaration. Structured conviction *details* are another matter;
 see the traps below.
 
-**Elected.** A candidate was elected iff `profilis.pastaba` starts with
-`Išrink` (`Išrinktas…`/`Išrinkta…`) **or** `kandidatavimas.isrinktas` is
-`true`. The second form is the 1996–2015 families, whose pages mark no winner:
-there `pastaba` is always null and the flag is joined in from VRK's results
-trees (`isrinktasKaip` names the seat, `rezultatuSaltinis` the page; a
-`false` means the results were consulted and the candidate is not among the
-winners, a `null` that no results file exists). Four traps:
+**Elected.** `kandidatavimas.isrinktas` is now `true`/`false` on every
+record of every election except the 1997 municipal pair (issue #92) —
+either joined in from VRK's results trees (the 1996–2015 families, whose
+pages mark no winner and whose `pastaba` is always null; `isrinktasKaip`
+names the seat, `rezultatuSaltinis` the page, a `null` means no results
+file exists) or, on the 2016–2025 layouts, derived from the profile's
+prose note (`profilis.pastaba` starting `Išrink`), which names the
+complete winner set in every one of those elections — see
+`docs/OUTPUT_SCHEMA.md`. Four traps:
 
 - *`kandidatavimas` is a list in the 1996-1999 Seimas archive family*, one
   entry per candidacy — a 1996 candidate could stand in a constituency and on
