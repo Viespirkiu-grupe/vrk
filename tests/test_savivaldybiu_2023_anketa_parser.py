@@ -6,6 +6,7 @@ from pathlib import Path
 from scraper.elections.kupiskio_mero_2023.anketa_parser import _normalize_anketa_rows
 from scraper.elections.savivaldybiu_2023.anketa_parser import parse_anketa_sample
 from scraper.elections.savivaldybiu_2023.candidate_samples import expected_tabs_for
+from scraper.shared.deklaracijos import DECLARATION_BLOCK_KEYS
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -626,15 +627,7 @@ class Savivaldybiu2023AnketaParserTests(unittest.TestCase):
             with self.subTest(candidate=payload["candidateId"]):
                 self.assertEqual(
                     list(payload["normalized"]["turto-ir-pajamu-deklaracijos"].keys()),
-                    [
-                        "privalomas-registruoti-turtas",
-                        "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
-                        "pinigines-lesos",
-                        "suteiktos-paskolos",
-                        "gautos-paskolos",
-                        "gautos-pajamos",
-                        "sumoketas-pajamu-mokestis",
-                    ],
+                    list(DECLARATION_BLOCK_KEYS),
                 )
 
         turtas = self.zebrauskas["normalized"]["turto-ir-pajamu-deklaracijos"]

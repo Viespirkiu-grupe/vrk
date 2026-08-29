@@ -23,7 +23,7 @@ Only the extensions the parsers open are eligible: `.html`, `.htm`, `.json`,
 `.doc`. The 2002 presidential declaration scans (`.jpg`, about 1 MB per
 candidate) are recorded by path and never read, so they stay local.
 
-That yields 5,344 files and 43 MiB -- every election keeps at least one
+That yields 5,348 files and 43 MiB -- every election keeps at least one
 candidate fixture, and the 48 candidates that exceed the limit are all
 2018-2019 pages carrying the portrait as a base64 data URI in the HTML itself
 (`2018-rugsejo-16-seimo-zanavykai/giedrius-surplys` is 86 MB of it). Tests that
@@ -118,7 +118,7 @@ def tracked_paths(repo_root: Path = REPO_ROOT) -> list[str]:
 
 def _git(repo_root: Path, *args: str, paths: list[str]) -> None:
     # One argv per 500 paths keeps the command line well inside every platform's
-    # limit; 5,344 fixtures in one call would not be.
+    # limit; 5,348 fixtures in one call would not be.
     for start in range(0, len(paths), 500):
         subprocess.run(
             ["git", *args, "--", *paths[start : start + 500]],

@@ -1249,6 +1249,211 @@
         "2002-gruodzio-22-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis"
       }
     },
+    "individualios-veiklos-pajamos": {
+      "label-lt": "Deklaruota individualios veiklos pajamų suma",
+      "paths": {
+        "2018-rugsejo-16-seimo-zanavykai": "turto-ir-pajamu-deklaracijos.individualios-veiklos-pajamos",
+        "2019-ep": "turto-ir-pajamu-deklaracijos.individualios-veiklos-pajamos",
+        "2019-kovo-3-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.individualios-veiklos-pajamos",
+        "2019-prezidento": "turto-ir-pajamu-deklaracijos.individualios-veiklos-pajamos",
+        "2019-rugsejo-8-seimo": "turto-ir-pajamu-deklaracijos.individualios-veiklos-pajamos",
+        "2020-seimo": "turto-ir-pajamu-deklaracijos.individualios-veiklos-pajamos",
+        "2021-balandzio-11-radviliskio-mero": "turto-ir-pajamu-deklaracijos.individualios-veiklos-pajamos",
+        "2021-spalio-10-meru": "turto-ir-pajamu-deklaracijos.individualios-veiklos-pajamos",
+        "2023-geguzes-7-visagino-mero": "turto-ir-pajamu-deklaracijos.individualios-veiklos-pajamos",
+        "2023-kovo-5-savivaldybiu-tarybu-ir-meru": "turto-ir-pajamu-deklaracijos.individualios-veiklos-pajamos",
+        "2023-rugsejo-3-seimo-raseiniai-kedainiai": "turto-ir-pajamu-deklaracijos.individualios-veiklos-pajamos",
+        "2023-spalio-8-kupiskio-mero": "turto-ir-pajamu-deklaracijos.individualios-veiklos-pajamos",
+        "2024-ep": "turto-ir-pajamu-deklaracijos.individualios-veiklos-pajamos",
+        "2024-prezidento": "turto-ir-pajamu-deklaracijos.individualios-veiklos-pajamos",
+        "2024-seimo": "turto-ir-pajamu-deklaracijos.individualios-veiklos-pajamos",
+        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.individualios-veiklos-pajamos"
+      }
+    },
+    "individualios-veiklos-atskaitymai": {
+      "label-lt": "Individualios veiklos leidžiami atskaitymai",
+      "paths": {
+        "2018-rugsejo-16-seimo-zanavykai": "turto-ir-pajamu-deklaracijos.individualios-veiklos-atskaitymai",
+        "2019-ep": "turto-ir-pajamu-deklaracijos.individualios-veiklos-atskaitymai",
+        "2019-kovo-3-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.individualios-veiklos-atskaitymai",
+        "2019-prezidento": "turto-ir-pajamu-deklaracijos.individualios-veiklos-atskaitymai",
+        "2019-rugsejo-8-seimo": "turto-ir-pajamu-deklaracijos.individualios-veiklos-atskaitymai",
+        "2020-seimo": "turto-ir-pajamu-deklaracijos.individualios-veiklos-atskaitymai",
+        "2021-balandzio-11-radviliskio-mero": "turto-ir-pajamu-deklaracijos.individualios-veiklos-atskaitymai",
+        "2021-spalio-10-meru": "turto-ir-pajamu-deklaracijos.individualios-veiklos-atskaitymai",
+        "2023-geguzes-7-visagino-mero": "turto-ir-pajamu-deklaracijos.individualios-veiklos-atskaitymai",
+        "2023-kovo-5-savivaldybiu-tarybu-ir-meru": "turto-ir-pajamu-deklaracijos.individualios-veiklos-atskaitymai",
+        "2023-rugsejo-3-seimo-raseiniai-kedainiai": "turto-ir-pajamu-deklaracijos.individualios-veiklos-atskaitymai",
+        "2023-spalio-8-kupiskio-mero": "turto-ir-pajamu-deklaracijos.individualios-veiklos-atskaitymai",
+        "2024-ep": "turto-ir-pajamu-deklaracijos.individualios-veiklos-atskaitymai",
+        "2024-prezidento": "turto-ir-pajamu-deklaracijos.individualios-veiklos-atskaitymai",
+        "2024-seimo": "turto-ir-pajamu-deklaracijos.individualios-veiklos-atskaitymai",
+        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.individualios-veiklos-atskaitymai"
+      }
+    },
+    "turto-pardavimo-pajamos": {
+      "label-lt": "Deklaruota turto pardavimo pajamų suma",
+      "paths": {
+        "2018-rugsejo-16-seimo-zanavykai": "turto-ir-pajamu-deklaracijos.turto-pardavimo-pajamos",
+        "2019-ep": "turto-ir-pajamu-deklaracijos.turto-pardavimo-pajamos",
+        "2019-kovo-3-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.turto-pardavimo-pajamos",
+        "2019-prezidento": "turto-ir-pajamu-deklaracijos.turto-pardavimo-pajamos",
+        "2019-rugsejo-8-seimo": "turto-ir-pajamu-deklaracijos.turto-pardavimo-pajamos",
+        "2020-seimo": "turto-ir-pajamu-deklaracijos.turto-pardavimo-pajamos",
+        "2021-balandzio-11-radviliskio-mero": "turto-ir-pajamu-deklaracijos.turto-pardavimo-pajamos",
+        "2021-spalio-10-meru": "turto-ir-pajamu-deklaracijos.turto-pardavimo-pajamos",
+        "2023-geguzes-7-visagino-mero": "turto-ir-pajamu-deklaracijos.turto-pardavimo-pajamos",
+        "2023-kovo-5-savivaldybiu-tarybu-ir-meru": "turto-ir-pajamu-deklaracijos.turto-pardavimo-pajamos",
+        "2023-rugsejo-3-seimo-raseiniai-kedainiai": "turto-ir-pajamu-deklaracijos.turto-pardavimo-pajamos",
+        "2023-spalio-8-kupiskio-mero": "turto-ir-pajamu-deklaracijos.turto-pardavimo-pajamos",
+        "2024-ep": "turto-ir-pajamu-deklaracijos.turto-pardavimo-pajamos",
+        "2024-prezidento": "turto-ir-pajamu-deklaracijos.turto-pardavimo-pajamos",
+        "2024-seimo": "turto-ir-pajamu-deklaracijos.turto-pardavimo-pajamos",
+        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.turto-pardavimo-pajamos"
+      }
+    },
+    "turto-isigijimo-kaina": {
+      "label-lt": "Parduoto turto įsigijimo kaina",
+      "paths": {
+        "2018-rugsejo-16-seimo-zanavykai": "turto-ir-pajamu-deklaracijos.turto-isigijimo-kaina",
+        "2019-ep": "turto-ir-pajamu-deklaracijos.turto-isigijimo-kaina",
+        "2019-kovo-3-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.turto-isigijimo-kaina",
+        "2019-prezidento": "turto-ir-pajamu-deklaracijos.turto-isigijimo-kaina",
+        "2019-rugsejo-8-seimo": "turto-ir-pajamu-deklaracijos.turto-isigijimo-kaina",
+        "2020-seimo": "turto-ir-pajamu-deklaracijos.turto-isigijimo-kaina",
+        "2021-balandzio-11-radviliskio-mero": "turto-ir-pajamu-deklaracijos.turto-isigijimo-kaina",
+        "2021-spalio-10-meru": "turto-ir-pajamu-deklaracijos.turto-isigijimo-kaina",
+        "2023-geguzes-7-visagino-mero": "turto-ir-pajamu-deklaracijos.turto-isigijimo-kaina",
+        "2023-kovo-5-savivaldybiu-tarybu-ir-meru": "turto-ir-pajamu-deklaracijos.turto-isigijimo-kaina",
+        "2023-rugsejo-3-seimo-raseiniai-kedainiai": "turto-ir-pajamu-deklaracijos.turto-isigijimo-kaina",
+        "2023-spalio-8-kupiskio-mero": "turto-ir-pajamu-deklaracijos.turto-isigijimo-kaina",
+        "2024-ep": "turto-ir-pajamu-deklaracijos.turto-isigijimo-kaina",
+        "2024-prezidento": "turto-ir-pajamu-deklaracijos.turto-isigijimo-kaina",
+        "2024-seimo": "turto-ir-pajamu-deklaracijos.turto-isigijimo-kaina",
+        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.turto-isigijimo-kaina"
+      }
+    },
+    "deklaracijos-metai": {
+      "label-lt": "Deklaracijos metai",
+      "paths": {
+        "2008-seimo": "turto-ir-pajamu-deklaracijos.deklaracijos-metai",
+        "2012-seimo": "turto-ir-pajamu-deklaracijos.deklaracijos-metai",
+        "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "turto-ir-pajamu-deklaracijos.deklaracijos-metai",
+        "2015-birzelio-7-seimo-varena-eisiskes": "turto-ir-pajamu-deklaracijos.deklaracijos-metai",
+        "2015-kovo-1-seimo-zirmunai": "turto-ir-pajamu-deklaracijos.deklaracijos-metai",
+        "2017-balandzio-23-meru": "turto-ir-pajamu-deklaracijos.deklaracijos-metai",
+        "2017-rugsejo-10-marijampoles-mero": "turto-ir-pajamu-deklaracijos.deklaracijos-metai",
+        "2019-ep": "turto-ir-pajamu-deklaracijos.deklaracijos-metai",
+        "2019-kovo-3-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.deklaracijos-metai",
+        "2019-prezidento": "turto-ir-pajamu-deklaracijos.deklaracijos-metai",
+        "2021-balandzio-11-radviliskio-mero": "turto-ir-pajamu-deklaracijos.deklaracijos-metai",
+        "2021-spalio-10-meru": "turto-ir-pajamu-deklaracijos.deklaracijos-metai",
+        "2023-geguzes-7-visagino-mero": "turto-ir-pajamu-deklaracijos.deklaracijos-metai",
+        "2023-kovo-5-savivaldybiu-tarybu-ir-meru": "turto-ir-pajamu-deklaracijos.deklaracijos-metai",
+        "2023-rugsejo-3-seimo-raseiniai-kedainiai": "turto-ir-pajamu-deklaracijos.deklaracijos-metai",
+        "2023-spalio-8-kupiskio-mero": "turto-ir-pajamu-deklaracijos.deklaracijos-metai",
+        "2024-ep": "turto-ir-pajamu-deklaracijos.deklaracijos-metai",
+        "2024-prezidento": "turto-ir-pajamu-deklaracijos.deklaracijos-metai",
+        "2024-seimo": "turto-ir-pajamu-deklaracijos.deklaracijos-metai",
+        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.deklaracijos-metai"
+      }
+    },
+    "deklaracijos-forma": {
+      "label-lt": "Deklaracijos forma",
+      "paths": {
+        "2004-ep": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2004-prezidento": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2004-seimo": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2005-lapkricio-20-seimo-kedainiai": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2007-spalio-7-seimo-dzukija": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2007-vasario-25-savivaldybiu": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2008-seimo": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2009-ep": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2009-prezidento": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2011-vasario-13-seimo-marijampole": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2011-vasario-27-savivaldybiu": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2012-seimo": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2014-ep": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2014-prezidento": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2015-birzelio-21-pakartotiniai-silutes": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2015-birzelio-7-seimo-varena-eisiskes": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2015-kovo-1-savivaldybiu": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2015-kovo-1-seimo-zirmunai": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2015-lapkricio-8-telsiu-mero": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2016-seimo": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2017-balandzio-23-meru": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2017-balandzio-23-seimo-anyksciai-panevezys": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2017-rugsejo-10-marijampoles-mero": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2018-rugsejo-16-seimo-zanavykai": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2019-ep": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2019-kovo-3-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2019-prezidento": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2019-rugsejo-8-seimo": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2020-seimo": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2021-balandzio-11-radviliskio-mero": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2021-spalio-10-meru": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2023-geguzes-7-visagino-mero": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2023-kovo-5-savivaldybiu-tarybu-ir-meru": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2023-rugsejo-3-seimo-raseiniai-kedainiai": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2023-spalio-8-kupiskio-mero": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2024-ep": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2024-prezidento": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2024-seimo": "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.deklaracijos-forma"
+      }
+    },
+    "deklaracijos-apimtis": {
+      "label-lt": "Deklaracijos apimtis",
+      "paths": {
+        "2002-gruodzio-22-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2003-birzelio-15-seimo-nauji": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2004-ep": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2004-prezidento": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2004-seimo": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2005-lapkricio-20-seimo-kedainiai": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2007-spalio-7-seimo-dzukija": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2007-vasario-25-savivaldybiu": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2008-seimo": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2009-ep": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2009-prezidento": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2011-vasario-13-seimo-marijampole": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2011-vasario-27-savivaldybiu": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2012-seimo": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2014-ep": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2014-prezidento": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2015-birzelio-21-pakartotiniai-silutes": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2015-birzelio-7-seimo-varena-eisiskes": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2015-kovo-1-savivaldybiu": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2015-kovo-1-seimo-zirmunai": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2015-lapkricio-8-telsiu-mero": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2016-seimo": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2017-balandzio-23-meru": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2017-balandzio-23-seimo-anyksciai-panevezys": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2017-rugsejo-10-marijampoles-mero": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2018-rugsejo-16-seimo-zanavykai": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2019-ep": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2019-kovo-3-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2019-prezidento": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2019-rugsejo-8-seimo": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2020-seimo": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2021-balandzio-11-radviliskio-mero": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2021-spalio-10-meru": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2023-geguzes-7-visagino-mero": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2023-kovo-5-savivaldybiu-tarybu-ir-meru": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2023-rugsejo-3-seimo-raseiniai-kedainiai": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2023-spalio-8-kupiskio-mero": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2024-ep": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2024-prezidento": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2024-seimo": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis",
+        "2025-kovo-16-meru": "turto-ir-pajamu-deklaracijos.deklaracijos-apimtis"
+      }
+    },
     "deklaraciju-valiuta": {
       "label-lt": "Deklaracijų valiuta",
       "paths": {
@@ -1341,6 +1546,26 @@
         "deklaruota": 1278
       },
       "note": "Measured over all 113,073 records on 2026-08-28. The affirmative of each question follows its wording: Taip/Ne on the Seimas and municipal forms, Yra/Nera on the 2000 and 2004 static-site ones (which ask whether there is anything to declare), Buvo/Nebuvo on that era's grave-crime question, Turiu/Neturiu on the unserved-sentence one. The main question itself only ever takes Taip (1,614), Yra (16), Ne and Nera, so a consumer filtering on 'Taip' misses sixteen of its 1,630 declarers. The four neighbouring conviction declarations are different questions and do not move busena, but they are returned under kiti-pareiskimai: 53 records answer one affirmatively and 20 of those deny the main question, so 1,650 records declare a conviction somewhere. The resolver flattens both entry shapes to one: data / valstybe / institucija / veikos (a list of offence names), with the stored entry kept under saltinis."
+    },
+    "deklaruotos-pajamos": {
+      "label-lt": "Deklaruotos pajamos",
+      "resolver": "scraper/shared/deklaracijos.py :: deklaruotos_pajamos(turto-ir-pajamu-deklaracijos)",
+      "inputs": [
+        "turto-ir-pajamu-deklaracijos.gautos-pajamos",
+        "turto-ir-pajamu-deklaracijos.gautos-pajamos-darbo-santykiu",
+        "turto-ir-pajamu-deklaracijos.valiuta"
+      ],
+      "states": {
+        "deklaruota-suma": "The declared total, which is what every era from 2004 on publishes and what gautos-pajamos holds.",
+        "darbo-santykiu": "Row 1 of the 1996-2000 form, employment income alone. That form prints rows 1 and 20 of its income section and row 20 fails by rendering 0 against a non-zero row 1, so the parser refuses it and gautos-pajamos is null; row 1 is nonetheless printed and is the only income figure those records have. A floor on what was declared, not the total.",
+        "nera": "Neither figure; suma is null."
+      },
+      "counts": {
+        "deklaruota-suma": 107476,
+        "darbo-santykiu": 4628,
+        "nera": 969
+      },
+      "note": "Measured over all 113,073 records on 2026-08-29. The 4,628 that resolve to the employment row are 4,463 of 1997-kovo-23-savivaldybiu-tarybu's 6,276, 147 of 2000-kovo-19-savivaldybiu-tarybu, 9 of 1996-spalio-20-seimo, 8 of 2000-seimo and 1 of 1997-birzelio-29-svenciniu-tarybos-pakartotiniai — every one of them a page whose row 20 total the parser refused because the page's own row 1 contradicts it (scraper/shared/deklaracija_archive_1990s.py). The 969 with neither figure are the records with no declaration at all (2002-prezidento publishes only scans) plus the archive pages VRK froze an Oracle error into. A consumer reading gautos-pajamos alone reports the 4,628 as having declared nothing, which is not what their page says (issue #98)."
     }
   }
 }

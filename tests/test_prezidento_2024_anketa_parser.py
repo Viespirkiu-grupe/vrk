@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from scraper.elections.prezidento_2024.anketa_parser import parse_anketa_sample
+from scraper.shared.deklaracijos import DECLARATION_BLOCK_KEYS
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -151,15 +152,7 @@ class Prezidento2024AnketaParserTests(unittest.TestCase):
         turtas = self.nauseda["normalized"]["turto-ir-pajamu-deklaracijos"]
         self.assertEqual(
             list(turtas.keys()),
-            [
-                "privalomas-registruoti-turtas",
-                "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
-                "pinigines-lesos",
-                "suteiktos-paskolos",
-                "gautos-paskolos",
-                "gautos-pajamos",
-                "sumoketas-pajamu-mokestis",
-            ],
+            list(DECLARATION_BLOCK_KEYS),
         )
         self.assertEqual(turtas["privalomas-registruoti-turtas"], 359450)
         self.assertEqual(turtas["gautos-pajamos"], 122760)

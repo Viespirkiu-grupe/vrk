@@ -6,7 +6,7 @@ from local_data import require
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SAMPLES_ROOT = REPO_ROOT / "samples" / "html" / "2007-vasario-25-savivaldybiu"
-# Ten of 13,422 — a sample, not the field, as with the other municipal
+# Eleven of 13,422 — a sample, not the field, as with the other municipal
 # generals. Chosen for the shapes the record depends on: a party list's
 # leader who won (two, one of them in Vilnius, the largest municipality),
 # the same list's last position after a withdrawn number (33 of 1–33 with
@@ -14,7 +14,9 @@ SAMPLES_ROOT = REPO_ROOT / "samples" / "html" / "2007-vasario-25-savivaldybiu"
 # number 3), the leaders of three of the four party coalitions (two elected,
 # one not — their cards carry a second "Numeris partijos sąraše" line), a
 # double surname, a three-part name whose questionnaire stops after an
-# empty "Tautybė", and a page with the degree line.
+# empty "Tautybė", a page with the degree line, and — since issue #98 — the
+# election's other declaration shape: a page whose only asset declaration is
+# the *spouse's*, which the corpus used to store as the candidate's.
 ALLOWED_CANDIDATE_DIRS = {
     "arvydas-vysniauskas-7357",
     "algirdas-strignatavicius-7436",
@@ -26,6 +28,7 @@ ALLOWED_CANDIDATE_DIRS = {
     "danute-mileikiene-3258",
     "giedre-ramanauskaite-kedikiene-9665",
     "zigfridas-herbertas-pilvinis-996",
+    "tadeus-romanovskij-11440",
 }
 ALLOWED_SUPPORT_DIRS = {"lists", "parties"}
 # Of the two, the one a clone carries: `lists/` is 4.5 MB across 600

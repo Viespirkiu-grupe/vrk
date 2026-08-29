@@ -41,37 +41,19 @@ from scraper.elections.seimo_2016.anketa_parser import (
     _parse_tabnav,
     _parse_turto_ir_pajamu_html,
     _row_answer_text,
-    _source_key,
     _split_list_value,
 )
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.deklaracijos import normalize_declaration
 from scraper.shared.files import write_candidate_record, write_json
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2017-balandzio-23-meru")
 DEFAULT_OUTPUT_ROOT = Path("data/2017-balandzio-23-meru")
 
-# The asset labels match the other elections, but the income summary is taken
-# from the GPM308 form and names its own field numbers, so the aliases differ
-# from both the 2016 Seimo and the 2019 EP tables.
-TURTO_PAJAMU_KEY_ALIASES = {
-    "i-privalomas-registruoti-turtas": "privalomas-registruoti-turtas",
-    "ii-vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
-    "iii-pinigines-lesos": "pinigines-lesos",
-    "iv-suteiktos-paskolos": "suteiktos-paskolos",
-    "v-gautos-paskolos": "gautos-paskolos",
-    "gautu-pajamu-suma-gpm308-formos-12-13-14-ir-gpm308v-formos-v14-laukeliu-suma": "gautos-pajamos",
-    "isskaiciuota-sumoketa-pajamu-mokescio-suma-gpm308-formos-27-28-30-laukeliu-suma": "sumoketas-pajamu-mokestis",
-}
+# The declaration rows, and the four things a section heading says about an
+# extract — its scope, its year, its form and its figures — are one shared
+# reading for every era; see scraper/shared/deklaracijos.py.
 
-TURTO_PAJAMU_OUTPUT_ORDER = [
-    "privalomas-registruoti-turtas",
-    "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
-    "pinigines-lesos",
-    "suteiktos-paskolos",
-    "gautos-paskolos",
-    "gautos-pajamos",
-    "sumoketas-pajamu-mokestis",
-]
 
 # Q9 quotes the statute it refers to in a row of its own, and the answer is
 # rendered on that continuation row rather than on the question row.
@@ -174,23 +156,7 @@ def parse_anketa_html(html: str) -> dict[str, Any]:
 
 
 def _normalize_turto_ir_pajamu_data(payload: dict[str, Any]) -> dict[str, Any]:
-    sections = payload.get("sections") if isinstance(payload.get("sections"), list) else []
-    normalized_fields: dict[str, int | float | None] = {
-        key: None for key in TURTO_PAJAMU_OUTPUT_ORDER
-    }
-
-    for section in sections:
-        if not isinstance(section, dict):
-            continue
-        for item in section.get("items", []):
-            if not isinstance(item, dict):
-                continue
-            target_key = TURTO_PAJAMU_KEY_ALIASES.get(_source_key(str(item.get("key", ""))))
-            if target_key is None:
-                continue
-            normalized_fields[target_key] = _parse_eur_amount(item.get("value"))
-
-    return {key: normalized_fields[key] for key in TURTO_PAJAMU_OUTPUT_ORDER}
+    return normalize_declaration(payload, _parse_eur_amount)
 
 
 # ---------------------------------------------------------------------------

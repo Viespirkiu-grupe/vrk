@@ -1109,7 +1109,9 @@ reach a candidate:
   `normalized.turto-ir-pajamu-deklaracijos`. This is the family whose section
   III "Iš viso" row usually prints 0 against a non-zero row 1, so most of its
   records carry a null `gautos-pajamos` and a populated
-  `gautos-pajamos-darbo-santykiu`; see `docs/OUTPUT_SCHEMA.md`.
+  `gautos-pajamos-darbo-santykiu`; see `docs/OUTPUT_SCHEMA.md`, and resolve
+  income through the `deklaruotos-pajamos` concept rather than the key
+  (`scraper/shared/deklaracijos.py`).
 - 46 candidate name collisions across the 6,276-candidate general election
   resolve with the same positional `-2` suffix the other families use — e.g.
   two different people named `Tamulevičius Kęstutis` (VRK ids 37862 and

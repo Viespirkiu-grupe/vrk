@@ -1,0 +1,49 @@
+{
+  "electionId": "2007-vasario-25-savivaldybiu",
+  "candidate": {
+    "candidateName": "Tadeuš Romanovskij",
+    "candidateId": "tadeus-romanovskij-11440",
+    "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas11440/Kandidato11440Anketa.html",
+    "vrkCandidateId": "11440",
+    "municipality": "Šalčininkų rajono savivaldybė",
+    "roles": [
+      "tarybos-narys"
+    ],
+    "councilCandidacy": {
+      "partyList": "Lietuvos lenkų rinkimų akcija",
+      "listKind": "partija",
+      "listNumber": 6,
+      "listPosition": 21,
+      "selfNominated": false
+    }
+  },
+  "anketaPath": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2007-vasario-25-savivaldybiu/tadeus-romanovskij-11440/anketa.html",
+  "tabCount": 3,
+  "tabSamples": [
+    {
+      "label": "Anketa",
+      "slug": "anketa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas11440/Kandidato11440Anketa.html",
+      "path": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2007-vasario-25-savivaldybiu/tadeus-romanovskij-11440/anketa.html",
+      "fetched": false
+    },
+    {
+      "label": "Turto ir pajamų deklaracijos",
+      "slug": "turto-ir-pajamu-deklaracijos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas11440/Kandidato11440Deklaracijos.html",
+      "path": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2007-vasario-25-savivaldybiu/tadeus-romanovskij-11440/turto-ir-pajamu-deklaracijos.html",
+      "fetched": true
+    },
+    {
+      "label": "Interesų deklaracija",
+      "slug": "interesu-deklaracija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/3/Kandidatai/Kandidatas11440/Kandidato11440InteresuDeklaracija.html",
+      "path": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2007-vasario-25-savivaldybiu/tadeus-romanovskij-11440/interesu-deklaracija.html",
+      "fetched": true
+    }
+  ],
+  "missingExpectedTabs": [],
+  "unpublishedTabs": [],
+  "campaignSamples": [],
+  "anomalies": []
+}

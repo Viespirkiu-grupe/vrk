@@ -50,6 +50,13 @@ import unicodedata
 from collections import defaultdict
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from scraper.shared.deklaracijos import (  # noqa: E402
+    INCOME_EMPLOYMENT,
+    deklaruotos_pajamos,
+)
+
 DATA_ROOT = Path("data")
 OUTPUT_PATH = Path("dashboard/people.json")
 
@@ -130,6 +137,20 @@ MONEY_FIELDS = (
     "turtas-ir-pinigines-lesos-metu-pabaigoje",
 )
 
+#: Which of those the `deklaruotos-pajamos` concept resolves rather than the
+#: record answering directly. The 1990s form prints rows 1 and 20 of its income
+#: section and row 20 is not always trustworthy -- it fails by rendering 0
+#: against a non-zero row 1, so the parser refuses it and `gautos-pajamos` is
+#: null on 4,463 of `1997-kovo-23-savivaldybiu-tarybu`'s 6,276 records, and on
+#: 165 more across `2000-kovo-19`, `1996-spalio-20-seimo`, `2000-seimo` and the
+#: 1997 Švenčionys repeat — 4,628 records in all. Row 1 is published on every
+#: one of them, and until issue #98 nothing downstream substituted it, so those
+#: candidacies charted as declaring no income at all.
+#: The concept returns it with `saltinis` saying what it is; a candidacy
+#: resolved that way is flagged `"ds"` so the dashboard can say the figure is
+#: employment income and not a total.
+INCOME_FIELD_INDEX = MONEY_FIELDS.index("gautos-pajamos")
+
 # The 2012-2015 pages declare in litas (`turto-ir-pajamu-deklaracijos.valiuta`
 # is "Lt"); everything from 2016 on is in euro. The index converts at the
 # irrevocable LTL/EUR conversion rate fixed for the 2015-01-01 changeover so
@@ -146,9 +167,13 @@ def declared_in_litas(record: dict) -> bool:
 def money_of(record: dict) -> list[float | None]:
     declarations = (record.get("normalized") or {}).get("turto-ir-pajamu-deklaracijos")
     divisor = LITAS_PER_EURO if declared_in_litas(record) else 1.0
+    income = deklaruotos_pajamos(declarations)
     values: list[float | None] = []
-    for field in MONEY_FIELDS:
-        raw = declarations.get(field) if isinstance(declarations, dict) else None
+    for index, field in enumerate(MONEY_FIELDS):
+        if index == INCOME_FIELD_INDEX:
+            raw = income["suma"]
+        else:
+            raw = declarations.get(field) if isinstance(declarations, dict) else None
         if isinstance(raw, (int, float)):
             values.append(round(float(raw) / divisor, 2))
         elif isinstance(raw, str):
@@ -159,6 +184,12 @@ def money_of(record: dict) -> list[float | None]:
         else:
             values.append(None)
     return values
+
+
+def income_is_employment_only(record: dict) -> bool:
+    """Whether the charted income is row 1 rather than a declared total."""
+    declarations = (record.get("normalized") or {}).get("turto-ir-pajamu-deklaracijos")
+    return deklaruotos_pajamos(declarations)["saltinis"] == INCOME_EMPLOYMENT
 
 
 def person_key(name: str | None, birth: str | None) -> str:
@@ -193,6 +224,7 @@ def build_index(data_root: Path, registry: list[dict] | None = None) -> dict:
                     "elected": elected_note_of(record),
                     "money": money_of(record),
                     "litas": declared_in_litas(record),
+                    "employmentIncome": income_is_employment_only(record),
                 }
             )
 
@@ -207,7 +239,9 @@ def build_index(data_root: Path, registry: list[dict] | None = None) -> dict:
             # The record file is derivable: data/<id>/<c>-<id>.json.
             # "m" is [privalomas-registruoti-turtas, pinigines-lesos,
             # gautos-pajamos] in euro, nulls where not declared/published;
-            # "lt" marks a declaration published in litas and converted.
+            # "lt" marks a declaration published in litas and converted, and
+            # "ds" an income figure that is the 1990s form's employment row
+            # rather than a declared total (the `deklaruotos-pajamos` concept).
             "e": [
                 {
                     "id": r["election"],
@@ -215,6 +249,7 @@ def build_index(data_root: Path, registry: list[dict] | None = None) -> dict:
                     **({"w": True} if r["elected"] else {}),
                     **({"m": r["money"]} if any(v is not None for v in r["money"]) else {}),
                     **({"lt": True} if r["litas"] and any(v is not None for v in r["money"]) else {}),
+                    **({"ds": True} if r["employmentIncome"] else {}),
                 }
                 for r in records
             ],

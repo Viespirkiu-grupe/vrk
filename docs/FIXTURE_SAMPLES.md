@@ -21,7 +21,7 @@ the extensions a parser opens count — `.html`, `.htm`, `.json`, `.doc` — so
 the 2002 presidential declaration scans (`.jpg`, about 1 MB per candidate,
 recorded by path and never read) stay local.
 
-That is 5,344 files and 43 MiB, and it leaves every election with at least one
+That is 5,348 files and 43 MiB, and it leaves every election with at least one
 candidate to parse; `tests/test_tracked_fixtures.py` asserts exactly that,
 along with git and the rule still agreeing. What a clone does *not* get is 48
 candidates, all of them 2018-2019 pages carrying the portrait as a base64 data
@@ -487,8 +487,8 @@ list pages. Every candidate has exactly the four tabs; there is no
 Biografija and no campaign subtree in this election.
 
 For `2007-vasario-25-savivaldybiu` the allowlist
-(`tests/test_savivaldybiu_2007_sample_allowlist.py`) is **ten candidates out
-of 13,422**, chosen for the shapes the record depends on in the oldest
+(`tests/test_savivaldybiu_2007_sample_allowlist.py`) is **eleven candidates
+out of 13,422**, chosen for the shapes the record depends on in the oldest
 municipal election with candidate pages (party lists only, no
 self-nomination of any kind):
 
@@ -511,6 +511,12 @@ self-nomination of any kind):
   questionnaire stops after an empty "Gimimo vieta" and "Tautybė" (the
   empty-answer row boundary), and an "Einu" on the incompatible-office
   question
+- `tadeus-romanovskij-11440` — the election's other declaration shape, and
+  the one it took issue #98 to see: his page publishes a *Sutuoktinio turto
+  deklaracija* and no declaration of his own, and the corpus stored the
+  spouse's three figures as his. 28 records are that shape and 352 publish a
+  spouse declaration at all; without a fixture the rule that keeps them apart
+  is untested
 
 Its samples directory also holds the listing tree: `index.html` (VRK's
 index of municipalities and parties), a `parties/` directory of the 24

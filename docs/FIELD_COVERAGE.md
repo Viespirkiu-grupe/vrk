@@ -16,7 +16,7 @@ python scripts/field_coverage.py --update-baseline  # after a deliberate change
 
 One pass over `data/` — about 30 seconds for 113,073 records — resolves every
 `docs/concept-map.json` path against every record of the elections that map it.
-That is 1,096 cells: 28 concepts across 55 elections.
+That is 1,266 cells: 35 concepts across 55 elections.
 
 ## What it produces
 
@@ -51,11 +51,11 @@ five points of a field without saying so is not.
 
 ## Status words
 
-Twenty-four of the 1,096 cells are filled by no record. Each carries one of:
+Twenty-four of the 1,266 cells are filled by no record. Each carries one of:
 
 | status | count | meaning |
 | --- | --- | --- |
-| `ok` | 1,072 | filled at some rate |
+| `ok` | 1,242 | filled at some rate |
 | `upstream-absent` | 18 | the source publishes no value here — the label is missing, or printed and left blank |
 | `empty-is-the-answer` | 6 | every record carries the key and the empty value is the answer: nobody declared a conviction, nobody had an outstanding loan |
 | `parser-gap` | 0 | the source publishes it and the parser does not recover it |

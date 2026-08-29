@@ -281,6 +281,77 @@ re-parses identically keeps its mtimes, and "when was this record last
 written" stays a usable provenance signal until issue #89 puts the parser
 version inside the record.
 
+### The 2026-08-29 declaration re-parse (issue #98)
+
+A page-by-page diff of the retained HTML against the records found the fetch
+nearly perfect and `page → rawData` good; **almost all remaining loss was in
+`rawData → normalized`**, and its largest concentration was the asset and
+income declaration — the one place this corpus most wants to compare. Four
+losses, all recoverable from records already on disk; checking that nothing a
+page publishes is dropped then found two more. The parsers now read
+the declaration once, for every era
+(`scraper/shared/deklaracijos.py`), and all 55 elections were re-parsed from
+their retained HTML: **94,474 records across 44 elections** were rewritten,
+and the 1996–2000 archive families and `2002-prezidento` re-parsed
+byte-identical. The 90 records in ten elections whose page was never retained
+were re-normalized from their own `rawData` instead
+(`scripts/renormalize_declarations.py`), so no election is left half-converted;
+`python scripts/reparse_diff.py --full` then reported 0 records differing
+across all 55.
+
+What the 94,474 records gained:
+
+- **the rest of the income extract.** Since its 2018 rewording the
+  GPM308/GPM311 form prints six or seven lines and the normalizers matched a
+  fixed pair, so `Deklaruota individualios veiklos pajamų suma` and three
+  further lines had nowhere to go: **18,251 non-zero declared figures on
+  10,063 records**, 8,864 of them in the 2023 municipal general and 6,990 in
+  the 2019 one. They land under `individualios-veiklos-pajamos`,
+  `individualios-veiklos-atskaitymai`, `turto-pardavimo-pajamos` and
+  `turto-isigijimo-kaina`;
+- **the year and the form.** A declaration filed for 2023 and one filed for
+  2015 were indistinguishable. `deklaracijos-metai` is filled on **33,494**
+  of the 84,402 sectioned declarations — the 2017-and-later headings state it
+  in so many words ("… IŠRAŠAS (2023 m.)") and the 2008–2015 Seimas pages in
+  their closing note ("nuo 2011-01-01 iki 2011-12-31"). The rest state no year
+  at all: the 2004 and 2007 pages, the 2011 and 2015 municipal generals,
+  `2016-seimo` and `2020-seimo`. `deklaracijos-forma` (GPM302/305/308/311, or
+  FR0462 for the 2004 and 2007 family) is filled on **84,343**;
+- **whose declaration it is.** 2004 and 2007 published *separate* declarations
+  for the candidate, the family and the spouse, and the normalizer flattened
+  them by letting the last section win. `deklaracijos-apimtis` is now on
+  **94,473** records (`gyventojo-seimos` on 69,466 — the combined heading every
+  page from 2008 on prints — `gyventojo` on 20,479 and `seimos` on 4,528),
+  `deklaracijos` lists every declaration the page printed, and `sutuoktinio`
+  carries the spouse's figures on the 352 records of
+  `2007-vasario-25-savivaldybiu` that publish one. On **243 of those records the corpus had been reporting a spouse's
+  assets as the candidate's** — 28 publish nothing but the spouse's
+  declaration, and on the other 215 it was simply the last section on the
+  page. 240 records' figures changed;
+- **an income no longer counted twice.** Sixteen records in four elections
+  repeat a declaration section verbatim, which the 2007 income reader summed:
+  thirteen candidates' declared income was double (or, in one case,
+  quadruple) what the page states. A repeat identical to an earlier section is
+  now read once; a repeat that differs is a second declaration and is kept;
+- **an income sentence with no tax figure in it.** The 2007 pages state each
+  income form as a sentence — "Gauta 4200.00 Lt , išskaičiuota pajamų mokesčio
+  Lt" — and on **531 lines across 529 records** the tax figure is simply
+  absent. The reader required both figures, so it refused the whole sentence
+  and lost the income with the tax: **522 records gained a declared income**,
+  and the fifth form line reappeared in their `pajamos-pagal-forma`.
+
+The fourth loss needed no corpus change. `1997-kovo-23-savivaldybiu-tarybu`
+has `gautos-pajamos` null on 4,463 of its 6,276 records because VRK's own page
+prints a broken total under a "Klaida užklausoje" banner and the parser
+rightly refuses it — but `gautos-pajamos-darbo-santykiu`, the form's
+employment row, is present on every one of them and nothing downstream
+substituted it. Corpus-wide that is **4,628 records** (147 more in
+`2000-kovo-19`, 9 in `1996-spalio-20-seimo`, 8 in `2000-seimo`, 1 in the 1997
+Švenčionys repeat). The `deklaruotos-pajamos` concept
+(`docs/concept-map.json` → `derived`) resolves the two and says which figure
+it returned; the dashboard and `scripts/build_person_index.py` read it, so
+those candidacies stop charting as having declared nothing.
+
 ### The 2026-08-28 conviction-detail backfill
 
 Issue #86: 331 candidates whose conviction details VRK had published could
@@ -1583,8 +1654,8 @@ key list itself is election-specific.
 
 ## Correctness fixes behind this corpus
 
-Thirty defects were found and fixed while building the newer modules, or by the
-re-parse gate afterwards. Each had been invisible because the affected
+Thirty-six defects were found and fixed while building the newer modules, or by
+the re-parse gate afterwards. Each had been invisible because the affected
 elections had thin or no test coverage, and each was measured against live
 data after the fix:
 
@@ -1620,6 +1691,12 @@ data after the fix:
 | the 2007–2008 interest declaration read as key/value pairs | the roman-numbered interest form of the 2007 and 2008 pages publishes each section as a record table — "Tipas \| Vienetų skaičius \| Vietovės pavadinimas \| Įsigijimo būdas" under II. Turtas — whose column-name row is bold `<td>` cells rather than `<th>`, so the era's interest parser saw no header and read every row as a label/value pair: a section collapsed to one entry per distinct first column with the last row winning, plus a spurious `tipas: "Vienetų skaičius"` from the header itself. Two flats became one, two employers the last. Found on the first 2007 municipal page; the header is now recognised by the emphasis (no key/value row of the family is bold whole — measured over 1,627 pages of 2007, 2008, 2011 and 2015) and the sections normalize as record lists in the 2016-era shape. Re-parsed offline: **1,593 records (1,584 of 2008 Seimo, 9 of 2007 Dzūkija), 5,357 sections, 13,198 rows** recovered; every other election byte-identical |
 | 2020 Seimas income keyed on the sentence VRK stopped using | the two money rows of the declaration were matched on a slug of VRK's whole label, GPM308 field numbers included (`Gautų pajamų suma (GPM308 formos 12, 13, 13a, 14, 20 laukelių …)`). `seimo_2020` reuses the 2016 normalizer, its pages state the same two figures in prose, so the alias missed and **all 1,753 of the election's declaration records** normalized to null income and null income tax while the figures sat in `rawData` — a 0 % fill against a 97.8–100 % floor everywhere else, with an empty `anomalies.jsonl` and a green suite. The money rows now match on their opening words instead: measured over every declaration row in the corpus, six spellings of the income row and four of the tax row exist, and the four prefixes match all ten and nothing else. Re-normalized offline from `rawData` (the election retains no HTML to re-parse): **3,506 figures recovered, both keys at 100 %**, with 2016 Seimo and 2017 Anykščiai–Panevėžys byte-identical (issue #81) |
 | an amount below one euro read as no figure | VRK's page formatter drops the leading zero of a sub-euro amount — the source of a live 2020 page reads `<td><b>,53 Eur</b></td>` — and `_parse_eur_amount`, shared by every modern module, returned null for it. Measured over the corpus: 102 declaration values are written that way and no election ever prints such an amount as `0,53`, so the zero is restored rather than the figure dropped. **95 further figures recovered** across five elections (59 in the 2023 municipal, 12 in 2024 Seimo, 11 in 2020 Seimo, 10 in the 2019 municipal, 3 in 2016 Seimo); the remaining 7 sit on declaration rows no election maps yet |
+| six or seven published income lines normalized as two | the GPM308/GPM311 extract has printed six or seven lines since its 2018 rewording — self-employment income and its allowable deductions, income from selling non-business assets and what that asset had cost — and every module matched a fixed pair and dropped the rest, so **18,251 non-zero declared figures on 10,063 records** had nowhere to go while `rawData` held all of them. Each published line now has a key of its own, matched on the label's opening words rather than on the slug of VRK's whole sentence, which is the same change that fixed issue #81. 8,864 figures in the 2023 municipal general, 6,990 in the 2019 one, 1,037 in 2024 Seimo, 1,014 in 2020 Seimo (issue #98) |
+| money with no year and no form | every declaration is an *extract* whose heading says what it is an extract of, and the normalized layer kept none of it: a declaration filed for 2023 and one filed for 2015 were the same numbers under the same keys. `deklaracijos-metai` (the heading's "(2023 m.)", or the 2008–2015 Seimas note's "nuo 2011-01-01 iki 2011-12-31") is filled on **33,494 of 84,402** sectioned declarations, `deklaracijos-forma` on **84,343**, and `deklaracijos-apimtis` on **94,473**. Where the year is null the page states none — the 2004, 2007, 2011 and 2015 pages, `2016-seimo` and `2020-seimo` — which is now a fact the corpus records rather than one a consumer has to rediscover (issue #98) |
+| a spouse's assets stored as the candidate's | 2004 and 2007 published *separate* declarations for the candidate, the family and the spouse, under headings the normalizer never read; it took whichever section came last. On **243 records of `2007-vasario-25-savivaldybiu` that was the spouse's** — 28 of them publish nothing else — so `privalomas-registruoti-turtas`, `vertybiniai-popieriai` and `pinigines-lesos` were somebody else's money. The value keys now take the candidate's own declaration where the page publishes one and the family's where it publishes that instead, never the spouse's; `deklaracijos-apimtis` says which, `sutuoktinio` carries the spouse's five figures on the 352 records that have one, and `deklaracijos` lists every declaration the page printed rather than collapsing to one. 240 records' figures changed (issue #98) |
+| a declaration section printed twice, counted twice | sixteen records across four elections repeat a section verbatim, and the 2007 income reader summed the per-form lines of both: thirteen candidates' declared income read double what the page states (34,197.32 Lt against a declaration of 17,098.66), one of them quadruple. A section identical to one already read is the page rendering the same extract twice and is read once; a repeat that *differs* — a 2008 record with two asset extracts under one heading, a 2007 record with an income extract and an empty second one — is a second declaration and is kept (issue #98) |
+| an income sentence refused for the figure it does not carry | the 2007 municipal pages state each income form as one sentence, and on 531 lines across 529 records the tax figure is missing from it: "Gauta 4200.00 Lt , išskaičiuota pajamų mokesčio Lt". The pattern required both figures, so the sentence matched nothing and the income went with the tax. Both figures are optional now and the absent one normalizes to null: **522 records gained a declared income** they had always published (issue #98) |
+| the 1990s income floor nobody substituted | the 1996–2000 form prints rows 1 (employment income) and 20 (the total) of its income section, and row 20 fails by rendering 0 against a non-zero row 1, so the parser refuses it: `gautos-pajamos` is null on **4,463 of `1997-kovo-23-savivaldybiu-tarybu`'s 6,276 records** and on 165 more across `2000-kovo-19`, `1996-spalio-20-seimo`, `2000-seimo` and the 1997 Švenčionys repeat — 4,628 in all. Row 1 is published on every one of them and nothing downstream read it, so those candidacies charted as having declared no income at all. The `deklaruotos-pajamos` concept returns the figure with a `saltinis` saying whether it is a declared total or employment income alone; the dashboard and the person index read it. The parser is unchanged — a total the page contradicts stays refused (issue #98) |
 | a backfill that stored the parser's working dict | `scripts/backfill_conviction_details.py` re-parses the 2019 municipal pages, and stored `parse_anketa_html`'s whole return value in `rawData.anketa`: `rows`, plus a `normalized` copy of `normalized.anketa` and a derived `stats`, where the module's own record assembly keeps only `rows`. All **13,666 records** of `2019-kovo-3-savivaldybiu-tarybu` carried the duplicate, and because the stored envelope could never equal what the script compared it against, every re-run would have rewritten every record. Found by `scripts/reparse_diff.py` the day after the backfill landed — the first thing the gate caught that was not already known (issue #91) |
 
 Every fix was verified by re-parsing all elections and confirming the diff was
@@ -1660,7 +1737,7 @@ Both now exist, and both are checked-in baselines rather than thresholds
 somebody has to remember:
 
 - **`python scripts/field_coverage.py`** resolves every `docs/concept-map.json`
-  path against every record — 1,096 cells, 28 concepts, 55 elections, about 30
+  path against every record — 1,266 cells, 35 concepts, 55 elections, about 30
   seconds — and fails on a mapped path no record fills or a fill rate more than
   five points below `docs/coverage-baseline.tsv`. Twenty-four cells are empty
   today and each carries a status word and a measured reason;

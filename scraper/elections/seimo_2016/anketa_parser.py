@@ -12,6 +12,7 @@ from bs4 import BeautifulSoup, NavigableString, Tag
 from scraper.elections.seimo_2016.sitemap import ELECTION_ID, resolve_candidate_url
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.conviction_details import conviction_field_keys, conviction_records
+from scraper.shared.deklaracijos import normalize_declaration
 from scraper.shared.files import slugify, write_candidate_record, write_json
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2016-seimo")
@@ -30,49 +31,13 @@ MISSING_TEXT_VALUES = {
 # #86 — the yes/no answer was the whole of what the corpus could be asked.
 CONVICTION_QUESTION = "9.2"
 
-# The five asset rows carry stable Roman-numeral labels, so they match on the
-# whole label.
-TURTO_PAJAMU_KEY_ALIASES = {
-    "i-privalomas-registruoti-turtas": "privalomas-registruoti-turtas",
-    "ii-vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
-    "iii-pinigines-lesos": "pinigines-lesos",
-    "iv-suteiktos-paskolos": "suteiktos-paskolos",
-    "v-gautos-paskolos": "gautos-paskolos",
-}
-
-# The two money rows do not. VRK restates them with every revision of the
-# income-tax form, and the label quotes the form number and the fields it sums
-# ("Gautų pajamų suma (GPM308 formos 12, 13, 13a, 14, 20 laukelių ...)"), so a
-# key made from the whole sentence silently loses any election filed on a newer
-# form. That is issue #81: `seimo_2020` reuses this normalizer, its pages say
-# "Deklaruota apmokestinamųjų ir neapmokestinamųjų pajamų suma", the 2016
-# sentence missed, and all 1,753 of its records normalized to null income while
-# the figures sat in rawData.
-#
-# So the money rows match on their opening words instead. Measured over the
-# declaration rows of all 113,046 records: six spellings of the income row and
-# four of the tax row exist, these four prefixes match all ten, and no other
-# declaration row in any election begins with them.
-TURTO_PAJAMU_MONEY_KEY_PREFIXES = (
-    # "Gautų pajamų suma (GPM302/GPM305/GPM308 ...)" up to 2017, then the
-    # prose wording the 2018-and-later pages use.
-    ("gautu-pajamu-suma", "gautos-pajamos"),
-    ("deklaruota-apmokestinamuju-ir-neapmokestinamuju-pajamu-suma", "gautos-pajamos"),
-    # "Išskaičiuota (sumokėta) pajamų mokesčio suma (GPM308 formos 26
-    # laukelis)" up to 2017, then its prose wording.
-    ("isskaiciuota-sumoketa-pajamu-mokescio-suma", "sumoketas-pajamu-mokestis"),
-    ("deklaruota-moketina-pajamu-mokescio-suma", "sumoketas-pajamu-mokestis"),
-)
-
-TURTO_PAJAMU_OUTPUT_ORDER = [
-    "privalomas-registruoti-turtas",
-    "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
-    "pinigines-lesos",
-    "suteiktos-paskolos",
-    "gautos-paskolos",
-    "gautos-pajamos",
-    "sumoketas-pajamu-mokestis",
-]
+# The declaration rows, the headings above them and the four things a heading
+# says about an extract are one shared reading for every era — see
+# scraper/shared/deklaracijos.py, which this module's normalizer is a thin
+# call into. Eight near-identical copies of the row table lived in the election
+# modules before issue #98, and the elections whose copy was never updated paid
+# for it (issue #81's 2020-seimo, whose income read null on all 1,753 records
+# while the figures sat in rawData).
 
 
 def normalize_space(value: str) -> str:
@@ -1647,41 +1612,8 @@ def _parse_eur_amount(value: Any) -> int | float | None:
     return amount
 
 
-def _turto_pajamu_target_key(source_key: str) -> str | None:
-    target_key = TURTO_PAJAMU_KEY_ALIASES.get(source_key)
-    if target_key is not None:
-        return target_key
-
-    for prefix, money_key in TURTO_PAJAMU_MONEY_KEY_PREFIXES:
-        if source_key.startswith(prefix):
-            return money_key
-
-    return None
-
-
 def _normalize_turto_ir_pajamu_data(payload: dict[str, Any]) -> dict[str, Any]:
-    sections = payload.get("sections") if isinstance(payload.get("sections"), list) else []
-    normalized_fields: dict[str, int | float | None] = {
-        key: None for key in TURTO_PAJAMU_OUTPUT_ORDER
-    }
-
-    for section in sections:
-        if not isinstance(section, dict):
-            continue
-
-        for item in section.get("items", []):
-            if not isinstance(item, dict):
-                continue
-
-            item_label = str(item.get("key", ""))
-            source_key = _source_key(item_label)
-            target_key = _turto_pajamu_target_key(source_key)
-            if target_key is None:
-                continue
-
-            normalized_fields[target_key] = _parse_eur_amount(item.get("value"))
-
-    return normalized_fields
+    return normalize_declaration(payload, _parse_eur_amount)
 
 
 def _normalize_kita_data(payload: dict[str, Any]) -> dict[str, Any]:

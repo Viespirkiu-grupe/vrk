@@ -78,8 +78,9 @@ straight through `compactValue`, so a litas figure printed raw, unlabelled,
 and 3.4528× too large beside the euro columns next to it — the same field
 disagreeing between two tabs of the same person, across the 36,362 of 76,776
 records that declare in litas. `FIELD_MAP` rows may now carry an optional
-`(value, record) => string` formatter, and the three money rows use
-`moneyCell`.
+`(value, record) => string` formatter; the asset rows use `moneyCell` and the
+income row `incomeCell`, which converts the same way after resolving the
+`deklaruotos-pajamos` concept (below).
 
 ## Assets & income across two different forms
 
@@ -96,6 +97,18 @@ and acquired-during-year totals, and **Gautos pajamos (darbo santykiai)**. That
 last one matters — on `1997-kovo-23-savivaldybiu-tarybu` the declaration's own
 total row is usually unusable (see `docs/OUTPUT_SCHEMA.md`), so the employment
 row is the only income figure most of those records have.
+
+**Income resolves through a concept, not a key.** The archive form prints rows
+1 (employment income) and 20 (the total) of its income section, and row 20
+fails by rendering 0 against a non-zero row 1; the parser refuses such a total,
+so `gautos-pajamos` is null on 4,628 records that do publish row 1. Reading the
+key alone charted them as having declared nothing. Both the chart and the
+comparison table now read `deklaruotos-pajamos`
+(`scraper/shared/deklaracijos.py`, mirrored as `declaredIncome()` in the page),
+which returns the figure and says whether it is a declared total or the
+employment row; the table appends "(darbo santykiai)", the chart's number
+table marks the cell with a `*` and a footnote, and `people.json` carries
+`"ds": true` on such a candidacy so Biggest movers can label it too.
 
 `MONEY_SERIES` in the page and `MONEY_FIELDS` in
 `scripts/build_person_index.py` are **order-dependent on each other**:

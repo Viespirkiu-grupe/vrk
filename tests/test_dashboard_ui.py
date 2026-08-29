@@ -386,6 +386,7 @@ class ArchiveComparisonRowTests(unittest.TestCase):
         script = (
             f"{CONVICTION_CONSTANTS}\n{helpers}\n"
             "function moneyCell() { return null; }\n"
+            "function incomeCell() { return null; }\n"
             f"{field_map}\n"
             f"const r = {json.dumps(record)};\n"
             "const out = {};\n"
