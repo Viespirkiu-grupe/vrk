@@ -40,7 +40,9 @@ from bs4 import BeautifulSoup, NavigableString, Tag
 from scraper.elections.ep_2004.results import load_ranking
 from scraper.elections.savivaldybiu_2000.sitemap import ELECTION_ID, resolve_site_url
 from scraper.elections.seimo_2000.anketa_parser import (
+    CHILD_RELATIONS,
     MEMBER_PARTY_PATTERN,
+    SPOUSE_RELATIONS,
     _bold_values,
     _labelled_bold,
     _load_candidate_meta,
@@ -73,10 +75,13 @@ DEFAULT_RESULTS_PATH = Path(f"sitemaps/{ELECTION_ID}.results.json")
 MUNICIPALITY_NUMBER_PATTERN = re.compile(r"\(Nr\.\s*(\d+)\)")
 LIST_NUMBER_PATTERN = re.compile(r"priešrinkiminis numeris sąraše:\s*(\d+)", re.IGNORECASE)
 
-# The questionnaire labels the municipal cards use (no family members,
-# hobbies or birthplace — the Seimas form's — on any of the pages read
-# while building), to the 2000 Seimas keys. A label outside the table is
-# kept in rawData and reported.
+# The questionnaire labels the municipal cards use (no hobbies or
+# birthplace — the Seimas form's — on any of the pages read while
+# building), to the 2000 Seimas keys. Family members ride inside the
+# "Šeimyninė padėtis" paragraph as a "Šeimos nariai:" run after the
+# status value rather than under the Seimas form's own label; the
+# normalizer splits them back out. A label outside the table is kept in
+# rawData and reported.
 FIELD_KEYS = {
     "išsilavinimas": "issilavinimas",
     "moksliniai laipsniai": "mokslo-laipsnis",
@@ -250,6 +255,23 @@ def normalize_anketa(parsed: dict[str, Any]) -> tuple[dict[str, Any], list[str]]
         values = _values(key)
         return _normalize_text_value(", ".join(values)) if values else None
 
+    # The card prints the family inside the marital-status paragraph:
+    # "Šeimyninė padėtis: <b>Vedęs</b> Šeimos nariai: <b>Laima</b> -
+    # sutuoktinis/sutuoktinė <b>Inga</b> - vaikas…", so the status value
+    # arrives with the "Šeimos nariai:" run as its trailing note and each
+    # member with their relation. Split them back apart as the 1997 and
+    # 2000 Seimas records do, instead of gluing the whole family into
+    # `seimine-padetis`.
+    def _is_family_member(item: dict[str, Any]) -> bool:
+        note = (item.get("note") or "").rstrip(":").strip().lower()
+        return bool(note) and note != "šeimos nariai"
+
+    marital_items = fields.pop("seimine-padetis", [])
+    family = [item for item in marital_items if _is_family_member(item)]
+    status_values = [item["value"] for item in marital_items if not _is_family_member(item)]
+    spouse = [m["value"] for m in family if (m["note"] or "").lower() in SPOUSE_RELATIONS]
+    children = [m["value"] for m in family if (m["note"] or "").lower() in CHILD_RELATIONS]
+
     explanation = None
     for key in ("ar-buvote-pripazintas-kaltu", "ar-bendradarbiavote-su-uzsienio-tarnybomis"):
         for row in answers.get(key, []):
@@ -291,7 +313,10 @@ def normalize_anketa(parsed: dict[str, Any]) -> tuple[dict[str, Any], list[str]]
         },
         "pagrindine-darboviete": _single("pagrindine-darboviete"),
         "visuomenine-veikla": _single("visuomenine-veikla"),
-        "seimine-padetis": _single("seimine-padetis"),
+        "seimine-padetis": _normalize_text_value(", ".join(status_values)) if status_values else None,
+        "sutuoktinio-vardas-pavarde": _normalize_text_value(", ".join(spouse)) if spouse else None,
+        "vaiku-vardai-pavardes": _normalize_text_value(", ".join(children)) if children else None,
+        "seimos-nariai": [{"vardas": m["value"], "rysys": m["note"]} for m in family],
         "kita-apie-save": _single("kita-apie-save"),
     }
     return anketa, unknown

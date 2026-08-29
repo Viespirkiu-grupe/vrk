@@ -54,7 +54,11 @@ REPLACEMENT_CHARACTER_VALUES = 20
 #: Values with a lowercase-uppercase junction, measured 2026-08-29. 13,158 of
 #: them are the legal-form abbreviation `VšĮ`; the rest are company names and
 #: VRK's typing. Not a parsing defect -- see docs/DATA_GUIDE.md.
-GLUED_VALUES = 20651
+#: Issue #100 raised the pin by 59: the recovered 2008 workplace lines carry
+#: 58 more `VšĮ`-style junctions and the 2000 municipal family split one
+#: child's name, all of them VRK's own spelling in fields that were dropped
+#: before, not new gluing.
+GLUED_VALUES = 20710
 
 
 def _leaves(node, path, out):

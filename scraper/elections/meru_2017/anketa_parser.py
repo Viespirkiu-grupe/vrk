@@ -13,6 +13,7 @@ from scraper.elections.meru_2017.sitemap import ELECTION_ID
 # the private-interest declaration uses the ID001x section blocks. That is the
 # 2019 EP shape, so its profile and anketa parsers apply here.
 from scraper.elections.ep_2019.anketa_parser import (
+    parse_office_heading,
     _normalize_privaciu_interesu_data,
     _parse_anketa_content,
     _parse_privaciu_interesu_html,
@@ -44,6 +45,7 @@ from scraper.elections.seimo_2016.anketa_parser import (
     _split_list_value,
 )
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.election_results import candidacy_from_elected_note
 from scraper.shared.deklaracijos import normalize_declaration
 from scraper.shared.files import write_candidate_record, write_json
 
@@ -134,6 +136,7 @@ def parse_anketa_html(html: str) -> dict[str, Any]:
     content = _find_main_content_after_tabnav(soup)
 
     profile = _parse_profile_table(profile_table)
+    profile["officeHeading"] = parse_office_heading(soup)
     tabs = _parse_tabnav(tabnav)
     anketa = _parse_anketa_content(content)
     anketa["normalized"] = _normalize_anketa_rows(anketa["rows"])
@@ -392,6 +395,9 @@ def parse_anketa_sample(
         "electionId": ELECTION_ID,
         "candidateId": candidate_id,
         "candidateName": candidate_name,
+        # Elected status exists on these pages only as the profile's prose
+        # note; the derived flag pair keeps it queryable (issue #100).
+        "kandidatavimas": candidacy_from_elected_note(normalized["profilis"].get("pastaba")),
         "source": {
             "candidateSourceUrl": candidate_source_url,
         },

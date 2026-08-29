@@ -309,6 +309,17 @@ appendices, and `docs/DATA_GUIDE.md` for how to read income across the eras.
 `{pavadinimas, reiksme, nuorodos}`. `normalized.kita` is
 `{tekstai, nuorodos}` in every election.
 
+The 2017–2025 pages open with an office line above the profile card — one
+`<h4 class="h4apgKom">` per page — and those elections' `profilis` carries
+two more keys: `kandidatuoja-i` (the line as printed, e.g. `"Kandidatas į
+savivaldybės tarybos narius ir merus"` — in the 2019 and 2023 municipal
+generals it is the one field that says which of the three roles the
+candidate sought) and `dokumentu-pateikimo-data` (the date from the
+2024 Seimo pages' `"(dokumentai pateikti 2024-07-29)"` clause, each
+candidate's own; `null` everywhere else — no other election prints it).
+The 2016 and 2020 Seimo pages and everything older have no office line and
+no such keys.
+
 A label that recurs on one profile card keeps its first value under the
 plain key and lands the later ones under `-2`, `-3` suffixes (`iskele`,
 `iskele-2`). Two shapes produce this: the 2012 Seimo cards, which carry one
@@ -345,6 +356,22 @@ lands in `kandidatavimas`:
 Elections without a listing-derived `kandidatavimas` block (the 2014
 presidential election, the 2015 Seimo by-elections, Telšiai) get a minimal
 one — `vrkCandidateId` plus the keys above — from the join alone.
+
+### Elected status on the 2016–2025 pages (derived from `profilis.pastaba`)
+
+The 2016–2025 layouts publish no results tree the scraper walks; their only
+elected signal is the profile's prose note — `"Išrinktas pagal sąrašą"`,
+`"Išrinkta vienmandatėje Zanavykų (Nr.64) apygardoje II ture"`, `"Išrinktas
+Kupiškio rajono (Nr.23) savivaldybėje II ture"`, `"Išrinktas II ture"`.
+Measured across the corpus the notes name the complete winner set (141 of
+141 Seimas seats in 2016, 2020 and 2024; 11 of 11 EP seats in 2019 and
+2024), so `candidacy_from_elected_note`
+(`scraper/shared/election_results.py`) derives a minimal `kandidatavimas`
+for those eighteen elections: `{isrinktas: true, isrinktasKaip:
+vienmandate|daugiamandate|meras|prezidentas}` on a noted record, and
+`{isrinktas: false}` — a real statement, not an unknown — on the rest. The
+2019 and 2023 municipal generals keep their richer sitemap-derived block
+instead. The full prose stays in `profilis.pastaba`.
 
 The person index and the inventory count a candidacy as won when
 `profilis.pastaba` starts with `Išrink` **or** `kandidatavimas.isrinktas` is
@@ -397,13 +424,30 @@ read a value (`"Kaimo sodyba su žeme, 2006-11-01"`). Each is now the pair it
 names: `dovana`/`data` and `paslauga`/`data`.
 
 Within the form-id family the spouse block
-(`deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris`) is dropped by
-four elections — `2016-seimo` (0/1,415 records),
-`2017-balandzio-23-seimo-anyksciai-panevezys` (0/11),
-`2018-rugsejo-16-seimo-zanavykai` (0/6) and `2019-rugsejo-8-seimo` (0/27) —
-and retained by the rest of the family (2020 Seimo carries it on
-1,754/1,754 records; in 2019 EP and the 2019 municipal election it is absent
-only from candidates who filed no declaration at all).
+(`deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris` —
+`{vardas, pavarde, sutuoktinio-sugyventinio-partnerio-darboviete-…}`) is
+present across the family. On the 2016-era pages the block's heading is
+printed as the table's first row rather than an `<h4>`, so the section
+arrives untitled and the normalizer titles it from that row; until issue
+#100 those sections were dropped whole (0/1,415 records in `2016-seimo`,
+0/11 in `2017-balandzio-23-seimo-anyksciai-panevezys`, 0/6 in
+`2018-rugsejo-16-seimo-zanavykai`, 0/27 in `2019-rugsejo-8-seimo`). It is
+absent only from candidates who filed no declaration at all.
+
+Two more facts about the pre-2016 roman-numbered form, both from the same
+issue:
+
+- the 2008 Seimo declarant block says `Deklaruojantysis asmuo` where every
+  later year says `Deklaruojantis asmuo`; its fields hoist to the top level
+  under their own slugs, so `2008-seimo` records carry
+  `deklaruojantysis-asmuo` plus the two workplace lines
+  (`darboviete-ir-pareigos-valstybineje-tarnyboje`,
+  `kitos-darbovietes-pareigos`) no other era prints there.
+- a section's `description` — the static form sentence under the heading,
+  identical on every candidate ("Deklaruojančiojo asmens ir jo sutuoktinio
+  (partnerio) turimas privalomas registruoti nekilnojamasis turtas:" and its
+  kin, ~70k occurrences across the 2007–2015 elections) — is deliberately
+  left in `rawData` and not normalized.
 
 ## Appendix: 2019 European Parliament (`2019-ep`)
 
@@ -2550,8 +2594,15 @@ while building), `issilavinimas` (`aprasas` the level — "Aukštasis",
 "Aukštesnysis", "Vidurinis" — as in 1997; `irasai` always empty),
 `mokslo-laipsnis`, `pedagoginis-vardas`, `uzsienio-kalbos`,
 `anksciau-isrinktas`, `pagrindine-darboviete`, `visuomenine-veikla`,
-`seimine-padetis`. No family members, hobbies, spouse or children keys:
-the municipal cards do not print them.
+`seimine-padetis`, `sutuoktinio-vardas-pavarde`, `vaiku-vardai-pavardes`,
+`seimos-nariai`, `kita-apie-save`. The card prints the family *inside* the
+marital-status paragraph — "Šeimyninė padėtis: **Vedęs** Šeimos nariai:
+**Laima** - sutuoktinis/sutuoktinė **Inga** - vaikas…" — and the
+normalizer splits it back into the 1997/2000-Seimas family keys
+(7,579 of 9,879 records carry members; relations seen: `vaikas`,
+`sutuoktinis/sutuoktinė`, `augintinis (ė)`, `anūkas (ė)`), so
+`seimine-padetis` holds only the status. No hobbies key: the municipal
+cards do not print one.
 
 ### `turto-ir-pajamu-deklaracijos`
 

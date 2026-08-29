@@ -39,7 +39,9 @@ from scraper.elections.seimo_2016.anketa_parser import (
     _tag_text,
     normalize_space,
 )
+from scraper.elections.ep_2019.anketa_parser import parse_office_heading
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.election_results import candidacy_from_elected_note
 from scraper.shared.conviction_details import conviction_entries, conviction_records
 from scraper.shared.files import write_candidate_record, write_json
 
@@ -184,6 +186,7 @@ def parse_anketa_html(html: str) -> dict[str, Any]:
     anketa_table = tabnav.find_next("table") if tabnav is not None else None
 
     profile = _parse_profile_table(profile_table)
+    profile["officeHeading"] = parse_office_heading(soup)
     if not profile.get("photoSrc"):
         profile["photoSrc"] = _find_photo_src(soup)
     tabs = _parse_tabnav(tabnav)
@@ -435,6 +438,9 @@ def parse_anketa_sample(
         "electionId": ELECTION_ID,
         "candidateId": candidate_id,
         "candidateName": candidate_name,
+        # Elected status exists on these pages only as the profile's prose
+        # note; the derived flag pair keeps it queryable (issue #100).
+        "kandidatavimas": candidacy_from_elected_note(normalized["profilis"].get("pastaba")),
         "source": {
             "candidateSourceUrl": candidate_source_url,
         },

@@ -186,7 +186,7 @@ deklaraciju-valiuta	2015-birzelio-7-seimo-varena-eisiskes	100.0	ok
 deklaraciju-valiuta	2015-kovo-1-savivaldybiu	100.0	ok	
 deklaraciju-valiuta	2015-kovo-1-seimo-zirmunai	100.0	ok	
 deklaraciju-valiuta	2015-lapkricio-8-telsiu-mero	100.0	ok	
-einamos-pareigos	2020-seimo	97.8	ok	
+einamos-pareigos	2020-seimo	97.3	ok	
 einamos-pareigos	2021-balandzio-11-radviliskio-mero	100.0	ok	
 einamos-pareigos	2021-spalio-10-meru	92.9	ok	
 einamos-pareigos	2023-geguzes-7-visagino-mero	100.0	ok	
@@ -535,7 +535,7 @@ kita-apie-save	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	23.5	ok
 kita-apie-save	2009-prezidento	28.6	ok	
 kita-apie-save	2011-vasario-13-seimo-marijampole	33.3	ok	
 kita-apie-save	2011-vasario-27-savivaldybiu	9.3	ok	
-kita-apie-save	2012-seimo	20.4	ok	
+kita-apie-save	2012-seimo	20.3	ok	
 kita-apie-save	2013-kovo-3-seimo-birzai-zarasai-ukmerge	35.1	ok	
 kita-apie-save	2014-prezidento	14.3	ok	
 kita-apie-save	2015-birzelio-21-pakartotiniai-silutes	1.9	ok	
@@ -585,11 +585,11 @@ naryste-politinese-organizacijose	2019-ep	70.4	ok
 naryste-politinese-organizacijose	2019-kovo-3-savivaldybiu-tarybu	47.7	ok	
 naryste-politinese-organizacijose	2019-prezidento	77.8	ok	
 naryste-politinese-organizacijose	2019-rugsejo-8-seimo	85.2	ok	
-naryste-politinese-organizacijose	2020-seimo	96.9	ok	
+naryste-politinese-organizacijose	2020-seimo	96.8	ok	
 naryste-politinese-organizacijose	2021-balandzio-11-radviliskio-mero	100.0	ok	
 naryste-politinese-organizacijose	2021-spalio-10-meru	100.0	ok	
 naryste-politinese-organizacijose	2023-geguzes-7-visagino-mero	100.0	ok	
-naryste-politinese-organizacijose	2023-kovo-5-savivaldybiu-tarybu-ir-meru	94.3	ok	
+naryste-politinese-organizacijose	2023-kovo-5-savivaldybiu-tarybu-ir-meru	94.2	ok	
 naryste-politinese-organizacijose	2023-rugsejo-3-seimo-raseiniai-kedainiai	100.0	ok	
 naryste-politinese-organizacijose	2023-spalio-8-kupiskio-mero	100.0	ok	
 naryste-politinese-organizacijose	2024-ep	91.8	ok	
@@ -599,7 +599,7 @@ naryste-politinese-organizacijose	2025-kovo-16-meru	100.0	ok
 pagrindine-darboviete	1996-spalio-20-seimo	0.1	ok	
 pagrindine-darboviete	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	88.2	ok	
 pagrindine-darboviete	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
-pagrindine-darboviete	1997-kovo-23-savivaldybiu-tarybu	78.7	ok	
+pagrindine-darboviete	1997-kovo-23-savivaldybiu-tarybu	78.6	ok	
 pagrindine-darboviete	1997-kovo-23-seimo-pakartotiniai	100.0	ok	
 pagrindine-darboviete	1998-kovo-22-seimo-pakartotiniai	72.7	ok	
 pagrindine-darboviete	1998-lapkricio-15-seimo-pakartotiniai	90.9	ok	
@@ -946,6 +946,7 @@ sutuoktinio-vardas-pavarde	1997-kovo-23-seimo-pakartotiniai	78.3	ok
 sutuoktinio-vardas-pavarde	1998-kovo-22-seimo-pakartotiniai	54.5	ok	
 sutuoktinio-vardas-pavarde	1998-lapkricio-15-seimo-pakartotiniai	72.7	ok	
 sutuoktinio-vardas-pavarde	1999-kovo-21-seimo-pakartotiniai	72.7	ok	
+sutuoktinio-vardas-pavarde	2000-kovo-19-savivaldybiu-tarybu	69.9	ok	
 sutuoktinio-vardas-pavarde	2000-seimo	81.4	ok	
 sutuoktinio-vardas-pavarde	2002-gruodzio-22-savivaldybiu-tarybu	71.9	ok	
 sutuoktinio-vardas-pavarde	2003-birzelio-15-seimo-nauji	85.2	ok	
@@ -1137,6 +1138,7 @@ vaiku-vardai-pavardes	1997-kovo-23-seimo-pakartotiniai	82.6	ok
 vaiku-vardai-pavardes	1998-kovo-22-seimo-pakartotiniai	45.5	ok	
 vaiku-vardai-pavardes	1998-lapkricio-15-seimo-pakartotiniai	81.8	ok	
 vaiku-vardai-pavardes	1999-kovo-21-seimo-pakartotiniai	86.4	ok	
+vaiku-vardai-pavardes	2000-kovo-19-savivaldybiu-tarybu	73.1	ok	
 vaiku-vardai-pavardes	2000-seimo	87.5	ok	
 vaiku-vardai-pavardes	2002-gruodzio-22-savivaldybiu-tarybu	77.1	ok	
 vaiku-vardai-pavardes	2003-birzelio-15-seimo-nauji	85.2	ok	
@@ -1213,7 +1215,7 @@ vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai	2024-ep	100.0	ok
 vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai	2024-prezidento	100.0	ok	
 vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai	2024-seimo	100.0	ok	
 vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai	2025-kovo-16-meru	100.0	ok	
-visuomenine-veikla	1996-spalio-20-seimo	11.4	ok	
+visuomenine-veikla	1996-spalio-20-seimo	11.3	ok	
 visuomenine-veikla	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	28.2	ok	
 visuomenine-veikla	1997-gruodzio-21-seimo-pakartotiniai	50.0	ok	
 visuomenine-veikla	1997-kovo-23-savivaldybiu-tarybu	22.9	ok	
@@ -1235,7 +1237,7 @@ visuomenine-veikla	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	64.
 visuomenine-veikla	2009-prezidento	85.7	ok	
 visuomenine-veikla	2011-vasario-13-seimo-marijampole	88.9	ok	
 visuomenine-veikla	2011-vasario-27-savivaldybiu	36.5	ok	
-visuomenine-veikla	2012-seimo	59.2	ok	
+visuomenine-veikla	2012-seimo	59.1	ok	
 visuomenine-veikla	2013-kovo-3-seimo-birzai-zarasai-ukmerge	62.2	ok	
 visuomenine-veikla	2014-ep	72.6	ok	
 visuomenine-veikla	2014-prezidento	71.4	ok	

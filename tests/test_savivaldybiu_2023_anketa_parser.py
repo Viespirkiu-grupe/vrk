@@ -321,7 +321,7 @@ class Savivaldybiu2023AnketaParserTests(unittest.TestCase):
                 profilis = payload["normalized"]["profilis"]
                 self.assertEqual(
                     list(profilis.keys()),
-                    ["vardas-pavarde", "pastaba", "nuotrauka", "kita"],
+                    ["vardas-pavarde", "pastaba", "nuotrauka", "kita", "kandidatuoja-i", "dokumentu-pateikimo-data"],
                 )
                 self.assertIn("kandImg", profilis["nuotrauka"])
                 self.assertTrue(profilis["nuotrauka"].startswith("https://"))
