@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from scraper.elections.seimo_2016.anketa_parser import _parse_eur_amount, parse_anketa_sample
+from scraper.shared.deklaracijos import DECLARATION_VALUE_KEYS
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -27,7 +28,7 @@ class Seimo2016TurtoNormalizationTests(unittest.TestCase):
         normalized_turto = payload["normalized"]["turto-ir-pajamu-deklaracijos"]
 
         self.assertEqual(
-            normalized_turto,
+            {key: normalized_turto[key] for key in DECLARATION_VALUE_KEYS},
             {
                 "privalomas-registruoti-turtas": 3000,
                 "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": 0,
@@ -36,7 +37,29 @@ class Seimo2016TurtoNormalizationTests(unittest.TestCase):
                 "gautos-paskolos": 3832,
                 "gautos-pajamos": 16611.73,
                 "sumoketas-pajamu-mokestis": 1382,
+                # The 2016 pages print the two-row income extract; the four
+                # further GPM lines arrive with the 2018 rewording.
+                "individualios-veiklos-pajamos": None,
+                "individualios-veiklos-atskaitymai": None,
+                "turto-pardavimo-pajamos": None,
+                "turto-isigijimo-kaina": None,
             },
+        )
+
+    def test_turto_normalized_says_what_the_extract_is(self) -> None:
+        payload = self._parse_candidate("agne-sirinskiene")
+        normalized_turto = payload["normalized"]["turto-ir-pajamu-deklaracijos"]
+
+        # The 2016 heading names the form but not the year: "METINĖS PAJAMŲ
+        # MOKESČIO DEKLARACIJOS GPM308 FORMOS PAGRINDINIŲ DUOMENŲ IŠRAŠAS",
+        # with no "(2015 m.)" as the 2019-and-later pages carry.
+        self.assertEqual(normalized_turto["deklaracijos-forma"], "GPM308")
+        self.assertIsNone(normalized_turto["deklaracijos-metai"])
+        self.assertEqual(normalized_turto["deklaracijos-apimtis"], "gyventojo-seimos")
+
+        self.assertEqual(
+            [(section["rusis"], section["apimtis"]) for section in normalized_turto["deklaracijos"]],
+            [("turto", "gyventojo-seimos"), ("pajamu", None)],
         )
 
     def test_turto_normalized_drops_descriptive_layers(self) -> None:
@@ -50,19 +73,16 @@ class Seimo2016TurtoNormalizationTests(unittest.TestCase):
         payload = self._parse_candidate("ingrida-simonyte")
         normalized_turto = payload["normalized"]["turto-ir-pajamu-deklaracijos"]
 
-        expected_keys = {
-            "privalomas-registruoti-turtas",
-            "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
-            "pinigines-lesos",
-            "suteiktos-paskolos",
-            "gautos-paskolos",
-            "gautos-pajamos",
-            "sumoketas-pajamu-mokestis",
-        }
-        self.assertEqual(set(normalized_turto.keys()), expected_keys)
+        self.assertEqual(
+            set(normalized_turto),
+            set(DECLARATION_VALUE_KEYS)
+            | {"deklaracijos-metai", "deklaracijos-forma", "deklaracijos-apimtis", "deklaracijos"},
+        )
 
-        for value in normalized_turto.values():
-            self.assertTrue(isinstance(value, (int, float)) or value is None)
+        for key in DECLARATION_VALUE_KEYS:
+            with self.subTest(key=key):
+                value = normalized_turto[key]
+                self.assertTrue(isinstance(value, (int, float)) or value is None)
 
 
 class EurAmountParsingTests(unittest.TestCase):

@@ -33,6 +33,7 @@ from scraper.elections.seimo_2016.anketa_parser import (
     normalize_space,
 )
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.deklaracijos import normalize_declaration, section_form
 from scraper.shared.election_results import ANKETA_ID_PATTERN, load_results_lookup
 from scraper.shared.files import write_candidate_record
 
@@ -63,56 +64,24 @@ ANKETA_PLACEHOLDER_TEXTS = {"rengiama"}
 # invitation that follows, the same on both.
 PROFILE_NOTICE_MARKER = "kviečiame susipažinti su skelbiamais duomenimis"
 
-# The 2015 pages publish declared amounts in litas; the GPM308 row wording is
-# also this era's own (the 2016 pages cite fields "…14, 20", these cite
-# "…14, 22" plus the V13 field in the singular), so the aliases are restated.
-TURTO_PAJAMU_KEY_ALIASES = {
-    "i-privalomas-registruoti-turtas": "privalomas-registruoti-turtas",
-    "ii-vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
-    "iii-pinigines-lesos": "pinigines-lesos",
-    "iv-suteiktos-paskolos": "suteiktos-paskolos",
-    "v-gautos-paskolos": "gautos-paskolos",
-    "gautu-pajamu-suma-gpm308-formos-12-13-13a-14-22-laukeliu-ir-gpm308-formos-v-priedo-v13-laukelio-suma": "gautos-pajamos",
-    # The 2012-2014 pages of the same layout family cite "…14, 20 laukelių"
-    # and "V13 laukelių" — the wording the 2016 pages kept — so both spellings
-    # resolve to the one income key.
-    "gautu-pajamu-suma-gpm308-formos-12-13-13a-14-20-laukeliu-ir-gpm308-formos-v-priedo-v13-laukeliu-suma": "gautos-pajamos",
-    "isskaiciuota-sumoketa-pajamu-mokescio-suma-gpm308-formos-26-laukelis": "sumoketas-pajamu-mokestis",
-    # The GPM305 form — the income-tax return in force before GPM308 —
-    # whose income line sums fields 12-14 plus V14 of the GPM305V annex and
-    # whose tax line sums fields 27, 28 and 30. Same two facts, one form
-    # earlier. The 2009 presidential pages extract it, and so does the whole
-    # 2015 municipal family (the March general, the June Širvintos-Trakai and
-    # Šilutė repeats, the November Telšiai mayoral) — 15,837 records whose
-    # income and tax read as null until this alias was added for 2009.
-    "gautu-pajamu-suma-gpm305-formos-12-13-14-ir-gpm305v-formos-v14-laukeliu-suma": "gautos-pajamos",
-    "isskaiciuota-sumoketa-pajamu-mokescio-suma-gpm305-formos-27-28-30-laukeliu-suma": "sumoketas-pajamu-mokestis",
-    # One form older still: the 2007 Dzūkija by-election pages extract the
-    # "laikinoji" (interim) GPM302 return — income from fields 12-15 plus
-    # V14 of the GPM302V annex, tax from field 36.
-    "gautu-pajamu-suma-12-13-14-ir-15-laukeliu-bei-gpm302v-priedo-v14-laukelio-suma": "gautos-pajamos",
-    "isskaiciuota-mokescio-suma-36-laukelio-suma": "sumoketas-pajamu-mokestis",
-}
 
 # The income extract stated as one sentence on the form's own line —
 # "GPM305 formos deklaracijos: Gauta 0 Lt, išskaičiuota pajamų mokesčio
 # 0 Lt" — instead of the two labelled rows. Thirty pages across the 2011 and
 # March 2015 municipal generals do this, every one of them a declared zero,
-# which is a statement and not a missing declaration.
+# which is a statement and not a missing declaration; the 2007 municipal pages
+# state every income form this way.
+#
+# Either figure can be missing from the sentence, and the sentence is printed
+# anyway: "Gauta 4200.00 Lt , išskaičiuota pajamų mokesčio Lt" is the shape of
+# 531 lines on 529 records of `2007-vasario-25-savivaldybiu`. Requiring both
+# figures refused the whole line and lost the income with the tax, so both are
+# optional and the absent one normalizes to null (issue #98).
 TURTO_PAJAMU_PROSE_PATTERN = re.compile(
-    r"^\s*Gauta\s+(?P<income>-?[\d\s.,]+?)\s*Lt\b\s*,\s*išskaičiuota pajamų mokesčio\s+(?P<tax>-?[\d\s.,]+?)\s*Lt\b",
+    r"^\s*Gauta\s+(?:(?P<income>-?[\d\s.,]+?)\s*)?Lt\b\s*,"
+    r"\s*išskaičiuota pajamų mokesčio\s+(?:(?P<tax>-?[\d\s.,]+?)\s*)?Lt\b",
     re.IGNORECASE,
 )
-
-TURTO_PAJAMU_OUTPUT_ORDER = [
-    "privalomas-registruoti-turtas",
-    "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
-    "pinigines-lesos",
-    "suteiktos-paskolos",
-    "gautos-paskolos",
-    "gautos-pajamos",
-    "sumoketas-pajamu-mokestis",
-]
 
 
 def _extract_links(container: Tag | None) -> list[str]:
@@ -652,41 +621,44 @@ def _sum_amounts(current: int | float | None, amount: int | float | None) -> int
     return round(total, 2) if isinstance(total, float) else total
 
 
+def _income_form_lines(item: dict[str, Any]) -> list[dict[str, Any]] | None:
+    """The income lines a page states as prose rather than as labelled rows.
+
+    "FR0462S15 Formos deklaracijos: Gauta 6900.00 Lt , išskaičiuota pajamų
+    mokesčio 1035.00 Lt". The 2007 municipal pages print one such line per
+    income form the tax office knew of (FR0462 and its S, S0, S15 and S33
+    variants), all but the one the candidate filed at zero; thirty pages across
+    the 2011 and March 2015 municipal generals print a single line the same
+    way, every one of them a declared zero, which is a statement and not a
+    missing declaration. Either way the declared income is the sum of the
+    lines, and which form each figure came from is kept in
+    `pajamos-pagal-forma`.
+    """
+    prose = TURTO_PAJAMU_PROSE_PATTERN.match(normalize_space(str(item.get("value") or "")))
+    if prose is None:
+        return None
+
+    def figure(name: str) -> int | float | None:
+        printed = prose.group(name)
+        return _parse_lt_amount(f"{printed} Lt") if printed else None
+
+    return [
+        {
+            "forma": section_form(item.get("key", "")),
+            "gautos-pajamos": figure("income"),
+            "sumoketas-pajamu-mokestis": figure("tax"),
+        }
+    ]
+
+
 def _normalize_turto_ir_pajamu_data(payload: dict[str, Any]) -> dict[str, Any]:
-    sections = payload.get("sections") if isinstance(payload.get("sections"), list) else []
-    normalized_fields: dict[str, Any] = {key: None for key in TURTO_PAJAMU_OUTPUT_ORDER}
-
-    for section in sections:
-        if not isinstance(section, dict):
-            continue
-        for item in section.get("items", []):
-            if not isinstance(item, dict):
-                continue
-            source_key = _source_key(str(item.get("key", "")))
-            target_key = TURTO_PAJAMU_KEY_ALIASES.get(source_key)
-            if target_key is None:
-                prose = TURTO_PAJAMU_PROSE_PATTERN.match(normalize_space(str(item.get("value") or "")))
-                if prose is not None:
-                    # The 2007 municipal pages print one prose line per
-                    # income form VRK knew of (FR0462 and its S, S0, S15 and
-                    # S33 variants), all but the one the candidate filed at
-                    # zero; the 2011 and 2015 pages print one. Either way the
-                    # declared income is the sum of the lines, not the last.
-                    income = _parse_lt_amount(prose.group("income") + " Lt")
-                    tax = _parse_lt_amount(prose.group("tax") + " Lt")
-                    normalized_fields["gautos-pajamos"] = _sum_amounts(normalized_fields["gautos-pajamos"], income)
-                    normalized_fields["sumoketas-pajamu-mokestis"] = _sum_amounts(
-                        normalized_fields["sumoketas-pajamu-mokestis"], tax
-                    )
-                continue
-            normalized_fields[target_key] = _parse_lt_amount(item.get("value"))
-
+    block = normalize_declaration(payload, _parse_lt_amount, form_lines=_income_form_lines)
     # Unlike every later era the amounts are litas, and the page names the
     # declaration period in its closing note; both carried explicitly so a
     # cross-era consumer cannot silently read Lt as Eur.
-    normalized_fields["valiuta"] = "Lt"
-    normalized_fields["pastaba"] = _normalize_text_value(payload.get("note"))
-    return normalized_fields
+    block["valiuta"] = "Lt"
+    block["pastaba"] = _normalize_text_value(payload.get("note"))
+    return block
 
 
 def _parse_interesu_html(html: str) -> dict[str, Any]:

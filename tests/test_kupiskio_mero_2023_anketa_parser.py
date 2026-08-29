@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from scraper.elections.kupiskio_mero_2023.anketa_parser import parse_anketa_sample
+from scraper.shared.deklaracijos import DECLARATION_BLOCK_KEYS
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -176,15 +177,7 @@ class KupiskioMero2023AnketaParserTests(unittest.TestCase):
         turtas = self.aukstikalnis["normalized"]["turto-ir-pajamu-deklaracijos"]
         self.assertEqual(
             list(turtas.keys()),
-            [
-                "privalomas-registruoti-turtas",
-                "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
-                "pinigines-lesos",
-                "suteiktos-paskolos",
-                "gautos-paskolos",
-                "gautos-pajamos",
-                "sumoketas-pajamu-mokestis",
-            ],
+            list(DECLARATION_BLOCK_KEYS),
         )
         self.assertEqual(turtas["privalomas-registruoti-turtas"], 57780)
         self.assertEqual(turtas["pinigines-lesos"], 11000)

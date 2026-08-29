@@ -484,6 +484,44 @@ class Ep2004AnketaParserTests(unittest.TestCase):
                 "gautos-paskolos": None,
                 "gautos-pajamos": 98270,
                 "sumoketas-pajamu-mokestis": 29568,
+                # The 2004 income extract is the FR0462 family, which states
+                # neither self-employment income nor asset sales.
+                "individualios-veiklos-pajamos": None,
+                "individualios-veiklos-atskaitymai": None,
+                "turto-pardavimo-pajamos": None,
+                "turto-isigijimo-kaina": None,
+                # The 2004 pages name no tax year and no numbered income-tax
+                # form in their headings; the form is read from the lines.
+                "deklaracijos-metai": None,
+                "deklaracijos-forma": "FR0462",
+                "deklaracijos-apimtis": "seimos",
+                "deklaracijos": [
+                    {
+                        "pavadinimas": "METINĖ ŠEIMOS TURTO DEKLARACIJA",
+                        "rusis": "turto",
+                        "apimtis": "seimos",
+                        "metai": None,
+                        "forma": None,
+                        "reiksmes": {
+                            "privalomas-registruoti-turtas": 170000,
+                            "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": 34881,
+                            "pinigines-lesos": 68829,
+                            "suteiktos-paskolos": None,
+                            "gautos-paskolos": None,
+                        },
+                    },
+                    {
+                        "pavadinimas": "METINĖ GYVENTOJO PAJAMŲ DEKLARACIJA",
+                        "rusis": "pajamu",
+                        "apimtis": "gyventojo",
+                        "metai": None,
+                        "forma": "FR0462",
+                        "reiksmes": {
+                            "gautos-pajamos": 98270,
+                            "sumoketas-pajamu-mokestis": 29568,
+                        },
+                    },
+                ],
                 "valiuta": "Lt",
                 "pastaba": None,
                 "pajamos-pagal-forma": [

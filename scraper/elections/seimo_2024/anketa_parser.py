@@ -37,6 +37,7 @@ from scraper.elections.seimo_2016.anketa_parser import (
 )
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.conviction_details import conviction_entries, conviction_records
+from scraper.shared.deklaracijos import normalize_declaration
 from scraper.shared.files import slugify, write_candidate_record, write_json
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2024-seimo")
@@ -48,28 +49,9 @@ MISSING_TEXT_VALUES = {
     "nenurode",
 }
 
-# The 2024 pages carry the same asset labels as the 2024 EP pages ("I.
-# Privalomas registruoti turtas" ...) and the same two GPM311 income summary
-# labels, so the alias table matches the 2024 EP module.
-TURTO_PAJAMU_KEY_ALIASES = {
-    "i-privalomas-registruoti-turtas": "privalomas-registruoti-turtas",
-    "ii-vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
-    "iii-pinigines-lesos": "pinigines-lesos",
-    "iv-suteiktos-paskolos": "suteiktos-paskolos",
-    "v-gautos-paskolos": "gautos-paskolos",
-    "deklaruota-apmokestinamuju-ir-neapmokestinamuju-pajamu-suma": "gautos-pajamos",
-    "deklaruota-moketina-pajamu-mokescio-suma": "sumoketas-pajamu-mokestis",
-}
-
-TURTO_PAJAMU_OUTPUT_ORDER = [
-    "privalomas-registruoti-turtas",
-    "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
-    "pinigines-lesos",
-    "suteiktos-paskolos",
-    "gautos-paskolos",
-    "gautos-pajamos",
-    "sumoketas-pajamu-mokestis",
-]
+# The declaration rows, and the four things a section heading says about an
+# extract — its scope, its year, its form and its figures — are one shared
+# reading for every era; see scraper/shared/deklaracijos.py.
 
 
 def normalize_space(value: str) -> str:
@@ -393,24 +375,7 @@ def _parse_turto_ir_pajamu_html(html: str) -> dict[str, Any]:
 
 
 def _normalize_turto_ir_pajamu_data(payload: dict[str, Any]) -> dict[str, Any]:
-    sections = payload.get("sections") if isinstance(payload.get("sections"), list) else []
-    normalized_fields: dict[str, int | float | None] = {
-        key: None for key in TURTO_PAJAMU_OUTPUT_ORDER
-    }
-
-    for section in sections:
-        if not isinstance(section, dict):
-            continue
-        for item in section.get("items", []):
-            if not isinstance(item, dict):
-                continue
-            source_key = _source_key(str(item.get("key", "")))
-            target_key = TURTO_PAJAMU_KEY_ALIASES.get(source_key)
-            if target_key is None:
-                continue
-            normalized_fields[target_key] = _parse_eur_amount(item.get("value"))
-
-    return normalized_fields
+    return normalize_declaration(payload, _parse_eur_amount)
 
 
 def _parse_privaciu_record_table(table: Tag) -> dict[str, Any]:

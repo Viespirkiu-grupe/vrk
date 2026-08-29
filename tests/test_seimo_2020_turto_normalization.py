@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from scraper.elections.seimo_2020.anketa_parser import parse_anketa_sample
+from scraper.shared.deklaracijos import DECLARATION_VALUE_KEYS
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -31,11 +32,12 @@ class Seimo2020TurtoNormalizationTests(unittest.TestCase):
             )
             return json.loads(output_path.read_text(encoding="utf-8"))
 
-    def test_declaration_is_the_flat_seven_key_shape(self) -> None:
+    def test_declaration_is_the_flat_value_shape(self) -> None:
         payload = self._parse_candidate("agne-sirinskiene")
+        declaration = payload["normalized"]["turto-ir-pajamu-deklaracijos"]
 
         self.assertEqual(
-            payload["normalized"]["turto-ir-pajamu-deklaracijos"],
+            {key: declaration[key] for key in DECLARATION_VALUE_KEYS},
             {
                 "privalomas-registruoti-turtas": 3000,
                 "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": 0,
@@ -44,8 +46,39 @@ class Seimo2020TurtoNormalizationTests(unittest.TestCase):
                 "gautos-paskolos": 0,
                 "gautos-pajamos": 45223.76,
                 "sumoketas-pajamu-mokestis": 9044.75,
+                "individualios-veiklos-pajamos": 0,
+                "individualios-veiklos-atskaitymai": 0,
+                "turto-pardavimo-pajamos": 0,
+                "turto-isigijimo-kaina": 0,
             },
         )
+
+    def test_the_four_further_gpm_lines_are_published(self) -> None:
+        """Issue #98: the 2020 pages print seven income rows, not two.
+
+        The four the corpus used to drop are the self-employment pair and the
+        asset-sale pair, and the page states them under wordings no fixed alias
+        table caught.
+        """
+        payload = self._parse_candidate("gabrielius-landsbergis")
+        declaration = payload["normalized"]["turto-ir-pajamu-deklaracijos"]
+        raw_items = {
+            item["key"]: item["value"]
+            for section in payload["rawData"]["turtoIrPajamuDeklaracijos"]["sections"]
+            for item in section["items"]
+        }
+
+        self.assertEqual(raw_items["Deklaruota individualios veiklos pajamų suma"], "0 Eur")
+        self.assertEqual(declaration["individualios-veiklos-pajamos"], 0)
+        self.assertEqual(
+            raw_items[
+                "Deklaruota ne individualios veiklos turto pardavimo ar kitokio "
+                "perleidimo nuosavybėn pajamų suma"
+            ],
+            "0 Eur",
+        )
+        self.assertEqual(declaration["turto-pardavimo-pajamos"], 0)
+        self.assertEqual(declaration["deklaracijos-forma"], "GPM308")
 
     def test_income_matches_the_figure_published_on_the_page(self) -> None:
         payload = self._parse_candidate("gabrielius-landsbergis")

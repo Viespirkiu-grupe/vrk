@@ -64,6 +64,7 @@ from scraper.elections.seimo_zirmunu_2015.anketa_parser import (
     load_results,
 )
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.deklaracijos import SCOPE_FAMILY, SCOPE_OWN
 from scraper.shared.files import write_candidate_record
 from scraper.shared.savivaldybiu_archive_1997 import normalize_birth_date
 
@@ -119,7 +120,26 @@ DEKLARACIJA_OUTPUT_ORDER = [
     "pasiskolintos-ir-dovanotos-lesos",
     "darboviete",
     "valiuta",
+    "deklaracijos-apimtis",
 ]
+
+# Whose declaration it is. The 2002 and 2003 pages print one of two forms --
+# "Lietuvos Respublikos gyventojo turto ir pajamų deklaracija" and its šeimos
+# variant -- and every numbered item follows suit, the individual form asking
+# after "Deklaruotojo (įskaitant vaikų)" and the family one after
+# "Deklaruotojų". So the scope is in the items whether or not the heading
+# reached rawData: it did for 2003 (`forma`), and not for 2002.
+#
+# Measured over both elections: 10,135 of 2002's 10,138 records are individual
+# declarations and three publish no item at all; 2003 splits 18 individual to
+# 9 family. Neither election has a spouse declaration -- that is the 2007
+# municipal form (see scraper/shared/deklaracijos.py).
+DEKLARACIJA_SCOPE_MARKERS = (
+    ("deklaruotojų", SCOPE_FAMILY),
+    ("deklaruotojams", SCOPE_FAMILY),
+    ("deklaruotojo", SCOPE_OWN),
+    ("deklaruotojui", SCOPE_OWN),
+)
 
 __all__ = [
     "build_candidacy",
@@ -470,7 +490,30 @@ def normalize_deklaracija(
     # held outside banks, in accounts and deposits.
     declaration["pinigines-lesos"] = declaration["pinigines-lesos-laikotarpio-pabaigoje"]
     declaration["valiuta"] = "Lt"
+    declaration["deklaracijos-apimtis"] = _deklaracija_scope(payload)
     return declaration, unknown
+
+
+def _deklaracija_scope(payload: dict[str, Any]) -> str | None:
+    """`gyventojo` or `seimos`, from whichever of the two forms the page prints.
+
+    The heading names it where the page's parser keeps one (`forma`, the 2003
+    pages); otherwise the numbered items do, each addressed to "Deklaruotojo"
+    on the individual form and "Deklaruotojų" on the family one. A page with
+    neither -- three of 2002's records publish no item at all -- has no scope.
+    """
+    heading = normalize_space(str(payload.get("forma") or "")).lower()
+    for marker, scope in (("šeimos", SCOPE_FAMILY), ("gyventojo", SCOPE_OWN)):
+        if marker in heading:
+            return scope
+    for item in payload.get("items", []):
+        if not isinstance(item, dict):
+            continue
+        lowered = normalize_space(str(item.get("prompt", ""))).lower()
+        for marker, scope in DEKLARACIJA_SCOPE_MARKERS:
+            if marker in lowered:
+                return scope
+    return None
 
 
 # ---------------------------------------------------------------------------

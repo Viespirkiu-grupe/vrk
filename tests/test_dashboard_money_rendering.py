@@ -29,12 +29,15 @@ DASHBOARD_PATH = REPO_ROOT / "dashboard" / "index.html"
 SOURCE = DASHBOARD_PATH.read_text(encoding="utf-8")
 NODE = shutil.which("node")
 
-# The three declaration fields every module normalizes under the same keys.
-MONEY_PATHS = (
-    "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas",
-    "turto-ir-pajamu-deklaracijos.pinigines-lesos",
-    "turto-ir-pajamu-deklaracijos.gautos-pajamos",
-)
+# The three declaration fields every module normalizes under the same keys,
+# and the renderer each compare-table row has to carry. The income row goes
+# through `incomeCell`, which resolves the `deklaruotos-pajamos` concept before
+# converting -- see the module docstring of scraper/shared/deklaracijos.py.
+MONEY_PATHS = {
+    "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas": "moneyCell",
+    "turto-ir-pajamu-deklaracijos.pinigines-lesos": "moneyCell",
+    "turto-ir-pajamu-deklaracijos.gautos-pajamos": "incomeCell",
+}
 
 
 def _extract(name: str) -> str:
@@ -51,7 +54,18 @@ def _extract(name: str) -> str:
 def run_in_node(expression: str) -> object:
     helpers = "\n".join(
         _extract(n)
-        for n in ("LITAS_PER_EURO", "parseMoney", "declaredInLitas", "fmtEUR", "moneyCell")
+        for n in (
+            "LITAS_PER_EURO",
+            "INCOME_PATH",
+            "EMPLOYMENT_INCOME_PATH",
+            "resolvePath",
+            "parseMoney",
+            "declaredInLitas",
+            "declaredIncome",
+            "fmtEUR",
+            "moneyCell",
+            "incomeCell",
+        )
     )
     script = f"{helpers}\nconsole.log(JSON.stringify({expression}));"
     out = subprocess.run(
@@ -75,13 +89,13 @@ class FieldMapWiringTests(unittest.TestCase):
     """Structural: the money rows must carry the formatter."""
 
     def test_each_money_row_uses_the_money_formatter(self):
-        for path in MONEY_PATHS:
+        for path, renderer in MONEY_PATHS.items():
             with self.subTest(path):
                 row = re.search(rf'\["{re.escape(path)}"\](,\s*\w+)?\]', SOURCE)
                 self.assertIsNotNone(row, f"{path} missing from FIELD_MAP")
                 self.assertEqual(
                     (row.group(1) or "").strip(" ,"),
-                    "moneyCell",
+                    renderer,
                     f"{path} would render raw, unconverted and unlabelled",
                 )
 
@@ -94,7 +108,7 @@ class FieldMapWiringTests(unittest.TestCase):
         self.assertNotIn("Lt→€", SOURCE)
 
     def test_the_conversion_itself_is_still_applied_in_both_renderers(self):
-        for renderer in ("moneyCell", "moneyEUR"):
+        for renderer in ("moneyCell", "incomeCell", "moneyEUR"):
             with self.subTest(renderer):
                 body = re.search(rf"^function {renderer}\(.*?^}}", SOURCE, re.S | re.M).group(0)
                 self.assertIn("declaredInLitas", body)
@@ -141,3 +155,47 @@ class MoneyCellTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class DeclaredIncomeTests(unittest.TestCase):
+    """The compare table's income row resolves `deklaruotos-pajamos`.
+
+    The 1990s form prints rows 1 and 20 of its income section, and row 20 is
+    not always trustworthy: it renders 0 against a non-zero row 1, so the
+    parser refuses it and `gautos-pajamos` is null on 4,463 of the 1997
+    municipal election's 6,276 records. The row the page does publish is
+    employment income, so the cell shows it and says which it is (issue #98).
+    """
+
+    @unittest.skipUnless(NODE, "node not installed")
+    def test_a_declared_total_renders_as_before(self):
+        record = {
+            "normalized": {
+                "turto-ir-pajamu-deklaracijos": {
+                    "gautos-pajamos": 5000,
+                    "gautos-pajamos-darbo-santykiu": 4000,
+                }
+            }
+        }
+        self.assertEqual(run_in_node(f"incomeCell(null, {json.dumps(record)})"), "5\u00a0000 €")
+
+    @unittest.skipUnless(NODE, "node not installed")
+    def test_a_refused_total_falls_back_to_the_employment_row_and_says_so(self):
+        record = {
+            "normalized": {
+                "turto-ir-pajamu-deklaracijos": {
+                    "gautos-pajamos": None,
+                    "gautos-pajamos-darbo-santykiu": 3452.8,
+                    "valiuta": "Lt",
+                }
+            }
+        }
+        self.assertEqual(
+            run_in_node(f"incomeCell(null, {json.dumps(record)})"),
+            "1\u00a0000 € (darbo santykiai)",
+        )
+
+    @unittest.skipUnless(NODE, "node not installed")
+    def test_neither_figure_still_reads_as_nothing(self):
+        record = {"normalized": {"turto-ir-pajamu-deklaracijos": {"gautos-pajamos": None}}}
+        self.assertIsNone(run_in_node(f"incomeCell(null, {json.dumps(record)})"))

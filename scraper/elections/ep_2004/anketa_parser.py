@@ -62,15 +62,13 @@ from scraper.elections.seimo_2016.anketa_parser import (
     normalize_space,
 )
 from scraper.elections.seimo_zirmunu_2015.anketa_parser import (
-    TURTO_PAJAMU_KEY_ALIASES,
-    TURTO_PAJAMU_OUTPUT_ORDER,
     _apply_results,
     _normalize_answer_value,
     _parse_lt_amount,
-    _sum_amounts,
     load_results,
 )
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.deklaracijos import normalize_declaration
 from scraper.shared.files import write_candidate_record
 from scraper.shared.savivaldybiu_archive_1997 import normalize_birth_date
 
@@ -542,17 +540,36 @@ def _parse_deklaracijos_html(html: str) -> dict[str, Any]:
     return {"sections": sections, "note": ""}
 
 
-def _normalize_deklaracijos_data(payload: dict[str, Any]) -> dict[str, Any]:
-    sections = payload.get("sections") if isinstance(payload.get("sections"), list) else []
-    normalized: dict[str, Any] = {key: None for key in TURTO_PAJAMU_OUTPUT_ORDER}
-    forms: list[dict[str, Any]] = []
-    extracts: dict[str, Any] = {}
+def _income_form_lines(item: dict[str, Any]) -> list[dict[str, Any]] | None:
+    """One income line of the 2004 pages' per-form table.
 
+    The page lists the five income-tax returns the tax office knew of --
+    FR0462 and its S, S0, S15 and S33 variants -- with a dash against the four
+    the candidate did not file. The declared income is the sum of the lines.
+    """
+    if "form" not in item:
+        return None
+    return [
+        {
+            "forma": item["form"],
+            "gautos-pajamos": _parse_lt_amount(item.get("income")),
+            "sumoketas-pajamu-mokestis": _parse_lt_amount(item.get("tax")),
+        }
+    ]
+
+
+def _normalize_deklaracijos_data(payload: dict[str, Any]) -> dict[str, Any]:
+    normalized = normalize_declaration(payload, _parse_lt_amount, form_lines=_income_form_lines)
+
+    sections = payload.get("sections") if isinstance(payload.get("sections"), list) else []
+    extracts: dict[str, Any] = {}
     for section in sections:
         if not isinstance(section, dict):
             continue
         title = normalize_space(str(section.get("title", "")))
         kind = "turto" if "TURTO" in title.upper() else "pajamu" if "PAJAM" in title.upper() else None
+        if kind is None:
+            continue
         meta: dict[str, Any] = {
             "pavadinimas": _normalize_text_value(title),
             "israsa-isdave": _normalize_text_value(section.get("issuer")),
@@ -563,50 +580,23 @@ def _normalize_deklaracijos_data(payload: dict[str, Any]) -> dict[str, Any]:
         for item in section.get("items", []):
             if not isinstance(item, dict):
                 continue
-            key = normalize_space(str(item.get("key", "")))
-            key_lower = key.lower()
-            if "form" in item:
-                income = _parse_lt_amount(item.get("income"))
-                tax = _parse_lt_amount(item.get("tax"))
-                forms.append(
-                    {
-                        "forma": item["form"],
-                        "gautos-pajamos": income,
-                        "sumoketas-pajamu-mokestis": tax,
-                    }
-                )
-                # Of the five FR0462 variants the page prints, the candidate
-                # filed one; the declared income is the sum of the lines.
-                normalized["gautos-pajamos"] = _sum_amounts(normalized["gautos-pajamos"], income)
-                normalized["sumoketas-pajamu-mokestis"] = _sum_amounts(normalized["sumoketas-pajamu-mokestis"], tax)
-                continue
+            key_lower = normalize_space(str(item.get("key", ""))).lower()
             if key_lower.startswith("3. darbovietė") or key_lower == "darbovietė":
                 meta["darboviete"] = _normalize_text_value(item.get("value"))
-                continue
-            if key_lower.startswith("pildymo data"):
+            elif key_lower.startswith("pildymo data"):
                 meta["pildymo-data"] = _normalize_iso_date(item.get("value"))
-                continue
-            source_key = _source_key_roman(key)
-            target = TURTO_PAJAMU_KEY_ALIASES.get(source_key)
-            if target is not None:
-                normalized[target] = _parse_lt_amount(item.get("value"))
-        if kind is not None:
-            extracts[kind] = meta
+        extracts[kind] = meta
 
     normalized["valiuta"] = "Lt"
     normalized["pastaba"] = _normalize_text_value(payload.get("note"))
-    normalized["pajamos-pagal-forma"] = forms
+    # Who issued each extract, when they received it and what the candidate
+    # gave as their workplace -- facts of the 2004 pages that no later era
+    # prints, so they keep a block of their own rather than a shared key.
     normalized["israsai"] = {
         "turto-deklaracija": extracts.get("turto"),
         "pajamu-deklaracija": extracts.get("pajamu"),
     }
     return normalized
-
-
-def _source_key_roman(label: str) -> str:
-    from scraper.shared.files import slugify
-
-    return slugify(normalize_space(label).rstrip(":"))
 
 
 def _normalize_iso_date(value: Any) -> str | None:

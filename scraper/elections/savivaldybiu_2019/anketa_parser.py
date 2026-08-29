@@ -11,7 +11,6 @@ from scraper.elections.savivaldybiu_2019.sitemap import ELECTION_ID
 # numbering, base64 photos, GPM308 income labels and ID001x private-interest
 # sections — so the parsing rules are reused rather than restated here.
 from scraper.elections.meru_2017.anketa_parser import (
-    TURTO_PAJAMU_OUTPUT_ORDER,
     _parse_optional_subpages,
     parse_anketa_html as _parse_anketa_html_2017,
 )
@@ -29,33 +28,18 @@ from scraper.elections.seimo_2016.anketa_parser import (
     _parse_eur_amount,
     _parse_nested_campaign_samples,
     _row_answer_text,
-    _source_key,
 )
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.conviction_details import conviction_field_keys, conviction_records
+from scraper.shared.deklaracijos import normalize_declaration
 from scraper.shared.files import write_candidate_record, write_json
 
 DEFAULT_SAMPLES_ROOT = Path(f"samples/html/{ELECTION_ID}")
 DEFAULT_OUTPUT_ROOT = Path(f"data/{ELECTION_ID}")
 
-# The asset rows carry the same Roman-numeral labels as 2017, but the income
-# rows were reworded between the two elections. 2017 names the GPM308 field
-# numbers ("Gautų pajamų suma (GPM308 formos 12, 13, 14 ... laukelių suma)");
-# 2019 states the same two figures in prose. Reusing the 2017 aliases leaves
-# `gautos-pajamos` and `sumoketas-pajamu-mokestis` null for every candidate in
-# the election while the values sit in rawData — so the aliases are local here,
-# as they are in the 2017 module for the same reason.
-TURTO_PAJAMU_KEY_ALIASES = {
-    "i-privalomas-registruoti-turtas": "privalomas-registruoti-turtas",
-    "ii-vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": (
-        "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai"
-    ),
-    "iii-pinigines-lesos": "pinigines-lesos",
-    "iv-suteiktos-paskolos": "suteiktos-paskolos",
-    "v-gautos-paskolos": "gautos-paskolos",
-    "deklaruota-apmokestinamuju-ir-neapmokestinamuju-pajamu-suma": "gautos-pajamos",
-    "deklaruota-moketina-pajamu-mokescio-suma": "sumoketas-pajamu-mokestis",
-}
+# The declaration rows, and the four things a section heading says about an
+# extract — its scope, its year, its form and its figures — are one shared
+# reading for every era; see scraper/shared/deklaracijos.py.
 
 # The 2019 pages ask for the conviction details under Q9.1, as the 2021 mayoral
 # ones do: same statute, same question, one table row per conviction.
@@ -117,29 +101,7 @@ def parse_anketa_html(html: str) -> dict[str, Any]:
 
 
 def _normalize_turto_ir_pajamu_data(payload: dict[str, Any]) -> dict[str, Any]:
-    """The seven canonical asset/income keys shared with the other elections.
-
-    The rest of the GPM308 breakdown 2019 publishes — individual-activity
-    income, asset-sale income and its acquisition cost — stays in rawData, as
-    it does elsewhere.
-    """
-    sections = payload.get("sections") if isinstance(payload.get("sections"), list) else []
-    normalized_fields: dict[str, int | float | None] = {
-        key: None for key in TURTO_PAJAMU_OUTPUT_ORDER
-    }
-
-    for section in sections:
-        if not isinstance(section, dict):
-            continue
-        for item in section.get("items", []):
-            if not isinstance(item, dict):
-                continue
-            target_key = TURTO_PAJAMU_KEY_ALIASES.get(_source_key(str(item.get("key", ""))))
-            if target_key is None:
-                continue
-            normalized_fields[target_key] = _parse_eur_amount(item.get("value"))
-
-    return {key: normalized_fields[key] for key in TURTO_PAJAMU_OUTPUT_ORDER}
+    return normalize_declaration(payload, _parse_eur_amount)
 
 
 def _build_candidacy(candidate_meta: dict[str, Any]) -> dict[str, Any]:

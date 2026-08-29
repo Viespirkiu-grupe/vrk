@@ -112,6 +112,17 @@ function moneyCell(value, record) {
   return fmtEUR(declaredInLitas(record) ? n / LITAS_PER_EURO : n);
 }
 
+// The income row resolves through the `deklaruotos-pajamos` concept, so the
+// 1996-2000 records whose declared total the page contradicts show the
+// employment row they do publish, said in so many words rather than left
+// blank. See declaredIncome() below.
+function incomeCell(value, record) {
+  const income = declaredIncome(record.normalized || {});
+  if (income.value == null) return null;
+  const shown = fmtEUR(declaredInLitas(record) ? income.value / LITAS_PER_EURO : income.value);
+  return income.employmentOnly ? `${shown} (darbo santykiai)` : shown;
+}
+
 // Education is an object -- {aprasas, irasai:[{issilavinimas,
 // mokymo-istaigos-pavadinimas, specialybe, baigimo-metai}]} -- so the generic
 // compactValue() rendered it as "irasai: issilavinimas: Aukštasis;
@@ -210,7 +221,7 @@ const FIELD_MAP = [
   ["Užsienio kalbos", ["anketa.uzsienio-kalbos", "biografija.uzsienio-kalbos"]],
   ["Privalomas registruoti turtas", ["turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas"], moneyCell],
   ["Piniginės lėšos", ["turto-ir-pajamu-deklaracijos.pinigines-lesos"], moneyCell],
-  ["Gautos pajamos", ["turto-ir-pajamu-deklaracijos.gautos-pajamos"], moneyCell],
+  ["Gautos pajamos", ["turto-ir-pajamu-deklaracijos.gautos-pajamos"], incomeCell],
   // 1996-1997 only: that form sums turtas and piniginės lėšos, and prints
   // employment income separately from the total. On the 1997 municipal
   // election the total is usually unusable, so the employment row is the only
@@ -520,7 +531,9 @@ function showMovers() {
       a.textContent = `${r.p.n} · ${r.p.b || "?"}`;
       a.addEventListener("click", (ev) => { ev.preventDefault(); showPerson(r.p); });
       nameCell.appendChild(a);
-      const tag = (e) => electionShortName(e.id);
+      // "ds" marks an income figure that is the 1990s form's employment row
+      // rather than a declared total (the `deklaruotos-pajamos` concept).
+      const tag = (e) => electionShortName(e.id) + (s === 2 && e.ds ? ", darbo santykiai" : "");
       tr.insertCell().textContent = `${fmtEUR(r.first.m[s])} (${tag(r.first)})`;
       tr.insertCell().textContent = `${fmtEUR(r.last.m[s])} (${tag(r.last)})`;
       const d = tr.insertCell();
@@ -551,8 +564,32 @@ function declaredInLitas(record) {
   const d = (record.normalized || {})["turto-ir-pajamu-deklaracijos"];
   return !!d && d.valiuta === "Lt";
 }
+
+// The `deklaruotos-pajamos` concept, mirrored from
+// scraper/shared/deklaracijos.py. The 1990s form prints rows 1 and 20 of its
+// income section and row 20 is not always trustworthy -- it fails by rendering
+// 0 against a non-zero row 1 -- so the parser refuses it and `gautos-pajamos`
+// is null on 4,463 of the 1997 municipal election's 6,276 records. Row 1 is
+// printed on every one of them and is the only income figure those records
+// have; charting nothing there said "declared no income", which is not what
+// the page says. It is employment income, not a total, and the cell says so.
+const INCOME_PATH = "turto-ir-pajamu-deklaracijos.gautos-pajamos";
+const EMPLOYMENT_INCOME_PATH = "turto-ir-pajamu-deklaracijos.gautos-pajamos-darbo-santykiu";
+function declaredIncome(normalized) {
+  const total = parseMoney(resolvePath(normalized, INCOME_PATH));
+  if (total != null) return { value: total, employmentOnly: false };
+  const row1 = parseMoney(resolvePath(normalized, EMPLOYMENT_INCOME_PATH));
+  if (row1 != null) return { value: row1, employmentOnly: true };
+  return { value: null, employmentOnly: false };
+}
+function incomeIsEmploymentOnly(record) {
+  return declaredIncome(record.normalized || {}).employmentOnly;
+}
+
 function moneyEUR(record, path) {
-  const v = parseMoney(resolvePath(record.normalized || {}, path));
+  const v = path === INCOME_PATH
+    ? declaredIncome(record.normalized || {}).value
+    : parseMoney(resolvePath(record.normalized || {}, path));
   if (v == null) return null;
   return declaredInLitas(record) ? v / LITAS_PER_EURO : v;
 }
@@ -564,6 +601,7 @@ function buildAssetPane(loaded) {
   const cols = loaded.map(([e, r]) => ({
     label: electionShortName(e.id),
     values: MONEY_SERIES.map(([, path]) => moneyEUR(r, path)),
+    employmentOnly: incomeIsEmploymentOnly(r),
   }));
   const allValues = cols.flatMap(c => c.values.filter(v => v != null));
   if (!allValues.length) {
@@ -613,16 +651,30 @@ function buildAssetPane(loaded) {
   const t = document.createElement("table"); t.className = "cmp"; t.style.marginTop = "14px";
   t.innerHTML = "<thead><tr><th>Rodiklis</th></tr></thead><tbody></tbody>";
   for (const col of cols) { const th = document.createElement("th"); th.textContent = col.label; t.tHead.rows[0].appendChild(th); }
-  MONEY_SERIES.forEach(([label], s) => {
+  let employmentOnly = false;
+  MONEY_SERIES.forEach(([label, path], s) => {
     const tr = t.tBodies[0].insertRow();
     const th = document.createElement("th"); th.textContent = label; tr.appendChild(th);
-    for (const col of cols) {
+    cols.forEach((col, i) => {
       const td = tr.insertCell();
       td.textContent = col.values[s] == null ? "—" : fmtEUR(col.values[s]);
       if (col.values[s] == null) td.className = "null";
-    }
+      if (path === INCOME_PATH && col.values[s] != null && col.employmentOnly) {
+        employmentOnly = true;
+        td.textContent += " *";
+        td.title = "Tik su darbo santykiais susijusios pajamos — puslapyje paskelbta bendra suma nepatikima";
+      }
+    });
   });
   pane.appendChild(t);
+  if (employmentOnly) {
+    const note = document.createElement("div");
+    note.className = "loading";
+    note.style.textAlign = "left";
+    note.textContent = "* 1996–2000 m. deklaracijų išrašuose bendra pajamų suma prieštarauja pačios deklaracijos "
+      + "1 eilutei, todėl neskelbiama; rodoma tos eilutės suma — tik su darbo santykiais susijusios pajamos.";
+    pane.appendChild(note);
+  }
   return pane;
 }
 

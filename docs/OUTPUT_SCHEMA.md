@@ -194,7 +194,16 @@ appendices never need to restate them.
 
 ### `turto-ir-pajamu-deklaracijos`
 
-The "seven canonical keys" the appendices refer to are:
+VRK publishes the declaration as an *extract*, and its heading says three
+things besides the figures: whose declaration it is, which income-tax form it
+is taken from, and — on the 2017-and-later pages — which year it covers. The
+block carries the figures and all three, and one reading produces it for every
+era whose pages publish the declaration as titled sections, which is every
+election from 2004 on (`scraper/shared/deklaracijos.py`). The 1996–2003 pages
+publish a single un-sectioned form; their own shape is at the end of this
+section.
+
+**The eleven value keys**, in this order:
 
 - `privalomas-registruoti-turtas`
 - `vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai`
@@ -203,13 +212,92 @@ The "seven canonical keys" the appendices refer to are:
 - `gautos-paskolos`
 - `gautos-pajamos`
 - `sumoketas-pajamu-mokestis`
+- `individualios-veiklos-pajamos`
+- `individualios-veiklos-atskaitymai`
+- `turto-pardavimo-pajamos`
+- `turto-isigijimo-kaina`
 
-The key set is identical in 20/20 elections at 100% presence. Values are
-parsed EUR amounts as JSON numbers (int or float), never strings — and null
-when the source renders the figure malformed (VRK publishes a handful of
-incomes with the integer part missing, e.g. `,35 EUR`; inventing `0.35` would
-be making up a figure, so those normalize to null with the source text kept
-in `rawData`).
+The first seven are the set the corpus has always carried (the appendices call
+them "the seven canonical keys"). The last four are the rest of the income
+extract: since the 2018 rewording the GPM308/GPM311 form prints six or seven
+lines and the normalizer matched a fixed pair, so 18,251 non-zero declared
+figures on 10,063 records had nowhere to go (issue #98). They are null in the
+eras whose form does not print them — everything before 2018, and the FR0462
+family of 2004 and 2007.
+
+Values are parsed amounts as JSON numbers (int or float), never strings, and
+`null` where the row was not published or does not parse as a number. The
+currency is euro from 2016 on and litas before it, which `valiuta` states
+explicitly (see below). An amount VRK renders without its leading zero
+(`,35 EUR` in the page source) is read as the sub-euro figure it is; no
+election ever prints such an amount in the `0,35` form, so this is a rendering
+quirk and not a truncated number, and the source text is in `rawData` either
+way.
+
+**What the extract is.** Three keys, from the section headings:
+
+- `deklaracijos-metai` — the tax year, as in "… IŠRAŠAS **(2023 m.)**". The
+  2008–2015 Seimas pages state it in their closing note instead ("deklaracijos
+  pateikiamos už laikotarpį nuo 2011-01-01 iki 2011-12-31") and that is read
+  too. Everything else states no year at all — the 2004 and 2007 pages, the
+  2011 and 2015 municipal generals, `2016-seimo` and `2020-seimo` — and is
+  `null` there. Filled on 33,494 of the 84,402 records that publish a
+  sectioned declaration.
+- `deklaracijos-forma` — the income-tax form: `GPM302`, `GPM305`, `GPM308`,
+  `GPM311`, or `FR0462` for the family the 2004 and 2007 pages list one line
+  per (which variant was filed is in `pajamos-pagal-forma`).
+- `deklaracijos-apimtis` — whose declaration the value keys carry:
+  `gyventojo` (the candidate's own), `seimos` (the family's), or
+  `gyventojo-seimos` for the combined heading every page from 2008 on prints,
+  which does not distinguish the two. `sutuoktinio` never appears here; see
+  below. It is `null` where no asset declaration was published.
+
+**Every declaration.** `deklaracijos` is a list, one entry per section the
+page prints, in page order:
+
+```json
+{"pavadinimas": "Šeimos turto deklaracija", "rusis": "turto",
+ "apimtis": "seimos", "metai": null, "forma": null,
+ "reiksmes": {"privalomas-registruoti-turtas": 37000, ...}}
+```
+
+`rusis` is `turto` or `pajamu`, and `reiksmes` holds only the keys that
+section published. A section the page prints twice over is one extract
+rendered twice and is listed once; a repeat that differs is a second
+declaration and is kept. This is where a page publishing more than one
+declaration stops being collapsed to one — before issue #98 the last section
+won, whatever it was.
+
+**The spouse.** 2004 and 2007 published *separate* declarations for the
+candidate, the family and the spouse. The value keys take the candidate's own
+where the page publishes one, the family's where it publishes that instead,
+and a spouse's never; the spouse's figures go under `sutuoktinio`, a dict of
+the five asset keys, present only on the 352 records of
+`2007-vasario-25-savivaldybiu` whose page publishes one. On 243 of those the
+spouse's declaration was the last section on the page and the corpus reported
+it as the candidate's.
+
+**Era keys**, present in the eras that have them rather than everywhere:
+
+- `valiuta` (`"Lt"`) and `pastaba` (the page's closing note) — every 2004–2015
+  election;
+- `pajamos-pagal-forma` — the same elections: one
+  `{forma, gautos-pajamos, sumoketas-pajamu-mokestis}` entry per income line
+  the page states per form, empty where the page uses the two labelled rows
+  instead;
+- `israsai` — 2004 and 2005 only: who issued each extract, when they received
+  it and the workplace the candidate gave.
+
+**The 1996–2003 pages** publish a single un-sectioned form and keep their own
+key set (`turtas-ir-pinigines-lesos-metu-pabaigoje`,
+`gautos-pajamos-darbo-santykiu` and so on), sharing `gautos-pajamos`,
+`sumoketas-pajamu-mokestis` and `pinigines-lesos` with the rest. They carry no
+`deklaracijos` list and no `deklaracijos-metai` or `-forma` — their pages state
+neither a tax year nor a numbered income-tax form, which those predate. The
+2002 and 2003 municipal form does name a scope and carries
+`deklaracijos-apimtis`; the 1996–2000 archive form has one scope and states it
+in the form's own name, which the corpus does not restate. See the per-election
+appendices, and `docs/DATA_GUIDE.md` for how to read income across the eras.
 
 ### `profilis` and `kita`
 
@@ -355,8 +443,9 @@ the party lists), so the `normalized` section order is `profilis`, `anketa`,
   `mokslo-laipsnis` (Q2.1), `pedagoginis-vardas` (Q2.2), `uzsienio-kalbos`
   (Q3), `darbo-patirtis.irasai` (Q4), `visuomenine-veikla` (Q5), `pomegiai`
   (Q6), `seimine-padetis` (Q7).
-- `turto-ir-pajamu-deklaracijos` keeps the seven canonical keys shared with
-  the other elections; the full GPM311 income breakdown stays in `rawData`.
+- `turto-ir-pajamu-deklaracijos` carries the eleven value keys shared with the
+  other elections — the whole GPM311 breakdown, not only the headline pair —
+  plus the year, form and scope of the extract.
 - `privaciu-interesu-deklaracija` merges the leading summary table to the top
   level (`pateikimo-data`, `deklaruojantis-asmuo`,
   `sutuoktinis-sugyventinis-ar-partneris`) and keys each `h4` section by its
@@ -392,8 +481,9 @@ section order is `profilis`, `anketa`, `biografija`,
 - `patiketiniai` is the presidential-only "Patikėtiniai" (trustees) tab,
   normalized to a list of text entries. It is empty for every 2019 candidate
   but is captured and parsed defensively.
-- `turto-ir-pajamu-deklaracijos` keeps the seven canonical keys shared with the
-  other elections; the full GPM308 income breakdown stays in `rawData`.
+- `turto-ir-pajamu-deklaracijos` carries the eleven value keys shared with the
+  other elections — the whole GPM308 breakdown, not only the headline pair —
+  plus the year, form and scope of the extract.
 - `privaciu-interesu-deklaracija` follows the 2019 EP shape: the declarant is
   hoisted to `deklaruojantis-asmuo`, the spouse block is retained under
   `deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris`, and each
@@ -440,8 +530,9 @@ five-tab set of `2024-ep` — there is no trustees tab and no campaign tab (unli
   `mokslo-laipsnis` (Q2.1), `pedagoginis-vardas` (Q2.2), `uzsienio-kalbos`
   (Q3), `darbo-patirtis.irasai` (Q4), `visuomenine-veikla` (Q5), `pomegiai`
   (Q6), `seimine-padetis` (Q7).
-- `turto-ir-pajamu-deklaracijos` keeps the seven canonical keys shared with the
-  other elections; the full GPM311 income breakdown stays in `rawData`.
+- `turto-ir-pajamu-deklaracijos` carries the eleven value keys shared with the
+  other elections — the whole GPM311 breakdown, not only the headline pair —
+  plus the year, form and scope of the extract.
 - `privaciu-interesu-deklaracija` merges the leading summary table to the top
   level (`pateikimo-data`, `deklaruojantis-asmuo`,
   `sutuoktinis-sugyventinis-ar-partneris`) and keys each `h4` section by its
@@ -489,8 +580,9 @@ Despite the pages keeping the 2016-era layout, `profilis.nuotrauka` is a URL
 to the candidate photo (`kandImg/...`) on all 1,754 records — not the base64
 data URI the other 2016-era-layout elections embed.
 
-`turto-ir-pajamu-deklaracijos` is the corpus's seven-key shape, but the two
-money keys were **null on all 1,753 declaration records** until 2026-08-28:
+`turto-ir-pajamu-deklaracijos` is the corpus's shared shape, but the two
+headline money keys were **null on all 1,753 declaration records** until
+2026-08-28:
 the election reuses the 2016 normalizer, whose income aliases named the
 GPM308 sentence 2016 prints, and these pages state the same two figures in
 prose ("Deklaruota apmokestinamųjų ir neapmokestinamųjų pajamų suma"). The
@@ -957,15 +1049,16 @@ As in 2023 the list name inside the note is in the genitive and does not match
 
 ### Other sections
 
-- `turto-ir-pajamu-deklaracijos` keeps the seven canonical keys. The
-  asset/income aliases are **local to this module**: the asset rows keep the
-  Roman-numeral labels of 2017, but the income rows were reworded between the
-  two elections. April 2017 names the GPM308 field numbers (`Gautų pajamų suma
-  (GPM308 formos 12, 13, 14 … laukelių suma)`); 2019 states the same two
-  figures in prose (`Deklaruota apmokestinamųjų ir neapmokestinamųjų pajamų
-  suma`, `Deklaruota mokėtina pajamų mokesčio suma`). Reusing the 2017 aliases
-  leaves `gautos-pajamos` and `sumoketas-pajamu-mokestis` null for every
-  candidate while the values sit in `rawData`. The resulting table is the same
+- `turto-ir-pajamu-deklaracijos` carries the shared value keys. The income
+  rows were reworded between the April 2017 election and this one: April 2017
+  names the GPM308 field numbers (`Gautų pajamų suma (GPM308 formos 12, 13,
+  14 … laukelių suma)`); 2019 states the same figures in prose (`Deklaruota
+  apmokestinamųjų ir neapmokestinamųjų pajamų suma`, `Deklaruota mokėtina
+  pajamų mokesčio suma`). A per-module alias table keyed on the whole sentence
+  left `gautos-pajamos` and `sumoketas-pajamu-mokestis` null for a whole
+  election at a time while the values sat in `rawData` (issue #81); since
+  issue #98 the rows match on their opening words, once, for every era. The
+  resulting table is the same
   one `2024-ep` and the 2018/2019 Seimo by-election modules use, restated here
   rather than imported. The rest of the GPM308 breakdown — individual-activity
   income, asset-sale income and its acquisition cost — stays in `rawData`.
@@ -1040,9 +1133,9 @@ pages predate the 2024 layout, so the section shapes follow the 2016/2019 era:
   paragraph (36 str. 12 d.); its answer is rendered on the continuation row that
   quotes the statute.
 - `biografija` is free text (`{"tekstas": ...}`), as in 2016 Seimo.
-- `turto-ir-pajamu-deklaracijos` keeps the seven canonical keys, but the income
-  rows are GPM308 fields and name their own field numbers, so the aliases are
-  local to this module.
+- `turto-ir-pajamu-deklaracijos` carries the shared value keys; the income
+  rows are GPM308 fields and name their own field numbers, which the shared
+  label-prefix match reads like every other wording.
 - `privaciu-interesu-deklaracija` hoists the declarant and keys each declaration
   block by its section id (`id001j`, `id001s`, …), as in 2019 EP.
 - `kita` is empty for every candidate in this election.
@@ -1137,7 +1230,7 @@ Election-specific notes:
 
 - `candidateName` drops the `(V)` winner suffix the listing appends;
   `profilis.pastaba` holds the elected note, one per constituency.
-- `turto-ir-pajamu-deklaracijos` keeps the seven canonical keys, but the income
+- `turto-ir-pajamu-deklaracijos` carries the shared value keys; the income
   rows use the modern labels rather than the GPM308 field-number wording of the
   2016 and April 2017 pages, despite the section heading still naming GPM308.
 - The 2019 election includes a candidate nominated by two parties; both appear
@@ -1178,10 +1271,11 @@ repository — so several record shapes are this era's own:
   yet. `kita-apie-save` (Q21) is
   present but answered by a minority. A bare `","` in `pagrindine-darboviete`
   is the template's empty workplace/position join and normalizes to null.
-- `turto-ir-pajamu-deklaracijos` keeps the seven canonical keys **but the
+- `turto-ir-pajamu-deklaracijos` carries the shared value keys **but the
   amounts are litas, not euros**. Two extra keys make that explicit:
   `valiuta` (always `"Lt"`) and `pastaba` (the page's own note naming the
-  declaration period, e.g. 2013 for this election).
+  declaration period, e.g. 2013 for this election, which is also where
+  `deklaracijos-metai` comes from on these pages).
 - `privaciu-interesu-deklaracija` is form-id keyed and — unlike the 2016-era
   Seimo family — retains the spouse block
   (`deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris`).
@@ -1442,8 +1536,25 @@ mayor was elected directly, so:
   pajamų mokesčio 11613.00 Lt", then the S33, S15, S0 and S variants) —
   the candidate filed one of the five and the rest read zero, so the sum
   is the declared income; all five at zero is a declared zero, not a
-  missing declaration. `privaciu-interesu-deklaracija` is the
+  missing declaration. Which of the five carried the figure is in
+  `pajamos-pagal-forma`. On 531 of those sentences the **tax** figure is
+  simply absent ("Gauta 4200.00 Lt , išskaičiuota pajamų mokesčio Lt"); the
+  income is read and the tax normalizes to null, where requiring both used to
+  refuse the sentence and lose 522 records' declared income (issue #98). `privaciu-interesu-deklaracija` is the
   roman-numbered record-table form of the 2007–2009 section above.
+- **This election's pages publish up to two asset declarations, one of which
+  can be the spouse's.** The headings are `Gyventojo turto deklaracija`
+  (9,664 records), `Šeimos turto deklaracija` (3,672) and `Sutuoktinio turto
+  deklaracija` (352), and 56 records publish none. The value keys take the
+  candidate's own where the page publishes one, the family's where it
+  publishes that instead, and never the spouse's; `deklaracijos-apimtis` says
+  which, `sutuoktinio` carries the spouse's five figures and `deklaracijos`
+  lists every declaration the page printed. Until issue #98 the last section
+  on the page won, so on **243 records — 28 of which publish nothing but the
+  spouse's declaration** — the corpus reported a spouse's assets as the
+  candidate's. Sixteen records also repeat a section verbatim; a repeat is one
+  extract rendered twice and is read once, which had been double-counting
+  thirteen candidates' declared income.
 
 ## Appendix: Seimas archive (`1996-spalio-20-seimo`, `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`, `1998-kovo-22-seimo-pakartotiniai`, `1998-lapkricio-15-seimo-pakartotiniai`, `1999-kovo-21-seimo-pakartotiniai`)
 
@@ -1891,7 +2002,7 @@ KANDIDATAS Į EUROPOS PARLAMENTĄ, IŠKELTAS …") before the prose;
 
 ### `turto-ir-pajamu-deklaracijos`
 
-The corpus's seven amount keys in litas (`valiuta: "Lt"`, `pastaba` null —
+The corpus's amount keys in litas (`valiuta: "Lt"`, `pastaba` null —
 the page has no note paragraph), read from the two extracts of the
 declarations page:
 
@@ -1899,7 +2010,10 @@ declarations page:
   DEKLARACIJA", 144 records) or the **individual** form ("METINĖ
   GYVENTOJO TURTO DEKLARACIJA", 97), sections I–V with one total each —
   `privalomas-registruoti-turtas` … `gautos-paskolos`. A "-" total is
-  null (nothing declared under that section), never zero.
+  null (nothing declared under that section), never zero. Which of the two
+  forms it is used to be readable only from `israsai.turto-deklaracija.
+  pavadinimas`; `deklaracijos-apimtis` now states it as `seimos` or
+  `gyventojo` (issue #98), and no record of this election publishes both.
 - The income extract prints one income/tax pair for each of the five
   FR0462 form variants VRK knew of (FR0462, S33, S15, S0, S); the
   candidate filed one, occasionally two or three (Platelis: FR0462, S33
@@ -2215,7 +2329,9 @@ as do `pinigines-lesos-laikotarpio-pradzioje`/`-pabaigoje` and
 `bendros-pinigines-lesos-banke-laikotarpio-pradzioje`/`-pabaigoje`.
 `pinigines-lesos` is the end-of-period figure of item 8.
 
-Three keys are this election's own, beside `valiuta: "Lt"`:
+Three keys are this election's own, beside `valiuta: "Lt"` and the
+`deklaracijos-apimtis` every era carries (`gyventojo` on 18 records,
+`seimos` on 9):
 
 - `forma` — the form the page prints. Two are in use: "Lietuvos
   Respublikos gyventojo turto ir pajamų deklaracija" (18 records, items
@@ -2223,7 +2339,9 @@ Three keys are this election's own, beside `valiuta: "Lt"`:
   turto ir pajamų deklaracija" (9 records, items 3-11, no joint-accounts
   item, every prompt in the plural). `bendros-pinigines-lesos-banke-*`
   is null on all 27 either way — absent on the nine, printed as "-" on
-  the eighteen.
+  the eighteen. `deklaracijos-forma` is null here and everywhere before
+  2007: it carries the numbered income-tax form (GPM302 and later), which
+  these pages predate.
 - `israsa-isdave` — the issuing tax office, as 2004 keys it.
 - `isdavimo-data` — the page's "Išdavimo data", ISO.
 
@@ -2511,6 +2629,15 @@ variant's `bendros-pinigines-lesos-banke-laikotarpio-pradzioje`/
 11-item pages), `grazintos-paskolos` and
 `pasiskolintos-ir-dovanotos-lesos`.
 
+`deklaracijos-apimtis` is `gyventojo` on 10,135 of the 10,138 records and
+null on the three whose page published an empty table. Unlike 2003 and 2004
+this election has no family form: the heading is not in `rawData`, so the
+scope is read from the numbered items, each addressed to "Deklaruotojo" on
+the individual form and "Deklaruotojų" on the family one, and no record uses
+the plural. `deklaracijos-forma` and `deklaracijos-metai` are not carried
+here — these pages predate the numbered income-tax forms and name no tax
+year.
+
 ## Appendix: 2007–2014 national elections (`2007-spalio-7-seimo-dzukija`, `2008-seimo`, `2009-prezidento`, `2009-ep`, `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai`, `2011-vasario-13-seimo-marijampole`, `2012-seimo`, `2013-kovo-3-seimo-birzai-zarasai-ukmerge`, `2014-prezidento`, `2014-ep`)
 
 All ten are the 2015-era static layout described in the 2015 Seimo
@@ -2699,7 +2826,8 @@ every row. Unique to 2009.
 
 ### Declarations
 
-`turto-ir-pajamu-deklaracijos` keeps the seven keys plus `valiuta: "Lt"`.
+`turto-ir-pajamu-deklaracijos` carries the shared value keys plus
+`valiuta: "Lt"`.
 `pastaba` names the period on the 2012 and 2013 pages ("nuo 2011-01-01 iki
 2011-12-31" for both — the 2013 repeat reused the 2012 declarations) and is
 null on the 2009 and 2014 pages, whose note paragraph is empty. The income

@@ -5,6 +5,7 @@ from pathlib import Path
 
 from scraper.elections.meru_2017.anketa_parser import parse_anketa_sample
 from scraper.elections.meru_2017.candidate_samples import _campaign_url_variants
+from scraper.shared.deklaracijos import DECLARATION_BLOCK_KEYS
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -208,15 +209,7 @@ class Meru2017AnketaParserTests(unittest.TestCase):
         turtas = self.sabutis["normalized"]["turto-ir-pajamu-deklaracijos"]
         self.assertEqual(
             list(turtas.keys()),
-            [
-                "privalomas-registruoti-turtas",
-                "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
-                "pinigines-lesos",
-                "suteiktos-paskolos",
-                "gautos-paskolos",
-                "gautos-pajamos",
-                "sumoketas-pajamu-mokestis",
-            ],
+            list(DECLARATION_BLOCK_KEYS),
         )
         self.assertEqual(turtas["privalomas-registruoti-turtas"], 17900)
         self.assertEqual(turtas["gautos-pajamos"], 21571.64)
