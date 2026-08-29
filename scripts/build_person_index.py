@@ -56,6 +56,8 @@ from scraper.shared.deklaracijos import (  # noqa: E402
     INCOME_EMPLOYMENT,
     deklaruotos_pajamos,
 )
+from scraper.shared.parties import entry as party_entry  # noqa: E402
+from scraper.shared.parties import partija  # noqa: E402
 
 DATA_ROOT = Path("data")
 OUTPUT_PATH = Path("dashboard/people.json")
@@ -225,6 +227,12 @@ def build_index(data_root: Path, registry: list[dict] | None = None) -> dict:
                     "money": money_of(record),
                     "litas": declared_in_litas(record),
                     "employmentIncome": income_is_employment_only(record),
+                    # The canonical nominator (issue #82): the registry id the
+                    # record's raw nominator string joins to, None on the
+                    # presidential elections that publish none. The raw string
+                    # stays in the record file; the id is what groups one
+                    # party's candidacies across its dash glyphs and renames.
+                    "party": partija(record, election_id)["partija-id"],
                 }
             )
 
@@ -250,6 +258,7 @@ def build_index(data_root: Path, registry: list[dict] | None = None) -> dict:
                     **({"m": r["money"]} if any(v is not None for v in r["money"]) else {}),
                     **({"lt": True} if r["litas"] and any(v is not None for v in r["money"]) else {}),
                     **({"ds": True} if r["employmentIncome"] else {}),
+                    **({"p": r["party"]} if r["party"] else {}),
                 }
                 for r in records
             ],
@@ -261,9 +270,21 @@ def build_index(data_root: Path, registry: list[dict] | None = None) -> dict:
     # dashboard reads its labels and chronology from this list and nothing
     # else. An unregistered directory keeps its raw id as its own label, and
     # is reported so it gets a registry entry rather than shipping as a slug.
+    # The registry rows for every party id the index actually uses, so the
+    # dashboard can label a candidacy's "p" without carrying scraper/parties.json.
+    used_party_ids = sorted({e["p"] for p in entries for e in p["e"] if "p" in e})
+    parties = {}
+    for pid in used_party_ids:
+        data = party_entry(pid)
+        parties[pid] = {
+            "n": data.get("shortName") or data["name"],
+            "t": data["type"],
+        }
+
     return {
         "elections": [e for e in registry if e["id"] in seen_elections],
         "unregisteredElections": sorted(seen_elections - set(order)),
+        "parties": parties,
         "stats": {
             "records": total,
             "persons": len(entries),
@@ -289,6 +310,7 @@ def main() -> int:
     print(f"distinct persons:         {stats['persons']}")
     print(f"in multiple elections:    {stats['personsInMultipleElections']}")
     print(f"records w/o birth date:   {stats['recordsWithoutBirthDate']} (grouped by name alone)")
+    print(f"nominators used:          {len(index['parties'])} registry entries")
     print(f"elections:                {len(index['elections'])} of {len(load_registry())} registered")
     print(f"wrote {OUTPUT_PATH} ({OUTPUT_PATH.stat().st_size // 1024} KB)")
     unregistered = index["unregisteredElections"]

@@ -2184,11 +2184,38 @@ python scripts/backfill_value_hygiene.py --election 2019-rugsejo-8-seimo
 Idempotent, and `tests/test_backfill_value_hygiene.py` pins that a record the
 parser just wrote is a fixed point of it.
 
+## The nominator gate (`scripts/nominator_report.py`)
+
+Party affiliation reaches a consumer through one resolver
+(`scraper/shared/nominator.py`, walking the ordered per-election path lists
+`docs/concept-map.json` declares under `iskele`) and one registry
+(`scraper/parties.json`, matched by `scraper/shared/parties.py`). This script
+keeps both true against the corpus as it moves (issue #82): it resolves every
+record's nominator, joins it to the registry, and reports any record that
+resolves null on a mapped election, any resolved string no entry claims, and
+any form `docs/nominator-forms.tsv` does not know.
+
+```bash
+python scripts/nominator_report.py                  # measure and check, exit 1 on a finding
+python scripts/nominator_report.py 2024-seimo       # one election
+python scripts/nominator_report.py --update         # rewrite the forms table and the
+                                                    # registry's unmatched block
+```
+
+`--update` is the deliberate half of the loop: after a scrape introduces a new
+surface form, it lands in `docs/nominator-forms.tsv` and — if no registry entry
+claims it — in the registry's `unmatched` block, which
+`tests/test_party_registry.py` asserts is empty. Classifying the form (an alias
+of an existing entry, or a new entry) is what turns the suite green again. The
+full per-election table goes to `data/nominator-report.tsv` on every run; the
+whole corpus takes about half a minute.
+
 ## Helpful Checks
 
 ```bash
 python -m scraper --help
 python -m scraper parse-anketa-samples --help
 python scripts/reparse_diff.py          # the corpus still matches the parsers
+python scripts/nominator_report.py      # every record still resolves and joins a nominator
 pytest tests/
 ```

@@ -68,7 +68,7 @@ from an empty answer.
 `parser-gap` is the word the `2020-seimo` cell would have needed. That it is
 unused today is a claim this file makes and the run checks.
 
-## Two resolution rules a naive walker gets wrong
+## Three resolution rules a naive walker gets wrong
 
 * Concept paths are relative to the record's `normalized` section, **except**
   the ones naming a section of the record itself. `kandidatavimas` is in both
@@ -76,9 +76,15 @@ unused today is a claim this file makes and the run checks.
   candidacy to the record root, and the two 1997 municipal archive elections
   leave it inside `normalized`. Walking only one of them reports four
   100 %-populated cells as zeros.
-* A concept's path for an election can be a **list** of paths — the municipal
-  elections that ask the nominator once per seat. The cell resolves on the
-  first alternative that is filled.
+* A concept's path for an election can be a **list** of paths — an ordered
+  resolution: the cell resolves on the first alternative that is filled. The
+  `iskele` concept leans on this hardest: its lists are the per-election
+  resolution order `scraper/shared/nominator.py` walks for the value
+  (issue #82), so the coverage gate and the resolver measure the same thing.
+* A **list met mid-path fans out** over its entries, first filled entry wins —
+  the 1996–1999 Seimas archive family's `kandidatavimas` is a list of
+  candidacies, and its `iskele` lives inside the entries. A list in leaf
+  position is a value, not a fan-out.
 
 "Filled" is not truthiness. `privalomas-registruoti-turtas` is `0` for a
 candidate who registered no property, and that zero is the declaration. Numbers

@@ -229,11 +229,18 @@ The two era groups:
 The nominator's five key names, all under `profilis.kita`: `iskele` (Seimo
 family), `iskele-i-tarybos-narius-merus` (2017/2019/2021 municipal),
 `iskele-i-savivaldybes-merus` and `iskele-i-tarybos-narius-ir-merus` (2023+
-municipal, split by role), `kandidata-iskele` (`2024-prezidento`). It is
-absent from `2019-ep`, `2019-prezidento` and `2024-ep`, appears only on
-mayoral candidacies in the municipal generals, and only on a subset of
-records in `2020-seimo` and `2024-seimo` (758/1754 and 699/1740).
-[concept-map.json](concept-map.json) has the per-election resolution.
+municipal, split by role), `kandidata-iskele` (`2024-prezidento`). The
+profile card alone is not enough: it names no nominator on `2019-ep` and
+`2024-ep` (their list is under `sarasas`), only mayoral candidacies carry it
+in the municipal generals (a council candidate's list is the
+`kandidatavimas.tarybosNarys.partyList` join), and only constituency
+candidacies in `2016-seimo`, `2020-seimo` and `2024-seimo`. **Do not walk
+these paths by hand** — resolve through
+`scraper/shared/nominator.py::resolve_nominator(record)`, which walks the
+ordered per-election path lists [concept-map.json](concept-map.json)
+declares under `iskele` and returns a non-null string for every record of
+every election but the five presidential ones whose candidates self-nominate
+by law (see the next section for the canonical party join).
 
 ## Joining people across elections
 
@@ -251,6 +258,54 @@ collides for zero same-election record pairs, and 305 names are shared by
 distinct people that name-only grouping would merge wrongly. Known
 limitation: a person who changes surname between elections (marriage)
 appears as two persons.
+
+## Joining parties across elections
+
+There is **no cross-election party id** in the corpus either — the
+`partyList.id` of the two municipal generals is a per-municipality list id,
+and no `rorgId` in a nominator URL is shared between two elections — and
+grouping by the raw string silently splits every major party: one party's
+16,268 candidacies split three ways on nothing but the dash glyph between
+the words, and the 2000/2002 profile cards print the same list in the
+genitive (issue #82).
+
+Party identity is therefore *created*, by
+[`scraper/parties.json`](../scraper/parties.json): one entry per
+organisation — parties, coalitions (with member party ids under `nariai`
+where the coalition's own name states them), electoral committees,
+self-nomination — with every one of the 427 measured nominator surface forms
+an exact alias of exactly one entry. The registry, not the corpus, carries
+renames (one entry, the old name an alias: LVŽS spans its 2001 and 2006
+names) and mergers (a new entry with `predecessors`: `ts-lkd` points at
+`tevynes-sajunga` and `lkd`, so pre-2008 candidacies group under the
+predecessor rather than anachronistically under the merged party).
+
+The join is `scraper/shared/parties.py`:
+
+```python
+from scraper.shared.parties import partija
+partija(record)
+# {"partija-id": "ts-lkd",
+#  "partija-vardas-raw": "Tėvynės sąjunga-Lietuvos krikščionys demokratai",
+#  "tipas": "partija"}
+```
+
+Matching is exact alias → punctuation/case fold → unmatched (`None`), never
+a guess; `scripts/nominator_report.py` re-measures the corpus and lands any
+new surface form in the registry's `unmatched` block, which
+`tests/test_party_registry.py` asserts is empty. The measured forms are
+checked in as [nominator-forms.tsv](nominator-forms.tsv). The records are
+never rewritten — `partija-id` is derived, `partija-vardas-raw` is exactly
+what the record says.
+
+Two different concepts wear the party's name; do not mix them. The
+**nominator** (this section) is who put the candidate on the ballot — VRK's
+controlled vocabulary, 99.8 % coverage. **Membership**
+(`anketa.politine-organizacija`, `anketa.narystes-politinese-organizacijose`)
+is what the candidate *typed* about their own party history — thousands of
+free-prose singletons, with "Nesu"/"Nepartinis" sitting in the same field as
+party names. Only the 2024-on structured membership table is machine-usable,
+and none of it is canonicalised by the registry.
 
 ## Traps
 

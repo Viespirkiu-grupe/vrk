@@ -124,14 +124,26 @@ def is_filled(value: Any) -> bool:
 
 
 def _walk(root: Any, segments: list[str]) -> tuple[bool, bool]:
-    node = root
-    for segment in segments[:-1]:
-        if not isinstance(node, dict) or segment not in node:
-            return False, False
-        node = node[segment]
-    if not isinstance(node, dict) or segments[-1] not in node:
+    if not segments:
+        return True, is_filled(root)
+    # A list met mid-path fans out over its entries: the 1996-1999 Seimas
+    # archive family's `kandidatavimas` is a list of candidacies (a candidate
+    # could stand in a constituency and on a party list at once), and `iskele`
+    # resolves on the first entry that carries it. Same rule as
+    # scraper/shared/nominator.py, which walks these paths for the value. A
+    # list in leaf position is a value, handled by `is_filled` above.
+    if isinstance(root, list):
+        present = filled = False
+        for entry in root:
+            entry_present, entry_filled = _walk(entry, segments)
+            present = present or entry_present
+            filled = filled or entry_filled
+            if filled:
+                break
+        return present, filled
+    if not isinstance(root, dict) or segments[0] not in root:
         return False, False
-    return True, is_filled(node[segments[-1]])
+    return _walk(root[segments[0]], segments[1:])
 
 
 def resolve(record: dict[str, Any], path: str) -> tuple[bool, bool]:
