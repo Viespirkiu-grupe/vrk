@@ -240,6 +240,18 @@ would have made a null mean two different things depending on the election.
   which is exactly how two of them reached the corpus unmeasured (issue #85);
   `tests/test_field_coverage.py` now fails when a mapped cell has no measured
   fill rate, so this and `docs/coverage-baseline.tsv` move together.
+- **The nominator's resolution order and the party registry.** The
+  `iskele` concept's entry in `docs/concept-map.json` is the ordered path
+  list `scraper/shared/nominator.py` resolves the nominator through — a
+  single path where one covers every record, a list where it does not
+  (issue #82). Every non-presidential election must resolve non-null on
+  every record (`tests/test_corpus_nominators.py`), and every surface form
+  the election introduces must be claimed by an entry in
+  `scraper/parties.json` — `python scripts/nominator_report.py --update`
+  writes the new forms into `docs/nominator-forms.tsv` and any unclaimed
+  ones into the registry's `unmatched` block, which
+  `tests/test_party_registry.py` keeps empty: add each as an alias of an
+  existing entry (a rename or glyph variant) or as a new entry.
 - **`scraper/elections.json`** — add the election: id, first-round date,
   official Lithuanian name, short label for chart axes. This is what names it
   in the dashboard and places it in the cross-election chronology. Skipping it
@@ -273,6 +285,7 @@ reviewer cannot see a field that silently stopped arriving; these can.
 
 ```bash
 python scripts/field_coverage.py --update-baseline   # then paste your election's rows
+python scripts/nominator_report.py --update          # forms table + registry unmatched
 python -m scraper anomalies-report <election-id>
 python scripts/reparse_diff.py
 ```

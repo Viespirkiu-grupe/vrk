@@ -1,0 +1,2185 @@
+{
+ "description": "Canonical registry of every nominator the corpus records: parties, coalitions, electoral committees and self-nomination (issue #82). Bootstrapped 2026-08-30 from the 427 distinct nominator/party-list surface forms measured over all 113,073 records; every measured form is an exact alias of exactly one entry. Matching is exact alias -> punctuation/case-folded alias -> unmatched (reported, never guessed) -- scraper/shared/parties.py. Renames stay one entry (the old name is an alias); mergers get a new entry with the merged organisations as predecessors. Coalitions carry their member party ids as `nariai` only where the coalition's own name enumerates them or the line-up is unambiguous; an absent `nariai` means not recovered, never empty. A line naming a party plus 'issikele pats' is the party's alias: the line names it. `unmatched` is the escape hatch for future scrapes -- a form that matches no entry lands there via scripts/nominator_report.py, and tests/test_party_registry.py asserts it is empty.",
+ "entries": {
+  "birzu-atgimimas": {
+   "name": "Biržų atgimimas",
+   "type": "partija",
+   "aliases": []
+  },
+  "darbo-partija": {
+   "name": "Darbo partija",
+   "type": "partija",
+   "shortName": "DP",
+   "since": "2003",
+   "predecessors": [
+    "naujoji-sajunga"
+   ],
+   "note": "2011 m. prisijungė Naujoji sąjunga (socialliberalai).",
+   "aliases": []
+  },
+  "demokratine-darbo-ir-vienybes-partija": {
+   "name": "Demokratinė darbo ir vienybės partija",
+   "type": "partija",
+   "aliases": []
+  },
+  "drasos-kelias": {
+   "name": "„Drąsos kelias“ politinė partija",
+   "type": "partija",
+   "since": "2012",
+   "aliases": []
+  },
+  "emigrantu-partija": {
+   "name": "Emigrantų partija",
+   "type": "partija",
+   "aliases": []
+  },
+  "fronto-partija": {
+   "name": "\"Fronto\" partija",
+   "type": "partija",
+   "note": "Algirdo Paleckio partija (2008-2009); 2009 m. susijungė į Socialistinį liaudies Frontą.",
+   "aliases": [
+    "\"FRONTO\" PARTIJA"
+   ]
+  },
+  "jaunoji-lietuva": {
+   "name": "Partija „Jaunoji Lietuva“",
+   "type": "partija",
+   "since": "1994",
+   "note": "Viena organizacija, kelis kartus keitusi pavadinimą (1996-2023).",
+   "aliases": [
+    "\"Jaunosios Lietuvos\" ir naujųjų tautininkų sąjunga",
+    "\"Jaunosios Lietuvos\", naujųjų tautininkų ir politinių kalinių sąjunga",
+    "Lietuvių nacionalinė partija - \"Jaunoji Lietuva\"",
+    "Lietuvių nacionalinės partijos ir \"Jaunosios Lietuvos\" sąjunga",
+    "Lietuvių nacionalinės partijos ir \"Jaunosios Lietuvos\" sąjungos",
+    "Partija \"Jaunoji Lietuva\""
+   ]
+  },
+  "kartu-solidarumo-sajunga": {
+   "name": "Kartų solidarumo sąjunga – Santalka Lietuvai",
+   "type": "partija",
+   "aliases": [
+    "KARTŲ SOLIDARUMO SĄJUNGA - SANTALKA LIETUVAI"
+   ]
+  },
+  "kovotoju-uz-lietuva-sajunga": {
+   "name": "Kovotojų už Lietuvą sąjunga",
+   "type": "partija",
+   "aliases": []
+  },
+  "krikscioniu-demokratu-sajunga": {
+   "name": "Krikščionių demokratų sąjunga",
+   "type": "partija",
+   "note": "2001 m. susijungė su LKDP į Lietuvos krikščionis demokratus.",
+   "aliases": [
+    "Krikščionių demokratų sąjungos"
+   ]
+  },
+  "krikscioniu-konservatoriu-socialine-sajunga": {
+   "name": "Krikščionių konservatorių socialinė sąjunga",
+   "type": "partija",
+   "aliases": []
+  },
+  "krikscioniu-partija": {
+   "name": "Krikščionių partija",
+   "type": "partija",
+   "aliases": []
+  },
+  "krikscioniu-sajunga": {
+   "name": "Krikščionių sąjunga",
+   "type": "partija",
+   "since": "2020",
+   "aliases": []
+  },
+  "laisve-ir-teisingumas": {
+   "name": "Partija „Laisvė ir teisingumas“",
+   "type": "partija",
+   "since": "2020",
+   "predecessors": [
+    "tvarka-ir-teisingumas",
+    "lietuvos-laisves-sajunga-liberalai"
+   ],
+   "aliases": [
+    "Partija \"Laisvė ir teisingumas\""
+   ]
+  },
+  "laisves-partija": {
+   "name": "Laisvės partija",
+   "type": "partija",
+   "since": "2019",
+   "aliases": []
+  },
+  "lddp": {
+   "name": "Lietuvos demokratinė darbo partija",
+   "type": "partija",
+   "shortName": "LDDP",
+   "note": "2001 m. susijungė su Lietuvos socialdemokratų partija.",
+   "aliases": [
+    "Lietuvos demokratinės darbo partijos"
+   ]
+  },
+  "leiboristu-partija": {
+   "name": "Leiboristų partija",
+   "type": "partija",
+   "aliases": []
+  },
+  "liberalu-ir-centro-sajunga": {
+   "name": "Liberalų ir centro sąjunga",
+   "type": "partija",
+   "shortName": "LiCS",
+   "since": "2003",
+   "predecessors": [
+    "lietuvos-liberalu-sajunga",
+    "lietuvos-centro-sajunga",
+    "moderniuju-krikscioniu-demokratu-sajunga"
+   ],
+   "aliases": []
+  },
+  "lietuva-visu": {
+   "name": "Partija LIETUVA – VISŲ",
+   "type": "partija",
+   "aliases": []
+  },
+  "lietuviu-tautininku-ir-respublikonu-sajunga": {
+   "name": "Lietuvių tautininkų ir respublikonų sąjunga",
+   "type": "partija",
+   "aliases": []
+  },
+  "lietuviu-tautininku-sajunga": {
+   "name": "Lietuvių tautininkų sąjunga",
+   "type": "partija",
+   "aliases": [
+    "Lietuvių tautininkų sąjungos"
+   ]
+  },
+  "lietuvos-centro-partija": {
+   "name": "Lietuvos centro partija",
+   "type": "partija",
+   "since": "2003",
+   "note": "2020 m. tapo partija „Centro partija – tautininkai“ (žr. tautos-ir-teisingumo-sajunga).",
+   "aliases": [
+    "Lietuvos centro partija, išsikėlė pati",
+    "Lietuvos centro partija, išsikėlė pats"
+   ]
+  },
+  "lietuvos-centro-sajunga": {
+   "name": "Lietuvos centro sąjunga",
+   "type": "partija",
+   "note": "2003 m. susijungė į Liberalų ir centro sąjungą.",
+   "aliases": [
+    "Lietuvos centro sąjungos"
+   ]
+  },
+  "lietuvos-demokratu-partija": {
+   "name": "Lietuvos demokratų partija",
+   "type": "partija",
+   "aliases": [
+    "Lietuvos demokratų partijos"
+   ]
+  },
+  "lietuvos-desiniuju-sajunga": {
+   "name": "Lietuvos dešiniųjų sąjunga",
+   "type": "partija",
+   "aliases": []
+  },
+  "lietuvos-gyvenimo-logikos-partija": {
+   "name": "Lietuvos gyvenimo logikos partija",
+   "type": "partija",
+   "aliases": []
+  },
+  "lietuvos-kelias": {
+   "name": "Tautinė partija Lietuvos kelias",
+   "type": "partija",
+   "aliases": [
+    "Tautinė partija LIETUVOS KELIAS"
+   ]
+  },
+  "lietuvos-krikscioniskosios-demokratijos-partija": {
+   "name": "Lietuvos krikščioniškosios demokratijos partija",
+   "type": "partija",
+   "aliases": []
+  },
+  "lietuvos-laisves-lyga": {
+   "name": "Lietuvos laisvės lyga",
+   "type": "partija",
+   "aliases": [
+    "Lietuvos laisvės lygos"
+   ]
+  },
+  "lietuvos-laisves-sajunga": {
+   "name": "Lietuvos laisvės sąjunga",
+   "type": "partija",
+   "note": "1990-ųjų partija (V. Šustauskas). Ne ta pati organizacija kaip 2014 m. įkurta Lietuvos laisvės sąjunga (liberalai).",
+   "aliases": [
+    "Lietuvos laisvės sąjungos"
+   ]
+  },
+  "lietuvos-laisves-sajunga-liberalai": {
+   "name": "Lietuvos laisvės sąjunga (liberalai)",
+   "type": "partija",
+   "since": "2014",
+   "predecessors": [
+    "liberalu-ir-centro-sajunga",
+    "sajunga-taip"
+   ],
+   "note": "2020 m. susijungė į partiją „Laisvė ir teisingumas“.",
+   "aliases": [
+    "Lietuvos laisvės sąjunga (liberalai), išsikėlė pats"
+   ]
+  },
+  "lietuvos-lenku-liaudies-partija": {
+   "name": "Lietuvos lenkų liaudies partija",
+   "type": "partija",
+   "aliases": []
+  },
+  "lietuvos-liaudies-partija": {
+   "name": "Lietuvos liaudies partija",
+   "type": "partija",
+   "note": "Vienas pavadinimas, dvi registracijos: 1990-ųjų partija (1996-1997) ir 2009 m. K. Prunskienės įkurtoji (2011-2024). Registras jų atskirti negali.",
+   "aliases": []
+  },
+  "lietuvos-liaudies-sajunga": {
+   "name": "Lietuvos liaudies sąjunga \"Už teisingą Lietuvą\"",
+   "type": "partija",
+   "aliases": []
+  },
+  "lietuvos-liberalu-sajunga": {
+   "name": "Lietuvos liberalų sąjunga",
+   "type": "partija",
+   "shortName": "LLS",
+   "note": "2003 m. susijungė į Liberalų ir centro sąjungą.",
+   "aliases": [
+    "Lietuvos liberalų sąjungos"
+   ]
+  },
+  "lietuvos-nacionaldemokratu-partija": {
+   "name": "Lietuvos nacionaldemokratų partija",
+   "type": "partija",
+   "aliases": [
+    "Lietuvos nacionaldemokratų partijos"
+   ]
+  },
+  "lietuvos-pensininku-partija": {
+   "name": "Lietuvos pensininkų partija",
+   "type": "partija",
+   "aliases": []
+  },
+  "lietuvos-pilieciu-aljansas": {
+   "name": "Lietuvos piliečių aljansas",
+   "type": "partija",
+   "aliases": [
+    "Lietuvos piliečių aljanso"
+   ]
+  },
+  "lietuvos-reformu-partija": {
+   "name": "Lietuvos reformų partija",
+   "type": "partija",
+   "aliases": []
+  },
+  "lietuvos-regionu-partija": {
+   "name": "Lietuvos regionų partija",
+   "type": "partija",
+   "since": "2018",
+   "note": "Įkurta kaip Lietuvos socialdemokratų darbo partija (atskilus nuo LSDP); 2021 m. persivadino.",
+   "aliases": [
+    "Lietuvos socialdemokratų darbo partija"
+   ]
+  },
+  "lietuvos-rusu-sajunga": {
+   "name": "Lietuvos rusų sąjunga",
+   "type": "partija",
+   "aliases": [
+    "Lietuvos rusų sąjungos"
+   ]
+  },
+  "lietuvos-sarasas": {
+   "name": "Politinė partija „Lietuvos sąrašas“",
+   "type": "partija",
+   "aliases": [
+    "Politinė partija „Lietuvos sąrašas“, išsikėlė pats"
+   ]
+  },
+  "lietuvos-socialdemokratu-sajunga": {
+   "name": "Lietuvos socialdemokratų sąjunga",
+   "type": "partija",
+   "aliases": []
+  },
+  "lietuvos-socialinio-teisingumo-sajunga": {
+   "name": "Lietuvos socialinio teisingumo sąjunga",
+   "type": "partija",
+   "aliases": []
+  },
+  "lietuvos-socialistu-partija": {
+   "name": "Lietuvos socialistų partija",
+   "type": "partija",
+   "note": "2009 m. susijungė į Socialistinį liaudies Frontą.",
+   "aliases": []
+  },
+  "lietuvos-teisingumo-partija": {
+   "name": "Lietuvos teisingumo partija",
+   "type": "partija",
+   "aliases": [
+    "Lietuvos teisingumo partijos"
+   ]
+  },
+  "lietuvos-ukio-partija": {
+   "name": "Lietuvos ūkio partija",
+   "type": "partija",
+   "aliases": [
+    "Lietuvos ūkio partijos"
+   ]
+  },
+  "lietuvos-valstieciu-partija": {
+   "name": "Lietuvos valstiečių partija",
+   "type": "partija",
+   "note": "2001 m. susijungė į Valstiečių ir Naujosios demokratijos partijų sąjungą.",
+   "aliases": [
+    "Lietuvos valstiečių partijos"
+   ]
+  },
+  "lietuvos-zaliuju-partija": {
+   "name": "Lietuvos žaliųjų partija",
+   "type": "partija",
+   "shortName": "LŽP",
+   "aliases": []
+  },
+  "lietuvos-zaliuju-sajudis": {
+   "name": "Politinė partija „Lietuvos žaliųjų sąjūdis“",
+   "type": "partija",
+   "note": "Ne tas pats kaip Lietuvos žaliųjų partija.",
+   "aliases": []
+  },
+  "lietuvos-zmoniu-partija": {
+   "name": "Lietuvos žmonių partija",
+   "type": "partija",
+   "aliases": []
+  },
+  "lkd": {
+   "name": "Lietuvos krikščionys demokratai",
+   "type": "partija",
+   "shortName": "LKD",
+   "since": "2001",
+   "predecessors": [
+    "lkdp",
+    "krikscioniu-demokratu-sajunga"
+   ],
+   "note": "2008 m. susijungė į Tėvynės sąjungą – Lietuvos krikščionis demokratus.",
+   "aliases": []
+  },
+  "lkdp": {
+   "name": "Lietuvos krikščionių demokratų partija",
+   "type": "partija",
+   "shortName": "LKDP",
+   "note": "2001 m. susijungė į Lietuvos krikščionis demokratus.",
+   "aliases": [
+    "Lietuvos krikščionių demokratų partijos"
+   ]
+  },
+  "llra-kss": {
+   "name": "Lietuvos lenkų rinkimų akcija – Krikščioniškų šeimų sąjunga",
+   "type": "partija",
+   "shortName": "LLRA-KŠS",
+   "since": "1994",
+   "note": "Iki 2016 m. vadinosi Lietuvos lenkų rinkimų akcija; pavadinimo keitimas, ne susijungimas.",
+   "aliases": [
+    "Lietuvos lenkų rinkimų akcija",
+    "Lietuvos lenkų rinkimų akcija - Krikščioniškų šeimų sąjunga",
+    "Lietuvos lenkų rinkimų akcija-Krikščioniškų šeimų sąjunga",
+    "Lietuvos lenkų rinkimų akcijos"
+   ]
+  },
+  "lpkts": {
+   "name": "Lietuvos politinių kalinių ir tremtinių sąjunga",
+   "type": "partija",
+   "shortName": "LPKTS",
+   "note": "2004 m. politinė veikla susijungė į Tėvynės sąjungą.",
+   "aliases": [
+    "Lietuvos politinių kalinių ir tremtinių sąjungos"
+   ]
+  },
+  "lrls": {
+   "name": "Lietuvos Respublikos liberalų sąjūdis",
+   "type": "partija",
+   "shortName": "LRLS",
+   "since": "2006",
+   "note": "Nuo 2022 m. oficialiai vadinasi Liberalų sąjūdis.",
+   "aliases": [
+    "Liberalų sąjūdis"
+   ]
+  },
+  "lsdp": {
+   "name": "Lietuvos socialdemokratų partija",
+   "type": "partija",
+   "shortName": "LSDP",
+   "since": "1989",
+   "predecessors": [
+    "lddp"
+   ],
+   "note": "2001 m. prisijungė Lietuvos demokratinė darbo partija.",
+   "aliases": [
+    "Lietuvos socialdemokratų partijos"
+   ]
+  },
+  "lvzs": {
+   "name": "Lietuvos valstiečių ir žaliųjų sąjunga",
+   "type": "partija",
+   "shortName": "LVŽS",
+   "since": "2001",
+   "predecessors": [
+    "lietuvos-valstieciu-partija",
+    "naujosios-demokratijos-partija"
+   ],
+   "note": "Įkurta 2001 m. kaip Valstiečių ir Naujosios demokratijos partijų sąjunga; nuo 2006 m. Lietuvos valstiečių liaudininkų sąjunga, nuo 2012 m. dabartinis pavadinimas.",
+   "aliases": [
+    "Lietuvos valstiečių ir žaliųjų sąjunga, išsikėlė pats",
+    "Lietuvos valstiečių liaudininkų sąjunga",
+    "Valstiečių ir Naujosios demokratijos partijų sąjunga"
+   ]
+  },
+  "moderniuju-krikscioniu-demokratu-sajunga": {
+   "name": "Moderniųjų krikščionių demokratų sąjunga",
+   "type": "partija",
+   "shortName": "MKDS",
+   "note": "2003 m. susijungė į Liberalų ir centro sąjungą.",
+   "aliases": []
+  },
+  "moletai-kartu": {
+   "name": "Molėtai kartu",
+   "type": "partija",
+   "predecessors": [
+    "komitetas-moletai-kartu"
+   ],
+   "note": "2023 m. įregistruota partija, tęsianti to paties pavadinimo rinkimų komiteto veiklą.",
+   "aliases": []
+  },
+  "nacionaline-centro-partija": {
+   "name": "Nacionalinė centro partija",
+   "type": "partija",
+   "aliases": []
+  },
+  "nacionalinis-susivienijimas": {
+   "name": "Nacionalinis susivienijimas",
+   "type": "partija",
+   "since": "2020",
+   "predecessors": [
+    "komitetas-vytautas-radzvilas-susigrazinkime-valstybe"
+   ],
+   "note": "Išaugo iš 2019 m. EP rinkimų komiteto „Vytautas Radžvilas: susigrąžinkime valstybę!“.",
+   "aliases": []
+  },
+  "naujoji-sajunga": {
+   "name": "Naujoji sąjunga (socialliberalai)",
+   "type": "partija",
+   "shortName": "NS",
+   "since": "1998",
+   "note": "2011 m. susijungė su Darbo partija.",
+   "aliases": [
+    "Naujosios sąjungos (socialliberalų)"
+   ]
+  },
+  "naujosios-demokratijos-partija": {
+   "name": "Naujosios demokratijos partija",
+   "type": "partija",
+   "since": "1995",
+   "note": "Įkurta 1995 m. kaip Lietuvos moterų partija (K. Prunskienė), nuo 1998 m. Naujoji demokratija/Moterų partija; 2001 m. susijungė į Valstiečių ir Naujosios demokratijos partijų sąjungą.",
+   "aliases": [
+    "Lietuvos moterų partija",
+    "Naujoji demokratija/ Moterų partija",
+    "Naujosios demokratijos/ Moterų partijos"
+   ]
+  },
+  "nemuno-ausra": {
+   "name": "Politinė partija „Nemuno Aušra“",
+   "type": "partija",
+   "shortName": "NA",
+   "since": "2023",
+   "aliases": [
+    "Politinė partija \"Nemuno Aušra\""
+   ]
+  },
+  "nepriklausomybes-partija": {
+   "name": "Nepriklausomybės partija",
+   "type": "partija",
+   "aliases": []
+  },
+  "nuosaikiuju-konservatoriu-sajunga": {
+   "name": "Nuosaikiųjų konservatorių sąjunga",
+   "type": "partija",
+   "aliases": []
+  },
+  "pensininku-partija": {
+   "name": "Pensininkų partija",
+   "type": "partija",
+   "note": "Vienintelis 2007 m. paminėjimas; ne tas pats kaip 2009 m. įkurta Lietuvos pensininkų partija.",
+   "aliases": []
+  },
+  "pilietines-demokratijos-partija": {
+   "name": "Pilietinės demokratijos partija",
+   "type": "partija",
+   "aliases": []
+  },
+  "profesiniu-sajungu-centras": {
+   "name": "Politinė partija „Profesinių sąjungų centras“",
+   "type": "partija",
+   "aliases": [
+    "Politinė partija \"Profesinių sąjungų centras\""
+   ]
+  },
+  "raseiniu-zemaitis": {
+   "name": "Raseinių žemaitis",
+   "type": "partija",
+   "aliases": []
+  },
+  "respublikonu-partija": {
+   "name": "Respublikonų partija",
+   "type": "partija",
+   "aliases": [
+    "Lietuvos Respublikonų partijos"
+   ]
+  },
+  "rinkimai-96": {
+   "name": "Nepartinių judėjimas \"Rinkimai 96\"",
+   "type": "partija",
+   "aliases": []
+  },
+  "rusu-aljansas": {
+   "name": "Politinė partija Rusų aljansas",
+   "type": "partija",
+   "aliases": [
+    "Politinė partija Rusų Aljansas"
+   ]
+  },
+  "sajunga-taip": {
+   "name": "Politinė partija „Sąjunga Taip“",
+   "type": "partija",
+   "note": "2014 m. susijungė į Lietuvos laisvės sąjungą (liberalus).",
+   "aliases": []
+  },
+  "siauliu-labui": {
+   "name": "„Šiaulių labui!“",
+   "type": "partija",
+   "aliases": []
+  },
+  "silales-centristai": {
+   "name": "Šilalės centristai",
+   "type": "partija",
+   "aliases": []
+  },
+  "smulkaus-ir-vidutinio-verslo-partija": {
+   "name": "Smulkaus ir vidutinio verslo partija",
+   "type": "partija",
+   "aliases": []
+  },
+  "socialdemokratija-2000": {
+   "name": "Lietuvos partija \"Socialdemokratija 2000\"",
+   "type": "partija",
+   "aliases": [
+    "Lietuvos partijos \"Socialdemokratija 2000\""
+   ]
+  },
+  "socialistinis-liaudies-frontas": {
+   "name": "Socialistinis liaudies Frontas",
+   "type": "partija",
+   "since": "2009",
+   "predecessors": [
+    "fronto-partija",
+    "lietuvos-socialistu-partija"
+   ],
+   "aliases": []
+  },
+  "stipri-utena": {
+   "name": "STIPRI UTENA",
+   "type": "partija",
+   "aliases": []
+  },
+  "tautininku-sajunga": {
+   "name": "Tautininkų sąjunga",
+   "type": "partija",
+   "note": "2020 m. susijungė į partiją „Centro partija – tautininkai“ (žr. tautos-ir-teisingumo-sajunga).",
+   "aliases": []
+  },
+  "tautos-ir-teisingumo-sajunga": {
+   "name": "Tautos ir teisingumo sąjunga (centristai, tautininkai)",
+   "type": "partija",
+   "since": "2020",
+   "predecessors": [
+    "lietuvos-centro-partija",
+    "tautininku-sajunga"
+   ],
+   "note": "2020 m. Lietuvos centro partijai susijungus su Tautininkų sąjunga; iki 2022 m. vadinosi „Centro partija – tautininkai“.",
+   "aliases": [
+    "Centro partija - tautininkai"
+   ]
+  },
+  "tautos-pazangos-partija": {
+   "name": "Tautos pažangos partija",
+   "type": "partija",
+   "aliases": [
+    "Tautos pažangos partijos"
+   ]
+  },
+  "tautos-prisikelimo-partija": {
+   "name": "Tautos prisikėlimo partija",
+   "type": "partija",
+   "aliases": []
+  },
+  "tautos-vienybes-sajunga": {
+   "name": "Tautos vienybės sąjunga",
+   "type": "partija",
+   "aliases": []
+  },
+  "tavo-balsas-uz-jurbarko-krasta": {
+   "name": "Tavo balsas už Jurbarko kraštą",
+   "type": "partija",
+   "aliases": []
+  },
+  "tevynes-liaudies-partija": {
+   "name": "Tėvynės liaudies partija",
+   "type": "partija",
+   "aliases": [
+    "Tėvynės liaudies partijos"
+   ]
+  },
+  "tevynes-sajunga": {
+   "name": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+   "type": "partija",
+   "shortName": "TS",
+   "since": "1993",
+   "predecessors": [
+    "lpkts"
+   ],
+   "note": "1993-2008; ilgasis 2004-2007 m. pavadinimas atsirado prisijungus politinių kalinių ir tremtinių bei krikščionių demokratų srovėms. 2008 m. susijungusi su LKD tapo TS-LKD.",
+   "aliases": [
+    "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+    "Tėvynės sąjungos (Lietuvos konservatorių)"
+   ]
+  },
+  "ts-lkd": {
+   "name": "Tėvynės sąjunga – Lietuvos krikščionys demokratai",
+   "type": "partija",
+   "shortName": "TS-LKD",
+   "since": "2008-05-17",
+   "predecessors": [
+    "tevynes-sajunga",
+    "lkd"
+   ],
+   "aliases": [
+    "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+    "Tėvynės sąjunga - Lietuvos krikščionys demokratai, išsikėlė pats",
+    "Tėvynės sąjunga – Lietuvos krikščionys demokratai; Išsikėlė pati",
+    "Tėvynės sąjunga – Lietuvos krikščionys demokratai; Išsikėlė pats",
+    "Tėvynės sąjunga-Lietuvos krikščionys demokratai"
+   ]
+  },
+  "tvarka-ir-teisingumas": {
+   "name": "Partija Tvarka ir teisingumas",
+   "type": "partija",
+   "shortName": "TT",
+   "since": "2002",
+   "note": "Įkurta kaip Liberalų demokratų partija; 2006 m. persivadino. 2020 m. susijungė į partiją „Laisvė ir teisingumas“.",
+   "aliases": [
+    "Liberalų demokratų partija",
+    "Partija Tvarka ir teisingumas (liberalai demokratai)",
+    "Partija Tvarka ir teisingumas, išsikėlė pats"
+   ]
+  },
+  "vardan-lietuvos": {
+   "name": "Demokratų sąjunga „Vardan Lietuvos“",
+   "type": "partija",
+   "shortName": "DSVL",
+   "since": "2022",
+   "aliases": [
+    "Demokratų sąjunga \"Vardan Lietuvos\"",
+    "Demokratų sąjunga „Vardan Lietuvos\""
+   ]
+  },
+  "vieningas-kaunas": {
+   "name": "Vieningas Kaunas",
+   "type": "partija",
+   "predecessors": [
+    "komitetas-vieningas-kaunas"
+   ],
+   "note": "2022 m. įregistruota partija, tęsianti to paties pavadinimo rinkimų komiteto veiklą.",
+   "aliases": []
+  },
+  "zemaiciu-partija": {
+   "name": "Žemaičių partija",
+   "type": "partija",
+   "aliases": []
+  },
+  "dp-ir-komitetas-permainu-laikas": {
+   "name": "Darbo partija, Visuomeninis rinkimų komitetas „Permainų laikas“",
+   "type": "koalicija",
+   "nariai": [
+    "darbo-partija",
+    "komitetas-permainu-laikas"
+   ],
+   "aliases": []
+  },
+  "dp-ir-lzp": {
+   "name": "Darbo partija, Lietuvos žaliųjų partija",
+   "type": "koalicija",
+   "nariai": [
+    "darbo-partija",
+    "lietuvos-zaliuju-partija"
+   ],
+   "aliases": []
+  },
+  "koalicija-a-brazausko-ir-a-paulausko-koalicija-uz-darba-lietuvai": {
+   "name": "A.Brazausko ir A.Paulausko koalicija \"Už darbą Lietuvai\"",
+   "type": "koalicija",
+   "nariai": [
+    "lsdp",
+    "naujoji-sajunga"
+   ],
+   "aliases": []
+  },
+  "koalicija-a-brazausko-socialdemokratine-koalicija": {
+   "name": "A.Brazausko socialdemokratinė koalicija",
+   "type": "koalicija",
+   "nariai": [
+    "lsdp",
+    "lddp",
+    "naujosios-demokratijos-partija",
+    "lietuvos-rusu-sajunga"
+   ],
+   "aliases": []
+  },
+  "koalicija-a-zuoko-ir-vilnieciu-koalicija-laimingas-vilnius": {
+   "name": "A. Zuoko ir vilniečių koalicija „Laimingas Vilnius“",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-a-zuoko-koalicija-uz-vilniu-kuriame-gera-visiems-liberalai-ir-modernieji-krikscionys-demokratai": {
+   "name": "A.Zuoko koalicija \"Už Vilnių, kuriame gera visiems\" Liberalai ir modernieji krikščionys demokratai",
+   "type": "koalicija",
+   "nariai": [
+    "lietuvos-liberalu-sajunga",
+    "moderniuju-krikscioniu-demokratu-sajunga"
+   ],
+   "aliases": []
+  },
+  "koalicija-antikorupcine-n-puteikio-ir-k-krivicko-koalicija-lietuvos-centro-partija-lietuvos-pensininku-partija": {
+   "name": "Antikorupcinė N. Puteikio ir K. Krivicko koalicija (Lietuvos centro partija, Lietuvos pensininkų partija)",
+   "type": "koalicija",
+   "nariai": [
+    "lietuvos-centro-partija",
+    "lietuvos-pensininku-partija"
+   ],
+   "aliases": []
+  },
+  "koalicija-arturo-zuoko-ir-vilniaus-koalicija": {
+   "name": "Artūro Zuoko ir Vilniaus koalicija",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-bendras-kelias-nepartiniu-kandidatu-tevynes-sajungos-ir-politiniu-kaliniu-ir-tremtiniu-sajungos-jungtinis-sarasas": {
+   "name": "Koalicija \"Bendras kelias\" - nepartinių kandidatų, Tėvynės sąjungos ir Politinių kalinių ir tremtinių sąjungos jungtinis sąrašas",
+   "type": "koalicija",
+   "nariai": [
+    "tevynes-sajunga",
+    "lpkts"
+   ],
+   "aliases": [
+    "Koalicijos \"Bendras kelias\" - nepartinių kandidatų, Tėvynės sąjungos ir Politinių kalinių ir tremtinių sąjungos jungtinis sąrašas"
+   ]
+  },
+  "koalicija-bendruomeniu-lyderiu-koalicija": {
+   "name": "Bendruomenių lyderių koalicija",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-centro-desines-koalicija": {
+   "name": "Centro dešinės koalicija",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-centro-desines-koalicija-tevynes-sajunga-lietuvos-krikscionys-demokratai-liberalu-sajudis-laisves-partija": {
+   "name": "Centro dešinės koalicija (Tėvynės sąjunga-Lietuvos krikščionys demokratai, Liberalų sąjūdis, Laisvės partija)",
+   "type": "koalicija",
+   "nariai": [
+    "ts-lkd",
+    "lrls",
+    "laisves-partija"
+   ],
+   "aliases": []
+  },
+  "koalicija-centro-desiniuju-koalicija": {
+   "name": "Centro dešiniųjų koalicija",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-centro-ir-tautininku-sajungu-koalicija-vidurio-kelias": {
+   "name": "Centro ir tautininkų sąjungų koalicija \"Vidurio kelias\"",
+   "type": "koalicija",
+   "nariai": [
+    "lietuvos-centro-sajunga",
+    "lietuviu-tautininku-sajunga"
+   ],
+   "aliases": []
+  },
+  "koalicija-cia-musu-namai": {
+   "name": "Koalicija \"Čia mūsų namai\"",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-darbo-partija-jaunimas": {
+   "name": "Koalicija Darbo partija + jaunimas",
+   "type": "koalicija",
+   "nariai": [
+    "darbo-partija"
+   ],
+   "aliases": []
+  },
+  "koalicija-g-vagnoriaus-koalicija": {
+   "name": "G.Vagnoriaus koalicija",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-geriausias-pasirinkimas-partija-laisve-ir-teisingumas-laisves-partija-liberalu-sajudis": {
+   "name": "Koalicija „Geriausias pasirinkimas“ (Partija „Laisvė ir teisingumas“, Laisvės partija, Liberalų sąjūdis)",
+   "type": "koalicija",
+   "nariai": [
+    "laisve-ir-teisingumas",
+    "laisves-partija",
+    "lrls"
+   ],
+   "aliases": []
+  },
+  "koalicija-jonu-koalicija": {
+   "name": "Jonų koalicija",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-kartu-uz-pazanga-vilniaus-rajone-tevynes-sajungos-lietuvos-krikscioniu-demokratu-ir-lietuvos-respublikos-liberalu-sajudzio-koalicija": {
+   "name": "Kartu - už pažangą Vilniaus rajone! Tėvynės sąjungos-Lietuvos krikščionių demokratų ir Lietuvos Respublikos liberalų sąjūdžio koalicija",
+   "type": "koalicija",
+   "nariai": [
+    "ts-lkd",
+    "lrls"
+   ],
+   "aliases": []
+  },
+  "koalicija-kitaip": {
+   "name": "Koalicija \"Kitaip\"",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-konservatoriu-liberalu-bei-politiniu-kaliniu-ir-tremtiniu-koalicija-vienybe": {
+   "name": "Konservatorių, liberalų bei politinių kalinių ir tremtinių koalicija \"VIENYBĖ\"",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-krikscioniska-koalicija-su-algiu-kaseta": {
+   "name": "Krikščioniška koalicija su Algiu Kašėta",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-lenku-rinkimu-akcijos-ir-rusu-aljanso-koalicija-krikscionisku-seimu-sajunga": {
+   "name": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Krikščioniškų šeimų sąjunga“",
+   "type": "koalicija",
+   "nariai": [
+    "llra-kss",
+    "rusu-aljansas"
+   ],
+   "aliases": []
+  },
+  "koalicija-lenku-rinkimu-akcijos-ir-rusu-aljanso-koalicija-valdemaro-tomasevskio-blokas": {
+   "name": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+   "type": "koalicija",
+   "nariai": [
+    "llra-kss",
+    "rusu-aljansas"
+   ],
+   "aliases": [
+    "Lenkų rinkimų akcijos ir Rusų Aljanso koalicija \"Valdemaro Tomaševskio blokas\""
+   ]
+  },
+  "koalicija-liaudies-koalicija-uz-teisinga-lietuva": {
+   "name": "Liaudies koalicija \"UŽ TEISINGĄ LIETUVĄ\"",
+   "type": "koalicija",
+   "aliases": [
+    "Liaudies koalicijos \"UŽ TEISINGĄ LIETUVĄ\""
+   ]
+  },
+  "koalicija-liberalu-koalicija": {
+   "name": "Liberalų koalicija",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-liberalu-sajudzio-ir-lietuvos-zaliuju-partijos-koalicija-uz-laisve-augti": {
+   "name": "Liberalų sąjūdžio ir Lietuvos žaliųjų partijos koalicija „Už laisvę augti“",
+   "type": "koalicija",
+   "nariai": [
+    "lrls",
+    "lietuvos-zaliuju-partija"
+   ],
+   "aliases": []
+  },
+  "koalicija-liberalu-sajudzio-ir-tevynes-sajungos-lietuvos-krikscioniu-demokratu-koalicija-visaginieciu-koalicija": {
+   "name": "Liberalų sąjūdžio ir Tėvynės sąjungos-Lietuvos krikščionių demokratų koalicija „Visaginiečių koalicija“",
+   "type": "koalicija",
+   "nariai": [
+    "lrls",
+    "ts-lkd"
+   ],
+   "aliases": []
+  },
+  "koalicija-liberalu-sajungos-ir-centro-sajungos-koalicija": {
+   "name": "Liberalų sąjungos ir Centro sąjungos koalicija",
+   "type": "koalicija",
+   "nariai": [
+    "lietuvos-liberalu-sajunga",
+    "lietuvos-centro-sajunga"
+   ],
+   "aliases": []
+  },
+  "koalicija-lietuviu-tautininku-ir-lietuvos-demokratu-partijos-koalicija": {
+   "name": "Lietuvių tautininkų ir Lietuvos demokratų partijos koalicija",
+   "type": "koalicija",
+   "nariai": [
+    "lietuviu-tautininku-sajunga",
+    "lietuvos-demokratu-partija"
+   ],
+   "aliases": []
+  },
+  "koalicija-lietuvos-centro-sajungos-ir-lietuvos-liberalu-sajungos-koalicija": {
+   "name": "Lietuvos centro sąjungos ir Lietuvos liberalų sąjungos koalicija",
+   "type": "koalicija",
+   "nariai": [
+    "lietuvos-centro-sajunga",
+    "lietuvos-liberalu-sajunga"
+   ],
+   "aliases": []
+  },
+  "koalicija-lietuvos-demokratu-partijos-ir-lietuviu-tautininku-sajungos-koalicija": {
+   "name": "Lietuvos Demokratų Partijos ir Lietuvių Tautininkų Sąjungos koalicija",
+   "type": "koalicija",
+   "nariai": [
+    "lietuvos-demokratu-partija",
+    "lietuviu-tautininku-sajunga"
+   ],
+   "aliases": [
+    "Lietuvos Demokratų Partijos ir Lietuvių Tautininkų Sąjungos koalicijos"
+   ]
+  },
+  "koalicija-lietuvos-krikscioniu-demokratu-partijos-ir-lietuvos-politiniu-kaliniu-ir-tremtiniu-saj-koalicija": {
+   "name": "Lietuvos krikščionių demokratų partijos ir Lietuvos politinių kalinių ir tremtinių sąj. koalicija",
+   "type": "koalicija",
+   "nariai": [
+    "lkdp",
+    "lpkts"
+   ],
+   "aliases": []
+  },
+  "koalicija-lietuvos-lenku-rinkimu-akcijos-ir-lietuvos-rusu-sajungos-koalicija-kartu-mes-jega": {
+   "name": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+   "type": "koalicija",
+   "nariai": [
+    "llra-kss",
+    "lietuvos-rusu-sajunga"
+   ],
+   "aliases": []
+  },
+  "koalicija-lietuvos-liberalu-sajungos-ir-moderniuju-krikscioniu-demokratu-sajungos-koalicija-komanda-kuria-vienija-darbas": {
+   "name": "Lietuvos liberalų sąjungos ir moderniųjų krikščionių demokratų sąjungos koalicija \"Komanda, kurią vienija darbas\"",
+   "type": "koalicija",
+   "nariai": [
+    "lietuvos-liberalu-sajunga",
+    "moderniuju-krikscioniu-demokratu-sajunga"
+   ],
+   "aliases": []
+  },
+  "koalicija-lietuvos-pilieciu-aljanso-ir-rusu-sajungos-koalicija": {
+   "name": "Lietuvos piliečių aljanso ir rusų sąjungos koalicija",
+   "type": "koalicija",
+   "nariai": [
+    "lietuvos-pilieciu-aljansas",
+    "lietuvos-rusu-sajunga"
+   ],
+   "aliases": []
+  },
+  "koalicija-lietuvos-politiniu-kaliniu-ir-tremtiniu-sajungos-ir-tevynes-sajungos-lk-koalicija": {
+   "name": "Lietuvos politinių kalinių ir tremtinių sąjungos ir Tėvynės Sąjungos (LK) koalicija",
+   "type": "koalicija",
+   "nariai": [
+    "lpkts",
+    "tevynes-sajunga"
+   ],
+   "aliases": []
+  },
+  "koalicija-lietuvos-valstieciu-ir-lietuvos-ukio-partiju-koalicija": {
+   "name": "Lietuvos valstiečių ir Lietuvos ūkio partijų koalicija",
+   "type": "koalicija",
+   "nariai": [
+    "lietuvos-valstieciu-partija",
+    "lietuvos-ukio-partija"
+   ],
+   "aliases": []
+  },
+  "koalicija-lietuvos-valstieciu-liaudininku-ir-krikscioniu-demokratu-koalicija": {
+   "name": "Lietuvos valstiečių liaudininkų ir krikščionių demokratų koalicija",
+   "type": "koalicija",
+   "nariai": [
+    "lvzs",
+    "lkd"
+   ],
+   "aliases": []
+  },
+  "koalicija-lietuvos-valstieciu-partijos-ir-krikscioniu-demokratu-sajungos-koalicija": {
+   "name": "Lietuvos valstiečių partijos ir Krikščionių demokratų sąjungos koalicija",
+   "type": "koalicija",
+   "nariai": [
+    "lietuvos-valstieciu-partija",
+    "krikscioniu-demokratu-sajunga"
+   ],
+   "aliases": [
+    "Lietuvos valstiečių partijos ir Krikščionių demokratų sąjungos koalicijos"
+   ]
+  },
+  "koalicija-mes-nepartiniai-grize-emigrantai": {
+   "name": "Koalicija \"Mes - nepartiniai grįžę emigrantai\"",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-musu-vienybe-ir-darbas-zarasu-krasto-zmonems": {
+   "name": "Koalicija „Mūsų vienybė ir darbas Zarasų krašto Žmonėms“",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-nacionalinis-susivienijimas-uz-lietuva-lietuvoje-lietuvos-centro-partijos-lietuvos-socialdemokratu-sajungos-tautininku-sajungos-ir-tautos-vienybes-sajungos-koalicija": {
+   "name": "Nacionalinis susivienijimas „Už Lietuvą Lietuvoje“ (Lietuvos centro partijos, Lietuvos socialdemokratų sąjungos, Tautininkų sąjungos ir Tautos vienybės sąjungos koalicija)",
+   "type": "koalicija",
+   "nariai": [
+    "lietuvos-centro-partija",
+    "lietuvos-socialdemokratu-sajunga",
+    "tautininku-sajunga",
+    "tautos-vienybes-sajunga"
+   ],
+   "aliases": []
+  },
+  "koalicija-nepartine-jaunosios-suduvos-koalicija": {
+   "name": "Nepartinė \"Jaunosios Sūduvos\" koalicija",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-nepartine-koalicija-elektrenu-krastas": {
+   "name": "Nepartinė koalicija \"Elektrėnų kraštas\"",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-nepartine-pilietine-koalicija": {
+   "name": "Nepartinė pilietinė koalicija",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-nepartiniu-ir-nepriklausomu-koalicija": {
+   "name": "Nepartinių ir nepriklausomų koalicija",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-nepartiniu-kandidatu-koalicija": {
+   "name": "Nepartinių kandidatų koalicija",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-nepartiniu-kandidatu-koalicija-uz-birstono-jaunima": {
+   "name": "Nepartinių kandidatų koalicija \"Už Birštono jaunimą\"",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-nepartiniu-kandidatu-koalicija-vilnius-musu-reikalas": {
+   "name": "Nepartinių kandidatų koalicija \"Vilnius - mūsų reikalas\"",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-nepriklausomu-anykstenu-koalicija": {
+   "name": "Nepriklausomų anykštėnų koalicija",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-nepriklausomu-kandidatu-koalicija": {
+   "name": "Nepriklausomų kandidatų koalicija",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-nepriklausomu-pasvalio-krasto-kandidatu-koalicija-uz-teigiamas-permainas": {
+   "name": "Nepriklausomų Pasvalio krašto kandidatų koalicija \"Už teigiamas permainas\"",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-pagegiu-krastui-pagegiu-zmonems-pagegiu-ateiciai": {
+   "name": "Koalicija \"Pagėgių kraštui, Pagėgių žmonėms, Pagėgių ateičiai\"",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-pakaunes-krasto-koalicija-naujoji-sajunga-socialliberalai-ir-liberalu-ir-centro-sajunga": {
+   "name": "Pakaunės krašto koalicija (Naujoji sąjunga (socialliberalai) ir Liberalų ir centro sąjunga)",
+   "type": "koalicija",
+   "nariai": [
+    "naujoji-sajunga",
+    "liberalu-ir-centro-sajunga"
+   ],
+   "aliases": []
+  },
+  "koalicija-pasaukti-tarnauti-jums-lietuvos-valstieciu-liaudininku-sajungos-ir-lietuvos-centro-partijos-koalicija": {
+   "name": "Pašaukti tarnauti Jums (Lietuvos valstiečių liaudininkų sąjungos ir Lietuvos centro partijos koalicija)",
+   "type": "koalicija",
+   "nariai": [
+    "lvzs",
+    "lietuvos-centro-partija"
+   ],
+   "aliases": []
+  },
+  "koalicija-petys-i-peti-vardan-ignalinos-krasto": {
+   "name": "Koalicija „Petys į petį vardan Ignalinos krašto!“",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-pocobuto-ir-vinco-koalicija": {
+   "name": "Počobuto ir Vinčo koalicija",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-pokyciu-pavasaris": {
+   "name": "Koalicija „Pokyčių pavasaris“",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-rasai": {
+   "name": "Koalicija \"Rasai\"",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-rokiskio-krasto-koalicija-uz-laisve-augti": {
+   "name": "Rokiškio krašto koalicija UŽ LAISVĘ AUGTI",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-rolando-pakso-koalicija-uz-tvarka-ir-teisinguma": {
+   "name": "Rolando Pakso koalicija \"Už tvarką ir teisingumą\"",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-s-buskeviciaus-ir-tautininku-koalicija-pries-korupcija-ir-skurda-partija-jaunoji-lietuva-tautininku-sajunga": {
+   "name": "S. Buškevičiaus ir Tautininkų koalicija „Prieš korupciją ir skurdą“ (Partija „Jaunoji Lietuva“, Tautininkų sąjunga)",
+   "type": "koalicija",
+   "nariai": [
+    "jaunoji-lietuva",
+    "tautininku-sajunga"
+   ],
+   "aliases": []
+  },
+  "koalicija-santarves-kelias": {
+   "name": "Koalicija \"Santarvės kelias\"",
+   "type": "koalicija",
+   "aliases": [
+    "Koalicijos \"Santarvės kelias\""
+   ]
+  },
+  "koalicija-silaliskiu-koalicija": {
+   "name": "Šilališkių koalicija",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-stasio-zirgulio-nepriklausomu-kandidatu-koalicija": {
+   "name": "Stasio Žirgulio nepriklausomų kandidatų koalicija",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-stipri-seima-stiprus-kaunas-krikscioniu-sajungos-ir-tautos-ir-teisingumo-sajungos-centristu-tautininku-koalicija": {
+   "name": "„STIPRI ŠEIMA – STIPRUS KAUNAS“ Krikščionių sąjungos ir Tautos ir teisingumo sąjungos (centristų, tautininkų) koalicija",
+   "type": "koalicija",
+   "nariai": [
+    "krikscioniu-sajunga",
+    "tautos-ir-teisingumo-sajunga"
+   ],
+   "aliases": []
+  },
+  "koalicija-taikos-koalicija-darbo-partija-lietuvos-krikscioniskosios-demokratijos-partija-zemaiciu-partija": {
+   "name": "Taikos koalicija (Darbo partija, Lietuvos krikščioniškosios demokratijos partija, Žemaičių partija)",
+   "type": "koalicija",
+   "nariai": [
+    "darbo-partija",
+    "lietuvos-krikscioniskosios-demokratijos-partija",
+    "zemaiciu-partija"
+   ],
+   "aliases": []
+  },
+  "koalicija-taikos-koalicija-lietuvos-krikscioniskosios-demokratijos-partija-zemaiciu-partija": {
+   "name": "Taikos koalicija (Lietuvos krikščioniškosios demokratijos partija, Žemaičių partija)",
+   "type": "koalicija",
+   "nariai": [
+    "lietuvos-krikscioniskosios-demokratijos-partija",
+    "zemaiciu-partija"
+   ],
+   "aliases": []
+  },
+  "koalicija-teisingas-sprendimas": {
+   "name": "Koalicija \"Teisingas sprendimas\"",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-tevynes-sajungos-koalicija": {
+   "name": "Tėvynės sąjungos koalicija",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-tevynes-sajungos-lietuvos-konservatoriai-ir-lietuvos-politiniu-kaliniu-ir-tremtiniu-sajungos-koalicija": {
+   "name": "Tėvynės Sąjungos (Lietuvos konservatoriai) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicija",
+   "type": "koalicija",
+   "nariai": [
+    "tevynes-sajunga",
+    "lpkts"
+   ],
+   "aliases": []
+  },
+  "koalicija-tevynes-sajungos-lietuvos-konservatoriu-ir-lietuvos-politiniu-kaliniu-ir-tremtiniu-sajungos-koalicija": {
+   "name": "Tėvynės sąjungos (Lietuvos konservatorių) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicija",
+   "type": "koalicija",
+   "nariai": [
+    "tevynes-sajunga",
+    "lpkts"
+   ],
+   "aliases": [
+    "Tėvynės sąjungos (Lietuvos konservatorių) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicijos"
+   ]
+  },
+  "koalicija-tevynes-sajungos-lietuvos-konservatoriu-ir-lietuvos-politiniu-kaliniu-ir-tremtiniu-sajungos-koalicija-silutes-krastas": {
+   "name": "Tėvynės sąjungos (Lietuvos konservatorių) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicija \"Šilutės kraštas\"",
+   "type": "koalicija",
+   "nariai": [
+    "tevynes-sajunga",
+    "lpkts"
+   ],
+   "aliases": [
+    "Tėvynės sąjungos (Lietuvos konservatorių) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicijos \"Šilutės kraštas\""
+   ]
+  },
+  "koalicija-tevynes-sajungos-lk-ir-lietuvos-politiniu-kaliniu-ir-tremtiniu-sajungos-koalicija": {
+   "name": "Tėvynės Sąjungos (LK) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicija",
+   "type": "koalicija",
+   "nariai": [
+    "tevynes-sajunga",
+    "lpkts"
+   ],
+   "aliases": [
+    "Tėvynės Sąjungos (LK) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicijos"
+   ]
+  },
+  "koalicija-ukio-ir-valstieciu-partiju-koalicija": {
+   "name": "Ūkio ir valstiečių partijų koalicija",
+   "type": "koalicija",
+   "nariai": [
+    "lietuvos-ukio-partija",
+    "lietuvos-valstieciu-partija"
+   ],
+   "aliases": []
+  },
+  "koalicija-uz-anyksciu-krasta": {
+   "name": "Koalicija \"Už Anykščių kraštą\"",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-uz-musu-neringa": {
+   "name": "Koalicija \"Už mūsų Neringą\"",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-uz-neringos-ateiti": {
+   "name": "Koalicija \"Už Neringos ateitį\"",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-uz-pokycius": {
+   "name": "Koalicija \"Už pokyčius\"",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-uz-tikraja-savivalda-lietuvos-demokratine-darbo-partija-naujoji-sajunga-socialliberalai-ir-naujoji-demokratija-moteru-partija": {
+   "name": "Koalicija \"Už tikrąją savivaldą\" - Lietuvos demokratinė darbo partija, Naujoji sąjunga (socialliberalai) ir Naujoji demokratija / Moterų partija",
+   "type": "koalicija",
+   "nariai": [
+    "lddp",
+    "naujoji-sajunga",
+    "naujosios-demokratijos-partija"
+   ],
+   "aliases": [
+    "Koalicijos \"Už tikrąją savivaldą\"-Lietuvos demokratinės darbo partijos, Naujosios sąjungos (socialliberalų) ir Naujosios demokratijos/Moterų partijos"
+   ]
+  },
+  "koalicija-valdemaro-tomasevskio-blokas-krikscionisku-seimu-sajungos-ir-rusu-aljanso-koalicija": {
+   "name": "„Valdemaro Tomaševskio blokas“ – Krikščioniškų šeimų sąjungos ir Rusų aljanso koalicija",
+   "type": "koalicija",
+   "nariai": [
+    "llra-kss",
+    "rusu-aljansas"
+   ],
+   "aliases": []
+  },
+  "koalicija-valiaus-kazlausko-koalicija-uz-laisve-augti": {
+   "name": "Valiaus Kazlausko koalicija „UŽ LAISVĘ AUGTI“",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-veikliu-mazeikieciu-koalicija": {
+   "name": "Veiklių mažeikiečių koalicija",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-veikliu-moteru-koalicija": {
+   "name": "Veiklių moterų koalicija",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-vieninga-plunge": {
+   "name": "Koalicija \"Vieninga Plungė\"",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-vieningas-kaunas": {
+   "name": "Koalicija \"Vieningas Kaunas\"",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-vilhelmo-dziugelio-jungtine-lyderiu-koalicija-mums-rupi-mazeikiu-krastas": {
+   "name": "Vilhelmo Džiugelio jungtinė lyderių koalicija \"Mums rūpi Mažeikių kraštas\"",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "koalicija-vyto-jarecko-koalicija-vieningi-birzai-lietuvos-valstieciu-ir-zaliuju-sajunga-lietuvos-respublikos-liberalu-sajudis": {
+   "name": "VYTO JARECKO koalicija „VIENINGI BIRŽAI“ (Lietuvos valstiečių ir žaliųjų sąjunga, Lietuvos Respublikos liberalų sąjūdis)",
+   "type": "koalicija",
+   "nariai": [
+    "lvzs",
+    "lrls"
+   ],
+   "aliases": []
+  },
+  "koalicija-zagares-krasto-atgimimo-koalicija": {
+   "name": "Žagarės krašto atgimimo koalicija",
+   "type": "koalicija",
+   "aliases": []
+  },
+  "llra-ir-rusu-aljansas": {
+   "name": "Lietuvos lenkų rinkimų akcija – Krikščioniškų šeimų sąjunga, Politinė partija Rusų aljansas",
+   "type": "koalicija",
+   "nariai": [
+    "llra-kss",
+    "rusu-aljansas"
+   ],
+   "aliases": [
+    "Lietuvos lenkų rinkimų akcija, Politinė partija Rusų aljansas",
+    "Politinė partija Rusų aljansas, Lietuvos lenkų rinkimų akcija – Krikščioniškų šeimų sąjunga"
+   ]
+  },
+  "lp-ts-lkd-ir-ls": {
+   "name": "Laisvės partija, Tėvynės sąjunga-Lietuvos krikščionys demokratai, Liberalų sąjūdis",
+   "type": "koalicija",
+   "nariai": [
+    "laisves-partija",
+    "ts-lkd",
+    "lrls"
+   ],
+   "aliases": []
+  },
+  "lrls-ir-ts-lkd": {
+   "name": "Lietuvos Respublikos liberalų sąjūdis, Tėvynės sąjunga-Lietuvos krikščionys demokratai",
+   "type": "koalicija",
+   "nariai": [
+    "lrls",
+    "ts-lkd"
+   ],
+   "aliases": []
+  },
+  "lvzs-ir-lcp": {
+   "name": "Lietuvos valstiečių ir žaliųjų sąjunga; Lietuvos centro partija",
+   "type": "koalicija",
+   "nariai": [
+    "lvzs",
+    "lietuvos-centro-partija"
+   ],
+   "aliases": []
+  },
+  "komitetas-a-baceviciaus-pilietinis-sarasas": {
+   "name": "Visuomeninis rinkimų komitetas „A. Bacevičiaus pilietinis sąrašas“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-a-lioges-sarasas-remiamas-n-puteikio": {
+   "name": "Visuomeninis rinkimų komitetas „A. Liogės sąrašas, remiamas N. Puteikio“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-a-margelio-komanda-pirmyn": {
+   "name": "Visuomeninis rinkimų komitetas „A. Margelio komanda „Pirmyn!“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-algio-kasetos-sarasas-drauge-su-jumis": {
+   "name": "Visuomeninis rinkimų komitetas „Algio Kašėtos sąrašas „Drauge su Jumis“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-algirdo-maciulaicio": {
+   "name": "Algirdo Mačiulaičio visuomeninis rinkimų komitetas",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-alytaus-pilieciai": {
+   "name": "Visuomeninis rinkimų komitetas „Alytaus piliečiai“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-alytaus-sajudis": {
+   "name": "Visuomeninis rinkimų komitetas „Alytaus sąjūdis“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-antano-vagonio-komitetas": {
+   "name": "Visuomeninis rinkimų komitetas „Antano Vagonio komitetas“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-arturo-visocko-nepartinis-sarasas": {
+   "name": "Visuomeninis rinkimų komitetas „Artūro Visocko nepartinis sąrašas“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-arturo-visocko-sarasas-dirbame-miestui": {
+   "name": "Visuomeninis rinkimų komitetas „Artūro Visocko sąrašas „Dirbame miestui“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-atsigrezkime-i-zmogu": {
+   "name": "Politinis komitetas „Atsigręžkime į žmogų“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-atsinaujinanciam-paneveziui": {
+   "name": "Visuomeninis rinkimų komitetas „Atsinaujinančiam Panevėžiui“",
+   "type": "komitetas",
+   "aliases": [
+    "Politinis komitetas „Atsinaujinančiam Panevėžiui“"
+   ]
+  },
+  "komitetas-ausros-maldeikienes-traukinys": {
+   "name": "Visuomeninis rinkimų komitetas „Aušros Maldeikienės traukinys“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-bendrai-geriau": {
+   "name": "Visuomeninis rinkimų komitetas „Bendrai geriau“",
+   "type": "komitetas",
+   "aliases": [
+    "Politinis komitetas „Bendrai geriau“"
+   ]
+  },
+  "komitetas-bendruomeniskas-vilnius": {
+   "name": "Visuomeninis rinkimų komitetas „Bendruomeniškas Vilnius“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-birzai-musu-krastas": {
+   "name": "Visuomeninis rinkimų komitetas „Biržai – mūsų kraštas“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-centro-judejimas-uz-silales-krasta": {
+   "name": "Visuomeninis rinkimų komitetas „Centro judėjimas už Šilalės kraštą“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-drauge-su-jumis": {
+   "name": "Politinis komitetas „Drauge su Jumis“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-druskininkai": {
+   "name": "Visuomeninis rinkimų komitetas „Druskininkai“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-druskininku-desinieji": {
+   "name": "Visuomeninis rinkimų komitetas „Druskininkų dešinieji“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-druskininku-naujasis": {
+   "name": "Visuomeninis rinkimų komitetas „Druskininkų „Naujasis“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-e-kuturio-komanda-uz-permainas-pagegiu-kraste": {
+   "name": "Visuomeninis rinkimų komitetas „E. Kuturio komanda „Už permainas Pagėgių krašte“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-gedimino-miestas": {
+   "name": "Visuomeninis rinkimų komitetas „Gedimino miestas“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-gintaro-sileikio": {
+   "name": "Gintaro Šileikio visuomeninis rinkimų komitetas",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-gintauto-labanausko-komanda-dirbam-kaunui": {
+   "name": "Visuomeninis rinkimų komitetas „Gintauto Labanausko komanda „Dirbam Kaunui“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-i-sedleckaites-pilietinis-sarasas-korupcijai-ne": {
+   "name": "Visuomeninis rinkimų komitetas „I. Sedleckaitės pilietinis sąrašas korupcijai ne“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-istikimi-klaipedai": {
+   "name": "Politinis komitetas Ištikimi Klaipėdai",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-jaunoji-karta": {
+   "name": "Visuomeninis rinkimų komitetas „Jaunoji karta“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-jaunoji-kazlu-ruda": {
+   "name": "Politinis komitetas „Jaunoji Kazlų Rūda“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-judek-vilniau": {
+   "name": "Visuomeninis rinkimų komitetas „Judėk, Vilniau“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-jums": {
+   "name": "Visuomeninis rinkimų komitetas „Jums“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-junkis": {
+   "name": "Visuomeninis rinkimų komitetas „Junkis“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-jurbarko-krastui": {
+   "name": "Visuomeninis rinkimų komitetas „Jurbarko kraštui“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-k-simkaus-komanda-uz-jurbarko-krasta": {
+   "name": "Visuomeninis rinkimų komitetas „K. Šimkaus komanda „Už Jurbarko kraštą“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-kartu-kurkime-kupiskio-krasta": {
+   "name": "Visuomeninis rinkimų komitetas „Kartu kurkime Kupiškio kraštą“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-kartu-mes-galime": {
+   "name": "Politinis komitetas „Kartu mes galime“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-kartu-pagegiu-krastui": {
+   "name": "Visuomeninis rinkimų komitetas „Kartu – Pagėgių kraštui“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-kartu-pakruojo-labui": {
+   "name": "Visuomeninis rinkimų komitetas „Kartu Pakruojo labui“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-kartu-uz-utenos-krasta": {
+   "name": "Politinis komitetas „Kartu už Utenos kraštą“",
+   "type": "komitetas",
+   "aliases": [
+    "Visuomeninis rinkimų komitetas „Kartu už Utenos kraštą“"
+   ]
+  },
+  "komitetas-kaunas-kitokia-lietuva": {
+   "name": "Visuomeninis rinkimų komitetas „Kaunas – kitokia Lietuva“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-kaunas-plius-puteikis": {
+   "name": "Visuomeninis rinkimų komitetas „Kaunas plius Puteikis“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-kestucio-tubio-sarasas-anyksciu-krasto-labui": {
+   "name": "Visuomeninis rinkimų komitetas „Kęstučio Tubio sąrašas „Anykščių krašto labui“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-kitaip": {
+   "name": "Visuomeninis rinkimų komitetas „Kitaip“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-klaipedos": {
+   "name": "„Klaipėdos“ visuomeninis rinkimų komitetas",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-klaipedos-rajono-zemaiciai": {
+   "name": "Visuomeninis rinkimų komitetas „Klaipėdos rajono žemaičiai“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-komanda-uz-kedainiu-krasto-zmones": {
+   "name": "Visuomeninis rinkimų komitetas „Komanda – už Kėdainių krašto žmones“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-kretingiskiai-uz-bocius-tevus-ir-vaikus": {
+   "name": "Visuomeninis rinkimų komitetas „Kretingiškiai – už bočius, tėvus ir vaikus“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-kretingos-krastas": {
+   "name": "Visuomeninis rinkimų komitetas „Kretingos kraštas“",
+   "type": "komitetas",
+   "aliases": [
+    "Politinis komitetas Kretingos kraštas"
+   ]
+  },
+  "komitetas-kupiskio-krasta-keiskime-kartu": {
+   "name": "Visuomeninis rinkimų komitetas „Kupiškio kraštą keiskime kartu“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-kuriam-kartu": {
+   "name": "Visuomeninis rinkimų komitetas „Kuriam kartu“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-kurk-zarasams": {
+   "name": "Politinis komitetas „Kurk Zarasams“",
+   "type": "komitetas",
+   "aliases": [
+    "Visuomeninis rinkimų komitetas „Kurk Zarasams“"
+   ]
+  },
+  "komitetas-kurkime-jauku-miesta-kartu": {
+   "name": "Visuomeninis rinkimų komitetas „Kurkime jaukų miestą KARTU“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-kvieciu-as-tauta-kelmes-kraste": {
+   "name": "Visuomeninis rinkimų komitetas „Kviečiu aš tautą Kelmės krašte“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-laimutes-slamienes-ir-algirdo-fergelio-komitetas-radviliskyje-uz-meile-zmogui": {
+   "name": "Visuomeninis rinkimų komitetas „Laimutės Šlamienės ir Algirdo Fergelio komitetas Radviliškyje „Už meilę žmogui“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-laisvieji-pilieciai": {
+   "name": "Visuomeninis rinkimų komitetas „Laisvieji piliečiai“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-lemiamas-suolis": {
+   "name": "Visuomeninis rinkimų komitetas „Lemiamas šuolis“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-mano-klaipeda": {
+   "name": "Visuomeninis rinkimų komitetas „Mano Klaipėda“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-mazeikiu-krastas": {
+   "name": "Visuomeninis rinkimų komitetas „Mažeikių kraštas“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-mazeikiu-pavasaris": {
+   "name": "Visuomeninis rinkimų komitetas „Mažeikių pavasaris“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-mes-esame-kitokie": {
+   "name": "Visuomeninis rinkimų komitetas „Mes esame Kitokie“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-mindaugo-gervaldo-susivienijimas-pries-korupcija": {
+   "name": "Visuomeninis rinkimų komitetas „Mindaugo Gervaldo susivienijimas „Prieš korupciją“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-moletai-kartu": {
+   "name": "Visuomeninis rinkimų komitetas „Molėtai kartu“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-mums-svarbu": {
+   "name": "Visuomeninis rinkimų komitetas „Mums svarbu“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-musu-jonava": {
+   "name": "Politinis komitetas „Mūsų Jonava“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-musu-krastas": {
+   "name": "Visuomeninis rinkimų komitetas „Mūsų kraštas“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-musu-telsiai": {
+   "name": "Visuomeninis rinkimų komitetas „Mūsų Telšiai“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-n-puteikio-komanda": {
+   "name": "Visuomeninis rinkimų komitetas „N. Puteikio komanda“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-naujas-startas": {
+   "name": "Visuomeninis rinkimų komitetas „Naujas startas“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-naujas-startas-vilkaviskio-krastui": {
+   "name": "Politinis komitetas „Naujas startas Vilkaviškio kraštui“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-nepartine-savivalda": {
+   "name": "Politinis komitetas „Nepartinė savivalda“",
+   "type": "komitetas",
+   "aliases": [
+    "Visuomeninis rinkimų komitetas „Nepartinė savivalda“"
+   ]
+  },
+  "komitetas-nepartine-taurage": {
+   "name": "Visuomeninis rinkimų komitetas „Nepartinė Tauragė“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-nepartinis-sarasas-dirbame-miestui": {
+   "name": "Politinis komitetas Nepartinis sąrašas „Dirbame miestui“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-nepartiniu-palangiskiu-sajudis": {
+   "name": "Visuomeninis rinkimų komitetas “Nepartinių palangiškių sąjūdis”",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-nepriklausomu-kandidatu-sarasas-prienu-krastas": {
+   "name": "Visuomeninis rinkimų komitetas „Nepriklausomų kandidatų sąrašas Prienų kraštas“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-pagegiu-krasto-vardan": {
+   "name": "Visuomeninis rinkimų komitetas „Pagėgių krašto vardan“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-palangiskiai": {
+   "name": "Visuomeninis rinkimų komitetas „Palangiškiai“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-panevezio-labui": {
+   "name": "Politinis komitetas „Panevėžio labui“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-patriotu-sajudis-uz-elektrenu-krasta": {
+   "name": "Visuomeninis rinkimų komitetas „Patriotų sąjūdis už Elektrėnų kraštą“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-permainu-laikas": {
+   "name": "Visuomeninis rinkimų komitetas „Permainų laikas“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-pilietine-iniciatyva": {
+   "name": "Visuomeninis rinkimų komitetas „Pilietinė iniciatyva“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-pilietiskas-pasirinkimas": {
+   "name": "Visuomeninis rinkimų komitetas „Pilietiškas pasirinkimas“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-pirmyn-palanga-ir-sventoji": {
+   "name": "Visuomeninis rinkimų komitetas „Pirmyn, Palanga ir Šventoji!“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-plunges-krastas": {
+   "name": "Visuomeninis rinkimų komitetas „Plungės kraštas“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-povilas-urbsys-uz-sarasa-kartu": {
+   "name": "Visuomeninis rinkimų komitetas „Povilas Urbšys už sąrašą KARTU“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-prezidento-rolando-pakso-judejimas": {
+   "name": "Visuomeninis rinkimų komitetas „Prezidento Rolando Pakso judėjimas“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-puteikis-plius": {
+   "name": "Visuomeninis rinkimų komitetas „Puteikis plius“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-r-simasiaus-komanda-uz-vilniu-kuriuo-didziuojames": {
+   "name": "Visuomeninis rinkimų komitetas „R. Šimašiaus komanda „Už Vilnių, kuriuo didžiuojamės!“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-rasai": {
+   "name": "Visuomeninis rinkimų komitetas „Rasai“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-renkuosi-ateiti": {
+   "name": "Visuomeninis rinkimų komitetas „Renkuosi ateitį“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-rusakalbe-klaipeda": {
+   "name": "Visuomeninis rinkimų komitetas „Rusakalbė Klaipėda“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-saukiam-tauta": {
+   "name": "Visuomeninis rinkimų komitetas „Šaukiam tautą“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-saukiame-tauta": {
+   "name": "Visuomeninis rinkimų komitetas „Šaukiame tautą“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-siekime-kartu": {
+   "name": "Politinis komitetas „Siekime kartu“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-silaliskiai": {
+   "name": "Visuomeninis rinkimų komitetas „Šilališkiai“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-silaliskiu": {
+   "name": "„Šilališkių“ visuomeninis rinkimų komitetas",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-silutes-krastas": {
+   "name": "Visuomeninis rinkimų komitetas „Šilutės kraštas“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-snvok-cia-ir-dabar": {
+   "name": "Visuomeninis rinkimų komitetas „ŠNVOK – čia ir dabar!“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-stipri-lietuva-vieningoje-europoje": {
+   "name": "Visuomeninis rinkimų komitetas „Stipri Lietuva vieningoje Europoje“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-su-sinkeviciumi-ir-osausku": {
+   "name": "Visuomeninis rinkimų komitetas „Su Sinkevičiumi ir Osausku“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-svari-savivalda": {
+   "name": "Visuomeninis rinkimų komitetas „Švari savivalda“",
+   "type": "komitetas",
+   "aliases": [
+    "Politinis komitetas „Švari savivalda“"
+   ]
+  },
+  "komitetas-tau-krastieti": {
+   "name": "Politinis komitetas „Tau, kraštieti!“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-tavo-raseiniai": {
+   "name": "Visuomeninis rinkimų komitetas „Tavo Raseiniai“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-tavo-ukmerge": {
+   "name": "Visuomeninis rinkimų komitetas „Tavo Ukmergė“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-titov-ir-teisingumas": {
+   "name": "Visuomeninis rinkimų komitetas „Titov ir teisingumas“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-traku-krasto-reikalas": {
+   "name": "Visuomeninis rinkimų komitetas „Trakų krašto reikalas“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-alytu": {
+   "name": "Visuomeninis rinkimų komitetas „Už Alytų“",
+   "type": "komitetas",
+   "aliases": [
+    "Politinis komitetas „Už Alytų“"
+   ]
+  },
+  "komitetas-uz-ateiti-ir-teisinguma-remiami-puteikio": {
+   "name": "Visuomeninis rinkimų komitetas „Už ateitį ir teisingumą, remiami Puteikio“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-augancia-kelme": {
+   "name": "Visuomeninis rinkimų komitetas „Už augančią Kelmę!“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-druskininkus": {
+   "name": "Politinis komitetas „Už Druskininkus“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-druskininkus-su-ricardu-malinausku": {
+   "name": "Visuomeninis rinkimų komitetas „Už Druskininkus su Ričardu Malinausku“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-geresne-ateiti-marijampoleje": {
+   "name": "Visuomeninis rinkimų komitetas „Už geresnę ateitį Marijampolėje“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-geresni-gyvenima-visiems": {
+   "name": "Visuomeninis rinkimų komitetas „Už geresnį gyvenimą visiems“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-jaunaja-suduva": {
+   "name": "Visuomeninis rinkimų komitetas „Už Jaunąją Sūduvą“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-klestinti-traku-krasta": {
+   "name": "Visuomeninis rinkimų komitetas „Už klestintį Trakų kraštą“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-kupiskio-krasta": {
+   "name": "Visuomeninis rinkimų komitetas „Už Kupiškio kraštą“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-pasitikejima-atsakomybe-ir-sekme": {
+   "name": "Visuomeninis rinkimų komitetas „Už pasitikėjimą, atsakomybę ir sėkmę“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-pokycius-klaipedoje": {
+   "name": "Visuomeninis rinkimų komitetas „Už pokyčius Klaipėdoje“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-prienu-krasta": {
+   "name": "Visuomeninis rinkimų komitetas „Už Prienų kraštą“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-rasus": {
+   "name": "Visuomeninis rinkimų komitetas „Už Rasus“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-sakiu-rajono-gyventoju-ateiti": {
+   "name": "Visuomeninis rinkimų komitetas „Už Šakių rajono gyventojų ateitį“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-savo-krasta": {
+   "name": "Visuomeninis rinkimų komitetas „Už savo kraštą“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-sviesia-kretinga": {
+   "name": "Politinis komitetas „Už šviesią Kretingą“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-vieninga-kelme": {
+   "name": "Visuomeninis rinkimų komitetas „Už vieningą Kelmę“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-vieningus-zanavykus": {
+   "name": "Visuomeninis rinkimų komitetas „Už vieningus zanavykus“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-visagina": {
+   "name": "Visuomeninis rinkimų komitetas „Už Visaginą“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-zarasu-krasto-ateiti": {
+   "name": "Visuomeninis rinkimų komitetas „Už Zarasų krašto ateitį!“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-uz-zmoniu-valdzia": {
+   "name": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-valentino-tamulio-komanda-musu-krasto-sekmei": {
+   "name": "Visuomeninis rinkimų komitetas „Valentino Tamulio komanda – mūsų krašto sėkmei“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-valerijaus-simulik-judejimas-uz-siaulius": {
+   "name": "Visuomeninis rinkimų komitetas „Valerijaus Simulik judėjimas „Už Šiaulius“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-vardan-kaisiadoriu-krasto": {
+   "name": "Visuomeninis rinkimų komitetas „Vardan Kaišiadorių krašto“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-vardan-silales-krasto": {
+   "name": "Politinis komitetas „Vardan Šilalės krašto“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-vardan-zmogaus": {
+   "name": "Visuomeninis rinkimų komitetas „Vardan žmogaus“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-vieninga-neringa": {
+   "name": "Visuomeninis rinkimų komitetas „Vieninga Neringa“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-vieninga-plunge": {
+   "name": "Visuomeninis rinkimų komitetas „Vieninga Plungė“",
+   "type": "komitetas",
+   "aliases": [
+    "Politinis komitetas „Vieninga Plungė“"
+   ]
+  },
+  "komitetas-vieningas-birstonas": {
+   "name": "Visuomeninis rinkimų komitetas „Vieningas Birštonas“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-vieningas-kaunas": {
+   "name": "Visuomeninis rinkimų komitetas „Vieningas Kaunas“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-vieningi-su-ramunu-godeliausku": {
+   "name": "Visuomeninis rinkimų komitetas „Vieningi su Ramūnu Godeliausku“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-vieningi-zanavykai": {
+   "name": "Politinis komitetas „Vieningi zanavykai“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-vieningi-zarasai": {
+   "name": "Visuomeninis rinkimų komitetas „Vieningi Zarasai“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-vilkaviskis-2015": {
+   "name": "Visuomeninis rinkimų komitetas „Vilkaviškis 2015“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-vilkmerges": {
+   "name": "„Vilkmergės“ visuomeninis rinkimų komitetas",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-vilnieciu-lokys": {
+   "name": "Visuomeninis rinkimų komitetas „Vilniečių „Lokys“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-vilnius-gali": {
+   "name": "Visuomeninis rinkimų komitetas „Vilnius gali“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-violetos-grigienes-visuomeninis-rinkimu-komitetas-drauge": {
+   "name": "Violetos Grigienės visuomeninis rinkimų komitetas „Drauge“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-visaginas-tai-mes": {
+   "name": "Visuomeninis rinkimų komitetas „Visaginas – tai mes“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-vytautas-grubliauskas-ir-komanda": {
+   "name": "Visuomeninis rinkimų komitetas „Vytautas Grubliauskas ir komanda“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-vytautas-radzvilas-susigrazinkime-valstybe": {
+   "name": "Visuomeninis rinkimų komitetas „Vytautas Radžvilas: susigrąžinkime valstybę!“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-z-grikselio-komanda-remiama-n-puteikio": {
+   "name": "Visuomeninis rinkimų komitetas „Z. Grikšelio komanda, remiama N. Puteikio“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-zinau-ir-galiu-ceslovas-daugela": {
+   "name": "Visuomeninis rinkimų komitetas „Žinau ir galiu – Česlovas Daugėla“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "komitetas-ziviles-pinskuvienes-komanda-uz-sekminga-sirvintu-krasta": {
+   "name": "Visuomeninis rinkimų komitetas „Živilės Pinskuvienės komanda – už sėkmingą Širvintų kraštą“",
+   "type": "komitetas",
+   "aliases": []
+  },
+  "issikele-pats": {
+   "name": "Išsikėlė pats",
+   "type": "issikelimas",
+   "note": "Vienmandatėse ir mero rinkimuose pats save iškėlęs kandidatas. Kai VRK eilutė įvardija ir partiją („X, išsikėlė pats“), forma priskiriama partijai, nes eilutė ją įvardija.",
+   "aliases": [
+    "Išsikėlė pati",
+    "Išsikėlęs kandidatas",
+    "išsikėlė pati",
+    "išsikėlė pats"
+   ]
+  }
+ },
+ "unmatched": []
+}

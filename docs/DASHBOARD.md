@@ -14,7 +14,7 @@ takes three forms on a rule that does not follow English's — 1 asmuo,
 ## Run it
 
 ```bash
-python scripts/build_person_index.py   # writes dashboard/people.json (~4 MB)
+python scripts/build_person_index.py   # writes dashboard/people.json (~20 MB)
 python3 -m http.server 8791            # serve the repo root
 ```
 
@@ -59,6 +59,15 @@ In the 1996-1999 Seimas archive family `kandidatavimas` is a **list**, one
 entry per candidacy, so the record counts as won if any of its candidacies is;
 that is the one place the index reads the flag out of a list rather than an
 object.
+
+**Party.** Each candidacy carries `"p"`, the canonical nominator id from
+`scraper/parties.json` (issue #82) — the join that holds one party together
+across its dash glyphs, genitives and renames — and `people.json`'s top-level
+`"parties"` table maps each used id to `{n: short or full name, t: kind}`
+(`partija`/`koalicija`/`komitetas`/`issikelimas`) so the page can label it
+without carrying the registry. The key is absent on the five presidential
+elections whose pages name no nominator. The raw string stays in the record
+file; `scraper/shared/parties.py::partija(record)` returns both.
 
 **Currency.** The 2012–2015 pages declare assets and income in litas
 (`turto-ir-pajamu-deklaracijos.valiuta` is `"Lt"` on those records); 2016 on
