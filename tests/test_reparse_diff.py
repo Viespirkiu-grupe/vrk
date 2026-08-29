@@ -125,7 +125,9 @@ class RoundTripTests(unittest.TestCase):
         self._tmp.cleanup()
 
     def _reparse_into(self, output_root: Path) -> None:
-        parsed, _, errors = script.reparse(ELECTION_ID, FIXTURES_ROOT, output_root, jobs=1)
+        parsed, _, errors = script.reparse(
+            ELECTION_ID, [(FIXTURES_ROOT, None)], output_root, jobs=1
+        )
         self.assertEqual(errors, [])
         self.assertGreater(parsed, 0)
 
@@ -194,34 +196,60 @@ class RoundTripTests(unittest.TestCase):
         self.assertIn("--apply requires --full", stderr.getvalue())
 
 
-class SamplesRootTests(unittest.TestCase):
+def _candidate_dir(root: Path, candidate_id: str) -> None:
+    """The shape `candidate_dirs` looks for: an index.json beside a page."""
+    directory = root / candidate_id
+    directory.mkdir(parents=True)
+    (directory / "index.json").write_text("{}", encoding="utf-8")
+    (directory / "anketa.html").write_text("<html></html>", encoding="utf-8")
+
+
+class SampleSourceTests(unittest.TestCase):
     def test_full_prefers_retained_html(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            (root / "samples" / "html" / ELECTION_ID).mkdir(parents=True)
-            (root / "samples-full" / ELECTION_ID).mkdir(parents=True)
+            fixtures = root / "samples" / "html" / ELECTION_ID
+            retained = root / "samples-full" / ELECTION_ID
+            _candidate_dir(fixtures, "jonas-jonaitis")
+            _candidate_dir(retained, "jonas-jonaitis")
             self.assertEqual(
-                script.resolve_samples_root(root, ELECTION_ID, full=True),
-                root / "samples-full" / ELECTION_ID,
+                script.resolve_sample_sources(root, ELECTION_ID, full=True),
+                [(retained, None)],
             )
             self.assertEqual(
-                script.resolve_samples_root(root, ELECTION_ID, full=False),
-                root / "samples" / "html" / ELECTION_ID,
+                script.resolve_sample_sources(root, ELECTION_ID, full=False),
+                [(fixtures, None)],
+            )
+
+    def test_a_candidate_with_a_fixture_and_no_retained_page_is_parsed_too(self) -> None:
+        # The gap issue #101 found: `--apply` could not reach these records
+        # while the fixture run kept reporting them as drifted.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            fixtures = root / "samples" / "html" / ELECTION_ID
+            retained = root / "samples-full" / ELECTION_ID
+            _candidate_dir(fixtures, "jonas-jonaitis")
+            _candidate_dir(fixtures, "petras-petraitis")
+            _candidate_dir(retained, "jonas-jonaitis")
+            self.assertEqual(
+                script.resolve_sample_sources(root, ELECTION_ID, full=True),
+                [(retained, None), (fixtures, ["petras-petraitis"])],
             )
 
     def test_full_falls_back_to_fixtures_when_nothing_was_retained(self) -> None:
         # For the archive families the fixture tree *is* every candidate.
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            (root / "samples" / "html" / ELECTION_ID).mkdir(parents=True)
+            fixtures = root / "samples" / "html" / ELECTION_ID
+            _candidate_dir(fixtures, "jonas-jonaitis")
             self.assertEqual(
-                script.resolve_samples_root(root, ELECTION_ID, full=True),
-                root / "samples" / "html" / ELECTION_ID,
+                script.resolve_sample_sources(root, ELECTION_ID, full=True),
+                [(fixtures, None)],
             )
 
     def test_an_election_with_no_sample_tree_at_all(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
-            self.assertIsNone(script.resolve_samples_root(Path(tmp), ELECTION_ID, full=True))
+            self.assertEqual(script.resolve_sample_sources(Path(tmp), ELECTION_ID, full=True), [])
 
 
 if __name__ == "__main__":

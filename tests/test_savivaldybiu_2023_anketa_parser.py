@@ -542,9 +542,11 @@ class Savivaldybiu2023AnketaParserTests(unittest.TestCase):
         entries = _normalize_anketa_rows(rows)["teistumo-detales"]["irasai"]
         self.assertEqual(len(entries), 1)
         self.assertEqual(entries[0]["nuosprendzio-data"], "1995-12-28")
+        # The page ends each offence with a semicolon; issue #101's value
+        # rules drop a separator that separates nothing.
         self.assertEqual(
             [veika["kesinimosi-objektas"] for veika in entries[0]["nusikalstamos-veikos"]],
-            ["16 str.(senas (iki 2003-05-01));", "82 str. 1 d.(senas (iki 2003-05-01));"],
+            ["16 str.(senas (iki 2003-05-01))", "82 str. 1 d.(senas (iki 2003-05-01))"],
         )
 
     # ------------------------------------------------------------------

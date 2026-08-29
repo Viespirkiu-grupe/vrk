@@ -67,6 +67,7 @@ from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.deklaracijos import SCOPE_FAMILY, SCOPE_OWN
 from scraper.shared.files import write_candidate_record
 from scraper.shared.savivaldybiu_archive_1997 import normalize_birth_date
+from scraper.shared.values import as_money
 
 DEFAULT_SAMPLES_ROOT = Path(f"samples/html/{ELECTION_ID}")
 DEFAULT_OUTPUT_ROOT = Path(f"data/{ELECTION_ID}")
@@ -390,7 +391,7 @@ def normalize_savivaldybiu_2002_anketa_rows(rows: list[dict[str, Any]]) -> dict[
 # ---------------------------------------------------------------------------
 
 
-def _parse_deklaracija_amount(value: Any) -> int | float | None:
+def _parse_deklaracija_amount(value: Any) -> float | None:
     """A printed litas figure. The page glues the unit to the income
     figures ("25565Lt") and spaces it elsewhere ("151659 Lt."), which
     the 2015-era ``_parse_lt_amount``'s word-boundary strip cannot
@@ -402,8 +403,7 @@ def _parse_deklaracija_amount(value: Any) -> int | float | None:
     compact = compact.replace(" ", "").replace(",", ".")
     if not compact or not re.fullmatch(r"-?\d+(?:\.\d+)?", compact):
         return None
-    amount = float(compact)
-    return int(amount) if amount.is_integer() else amount
+    return as_money(float(compact))
 
 
 def parse_deklaracija_html(html: str) -> dict[str, Any]:

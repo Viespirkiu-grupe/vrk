@@ -132,9 +132,11 @@ class KupiskioMero2023AnketaParserTests(unittest.TestCase):
 
         irasai = teistumas["nusikalstamos-veikos"]
         self.assertEqual(len(irasai), 1)
+        # The page prints this one with a trailing semicolon, which issue #101's
+        # value rules drop -- a separator with nothing after it says nothing.
         self.assertEqual(
             irasai[0]["kesinimosi-objektas-baudziamojo-kodekso-skyriaus-ir-straipsnio-pavadinimas"],
-            "90 str. 1 d.(senas (iki 2003-05-01));",
+            "90 str. 1 d.(senas (iki 2003-05-01))",
         )
         self.assertEqual(irasai[0]["teistumo-isnykimo-ar-panaikinimo-data"], "1993-12-04")
 

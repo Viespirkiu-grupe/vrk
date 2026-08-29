@@ -66,14 +66,27 @@ titled sections — at 100% presence:
 - `turto-pardavimo-pajamos`
 - `turto-isigijimo-kaina`
 
-Values are parsed numbers — never strings — in EUR from 2016 on and in litas
-before it (see the litas trap below). An amount VRK renders without its
-leading zero (`,35 EUR`) is read as the sub-euro figure it is — the page
-formatter drops the zero, and no election prints such an amount as `0,35` —
-with the source text kept in `rawData` either way. `null` means the row was
-not published or does not parse as a number; the last four are published only
-by the GPM308/GPM311 form as reworded in 2018, and are null in every earlier
-era.
+Values are parsed numbers — never strings — and always **floats**, in EUR from
+2016 on and in litas before it (see the litas trap below). The type is a
+property of the column, not of the figure: `202000` is stored `202000.0` so a
+column does not change type between two candidates because one of them
+happened to declare whole euro. (Until issue #101 it did, in 225 columns.) An
+amount VRK renders without its leading zero (`,35 EUR`) is read as the
+sub-euro figure it is — the page formatter drops the zero, and no election
+prints such an amount as `0,35` — with the source text kept in `rawData`
+either way. `null` means the row was not published or does not parse as a
+number; the last four are published only by the GPM308/GPM311 form as reworded
+in 2018, and are null in every earlier era.
+
+The same rule holds for every money value in a record, not just this block:
+the private-interest transaction sums (`id001s[].sandorio-suma`,
+`id001s[].sandorio-suma-lt`, `vii-sandoriai[].suma-skaiciais`) and the
+campaign-finance `amountEur`/`amountLt`. Where a column prints the currency in
+the *value* rather than in its heading, the currency is a sibling key:
+`sandorio-suma` is a float and `sandorio-suma-valiuta` is `"EUR"` or `"Lt"`.
+The value-band codes (`sandorio-vertes-litais-kodas` and its siblings) are
+**not** money and stay strings — `"001"` is a band, and its leading zeros
+carry meaning.
 
 The 1996–2003 pages publish a single un-sectioned form and keep their own key
 set instead (`turtas-ir-pinigines-lesos-metu-pabaigoje`,
@@ -133,12 +146,20 @@ winners, a `null` that no results file exists). Four traps:
   `isrinktas: false` — VRK's results page named them, its decision unmade
   it, and the June repeat elections' records hold the seats actually won.
 
-**Placeholders.** Exactly three placeholder forms normalize to `null`:
-`Nenurodė`, `-`, and the empty string. A `null` means "not answered on the
-page"; the source text is always in `rawData`. Candidate-*typed* variants
-survive verbatim as answers — `Nėra`, `nėra`, `Nenurodyta`, `Nenurodoma`,
-`--`, `.` and similar — because an answered "none" is not the same as
-unanswered. Account for them when counting.
+**Placeholders.** Four placeholder forms normalize to `null`: `Nenurodė`,
+`-`, the empty string, and a value that is nothing but the replacement
+character `U+FFFD` (30 records, 28 of them `2008-seimo` biographies, where
+VRK's page holds a bare NUL byte). A `null` means "not answered on the page";
+the source text is always in `rawData`. Candidate-*typed* variants survive
+verbatim as answers — `Nėra`, `nėra`, `Nenurodyta`, `Nenurodoma`, `--`, `.`
+and similar — because an answered "none" is not the same as unanswered.
+Account for them when counting.
+
+**Trailing separators.** A normalized string never ends in a bare `,` or `;`.
+VRK publishes 3,856 values that do (`"Jonas, Rasa, Živilė, Jovita,"`, one list
+item per separator and one to spare); the separator is dropped because it
+separates nothing and breaks any consumer that splits on it. A full stop is
+kept — a sentence is allowed to end. `rawData` keeps the published text.
 
 ## The era map: concept → path
 
@@ -307,6 +328,26 @@ appears as two persons.
   elsewhere, bring the election's `photos/` folder along** — a record alone
   no longer contains its portrait. One curiosity survives faithfully: one
   candidate's "photo" is a ZIP archive, stored as `.zip`.
+- **20 values still hold a replacement character, and that is VRK's.**
+  `U+FFFD` reached the corpus in 203 values. Fetching one of those pages live
+  returns the replacement character in VRK's own bytes, so the original was
+  destroyed upstream and no re-decode recovers it. 30 of them were the whole
+  value (a NUL byte where a biography should be) and normalize to `null`; 153
+  stood where a Lithuanian opening quote belongs, closed by a `"` that proves
+  the pair, and are restored to `„` (`AB „Lietuvos geležinkeliai"`). The
+  remaining **20 have nothing to prove what they were and are left as
+  published** rather than guessed at — 9 in `2000-seimo`, 9 in `2004-seimo`,
+  2 in `2004-ep`. `tests/test_corpus_value_hygiene.py` pins that 20 so it
+  cannot grow.
+- **`VšĮ` is not a parsing bug.** 20,651 normalized values contain a
+  lowercase letter immediately followed by an uppercase one, which reads like
+  a lost line break. It is not: 13,158 of them are the legal-form
+  abbreviation `VšĮ`, and the rest are company names (`UAB "inChase"`, `DnB`,
+  `GmbH`, `StepArc`) and VRK's own typing (`kAUNO`, `Partija tTvarka`). A
+  sample of 835 such junctions checked against the retained HTML found 797
+  present verbatim, with no tag boundary between the two letters, and the
+  misses were a parser-authored enum value and one biography split across
+  files. Do **not** insert spaces at these junctions.
 
 ## Going deeper
 

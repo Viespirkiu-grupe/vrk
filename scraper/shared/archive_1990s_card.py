@@ -32,6 +32,8 @@ from typing import Any
 
 from bs4 import NavigableString, Tag
 
+from scraper.shared.values import clean_value
+
 
 def normalize_space(value: str) -> str:
     return " ".join(value.split())
@@ -98,7 +100,12 @@ def field_value(plain: str, label: str) -> str:
     )
     pattern = rf"{re.escape(label)}{LABEL_TAILS.get(label, '')}:\s*(.*?)(?:\s*(?:{others}):|$)"
     match = re.search(pattern, plain)
-    return match.group(1).strip() if match else ""
+    if match is None:
+        return ""
+    # The card writes its lists with a separator after the last item as often
+    # as not ("...,valdybos narys;"); the corpus-wide value rules take it off
+    # here, where a card field is first read (scraper/shared/values.py).
+    return clean_value(match.group(1).strip()) or ""
 
 
 def bold_values(paragraph: Tag) -> list[dict[str, Any]]:
@@ -110,7 +117,7 @@ def bold_values(paragraph: Tag) -> list[dict[str, Any]]:
     """
     items: list[dict[str, Any]] = []
     for bold in paragraph.find_all("b"):
-        value = normalize_space(bold.get_text(" ", strip=True))
+        value = clean_value(normalize_space(bold.get_text(" ", strip=True)))
         if not value:
             continue
         trail: list[str] = []

@@ -101,3 +101,7 @@ and booleans always count; strings and containers have to hold something.
   author paste their election's fill rates into the PR body.
 - `scripts/reparse_diff.py` — the third gate: the corpus equals what the parsers
   produce.
+- `tests/test_corpus_value_hygiene.py` — the fourth: a field that *is* filled
+  can still be filled wrongly. It walks every record for the value shapes issue
+  #101 removed — a trailing separator, money as a string, a column that is
+  `int` here and `float` there — which coverage counts as filled.

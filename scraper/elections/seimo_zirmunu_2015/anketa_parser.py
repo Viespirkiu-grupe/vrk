@@ -36,6 +36,7 @@ from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.deklaracijos import normalize_declaration, section_form
 from scraper.shared.election_results import ANKETA_ID_PATTERN, load_results_lookup
 from scraper.shared.files import write_candidate_record
+from scraper.shared.values import as_money
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2015-kovo-1-seimo-zirmunai")
 DEFAULT_OUTPUT_ROOT = Path("data/2015-kovo-1-seimo-zirmunai")
@@ -592,7 +593,7 @@ def _parse_deklaracijos_html(html: str) -> dict[str, Any]:
     }
 
 
-def _parse_lt_amount(value: Any) -> int | float | None:
+def _parse_lt_amount(value: Any) -> float | None:
     normalized_value = _normalize_text_value(value)
     if normalized_value is None:
         return None
@@ -604,21 +605,15 @@ def _parse_lt_amount(value: Any) -> int | float | None:
     if not compact or not re.fullmatch(r"-?\d+(?:\.\d+)?", compact):
         return None
 
-    amount = float(compact)
-    if amount.is_integer():
-        return int(amount)
-    return amount
+    return as_money(float(compact))
 
 
-def _sum_amounts(current: int | float | None, amount: int | float | None) -> int | float | None:
+def _sum_amounts(current: float | None, amount: float | None) -> float | None:
     if amount is None:
         return current
     if current is None:
         return amount
-    total = current + amount
-    if isinstance(total, float) and total.is_integer():
-        return int(total)
-    return round(total, 2) if isinstance(total, float) else total
+    return as_money(round(current + amount, 2))
 
 
 def _income_form_lines(item: dict[str, Any]) -> list[dict[str, Any]] | None:

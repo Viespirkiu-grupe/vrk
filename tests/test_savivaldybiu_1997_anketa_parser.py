@@ -174,13 +174,15 @@ class DeclarationTests(unittest.TestCase):
         self.assertEqual(self.declaration["valiuta"], "Lt")
 
     def test_the_combined_section_totals_are_present(self):
+        # Float, not int: issue #101 made money a property of the column
+        # rather than of whether this candidate's figure happened to be whole.
         for key in (
             "turtas-ir-pinigines-lesos-metu-pradzioje",
             "turtas-ir-pinigines-lesos-metu-pabaigoje",
             "kalendoriniais-metais-isigytas-turtas",
         ):
             with self.subTest(key):
-                self.assertIsInstance(self.declaration[key], int)
+                self.assertIsInstance(self.declaration[key], float)
 
     def test_the_modern_split_keys_are_null_not_invented(self):
         self.assertIsNone(self.declaration["privalomas-registruoti-turtas"])

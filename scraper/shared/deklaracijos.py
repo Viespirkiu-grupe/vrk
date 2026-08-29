@@ -54,6 +54,7 @@ import unicodedata
 from typing import Any, Callable, Iterable
 
 from scraper.shared.files import slugify
+from scraper.shared.values import as_money
 
 # --------------------------------------------------------------------------
 # Value labels
@@ -276,10 +277,7 @@ def _sum_amounts(current: Any, amount: Any) -> Any:
         return current
     if current is None:
         return amount
-    total = current + amount
-    if isinstance(total, float):
-        return int(total) if total.is_integer() else round(total, 2)
-    return total
+    return as_money(round(current + amount, 2))
 
 
 def normalize_declaration(
