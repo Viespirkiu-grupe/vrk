@@ -39,6 +39,7 @@ from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.conviction_details import conviction_entries, conviction_records
 from scraper.shared.deklaracijos import normalize_declaration
 from scraper.shared.files import slugify, write_candidate_record, write_json
+from scraper.shared.values import clean_value
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2024-seimo")
 DEFAULT_OUTPUT_ROOT = Path("data/2024-seimo")
@@ -69,9 +70,11 @@ def _normalize_text_value(value: Any) -> str | None:
         value = str(value)
 
     # Mirrors seimo_2016: fold mixed unicode normalization forms to NFC so an
-    # NFD "ė" string-matches its NFC form; rawData keeps the original bytes.
-    normalized = normalize_space(unicodedata.normalize("NFC", value))
-    if normalized.lower() in MISSING_TEXT_VALUES:
+    # NFD "ė" string-matches its NFC form; rawData keeps the original bytes,
+    # then `clean_value` applies the rules every era shares
+    # (scraper/shared/values.py).
+    normalized = clean_value(normalize_space(unicodedata.normalize("NFC", value)))
+    if normalized is None or normalized.lower() in MISSING_TEXT_VALUES:
         return None
     return normalized
 

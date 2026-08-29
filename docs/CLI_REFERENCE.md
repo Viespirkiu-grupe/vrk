@@ -2142,9 +2142,13 @@ Options:
 
 - `--full`: parse every retained candidate (`samples-full/<id>/`) instead of
   the fixture set. An election with no retained tree falls back to its
-  fixtures, which for the archive families is every candidate anyway; the
-  per-election line always states how many of the stored records the run
-  actually reached.
+  fixtures, which for the archive families is every candidate anyway, and so
+  does any single *candidate* the retained tree lacks and the fixture tree
+  has — 96 of them across ten elections, which `--apply` could not reach at
+  all until issue #101 while the fixture run went on reporting them as
+  drifted. The per-election line always states how many of the stored records
+  the run actually reached, and names the fixture fill-in when there is one
+  (`re-parsed from retained + 9 from fixtures`).
 - `--apply`: copy the freshly parsed records over `data/<id>/`, with any
   photo sidecars the parse externalized. Only the records that differ are
   written, so an election that re-parses identically is not touched at all.
@@ -2163,6 +2167,22 @@ that raised).
 Without `--full` the whole corpus is checked in about ten seconds, which is
 what makes it a habit rather than an event. A full pass over all 113,073
 records takes about an hour on eight processes and needs no network.
+
+### `scripts/backfill_value_hygiene.py`
+
+The 38 records a re-parse cannot reach — their page exists in neither sample
+tree — cannot be brought forward by `--apply`, and a stale record in an
+otherwise-uniform column is worse than a stale record. This applies the
+corpus-wide value rules (`scraper/shared/values.py`) to what is already stored
+in `normalized`, leaving `rawData` alone.
+
+```bash
+python scripts/backfill_value_hygiene.py --dry-run
+python scripts/backfill_value_hygiene.py --election 2019-rugsejo-8-seimo
+```
+
+Idempotent, and `tests/test_backfill_value_hygiene.py` pins that a record the
+parser just wrote is a fixed point of it.
 
 ## Helpful Checks
 

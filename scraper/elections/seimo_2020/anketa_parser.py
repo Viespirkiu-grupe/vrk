@@ -33,6 +33,7 @@ from scraper.elections.seimo_2016.anketa_parser import (
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.conviction_details import conviction_field_keys, conviction_records
 from scraper.shared.files import slugify, write_candidate_record, write_json
+from scraper.shared.values import clean_value, interest_row_columns
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2020-seimo")
 DEFAULT_OUTPUT_ROOT = Path("data/2020-seimo")
@@ -65,9 +66,11 @@ def _normalize_text_value(value: Any) -> str | None:
         value = str(value)
 
     # Mirrors seimo_2016: fold mixed unicode normalization forms to NFC so an
-    # NFD "ė" string-matches its NFC form; rawData keeps the original bytes.
-    normalized = normalize_space(unicodedata.normalize("NFC", value))
-    if normalized.lower() in MISSING_TEXT_VALUES:
+    # NFD "ė" string-matches its NFC form; rawData keeps the original bytes,
+    # then `clean_value` applies the rules every era shares
+    # (scraper/shared/values.py).
+    normalized = clean_value(normalize_space(unicodedata.normalize("NFC", value)))
+    if normalized is None or normalized.lower() in MISSING_TEXT_VALUES:
         return None
     return normalized
 
@@ -556,7 +559,9 @@ def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]
                     # column but never fills it. Skipped only when empty.
                     if normalized_value is None and key == "asmens-kodas":
                         continue
-                    row_obj[key] = normalized_value
+                    # As in seimo_2016: a column can carry more than one value
+                    # -- a money figure and its currency (scraper/shared/values.py).
+                    row_obj.update(interest_row_columns(key, normalized_value))
                 if row_obj:
                     normalized_rows.append(row_obj)
             if normalized_rows:

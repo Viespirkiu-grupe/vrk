@@ -14,6 +14,7 @@ from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.conviction_details import conviction_field_keys, conviction_records
 from scraper.shared.deklaracijos import normalize_declaration
 from scraper.shared.files import slugify, write_candidate_record, write_json
+from scraper.shared.values import as_money, clean_value, interest_row_columns
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2016-seimo")
 DEFAULT_OUTPUT_ROOT = Path("data/2016-seimo")
@@ -53,8 +54,11 @@ def _normalize_text_value(value: Any) -> str | None:
     # VRK pages and candidate-pasted text mix unicode normalization forms;
     # an NFD "ė" does not string-match its NFC form, so values are folded to
     # NFC. Lossless for Lithuanian text; rawData keeps the original bytes.
-    normalized = normalize_space(unicodedata.normalize("NFC", value))
-    if normalized.lower() in MISSING_TEXT_VALUES:
+    # `clean_value` then applies the rules every era shares — a trailing
+    # separator dropped, a lost opening quote restored, a value that is only
+    # a replacement character read as missing (scraper/shared/values.py).
+    normalized = clean_value(normalize_space(unicodedata.normalize("NFC", value)))
+    if normalized is None or normalized.lower() in MISSING_TEXT_VALUES:
         return None
     return normalized
 
@@ -1565,7 +1569,11 @@ def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]
                     # elections. Skipped only when empty.
                     if normalized_value is None and key == "asmens-kodas":
                         continue
-                    row_object[key] = normalized_value
+                    # One column can carry more than one value: a money figure
+                    # and the currency printed beside it, or the object and
+                    # the date VRK prints in the single cell it heads
+                    # "Dovana, data" (scraper/shared/values.py).
+                    row_object.update(interest_row_columns(key, normalized_value))
 
                 if row_object:
                     normalized_rows.append(row_object)
@@ -1587,7 +1595,7 @@ def _normalize_privaciu_interesu_data(payload: dict[str, Any]) -> dict[str, Any]
     return result
 
 
-def _parse_eur_amount(value: Any) -> int | float | None:
+def _parse_eur_amount(value: Any) -> float | None:
     normalized_value = _normalize_text_value(value)
     if normalized_value is None:
         return None
@@ -1606,10 +1614,7 @@ def _parse_eur_amount(value: Any) -> int | float | None:
     if not compact or not re.fullmatch(r"-?\d+(?:\.\d+)?", compact):
         return None
 
-    amount = float(compact)
-    if amount.is_integer():
-        return int(amount)
-    return amount
+    return as_money(float(compact))
 
 
 def _normalize_turto_ir_pajamu_data(payload: dict[str, Any]) -> dict[str, Any]:

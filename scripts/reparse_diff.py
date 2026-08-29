@@ -27,8 +27,11 @@ Two sample roots, and the difference matters:
 * **retained** (`samples-full/<election-id>/`, `--full`) -- every candidate's
   HTML as fetched. This is what `--apply` regenerates the corpus from. An
   election with no `samples-full/` tree falls back to its fixtures, which for
-  the archive families holds every candidate anyway; the coverage line says
-  how many of the stored records the run actually reached.
+  the archive families holds every candidate anyway; so does any *candidate*
+  the retained tree lacks but the fixture tree has -- 96 of them across
+  ten elections, which `--apply` used to be unable to reach at all while
+  the fixture run went on reporting them as drifted (issue #101). The
+  coverage line says how many of the stored records the run actually reached.
 
 The comparison is structural, not textual: both records are walked in parallel
 and every differing JSON path is classified `added` / `removed` / `changed` /
@@ -121,22 +124,21 @@ def _parse_chunk(args: tuple[str, list[str] | None, str, str]) -> tuple[int, lis
     return len(results), anomalies, None
 
 
-def reparse(
+def _reparse_source(
     election_id: str,
     samples_root: Path,
+    candidate_ids: list[str] | None,
     output_root: Path,
     jobs: int,
 ) -> tuple[int, list[dict[str, Any]], list[str]]:
-    """Parse a whole sample tree into `output_root`. Returns (parsed, anomalies, errors)."""
-    output_root.mkdir(parents=True, exist_ok=True)
-
+    """Parse one sample tree, or a named subset of it, into `output_root`."""
     if jobs <= 1:
         parsed, anomalies, error = _parse_chunk(
-            (election_id, None, str(samples_root), str(output_root))
+            (election_id, candidate_ids, str(samples_root), str(output_root))
         )
         return parsed, anomalies, [error] if error else []
 
-    ids = candidate_dirs(samples_root)
+    ids = candidate_ids if candidate_ids is not None else candidate_dirs(samples_root)
     size = chunk_size(len(ids), jobs)
     chunks = [
         (election_id, ids[start : start + size], str(samples_root), str(output_root))
@@ -156,6 +158,27 @@ def reparse(
             f"enumeration mismatch: {len(ids)} candidate directories, {parsed} parsed."
             " Re-run with --jobs 1, which lets the module enumerate its own tree."
         )
+    return parsed, anomalies, errors
+
+
+def reparse(
+    election_id: str,
+    sources: list[tuple[Path, list[str] | None]],
+    output_root: Path,
+    jobs: int,
+) -> tuple[int, list[dict[str, Any]], list[str]]:
+    """Parse every sample source into `output_root`. Returns (parsed, anomalies, errors)."""
+    output_root.mkdir(parents=True, exist_ok=True)
+    parsed = 0
+    anomalies: list[dict[str, Any]] = []
+    errors: list[str] = []
+    for samples_root, candidate_ids in sources:
+        source_parsed, source_anomalies, source_errors = _reparse_source(
+            election_id, samples_root, candidate_ids, output_root, jobs
+        )
+        parsed += source_parsed
+        anomalies.extend(source_anomalies)
+        errors.extend(source_errors)
     return parsed, anomalies, errors
 
 
@@ -275,12 +298,33 @@ def write_anomalies(path: Path, anomalies: list[dict[str, Any]]) -> bool:
     return True
 
 
-def resolve_samples_root(repo_root: Path, election_id: str, full: bool) -> Path | None:
+def resolve_sample_sources(
+    repo_root: Path, election_id: str, full: bool
+) -> list[tuple[Path, list[str] | None]]:
+    """Where this election's candidates are read from, in parse order.
+
+    A `--full` run reads `samples-full/`, and the fixture tree fills in the
+    candidates it does not hold. That fallback is per *candidate*, not per
+    election: a handful of candidates per election have a tracked fixture and
+    no retained page (96 of them across ten elections, measured 2026-08-29),
+    and reading only `samples-full/` left exactly those records
+    behind on every `--apply` while the fixture run kept reporting them as
+    drifted -- a gate that fails and an apply that cannot fix it.
+
+    A `None` id list means "whatever the module enumerates in this tree",
+    which is how a single-process run cross-checks the enumeration.
+    """
     retained = repo_root / "samples-full" / election_id
     fixtures = repo_root / "samples" / "html" / election_id
-    if full and retained.is_dir():
-        return retained
-    return fixtures if fixtures.is_dir() else None
+    if not (full and retained.is_dir()):
+        return [(fixtures, None)] if fixtures.is_dir() else []
+
+    sources: list[tuple[Path, list[str] | None]] = [(retained, None)]
+    if fixtures.is_dir():
+        only_in_fixtures = sorted(set(candidate_dirs(fixtures)) - set(candidate_dirs(retained)))
+        if only_in_fixtures:
+            sources.append((fixtures, only_in_fixtures))
+    return sources
 
 
 def stored_record_count(stored_root: Path) -> int:
@@ -303,8 +347,8 @@ def run_election(
         print(f"{election_id}: no data/ directory, skipped")
         return True, 0, Counter()
 
-    samples_root = resolve_samples_root(repo_root, election_id, full)
-    if samples_root is None:
+    sources = resolve_sample_sources(repo_root, election_id, full)
+    if not sources:
         print(f"{election_id}: no sample tree, skipped", file=sys.stderr)
         return False, 0, Counter()
 
@@ -312,14 +356,16 @@ def run_election(
     if fresh_root.exists():
         shutil.rmtree(fresh_root)
 
-    parsed, anomalies, errors = reparse(election_id, samples_root, fresh_root, jobs)
+    parsed, anomalies, errors = reparse(election_id, sources, fresh_root, jobs)
     for error in errors:
         print(f"{election_id}: parse failed\n{error}", file=sys.stderr)
 
     compared, differing, unknown, histogram, differing_records = compare(fresh_root, stored_root)
     stored_total = stored_record_count(stored_root)
 
-    kind = "retained" if samples_root.parent.name == "samples-full" else "fixtures"
+    kind = "retained" if sources[0][0].parent.name == "samples-full" else "fixtures"
+    if len(sources) > 1:
+        kind += f" + {len(sources[1][1] or [])} from fixtures"
     print(
         f"{election_id}: {compared} of {stored_total} stored records re-parsed"
         f" from {kind}, {differing} differ"

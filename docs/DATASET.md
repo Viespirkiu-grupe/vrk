@@ -1642,6 +1642,23 @@ All of these are verbatim from VRK's own pages (verified present in
   employer `If P&amp;C Insurance AS` in `biografija.darbo-patirtis` — the
   source HTML carried `&amp;amp;`, an upstream double-encoding, not a parser
   unescape miss.
+- 20,651 values contain a lowercase letter immediately followed by an
+  uppercase one, and **none of them is a lost line break**. Issue #101 read
+  that pattern as 20,704 "glued run-ons" a whitespace repair would fix;
+  checking 835 of the junctions against the retained HTML found 797 present
+  verbatim, with no tag boundary between the two letters (the misses were a
+  parser-authored enum value and one biography split across files). 13,158 of
+  them are `VšĮ`, the legal-form abbreviation; the rest are company names
+  (`UAB "inChase"`, `DnB`, `GmbH`, `StepArc`) and VRK's own typing (`kAUNO`,
+  `šIAULIŲ`, `Partija tTvarka ir teisingumas`). Inserting spaces there would
+  corrupt 13,000 institution names to fix nothing.
+- 20 values keep a `U+FFFD` replacement character. VRK serves it: fetching a
+  2004 page live on 2026-08-29 returns the character in its own bytes, so the
+  original was destroyed upstream and no re-decode recovers it. These 20 are
+  the ones with no closing quote to say what the character stood for; the 153
+  that have one are restored to the Lithuanian opening quote `„`, and the 30
+  values that were *only* the character (a NUL byte where a biography should
+  be, 28 of them in `2008-seimo`) normalize to `null`.
 
 ### Per-election schemas are deliberately not identical
 
@@ -1654,7 +1671,7 @@ key list itself is election-specific.
 
 ## Correctness fixes behind this corpus
 
-Thirty-six defects were found and fixed while building the newer modules, or by
+Forty-three defects were found and fixed while building the newer modules, or by
 the re-parse gate afterwards. Each had been invisible because the affected
 elections had thin or no test coverage, and each was measured against live
 data after the fix:
@@ -1698,6 +1715,13 @@ data after the fix:
 | an income sentence refused for the figure it does not carry | the 2007 municipal pages state each income form as one sentence, and on 531 lines across 529 records the tax figure is missing from it: "Gauta 4200.00 Lt , išskaičiuota pajamų mokesčio Lt". The pattern required both figures, so the sentence matched nothing and the income went with the tax. Both figures are optional now and the absent one normalizes to null: **522 records gained a declared income** they had always published (issue #98) |
 | the 1990s income floor nobody substituted | the 1996–2000 form prints rows 1 (employment income) and 20 (the total) of its income section, and row 20 fails by rendering 0 against a non-zero row 1, so the parser refuses it: `gautos-pajamos` is null on **4,463 of `1997-kovo-23-savivaldybiu-tarybu`'s 6,276 records** and on 165 more across `2000-kovo-19`, `1996-spalio-20-seimo`, `2000-seimo` and the 1997 Švenčionys repeat — 4,628 in all. Row 1 is published on every one of them and nothing downstream read it, so those candidacies charted as having declared no income at all. The `deklaruotos-pajamos` concept returns the figure with a `saltinis` saying whether it is a declared total or employment income alone; the dashboard and the person index read it. The parser is unchanged — a total the page contradicts stays refused (issue #98) |
 | a backfill that stored the parser's working dict | `scripts/backfill_conviction_details.py` re-parses the 2019 municipal pages, and stored `parse_anketa_html`'s whole return value in `rawData.anketa`: `rows`, plus a `normalized` copy of `normalized.anketa` and a derived `stats`, where the module's own record assembly keeps only `rows`. All **13,666 records** of `2019-kovo-3-savivaldybiu-tarybu` carried the duplicate, and because the stored envelope could never equal what the script compared it against, every re-run would have rewritten every record. Found by `scripts/reparse_diff.py` the day after the backfill landed — the first thing the gate caught that was not already known (issue #91) |
+| money that was `int` here and `float` there | `_parse_eur_amount` and its two era siblings returned an `int` whenever the printed figure happened to be whole, so the type of a money value was a fact about the candidate rather than about the column: **225 money columns held both types, and 4.2 million values sat in one**. Harmless in Python, not harmless in the typed export issue #94 wants. Money is a float everywhere now — `scraper/shared/values.as_money` is the one place that says so — and the corpus was re-parsed to match (issue #101) |
+| the corpus's last money left as a string | three private-interest columns stored the figure VRK printed rather than a number: `id001s[].sandorio-suma` (8,658 values, ten elections), `id001s[].sandorio-suma-lt` (7,047) and `vii-sandoriai[].suma-skaiciais` (2,189) — **17,894 in all**, against a documented invariant that says money is never a string. The currency is load-bearing on the first of them (8,111 euro and 547 litas in one column), so it is now a sibling key, `sandorio-suma-valiuta`. The value-band codes that look numeric (`"001"`) stay strings: their leading zeros are the band (issue #101) |
+| a column headed with two names read as one date | VRK heads two columns of the 2007–2008 interest form `Dovana, data` and `Paslauga, data` — a comma-joined *pair* of column names — and prints both values in the one cell. Slugified they read `dovana-data` and `paslauga-data`, indistinguishable from the corpus's 21 other date keys until you read a value (`"Kaimo sodyba su žeme, 2006-11-01"`). Every one of the 166 rows across three elections held a gift or a service where a date was promised; each is now the pair it names, **129 gift descriptions and 24 service descriptions recovered** with the date beside them. Ten cells in the 2011 Marijampolė by-election print the same date twice (`"2009-12-14 2009-12-14"`, in the page's own source) and now hold it once (issue #101) |
+| a separator that separates nothing | **3,856 values across 30 elections** ended in a stray `,` or `;` — `"Jonas, Rasa, Živilė, Jovita,"`, one list item per separator and one to spare. VRK publishes them that way (1,908 of 1,909 sampled were verbatim in the retained HTML), but a trailing separator says nothing and breaks any consumer that splits the value on it. Dropped in `clean_value`, which every era's text normalizer now calls; a full stop is kept, because a sentence is allowed to end (issue #101) |
+| a biography that was a NUL byte | 30 records carried a `biografija.tekstas` whose entire content was the replacement character — 28 in `2008-seimo`, one each in 2011 Marijampolė and 2012 Seimo. The page's own `<div class="candidateInfo">` holds a literal `\x00`, which the HTML parser renders as `U+FFFD`; there is no biography behind it. It normalizes to `null` now, like VRK's other three ways of writing "nothing here" (issue #101) |
+| an opening quote destroyed upstream | 173 further values carried an embedded `U+FFFD` where a Lithuanian opening quote belongs — `AB �Lietuvos geležinkeliai"`, 152 of them in `2004-seimo`. Issue #101 read this as a decoding bug of ours; fetching the page live on 2026-08-29 returns the replacement character **in VRK's own bytes**, so nothing recovers the original. Where a `"` closes the phrase the pair is unambiguous and the opening `„` is restored — **153 of the 173**. The other 20 are left exactly as published rather than guessed at, and `tests/test_corpus_value_hygiene.py` pins that 20 so it cannot grow |
+| `--apply` could not reach the candidate it kept reporting | `reparse_diff.py --full` read `samples-full/` and fell back to the fixture tree only for an election with *no* retained tree at all. **96 candidates across ten elections** have a tracked fixture and no retained page, so `--apply` could never write them while the fixture run went on reporting them as drifted — a gate that fails and an apply that cannot fix it. The fallback is per candidate now, and those ten elections re-parse at 100 % coverage, which also let their `anomalies.jsonl` be regenerated for the first time (issue #101) |
 
 Every fix was verified by re-parsing all elections and confirming the diff was
 confined to the intended records.
@@ -1756,6 +1780,18 @@ somebody has to remember:
   can raise them. `fetch-candidate-samples` now takes `--anomalies-path` and the
   batch runner appends it, so a failed tab download will surface in the same
   file the parse stage's findings do.
+
+A third detector joined them for issue #101, and it is a test rather than a
+script because what it guards is not a rate but an invariant:
+**`tests/test_corpus_value_hygiene.py`** walks every record and asserts that
+no value ends in a bare separator, no money column is a string, no column
+holds both an `int` and a `float`, and no value is nothing but a replacement
+character — plus two pinned counts (the 20 surviving `U+FFFD` and the 20,651
+lowercase-uppercase junctions) so that a *rise* in either is a finding. It
+exists because each election owns its parser: a value rule wired into six
+normalizers and not the seventh is invisible until somebody counts, which is
+how the seventh election's records came to look exactly like everybody
+else's. It skips on a checkout with no `data/`, which is every CI run.
 
 The same pass reclassified the corpus's loudest event. 8,598 of the 8,949 are
 one archive declaration page contradicting its own totals *below VRK's own

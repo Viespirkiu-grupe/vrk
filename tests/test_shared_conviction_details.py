@@ -201,13 +201,13 @@ class ConvictionRecordsTests(unittest.TestCase):
                     "nusikalstamos-veikos-rusis-nusikaltimas-ar-baudziamasis-isakymas": None,
                     "kaltes-forma": "Tyčia",
                     "kesinimosi-objektas-baudziamojo-kodekso-skyriaus-ir-straipsnio-pavadinimas": (
-                        "16 str.(senas (iki 2003-05-01));"
+                        "16 str.(senas (iki 2003-05-01))"
                     ),
                     "teistumo-isnykimo-ar-panaikinimo-data": "1996-12-13",
                 },
                 {
                     "kesinimosi-objektas-baudziamojo-kodekso-skyriaus-ir-straipsnio-pavadinimas": (
-                        "82 str. 1 d.(senas (iki 2003-05-01));"
+                        "82 str. 1 d.(senas (iki 2003-05-01))"
                     ),
                     "teistumo-isnykimo-ar-panaikinimo-data": "1996-12-13",
                 },

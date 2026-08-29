@@ -83,6 +83,8 @@ import html as html_module
 import re
 from typing import Any
 
+from scraper.shared.values import as_money, clean_value
+
 # A printed figure: digits (thousands sometimes spaced), on the 2000 pages
 # with two decimals.
 AMOUNT = r"([\d\s]+?(?:[.,]\d{1,2})?)"
@@ -155,22 +157,21 @@ def clean_page_text(html: str) -> str:
     return re.sub(r"[\s ]+", " ", text).strip()
 
 
-def _int(value: str | None) -> int | float | None:
-    """A printed litas figure: an int, or a float when it carries non-zero
-    centai (the 2000 pages; the 1996-1997 figures are whole litas)."""
+def _amount(value: str | None) -> float | None:
+    """A printed litas figure, as a float like every money value in the corpus
+    (the 2000 pages carry centai; the 1996-1997 figures are whole litas)."""
     if not value:
         return None
     compact = re.sub(r"\s", "", value).replace(",", ".")
     if not re.fullmatch(r"\d+(?:\.\d+)?", compact):
         digits = re.sub(r"[^\d]", "", compact)
-        return int(digits) if digits else None
-    amount = float(compact)
-    return int(amount) if amount.is_integer() else amount
+        return as_money(float(digits)) if digits else None
+    return as_money(float(compact))
 
 
-def _section_total(text: str, pattern: str) -> int | None:
+def _section_total(text: str, pattern: str) -> float | None:
     match = re.search(pattern + SECTION_TOTAL_TAIL, text, re.S)
-    return _int(match.group(1)) if match else None
+    return _amount(match.group(1)) if match else None
 
 
 def extract_issue_date(text: str) -> str | None:
@@ -203,10 +204,10 @@ def parse_declaration(html: str) -> dict[str, Any]:
 
     employment = ROW_EMPLOYMENT.search(text)
     total = ROW_TOTAL.search(text)
-    employment_income = _int(employment.group(1)) if employment else None
-    employment_tax = _int(employment.group(2)) if employment else None
-    total_income = _int(total.group(1)) if total else None
-    total_tax = _int(total.group(2)) if total else None
+    employment_income = _amount(employment.group(1)) if employment else None
+    employment_tax = _amount(employment.group(2)) if employment else None
+    total_income = _amount(total.group(1)) if total else None
+    total_tax = _amount(total.group(2)) if total else None
 
     query_error_banner = QUERY_ERROR_BANNER in text
 
@@ -255,9 +256,9 @@ def parse_declaration(html: str) -> dict[str, Any]:
         ),
         "gautos-pajamos-darbo-santykiu": employment_income,
         "sumoketas-pajamu-mokestis-darbo-santykiu": employment_tax,
-        "mokesciu-nepriemoka": _int(m.group(1)) if (m := TAX_ARREARS.search(text)) else None,
+        "mokesciu-nepriemoka": _amount(m.group(1)) if (m := TAX_ARREARS.search(text)) else None,
         "privaloma-sumoketi-mokesciu-ir-sankciju": (
-            _int(m.group(1)) if (m := TAX_PAYABLE.search(text)) else None
+            _amount(m.group(1)) if (m := TAX_PAYABLE.search(text)) else None
         ),
         "valiuta": "Lt",
         "israso-data": extract_issue_date(text),
@@ -286,7 +287,7 @@ def parse_declaration(html: str) -> dict[str, Any]:
             ),
             workplace.groups(),
         ):
-            value = value.strip().rstrip(".").strip()
+            value = clean_value(value.strip().rstrip(".").strip())
             if value:
                 declaration[key] = value
 

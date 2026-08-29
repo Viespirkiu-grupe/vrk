@@ -225,8 +225,11 @@ figures on 10,063 records had nowhere to go (issue #98). They are null in the
 eras whose form does not print them — everything before 2018, and the FR0462
 family of 2004 and 2007.
 
-Values are parsed amounts as JSON numbers (int or float), never strings, and
-`null` where the row was not published or does not parse as a number. The
+Values are parsed amounts as JSON floats, never strings and never ints, and
+`null` where the row was not published or does not parse as a number. The type
+is a property of the column: `202000` is stored `202000.0`, so a column does
+not flip between `int` and `float` because one candidate's figure happened to
+be whole. (Until issue #101 it did, in 225 columns of the corpus.) The
 currency is euro from 2016 on and litas before it, which `valiuta` states
 explicitly (see below). An amount VRK renders without its leading zero
 (`,35 EUR` in the page source) is read as the sub-euro figure it is; no
@@ -371,6 +374,27 @@ Declaration sections are keyed two different ways depending on the page era:
 The concept pairs across the split are `id001j` ≈
 `rysiai-su-juridiniais-asmenimis`, `id001s` ≈ `rysiai-sudarius-sandorius`
 and `id001a` ≈ `kiti-duomenys`.
+
+**Row columns that are not what their key suggests.** Three columns of these
+tables print a money figure and were stored as the string VRK printed until
+issue #101; all three are parsed numbers now, and where the *value* carried
+the currency rather than the heading, the currency is a sibling key:
+
+| column | value | currency |
+|---|---|---|
+| `id001s[].sandorio-suma` | float | `sandorio-suma-valiuta` — `"EUR"` (8,111 rows) or `"Lt"` (547, the 2016-era pages that still declared litas) |
+| `id001s[].sandorio-suma-lt` | float | in the heading; litas throughout |
+| `vii-sandoriai[].suma-skaiciais` | float | in the section; litas throughout |
+
+`*-vertes-litais-kodas` looks numeric and is not: it is VRK's value-band code
+(`"001"`–`"012"`) and stays a string, leading zeros included.
+
+Two columns of the 2007–2008 roman-numbered form are headed with a
+comma-joined *pair* of names — `Dovana, data` and `Paslauga, data` — and print
+both values in the one cell. They slugified to `dovana-data` and
+`paslauga-data`, indistinguishable from the corpus's other date keys until you
+read a value (`"Kaimo sodyba su žeme, 2006-11-01"`). Each is now the pair it
+names: `dovana`/`data` and `paslauga`/`data`.
 
 Within the form-id family the spouse block
 (`deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris`) is dropped by

@@ -32,6 +32,7 @@ import unicodedata
 from typing import Any
 
 from scraper.shared.files import slugify
+from scraper.shared.values import clean_value
 
 # The four facts the block has carried in every era, in the order the pages
 # print them. The 2019/2021 municipal and 2016-2020 Seimas tables give one
@@ -72,10 +73,11 @@ def normalize_text_value(value: Any) -> str | None:
         return str(value)
 
     # As in every election module: fold mixed unicode normalization forms to
-    # NFC so an NFD "ė" string-matches its NFC form. rawData keeps the
+    # NFC so an NFD "ė" string-matches its NFC form, then apply the value
+    # rules every era shares (scraper/shared/values.py). rawData keeps the
     # original bytes.
-    normalized = normalize_space(unicodedata.normalize("NFC", value))
-    if normalized.lower() in MISSING_TEXT_VALUES:
+    normalized = clean_value(normalize_space(unicodedata.normalize("NFC", value)))
+    if normalized is None or normalized.lower() in MISSING_TEXT_VALUES:
         return None
     return normalized
 
