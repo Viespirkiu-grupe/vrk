@@ -251,13 +251,23 @@ vs name-slug-plus-VRK-candidate-id (`ada-grakauskiene-2420696`) in the two
 municipal generals. Never join on it.
 
 The tested recipe (measured in [DASHBOARD.md](DASHBOARD.md)): **normalized
-name + birth date** — NFC-normalize, uppercase and whitespace-collapse the
-name, keep diacritics, pair it with `gimimo-data`. Birth date is present on
-33,120 of 33,121 records (the one exception groups by name alone); the pair
-collides for zero same-election record pairs, and 305 names are shared by
-distinct people that name-only grouping would merge wrongly. Known
-limitation: a person who changes surname between elections (marriage)
-appears as two persons.
+name + birth key** — NFC-normalize, uppercase and whitespace-collapse the
+name, keep diacritics, pair it with `gimimo-data`, falling back to
+`~gimimo-metai` for the 170 archive records that publish a year and no date
+(the 64 records left group by name alone). The pair collides for zero
+same-election record pairs, and 1,989 names are shared by distinct people
+that name-only grouping would merge wrongly.
+
+Two things ride on top of the key (issue #96). Each person in
+`dashboard/people.json` carries a **`pid`** — `p` + 12 hex digits of blake2s
+over the natural `NAME|birth` key, anchored for merged persons at the
+chronologically earliest fragment so it survives rebuilds and new elections
+— and **`scraper/person_overrides.json`** is the checked-in, hand-reviewed
+record of the decisions the key cannot make: a person who changed surname
+between elections is two natural keys, and each reviewed pair is either
+merged (the former keys stay on the person as `"ak"`) or recorded as
+genuinely distinct. `scripts/find_identity_merge_candidates.py` finds and
+scores the candidate pairs; DASHBOARD.md documents the workflow.
 
 ## Joining parties across elections
 

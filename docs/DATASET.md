@@ -1911,11 +1911,12 @@ regenerate their anomaly files; all 18,415 records came back byte-identical.
   sentence and marked
   `anketa.gimimo-data-saltinis: "biografijos-tekstas"`; see
   `docs/OUTPUT_SCHEMA.md` for coverage (692 of 906) and the measured 89%
-  agreement with independently published dates. The remaining 214 records of
-  this family — 157 whose biography gives only a year, 57 with no usable
-  biography — still group by name alone in
-  `scripts/build_person_index.py`'s cross-election identity index, so a
-  same-named person among them cannot be told apart from a namesake. Corpus
+  agreement with independently published dates. Of the remaining 214 records
+  of this family, the 157 whose biography gives only a year group by
+  name + `~year` in `scripts/build_person_index.py`'s cross-election
+  identity index (issue #96), and the 57 with no usable biography group by
+  name alone, so a same-named same-aged person among them cannot be told
+  apart from a namesake. Corpus
   records without a birth date: **217** (down from 908 before the biography
   pass). The 1997 municipal archive
   (`1997-kovo-23-savivaldybiu-tarybu`,

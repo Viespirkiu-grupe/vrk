@@ -13,6 +13,7 @@ import importlib.util
 import json
 import unittest
 from pathlib import Path
+from unittest import mock
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -62,7 +63,7 @@ class BirthDateTests(unittest.TestCase):
 
 
 class GroupingTests(unittest.TestCase):
-    def _build(self, tmp_records):
+    def _build(self, tmp_records, overrides=None):
         # lay records out as data/<election>/<cid>-<election>.json
         import tempfile
 
@@ -75,7 +76,9 @@ class GroupingTests(unittest.TestCase):
                 (d / f"{cid}-{eid}.json").write_text(
                     json.dumps(record, ensure_ascii=False), encoding="utf-8"
                 )
-            return build_person_index.build_index(root)
+            return build_person_index.build_index(
+                root, overrides=overrides or {"decisions": []}
+            )
 
     def test_same_name_and_birth_groups_across_elections(self):
         index = self._build(
@@ -104,6 +107,160 @@ class GroupingTests(unittest.TestCase):
         )
         self.assertEqual(index["stats"]["recordsWithoutBirthDate"], 1)
         self.assertIsNone(index["people"][0]["b"])
+
+    def test_birth_year_keys_apart_what_a_date_would_have(self):
+        # The 1996-1998 Seimas archive publishes no birth date but usually a
+        # year; two same-named archive candidates born in different years
+        # must not collapse into one person just because the date is absent.
+        a = _record("Jonas JONAITIS")
+        a["normalized"]["anketa"] = {"gimimo-metai": 1936}
+        b = _record("Jonas JONAITIS")
+        b["normalized"]["anketa"] = {"gimimo-metai": 1960}
+        index = self._build(
+            [("1996-spalio-20-seimo", "a", a), ("1997-kovo-23-seimo-pakartotiniai", "b", b)]
+        )
+        self.assertEqual(index["stats"]["persons"], 2)
+        self.assertEqual(index["stats"]["recordsWithBirthYearOnly"], 2)
+        self.assertEqual(
+            sorted(p["b"] for p in index["people"]), ["~1936", "~1960"]
+        )
+
+    def test_a_full_date_still_beats_the_year(self):
+        record = _record("Jonas JONAITIS", "1936-02-22")
+        record["normalized"]["anketa"]["gimimo-metai"] = 1936
+        index = self._build([("2000-seimo", "a", record)])
+        self.assertEqual(index["people"][0]["b"], "1936-02-22")
+        self.assertEqual(index["stats"]["recordsWithBirthYearOnly"], 0)
+
+    def test_every_person_carries_a_deterministic_pid(self):
+        index = self._build(
+            [("2016-seimo", "jonas-jonaitis", _record("Jonas JONAITIS", "1970-01-01"))]
+        )
+        person = index["people"][0]
+        # The literal digest pins the hash recipe itself: a quiet change to
+        # the pid formula would silently break every shared deep link.
+        self.assertEqual(person["pid"], build_person_index.person_pid(person["k"]))
+        self.assertEqual(
+            build_person_index.person_pid("JONAS JONAITIS|1970-01-01"),
+            "pff9fb9faa17a",
+        )
+
+    def test_the_pid_survives_a_new_election(self):
+        before = self._build(
+            [("2016-seimo", "a-b", _record("A B", "1970-01-01"))]
+        )
+        after = self._build(
+            [
+                ("2016-seimo", "a-b", _record("A B", "1970-01-01")),
+                ("2020-seimo", "a-b", _record("A B", "1970-01-01")),
+            ]
+        )
+        self.assertEqual(before["people"][0]["pid"], after["people"][0]["pid"])
+
+    def test_a_pid_collision_fails_the_build(self):
+        with mock.patch.object(build_person_index, "person_pid", return_value="pdeadbeef0000"):
+            with self.assertRaises(ValueError):
+                self._build(
+                    [
+                        ("2016-seimo", "a-b", _record("A B", "1970-01-01")),
+                        ("2016-seimo", "c-d", _record("C D", "1980-01-01")),
+                    ]
+                )
+
+    def test_an_override_merge_folds_two_fragments_into_one_person(self):
+        # Surname change between elections: two natural keys, one human.
+        # The canonical fragment is the chronologically earliest, so the pid
+        # does not move when a later election arrives; the other key lands in
+        # "ak" so an old deep link still resolves; the display name and birth
+        # follow the latest record, like an unmerged person's do.
+        merge = {
+            "decisions": [
+                {
+                    "decision": "merge",
+                    "keys": ["A MAIDENYTĖ|1970-01-01", "A MAIDENYTĖ-VED|1970-01-01"],
+                    "why": "test",
+                }
+            ]
+        }
+        index = self._build(
+            [
+                ("2016-seimo", "a-m", _record("A Maidenytė", "1970-01-01")),
+                ("2020-seimo", "a-mv", _record("A MAIDENYTĖ-VED", "1970-01-01")),
+            ],
+            overrides=merge,
+        )
+        self.assertEqual(index["stats"]["persons"], 1)
+        self.assertEqual(index["stats"]["mergedPersons"], 1)
+        person = index["people"][0]
+        self.assertEqual(person["k"], "A MAIDENYTĖ|1970-01-01")
+        self.assertEqual(person["pid"], build_person_index.person_pid(person["k"]))
+        self.assertEqual(person["ak"], ["A MAIDENYTĖ-VED|1970-01-01"])
+        self.assertEqual(person["n"], "A MAIDENYTĖ-VED")
+        self.assertEqual([e["id"] for e in person["e"]], ["2016-seimo", "2020-seimo"])
+        self.assertEqual(index["unmatchedOverrideKeys"], [])
+
+    def test_a_distinct_decision_merges_nothing(self):
+        distinct = {
+            "decisions": [
+                {
+                    "decision": "distinct",
+                    "keys": ["A MAIDENYTĖ|1970-01-01", "A MAIDENYTĖ-VED|1970-01-01"],
+                    "why": "test",
+                }
+            ]
+        }
+        index = self._build(
+            [
+                ("2016-seimo", "a-m", _record("A Maidenytė", "1970-01-01")),
+                ("2020-seimo", "a-mv", _record("A MAIDENYTĖ-VED", "1970-01-01")),
+            ],
+            overrides=distinct,
+        )
+        self.assertEqual(index["stats"]["persons"], 2)
+        self.assertEqual(index["stats"]["mergedPersons"], 0)
+
+    def test_two_pair_entries_chain_into_a_three_way_merge(self):
+        merge = {
+            "decisions": [
+                {"decision": "merge", "keys": ["A B|1970-01-01", "A B|~1970"], "why": "t"},
+                {"decision": "merge", "keys": ["A B|~1970", "A B|?"], "why": "t"},
+            ]
+        }
+        dated = _record("A B", "1970-01-01")
+        year = _record("A B")
+        year["normalized"]["anketa"] = {"gimimo-metai": 1970}
+        bare = _record("A B")
+        index = self._build(
+            [
+                ("2016-seimo", "d", dated),
+                ("1996-spalio-20-seimo", "y", year),
+                ("2020-seimo", "b", bare),
+            ],
+            overrides=merge,
+        )
+        self.assertEqual(index["stats"]["persons"], 1)
+        person = index["people"][0]
+        # 1996 is the earliest candidacy, so the year fragment is canonical —
+        # and the shown birth is still the latest *full* date, not the year.
+        self.assertEqual(person["k"], "A B|~1970")
+        self.assertEqual(sorted(person["ak"]), ["A B|1970-01-01", "A B|?"])
+        self.assertEqual(person["b"], "1970-01-01")
+
+    def test_an_override_key_matching_no_person_is_reported(self):
+        merge = {
+            "decisions": [
+                {
+                    "decision": "merge",
+                    "keys": ["A B|1970-01-01", "GONE PERSON|1900-01-01"],
+                    "why": "test",
+                }
+            ]
+        }
+        index = self._build(
+            [("2016-seimo", "a-b", _record("A B", "1970-01-01"))], overrides=merge
+        )
+        self.assertEqual(index["unmatchedOverrideKeys"], ["GONE PERSON|1900-01-01"])
+        self.assertEqual(index["stats"]["persons"], 1)
 
     def test_elected_note_becomes_the_win_flag(self):
         index = self._build(
