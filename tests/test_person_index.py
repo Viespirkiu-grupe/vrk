@@ -262,25 +262,16 @@ class GroupingTests(unittest.TestCase):
         self.assertEqual(index["unmatchedOverrideKeys"], ["GONE PERSON|1900-01-01"])
         self.assertEqual(index["stats"]["persons"], 1)
 
-    def test_elected_note_becomes_the_win_flag(self):
-        index = self._build(
-            [
-                (
-                    "2016-seimo",
-                    "a-b",
-                    _record("A B", "1970-01-01", elected_note="Išrinkta pagal sąrašą"),
-                ),
-                ("2020-seimo", "a-b", _record("A B", "1970-01-01")),
-            ]
-        )
-        entries = index["people"][0]["e"]
-        self.assertTrue(entries[0].get("w"))
-        self.assertNotIn("w", entries[1])
-
-    def test_results_joined_elected_flag_becomes_the_win_flag(self):
-        # The 2012-2015 pages carry no elected note; the results join sets
-        # kandidatavimas.isrinktas instead, and false/null must not win.
-        winner = _record("A B", "1970-01-01")
+    def test_the_win_flag_is_the_candidacy_resolvers_tri_state(self):
+        # Elected status resolves through scraper/shared/kandidatura.py alone.
+        # The prose-note pathway lives in the parsers now
+        # (candidacy_from_elected_note, issue #100), which emit the root
+        # kandidatavimas block these records carry — measured 2026-08-30, all
+        # 3,522 Išrink…-noted records agree with the block, zero disagree.
+        # "w" is emitted for both known outcomes and omitted where no results
+        # exist, so "lost" and "no results data" are no longer the same
+        # absence (issue #87).
+        winner = _record("A B", "1970-01-01", elected_note="Išrinkta pagal sąrašą")
         winner["kandidatavimas"] = {"vrkCandidateId": "1", "isrinktas": True, "isrinktasKaip": "vienmandate"}
         loser = _record("A B", "1970-01-01")
         loser["kandidatavimas"] = {"vrkCandidateId": "2", "isrinktas": False}
@@ -288,15 +279,27 @@ class GroupingTests(unittest.TestCase):
         unknown["kandidatavimas"] = {"vrkCandidateId": "3", "isrinktas": None}
         index = self._build([("2012-seimo", "a-b", winner), ("2014-ep", "a-b", loser), ("2015-kovo-1-savivaldybiu", "a-b", unknown)])
         entries = index["people"][0]["e"]
-        self.assertTrue(entries[0].get("w"))
-        self.assertNotIn("w", entries[1])
+        self.assertIs(entries[0].get("w"), True)
+        self.assertIs(entries[1].get("w"), False)
         self.assertNotIn("w", entries[2])
+        self.assertEqual(index["stats"]["candidaciesWon"], 1)
+        self.assertEqual(index["stats"]["candidaciesLost"], 1)
+        self.assertEqual(index["stats"]["candidaciesWithoutResultsData"], 1)
+
+    def test_a_prose_note_without_the_block_does_not_win_on_its_own(self):
+        # A record with only the note and no kandidatavimas block does not
+        # exist in the corpus (the parsers guarantee the block); the builder
+        # deliberately reads the one resolver rather than keeping a second
+        # elected rule of its own.
+        noted = _record("A B", "1970-01-01", elected_note="Išrinkta pagal sąrašą")
+        index = self._build([("2016-seimo", "a-b", noted)])
+        self.assertNotIn("w", index["people"][0]["e"][0])
 
     def test_archive_family_list_shaped_candidacy_becomes_the_win_flag(self):
         # The 1996-1999 Seimas archive family's kandidatavimas is a list under
         # `normalized` — a 1996 candidate could stand in a constituency and on
         # a list at once — so any elected candidacy wins the record, and a
-        # record whose candidacies are all false does not.
+        # record whose candidacies are all false lost.
         winner = _record("A B", "1970-01-01")
         winner["normalized"]["kandidatavimas"] = [
             {"apygarda": "Žirmūnų", "isrinktas": False},
@@ -311,8 +314,50 @@ class GroupingTests(unittest.TestCase):
             [("1996-spalio-20-seimo", "a-b", winner), ("1999-kovo-21-seimo-pakartotiniai", "a-b", loser)]
         )
         entries = index["people"][0]["e"]
-        self.assertTrue(entries[0].get("w"))
-        self.assertNotIn("w", entries[1])
+        self.assertIs(entries[0].get("w"), True)
+        self.assertIs(entries[1].get("w"), False)
+
+    def test_candidacy_facets_ride_into_the_index(self):
+        # The dashboard's facets and search work off people.json alone
+        # (issue #87): the interned municipality ("sv"), the mayor flag on a
+        # two-office ballot ("r"), the workplace string the search box
+        # matches ("wp", resolved through docs/concept-map.json), and the
+        # education rank ("ed", scraper/shared/education.py's ordinal).
+        record = _record("A B", "1970-01-01")
+        record["kandidatavimas"] = {
+            "savivaldybe": {"id": "1", "number": 45, "name": "Šiaulių rajono"},
+            "roles": ["meras", "tarybos-narys"],
+            "isrinktas": False,
+        }
+        record["normalized"]["anketa"]["pagrindine-darboviete"] = "AB Žeimena, inspektorė"
+        record["normalized"]["anketa"]["issilavinimas"] = {
+            "aprasas": None,
+            "irasai": [{"issilavinimas": "Aukštasis universitetinis"}],
+        }
+        index = self._build([("2019-kovo-3-savivaldybiu-tarybu", "a-b", record)])
+        entry = index["people"][0]["e"][0]
+        self.assertEqual(index["municipalities"], ["Šiaulių rajono"])
+        self.assertEqual(entry["sv"], 0)
+        self.assertEqual(entry["r"], "m")
+        self.assertEqual(entry["wp"], "AB Žeimena, inspektorė")
+        self.assertEqual(entry["ed"], 10)
+
+    def test_the_mayor_flag_is_only_carried_on_two_office_ballots(self):
+        # On a mero-kind election the kind alone decides the office, so the
+        # per-candidacy flag would be redundant bytes 1,368 times over.
+        record = _record("A B", "1970-01-01")
+        index = self._build([("2021-spalio-10-meru", "a-b", record)])
+        self.assertNotIn("r", index["people"][0]["e"][0])
+
+    def test_the_education_ladder_rides_with_lithuanian_labels(self):
+        # The slugs are ASCII-folded, so de-slugging in the page would lose
+        # the diacritics; the labels travel in people.json, rank-ordered.
+        index = self._build([("2016-seimo", "a-b", _record("A B", "1970-01-01"))])
+        levels = index["educationLevels"]
+        self.assertEqual(len(levels), 13)
+        self.assertEqual(
+            levels[9], {"id": "aukstasis-universitetinis", "label": "Aukštasis universitetinis"}
+        )
 
     def test_litas_declarations_are_converted_to_euro_and_flagged(self):
         # The 2012-2015 pages declare in litas; the index converts at the

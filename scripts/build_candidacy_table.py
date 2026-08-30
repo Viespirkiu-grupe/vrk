@@ -282,39 +282,9 @@ DECLARATION_TO_COLUMN = (
 )
 
 
-# ---------------------------------------------------------------------------
-# Concept-map value resolution (the value twin of field_coverage's resolver)
-# ---------------------------------------------------------------------------
-
-
-def _walk_value(root: Any, segments: list[str]) -> Any:
-    if not segments:
-        return root if field_coverage.is_filled(root) else None
-    if isinstance(root, list):
-        for entry in root:
-            value = _walk_value(entry, segments)
-            if value is not None:
-                return value
-        return None
-    if not isinstance(root, dict) or segments[0] not in root:
-        return None
-    return _walk_value(root[segments[0]], segments[1:])
-
-
-def concept_value(record: dict[str, Any], path: str | list[str]) -> Any:
-    """The first filled value a concept path (or ordered path list) resolves
-    to, with `field_coverage.resolve`'s exact semantics: paths are relative to
-    `normalized`, falling back to the record root for the sections hoisted
-    there, and a list met mid-path fans out over its entries."""
-    paths = [path] if isinstance(path, str) else path
-    for alternative in paths:
-        segments = alternative.split(".")
-        value = _walk_value(record.get("normalized"), segments)
-        if value is None and segments[0] in field_coverage.RECORD_ROOT_SECTIONS:
-            value = _walk_value(record, segments)
-        if value is not None:
-            return value
-    return None
+# The concept-map value resolver lives in field_coverage (`concept_value`),
+# beside the (present, filled) resolver whose semantics it shares.
+concept_value = field_coverage.concept_value
 
 
 # ---------------------------------------------------------------------------

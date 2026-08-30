@@ -15,59 +15,94 @@
   header { padding: 14px 22px; background: var(--panel); border-bottom: 1px solid var(--line); display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap; }
   header h1 { font-size: 17px; margin: 0; }
   header .stats { color: var(--muted); font-size: 13px; }
-  main { display: grid; grid-template-columns: 340px 1fr; gap: 0; flex: 1; min-height: 0; }
-  #left { border-right: 1px solid var(--line); background: var(--panel); display: flex; flex-direction: column; min-height: 0; }
-  #searchbox { padding: 12px; border-bottom: 1px solid var(--line); }
+  header .hbtn { padding: 6px 12px; border: 1px solid var(--line); background: var(--panel); border-radius: 8px; cursor: pointer; font-size: 13.5px; }
+  main { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 0; flex: 1; min-height: 0; }
+  #left { border-right: 1px solid var(--line); background: var(--panel); display: flex; flex-direction: column; min-height: 0; min-width: 0; }
+  #searchbox { padding: 12px 12px 8px; }
   #search { width: 100%; padding: 9px 12px; font-size: 15px; border: 1px solid var(--line); border-radius: 8px; }
-  #filters { padding: 6px 12px 10px; font-size: 13px; color: var(--muted); display: flex; gap: 14px; border-bottom: 1px solid var(--line); }
-  #count { margin-left: auto; }
+  #filters { padding: 0 12px 10px; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px; }
+  #filters select { padding: 5px 6px; border: 1px solid var(--line); border-radius: 6px; font-size: 12.5px; width: 100%; min-width: 0; color: var(--ink); background: var(--panel); }
+  #filterrow { grid-column: 1 / -1; display: flex; gap: 10px; align-items: center; font-size: 13px; color: var(--muted); }
+  #count { flex: 1; }
+  #csvBtn { padding: 4px 10px; border: 1px solid var(--line); background: var(--panel); border-radius: 6px; cursor: pointer; font-size: 12.5px; }
   #results { overflow-y: auto; flex: 1; }
-  .row { padding: 8px 14px; border-bottom: 1px solid var(--line); cursor: pointer; display: flex; justify-content: space-between; gap: 8px; }
+  .row { padding: 7px 14px 7px 10px; border-bottom: 1px solid var(--line); cursor: pointer; display: flex; align-items: flex-start; gap: 8px; }
   .row:hover, .row.active { background: var(--accent-soft); }
+  .row:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .row .rowmain { flex: 1; min-width: 0; overflow: hidden; }
   .row .nm { font-weight: 500; }
   .row .bd { color: var(--muted); font-size: 12.5px; white-space: nowrap; }
+  .row .pt { display: block; color: var(--muted); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .row .cnt { color: var(--accent); font-size: 12.5px; white-space: nowrap; }
+  .row .cmpbox { margin: 4px 0 0; }
+  #cmpbar { padding: 8px 12px; border-top: 1px solid var(--line); display: flex; gap: 8px; align-items: center; font-size: 13px; background: var(--accent-soft); }
+  #cmpbar[hidden] { display: none; }
+  #cmpbar button { padding: 4px 10px; border: 1px solid var(--line); background: var(--panel); border-radius: 6px; cursor: pointer; font-size: 12.5px; }
   #person { padding: 22px 28px; overflow-y: auto; }
   #person .placeholder { color: var(--muted); margin-top: 40px; text-align: center; }
   .phead { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 18px; }
   .phead img { width: 92px; border-radius: 8px; border: 1px solid var(--line); }
   .phead h2 { margin: 0 0 4px; font-size: 22px; }
   .phead .meta { color: var(--muted); }
-  .tabs { display: flex; gap: 6px; margin: 14px 0; }
+  .tabs { display: flex; gap: 6px; margin: 14px 0; flex-wrap: wrap; }
   .tabs button { padding: 7px 14px; border: 1px solid var(--line); background: var(--panel); border-radius: 8px; cursor: pointer; font-size: 14px; }
   .tabs button.on { background: var(--accent); color: #fff; border-color: var(--accent); }
   .ecard { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; margin-bottom: 14px; overflow: hidden; }
-  .ecard > summary { padding: 12px 16px; cursor: pointer; font-weight: 600; list-style: none; display: flex; gap: 10px; align-items: baseline; }
+  .ecard > summary { padding: 12px 16px; cursor: pointer; font-weight: 600; list-style: none; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
   .ecard > summary::-webkit-details-marker { display: none; }
+  .ecard .party { color: var(--muted); font-size: 13px; font-weight: 400; }
   .ecard .win { color: var(--win); font-size: 13px; font-weight: 500; }
+  .ecard .nores { color: var(--muted); font-size: 13px; font-weight: 400; font-style: italic; }
   .ecard .body { padding: 4px 16px 14px; border-top: 1px solid var(--line); }
   .sec { margin: 12px 0; }
   .sec h4 { margin: 0 0 6px; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
   dl { margin: 0; display: grid; grid-template-columns: 260px 1fr; gap: 3px 14px; }
   dt { color: var(--muted); overflow-wrap: anywhere; }
   dd { margin: 0; overflow-wrap: anywhere; white-space: pre-wrap; }
+  dd a { color: var(--accent); font-size: 12.5px; }
   table.rec { border-collapse: collapse; font-size: 13.5px; margin: 4px 0; max-width: 100%; display: block; overflow-x: auto; }
   table.rec th, table.rec td { border: 1px solid var(--line); padding: 4px 8px; text-align: left; vertical-align: top; min-width: 110px; }
   table.rec th { background: var(--accent-soft); font-weight: 600; }
+  .tablewrap { overflow-x: auto; }
   table.cmp { border-collapse: collapse; width: 100%; font-size: 13.5px; background: var(--panel); }
   table.cmp th, table.cmp td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; white-space: pre-line; }
-  table.cmp thead th { background: var(--accent-soft); position: sticky; top: 0; }
+  table.cmp thead th { background: var(--accent-soft); position: sticky; top: 0; z-index: 2; }
+  table.cmp th:first-child { position: sticky; left: 0; background: var(--accent-soft); z-index: 1; min-width: 180px; }
+  table.cmp thead th:first-child { z-index: 3; }
   table.cmp td.null { color: var(--muted); }
+  table.cmp td.unmapped { color: var(--muted); background: var(--bg); }
   .loading { color: var(--muted); padding: 20px; }
-  @media (max-width: 900px) { main { grid-template-columns: 1fr; } #left { max-height: 45vh; } }
+  .aggnote { color: var(--muted); font-size: 13px; margin: 6px 0 14px; }
+  @media (max-width: 900px) { main { grid-template-columns: minmax(0, 1fr); } #left { max-height: 50vh; } }
 </style>
 </head>
 <body>
 <header>
   <h1>VRK kandidatų naršyklė</h1>
   <span class="stats" id="topstats">kraunamas indeksas…</span>
-  <button id="moversBtn" style="margin-left:auto;padding:6px 12px;border:1px solid var(--line);background:var(--panel);border-radius:8px;cursor:pointer;font-size:13.5px">📈 Didžiausi pokyčiai</button>
+  <button id="aggBtn" class="hbtn" style="margin-left:auto">📊 Rinkimų suvestinė</button>
+  <button id="moversBtn" class="hbtn">📈 Didžiausi pokyčiai</button>
 </header>
 <main>
   <div id="left">
-    <div id="searchbox"><input id="search" type="search" placeholder="Ieškokite asmens… (pvz., Puidokas)" autofocus></div>
-    <div id="filters"><span id="count"></span></div>
+    <div id="searchbox"><input id="search" type="search" placeholder="Ieškokite asmens, partijos ar darbovietės…" autofocus></div>
+    <div id="filters">
+      <select id="fElection" title="Rinkimai"></select>
+      <select id="fParty" title="Iškėlusi partija ar komitetas"></select>
+      <select id="fMunicipality" title="Savivaldybė"></select>
+      <select id="fRole" title="Pareigos, į kurias kandidatuota"></select>
+      <select id="fWon" title="Rinkimų rezultatas" style="grid-column: 1 / -1"></select>
+      <div id="filterrow">
+        <span id="count"></span>
+        <button id="csvBtn" title="Atsisiųsti dabartinę atranką CSV formatu">⬇ CSV</button>
+      </div>
+    </div>
     <div id="results"></div>
+    <div id="cmpbar" hidden>
+      <span id="cmpcount"></span>
+      <button id="cmpGo">Palyginti</button>
+      <button id="cmpClear">Išvalyti</button>
+    </div>
   </div>
   <div id="person"><div class="placeholder">Pasirinkite asmenį — matysite rinkimus ir anketų atsakymus.</div></div>
 </main>
@@ -105,7 +140,7 @@ const MONEY_SERIES = [
 // the changeover rate and formatted as euro. Without this the compare table
 // printed the stored number raw, so a 2008 income sat next to a 2024 one
 // 3.4528x too large and unlabelled -- half the corpus declares in litas.
-// A function declaration, so FIELD_MAP below can reference it.
+// A function declaration, so CONCEPT_ROWS below can reference it.
 function moneyCell(value, record) {
   const n = parseMoney(value);
   if (n == null) return null;
@@ -145,6 +180,30 @@ function educationCell(value) {
   }).filter(Boolean);
   if (value.aprasas) lines.unshift(value.aprasas);
   return lines.length ? lines.join("\n") : null;
+}
+
+// The 2020-era biography's work-history table (`biografija.darbo-patirtis`,
+// 17,666 records across 11 elections) -- one line per job, newest first as
+// published. compactValue() would dump its raw keys.
+function workHistoryCell(value) {
+  if (value == null || value === "") return null;
+  if (typeof value !== "object") return String(value);
+  const lines = (value.irasai || []).map((entry) => {
+    const span = [entry["darbo-pradzia"], entry["darbo-pabaiga"]].filter(Boolean).join("–");
+    const what = [entry["darboviete"], entry["pareigos"]].filter(Boolean).join(", ");
+    return [span, what].filter(Boolean).join(" — ");
+  }).filter(Boolean);
+  if (value.aprasas) lines.unshift(value.aprasas);
+  return lines.length ? lines.join("\n") : null;
+}
+
+// A field that is a plain string in some eras and {id, number, name} in
+// others -- `savivaldybe` and the 2019/2023 party list (issue #93's type
+// split). Mirrors scraper/shared/kandidatura.py::_name_of.
+function nameCell(value) {
+  if (value && typeof value === "object" && !Array.isArray(value)) value = value.name;
+  if (value == null || value === "") return null;
+  return String(value);
 }
 
 // A criminal conviction is published in three shapes across the corpus -- a
@@ -214,31 +273,117 @@ function convictionLines(declaration, entries, freeText, related) {
   return lines.join("\n");
 }
 
-// Comparison concepts: label -> normalized paths tried in order per election,
-// plus an optional formatter (value, record) -> string for concepts a bare
-// compactValue() renders wrongly.
-const FIELD_MAP = [
-  ["Einamos pareigos", ["anketa.einamos-pareigos"]],
-  ["Pagrindinė darbovietė", ["anketa.pagrindine-darboviete"]],
-  ["Išsilavinimas", ["anketa.issilavinimas", "biografija.issilavinimas"], educationCell],
-  ["Šeiminė padėtis", ["anketa.seimine-padetis", "biografija.seimine-padetis"]],
-  ["Užsienio kalbos", ["anketa.uzsienio-kalbos", "biografija.uzsienio-kalbos"]],
-  ["Privalomas registruoti turtas", ["turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas"], moneyCell],
-  ["Piniginės lėšos", ["turto-ir-pajamu-deklaracijos.pinigines-lesos"], moneyCell],
-  ["Gautos pajamos", ["turto-ir-pajamu-deklaracijos.gautos-pajamos"], incomeCell],
-  // 1996-1997 only: that form sums turtas and piniginės lėšos, and prints
-  // employment income separately from the total. On the 1997 municipal
-  // election the total is usually unusable, so the employment row is the only
-  // income figure those records have -- without this row they read as blank.
-  ["Turtas ir piniginės lėšos (metų pabaigoje)", ["turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pabaigoje"], moneyCell],
-  ["Turtas ir piniginės lėšos (metų pradžioje)", ["turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pradzioje"], moneyCell],
-  ["Per metus įsigytas turtas", ["turto-ir-pajamu-deklaracijos.kalendoriniais-metais-isigytas-turtas"], moneyCell],
-  ["Gautos pajamos (darbo santykiai)", ["turto-ir-pajamu-deklaracijos.gautos-pajamos-darbo-santykiu"], moneyCell],
-  ["Teistumas", ["anketa.pareiskimai.ar-buvote-pripazintas-kaltu"], convictionCell],
+// Comparison rows. Each names a concept from docs/concept-map.json -- the
+// checked-in, corpus-verified bridge whose per-election paths
+// scripts/field_coverage.py gates against the data -- so this file carries
+// no dotted path of its own and cannot drift from the corpus the way its
+// old hand-maintained FIELD_MAP did (issue #87). `fallbacks` chains concepts
+// that are one question split across page eras: einamos-pareigos is the
+// 2020-on wording of the pre-2020 pagrindine-darboviete, and without the
+// chain each half rendered permanently empty for the other's era. A `format`
+// is (value, record) => string for concepts a bare compactValue() renders
+// wrongly; `derived: true` marks concepts the formatter resolves from the
+// whole record (the map's `derived` block), so no path lookup happens.
+const CONCEPT_ROWS = [
+  { concept: "einamos-pareigos", fallbacks: ["pagrindine-darboviete"], label: "Einamos pareigos / darbovietė" },
+  { concept: "darbo-patirtis", format: workHistoryCell },
+  { concept: "issilavinimas", format: educationCell },
+  { concept: "iskele", format: nameCell },
+  { concept: "naryste-politinese-organizacijose" },
+  { concept: "savivaldybe", format: nameCell },
+  { concept: "seimine-padetis" },
+  { concept: "uzsienio-kalbos" },
+  { concept: "privalomas-registruoti-turtas", format: moneyCell },
+  { concept: "pinigines-lesos", format: moneyCell },
+  { concept: "gautos-pajamos", format: incomeCell },
+  { concept: "turtas-ir-pinigines-lesos", format: moneyCell },
+  { concept: "turtas-ir-pinigines-lesos-metu-pradzioje", format: moneyCell },
+  { concept: "kalendoriniais-metais-isigytas-turtas", format: moneyCell },
+  { concept: "gautos-pajamos-darbo-santykiu", format: moneyCell },
+  { concept: "teistumas", derived: true, format: convictionCell },
 ];
 
+// The office a candidacy ran for: the election's kind decides it everywhere
+// except the council-and-mayor ballots, where the record itself says which
+// via "r" (scripts/build_person_index.py, from scraper/shared/kandidatura.py).
+const ROLE_LABELS = new Map([
+  ["s", "Seimo narys"], ["t", "Tarybos narys"], ["m", "Meras"],
+  ["p", "Prezidentas"], ["e", "EP narys"],
+]);
+const ROLE_BY_KIND = { seimo: "s", ep: "e", prezidento: "p", mero: "m" };
+function roleOf(e) {
+  const kind = (ELECTIONS.get(e.id) || {}).kind;
+  return ROLE_BY_KIND[kind] || (e.r === "m" ? "m" : "t");
+}
+
+// ---------------------------------------------------------------------------
+// Labels. Section headings and dt keys used to render as raw slugs
+// ("turto-ir-pajamu-deklaracijos", 1,234 pairs on one person page). The
+// Lithuanian labels come from docs/concept-map.json (label-lt, built at boot
+// into CONCEPT_LABELS/SEGMENT_LABELS); the record sections, which are not
+// concepts, are the bounded 11-name set below; anything else de-slugs, which
+// cannot restore diacritics but beats the slug.
+// ---------------------------------------------------------------------------
+const SECTION_LABELS = {
+  "profilis": "Profilis",
+  "anketa": "Anketa",
+  "biografija": "Biografija",
+  "kandidatavimas": "Kandidatavimas",
+  "gyvenamoji-vieta": "Gyvenamoji vieta",
+  "turto-ir-pajamu-deklaracijos": "Turto ir pajamų deklaracijos",
+  "privaciu-interesu-deklaracija": "Privačių interesų deklaracija",
+  "politines-kampanijos-dalyvio-duomenys": "Politinės kampanijos dalyvio duomenys",
+  "programa": "Programa",
+  "kita": "Kita",
+  "patiketiniai": "Patikėtiniai",
+  // High-frequency keys that are not concepts and whose de-slug loses its
+  // diacritics badly.
+  "vardas-pavarde": "Vardas ir pavardė",
+  "pastaba": "Pastaba",
+  "pareiskimai": "Pareiškimai",
+  "anksciau-isrinktas": "Anksčiau išrinktas",
+  "politine-organizacija": "Politinė organizacija",
+  "kandidatuoja-i": "Kandidatuoja į",
+  "isrinktas": "Išrinktas",
+  "isrinktasKaip": "Išrinktas kaip",
+  "valiuta": "Valiuta",
+  "seimos-nariai": "Šeimos nariai",
+  "teisiniai-argumentai": "Teisiniai argumentai",
+  // The root kandidatavimas block's camelCase keys, which would otherwise
+  // de-slug into English ("Vrk candidate id").
+  "vrkCandidateId": "VRK kandidato id",
+  "roles": "Kandidatuoja į",
+  "vienmandate": "Vienmandatė apygarda",
+  "daugiamandate": "Daugiamandatė (sąrašas)",
+  "sarasas": "Sąrašas",
+  "numerisSarase": "Numeris sąraše",
+  "porinkiminisNumerisSarase": "Porinkiminis numeris sąraše",
+  "listNumber": "Sąrašo numeris",
+  "listPosition": "Numeris sąraše",
+  "postElectionPosition": "Porinkiminis numeris sąraše",
+  "rezultatuSaltinis": "Rezultatų šaltinis",
+  "name": "Pavadinimas",
+  "number": "Numeris",
+};
+
+function deslug(key) {
+  const words = String(key)
+    .replace(/([a-ząčęėįšųūž])([A-ZĄČĘĖĮŠŲŪŽ])/g, "$1 $2")
+    .replace(/-/g, " ")
+    .toLowerCase();
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
+let CONCEPT_LABELS = {};
+let SEGMENT_LABELS = {};
+function labelFor(key) {
+  return SECTION_LABELS[key] || CONCEPT_LABELS[key] || SEGMENT_LABELS[key] || deslug(key);
+}
+
 let INDEX = null;
+let CONCEPTS = {};
 const recordCache = new Map();
+const compareSet = new Map();
 
 const fold = (s) => (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase();
 
@@ -249,12 +394,55 @@ const PLURAL = new Intl.PluralRules("lt");
 const plural = (n, one, few, rest) => ({ one, few, many: rest, other: rest })[PLURAL.select(n)];
 const fmtInt = (n) => n.toLocaleString("lt-LT");
 
+function bootFailed(err) {
+  const message = `Nepavyko įkelti duomenų: ${err.message || err}. ` +
+    "Ar serveris paleistas iš saugyklos šaknies, šalia data/ ir docs/? " +
+    "Paleiskite: python3 scripts/serve_dashboard.py";
+  document.getElementById("topstats").textContent = "indekso įkelti nepavyko";
+  const root = document.getElementById("person");
+  root.innerHTML = "";
+  const div = document.createElement("div");
+  div.className = "placeholder";
+  div.textContent = message;
+  root.appendChild(div);
+}
+
 async function boot() {
   // The index changes after every corpus update; a cached stale copy makes
-  // the app quietly disagree with the data on disk.
-  const res = await fetch("people.json", { cache: "no-store" });
-  INDEX = await res.json();
+  // the app quietly disagree with the data on disk. The concept map rides
+  // along: the comparison rows resolve through it, so the page carries no
+  // path list of its own.
+  let conceptMap;
+  try {
+    const [indexRes, mapRes] = await Promise.all([
+      fetch("people.json", { cache: "no-store" }),
+      fetch("../docs/concept-map.json", { cache: "no-store" }),
+    ]);
+    if (!indexRes.ok) throw new Error(`people.json: HTTP ${indexRes.status}`);
+    if (!mapRes.ok) throw new Error(`docs/concept-map.json: HTTP ${mapRes.status}`);
+    INDEX = await indexRes.json();
+    conceptMap = await mapRes.json();
+  } catch (err) {
+    bootFailed(err);
+    return;
+  }
   ELECTIONS = new Map((INDEX.elections || []).map(e => [e.id, e]));
+  CONCEPTS = conceptMap.concepts || {};
+  for (const [id, spec] of Object.entries(CONCEPTS)) {
+    if (!spec["label-lt"]) continue;
+    CONCEPT_LABELS[id] = spec["label-lt"];
+    // The last path segment usually spells the concept's own id, but not
+    // always (issilavinimas resolves biografija.issilavinimas and friends);
+    // both spellings label the raw per-election pane.
+    for (const path of Object.values(spec.paths || {})) {
+      for (const p of Array.isArray(path) ? path : [path]) {
+        SEGMENT_LABELS[p.split(".").pop()] = spec["label-lt"];
+      }
+    }
+  }
+  for (const [id, spec] of Object.entries(conceptMap.derived || {})) {
+    if (spec["label-lt"]) CONCEPT_LABELS[id] = spec["label-lt"];
+  }
   const s = INDEX.stats;
   document.getElementById("topstats").textContent =
     `${fmtInt(s.persons)} ${plural(s.persons, "asmuo", "asmenys", "asmenų")} · ` +
@@ -264,13 +452,34 @@ async function boot() {
   // haystack folds in each natural key's name — the canonical key's (the
   // display name follows the latest election and can differ from it: the
   // Gerasimovičienė→Gasperavičienė remarriage displays only the second
-  // name) and every merged-away fragment's from "ak".
+  // name) and every merged-away fragment's from "ak" — plus the canonical
+  // names of every party that nominated them and each candidacy's
+  // workplace/position string, so the box also answers "valstiečių" or
+  // "Vilniaus universitetas" (issue #87).
   for (const p of INDEX.people) {
     const names = [p.k, ...(p.ak || [])].map(k => k.slice(0, k.lastIndexOf("|")));
-    p._f = fold([...new Set([p.n, ...names])].join(" "));
+    const partyNames = [...new Set(p.e.map(e => e.p).filter(Boolean))]
+      .flatMap(id => { const party = INDEX.parties[id] || {}; return [party.n, party.f]; });
+    const workplaces = p.e.map(e => e.wp);
+    p._f = fold([...new Set([p.n, ...names, ...partyNames, ...workplaces])].filter(Boolean).join(" "));
   }
+  buildFilters();
   document.getElementById("search").addEventListener("input", renderList);
+  document.getElementById("search").addEventListener("keydown", (ev) => {
+    if (ev.key === "ArrowDown") {
+      const first = document.querySelector("#results .row");
+      if (first) { ev.preventDefault(); first.focus(); }
+    }
+  });
   document.getElementById("moversBtn").addEventListener("click", showMovers);
+  document.getElementById("aggBtn").addEventListener("click", showAggregates);
+  document.getElementById("csvBtn").addEventListener("click", exportCSV);
+  document.getElementById("cmpGo").addEventListener("click", showCompare);
+  document.getElementById("cmpClear").addEventListener("click", () => {
+    compareSet.clear();
+    updateCompareBar();
+    renderList();
+  });
   renderList();
   // The pid is the durable deep link (issue #96). A pre-pid name|birth hash
   // and a merged-away fragment's key both still resolve — showPerson then
@@ -284,18 +493,112 @@ async function boot() {
   }
 }
 
-// Matching stops at MATCH_CAP so a bare search does not walk all 47k people;
+// ---------------------------------------------------------------------------
+// The left pane: search + facets over the index (issue #87). Every filter
+// works off people.json alone — no record fetches — and they conjoin at the
+// candidacy level: a person matches when at least one of their candidacies
+// passes every active filter.
+// ---------------------------------------------------------------------------
+
+function addOption(select, value, label) {
+  const option = document.createElement("option");
+  option.value = value;
+  option.textContent = label;
+  select.appendChild(option);
+}
+
+function buildFilters() {
+  const elections = [...(INDEX.elections || [])].reverse();
+  const fElection = document.getElementById("fElection");
+  addOption(fElection, "", "— visi rinkimai —");
+  for (const e of elections) addOption(fElection, e.id, e.shortName || e.id);
+
+  const partyCounts = new Map();
+  for (const p of INDEX.people) {
+    for (const e of p.e) if (e.p) partyCounts.set(e.p, (partyCounts.get(e.p) || 0) + 1);
+  }
+  const fParty = document.getElementById("fParty");
+  addOption(fParty, "", "— visi iškėlėjai —");
+  const byCount = [...partyCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  for (const [id, count] of byCount) {
+    addOption(fParty, id, `${(INDEX.parties[id] || {}).n || id} (${fmtInt(count)})`);
+  }
+
+  const fMunicipality = document.getElementById("fMunicipality");
+  addOption(fMunicipality, "", "— visos savivaldybės —");
+  (INDEX.municipalities || [])
+    .map((name, i) => [name, i])
+    .sort((a, b) => a[0].localeCompare(b[0], "lt"))
+    .forEach(([name, i]) => addOption(fMunicipality, String(i), name));
+
+  const fRole = document.getElementById("fRole");
+  addOption(fRole, "", "— visos pareigos —");
+  for (const [code, label] of ROLE_LABELS) addOption(fRole, code, label);
+
+  const fWon = document.getElementById("fWon");
+  addOption(fWon, "", "— visi rezultatai —");
+  addOption(fWon, "won", "tik išrinkti");
+  addOption(fWon, "lost", "tik neišrinkti");
+  addOption(fWon, "unknown", "be rezultatų duomenų");
+
+  for (const id of ["fElection", "fParty", "fMunicipality", "fRole", "fWon"]) {
+    document.getElementById(id).addEventListener("change", renderList);
+  }
+}
+
+function activeFilters() {
+  const f = {
+    election: document.getElementById("fElection").value,
+    party: document.getElementById("fParty").value,
+    municipality: document.getElementById("fMunicipality").value,
+    role: document.getElementById("fRole").value,
+    won: document.getElementById("fWon").value,
+  };
+  f.any = !!(f.election || f.party || f.municipality || f.role || f.won);
+  return f;
+}
+
+// The tri-state elected flag (issue #87): `w` is true, false, or absent —
+// absent meaning VRK published no results for that ballot (the 1997
+// municipal pair, five 2000 municipalities), which is not a loss.
+function candidacyMatches(e, f) {
+  if (f.election && e.id !== f.election) return false;
+  if (f.party && e.p !== f.party) return false;
+  if (f.municipality !== "" && e.sv !== +f.municipality) return false;
+  if (f.role && roleOf(e) !== f.role) return false;
+  if (f.won === "won" && e.w !== true) return false;
+  if (f.won === "lost" && e.w !== false) return false;
+  if (f.won === "unknown" && e.w !== undefined) return false;
+  return true;
+}
+
+function personMatches(p, q, f) {
+  if (q && !p._f.includes(q)) return false;
+  if (f.any && !p.e.some(e => candidacyMatches(e, f))) return false;
+  return true;
+}
+
+// Matching stops at MATCH_CAP so a bare search does not walk all 60k people;
 // only the first RENDER_LIMIT rows are built. The count says both numbers --
 // it used to report the match count alone ("5,000+ shown") while 300 rows
 // existed, which read as a claim about what was on screen.
 const MATCH_CAP = 5000;
 const RENDER_LIMIT = 300;
 
+function latestPartyName(p) {
+  for (let i = p.e.length - 1; i >= 0; i--) {
+    const id = p.e[i].p;
+    if (id) return (INDEX.parties[id] || {}).n || id;
+  }
+  return null;
+}
+
 function renderList() {
   const q = fold(document.getElementById("search").value.trim());
+  const f = activeFilters();
   const out = [];
   for (const p of INDEX.people) {
-    if (q && !p._f.includes(q)) continue;
+    if (!personMatches(p, q, f)) continue;
     out.push(p);
     if (out.length >= MATCH_CAP) break;
   }
@@ -310,15 +613,111 @@ function renderList() {
     const div = document.createElement("div");
     div.className = "row";
     div.dataset.key = p.pid;
-    div.innerHTML = `<span><span class="nm"></span> <span class="bd"></span></span>` +
-      `<span class="cnt">Rinkimų: ${p.e.length}</span>`;
-    div.querySelector(".nm").textContent = p.n;
-    div.querySelector(".bd").textContent = p.b ? `· ${p.b}` : "· gimimo data nežinoma";
+    div.tabIndex = 0;
+    div.setAttribute("role", "button");
+    const box = document.createElement("input");
+    box.type = "checkbox";
+    box.className = "cmpbox";
+    box.title = "Pažymėti palyginimui";
+    box.checked = compareSet.has(p.pid);
+    box.addEventListener("click", (ev) => ev.stopPropagation());
+    box.addEventListener("change", () => {
+      if (box.checked) compareSet.set(p.pid, p);
+      else compareSet.delete(p.pid);
+      updateCompareBar();
+    });
+    const main = document.createElement("span");
+    main.className = "rowmain";
+    const nm = document.createElement("span"); nm.className = "nm"; nm.textContent = p.n;
+    const bd = document.createElement("span"); bd.className = "bd";
+    bd.textContent = p.b ? `· ${p.b}` : "· gimimo data nežinoma";
+    main.append(nm, " ", bd);
+    const partyName = latestPartyName(p);
+    if (partyName) {
+      const pt = document.createElement("span"); pt.className = "pt";
+      pt.textContent = partyName;
+      main.appendChild(pt);
+    }
+    const cnt = document.createElement("span");
+    cnt.className = "cnt";
+    cnt.textContent = `Rinkimų: ${p.e.length}`;
+    div.append(box, main, cnt);
     div.addEventListener("click", () => showPerson(p));
+    div.addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); showPerson(p); }
+      else if (ev.key === "ArrowDown" && div.nextElementSibling) { ev.preventDefault(); div.nextElementSibling.focus(); }
+      else if (ev.key === "ArrowUp") {
+        ev.preventDefault();
+        if (div.previousElementSibling) div.previousElementSibling.focus();
+        else document.getElementById("search").focus();
+      }
+    });
     frag.appendChild(div);
   }
   const results = document.getElementById("results");
   results.replaceChildren(frag);
+}
+
+function updateCompareBar() {
+  const bar = document.getElementById("cmpbar");
+  bar.hidden = compareSet.size === 0;
+  const n = compareSet.size;
+  document.getElementById("cmpcount").textContent =
+    `pažymėta: ${n} ${plural(n, "asmuo", "asmenys", "asmenų")}`;
+  document.getElementById("cmpGo").disabled = n < 2;
+}
+
+// ---------------------------------------------------------------------------
+// CSV export of the current selection (issue #87). Runs the same predicate
+// as the list but uncapped, one row per matching (person, candidacy) pair;
+// with no candidacy filter active a matched person exports whole. Semicolon
+// separated and BOM-prefixed, which is what lt-LT Excel expects.
+// ---------------------------------------------------------------------------
+
+function csvField(value) {
+  if (value == null) return "";
+  const s = String(value);
+  return /[;"\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+}
+
+function exportCSV() {
+  const q = fold(document.getElementById("search").value.trim());
+  const f = activeFilters();
+  const header = [
+    "pid", "vardas_pavarde", "gimimo_data", "rinkimai", "data",
+    "pareigos", "savivaldybe", "partijos_id", "partija", "isrinktas",
+    "issilavinimas",
+    "turtas_eur", "pinigines_lesos_eur", "pajamos_eur",
+    "turtas_ir_lesos_eur", "deklaruota_litais", "tik_darbo_santykiu_pajamos",
+    "darboviete",
+  ];
+  const rows = [header];
+  for (const p of INDEX.people) {
+    if (!personMatches(p, q, f)) continue;
+    for (const e of p.e) {
+      if (f.any && !candidacyMatches(e, f)) continue;
+      const m = e.m || [];
+      rows.push([
+        p.pid, p.n, p.b || "",
+        e.id, (ELECTIONS.get(e.id) || {}).date || "",
+        ROLE_LABELS.get(roleOf(e)) || "",
+        e.sv != null ? INDEX.municipalities[e.sv] : "",
+        e.p || "", e.p ? ((INDEX.parties[e.p] || {}).n || "") : "",
+        e.w === true ? "taip" : e.w === false ? "ne" : "",
+        e.ed ? ((INDEX.educationLevels || [])[e.ed - 1] || {}).label || "" : "",
+        m[0] ?? "", m[1] ?? "", m[2] ?? "", m[3] ?? "",
+        e.lt ? "taip" : "", e.ds ? "taip" : "",
+        e.wp || "",
+      ]);
+    }
+  }
+  const body = rows.map(r => r.map(csvField).join(";")).join("\r\n");
+  const blob = new Blob(["\ufeff" + body], { type: "text/csv;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "vrk-atranka.csv";
+  a.click();
+  URL.revokeObjectURL(a.href);
 }
 
 function recordFile(e) {
@@ -355,21 +754,104 @@ function resolvePath(obj, path) {
   return cur === undefined ? null : cur;
 }
 
+// ---------------------------------------------------------------------------
+// Concept resolution — the JS twin of field_coverage.concept_value, and held
+// to it by tests/test_dashboard_concept_rows.py. "Filled" is not truthiness
+// (0 is a declared amount, false a real answer); a path is relative to
+// `normalized` and falls back to the record root for the hoisted sections; a
+// list met mid-path fans out over its entries; a concept's mapping may be a
+// list of alternative paths, first filled one wins.
+// ---------------------------------------------------------------------------
+
+const ROOT_SECTIONS = new Set(["kandidatavimas"]);
+
+function isFilledValue(v) {
+  if (v == null) return false;
+  if (typeof v === "string") return v.trim() !== "";
+  if (Array.isArray(v)) return v.length > 0;
+  if (typeof v === "object") return Object.keys(v).length > 0;
+  return true;
+}
+
+function walkValue(root, segments) {
+  if (!segments.length) return isFilledValue(root) ? root : null;
+  if (Array.isArray(root)) {
+    for (const entry of root) {
+      const value = walkValue(entry, segments);
+      if (value != null) return value;
+    }
+    return null;
+  }
+  if (root == null || typeof root !== "object" || !(segments[0] in root)) return null;
+  return walkValue(root[segments[0]], segments.slice(1));
+}
+
+// {mapped, value}: mapped=false means the concept map lists no path for this
+// election — the form never asked — which the table shows apart from an
+// answer the form invited and did not get.
+function resolveConcept(record, electionId, conceptId) {
+  const spec = CONCEPTS[conceptId];
+  const mapping = spec && spec.paths ? spec.paths[electionId] : null;
+  if (mapping == null) return { mapped: false, value: null };
+  const paths = Array.isArray(mapping) ? mapping : [mapping];
+  for (const path of paths) {
+    const segments = path.split(".");
+    let value = walkValue(record.normalized || {}, segments);
+    if (value == null && ROOT_SECTIONS.has(segments[0])) value = walkValue(record, segments);
+    if (value != null) return { mapped: true, value };
+  }
+  return { mapped: true, value: null };
+}
+
+// Resolve one comparison row against one record: the row's concept, then its
+// era-fallback concepts. A derived row resolves nothing here — its formatter
+// reads the whole record.
+function resolveRow(row, record, electionId) {
+  if (row.derived) return { mapped: true, value: null };
+  let mapped = false;
+  for (const conceptId of [row.concept, ...(row.fallbacks || [])]) {
+    const res = resolveConcept(record, electionId, conceptId);
+    mapped = mapped || res.mapped;
+    if (res.value != null) return { mapped: true, value: res.value };
+  }
+  return { mapped, value: null };
+}
+
+function rowLabel(row) {
+  return row.label || CONCEPT_LABELS[row.concept] || deslug(row.concept);
+}
+
 function compactValue(v) {
   if (v == null || v === "") return null;
+  if (typeof v === "boolean") return v ? "taip" : "ne";
   if (typeof v !== "object") return String(v);
   if (Array.isArray(v)) {
     const parts = v.map(compactValue).filter(Boolean);
     return parts.length ? parts.join("; ") : null;
   }
   const parts = Object.entries(v)
-    .map(([k, x]) => { const c = compactValue(x); return c == null ? null : `${k}: ${c}`; })
+    .map(([k, x]) => { const c = compactValue(x); return c == null ? null : `${labelFor(k)}: ${c}`; })
     .filter(Boolean);
   return parts.length ? parts.join("; ") : null;
 }
 
+// Source links out of a `nuorodos` list — only http(s), textContent only.
+function appendSourceLinks(dd, nuorodos) {
+  for (const url of Array.isArray(nuorodos) ? nuorodos : []) {
+    if (typeof url !== "string" || !/^https?:\/\//.test(url)) continue;
+    dd.appendChild(document.createTextNode(" "));
+    const a = document.createElement("a");
+    a.href = url;
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.textContent = "šaltinis";
+    dd.appendChild(a);
+  }
+}
+
 function renderValue(v) {
   if (v == null || v === "") { const s = document.createElement("span"); s.textContent = "—"; s.style.color = "var(--muted)"; return s; }
+  if (typeof v === "boolean") { const s = document.createElement("span"); s.textContent = v ? "taip" : "ne"; return s; }
   if (typeof v !== "object") { const s = document.createElement("span"); s.textContent = String(v); return s; }
   if (Array.isArray(v)) {
     if (v.every(x => x == null || typeof x !== "object")) {
@@ -378,7 +860,7 @@ function renderValue(v) {
     const keys = [...new Set(v.flatMap(x => (x && typeof x === "object" && !Array.isArray(x)) ? Object.keys(x) : []))];
     const t = document.createElement("table"); t.className = "rec";
     t.innerHTML = "<thead><tr></tr></thead><tbody></tbody>";
-    for (const k of keys) { const th = document.createElement("th"); th.textContent = k; t.tHead.rows[0].appendChild(th); }
+    for (const k of keys) { const th = document.createElement("th"); th.textContent = labelFor(k); t.tHead.rows[0].appendChild(th); }
     for (const item of v) {
       const tr = t.tBodies[0].insertRow();
       for (const k of keys) tr.insertCell().appendChild(renderValue(item && typeof item === "object" ? item[k] : item));
@@ -388,11 +870,30 @@ function renderValue(v) {
   const dl = document.createElement("dl");
   for (const [k, x] of Object.entries(v)) {
     if (k === "nuotrauka") continue; // rendered as the header photo instead
-    const dt = document.createElement("dt"); dt.textContent = k;
-    const dd = document.createElement("dd"); dd.appendChild(renderValue(x));
+    const dt = document.createElement("dt");
+    const dd = document.createElement("dd");
+    // profilis.kita entries print their own page label; use it over the slug.
+    if (x && typeof x === "object" && !Array.isArray(x)
+        && typeof x.pavadinimas === "string" && "reiksme" in x) {
+      dt.textContent = x.pavadinimas;
+      dd.appendChild(renderValue(x.reiksme));
+      appendSourceLinks(dd, x.nuorodos);
+    } else {
+      dt.textContent = labelFor(k);
+      dd.appendChild(renderValue(x));
+    }
     dl.append(dt, dd);
   }
   return dl;
+}
+
+function partyNameOf(e) {
+  if (!e.p) return null;
+  return (INDEX.parties[e.p] || {}).n || e.p;
+}
+
+function clearActiveRows() {
+  for (const el of document.querySelectorAll(".row")) el.classList.remove("active");
 }
 
 async function showPerson(p) {
@@ -415,22 +916,44 @@ async function showPerson(p) {
     root.appendChild(warn);
   }
   const head = document.createElement("div"); head.className = "phead";
-  for (const [e, r] of loaded) {
-    // Photos are sidecar files since the externalization: both photo fields
-    // carry "photos/<candidateId>.<ext>", resolved against the election dir.
-    // Older corpora may still embed data: URIs; VRK URLs are not hotlinked.
+  // The newest election's portrait, not the oldest: people age, and the
+  // recent photo is the one a reader recognises. Three shapes are accepted:
+  // the externalized sidecar (photos/<id>.<ext>, resolved against the
+  // election dir), VRK's own hosted URL — the only shape 29% of persons have
+  // — and a legacy inline data: URI from a pre-externalization corpus.
+  for (const [e, r] of [...loaded].reverse()) {
     const photo = resolvePath(r, "rawData.profile.photoSrc") || resolvePath(r, "normalized.profilis.nuotrauka");
-    if (!photo) continue;
+    if (typeof photo !== "string" || !photo) continue;
     const img = document.createElement("img");
-    if (photo.startsWith("photos/")) { img.src = `../data/${e.id}/${photo}`; head.appendChild(img); break; }
-    if (photo.startsWith("data:")) { img.src = photo; head.appendChild(img); break; }
+    img.loading = "lazy";
+    img.alt = "";
+    img.addEventListener("error", () => img.remove());
+    if (photo.startsWith("photos/")) img.src = `../data/${e.id}/${photo}`;
+    else if (/^https?:\/\//.test(photo)) img.src = photo;
+    else if (photo.startsWith("data:")) img.src = photo;
+    else continue;
+    head.appendChild(img);
+    break;
   }
   const hd = document.createElement("div");
   const h2 = document.createElement("h2"); h2.textContent = p.n;
   const meta = document.createElement("div"); meta.className = "meta";
+  const won = p.e.filter(e => e.w === true).length;
+  const unknown = p.e.filter(e => e.w === undefined).length;
   meta.textContent = (p.b ? `Gimė ${p.b} · ` : "Gimimo data nežinoma · ") +
-    `rinkimų: ${p.e.length}, laimėta: ${p.e.filter(e => e.w).length}`;
-  hd.append(h2, meta); head.appendChild(hd); root.appendChild(head);
+    `rinkimų: ${p.e.length}, laimėta: ${won}` +
+    (unknown ? `, be rezultatų duomenų: ${unknown}` : "");
+  hd.append(h2, meta);
+  // Who fielded them, across their whole run — distinct canonical nominator
+  // names in first-appearance order, so a party switch reads as one.
+  const partyIds = [...new Set(p.e.map(e => e.p).filter(Boolean))];
+  if (partyIds.length) {
+    const parties = document.createElement("div");
+    parties.className = "meta";
+    parties.textContent = partyIds.map(id => (INDEX.parties[id] || {}).n || id).join(" → ");
+    hd.appendChild(parties);
+  }
+  head.appendChild(hd); root.appendChild(head);
 
   const tabs = document.createElement("div"); tabs.className = "tabs";
   root.appendChild(tabs);
@@ -441,7 +964,14 @@ async function showPerson(p) {
     if (records.length <= 3) card.open = true;
     const sum = document.createElement("summary");
     sum.textContent = electionName(e.id);
-    if (e.w) { const win = document.createElement("span"); win.className = "win"; win.textContent = "✓ išrinktas (-a)"; sum.appendChild(win); }
+    const partyName = partyNameOf(e);
+    if (partyName) {
+      const party = document.createElement("span"); party.className = "party";
+      party.textContent = partyName;
+      sum.appendChild(party);
+    }
+    if (e.w === true) { const win = document.createElement("span"); win.className = "win"; win.textContent = "✓ išrinktas (-a)"; sum.appendChild(win); }
+    else if (e.w === undefined) { const na = document.createElement("span"); na.className = "nores"; na.textContent = "rezultatų duomenų nėra"; sum.appendChild(na); }
     card.appendChild(sum);
     const body = document.createElement("div"); body.className = "body";
     if (r._error) {
@@ -449,9 +979,17 @@ async function showPerson(p) {
       err.textContent = `Nepavyko įkelti: ${r._error}`;
       body.appendChild(err);
     } else {
-      for (const [sec, val] of Object.entries(r.normalized || {})) {
+      const sections = Object.entries(r.normalized || {});
+      // The root kandidatavimas — the pre-2016 candidacy block — never
+      // rendered anywhere: both panes iterated `normalized` alone (issue
+      // #87). The archive families keep theirs inside normalized, so only
+      // the root-held one needs appending.
+      if (r.kandidatavimas && typeof r.kandidatavimas === "object" && !(r.normalized || {}).kandidatavimas) {
+        sections.push(["kandidatavimas", r.kandidatavimas]);
+      }
+      for (const [sec, val] of sections) {
         const wrap = document.createElement("div"); wrap.className = "sec";
-        const h = document.createElement("h4"); h.textContent = sec;
+        const h = document.createElement("h4"); h.textContent = labelFor(sec);
         wrap.appendChild(h); wrap.appendChild(renderValue(val));
         body.appendChild(wrap);
       }
@@ -460,27 +998,34 @@ async function showPerson(p) {
   }
 
   const paneC = document.createElement("div");
+  const cmpWrap = document.createElement("div"); cmpWrap.className = "tablewrap";
   const cmp = document.createElement("table"); cmp.className = "cmp";
   cmp.innerHTML = "<thead><tr><th>Laukas</th></tr></thead><tbody></tbody>";
   for (const [e] of loaded) {
     const th = document.createElement("th");
-    th.textContent = electionName(e.id);
+    th.textContent = electionShortName(e.id);
+    th.title = electionName(e.id);
     cmp.tHead.rows[0].appendChild(th);
   }
-  for (const [label, paths, format] of FIELD_MAP) {
+  for (const row of CONCEPT_ROWS) {
     const tr = cmp.tBodies[0].insertRow();
-    const th = document.createElement("th"); th.textContent = label; tr.appendChild(th);
-    for (const [, r] of loaded) {
-      let v = null;
-      for (const path of paths) { v = resolvePath(r.normalized || {}, path); if (v != null && v !== "") break; }
+    const th = document.createElement("th"); th.textContent = rowLabel(row); tr.appendChild(th);
+    for (const [e, r] of loaded) {
+      const { mapped, value } = resolveRow(row, r, e.id);
+      const v = value;
+      const format = row.format;
       const td = tr.insertCell();
       const c = format ? format(v, r) : compactValue(v);
       td.textContent = c == null ? "—" : c;
-      if (c == null) td.className = "null";
+      if (c == null) {
+        td.className = mapped ? "null" : "null unmapped";
+        if (!mapped) td.title = "Šių rinkimų anketa šio lauko neskelbė";
+      }
       else if (format === moneyCell) td.style.fontVariantNumeric = "tabular-nums";
     }
   }
-  paneC.appendChild(cmp);
+  cmpWrap.appendChild(cmp);
+  paneC.appendChild(cmpWrap);
 
   const paneA = buildAssetPane(loaded);
 
@@ -505,9 +1050,255 @@ async function showPerson(p) {
   paneE.style.display = "";
 }
 
+// ---------------------------------------------------------------------------
+// Side-by-side comparison of hand-picked persons (issue #87) — the project's
+// own goal sentence, previously absent. Columns are persons; every concept
+// row shows each person's newest resolving answer, tagged with its election.
+// ---------------------------------------------------------------------------
+
+async function showCompare() {
+  const persons = [...compareSet.values()];
+  if (persons.length < 2) return;
+  location.hash = "";
+  clearActiveRows();
+  const root = document.getElementById("person");
+  const total = persons.reduce((n, p) => n + p.e.length, 0);
+  root.innerHTML = `<div class="loading">Kraunami įrašai (${total})…</div>`;
+  const perPerson = await Promise.all(persons.map(async p => {
+    const records = await Promise.all(p.e.map(e => fetchRecord(e).then(r => [e, r])));
+    return [p, records.filter(([, r]) => !r._error)];
+  }));
+
+  root.innerHTML = "";
+  const h2 = document.createElement("h2");
+  h2.style.cssText = "margin:0 0 4px;font-size:20px";
+  h2.textContent = "Asmenų palyginimas";
+  root.appendChild(h2);
+  const note = document.createElement("div");
+  note.className = "aggnote";
+  note.textContent = "Kiekviename langelyje — naujausias to asmens atsakymas ir rinkimai, kuriuose jis pateiktas.";
+  root.appendChild(note);
+
+  const wrap = document.createElement("div"); wrap.className = "tablewrap";
+  const t = document.createElement("table"); t.className = "cmp";
+  t.innerHTML = "<thead><tr><th>Laukas</th></tr></thead><tbody></tbody>";
+  for (const [p] of perPerson) {
+    const th = document.createElement("th");
+    th.textContent = `${p.n}\n${p.b || "gimimo data nežinoma"}`;
+    t.tHead.rows[0].appendChild(th);
+  }
+
+  const infoRow = (label, fill) => {
+    const tr = t.tBodies[0].insertRow();
+    const th = document.createElement("th"); th.textContent = label; tr.appendChild(th);
+    for (const [p, records] of perPerson) {
+      const td = tr.insertCell();
+      const c = fill(p, records);
+      td.textContent = c == null ? "—" : c;
+      if (c == null) td.className = "null";
+    }
+  };
+  infoRow("Rinkimų / laimėta", (p) => {
+    const won = p.e.filter(e => e.w === true).length;
+    const unknown = p.e.filter(e => e.w === undefined).length;
+    return `${p.e.length} / ${won}` + (unknown ? ` (be duomenų: ${unknown})` : "");
+  });
+  infoRow("Iškėlusios partijos", (p) => {
+    const ids = [...new Set(p.e.map(e => e.p).filter(Boolean))];
+    return ids.length ? ids.map(id => (INDEX.parties[id] || {}).n || id).join("\n") : null;
+  });
+
+  for (const row of CONCEPT_ROWS) {
+    const tr = t.tBodies[0].insertRow();
+    const th = document.createElement("th"); th.textContent = rowLabel(row); tr.appendChild(th);
+    for (const [, records] of perPerson) {
+      const td = tr.insertCell();
+      let cell = null;
+      for (const [e, r] of [...records].reverse()) {
+        const { value } = resolveRow(row, r, e.id);
+        const c = row.format ? row.format(value, r) : compactValue(value);
+        // "Neklausta" is a real answer state but not this person's answer —
+        // keep scanning back for an election that asked.
+        if (c == null || c === "Neklausta") continue;
+        cell = `${c}\n(${electionShortName(e.id)})`;
+        break;
+      }
+      td.textContent = cell == null ? "—" : cell;
+      if (cell == null) td.className = "null";
+      else if (row.format === moneyCell) td.style.fontVariantNumeric = "tabular-nums";
+    }
+  }
+  wrap.appendChild(t);
+  root.appendChild(wrap);
+}
+
+// ---------------------------------------------------------------------------
+// Per-election aggregates (issue #87): party mix, education mix, money
+// medians — every figure with its denominator printed beside it, because the
+// higher-education share alone swings up to 28.9 points on that choice.
+// Everything computes from people.json; no record fetches.
+// ---------------------------------------------------------------------------
+
+function median(values) {
+  if (!values.length) return null;
+  const sorted = [...values].sort((a, b) => a - b);
+  const mid = sorted.length >> 1;
+  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+}
+
+const pct = (part, whole) => whole ? `${(100 * part / whole).toFixed(1).replace(".", ",")} %` : "—";
+
+function showAggregates() {
+  location.hash = "";
+  clearActiveRows();
+  const root = document.getElementById("person");
+  root.innerHTML = "";
+
+  const bar = document.createElement("div");
+  bar.style.cssText = "display:flex;gap:12px;align-items:center;margin-bottom:4px;flex-wrap:wrap";
+  const h2 = document.createElement("h2");
+  h2.style.cssText = "margin:0;font-size:20px";
+  h2.textContent = "Rinkimų suvestinė";
+  const select = document.createElement("select");
+  select.id = "aggElection";
+  select.style.cssText = "padding:6px 8px;border:1px solid var(--line);border-radius:6px";
+  for (const e of [...(INDEX.elections || [])].reverse()) addOption(select, e.id, e.shortName || e.id);
+  const filtered = document.getElementById("fElection").value;
+  if (filtered) select.value = filtered;
+  bar.append(h2, select);
+  root.appendChild(bar);
+  const note = document.createElement("div");
+  note.className = "aggnote";
+  note.textContent = "Prie kiekvieno rodiklio nurodyta, iš kelių kandidatavimų jis apskaičiuotas — aprėptis keičia išvadas.";
+  root.appendChild(note);
+  const holder = document.createElement("div");
+  root.appendChild(holder);
+
+  function render() {
+    const id = select.value;
+    const candidacies = [];
+    for (const p of INDEX.people) for (const e of p.e) if (e.id === id) candidacies.push(e);
+    const total = candidacies.length;
+    holder.replaceChildren();
+
+    const summary = document.createElement("div"); summary.className = "ecard";
+    summary.style.padding = "14px 16px";
+    const won = candidacies.filter(e => e.w === true).length;
+    const unknown = candidacies.filter(e => e.w === undefined).length;
+    summary.textContent = `${electionName(id)} — kandidatavimų: ${fmtInt(total)}, ` +
+      `išrinkta: ${fmtInt(won)}` +
+      (unknown ? `, be rezultatų duomenų: ${fmtInt(unknown)}` : "");
+    holder.appendChild(summary);
+
+    const section = (title, denominatorText) => {
+      const wrap = document.createElement("div"); wrap.className = "sec";
+      const h = document.createElement("h4"); h.textContent = title;
+      wrap.appendChild(h);
+      if (denominatorText) {
+        const d = document.createElement("div"); d.className = "aggnote";
+        d.textContent = denominatorText;
+        wrap.appendChild(d);
+      }
+      holder.appendChild(wrap);
+      return wrap;
+    };
+
+    // Party mix
+    const withParty = candidacies.filter(e => e.p);
+    const partyWrap = section(
+      "Iškėlusios partijos ir komitetai",
+      `Iškėlėjas žinomas ${fmtInt(withParty.length)} iš ${fmtInt(total)} kandidatavimų (${pct(withParty.length, total)}).`
+    );
+    if (withParty.length) {
+      const counts = new Map();
+      for (const e of withParty) counts.set(e.p, (counts.get(e.p) || 0) + 1);
+      const top = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+      const t = document.createElement("table"); t.className = "cmp";
+      t.innerHTML = "<thead><tr><th>Iškėlėjas</th><th>Kandidatavimų</th><th>Dalis (iš žinomų)</th><th>Išrinkta</th></tr></thead><tbody></tbody>";
+      for (const [pid, count] of top.slice(0, 15)) {
+        const tr = t.tBodies[0].insertRow();
+        const th = document.createElement("th"); th.textContent = (INDEX.parties[pid] || {}).n || pid; tr.appendChild(th);
+        tr.insertCell().textContent = fmtInt(count);
+        tr.insertCell().textContent = pct(count, withParty.length);
+        tr.insertCell().textContent = fmtInt(withParty.filter(e => e.p === pid && e.w === true).length);
+      }
+      if (top.length > 15) {
+        const rest = top.slice(15).reduce((n, [, c]) => n + c, 0);
+        const tr = t.tBodies[0].insertRow();
+        const th = document.createElement("th"); th.textContent = `kiti (${top.length - 15})`; tr.appendChild(th);
+        tr.insertCell().textContent = fmtInt(rest);
+        tr.insertCell().textContent = pct(rest, withParty.length);
+        tr.insertCell().textContent = "";
+      }
+      const wrap = document.createElement("div"); wrap.className = "tablewrap";
+      wrap.appendChild(t);
+      partyWrap.appendChild(wrap);
+    }
+
+    // Education mix
+    const withEducation = candidacies.filter(e => e.ed != null);
+    const levels = INDEX.educationLevels || [];
+    const higherRank = levels.findIndex(l => l.id === "aukstasis-nedetalizuotas") + 1;
+    const eduWrap = section(
+      "Išsilavinimas",
+      `Lygį galima nustatyti ${fmtInt(withEducation.length)} iš ${fmtInt(total)} kandidatavimų (${pct(withEducation.length, total)}).`
+    );
+    if (withEducation.length && higherRank) {
+      const higher = withEducation.filter(e => e.ed >= higherRank).length;
+      const line = document.createElement("div");
+      line.style.margin = "0 0 8px";
+      line.textContent = `Aukštasis (įskaitant nedetalizuotą „Aukštasis“): ${fmtInt(higher)} — ${pct(higher, withEducation.length)} nurodžiusiųjų, ${pct(higher, total)} visų.`;
+      eduWrap.appendChild(line);
+      const counts = new Map();
+      for (const e of withEducation) counts.set(e.ed, (counts.get(e.ed) || 0) + 1);
+      const t = document.createElement("table"); t.className = "cmp";
+      t.innerHTML = "<thead><tr><th>Lygis</th><th>Kandidatavimų</th><th>Dalis (iš nurodžiusiųjų)</th></tr></thead><tbody></tbody>";
+      for (const [rank, count] of [...counts.entries()].sort((a, b) => b[0] - a[0])) {
+        const tr = t.tBodies[0].insertRow();
+        const th = document.createElement("th"); th.textContent = (levels[rank - 1] || {}).label || String(rank); tr.appendChild(th);
+        tr.insertCell().textContent = fmtInt(count);
+        tr.insertCell().textContent = pct(count, withEducation.length);
+      }
+      const wrap = document.createElement("div"); wrap.className = "tablewrap";
+      wrap.appendChild(t);
+      eduWrap.appendChild(wrap);
+    }
+
+    // Money medians
+    const moneyWrap = section("Deklaruotas turtas ir pajamos (mediana, €)", null);
+    const t = document.createElement("table"); t.className = "cmp";
+    t.innerHTML = "<thead><tr><th>Rodiklis</th><th>Mediana</th><th>Deklaravusių</th></tr></thead><tbody></tbody>";
+    MONEY_SERIES.forEach(([label], seriesIndex) => {
+      const values = candidacies.map(e => e.m && e.m[seriesIndex]).filter(v => v != null);
+      const tr = t.tBodies[0].insertRow();
+      const th = document.createElement("th"); th.textContent = label; tr.appendChild(th);
+      const mid = median(values);
+      const midCell = tr.insertCell();
+      midCell.textContent = mid == null ? "—" : fmtEUR(mid);
+      midCell.style.fontVariantNumeric = "tabular-nums";
+      if (mid == null) midCell.className = "null";
+      tr.insertCell().textContent = values.length
+        ? `${fmtInt(values.length)} iš ${fmtInt(total)} (${pct(values.length, total)})`
+        : "—";
+    });
+    const wrap = document.createElement("div"); wrap.className = "tablewrap";
+    wrap.appendChild(t);
+    moneyWrap.appendChild(wrap);
+    const dsCount = candidacies.filter(e => e.ds).length;
+    if (dsCount) {
+      const dsNote = document.createElement("div");
+      dsNote.className = "aggnote";
+      dsNote.textContent = `Pastaba: ${fmtInt(dsCount)} kandidatavimų pajamų suma — tik darbo santykių pajamos (žr. gautos pajamos), nes deklaracijos bendra eilutė nepatikima.`;
+      moneyWrap.appendChild(dsNote);
+    }
+  }
+  select.addEventListener("change", render);
+  render();
+}
+
 function showMovers() {
   location.hash = "";
-  for (const el of document.querySelectorAll(".row")) el.classList.remove("active");
+  clearActiveRows();
   const root = document.getElementById("person");
   root.innerHTML = "";
 
@@ -561,19 +1352,28 @@ function showMovers() {
       d.style.color = r.delta > 0 ? "var(--win)" : "#a03325";
       d.style.fontVariantNumeric = "tabular-nums";
     });
-    holder.replaceChildren(t);
+    const wrap = document.createElement("div"); wrap.className = "tablewrap";
+    wrap.appendChild(t);
+    holder.replaceChildren(wrap);
   }
   document.getElementById("mvSeries").addEventListener("change", render);
   document.getElementById("mvDir").addEventListener("change", render);
   render();
 }
 
+// The one shared money-string rule, mirrored by parse_money_text in
+// scripts/build_person_index.py and held together by the fixture list in
+// tests/test_dashboard_money_rendering.py: strip the euro sign and
+// whitespace, allow one decimal separator (comma or dot), refuse anything
+// else. It used to hand multi-separator strings to parseFloat, whose prefix
+// parse silently read "1.234.567,89" as 1.234 while the builder stored None.
 function parseMoney(v) {
   if (v == null) return null;
   if (typeof v === "number") return Number.isFinite(v) ? v : null;
   if (typeof v !== "string") return null;
-  const n = parseFloat(v.replace(/[€\s ]/g, "").replace(",", "."));
-  return Number.isFinite(n) ? n : null;
+  const cleaned = v.replace(/[€\s]/g, "");
+  if (!/^-?\d+(?:[.,]\d+)?$/.test(cleaned)) return null;
+  return parseFloat(cleaned.replace(",", "."));
 }
 
 // The 2012-2015 pages declare in litas (`valiuta: "Lt"`); converted at the
@@ -638,7 +1438,9 @@ function buildAssetPane(loaded) {
   // 4 round-number gridlines
   const step = Math.pow(10, Math.floor(Math.log10(max / 4)));
   const tick = Math.ceil(max / 4 / step) * step;
-  let svg = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" style="max-width:100%">`;
+  // The svg keeps its natural width and the card scrolls instead: squeezed
+  // to the pane, an 8-election chart shrank its 11px labels to 3.3px.
+  let svg = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img">`;
   for (let t = 0; t <= max; t += tick) {
     svg += `<line x1="${mL}" y1="${y(t)}" x2="${W - mR}" y2="${y(t)}" stroke="#e3e3de"/>` +
       `<text x="${mL - 8}" y="${y(t) + 4}" text-anchor="end" font-size="11" fill="#6d6d68">${fmtEUR(t)}</text>`;
@@ -658,8 +1460,8 @@ function buildAssetPane(loaded) {
 
   const card = document.createElement("div"); card.className = "ecard";
   card.style.padding = "16px";
-  card.innerHTML = svg +
-    `<div style="display:flex;gap:18px;margin-top:8px;font-size:13px;color:#6d6d68">` +
+  card.innerHTML = `<div class="tablewrap">${svg}</div>` +
+    `<div style="display:flex;gap:18px;margin-top:8px;font-size:13px;color:#6d6d68;flex-wrap:wrap">` +
     MONEY_SERIES.map(([label, , color]) =>
       `<span><span style="display:inline-block;width:11px;height:11px;background:${color};border-radius:2px;margin-right:5px"></span>${label}</span>`
     ).join("") +
@@ -686,7 +1488,9 @@ function buildAssetPane(loaded) {
       }
     });
   });
-  pane.appendChild(t);
+  const tableWrap = document.createElement("div"); tableWrap.className = "tablewrap";
+  tableWrap.appendChild(t);
+  pane.appendChild(tableWrap);
   if (employmentOnly) {
     const note = document.createElement("div");
     note.className = "loading";

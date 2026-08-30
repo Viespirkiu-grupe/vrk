@@ -29,14 +29,19 @@ DASHBOARD_PATH = REPO_ROOT / "dashboard" / "index.html"
 SOURCE = DASHBOARD_PATH.read_text(encoding="utf-8")
 NODE = shutil.which("node")
 
-# The three declaration fields every module normalizes under the same keys,
-# and the renderer each compare-table row has to carry. The income row goes
-# through `incomeCell`, which resolves the `deklaruotos-pajamos` concept before
-# converting -- see the module docstring of scraper/shared/deklaracijos.py.
-MONEY_PATHS = {
-    "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas": "moneyCell",
-    "turto-ir-pajamu-deklaracijos.pinigines-lesos": "moneyCell",
-    "turto-ir-pajamu-deklaracijos.gautos-pajamos": "incomeCell",
+# The money concepts of the comparison table, and the renderer each row has
+# to carry. The rows name concepts from docs/concept-map.json now, not paths
+# (issue #87). The income row goes through `incomeCell`, which resolves the
+# `deklaruotos-pajamos` concept before converting -- see the module docstring
+# of scraper/shared/deklaracijos.py.
+MONEY_CONCEPTS = {
+    "privalomas-registruoti-turtas": "moneyCell",
+    "pinigines-lesos": "moneyCell",
+    "gautos-pajamos": "incomeCell",
+    "turtas-ir-pinigines-lesos": "moneyCell",
+    "turtas-ir-pinigines-lesos-metu-pradzioje": "moneyCell",
+    "kalendoriniais-metais-isigytas-turtas": "moneyCell",
+    "gautos-pajamos-darbo-santykiu": "moneyCell",
 }
 
 
@@ -85,18 +90,18 @@ def euro(value):
     return {"normalized": {"turto-ir-pajamu-deklaracijos": {"x": value}}}
 
 
-class FieldMapWiringTests(unittest.TestCase):
+class ConceptRowWiringTests(unittest.TestCase):
     """Structural: the money rows must carry the formatter."""
 
     def test_each_money_row_uses_the_money_formatter(self):
-        for path, renderer in MONEY_PATHS.items():
-            with self.subTest(path):
-                row = re.search(rf'\["{re.escape(path)}"\](,\s*\w+)?\]', SOURCE)
-                self.assertIsNotNone(row, f"{path} missing from FIELD_MAP")
+        for concept, renderer in MONEY_CONCEPTS.items():
+            with self.subTest(concept):
+                row = re.search(rf'\{{ concept: "{re.escape(concept)}", format: (\w+) \}}', SOURCE)
+                self.assertIsNotNone(row, f"{concept} missing from CONCEPT_ROWS")
                 self.assertEqual(
-                    (row.group(1) or "").strip(" ,"),
+                    row.group(1),
                     renderer,
-                    f"{path} would render raw, unconverted and unlabelled",
+                    f"{concept} would render raw, unconverted and unlabelled",
                 )
 
     def test_the_compare_table_applies_the_formatter(self):
@@ -199,3 +204,50 @@ class DeclaredIncomeTests(unittest.TestCase):
     def test_neither_figure_still_reads_as_nothing(self):
         record = {"normalized": {"turto-ir-pajamu-deklaracijos": {"gautos-pajamos": None}}}
         self.assertIsNone(run_in_node(f"incomeCell(null, {json.dumps(record)})"))
+
+
+# The one shared money-string rule (issue #87): the page's parseMoney and the
+# builder's parse_money_text must agree on every one of these, because they
+# used to diverge exactly where it is dangerous — parseFloat's prefix parse
+# read "1.234.567,89" as 1.234 while Python raised and stored None. The rule:
+# strip € and whitespace (NBSP included), allow one decimal separator (comma
+# or dot), refuse everything else. Dormant today — no money field in the
+# corpus is a string — which is why refusal is safe.
+PARSE_MONEY_FIXTURES = [
+    ("34 528,00", 34528.0),
+    ("1 234 567,89", 1234567.89),
+    ("12 345,67", 12345.67),
+    ("9680.84", 9680.84),
+    ("0", 0.0),
+    ("-12,5", -12.5),
+    ("€ 100", 100.0),
+    ("1.234.567,89", None),
+    ("1,234.56", None),
+    ("12abc", None),
+    ("", None),
+    ("Lt", None),
+]
+
+
+class SharedMoneyRuleTests(unittest.TestCase):
+    def _python_side(self):
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location(
+            "build_person_index", REPO_ROOT / "scripts" / "build_person_index.py"
+        )
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module.parse_money_text
+
+    def test_the_builder_follows_the_rule(self):
+        parse_money_text = self._python_side()
+        for text, expected in PARSE_MONEY_FIXTURES:
+            with self.subTest(text):
+                self.assertEqual(parse_money_text(text), expected)
+
+    @unittest.skipUnless(NODE, "node not installed")
+    def test_the_page_follows_the_same_rule(self):
+        texts = [text for text, _ in PARSE_MONEY_FIXTURES]
+        got = run_in_node(f"{json.dumps(texts)}.map(parseMoney)")
+        self.assertEqual(got, [expected for _, expected in PARSE_MONEY_FIXTURES])
