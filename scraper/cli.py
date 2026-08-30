@@ -888,6 +888,28 @@ def _build_results_for_election(election_id: str) -> tuple[Path, dict[str, Any]]
     return builder()
 
 
+def listing_fixture_refusal(election_id: str, allow_fixture_overwrite: bool) -> str | None:
+    """Why fetch-sample must not run, or None when it may.
+
+    The listing fetchers write into ``samples/html/<election-id>/`` — the
+    tracked fixture tree the suite pins — and used to do so silently
+    (issue #95). An election that already has that directory is either fully
+    fixtured or a fresh clone still missing its untracked listing pages;
+    both are deliberate re-captures, so both take an explicit flag.
+    """
+    fixture_root = Path(f"samples/html/{election_id}")
+    if allow_fixture_overwrite or not fixture_root.exists():
+        return None
+    return (
+        f"{fixture_root}/ already exists — fetch-sample writes the tracked "
+        "listing fixtures and would overwrite them. If the sitemap is what "
+        f"you need, `python -m scraper sitemap {election_id}` rebuilds it "
+        "offline from the fixtures already on disk; pass "
+        "--allow-fixture-overwrite to re-capture the listing pages "
+        "deliberately (fetchers resume past files already saved)."
+    )
+
+
 def _fetch_listing_sample_for_election(election_id: str) -> Path:
     if election_id == SEIMO_2016_ELECTION_ID:
         return fetch_2016_listing_sample()
@@ -2198,6 +2220,15 @@ def build_parser() -> argparse.ArgumentParser:
         help="Download and save raw HTML sample for an election",
     )
     fetch_parser.add_argument("election_id", choices=FETCHABLE_ELECTION_IDS)
+    fetch_parser.add_argument(
+        "--allow-fixture-overwrite",
+        action="store_true",
+        help=(
+            "Fetch even though samples/html/<election-id>/ already exists. The "
+            "listing samples are tracked test fixtures, so re-capturing them is "
+            "a deliberate act — refused by default (issue #95)."
+        ),
+    )
 
     sitemap_parser = subparsers.add_parser(
         "sitemap",
@@ -2397,6 +2428,10 @@ def main() -> int:
     args = parser.parse_args()
 
     if args.command == "fetch-sample":
+        refusal = listing_fixture_refusal(args.election_id, args.allow_fixture_overwrite)
+        if refusal:
+            print(refusal, file=sys.stderr)
+            return 1
         sample_path = _fetch_listing_sample_for_election(args.election_id)
         print(f"Saved HTML sample: {sample_path}")
         return 0
