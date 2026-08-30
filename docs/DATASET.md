@@ -165,7 +165,13 @@ the embedded-photo eras, externalized 2026-08-19 and verified byte-identical
 to a pre-migration sha256 manifest, file for file) and are **not** version
 controlled — `data/`, `sitemaps/` and `samples/` are gitignored, so the corpus is
 reproduced by running the scrapers rather than by cloning — or downloaded
-from a `corpus-YYYY-MM-DD` release (see the top of this page).
+from a `corpus-YYYY-MM-DD` release (see the top of this page). The
+reproduction entry point is `scripts/run_all_elections.sh`: it drives every
+election the CLI can fetch, and per election the batch runner builds the
+`isrinktas` results join first, retains the fetched HTML by default, writes a
+`CandidateFetchFailed`/`CandidateParseFailed` anomaly for any candidate it
+cannot land, and refuses to report an election complete until every sitemap
+id has a record on disk (issue #95).
 
 ### The 2026-08-29 corpus re-parse, and the gate that found it
 

@@ -21,13 +21,17 @@
 #                      8,949 are one archive page printing VRK's own query-error
 #                      banner, and counting those made this switch unusable on
 #                      every archive election (issue #85).
-#   SAMPLES_ROOT       reuse a samples directory instead of a temporary one
-#   KEEP_SAMPLES       1 to keep every candidate's fetched HTML instead of
-#                      deleting it after parsing (default 0). Defaults
-#                      SAMPLES_ROOT to samples-full/<election-id> when none is
-#                      given. Retained HTML lets a later parser fix be applied
-#                      by offline re-parse instead of a full re-scrape; the
-#                      cost is disk on the order of the election itself.
+#   SAMPLES_ROOT       reuse a samples directory instead of the default
+#                      samples-full/<election-id>
+#   KEEP_SAMPLES       1 to keep every candidate's fetched HTML (the default,
+#                      under samples-full/<election-id> when SAMPLES_ROOT is
+#                      not given). Retained HTML is what lets a later parser
+#                      fix be applied by offline re-parse instead of a full
+#                      re-scrape — every record in the corpus has its source
+#                      HTML today. Set 0 to fetch into a temporary directory
+#                      and delete each candidate's HTML after parsing; the
+#                      run warns, because that trades ~30 minutes of offline
+#                      re-parse for ~27 hours of re-scrape (issue #95).
 #   STATE_DIR          run-state directory (default .run-state/<election-id>)
 
 set -euo pipefail
@@ -42,7 +46,24 @@ ELECTION_ID="$1"
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 PYTHON_BIN="${PYTHON_BIN:-$ROOT_DIR/.venv/bin/python}"
 
+if [[ ! -x "$PYTHON_BIN" ]]; then
+  echo "Python executable not found or not executable: $PYTHON_BIN" >&2
+  exit 1
+fi
+
+# sitemaps/ holds one <id>.json and one <id>.results.json per results-joined
+# election; a basename glob over it once yielded ids like "2012-seimo.results",
+# and the runner took the phantom to a clean "complete" with zero records
+# (issue #95). Only ids the CLI can actually fetch get past here.
+if ! (cd "$ROOT_DIR" && "$PYTHON_BIN" -c 'import sys
+from scraper.cli import FETCHABLE_ELECTION_IDS
+sys.exit(0 if sys.argv[1] in FETCHABLE_ELECTION_IDS else 1)' "$ELECTION_ID"); then
+  echo "Unknown election id: $ELECTION_ID — not in scraper.cli.FETCHABLE_ELECTION_IDS" >&2
+  exit 1
+fi
+
 SITEMAP_PATH="$ROOT_DIR/sitemaps/${ELECTION_ID}.json"
+RESULTS_PATH="$ROOT_DIR/sitemaps/${ELECTION_ID}.results.json"
 OUTPUT_ROOT="$ROOT_DIR/data/${ELECTION_ID}"
 ANOMALIES_PATH="$OUTPUT_ROOT/anomalies.jsonl"
 STATE_DIR="${STATE_DIR:-$ROOT_DIR/.run-state/${ELECTION_ID}}"
@@ -51,7 +72,11 @@ BATCH_SIZE="${BATCH_SIZE:-200}"
 THROTTLE_SECONDS="${THROTTLE_SECONDS:-0.4}"
 MAX_BATCHES="${MAX_BATCHES:-0}"
 STOP_ON_ANOMALY="${STOP_ON_ANOMALY:-0}"
-KEEP_SAMPLES="${KEEP_SAMPLES:-0}"
+KEEP_SAMPLES="${KEEP_SAMPLES:-1}"
+
+if [[ "$KEEP_SAMPLES" != "1" ]]; then
+  echo "[$ELECTION_ID] KEEP_SAMPLES=$KEEP_SAMPLES: fetched HTML will be DELETED after parsing — the next parser fix will cost a full re-scrape instead of an offline re-parse" >&2
+fi
 
 ALL_IDS_PATH="$STATE_DIR/all_ids.txt"
 DONE_IDS_PATH="$STATE_DIR/done_ids.txt"
@@ -93,13 +118,28 @@ touch "$DONE_IDS_PATH" "$FAILED_IDS_PATH" "$BATCH_LOG_PATH"
 
 if [[ ! -f "$SITEMAP_PATH" ]]; then
   echo "Missing sitemap: $SITEMAP_PATH" >&2
-  echo "Build it first: $PYTHON_BIN -m scraper fetch-sample $ELECTION_ID && $PYTHON_BIN -m scraper sitemap $ELECTION_ID" >&2
+  echo "Build it first: $PYTHON_BIN -m scraper sitemap $ELECTION_ID" >&2
+  echo "(offline when the tracked listing fixtures cover the election; run" >&2
+  echo " $PYTHON_BIN -m scraper fetch-sample $ELECTION_ID --allow-fixture-overwrite first when they do not)" >&2
   exit 1
 fi
 
-if [[ ! -x "$PYTHON_BIN" ]]; then
-  echo "Python executable not found or not executable: $PYTHON_BIN" >&2
-  exit 1
+# 32 elections' candidate pages mark no winner: their `isrinktas` joins in at
+# parse time from sitemaps/<id>.results.json, and load_results_lookup leaves it
+# silently unknown when that file is absent. A full run used to skip this stage
+# entirely — two thirds of the corpus without winners (issue #95).
+if (cd "$ROOT_DIR" && "$PYTHON_BIN" -c 'import sys
+from scraper.cli import RESULTS_ELECTION_IDS
+sys.exit(0 if sys.argv[1] in RESULTS_ELECTION_IDS else 1)' "$ELECTION_ID"); then
+  if [[ -f "$RESULTS_PATH" ]]; then
+    echo "[$ELECTION_ID] election results present, reusing: $RESULTS_PATH"
+  else
+    echo "[$ELECTION_ID] building election results (the isrinktas source): $RESULTS_PATH"
+    if ! (cd "$ROOT_DIR" && "$PYTHON_BIN" -m scraper build-results "$ELECTION_ID"); then
+      echo "[$ELECTION_ID] build-results failed; refusing to parse without it — every record would leave isrinktas unknown" >&2
+      exit 1
+    fi
+  fi
 fi
 
 "$PYTHON_BIN" - "$SITEMAP_PATH" > "$ALL_IDS_PATH" <<'PY'
@@ -144,15 +184,61 @@ build_pending_ids() {
   rm -f "$not_done"
 }
 
-report_failures() {
-  local failed_count
-  failed_count=$(awk 'NF' "$FAILED_IDS_PATH" 2>/dev/null | sort -u | wc -l | tr -d ' ')
-  if [[ "$failed_count" != "0" ]]; then
-    echo "[$ELECTION_ID] $failed_count candidate(s) failed and were not retried; see $FAILED_IDS_PATH"
-    echo "[$ELECTION_ID] retry them by emptying that file and re-running"
-    return 1
+# A candidate whose fetch or parse failed used to leave no trace inside the
+# corpus: the id went to .run-state/<id>/failed_ids.txt — untracked, excluded
+# from every later pending set — and data/ said nothing, which is how three
+# candidates went permanently absent unnoticed (issue #95). The failure now
+# also lands in anomalies.jsonl, where the anomaly report can see it.
+record_candidate_failure() {
+  local candidate_id="$1"
+  local stage="$2"
+  echo "$candidate_id" >> "$FAILED_IDS_PATH"
+  echo "[$ELECTION_ID] FAILED $candidate_id ($stage)"
+  (cd "$ROOT_DIR" && "$PYTHON_BIN" - "$ELECTION_ID" "$candidate_id" "$stage" <<'PY'
+import json, sys
+from scraper.shared.anomalies import build_anomaly_event
+election_id, candidate_id, stage = sys.argv[1:4]
+event = build_anomaly_event(
+    event_type="CandidateFetchFailed" if stage == "fetch" else "CandidateParseFailed",
+    severity="error",
+    stage=stage,
+    election_id=election_id,
+    candidate_id=candidate_id,
+    detail={
+        "recordedBy": "run_election_batches.sh",
+        "retry": "empty .run-state/<election-id>/failed_ids.txt and re-run",
+    },
+)
+print(json.dumps(event, ensure_ascii=False))
+PY
+  ) >> "$ANOMALIES_PATH" \
+    || echo "[$ELECTION_ID] warning: could not record the failure anomaly for $candidate_id" >&2
+}
+
+# "Complete" used to mean "no pending candidates", which counted the failed
+# ones as settled. The final report diffs the sitemap's ids against the record
+# files actually on disk, so it cannot say complete while candidates are
+# missing (issue #95).
+final_report() {
+  local missing_path="$STATE_DIR/missing_ids.txt"
+  : > "$missing_path"
+  local candidate_id
+  while IFS= read -r candidate_id; do
+    if [[ ! -f "$OUTPUT_ROOT/${candidate_id}-${ELECTION_ID}.json" ]]; then
+      echo "$candidate_id" >> "$missing_path"
+    fi
+  done < "$ALL_IDS_PATH"
+  local total missing
+  total=$(awk 'NF' "$ALL_IDS_PATH" | wc -l | tr -d ' ')
+  missing=$(wc -l < "$missing_path" | tr -d ' ')
+  if [[ "$missing" == "0" ]]; then
+    echo "[$ELECTION_ID] complete: all $total sitemap candidates have records in $OUTPUT_ROOT"
+    rm -f "$missing_path"
+    return 0
   fi
-  return 0
+  echo "[$ELECTION_ID] INCOMPLETE: $missing of $total sitemap candidates have no record; ids in $missing_path"
+  echo "[$ELECTION_ID] retry them by emptying $FAILED_IDS_PATH and re-running"
+  return 1
 }
 
 # What STOP_ON_ANOMALY counts: the events somebody has to look at. `info` is
@@ -233,9 +319,9 @@ while (( MAX_BATCHES == 0 || batch_counter < MAX_BATCHES )); do
 
   pending_count=$(wc -l < "$tmp_pending" | tr -d ' ')
   if [[ "$pending_count" == "0" ]]; then
-    echo "[$ELECTION_ID] no pending candidates; scrape complete"
+    echo "[$ELECTION_ID] no pending candidates"
     rm -f "$tmp_pending"
-    report_failures
+    final_report
     exit $?
   fi
 
@@ -253,12 +339,13 @@ while (( MAX_BATCHES == 0 || batch_counter < MAX_BATCHES )); do
   anomalies_before=$(count_actionable_anomalies)
 
   while IFS= read -r candidate_id; do
-    if fetch_candidate "$candidate_id" && parse_candidate "$candidate_id" \
-        && [[ -f "$OUTPUT_ROOT/${candidate_id}-${ELECTION_ID}.json" ]]; then
-      echo "$candidate_id" >> "$DONE_IDS_PATH"
+    if ! fetch_candidate "$candidate_id"; then
+      record_candidate_failure "$candidate_id" fetch
+    elif ! parse_candidate "$candidate_id" \
+        || [[ ! -f "$OUTPUT_ROOT/${candidate_id}-${ELECTION_ID}.json" ]]; then
+      record_candidate_failure "$candidate_id" parse
     else
-      echo "$candidate_id" >> "$FAILED_IDS_PATH"
-      echo "[$ELECTION_ID] FAILED $candidate_id"
+      echo "$candidate_id" >> "$DONE_IDS_PATH"
     fi
     if [[ "$KEEP_SAMPLES" != "1" ]]; then
       # Keep the temporary samples directory from growing to the size of the
@@ -290,4 +377,4 @@ while (( MAX_BATCHES == 0 || batch_counter < MAX_BATCHES )); do
 done
 
 echo "[$ELECTION_ID] completed $batch_counter batch(es)"
-report_failures
+final_report

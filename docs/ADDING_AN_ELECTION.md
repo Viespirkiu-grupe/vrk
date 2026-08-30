@@ -271,12 +271,16 @@ scripts/run_election_batches.sh <election-id>
 way the events land in `data/<election-id>/anomalies.jsonl`, from both the
 fetch and the parse stage, and you read them back afterwards (see step 7).
 
-By default the runner deletes each candidate's fetched HTML after parsing it,
-so a later parser fix costs a full re-scrape. `KEEP_SAMPLES=1` retains the
-HTML under `samples-full/<election-id>/` instead, making every future fix an
-offline re-parse (`parse-anketa-samples` with `--samples-root` pointed there).
-The price is disk on the order of the election itself — pay it for the large
-elections, where a re-scrape costs hours of polite traffic to vrk.lt.
+The runner retains each candidate's fetched HTML under
+`samples-full/<election-id>/`, making every future parser fix an offline
+re-parse (`parse-anketa-samples` with `--samples-root` pointed there). The
+price is disk on the order of the election itself; the alternative is a full
+re-scrape — hours of polite traffic to vrk.lt — which is why retention is the
+default and `KEEP_SAMPLES=0`, which fetches into a temporary directory and
+deletes as it parses, prints a warning (issue #95). The runner also builds
+`sitemaps/<election-id>.results.json` first when the election joins
+`isrinktas` from a results tree, and its final report refuses to say
+"complete" until every sitemap id has a record on disk.
 
 ## 7. Before you open the PR
 
@@ -345,4 +349,4 @@ writing only the records that actually differ.
 An election with no retained HTML cannot be regenerated this way. Its repair
 is a `scripts/` backfill working from `rawData`
 (`scripts/renormalize_declarations.py` is the worked example), or a
-re-scrape. That is the cost `KEEP_SAMPLES=1` buys you out of.
+re-scrape. That is the cost the runner's default retention buys you out of.

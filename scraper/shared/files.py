@@ -2,6 +2,7 @@ import base64
 import binascii
 import hashlib
 import json
+import os
 import re
 import unicodedata
 from pathlib import Path
@@ -13,8 +14,14 @@ def ensure_parent(path: Path) -> None:
 
 
 def write_json(path: Path, data: Any) -> None:
+    # Serialized first and landed with os.replace: the runners resume on file
+    # existence, so a write that dies halfway must leave either the previous
+    # file or nothing — never a truncated file that counts as done (issue #95).
+    payload = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
     ensure_parent(path)
-    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    tmp_path = path.with_name(path.name + ".tmp")
+    tmp_path.write_text(payload, encoding="utf-8")
+    os.replace(tmp_path, path)
 
 
 def slugify(text: str) -> str:
@@ -90,5 +97,9 @@ def externalize_record_photo(record: Any, output_path: Path) -> None:
 
 
 def write_candidate_record(output_path: Path, record: Any) -> None:
+    # The photo sidecar is written first on purpose: resume is keyed on the
+    # record file's existence, so the record has to be the last thing to land —
+    # a crash in between leaves an orphan photo a re-run overwrites, never a
+    # record pointing at a photo that was never written.
     externalize_record_photo(record, output_path)
     write_json(output_path, record)

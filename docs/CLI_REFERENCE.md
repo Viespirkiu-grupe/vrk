@@ -79,6 +79,17 @@ Download and save the listing HTML sample for an election.
 python -m scraper fetch-sample 2016-seimo
 ```
 
+Options:
+
+- `--allow-fixture-overwrite`: Fetch even though `samples/html/<election-id>/`
+  already exists. The listing samples are tracked test fixtures, and this
+  command used to overwrite them silently (issue #95); now an election whose
+  fixture directory exists is refused without the flag. A reproduction run
+  does not need it — `sitemap` rebuilds from the fixtures already on disk —
+  so the flag marks the two deliberate cases: refreshing the fixtures against
+  today's VRK, and completing the untracked listing pages on a fresh clone
+  (the fetchers resume past files already saved).
+
 Output:
 
 - Updates the listing sample file under `samples/html/2016-seimo/`.
@@ -166,6 +177,11 @@ Pages are cached under `samples/results/<election-id>/` so a re-run is
 offline. The command prints the reconciliation stats; read them before
 trusting the file (`unresolved`, `*NotInSitemap`, `seatCountMismatches`
 should be zero or explained — see the 2012–2015 results section below).
+
+`scripts/run_election_batches.sh` runs this automatically before its first
+batch when the election is results-joined and `sitemaps/<election-id>.results.json`
+is absent — a full run used to skip the stage entirely, leaving `isrinktas`
+unknown on two thirds of the corpus (issue #95).
 
 ```bash
 python -m scraper build-results 2012-seimo
@@ -827,9 +843,9 @@ python -m scraper parse-anketa-samples 2015-kovo-1-savivaldybiu
 
 Resumable full scrape:
 
-- `scripts/run_election_batches.sh 2015-kovo-1-savivaldybiu`, with
-  `KEEP_SAMPLES=1` — at this size a later parser fix should be an offline
-  re-parse, not hours of repeat traffic to vrk.lt.
+- `scripts/run_election_batches.sh 2015-kovo-1-savivaldybiu` — retention is
+  the default, and at this size that matters: a later parser fix should be an
+  offline re-parse, not hours of repeat traffic to vrk.lt.
 
 ## Municipal general election (`2011-vasario-27-savivaldybiu`) Workflow
 
@@ -1133,9 +1149,9 @@ Resumable full scrape (the general election only — 449 party lists, 6,276
 candidates across all 56 municipalities; the Švenčionys repeat's 110
 candidates are the complete field already covered above):
 
-- `scripts/run_election_batches.sh 1997-kovo-23-savivaldybiu-tarybu`, with
-  `KEEP_SAMPLES=1` — at this size a later parser fix should be an offline
-  re-parse, not hours of repeat traffic to vrk.lt.
+- `scripts/run_election_batches.sh 1997-kovo-23-savivaldybiu-tarybu` —
+  retention is the default, and at this size that matters: a later parser fix
+  should be an offline re-parse, not hours of repeat traffic to vrk.lt.
 
 ## Presidential 2002 (`2002-prezidento`) Workflow
 
