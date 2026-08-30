@@ -619,6 +619,23 @@
       },
       "note": "2016-era question; the 2020-on near-equivalent is einamos-pareigos."
     },
+    "darbo-patirtis": {
+      "label-lt": "Darbo patirtis",
+      "paths": {
+        "2020-seimo": "biografija.darbo-patirtis",
+        "2021-balandzio-11-radviliskio-mero": "biografija.darbo-patirtis",
+        "2021-spalio-10-meru": "biografija.darbo-patirtis",
+        "2023-geguzes-7-visagino-mero": "biografija.darbo-patirtis",
+        "2023-kovo-5-savivaldybiu-tarybu-ir-meru": "biografija.darbo-patirtis",
+        "2023-rugsejo-3-seimo-raseiniai-kedainiai": "biografija.darbo-patirtis",
+        "2023-spalio-8-kupiskio-mero": "biografija.darbo-patirtis",
+        "2024-ep": "biografija.darbo-patirtis",
+        "2024-prezidento": "biografija.darbo-patirtis",
+        "2024-seimo": "biografija.darbo-patirtis",
+        "2025-kovo-16-meru": "biografija.darbo-patirtis"
+      },
+      "note": "The 2020-era biography's work-history table: irasai of {darbo-pradzia, darbo-pabaiga, darboviete, pareigos}. 17,666 records across this era's 11 elections publish at least one entry; mapped for issue #87, which found it displayed nowhere."
+    },
     "visuomenine-veikla": {
       "label-lt": "Visuomeninė veikla",
       "paths": {
@@ -1097,6 +1114,38 @@
       },
       "note": "The 1996-2000 form's single combined wealth row -- property and cash in one figure, litas. That era leaves the modern split keys (privalomas-registruoti-turtas, vertybiniai-popieriai-..., pinigines-lesos beyond its own row) as null placeholders, so a consumer summing the documented seven keys reads 0 for 17,654 declarations that do state their wealth here (issue #97). Resolve totals through the deklaruotas-turtas derived concept, which names the measure."
     },
+    "turtas-ir-pinigines-lesos-metu-pradzioje": {
+      "label-lt": "Turtas ir piniginės lėšos (metų pradžioje)",
+      "paths": {
+        "1996-spalio-20-seimo": "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pradzioje",
+        "1997-kovo-23-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pradzioje",
+        "1997-kovo-23-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pradzioje",
+        "1997-birzelio-29-svenciniu-tarybos-pakartotiniai": "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pradzioje",
+        "1997-gruodzio-21-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pradzioje",
+        "1998-kovo-22-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pradzioje",
+        "1998-lapkricio-15-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pradzioje",
+        "1999-kovo-21-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pradzioje",
+        "2000-kovo-19-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pradzioje",
+        "2000-seimo": "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pradzioje"
+      },
+      "note": "The 1996-2000 archive form's start-of-year twin of turtas-ir-pinigines-lesos."
+    },
+    "kalendoriniais-metais-isigytas-turtas": {
+      "label-lt": "Per kalendorinius metus įsigytas turtas",
+      "paths": {
+        "1996-spalio-20-seimo": "turto-ir-pajamu-deklaracijos.kalendoriniais-metais-isigytas-turtas",
+        "1997-kovo-23-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.kalendoriniais-metais-isigytas-turtas",
+        "1997-kovo-23-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.kalendoriniais-metais-isigytas-turtas",
+        "1997-birzelio-29-svenciniu-tarybos-pakartotiniai": "turto-ir-pajamu-deklaracijos.kalendoriniais-metais-isigytas-turtas",
+        "1997-gruodzio-21-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.kalendoriniais-metais-isigytas-turtas",
+        "1998-kovo-22-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.kalendoriniais-metais-isigytas-turtas",
+        "1998-lapkricio-15-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.kalendoriniais-metais-isigytas-turtas",
+        "1999-kovo-21-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.kalendoriniais-metais-isigytas-turtas",
+        "2000-kovo-19-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.kalendoriniais-metais-isigytas-turtas",
+        "2000-seimo": "turto-ir-pajamu-deklaracijos.kalendoriniais-metais-isigytas-turtas"
+      },
+      "note": "The 1996-2000 archive form's acquired-during-the-year row."
+    },
     "turtas-ir-vertybiniai-popieriai": {
       "label-lt": "Turtas ir vertybiniai popieriai (laikotarpio pabaigoje)",
       "paths": {
@@ -1252,6 +1301,22 @@
         "2000-kovo-19-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.gautos-pajamos",
         "2002-gruodzio-22-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.gautos-pajamos"
       }
+    },
+    "gautos-pajamos-darbo-santykiu": {
+      "label-lt": "Gautos pajamos (darbo santykiai)",
+      "paths": {
+        "1996-spalio-20-seimo": "turto-ir-pajamu-deklaracijos.gautos-pajamos-darbo-santykiu",
+        "1997-kovo-23-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.gautos-pajamos-darbo-santykiu",
+        "1997-kovo-23-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.gautos-pajamos-darbo-santykiu",
+        "1997-birzelio-29-svenciniu-tarybos-pakartotiniai": "turto-ir-pajamu-deklaracijos.gautos-pajamos-darbo-santykiu",
+        "1997-gruodzio-21-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.gautos-pajamos-darbo-santykiu",
+        "1998-kovo-22-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.gautos-pajamos-darbo-santykiu",
+        "1998-lapkricio-15-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.gautos-pajamos-darbo-santykiu",
+        "1999-kovo-21-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.gautos-pajamos-darbo-santykiu",
+        "2000-kovo-19-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.gautos-pajamos-darbo-santykiu",
+        "2000-seimo": "turto-ir-pajamu-deklaracijos.gautos-pajamos-darbo-santykiu"
+      },
+      "note": "Row 1 of the 1996-2000 archive form's income section - employment income alone. The deklaruotos-pajamos derived concept substitutes it where the form's own total (row 20) is refused; mapped in its own right so the split stays visible."
     },
     "sumoketas-pajamu-mokestis": {
       "label-lt": "Sumokėtas pajamų mokestis",

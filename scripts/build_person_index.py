@@ -73,26 +73,61 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import sys
 import unicodedata
 from collections import defaultdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from scraper.shared.deklaracijos import (  # noqa: E402
     INCOME_EMPLOYMENT,
     LITAS_PER_EURO,
     deklaruotos_pajamos,
 )
+from scraper.shared.education import LEVELS as EDUCATION_LEVELS  # noqa: E402
+from scraper.shared.education import issilavinimas  # noqa: E402
+from scraper.shared.kandidatura import ROLE_MAYOR, kandidatura  # noqa: E402
 from scraper.shared.parties import entry as party_entry  # noqa: E402
 from scraper.shared.parties import partija  # noqa: E402
+
+import field_coverage  # noqa: E402
 
 DATA_ROOT = Path("data")
 OUTPUT_PATH = Path("dashboard/people.json")
 
 REGISTRY_PATH = Path("scraper/elections.json")
 OVERRIDES_PATH = Path("scraper/person_overrides.json")
+CONCEPT_MAP_PATH = Path("docs/concept-map.json")
+
+#: The employment concepts folded into each candidacy's search string ("wp"),
+#: resolved through docs/concept-map.json rather than a path list of this
+#: file's own -- the eras split them (einamos-pareigos is the 2020-on
+#: question, pagrindine-darboviete everything before), and the map, not this
+#: builder, is where that split is recorded. First concept that answers wins.
+WORKPLACE_CONCEPTS = ("einamos-pareigos", "pagrindine-darboviete")
+
+#: Lithuanian display labels for scraper/shared/education.py's 13-tier
+#: ordinal, in rank order. The slugs are ASCII-folded, so de-slugging them in
+#: the page would drop the diacritics ("Aukstasis"); the labels ride in
+#: people.json instead, and build_index() fails if a tier lacks one.
+EDUCATION_LEVEL_LABELS = {
+    "pradinis": "Pradinis",
+    "pagrindinis": "Pagrindinis",
+    "nebaigtas-vidurinis": "Nebaigtas vidurinis",
+    "vidurinis": "Vidurinis",
+    "profesinis-vidurinis": "Profesinis vidurinis",
+    "aukstesnysis": "Aukštesnysis",
+    "nebaigtas-aukstasis": "Nebaigtas aukštasis",
+    "aukstasis-nedetalizuotas": "Aukštasis (nedetalizuota)",
+    "aukstasis-neuniversitetinis": "Aukštasis neuniversitetinis",
+    "aukstasis-universitetinis": "Aukštasis universitetinis",
+    "aukstasis-bakalauras": "Aukštasis (bakalauras)",
+    "aukstasis-magistras": "Aukštasis (magistras)",
+    "doktorantura": "Doktorantūra",
+}
 
 
 def load_registry(path: Path = REGISTRY_PATH) -> list[dict]:
@@ -149,30 +184,14 @@ def birth_key_of(record: dict) -> str | None:
     return None
 
 
-def elected_note_of(record: dict) -> str | None:
-    normalized = record.get("normalized") or {}
-    profilis = normalized.get("profilis")
-    if isinstance(profilis, dict):
-        note = profilis.get("pastaba")
-        if isinstance(note, str) and note.startswith("Išrink"):
-            return note
-    # The 2012-2015 pages mark no winner; their electedness is joined in from
-    # VRK's results tree as kandidatavimas.isrinktas (true/false, or null
-    # when no results file was built). The 2019/2023 municipal modules set
-    # the same flag from their listings, alongside the page's own note.
-    candidacy = record.get("kandidatavimas")
-    if isinstance(candidacy, dict) and candidacy.get("isrinktas") is True:
-        seat = candidacy.get("isrinktasKaip")
-        return f"Išrinktas ({seat})" if seat else "Išrinktas"
-    # The 1996-1999 Seimas archive family carries the same flag, but its
-    # candidacy is a *list* under `normalized` — a 1996 candidate could stand
-    # in a constituency and on a party list at once — so the record is elected
-    # if any one of its candidacies is, and the seat is that candidacy's.
-    for entry in normalized.get("kandidatavimas") or []:
-        if isinstance(entry, dict) and entry.get("isrinktas") is True:
-            seat = entry.get("isrinktas-kaip")
-            return f"Išrinktas ({seat})" if seat else "Išrinktas"
-    return None
+# Elected status resolves through scraper/shared/kandidatura.py, the one
+# resolver over the corpus's five kandidatavimas shapes. Its `isrinktas` is
+# tri-state -- True, False, or None where no results exist (the 1997
+# municipal pair and 2000-kovo-19's five unpublished municipalities) -- and
+# people.json carries all three: `"w": true`, `"w": false`, or no key. The
+# index used to emit `"w"` only when won, which made "lost" and "no results
+# data" the same absence, and the dashboard read 7,192 unknown outcomes as
+# losses (issue #87).
 
 
 # The asset/income fields carried into the index so the dashboard can chart
@@ -217,6 +236,25 @@ def declared_in_litas(record: dict) -> bool:
     return isinstance(declarations, dict) and declarations.get("valiuta") == "Lt"
 
 
+#: The one money-string rule, shared verbatim with the page's `parseMoney`
+#: (dashboard/index.html) and held together by the fixture list in
+#: tests/test_dashboard_money_rendering.py. After stripping the euro sign and
+#: whitespace (NBSP included), the string must be a plain number with at most
+#: one decimal separator, comma or dot. A multi-separator string
+#: ("1.234.567,89") is refused rather than guessed at: the two sides used to
+#: disagree on exactly those — Python raised and stored None while
+#: parseFloat's prefix parse read 1.234 — and no money field in the corpus is
+#: a string today, so refusal costs nothing and removes the divergence.
+_MONEY_TEXT = re.compile(r"-?\d+(?:[.,]\d+)?")
+
+
+def parse_money_text(text: str) -> float | None:
+    cleaned = re.sub(r"[€\s]", "", text)
+    if not _MONEY_TEXT.fullmatch(cleaned):
+        return None
+    return float(cleaned.replace(",", "."))
+
+
 def money_of(record: dict) -> list[float | None]:
     declarations = (record.get("normalized") or {}).get("turto-ir-pajamu-deklaracijos")
     divisor = LITAS_PER_EURO if declared_in_litas(record) else 1.0
@@ -227,13 +265,11 @@ def money_of(record: dict) -> list[float | None]:
             raw = income["suma"]
         else:
             raw = declarations.get(field) if isinstance(declarations, dict) else None
-        if isinstance(raw, (int, float)):
+        if isinstance(raw, (int, float)) and not isinstance(raw, bool):
             values.append(round(float(raw) / divisor, 2))
         elif isinstance(raw, str):
-            try:
-                values.append(round(float(raw.replace(" ", "").replace(",", ".")) / divisor, 2))
-            except ValueError:
-                values.append(None)
+            parsed = parse_money_text(raw)
+            values.append(round(parsed / divisor, 2) if parsed is not None else None)
         else:
             values.append(None)
     return values
@@ -269,6 +305,10 @@ def load_overrides(path: Path = OVERRIDES_PATH) -> dict:
     """
     if not path.exists():
         return {"decisions": []}
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def load_concept_map(path: Path = CONCEPT_MAP_PATH) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
@@ -317,13 +357,20 @@ def build_index(
     data_root: Path,
     registry: list[dict] | None = None,
     overrides: dict | None = None,
+    concept_map: dict | None = None,
 ) -> dict:
     registry = load_registry() if registry is None else registry
     overrides = load_overrides() if overrides is None else overrides
+    concept_map = load_concept_map() if concept_map is None else concept_map
+    workplace_paths = [
+        concept_map["concepts"][name]["paths"] for name in WORKPLACE_CONCEPTS
+    ]
+    kind_of = {e["id"]: e.get("kind") for e in registry}
     people: dict[str, dict] = {}
     grouped: dict[str, list[dict]] = defaultdict(list)
     total = missing_birth = year_only = 0
     seen_elections: set[str] = set()
+    municipalities: set[str] = set()
 
     for election_dir in sorted(p for p in data_root.iterdir() if p.is_dir()):
         election_id = election_dir.name
@@ -340,13 +387,28 @@ def build_index(
             elif birth.startswith("~"):
                 year_only += 1
             key = person_key(name, birth)
+            # The candidacy itself — office, municipality, elected — resolves
+            # through scraper/shared/kandidatura.py, the one resolver over the
+            # corpus's five kandidatavimas shapes (issue #93).
+            candidacy = kandidatura(record, kind_of.get(election_id))
+            if candidacy["savivaldybe"]:
+                municipalities.add(candidacy["savivaldybe"])
+            workplace = None
+            for paths in workplace_paths:
+                mapped = paths.get(election_id)
+                if mapped is None:
+                    continue
+                value = field_coverage.concept_value(record, mapped)
+                if isinstance(value, str) and value.strip():
+                    workplace = value.strip()
+                    break
             grouped[key].append(
                 {
                     "election": election_id,
                     "candidateId": record.get("candidateId"),
                     "displayName": record.get("candidateName"),
                     "birthKey": birth,
-                    "elected": elected_note_of(record),
+                    "elected": candidacy["isrinktas"],
                     "money": money_of(record),
                     "litas": declared_in_litas(record),
                     "employmentIncome": income_is_employment_only(record),
@@ -356,12 +418,24 @@ def build_index(
                     # stays in the record file; the id is what groups one
                     # party's candidacies across its dash glyphs and renames.
                     "party": partija(record, election_id)["partija-id"],
+                    "municipality": candidacy["savivaldybe"],
+                    # The kind decides the office for every other election, so
+                    # the flag is only carried where the ballot had two.
+                    "mayor": candidacy["vaidmuo"] == ROLE_MAYOR
+                    and kind_of.get(election_id) == "savivaldybiu",
+                    "workplace": workplace,
+                    "educationRank": issilavinimas(record, election_id)["rangas"],
                 }
             )
 
     order = {e["id"]: i for i, e in enumerate(registry)}
     former, unmatched_override_keys = apply_merges(grouped, overrides, order)
     pid_of: dict[str, str] = {}
+    # Municipality names are interned: the corpus writes ~100k of them over
+    # ~127 distinct values, so each candidacy carries an index into the
+    # top-level "municipalities" list instead of the string.
+    municipality_list = sorted(municipalities)
+    municipality_index = {name: i for i, name in enumerate(municipality_list)}
 
     def best_birth(records: list[dict]) -> str | None:
         # Like the display name, the shown birth follows the latest word:
@@ -396,20 +470,36 @@ def build_index(
             "n": records[-1]["displayName"] or name,
             "b": best_birth(records),
             # The record file is derivable: data/<id>/<c>-<id>.json.
+            # "w" is the tri-state elected flag: true, false, or no key where
+            # no results exist — three states the dashboard renders apart.
             # "m" is [privalomas-registruoti-turtas, pinigines-lesos,
             # gautos-pajamos] in euro, nulls where not declared/published;
             # "lt" marks a declaration published in litas and converted, and
             # "ds" an income figure that is the 1990s form's employment row
             # rather than a declared total (the `deklaruotos-pajamos` concept).
+            # "p" is the canonical nominator id, "sv" an index into the
+            # top-level municipalities list, "r": "m" a mayoral run on a
+            # council-and-mayor ballot (the kind decides every other office),
+            # "wp" the workplace/position string the search box matches, and
+            # "ed" the education rank in scraper/shared/education.py's
+            # 13-tier ordinal (the top-level educationLevels list).
             "e": [
                 {
                     "id": r["election"],
                     "c": r["candidateId"],
-                    **({"w": True} if r["elected"] else {}),
+                    **({"w": r["elected"]} if r["elected"] is not None else {}),
                     **({"m": r["money"]} if any(v is not None for v in r["money"]) else {}),
                     **({"lt": True} if r["litas"] and any(v is not None for v in r["money"]) else {}),
                     **({"ds": True} if r["employmentIncome"] else {}),
                     **({"p": r["party"]} if r["party"] else {}),
+                    **(
+                        {"sv": municipality_index[r["municipality"]]}
+                        if r["municipality"]
+                        else {}
+                    ),
+                    **({"r": "m"} if r["mayor"] else {}),
+                    **({"wp": r["workplace"]} if r["workplace"] else {}),
+                    **({"ed": r["educationRank"]} if r["educationRank"] else {}),
                 }
                 for r in records
             ],
@@ -430,13 +520,38 @@ def build_index(
         parties[pid] = {
             "n": data.get("shortName") or data["name"],
             "t": data["type"],
+            # The full name too where "n" is a short one, so the search box
+            # can match either ("valstiečių" finds LVŽS).
+            **(
+                {"f": data["name"]}
+                if data.get("shortName") and data["shortName"] != data["name"]
+                else {}
+            ),
         }
+
+    missing_labels = [t for t in EDUCATION_LEVELS if t not in EDUCATION_LEVEL_LABELS]
+    stale_labels = [t for t in EDUCATION_LEVEL_LABELS if t not in EDUCATION_LEVELS]
+    if missing_labels or stale_labels:
+        raise ValueError(
+            f"EDUCATION_LEVEL_LABELS out of step with education.LEVELS: "
+            f"missing {missing_labels}, stale {stale_labels}"
+        )
+
+    won = sum(1 for p in entries for e in p["e"] if e.get("w") is True)
+    lost = sum(1 for p in entries for e in p["e"] if e.get("w") is False)
 
     return {
         "elections": [e for e in registry if e["id"] in seen_elections],
         "unregisteredElections": sorted(seen_elections - set(order)),
         "unmatchedOverrideKeys": sorted(unmatched_override_keys),
         "parties": parties,
+        "municipalities": municipality_list,
+        # The 13-tier education ordinal, rank order ("ed" is a 1-based index
+        # into it); labels ride here because the slugs are ASCII-folded and
+        # would de-slug without their diacritics.
+        "educationLevels": [
+            {"id": t, "label": EDUCATION_LEVEL_LABELS[t]} for t in EDUCATION_LEVELS
+        ],
         "stats": {
             "records": total,
             "persons": len(entries),
@@ -444,6 +559,9 @@ def build_index(
             "recordsWithoutBirthDate": missing_birth,
             "recordsWithBirthYearOnly": year_only,
             "mergedPersons": len(former),
+            "candidaciesWon": won,
+            "candidaciesLost": lost,
+            "candidaciesWithoutResultsData": total - won - lost,
         },
         "people": entries,
     }
@@ -467,6 +585,12 @@ def main() -> int:
     print(f"records w/ year only:     {stats['recordsWithBirthYearOnly']} (grouped by name + ~year)")
     print(f"override-merged persons:  {stats['mergedPersons']} ({OVERRIDES_PATH})")
     print(f"nominators used:          {len(index['parties'])} registry entries")
+    print(
+        f"elected:                  {stats['candidaciesWon']} won, "
+        f"{stats['candidaciesLost']} lost, "
+        f"{stats['candidaciesWithoutResultsData']} without results data"
+    )
+    print(f"municipalities:           {len(index['municipalities'])}")
     print(f"elections:                {len(index['elections'])} of {len(load_registry())} registered")
     print(f"wrote {OUTPUT_PATH} ({OUTPUT_PATH.stat().st_size // 1024} KB)")
     failed = False

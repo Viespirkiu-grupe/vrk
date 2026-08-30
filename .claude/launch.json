@@ -4,7 +4,7 @@
     {
       "name": "vrk-dashboard",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8791"],
+      "runtimeArgs": ["scripts/serve_dashboard.py", "8791"],
       "port": 8791
     }
   ]

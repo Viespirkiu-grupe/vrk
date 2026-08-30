@@ -373,23 +373,99 @@ class ComparisonTableRenderingTests(unittest.TestCase):
         self.assertIn("white-space: pre-line", rule)
 
     def test_conviction_uses_the_formatter(self):
-        row = re.search(r'\["Teistumas", \[[^\]]*\](, *\w+)?\]', SOURCE)
+        row = re.search(r'\{ concept: "teistumas", derived: true, format: (\w+) \}', SOURCE)
         self.assertIsNotNone(row)
-        self.assertEqual((row.group(1) or "").strip(" ,"), "convictionCell")
+        self.assertEqual(row.group(1), "convictionCell")
 
     def test_education_uses_the_formatter(self):
-        row = re.search(r'\["Išsilavinimas", \[[^\]]*\](, *\w+)?\]', SOURCE)
+        row = re.search(r'\{ concept: "issilavinimas", format: (\w+) \}', SOURCE)
         self.assertIsNotNone(row)
-        self.assertEqual((row.group(1) or "").strip(" ,"), "educationCell")
+        self.assertEqual(row.group(1), "educationCell")
+
+    def test_the_row_label_column_stays_visible_while_scrolling(self):
+        # The table renders 1,746px wide inside a 1,085px pane for an
+        # 8-election person; without a sticky first column the row label
+        # scrolls away and every cell is a number with no name.
+        rule = re.search(r"table\.cmp th:first-child \{[^}]*\}", SOURCE)
+        self.assertIsNotNone(rule)
+        self.assertIn("position: sticky", rule.group(0))
+
+    def test_the_comparison_header_uses_short_election_names(self):
+        # The chart always used shortName; the table used the full names and
+        # was the wider for it.
+        self.assertIn("th.textContent = electionShortName(e.id);", SOURCE)
+
+
+class KeyboardAccessTests(unittest.TestCase):
+    """The people list used to be unreachable by keyboard: two focusable
+    elements in the whole document, 300 rendered rows of tabIndex -1 divs."""
+
+    def test_rows_are_focusable_buttons(self):
+        self.assertIn("div.tabIndex = 0;", SOURCE)
+        self.assertIn('div.setAttribute("role", "button");', SOURCE)
+
+    def test_rows_open_on_enter_and_space_and_arrow_between_rows(self):
+        for fragment in ('ev.key === "Enter"', 'ev.key === "ArrowDown"', 'ev.key === "ArrowUp"'):
+            with self.subTest(fragment):
+                self.assertIn(fragment, SOURCE)
+
+
+class BootFailureTests(unittest.TestCase):
+    """boot() used to have no res.ok check and no try/catch, so a missing
+    people.json froze the app on "kraunamas indeksas…" with no message."""
+
+    def test_both_fetches_are_ok_checked(self):
+        self.assertIn("if (!indexRes.ok) throw new Error", SOURCE)
+        self.assertIn("if (!mapRes.ok) throw new Error", SOURCE)
+
+    def test_a_failed_boot_reports_instead_of_freezing(self):
+        self.assertIn("function bootFailed(", SOURCE)
+        self.assertIn("catch (err)", SOURCE)
+        self.assertIn("indekso įkelti nepavyko", SOURCE)
+
+
+class TriStateElectedTests(unittest.TestCase):
+    """`w` is true, false, or absent (no results data) — three states the
+    page must keep apart. Counting truthiness read 7,192 unknown outcomes as
+    losses (issue #87)."""
+
+    def test_the_won_count_counts_only_true(self):
+        self.assertIn("p.e.filter(e => e.w === true).length", SOURCE)
+
+    def test_the_unknown_count_is_reported_beside_it(self):
+        self.assertIn("e.w === undefined", SOURCE)
+        self.assertIn("be rezultatų duomenų", SOURCE)
+
+    def test_a_card_says_when_results_data_is_missing(self):
+        self.assertIn("rezultatų duomenų nėra", SOURCE)
+
+
+class PhotoShapeTests(unittest.TestCase):
+    """25,332 records carry their portrait as VRK's own URL — the only shape
+    29% of persons have — and the page used to refuse it, show a photo for
+    3% of persons, and prefer the oldest election's portrait."""
+
+    def test_the_url_shape_is_accepted(self):
+        self.assertIn('/^https?:\\/\\//.test(photo)', SOURCE)
+
+    def test_the_newest_portrait_wins(self):
+        self.assertIn("[...loaded].reverse()", SOURCE)
+
+    def test_photos_load_lazily(self):
+        self.assertIn('img.loading = "lazy";', SOURCE)
 
 
 class ArchiveComparisonRowTests(unittest.TestCase):
     """Four comparison rows read an em-dash for every 1996-1998 Seimas archive
     record until issue #69, because that family's card questionnaire was never
-    parsed. This runs a real re-parsed record through the page's own
-    `resolvePath`/`compactValue`/`educationCell`, so it fails if either the
-    parser stops emitting those keys or the field map stops resolving them.
+    parsed. This runs a real re-parsed record through the page's own concept
+    rows — CONCEPT_ROWS resolved against the real docs/concept-map.json, the
+    exact machinery showPerson uses — so it fails if the parser stops emitting
+    those keys, the concept map stops mapping them, or the page's resolver
+    stops resolving them (issue #87's test gap).
     """
+
+    ELECTION = "1996-spalio-20-seimo"
 
     # astrauskas-vytautas, 1996-spalio-20-seimo: the fixture candidate with no
     # biography page at all, whose whole anketa therefore comes from the card.
@@ -407,25 +483,44 @@ class ArchiveComparisonRowTests(unittest.TestCase):
     }
 
     def _cells(self, record):
+        concept_map = json.loads(
+            (REPO_ROOT / "docs" / "concept-map.json").read_text(encoding="utf-8")
+        )
+        labels = {
+            cid: spec["label-lt"]
+            for cid, spec in {**concept_map["concepts"], **concept_map.get("derived", {})}.items()
+            if spec.get("label-lt")
+        }
         helpers = "\n".join(
             re.search(rf"^function {name}\(.*?^}}", SOURCE, re.S | re.M).group(0)
-            for name in ("resolvePath", "compactValue", "educationCell", "convictionCell", "convictionLines")
+            for name in (
+                "resolvePath", "compactValue", "educationCell", "workHistoryCell",
+                "nameCell", "convictionCell", "convictionLines", "deslug", "labelFor",
+                "isFilledValue", "walkValue", "resolveConcept", "resolveRow", "rowLabel",
+            )
         )
-
-        field_map = re.search(r"^const FIELD_MAP = \[.*?^\];", SOURCE, re.S | re.M).group(0)
+        consts = "\n".join(
+            re.search(pattern, SOURCE, re.S | re.M).group(0)
+            for pattern in (
+                r"^const SECTION_LABELS = \{.*?^\};",
+                r"^const ROOT_SECTIONS = .*?;$",
+                r"^const CONCEPT_ROWS = \[.*?^\];",
+            )
+        )
         script = (
-            f"{CONVICTION_CONSTANTS}\n{helpers}\n"
+            f"{CONVICTION_CONSTANTS}\n"
+            f"const CONCEPTS = {json.dumps(concept_map['concepts'])};\n"
+            f"const CONCEPT_LABELS = {json.dumps(labels, ensure_ascii=False)};\n"
+            "const SEGMENT_LABELS = {};\n"
+            f"{consts}\n{helpers}\n"
             "function moneyCell() { return null; }\n"
             "function incomeCell() { return null; }\n"
-            f"{field_map}\n"
-            f"const r = {json.dumps(record)};\n"
+            f"const r = {json.dumps(self.RECORD if record is None else record)};\n"
             "const out = {};\n"
-            "for (const [label, paths, format] of FIELD_MAP) {\n"
-            "  let v = null;\n"
-            "  for (const p of paths) { v = resolvePath(r.normalized || {}, p);"
-            " if (v != null && v !== '') break; }\n"
-            "  const c = format ? format(v, r) : compactValue(v);\n"
-            "  out[label] = c == null ? null : c;\n"
+            "for (const row of CONCEPT_ROWS) {\n"
+            f"  const {{ value }} = resolveRow(row, r, {json.dumps(self.ELECTION)});\n"
+            "  const c = row.format ? row.format(value, r) : compactValue(value);\n"
+            "  out[rowLabel(row)] = c == null ? null : c;\n"
             "}\n"
             "console.log(JSON.stringify(out));"
         )
@@ -456,9 +551,11 @@ class ArchiveComparisonRowTests(unittest.TestCase):
 
     @unittest.skipUnless(NODE, "node not installed")
     def test_a_label_the_card_omits_still_reads_as_nothing(self):
-        # Astrauskas' card leaves "Pagrindinė darbovietė" blank, so the parser
-        # writes no key and the cell must stay an em-dash rather than "null".
-        self.assertIsNone(self._cells(self.RECORD)["Pagrindinė darbovietė"])
+        # Astrauskas' card leaves the workplace blank, so the parser writes no
+        # key and the cell must stay an em-dash rather than "null". The row is
+        # the era-bridged one: einamos-pareigos falls back to
+        # pagrindine-darboviete, which is what the 1996 card maps.
+        self.assertIsNone(self._cells(self.RECORD)["Einamos pareigos / darbovietė"])
 
 
 if __name__ == "__main__":

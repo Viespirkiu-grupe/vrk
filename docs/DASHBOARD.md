@@ -14,15 +14,19 @@ takes three forms on a rule that does not follow English's — 1 asmuo,
 ## Run it
 
 ```bash
-python scripts/build_person_index.py   # writes dashboard/people.json (~20 MB)
-python3 -m http.server 8791            # serve the repo root
+python scripts/build_person_index.py   # writes dashboard/people.json (~28 MB)
+python3 scripts/serve_dashboard.py     # serve the repo root, gzipped
 ```
 
 Then open <http://127.0.0.1:8791/dashboard/>. Both commands run from the repo
 root — the index builder reads `data/`, and the page fetches candidate JSONs
-relative to the server root. A person page is deep-linkable via the URL hash,
-which is the person's `pid` (below); a pre-pid `name|birth` hash and a
-merged-away fragment's key still resolve and are rewritten to the pid.
+and `docs/concept-map.json` relative to the server root. `serve_dashboard.py`
+is the stdlib server plus gzip: the index compresses 4.2× (29 MB → 7 MB) and
+the page fetches it `no-store` on every load, so plain `python3 -m
+http.server 8791` works but pays the full weight each time. A person page is
+deep-linkable via the URL hash, which is the person's `pid` (below); a
+pre-pid `name|birth` hash and a merged-away fragment's key still resolve and
+are rewritten to the pid.
 
 ## Identity: how candidacies become persons
 
@@ -70,33 +74,91 @@ left distinct for lack of evidence. Merging another pair is a one-line edit
 of the override file, not a code change; the builder fails if an override
 key stops matching, so the file cannot rot silently.
 
+## What the page offers
+
+The left pane is search plus facets, all answered from `people.json` alone:
+free text over names, canonical party names and each candidacy's
+workplace/position string; selects for election, nominating party/committee,
+municipality, office and outcome. Filters conjoin at the candidacy level — a
+person matches when at least one of their candidacies passes every active
+filter — and **⬇ CSV** exports the current selection (semicolon-separated,
+BOM-prefixed for lt-LT Excel, uncapped even when the list shows only the
+first 300 rows). Checking rows collects persons for **Palyginti**, a
+side-by-side table whose columns are persons and whose cells show each
+person's newest resolving answer tagged with its election. **📊 Rinkimų
+suvestinė** aggregates one election — party mix, education mix, money
+medians — with the denominator printed beside every figure, because the
+higher-education share alone swings up to 28.9 points on that choice.
+**📈 Didžiausi pokyčiai** ranks first-to-last declared money deltas.
+
 ## The comparison table
 
-`dashboard/index.html` carries a curated field map (concept → normalized paths
-tried in order), built from a measured key×election matrix. The asset and
-income fields (`privalomas-registruoti-turtas`, `pinigines-lesos`,
-`gautos-pajamos`) are already aligned across all 20 elections by the module
-convention of reusing key names where questions match; biography-era splits
-(`anketa.*` up to 2019, `biografija.*` from 2020) are bridged per concept in
-the map. Extending the comparison is editing `FIELD_MAP` in the page.
+The per-person comparison rows (`CONCEPT_ROWS` in the page) name **concepts
+from `docs/concept-map.json`**, which the page fetches at boot; labels come
+from the map's `label-lt` and the paths from its per-election tables, so the
+page carries no dotted path of its own and cannot drift from the data the
+way its old hand-maintained `FIELD_MAP` did (issue #87 found two era-split
+rows permanently empty for half the corpus each). The JS resolver mirrors
+`field_coverage.concept_value` — same root-section fallback, list-mapping
+and mid-path fan-out rules — and `tests/test_dashboard_concept_rows.py`
+holds the two together on fixtures while `scripts/field_coverage.py` gates
+the map itself against the full corpus. A cell whose concept the election
+never mapped renders dimmed with a "form never asked" tooltip, distinct from
+an answer the form invited and did not get. Rows that are one question split
+across page eras chain concepts (`einamos-pareigos` falls back to
+`pagrindine-darboviete`), and `biografija.darbo-patirtis` — 17,666 records
+that were displayed nowhere — is a row of its own. Extending the comparison
+is adding a concept id to `CONCEPT_ROWS`; if the concept is new, map it in
+`docs/concept-map.json` and re-run `field_coverage.py --update-baseline`.
 
-**Won flag.** A candidacy is marked won (`"w": true`) when the record's
-`profilis.pastaba` starts with `Išrink` or — for the 1996–2015 families, whose
-pages mark no winner — when `kandidatavimas.isrinktas` is `true`, the flag
-joined in from VRK's results trees (`python -m scraper build-results <id>`).
-In the 1996-1999 Seimas archive family `kandidatavimas` is a **list**, one
-entry per candidacy, so the record counts as won if any of its candidacies is;
-that is the one place the index reads the flag out of a list rather than an
-object.
+**Won flag.** `"w"` is tri-state: `true`, `false`, or absent where VRK
+published no results — the 1997 municipal pair (issue #92) and the five
+2000-kovo-19 municipalities whose results tree VRK does not publish, 7,192
+candidacies in all. It is `kandidatura(record, kind)["isrinktas"]`
+(`scraper/shared/kandidatura.py`), the one resolver over the corpus's five
+`kandidatavimas` shapes; the prose-note pathway lives in the parsers
+(`candidacy_from_elected_note`, issue #100), which emit the root block this
+reads — measured 2026-08-30, all 3,522 `Išrink…`-noted records agree with
+it. The page renders the three states apart: `laimėta: N` counts only
+`true`, `be rezultatų duomenų: M` appears beside it, a no-results card says
+so, and the outcome facet offers all three. The index used to emit `"w"`
+only when won, which made "lost" and "no results data" the same absence.
 
 **Party.** Each candidacy carries `"p"`, the canonical nominator id from
 `scraper/parties.json` (issue #82) — the join that holds one party together
 across its dash glyphs, genitives and renames — and `people.json`'s top-level
-`"parties"` table maps each used id to `{n: short or full name, t: kind}`
-(`partija`/`koalicija`/`komitetas`/`issikelimas`) so the page can label it
-without carrying the registry. The key is absent on the five presidential
-elections whose pages name no nominator. The raw string stays in the record
-file; `scraper/shared/parties.py::partija(record)` returns both.
+`"parties"` table maps each used id to `{n: short or full name, t: kind, f:
+full name where n is short}` (`partija`/`koalicija`/`komitetas`/
+`issikelimas`) so the page can label it without carrying the registry. The
+key is absent on the five presidential elections whose pages name no
+nominator. The raw string stays in the record file;
+`scraper/shared/parties.py::partija(record)` returns both. On screen the
+party shows on the list rows (latest candidacy), on each election card, as
+the person header's nominator trajectory (`LLS → LiCS → …`), as a facet, and
+in the search haystack; the comparison's *Iškėlė / sąrašas* row shows the
+per-election raw string, which is where coalition compositions differ.
+
+**The other per-candidacy fields** (issue #87): `"sv"` indexes the top-level
+`municipalities` list (~127 names interned rather than repeated 99,594
+times), `"r": "m"` marks a mayoral run on a council-and-mayor ballot (the
+election's `kind` decides every other office), `"wp"` is the
+workplace/position string the search box matches (resolved through the
+concept map's `einamos-pareigos`/`pagrindine-darboviete`, whichever the era
+asks), and `"ed"` is the education rank in
+`scraper/shared/education.py`'s 13-tier ordinal — the top-level
+`educationLevels` list carries the ladder with Lithuanian labels, because
+the slugs are ASCII-folded and would de-slug without their diacritics. All
+of it comes from the shared resolvers, not rules of the builder's own:
+`kandidatura()` for office/municipality/elected, `issilavinimas()` for the
+rank, `field_coverage.concept_value()` for the workplace.
+
+**Photos.** The corpus stores portraits three ways — an externalized sidecar
+(`photos/<candidateId>.<ext>`, 2,199 records), VRK's own hosted URL (25,332
+records, the only shape 29 % of persons have), and nothing (85,542). The
+page accepts all of the first two plus a legacy inline `data:` URI, prefers
+the **newest** election's portrait, loads lazily, and drops the `<img>` on
+error rather than showing a broken icon — VRK has been known to retire old
+image paths.
 
 **Currency.** The 2012–2015 pages declare assets and income in litas
 (`turto-ir-pajamu-deklaracijos.valiuta` is `"Lt"` on those records); 2016 on
@@ -115,7 +177,7 @@ The comparison table did not always convert. It read the stored number
 straight through `compactValue`, so a litas figure printed raw, unlabelled,
 and 3.4528× too large beside the euro columns next to it — the same field
 disagreeing between two tabs of the same person, across the 36,362 of 76,776
-records that declare in litas. `FIELD_MAP` rows may now carry an optional
+records that declare in litas. `CONCEPT_ROWS` entries may carry an optional
 `(value, record) => string` formatter; the asset rows use `moneyCell` and the
 income row `incomeCell`, which converts the same way after resolving the
 `deklaruotos-pajamos` concept (below).
@@ -181,9 +243,14 @@ repeat municipal votes and there is no other order between them.
 - `scraper/person_overrides.json` — the hand-reviewed identity decisions
   (version controlled): every accepted merge and rejected pair, with the
   evidence.
+- `docs/concept-map.json` — the concept → per-election-path bridge the
+  comparison rows resolve through; `scripts/field_coverage.py` gates it
+  against the corpus.
 - `scripts/build_person_index.py` — builds `dashboard/people.json`
   (gitignored); applies the override merges, assigns pids, prints the audit
   counts on every run.
+- `scripts/serve_dashboard.py` — the stdlib server plus gzip and an
+  mtime-keyed compression cache; run from the repo root.
 - `scripts/find_identity_merge_candidates.py` — scores possible
   surname-change splits and prints the undecided ones; writes
   `dashboard/merge-review.csv` (gitignored — the record of decisions is the
@@ -197,7 +264,15 @@ repeat municipal votes and there is no other order between them.
 - `tests/test_elections_registry.py` — pins the registry's shape, its
   chronology, and that every scraped election has an entry.
 - `tests/test_dashboard_money_rendering.py` — pins that both renderers
-  convert litas; lifts the helpers out of the page and runs them under node,
-  skipping the behavioural half where node is absent.
+  convert litas and that `parseMoney`/`parse_money_text` follow one shared
+  string rule over one fixture list; lifts the helpers out of the page and
+  runs them under node, skipping the behavioural half where node is absent.
 - `tests/test_dashboard_ui.py` — pins the page's Lithuanian chrome, the
-  sidebar's `nowrap`, and the plural rule across the 11/21 boundaries.
+  sidebar's `nowrap`, the plural rule across the 11/21 boundaries, the
+  tri-state outcome rendering, keyboard reachability, boot failure
+  reporting, and the archive-era concept rows end to end.
+- `tests/test_dashboard_concept_rows.py` — closes issue #87's test gap: the
+  rows name real, corpus-measured concepts; the page's resolver agrees with
+  `field_coverage.concept_value` on the shapes a naive walker gets wrong;
+  the era-fallback chain bridges both eras; and no dotted path can creep
+  back into the row list.
