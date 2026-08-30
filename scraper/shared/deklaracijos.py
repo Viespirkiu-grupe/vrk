@@ -438,6 +438,245 @@ INCOME_TOTAL = "deklaruota-suma"
 INCOME_EMPLOYMENT = "darbo-santykiu"
 INCOME_NONE = "nera"
 
+#: The irrevocable LTL/EUR conversion rate fixed for the 2015-01-01 changeover.
+#: Every pre-2016 election declares in litas (`valiuta` is `"Lt"` on all
+#: 79,071 records that carry the section, 1996 through 2015, with no
+#: exceptions); every 2016-and-later one declares in euro and says nothing.
+LITAS_PER_EURO = 3.4528
+
+CURRENCY_LITAS = "Lt"
+CURRENCY_EURO = "EUR"
+
+
+def deklaracijos_valiuta(declaration: dict[str, Any] | None) -> str | None:
+    """The currency one declaration block's figures are published in.
+
+    `"Lt"` where the record states it, `"EUR"` for a block that states
+    nothing — no record anywhere says `"EUR"`, so in the stored corpus the
+    euro is marked by *absence*, which is too load-bearing to hand a
+    consumer (issue #97). Measured over all 113,073 records: `valiuta` is
+    `"Lt"` on every 1996–2015 record with the section and absent from
+    `2016-seimo` on. None when there is no declaration block at all.
+    """
+    if not isinstance(declaration, dict):
+        return None
+    return CURRENCY_LITAS if declaration.get("valiuta") == CURRENCY_LITAS else CURRENCY_EURO
+
+
+# --------------------------------------------------------------------------
+# Derived: total declared assets, with the measure named
+# --------------------------------------------------------------------------
+
+#: What a total-assets figure is a sum *of*, per era of the declaration form.
+TURTAS_SPLIT = "skaidytas"  # property + securities + cash, summed from split rows (2004 on)
+TURTAS_PLUS_CASH = "turtas-plius-lesos"  # the 1996-2000 combined "Turtas ir piniginės lėšos" row
+TURTAS_PLUS_SECURITIES = "turtas-plius-vp"  # 2002's "Turtas ir vertybiniai popieriai" row, plus its cash row
+
+#: The split rows the modern total sums. Loans given are an asset too, but the
+#: archive-era combined rows exclude them, so keeping them out of every era's
+#: total is what makes the figure comparable; they stay available as their own
+#: keys.
+_SPLIT_TOTAL_KEYS = (
+    "privalomas-registruoti-turtas",
+    "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
+    "pinigines-lesos",
+)
+
+#: The era-marker keys. Present-with-null still marks the era: the archive
+#: elections carry the modern keys as always-null placeholders, so key
+#: *presence* of the era's own row is what decides, never value.
+_ARCHIVE_COMBINED_KEY = "turtas-ir-pinigines-lesos-metu-pabaigoje"
+_2002_COMBINED_KEY = "turtas-ir-vertybiniai-popieriai-laikotarpio-pabaigoje"
+
+
+def _non_null_sum(values: Iterable[Any]) -> int | float | None:
+    total: int | float | None = None
+    for value in values:
+        if isinstance(value, (int, float)):
+            total = value if total is None else as_money(round(total + value, 2))
+    return total
+
+
+def deklaruotas_turtas(declaration: dict[str, Any] | None) -> dict[str, Any]:
+    """One total-declared-assets concept: `{"suma", "matas"}`.
+
+    The documented seven-key contract reaches 73.9 % of records; the two
+    archive families hold their wealth under other names while leaving the
+    modern keys as always-null placeholders (issue #97). This resolves the
+    era's own figure and *names the measure*, because the three are not the
+    same sum:
+
+    * `skaidytas` — property + securities + cash, summed from the split rows
+      every sectioned form (2004 on) publishes;
+    * `turtas-plius-lesos` — the 1996–2000 form's single combined row, which
+      already includes the cash;
+    * `turtas-plius-vp` — the 2002 form's property-and-securities row plus
+      its separate cash row.
+
+    Loans given/received are in none of the three. `suma` is in the block's
+    published currency (`deklaracijos_valiuta`), never converted here.
+    """
+    declaration = declaration if isinstance(declaration, dict) else {}
+    if _ARCHIVE_COMBINED_KEY in declaration:
+        value = declaration.get(_ARCHIVE_COMBINED_KEY)
+        value = value if isinstance(value, (int, float)) else None
+        return {"suma": value, "matas": TURTAS_PLUS_CASH if value is not None else None}
+    if _2002_COMBINED_KEY in declaration:
+        total = _non_null_sum(
+            (declaration.get(_2002_COMBINED_KEY), declaration.get("pinigines-lesos"))
+        )
+        return {"suma": total, "matas": TURTAS_PLUS_SECURITIES if total is not None else None}
+    if any(key in declaration for key in _SPLIT_TOTAL_KEYS):
+        total = _non_null_sum(declaration.get(key) for key in _SPLIT_TOTAL_KEYS)
+        return {"suma": total, "matas": TURTAS_SPLIT if total is not None else None}
+    return {"suma": None, "matas": None}
+
+
+# --------------------------------------------------------------------------
+# Derived: which measure the income and tax rows state
+# --------------------------------------------------------------------------
+
+#: `gautos-pajamos` is not one measure (issue #97). The 1996–2002 forms state
+#: income *net of tax* ("Gauta pajamų (be mokesčių) suma" — provable from the
+#: numbers: the modal tax/income ratio there is 0.40–0.52, above the era's
+#: 33 % statutory rate, which a gross base cannot produce); everything from
+#: 2004 on is gross. All of it normalizes to the same key.
+PAJAMOS_NET_ARCHIVE = "neto-archyvas"
+PAJAMOS_FR0462 = "fr0462"
+PAJAMOS_GROSS_GPM = "gpm-bruto"
+PAJAMOS_GROSS_DECLARED = "deklaruota-apmokestinamos"
+
+#: And the tax row switches from tax *paid* ("Išskaičiuota (sumokėta) ...")
+#: to tax *payable* ("Deklaruota mokėtina ...") with the 2018 rewording.
+MOKESTIS_PAID = "sumoketas"
+MOKESTIS_PAYABLE = "moketinas"
+
+#: Label-prefix → measure, matched against the raw declaration rows the same
+#: way `MONEY_KEY_PREFIXES` reads the values. Measured: the wording flips
+#: cleanly at 2018 — every 2007–2017 election prints the "Gautų pajamų suma" /
+#: "Išskaičiuota (sumokėta)" pair, every 2018-and-later one the "Deklaruota
+#: apmokestinamųjų..." / "Deklaruota mokėtina..." pair, and no election mixes
+#: them.
+_INCOME_LABEL_MEASURES = (
+    ("deklaruota-apmokestinamuju-ir-neapmokestinamuju-pajamu-suma", PAJAMOS_GROSS_DECLARED),
+    ("gautu-pajamu-suma", PAJAMOS_GROSS_GPM),
+)
+_TAX_LABEL_MEASURES = (
+    ("deklaruota-moketina-pajamu-mokescio-suma", MOKESTIS_PAYABLE),
+    ("isskaiciuota-sumoketa-pajamu-mokescio-suma", MOKESTIS_PAID),
+    ("isskaiciuota-mokescio-suma", MOKESTIS_PAID),
+)
+
+
+def _row_label_slugs(raw_declaration: dict[str, Any] | None) -> list[str]:
+    if not isinstance(raw_declaration, dict):
+        return []
+    slugs = []
+    for section in raw_declaration.get("sections") or []:
+        if not isinstance(section, dict):
+            continue
+        for item in section.get("items") or []:
+            if isinstance(item, dict):
+                slugs.append(source_key(item.get("key", "")))
+    return slugs
+
+
+def _is_archive_form(declaration: dict[str, Any]) -> bool:
+    """The 1996–2002 un-sectioned forms, whose income is net of tax."""
+    return (
+        "gautos-pajamos-darbo-santykiu" in declaration
+        or _ARCHIVE_COMBINED_KEY in declaration
+        or _2002_COMBINED_KEY in declaration
+    )
+
+
+def pajamu_matas(
+    declaration: dict[str, Any] | None,
+    raw_declaration: dict[str, Any] | None = None,
+) -> str | None:
+    """Which measure this declaration's income figure states.
+
+    Decided from the record itself: the archive form's own keys mark the net
+    era, `pajamos-pagal-forma` marks the FR0462 per-form pages, and for the
+    GPM eras the row label retained in `rawData` says which wording the page
+    printed. Falls back to the stated form name where no labels are
+    available. None when there is no declaration block.
+    """
+    if not isinstance(declaration, dict):
+        return None
+    if _is_archive_form(declaration):
+        return PAJAMOS_NET_ARCHIVE
+    # The label the page printed decides first: `pajamos-pagal-forma` exists
+    # on every 2004-2015 declaration (issue #98 normalizes the per-form lines
+    # for the whole span), so it cannot distinguish the FR0462 pages from the
+    # GPM ones -- but only the FR0462 pages print *no* income-total label.
+    for slug in _row_label_slugs(raw_declaration):
+        for prefix, measure in _INCOME_LABEL_MEASURES:
+            if slug.startswith(prefix):
+                return measure
+    form = declaration.get("deklaracijos-forma")
+    if isinstance(form, str):
+        if form.startswith("FR"):
+            return PAJAMOS_FR0462
+        if form.startswith("GPM"):
+            return PAJAMOS_GROSS_GPM
+    if "pajamos-pagal-forma" in declaration:
+        return PAJAMOS_FR0462
+    return None
+
+
+def mokescio_matas(
+    declaration: dict[str, Any] | None,
+    raw_declaration: dict[str, Any] | None = None,
+) -> str | None:
+    """Which measure this declaration's income-tax figure states."""
+    if not isinstance(declaration, dict):
+        return None
+    if _is_archive_form(declaration):
+        return MOKESTIS_PAID
+    for slug in _row_label_slugs(raw_declaration):
+        for prefix, measure in _TAX_LABEL_MEASURES:
+            if slug.startswith(prefix):
+                return measure
+    form = declaration.get("deklaracijos-forma")
+    if isinstance(form, str) and (form.startswith("FR") or form.startswith("GPM")):
+        return MOKESTIS_PAID
+    if "pajamos-pagal-forma" in declaration:
+        return MOKESTIS_PAID
+    return None
+
+
+def deklaruotos_pajamos_bruto(
+    declaration: dict[str, Any] | None,
+    matas: str | None = None,
+) -> int | float | None:
+    """The gross-equivalent income, so one series is comparable across 2002→2004.
+
+    The gross eras return the declared figure as is. The net era re-grosses
+    exactly as issue #97 proves out: `gautos-pajamos +
+    sumoketas-pajamu-mokestis` (the two rows of the same form), or the
+    employment rows' pair where the income is the row-1 floor. Net income
+    whose tax row is unpublished has no recoverable gross and returns None —
+    the net figure itself is still in `gautos-pajamos`.
+    """
+    declaration = declaration if isinstance(declaration, dict) else {}
+    income = deklaruotos_pajamos(declaration)
+    if income["suma"] is None:
+        return None
+    if matas is None:
+        matas = pajamu_matas(declaration)
+    if matas != PAJAMOS_NET_ARCHIVE:
+        return income["suma"]
+    tax_key = (
+        "sumoketas-pajamu-mokestis-darbo-santykiu"
+        if income["saltinis"] == INCOME_EMPLOYMENT
+        else "sumoketas-pajamu-mokestis"
+    )
+    tax = declaration.get(tax_key)
+    if isinstance(tax, (int, float)):
+        return as_money(round(income["suma"] + tax, 2))
+    return None
+
 
 def deklaruotos_pajamos(declaration: dict[str, Any] | None) -> dict[str, Any]:
     """One income concept for a record's `turto-ir-pajamu-deklaracijos`.

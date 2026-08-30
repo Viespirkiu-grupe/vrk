@@ -48,6 +48,12 @@ what it wanted; `docs/FIXTURE_SAMPLES.md` explains the rule and
 
 Where to start:
 
+- **One comparable table** — [docs/CANDIDACIES.md](docs/CANDIDACIES.md):
+  `python scripts/build_candidacy_table.py` projects the corpus into
+  `dist/candidacies.csv.gz` + `dist/vrk.sqlite`, one row per (person,
+  election) — education on one ordinal, money EUR-converted with its
+  measure named, canonical party ids, typed absences — gated by per-column
+  fill rates so a field cannot silently stop arriving.
 - **Consuming the data** — [docs/DATA_GUIDE.md](docs/DATA_GUIDE.md): record
   anatomy, the cross-election invariants, the concept→path era map, how to
   join people across elections, and the traps.

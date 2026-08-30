@@ -160,6 +160,14 @@ deklaraciju-laikotarpis	2015-birzelio-7-seimo-varena-eisiskes	100.0	ok
 deklaraciju-laikotarpis	2015-kovo-1-savivaldybiu	0.0	upstream-absent	No retained page of this election prints the „Pastaba.“ declaration paragraph the concept reads (15,140 candidates checked, 0 carry the word), against every candidate of 2008-seimo (1,595) and 2012-seimo (1,918).
 deklaraciju-laikotarpis	2015-kovo-1-seimo-zirmunai	100.0	ok	
 deklaraciju-laikotarpis	2015-lapkricio-8-telsiu-mero	0.0	upstream-absent	No retained page of this election prints the „Pastaba.“ declaration paragraph the concept reads (8 candidates checked, 0 carry the word), against every candidate of 2008-seimo (1,595) and 2012-seimo (1,918).
+deklaraciju-valiuta	1996-spalio-20-seimo	100.0	ok	
+deklaraciju-valiuta	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	98.2	ok	
+deklaraciju-valiuta	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
+deklaraciju-valiuta	1997-kovo-23-savivaldybiu-tarybu	87.3	ok	
+deklaraciju-valiuta	1997-kovo-23-seimo-pakartotiniai	4.3	ok	
+deklaraciju-valiuta	1998-kovo-22-seimo-pakartotiniai	18.2	ok	
+deklaraciju-valiuta	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
+deklaraciju-valiuta	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
 deklaraciju-valiuta	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
 deklaraciju-valiuta	2000-seimo	100.0	ok	
 deklaraciju-valiuta	2002-gruodzio-22-savivaldybiu-tarybu	100.0	ok	
@@ -1053,6 +1061,17 @@ teistumo-detales	2024-ep	2.2	ok
 teistumo-detales	2024-prezidento	0.0	empty-is-the-answer	irasai is [] on every record because all 8 candidates answered „Ne“ to the conviction question; the block itself is published (issue #86).
 teistumo-detales	2024-seimo	3.6	ok	
 teistumo-detales	2025-kovo-16-meru	0.0	empty-is-the-answer	irasai is [] on every record because all 14 candidates answered „Ne“ to the conviction question; the block itself is published (issue #86).
+turtas-ir-pinigines-lesos	1996-spalio-20-seimo	99.8	ok	
+turtas-ir-pinigines-lesos	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	98.2	ok	
+turtas-ir-pinigines-lesos	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
+turtas-ir-pinigines-lesos	1997-kovo-23-savivaldybiu-tarybu	87.3	ok	
+turtas-ir-pinigines-lesos	1997-kovo-23-seimo-pakartotiniai	4.3	ok	
+turtas-ir-pinigines-lesos	1998-kovo-22-seimo-pakartotiniai	18.2	ok	
+turtas-ir-pinigines-lesos	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
+turtas-ir-pinigines-lesos	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
+turtas-ir-pinigines-lesos	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
+turtas-ir-pinigines-lesos	2000-seimo	100.0	ok	
+turtas-ir-vertybiniai-popieriai	2002-gruodzio-22-savivaldybiu-tarybu	95.4	ok	
 turto-isigijimo-kaina	2018-rugsejo-16-seimo-zanavykai	100.0	ok	
 turto-isigijimo-kaina	2019-ep	100.0	ok	
 turto-isigijimo-kaina	2019-kovo-3-savivaldybiu-tarybu	100.0	ok	

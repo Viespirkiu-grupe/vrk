@@ -1,18 +1,24 @@
 # Data Guide
 
 The consumer entry point to the corpus: everything a third party needs to
-query 113,002 candidate records across 51 Lithuanian elections (1996–2025)
-without reading the per-election schema appendices first. Every path and
-count on this page was verified against the full corpus on 2026-08-19; the
-election and record totals were refreshed on 2026-08-21 when the 2012–2014
-elections joined and on 2026-08-22 for the 2007–2011 Seimo by-elections, the 2008 Seimo, the two
-2009 elections and the 2011 municipal general, and on 2026-08-23 for the
-2007 municipal general, the two 2004 elections and the 2005 Kėdainiai
-by-election (see DATASET.md).
+query 113,073 candidate records across 55 Lithuanian elections (1996–2025)
+without reading the per-election schema appendices first. The headline
+numbers are no longer hand-maintained: `tests/test_doc_counts.py` fails
+whenever this sentence disagrees with `scraper/elections.json` or, on a
+checkout with a local corpus, with `data/` itself (issue #84 — the previous
+revision sat three elections stale for a week and nothing said a word).
 
 Records live at `data/<election-id>/<candidateId>-<electionId>.json`, one
 file per candidacy. `data/` is not version controlled; see
 [DATASET.md](DATASET.md) for the inventory and how to regenerate it.
+
+**If what you want is one table** — compare education, money, party or
+electedness across elections without learning the 55 per-election schemas —
+build the derived candidacy table first:
+`python scripts/build_candidacy_table.py` writes one row per (person,
+election) with everything already joined, EUR-converted and measure-tagged.
+[CANDIDACIES.md](CANDIDACIES.md) documents every column. The rest of this
+page is for reading the record files themselves.
 
 Every record in the corpus is what today's parser produces from the page it
 was fetched from: `python scripts/reparse_diff.py` re-parses each election
@@ -94,6 +100,33 @@ set instead (`turtas-ir-pinigines-lesos-metu-pabaigoje`,
 `sumoketas-pajamu-mokestis` and `pinigines-lesos` are the keys they share with
 the rest.
 
+**A shared key is not a shared measure** (issue #97). Three eras' figures
+sit under the same names while measuring different things, with nothing in
+the record marking the switch:
+
+- `gautos-pajamos` is income **net of tax** on every 1996–2002 form ("Gauta
+  pajamų (be mokesčių) suma"; 2002's is family-scoped as well) and **gross**
+  from 2004 on. This is provable from the numbers, not just the labels: the
+  modal tax/income ratio in 1996–2002 is 0.40–0.52, above the era's 33 %
+  statutory rate, which a gross base cannot produce. 23,141 populated
+  records are on the net side, and a per-person income series drawn through
+  2002→2004 steps 30–50 % for no real reason unless re-grossed
+  (`gautos-pajamos + sumoketas-pajamu-mokestis`, the two rows of the same
+  form).
+- `sumoketas-pajamu-mokestis` switches from tax *paid* ("Išskaičiuota
+  (sumokėta)…") to tax *payable* ("Deklaruota mokėtina…") with the 2018
+  rewording.
+- the archive eras hold their wealth in combined rows while carrying the
+  modern split keys as always-null placeholders, so summing the eleven keys
+  above reads €0 for 17,654 declarations that do state their wealth.
+
+Resolve all three through `scraper/shared/deklaracijos.py` —
+`pajamu_matas()`, `mokescio_matas()`, `deklaruotas_turtas()` and
+`deklaruotos_pajamos_bruto()` name the measure and do the era-aware
+arithmetic — or read the candidacy table
+([CANDIDACIES.md](CANDIDACIES.md)), which carries the measure columns
+alongside every figure.
+
 **What each declaration is.** Three more keys say what the figures are an
 extract *of*, and a `deklaracijos` list carries each declaration the page
 printed with its own copy of them. The first two are present on the sectioned
@@ -174,16 +207,16 @@ single path resolves (a conviction is published three different ways, so
 
 **How often each of those paths is actually filled is measured**, not assumed:
 `data/coverage.tsv` (from `python scripts/field_coverage.py`) carries a
-records / keyPresent / nonNull count for all 1,266 mapped cells, and
+records / keyPresent / nonNull count for all 1,295 mapped cells, and
 [coverage-baseline.tsv](coverage-baseline.tsv) carries the checked-in rate and,
 for the 24 cells no record fills, a status word saying why. Read it before
 concluding a field is missing from an era —
 [FIELD_COVERAGE.md](FIELD_COVERAGE.md) explains the vocabulary.
 
-**The table below covers the two modern eras only — 20 of the corpus's 48
+**The table below covers the two modern eras only — 20 of the corpus's 55
 elections.** `concept-map.json` is the authority and is the thing to read
 programmatically; this table is a human summary of the 2016 and 2020 eras.
-The twenty-eight pre-2016 elections (six 2007–2011, four 2012–2014, six 2015, five 1996-1998, the 2007 and 2011 municipal generals, the two 2004 elections, the 2005 by-election and the two 2000 elections)
+The thirty-five pre-2016 elections
 are mapped in `concept-map.json` but not summarized here: the 2012–2015
 family, the 2004–2005 static-site elections, the two 2000 elections and the 1997 municipal archive all resolve most concepts under
 `anketa.*` with the same kebab-case keys as the 2016 era, while the 1996-1998 Seimas archive publishes
@@ -321,7 +354,10 @@ and none of it is canonicalised by the registry.
 
 - **Donations are per campaign, not per candidate.** Every candidate on a
   shared list carries the whole campaign's donation list; naive summing
-  inflated 2019 EP donations 20×. Group by campaign identity first — see
+  inflates the corpus 104× overall and one election 1,182×. Group by
+  `rawData…campaigns[].campaignKey` — the *only* correct key; a VRK
+  decision number spans many participants and destroys money — or read the
+  candidacy table's `campaigns` table, which is already de-duplicated. See
   the caveat in [DATASET.md](DATASET.md#caveats-for-analysis).
 - **Municipal sections are role-dependent.** In
   `2019-kovo-3-savivaldybiu-tarybu`, free-text biography, photo and the
@@ -380,11 +416,17 @@ and none of it is canonicalised by the registry.
   `saltinis` saying whether it is a declared total or employment income
   alone; reading `gautos-pajamos` by itself reports those candidates as
   having declared nothing.
-- **Pre-2016 money is in litas.** Every 2004–2015 record declares assets and
-  income in litas, not euro — `turto-ir-pajamu-deklaracijos.valiuta` is
-  `"Lt"` there and absent from 2016 on. Divide by 3.4528 (the irrevocable
-  changeover rate) before comparing across 2015→2016; the dashboard's index
-  builder does this and flags the converted candidacies.
+- **Pre-2016 money is in litas, and the rule is data-driven: divide by
+  3.4528 whenever `valiuta == "Lt"`.** That key is `"Lt"` on every record
+  that carries a declaration block from 1996 through 2015 — all 79,071 of
+  them, not just the 2004–2015 slice an earlier revision of this page named
+  — and absent from 2016 on. **No record anywhere says `"EUR"`**: in the
+  stored corpus the euro era is marked by the key's absence, so a consumer
+  who checks for `"EUR"` converts nothing.
+  `scraper/shared/deklaracijos.py::deklaracijos_valiuta()` turns the absence
+  into an explicit answer, and the candidacy table ships everything
+  EUR-converted with the rate in its own column. The dashboard's index
+  builder converts the same way and flags the converted candidacies.
 - **Photos are sidecar files.** `profilis.nuotrauka` (and
   `rawData.profile.photoSrc`) is always a *reference*: a VRK URL from
   `2020-seimo` on, and the relative path `photos/<candidateId>.<ext>` in the
@@ -418,11 +460,19 @@ and none of it is canonicalised by the registry.
 
 ## Going deeper
 
+- [CANDIDACIES.md](CANDIDACIES.md) — the derived candidacy table: one row
+  per (person, election), education on one ordinal, money EUR-converted with
+  its measure named, the campaign grouping key, and typed absences. Built by
+  `scripts/build_candidacy_table.py` and gated against
+  [candidacy-baseline.tsv](candidacy-baseline.tsv).
 - [concept-map.json](concept-map.json) — the machine-readable concept→path
   bridge this page's era map is built from. Its `derived` section covers the
-  concepts no single path resolves: `teistumas`, whose resolver is
-  `scraper/shared/conviction_details.py`, and `deklaruotos-pajamos`, whose
-  resolver is `scraper/shared/deklaracijos.py`.
+  concepts no single path resolves: `teistumas`
+  (`scraper/shared/conviction_details.py`), `deklaruotos-pajamos`,
+  `deklaruotas-turtas` and `pajamu-matas`
+  (`scraper/shared/deklaracijos.py`), `issilavinimo-lygis`
+  (`scraper/shared/education.py`), `partija` (`scraper/shared/parties.py`)
+  and `kandidatura` (`scraper/shared/kandidatura.py`).
 - [FIELD_COVERAGE.md](FIELD_COVERAGE.md) and
   [coverage-baseline.tsv](coverage-baseline.tsv) — how often every mapped path
   is filled, and which cells are empty on purpose.

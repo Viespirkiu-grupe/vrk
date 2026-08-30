@@ -82,6 +82,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from scraper.shared.deklaracijos import (  # noqa: E402
     INCOME_EMPLOYMENT,
+    LITAS_PER_EURO,
     deklaruotos_pajamos,
 )
 from scraper.shared.parties import entry as party_entry  # noqa: E402
@@ -203,12 +204,12 @@ MONEY_FIELDS = (
 #: employment income and not a total.
 INCOME_FIELD_INDEX = MONEY_FIELDS.index("gautos-pajamos")
 
-# The 2012-2015 pages declare in litas (`turto-ir-pajamu-deklaracijos.valiuta`
+# The pre-2016 pages declare in litas (`turto-ir-pajamu-deklaracijos.valiuta`
 # is "Lt"); everything from 2016 on is in euro. The index converts at the
-# irrevocable LTL/EUR conversion rate fixed for the 2015-01-01 changeover so
-# that one person's series is comparable across the switch, and flags the
-# candidacy so the dashboard can say the figure was converted.
-LITAS_PER_EURO = 3.4528
+# irrevocable changeover rate (`LITAS_PER_EURO`, from
+# scraper/shared/deklaracijos.py) so that one person's series is comparable
+# across the switch, and flags the candidacy so the dashboard can say the
+# figure was converted.
 
 
 def declared_in_litas(record: dict) -> bool:
