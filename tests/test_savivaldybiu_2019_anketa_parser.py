@@ -67,6 +67,23 @@ TURTO_PAJAMU_KEYS = [
     "sumoketas-pajamu-mokestis",
 ]
 
+# What issue #98's shared declaration reading appends after those seven: the
+# four GPM lines of the 2018-and-later income extract, the year, form and
+# scope of the newest declaration, and the per-extract breakdown list.
+# Duplicated from scraper/shared/deklaracijos.py::DECLARATION_BLOCK_KEYS for
+# the same reason PUBLISHED_AMOUNT_LABELS below is local: a change to the
+# block's shape must fail here, not silently rewrite the expectation.
+TURTO_PAJAMU_BLOCK_KEYS = TURTO_PAJAMU_KEYS + [
+    "individualios-veiklos-pajamos",
+    "individualios-veiklos-atskaitymai",
+    "turto-pardavimo-pajamos",
+    "turto-isigijimo-kaina",
+    "deklaracijos-metai",
+    "deklaracijos-forma",
+    "deklaracijos-apimtis",
+    "deklaracijos",
+]
+
 # The labels VRK actually prints on the 2019 "Turto ir pajamų deklaracijos"
 # tab, transcribed from the fixture HTML rather than from the module. The asset
 # rows (I-V) are worded as in 2017; the two income rows were rewritten between
@@ -956,7 +973,7 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
             with self.subTest(candidate=payload["candidateId"]):
                 self.assertEqual(
                     list(payload["normalized"]["turto-ir-pajamu-deklaracijos"].keys()),
-                    TURTO_PAJAMU_KEYS,
+                    TURTO_PAJAMU_BLOCK_KEYS,
                 )
 
     def test_every_published_amount_reaches_the_normalized_record(self) -> None:
@@ -980,9 +997,21 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
                     self.assertEqual(normalized[key], published[key], key)
 
     def test_turto_ir_pajamu_amounts(self) -> None:
-        # Whole euros stay ints; the comma decimal separator parses to a float.
+        # The comma decimal separator parses to a fraction; every 2019 page
+        # publishes one GPM308 extract for 2017, gyventojo-seimos scope. The
+        # per-extract `deklaracijos` list is pinned once, in
+        # test_gpm308_breakdown_is_normalized below — here the scalars.
+        def scalars(payload: dict) -> dict:
+            block = payload["normalized"]["turto-ir-pajamu-deklaracijos"]
+            return {k: v for k, v in block.items() if k != "deklaracijos"}
+
+        GPM308_2017 = {
+            "deklaracijos-metai": 2017,
+            "deklaracijos-forma": "GPM308",
+            "deklaracijos-apimtis": "gyventojo-seimos",
+        }
         self.assertEqual(
-            self.dauksys["normalized"]["turto-ir-pajamu-deklaracijos"],
+            scalars(self.dauksys),
             {
                 "privalomas-registruoti-turtas": 29223,
                 "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": 91805,
@@ -991,10 +1020,15 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
                 "gautos-paskolos": 0,
                 "gautos-pajamos": 12023.63,
                 "sumoketas-pajamu-mokestis": 1345,
+                "individualios-veiklos-pajamos": 0,
+                "individualios-veiklos-atskaitymai": 0,
+                "turto-pardavimo-pajamos": 0,
+                "turto-isigijimo-kaina": 0,
+                **GPM308_2017,
             },
         )
         self.assertEqual(
-            self.ziliene["normalized"]["turto-ir-pajamu-deklaracijos"],
+            scalars(self.ziliene),
             {
                 "privalomas-registruoti-turtas": 246338,
                 "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": 0,
@@ -1003,10 +1037,15 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
                 "gautos-paskolos": 0,
                 "gautos-pajamos": 242774.5,
                 "sumoketas-pajamu-mokestis": 4855,
+                "individualios-veiklos-pajamos": 202389,
+                "individualios-veiklos-atskaitymai": 139802.02,
+                "turto-pardavimo-pajamos": 976,
+                "turto-isigijimo-kaina": 976,
+                **GPM308_2017,
             },
         )
         self.assertEqual(
-            self.armonas["normalized"]["turto-ir-pajamu-deklaracijos"],
+            scalars(self.armonas),
             {
                 "privalomas-registruoti-turtas": 481880,
                 "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": 0,
@@ -1015,10 +1054,15 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
                 "gautos-paskolos": 142671,
                 "gautos-pajamos": 395658.6,
                 "sumoketas-pajamu-mokestis": 6785,
+                "individualios-veiklos-pajamos": 347357,
+                "individualios-veiklos-atskaitymai": 212264,
+                "turto-pardavimo-pajamos": 0,
+                "turto-isigijimo-kaina": 0,
+                **GPM308_2017,
             },
         )
         self.assertEqual(
-            self.mockevicius["normalized"]["turto-ir-pajamu-deklaracijos"],
+            scalars(self.mockevicius),
             {
                 "privalomas-registruoti-turtas": 9413,
                 "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": 29,
@@ -1027,12 +1071,17 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
                 "gautos-paskolos": 0,
                 "gautos-pajamos": 34241.13,
                 "sumoketas-pajamu-mokestis": 5136,
+                "individualios-veiklos-pajamos": 0,
+                "individualios-veiklos-atskaitymai": 0,
+                "turto-pardavimo-pajamos": 0,
+                "turto-isigijimo-kaina": 0,
+                **GPM308_2017,
             },
         )
         # A declaration whose asset half is all zeros — the rows are published
         # as "0 EUR", so zero and "not declared" stay distinguishable.
         self.assertEqual(
-            self.aleksejevaite["normalized"]["turto-ir-pajamu-deklaracijos"],
+            scalars(self.aleksejevaite),
             {
                 "privalomas-registruoti-turtas": 0,
                 "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": 0,
@@ -1041,6 +1090,11 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
                 "gautos-paskolos": 0,
                 "gautos-pajamos": 11599.07,
                 "sumoketas-pajamu-mokestis": 1710,
+                "individualios-veiklos-pajamos": 0,
+                "individualios-veiklos-atskaitymai": 0,
+                "turto-pardavimo-pajamos": 0,
+                "turto-isigijimo-kaina": 0,
+                **GPM308_2017,
             },
         )
         self.assertEqual(
@@ -1050,10 +1104,13 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
             29049,
         )
 
-    def test_gpm308_breakdown_stays_in_raw_data_only(self) -> None:
+    def test_gpm308_breakdown_is_normalized(self) -> None:
         # 2019 also publishes individual-activity income, its deductions, and
-        # asset-sale income with its acquisition cost. Those are not part of
-        # the seven canonical keys and must not be folded into them.
+        # asset-sale income with its acquisition cost. Until issue #98 nothing
+        # normalized them — this test used to pin them *out* of the block —
+        # and the shared declaration reading now carries them as first-class
+        # keys plus a per-extract `deklaracijos` list, while rawData keeps the
+        # published rows as ever.
         armonas_raw = self.armonas["rawData"]["turtoIrPajamuDeklaracijos"]
         labels = {
             " ".join(str(item["key"]).split())
@@ -1062,9 +1119,47 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
         }
         self.assertIn("Deklaruota individualios veiklos pajamų suma", labels)
         normalized = self.armonas["normalized"]["turto-ir-pajamu-deklaracijos"]
-        # 347357 EUR of individual-activity income is part of the 395658.6
-        # total, not a value of its own in the record.
-        self.assertNotIn(347357, normalized.values())
+        self.assertEqual(normalized["individualios-veiklos-pajamos"], 347357)
+        self.assertEqual(
+            normalized["deklaracijos"],
+            [
+                {
+                    "pavadinimas": (
+                        "METINĖS GYVENTOJO (ŠEIMOS) TURTO DEKLARACIJOS "
+                        "PAGRINDINIŲ DUOMENŲ IŠRAŠAS (2017 m.)"
+                    ),
+                    "rusis": "turto",
+                    "apimtis": "gyventojo-seimos",
+                    "metai": 2017,
+                    "forma": None,
+                    "reiksmes": {
+                        "privalomas-registruoti-turtas": 481880,
+                        "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": 0,
+                        "pinigines-lesos": 13241,
+                        "suteiktos-paskolos": 0,
+                        "gautos-paskolos": 142671,
+                    },
+                },
+                {
+                    "pavadinimas": (
+                        "METINĖS PAJAMŲ MOKESČIO DEKLARACIJOS GPM308 FORMOS "
+                        "PAGRINDINIŲ DUOMENŲ IŠRAŠAS (2017 m.)"
+                    ),
+                    "rusis": "pajamu",
+                    "apimtis": None,
+                    "metai": 2017,
+                    "forma": "GPM308",
+                    "reiksmes": {
+                        "gautos-pajamos": 395658.6,
+                        "individualios-veiklos-pajamos": 347357,
+                        "individualios-veiklos-atskaitymai": 212264,
+                        "turto-pardavimo-pajamos": 0,
+                        "turto-isigijimo-kaina": 0,
+                        "sumoketas-pajamu-mokestis": 6785,
+                    },
+                },
+            ],
+        )
 
     # ------------------------------------------------------------------
     # privaciu interesu deklaracija
