@@ -9,8 +9,11 @@ declarations, private-interest declarations and campaign finance data, one
 JSON file per candidacy.
 
 The corpus itself is not version controlled (`data/`, `sitemaps/` and all but
-a fixture subset of `samples/` are gitignored); it is reproduced by running the
-scrapers, and
+a fixture subset of `samples/` are gitignored); it ships as [release
+assets](https://github.com/Viespirkiu-grupe/vrk/releases) tagged
+`corpus-YYYY-MM-DD` — the flat comparison table and the full corpus as one
+SQLite database, with a manifest naming the parser commit — or is reproduced
+by running the scrapers, and
 every election's raw HTML is retained so parser fixes land by offline
 re-parse.
 
@@ -48,6 +51,12 @@ what it wanted; `docs/FIXTURE_SAMPLES.md` explains the rule and
 
 Where to start:
 
+- **Getting the data** — the latest
+  [`corpus-YYYY-MM-DD` release](https://github.com/Viespirkiu-grupe/vrk/releases):
+  `candidacies.csv.gz` for the comparison surface, `vrk-corpus.sqlite.gz`
+  for every record, portrait and anomaly log in one queryable file
+  ([docs/CANDIDACIES.md](docs/CANDIDACIES.md#distribution));
+  `python scripts/build_distribution.py` rebuilds and checksums the assets.
 - **One comparable table** — [docs/CANDIDACIES.md](docs/CANDIDACIES.md):
   `python scripts/build_candidacy_table.py` projects the corpus into
   `dist/candidacies.csv.gz` + `dist/vrk.sqlite`, one row per (person,

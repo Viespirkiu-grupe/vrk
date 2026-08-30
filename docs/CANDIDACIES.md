@@ -152,4 +152,63 @@ It is a *projection*: the full questionnaires, the per-declaration sections,
 the private-interest declarations, donation row lists and photos stay in the
 record files (`data/<election-id>/…`, [DATA_GUIDE.md](DATA_GUIDE.md)). A
 column here answers "compare candidates across elections"; anything deeper
-starts from `candidate_id` + `election_id`, which every row carries.
+starts from `candidate_id` + `election_id`, which every row carries — or
+from the full-corpus database below, which carries the record files too.
+
+## Distribution
+
+Issue #94: the corpus had exactly one consumer because there was no way to
+get it — `data/` is gitignored and the alternative was a ~27-hour scrape.
+`scripts/build_distribution.py` builds what a release ships:
+
+```bash
+python scripts/build_distribution.py                    # full corpus + fill gate
+python scripts/build_distribution.py 2019-prezidento    # subset, no gate
+```
+
+| release asset | contents |
+|---|---|
+| `candidacies.csv.gz` | the flat table above |
+| `campaigns.csv.gz` | one row per campaign-finance participant |
+| `vrk.sqlite.gz` | the analysis database above, gzipped |
+| `vrk-corpus.sqlite.gz` | **everything**: the analysis tables plus `records`, `photos`, `anomalies` |
+| `MANIFEST.json` | per-election record counts, build date, parser commit, sha256 + bytes per asset |
+
+The build refuses a table that fails the fill gate, an envelope key it does
+not know, a photo sidecar that is missing or hashes differently from the
+record's own `photoMeta.sha256`, and an inline base64 portrait (zero remain
+since the 2026-08-29 re-parse; one reappearing means an election regressed).
+The candidacy-table pass and the records pass must agree on the record
+count.
+
+In `vrk-corpus.sqlite` the three extra tables are:
+
+- `records(election_id, candidate_id, candidate_name, record_file,
+  source_json, kandidatavimas_json, candidate_note, photo_sha256, raw_json,
+  norm_json)` — one row per record file, primary key
+  `(election_id, candidate_id)`. `raw_json` / `norm_json` are the record's
+  `rawData` / `normalized`, compact-serialized (the files are
+  pretty-printed; 34.5 % of `data/` was whitespace). The original record
+  reassembles losslessly from the row — `reconstruct_record` in the script
+  is the contract and a test pins the round trip.
+- `photos(sha256, mime, bytes, data)` — every sidecar portrait, stored once
+  by content hash; `records.photo_sha256` is the join. URL-form portraits
+  (25,305 records, the pre-2016 and 2020+ eras) remain URLs pointing at
+  vrk.lt — VRK never served this scraper those bytes, and archiving them is
+  issue #94's still-open network job.
+- `anomalies(election_id, event_json)` — the per-election
+  `anomalies.jsonl` logs, so "what went wrong" travels with the data.
+
+```sql
+-- a candidacy, its full record and its portrait, in one query
+SELECT c.candidate_name, c.income_eur, r.norm_json, p.data
+FROM candidacies c
+JOIN records r USING (election_id, candidate_id)
+LEFT JOIN photos p ON p.sha256 = r.photo_sha256
+WHERE c.election_id = '2019-prezidento';
+```
+
+Releases are tagged `corpus-YYYY-MM-DD` (the manifest's `version`), so the
+corpus is versioned by release tag rather than by whatever happens to be on
+one disk; `parserCommit` in the manifest names the exact code that produced
+it. A full build prints the `gh release create` line, filled in.

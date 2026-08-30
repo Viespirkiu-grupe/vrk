@@ -10,7 +10,10 @@ revision sat three elections stale for a week and nothing said a word).
 
 Records live at `data/<election-id>/<candidateId>-<electionId>.json`, one
 file per candidacy. `data/` is not version controlled; see
-[DATASET.md](DATASET.md) for the inventory and how to regenerate it.
+[DATASET.md](DATASET.md) for the inventory and how to regenerate it — or
+skip the scrape and download a `corpus-YYYY-MM-DD` release, which carries
+every record (and portrait, and anomaly log) as one SQLite database plus
+the flat table ([CANDIDACIES.md](CANDIDACIES.md#distribution)).
 
 **If what you want is one table** — compare education, money, party or
 electedness across elections without learning the 55 per-election schemas —

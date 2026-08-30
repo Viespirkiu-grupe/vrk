@@ -9,6 +9,15 @@ Every record now equals what its own parser produces from the page it was
 fetched from — `python scripts/reparse_diff.py` is the check, and it is green
 across all 55 elections.
 
+Get it without scraping: every `corpus-YYYY-MM-DD` GitHub release ships the
+corpus ready-made — the flat comparison table (`candidacies.csv.gz`) and the
+whole corpus as one SQLite database (`vrk-corpus.sqlite.gz`: every record's
+raw and normalized JSON, portraits deduplicated by content hash, the anomaly
+logs), with a `MANIFEST.json` naming the parser commit, per-election counts
+and a checksum per asset. `python scripts/build_distribution.py` builds the
+assets (issue #94); [CANDIDACIES.md](CANDIDACIES.md#distribution) documents
+them.
+
 Regenerate any part of it with:
 
 ```bash
@@ -155,7 +164,8 @@ photo sidecar files under `data/<election-id>/photos/` — 2,199 portraits from
 the embedded-photo eras, externalized 2026-08-19 and verified byte-identical
 to a pre-migration sha256 manifest, file for file) and are **not** version
 controlled — `data/`, `sitemaps/` and `samples/` are gitignored, so the corpus is
-reproduced by running the scrapers rather than by cloning.
+reproduced by running the scrapers rather than by cloning — or downloaded
+from a `corpus-YYYY-MM-DD` release (see the top of this page).
 
 ### The 2026-08-29 corpus re-parse, and the gate that found it
 
