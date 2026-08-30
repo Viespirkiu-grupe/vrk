@@ -134,7 +134,11 @@ function educationCell(value) {
   if (value == null || value === "") return null;
   if (typeof value !== "object") return String(value);
   const lines = (value.irasai || []).map((entry) => {
-    const where = [entry["mokymo-istaigos-pavadinimas"], entry["specialybe"]].filter(Boolean).join(", ");
+    // 2004-ep spells the institution key from its own column heading
+    // ("Mokyklos įstaigos pavadinimas") on 360 of its 361 entries; reading
+    // only the corpus-wide spelling rendered those institutions blank.
+    const institution = entry["mokymo-istaigos-pavadinimas"] || entry["mokyklos-istaigos-pavadinimas"];
+    const where = [institution, entry["specialybe"]].filter(Boolean).join(", ");
     const year = entry["baigimo-metai"] ? ` (${entry["baigimo-metai"]})` : "";
     return [entry.issilavinimas, where && `${where}${year}`].filter(Boolean).join(" — ")
         || (year ? year.trim() : "");

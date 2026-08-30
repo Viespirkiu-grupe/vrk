@@ -290,7 +290,7 @@
         "2024-seimo": "biografija.issilavinimas.irasai",
         "2025-kovo-16-meru": "biografija.issilavinimas.irasai"
       },
-      "note": "Both 1990s archive families write null at anketa.issilavinimas for a candidate who published no education level, where every era from 2007 on always writes the {aprasas, irasai} object (with an empty irasai when there is nothing). So their path stops at the object rather than at .irasai: appending it would fail to resolve on 1,192 of their 7,292 records. The value, when there is one, is the same object -- the card's single controlled level in the entry's own issilavinimas field."
+      "note": "Both 1990s archive families write null at anketa.issilavinimas for a candidate who published no education level, where every era from 2007 on always writes the {aprasas, irasai} object (with an empty irasai when there is nothing). So their path stops at the object rather than at .irasai: appending it would fail to resolve on 1,192 of their 7,292 records. The value, when there is one, is the same object -- the card's single controlled level in the entry's own issilavinimas field. Inside irasai[], 2004-ep spells the institution key mokyklos-istaigos-pavadinimas (a slug of that page's own column heading, 360 of its 361 entries) where the other 53 elections write mokymo-istaigos-pavadinimas; read both, or resolve through scraper/shared/education.py :: issilavinimas(), which folds the alias. The level itself is not one path either: 2000-kovo-19 and 2002-gruodzio-22 answer it in issilavinimas.aprasas with empty irasai, and 2000-seimo, 2002-prezidento and 2004-prezidento publish no level at all -- the derived issilavinimo-lygis concept resolves all of it."
     },
     "uzsienio-kalbos": {
       "label-lt": "Užsienio kalbos",
@@ -1081,6 +1081,29 @@
         "2005-lapkricio-20-seimo-kedainiai": "turto-ir-pajamu-deklaracijos.pinigines-lesos"
       }
     },
+    "turtas-ir-pinigines-lesos": {
+      "label-lt": "Turtas ir piniginės lėšos (metų pabaigoje)",
+      "paths": {
+        "1996-spalio-20-seimo": "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pabaigoje",
+        "1997-kovo-23-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pabaigoje",
+        "1997-kovo-23-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pabaigoje",
+        "1997-birzelio-29-svenciniu-tarybos-pakartotiniai": "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pabaigoje",
+        "1997-gruodzio-21-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pabaigoje",
+        "1998-kovo-22-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pabaigoje",
+        "1998-lapkricio-15-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pabaigoje",
+        "1999-kovo-21-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pabaigoje",
+        "2000-kovo-19-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pabaigoje",
+        "2000-seimo": "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pabaigoje"
+      },
+      "note": "The 1996-2000 form's single combined wealth row -- property and cash in one figure, litas. That era leaves the modern split keys (privalomas-registruoti-turtas, vertybiniai-popieriai-..., pinigines-lesos beyond its own row) as null placeholders, so a consumer summing the documented seven keys reads 0 for 17,654 declarations that do state their wealth here (issue #97). Resolve totals through the deklaruotas-turtas derived concept, which names the measure."
+    },
+    "turtas-ir-vertybiniai-popieriai": {
+      "label-lt": "Turtas ir vertybiniai popieriai (laikotarpio pabaigoje)",
+      "paths": {
+        "2002-gruodzio-22-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.turtas-ir-vertybiniai-popieriai-laikotarpio-pabaigoje"
+      },
+      "note": "The 2002 municipal form's combined property-and-securities row -- a third wealth shape, distinct from both the 1990s combined row (which folds cash in) and the 2004-on split rows. Its cash lives in the separate pinigines-lesos row, so the era's total is this row plus that one; the deklaruotas-turtas derived concept does the sum and names the measure."
+    },
     "suteiktos-paskolos": {
       "label-lt": "Suteiktos paskolos",
       "paths": {
@@ -1514,8 +1537,17 @@
         "2005-lapkricio-20-seimo-kedainiai": "turto-ir-pajamu-deklaracijos.valiuta",
         "2000-seimo": "turto-ir-pajamu-deklaracijos.valiuta",
         "2000-kovo-19-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.valiuta",
-        "2002-gruodzio-22-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.valiuta"
-      }
+        "2002-gruodzio-22-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.valiuta",
+        "1996-spalio-20-seimo": "turto-ir-pajamu-deklaracijos.valiuta",
+        "1997-kovo-23-savivaldybiu-tarybu": "turto-ir-pajamu-deklaracijos.valiuta",
+        "1997-kovo-23-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.valiuta",
+        "1997-birzelio-29-svenciniu-tarybos-pakartotiniai": "turto-ir-pajamu-deklaracijos.valiuta",
+        "1997-gruodzio-21-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.valiuta",
+        "1998-kovo-22-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.valiuta",
+        "1998-lapkricio-15-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.valiuta",
+        "1999-kovo-21-seimo-pakartotiniai": "turto-ir-pajamu-deklaracijos.valiuta"
+      },
+      "note": "Mapped for every election that publishes a declaration block before 2016: the key is \"Lt\" on all of them (79,071 records) and absent from 2016 on, where the figures are euro -- no record anywhere says \"EUR\", so the euro era is marked by the key's absence. scraper/shared/deklaracijos.py :: deklaracijos_valiuta() turns that absence into an explicit \"EUR\" for consumers (issue #97)."
     },
     "deklaraciju-laikotarpis": {
       "label-lt": "Deklaracijų laikotarpio pastaba",
@@ -1623,6 +1655,101 @@
         "nezinoma": 0
       },
       "note": "Measured over all 113,073 records on 2026-08-30 (issue #82). Returns partija-id (the scraper/parties.json entry), partija-vardas-raw (the string the record carries, kept verbatim) and tipas (the states above). The corpus has no cross-election party identifier of its own -- the ids VRK publishes are per-municipality list ids or per-election rorg ids, none shared between two elections -- so identity is created by the registry: 427 measured surface forms, each an exact alias of exactly one of its 340 entries. Matching is exact alias, then a punctuation/case fold (dashes, quote glyphs, whitespace, case -- never grammatical de-inflection: the genitive forms the 2000/2002 sarasas prints are explicit aliases, proven by pairing them with the nominative partyList on the same records), then unmatched. Renames stay one entry with the old name as an alias (LVŽS spans 2001-2025); mergers get a new entry with `predecessors` (TS-LKD points at Tėvynės sąjunga and LKD, so the pre-2008 forms group under the predecessor, not anachronistically under TS-LKD). scripts/nominator_report.py re-measures this and docs/nominator-forms.tsv carries the measured forms."
+    },
+    "issilavinimo-lygis": {
+      "label-lt": "Išsilavinimo lygis",
+      "resolver": "scraper/shared/education.py :: issilavinimas(record)",
+      "inputs": [
+        "anketa.issilavinimas.irasai[].issilavinimas",
+        "anketa.issilavinimas.aprasas",
+        "biografija.issilavinimas.irasai[].issilavinimas",
+        "anketa.mokslo-laipsnis",
+        "biografija.mokslo-laipsnis",
+        "anketa.pedagoginis-vardas",
+        "biografija.pedagoginis-vardas",
+        "rawData.anketa.rows[]",
+        "rawData.biografija.rows[]"
+      ],
+      "states": {
+        "nurodyta": "A level was published and maps onto the 13-tier ordinal (education.py::LEVELS). lygis is the highest tier any of the record's level values states; nebaigtas flags an explicitly unfinished one.",
+        "nenurode": "The page itself prints the decline (Issilavinimas: Nenurode), retained in rawData.anketa/biografija rows -- the 2016 and 2020 page eras only. A decline is an answer, not a gap.",
+        "neskelbta": "The election publishes no level for anyone: 2000-seimo (institution/specialty/year but zero levels -- its true higher-education share is ~77%, and reading the null as 0% is an artefact), 2002-prezidento and 2004-prezidento (no questionnaire).",
+        "neatsakyta": "The form asks the question and this page shows no answer -- the pre-2016 pages print no education row at all for a blank (verified against retained HTML)."
+      },
+      "note": "The bare 'Aukstasis' (39% of all level tokens) is a property of the form, not the candidate -- every election up to 2007-vasario offers it as the only higher-education option -- so it is its own tier (aukstasis-nedetalizuotas) and never collapsed into universitetinis/neuniversitetinis. Era-comparable questions use the coarse aukstasis boolean (rank >= aukstasis-nedetalizuotas). laipsnis reads the degree fields independently, including the eight elections whose page fused the degree and title questions into one row. Measured over all 113,073 records on 2026-08-30.",
+      "counts": {
+        "nurodyta": 93294,
+        "neatsakyta": 10676,
+        "nenurode": 7810,
+        "neskelbta": 1293
+      }
+    },
+    "deklaruotas-turtas": {
+      "label-lt": "Deklaruotas turtas (iš viso)",
+      "resolver": "scraper/shared/deklaracijos.py :: deklaruotas_turtas(turto-ir-pajamu-deklaracijos)",
+      "inputs": [
+        "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas",
+        "turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
+        "turto-ir-pajamu-deklaracijos.pinigines-lesos",
+        "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pabaigoje",
+        "turto-ir-pajamu-deklaracijos.turtas-ir-vertybiniai-popieriai-laikotarpio-pabaigoje"
+      ],
+      "states": {
+        "skaidytas": "Property + securities + cash summed from the split rows every sectioned form (2004 on) publishes.",
+        "turtas-plius-lesos": "The 1996-2000 form's single combined row, cash already included.",
+        "turtas-plius-vp": "The 2002 form's property-and-securities row plus its separate cash row."
+      },
+      "note": "The measure is decided by which era-marker key the block carries (the archive eras keep the modern keys as null placeholders, so presence of the era's own row decides, never value). Loans given/received are in none of the three sums. The figure is in the block's published currency; deklaracijos_valiuta() names it. Measured over all 113,073 records on 2026-08-30; 1,086 declarations state no wealth figure.",
+      "counts": {
+        "skaidytas": 84290,
+        "turtas-plius-lesos": 17651,
+        "turtas-plius-vp": 10046
+      }
+    },
+    "pajamu-matas": {
+      "label-lt": "Pajamų matas",
+      "resolver": "scraper/shared/deklaracijos.py :: pajamu_matas(declaration, rawData.turtoIrPajamuDeklaracijos)",
+      "inputs": [
+        "turto-ir-pajamu-deklaracijos.gautos-pajamos-darbo-santykiu",
+        "turto-ir-pajamu-deklaracijos.pajamos-pagal-forma",
+        "turto-ir-pajamu-deklaracijos.deklaracijos-forma",
+        "rawData.turtoIrPajamuDeklaracijos.sections[].items[].key"
+      ],
+      "states": {
+        "neto-archyvas": "1996-2002: 'Gauta pajamu (be mokesciu) suma' -- income net of tax (2002 family-scoped as well). Provable from the numbers: the modal tax/income ratio there is 0.40-0.52, above the era's 33% statutory rate, which a gross base cannot produce. Gross equivalent = gautos-pajamos + sumoketas-pajamu-mokestis (deklaruotos_pajamos_bruto).",
+        "fr0462": "2004-2007: the FR0462 per-form pages; gross.",
+        "gpm-bruto": "2007-2017: 'Gautu pajamu suma (GPM302/305/308 ...)'; gross.",
+        "deklaruota-apmokestinamos": "2018 on: 'Deklaruota apmokestinamuju ir neapmokestinamuju pajamu suma'; gross."
+      },
+      "note": "All four normalize to the same gautos-pajamos key with nothing marking the difference (issue #97) -- 23,141 populated records are on the net side. mokescio_matas() answers the same question for the tax row, whose meaning flips from tax paid ('Isskaiciuota (sumoketa) ...', sumoketas) to tax payable ('Deklaruota moketina ...', moketinas) with the 2018 rewording. Measured over all 113,073 records on 2026-08-30 (mokescio-matas: sumoketas 80,543, moketinas 31,674).",
+      "counts": {
+        "gpm-bruto": 37805,
+        "deklaruota-apmokestinamos": 31674,
+        "neto-archyvas": 27816,
+        "fr0462": 14922
+      }
+    },
+    "kandidatura": {
+      "label-lt": "Kandidatūra",
+      "resolver": "scraper/shared/kandidatura.py :: kandidatura(record, kind)",
+      "inputs": [
+        "kandidatavimas (record root, camelCase: 2000-2015 and the municipal generals)",
+        "normalized.kandidatavimas (dict: 1997 municipal pair; list: 1996-1999 Seimas archive)",
+        "profilis.kita.{vienmandate-apygarda,apygarda,sarasas,numeris-sarase,priesrinkiminis-numeris-sarase,porinkiminis-eiles-numeris,porinkiminis-numeris-sarase,savivaldybe}.reiksme",
+        "scraper/elections.json kind"
+      ],
+      "states": {
+        "vaidmuo": "seimo-narys | tarybos-narys | meras | prezidentas | ep-narys -- from the record's roles where it has them, from the election kind where it does not. A 2019/2023 council-and-mayor dual candidacy takes meras and keeps its council list fields.",
+        "isrinktas": "true | false | null. Null only where no results exist: the 1997 municipal pair (issue #92) and the five 2000-kovo-19 municipalities whose results tree VRK does not publish."
+      },
+      "note": "One answer -- role, constituency, municipality, list name, pre- and post-election list position, elected -- for the corpus's five kandidatavimas shapes, including the string-vs-dict split of savivaldybe and tarybosNarys.partyList (a plain string in seven municipal elections, {id, number, name} in 2019/2023). Role counts measured over all 113,073 records on 2026-08-30; isrinktas true 11,852 / false 94,029 / null 7,192.",
+      "counts": {
+        "tarybos-narys": 98226,
+        "seimo-narys": 12088,
+        "meras": 1368,
+        "ep-narys": 1338,
+        "prezidentas": 53
+      }
     }
   }
 }

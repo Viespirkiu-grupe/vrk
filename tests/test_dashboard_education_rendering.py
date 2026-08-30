@@ -1,0 +1,75 @@
+"""The education cell must render 2004-ep's institution-key spelling.
+
+`2004-ep` slugs the institution key from its own column heading —
+`mokyklos-istaigos-pavadinimas` on 360 of its 361 education entries — where
+every other election writes `mokymo-istaigos-pavadinimas`. `educationCell`
+read only the common spelling, so those 360 institution names rendered blank
+in the dashboard (issue #88). Same lift-and-run harness as
+tests/test_dashboard_money_rendering.py: the function is extracted from the
+shipped page and executed with node; where node is missing the behavioural
+test skips and the structural one still runs.
+"""
+
+from __future__ import annotations
+
+import json
+import re
+import shutil
+import subprocess
+import unittest
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+DASHBOARD_PATH = REPO_ROOT / "dashboard" / "index.html"
+SOURCE = DASHBOARD_PATH.read_text(encoding="utf-8")
+NODE = shutil.which("node")
+
+
+def _education_cell() -> str:
+    match = re.search(r"^function educationCell\(.*?^}", SOURCE, re.S | re.M)
+    assert match is not None, "educationCell not found in index.html"
+    return match.group(0)
+
+
+def run(value: dict) -> object:
+    script = (
+        f"{_education_cell()}\n"
+        f"console.log(JSON.stringify(educationCell({json.dumps(value, ensure_ascii=False)})));"
+    )
+    out = subprocess.run(
+        [NODE, "--input-type=module", "-e", script],
+        capture_output=True, text=True, timeout=30,
+    )
+    if out.returncode != 0:
+        raise AssertionError(out.stderr.strip())
+    return json.loads(out.stdout)
+
+
+class Structural(unittest.TestCase):
+    def test_both_institution_spellings_are_read(self):
+        cell = _education_cell()
+        self.assertIn("mokymo-istaigos-pavadinimas", cell)
+        self.assertIn("mokyklos-istaigos-pavadinimas", cell)
+
+
+@unittest.skipIf(NODE is None, "node is not installed; behavioural half skipped")
+class Behavioural(unittest.TestCase):
+    def test_common_spelling_renders(self):
+        rendered = run({"irasai": [{
+            "issilavinimas": "Aukštasis",
+            "mokymo-istaigos-pavadinimas": "Vilniaus universitetas",
+            "specialybe": "teisė", "baigimo-metai": "1996",
+        }]})
+        self.assertEqual(rendered, "Aukštasis — Vilniaus universitetas, teisė (1996)")
+
+    def test_2004_ep_spelling_renders_identically(self):
+        rendered = run({"irasai": [{
+            "issilavinimas": "Aukštasis",
+            "mokyklos-istaigos-pavadinimas": "Vilniaus universitetas",
+            "specialybe": "teisė", "baigimo-metai": "1996",
+        }]})
+        self.assertEqual(rendered, "Aukštasis — Vilniaus universitetas, teisė (1996)")
+
+
+if __name__ == "__main__":
+    unittest.main()

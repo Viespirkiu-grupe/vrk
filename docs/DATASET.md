@@ -1468,8 +1468,16 @@ parse anomalies.
 their entire questionnaire discarded before the nested-table fix listed below
 — the defect erased exactly the records this field exists to surface.
 
-Three nulls to expect, all traced to the source and all genuine:
+Four nulls to expect, all traced to the source and all genuine:
 
+- `anketa.issilavinimas` — the election's **largest** null field: 5,091
+  candidates (37.3%) have no level, and for every one of them the page
+  itself prints `Išsilavinimas: Nenurodė` (retained in
+  `rawData.anketa.rows`). A decline, not a gap — the candidacy table types
+  it `education_status: nenurode` (docs/CANDIDACIES.md), and any
+  education share quoted for this election must say which denominator it
+  uses: 48.7% of all records are higher-educated, 77.7% of those who
+  answered.
 - `anketa.pagrindine-darboviete` for 4,572 candidates (33.5%) and
   `anketa.tautybe` for 2,992 (21.9%), both published as `Nenurodė`.
 - Q9.2–Q9.4 for 110 candidates, whose pages print those questions with no
@@ -1500,29 +1508,48 @@ per-campaign de-duplication that matters elsewhere is a no-op here —
 Donation records belong to a *campaign participant*. In list-based elections one
 participant covers many candidates, and each of those candidates' records
 contains the whole shared donation list. Summing donations across candidates
-therefore multiplies the same money:
+therefore multiplies the same money — over the whole corpus, naively adding
+each record's accepted-donations total gives **€2.68 billion** where the
+de-duplicated truth is **€25.7 million**, a 104× inflation.
 
-| election | candidates with campaign data | distinct campaigns | largest share |
-|---|---:|---:|---:|
-| `2019-ep` | 279 | 15 | one campaign across 22 candidates |
-| `2024-seimo` | 699 | 205 | one campaign across 70 candidates |
-| `2023-kovo-5-savivaldybiu-tarybu-ir-meru` | 433 | 58 | one campaign across 59 candidates |
-| `2019-kovo-3-savivaldybiu-tarybu` | 410 | 15 | none shared |
-| `2020-seimo` | 758 | 298 | none shared |
-| `2016-seimo` | 672 | 324 | none shared |
+**The one correct grouping key is
+`rawData.politinesKampanijosDalyvioDuomenys.campaigns[].campaignKey`** —
+present on every record that has the section (measured: 20,199 of 20,199
+campaign entries, every era from 2007 on), and surfaced as `campaign_key` in
+the candidacy table, whose `campaigns` table/CSV already carries the
+de-duplicated per-participant totals (docs/CANDIDACIES.md).
 
-The effect is large. For 2019 EP, naively adding donation amounts across
-candidate records gives €29.2M; de-duplicating by campaign gives **€1.44M** — a
-20× inflation. Always group by campaign identity (`sprendimo-numeris`, or the
-`campaignKey` in `rawData`) before summing.
+Do **not** group by `sprendimo-numeris`: a VRK registration decision spans
+many participants — `PK1-2024LRS-S235` alone covers 70 distinct campaign
+keys in `2024-seimo`, 16 of that election's 205 decision numbers span more
+than one participant, and collapsing them destroys €626,553 of its real
+money. (An earlier revision of this page recommended exactly that; it was
+wrong.)
 
-The 2023 municipal election is the sharpest illustration of *why* the sharing
-happens: only 11 of its 433 campaign participants are `Savarankiškas` (running
-their own campaign), and the other 422 are `Atstovaujamasis` — their party runs
-the campaign, so dozens of candidates share one participant record. Naive
-summing gives €495,154; de-duplicated it is **€295,300**, a 1.7× inflation.
-The factor is smaller than 2019 EP's only because most of those 422 candidates
-share campaigns that declared nothing at all.
+Worst cases, measured over the accepted-donations totals of every record
+(the earlier revision's 20× example was the *floor*, not the ceiling):
+
+| election | naive € | per campaign € | inflation | largest share |
+|---|---:|---:|---:|---:|
+| `2015-kovo-1-savivaldybiu` | 2,279,998,501 | 1,928,924 | **1,182×** | one campaign on 2,414 records |
+| `2015-birzelio-21-pakartotiniai-silutes` | 626,514 | 14,493 | 43.2× | 49 |
+| `2012-seimo` | 294,344,087 | 6,851,422 | 43.0× | 105 |
+| `2015-birzelio-7-pakartotiniai-sirvintos-trakai` | 1,417,811 | 53,633 | 26.4× | 48 |
+| `2009-ep` | 19,046,090 | 890,957 | 21.4× | 24 |
+| `2014-ep` | 43,696,730 | 2,047,301 | 21.3× | 22 |
+| `2019-ep` | 28,170,073 | 1,389,023 | 20.3× | 22 |
+
+Every other election measures **1.0×** — including
+`2023-kovo-5-savivaldybiu-tarybu-ir-meru`, which an earlier revision of this
+page called 1.7×: in fact every 2023 candidate has their own
+`atstovaujamasis-pkdid-*` participant, so naive and de-duplicated agree at
+€495,154 exactly, and the €295,300 figure was an artefact of grouping by
+decision number. What *is* true of the 2023-style `Atstovaujamasis`
+participants — 2,352 candidacies across 2009–2021 carry one with a
+completely empty payload — is that the emptiness means *financed through the
+party's campaign*, not "no data"; the candidacy table's
+`campaign_status: atstovaujamasis` with a null donations total is that
+statement, never a zero.
 
 ### Conviction data: one concept, three published shapes
 

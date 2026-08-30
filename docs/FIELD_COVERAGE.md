@@ -16,7 +16,7 @@ python scripts/field_coverage.py --update-baseline  # after a deliberate change
 
 One pass over `data/` — about 30 seconds for 113,073 records — resolves every
 `docs/concept-map.json` path against every record of the elections that map it.
-That is 1,266 cells: 35 concepts across 55 elections.
+That is 1,295 cells: 37 concepts across 55 elections.
 
 ## What it produces
 
@@ -51,7 +51,7 @@ five points of a field without saying so is not.
 
 ## Status words
 
-Twenty-four of the 1,266 cells are filled by no record. Each carries one of:
+Twenty-four of the 1,295 cells are filled by no record. Each carries one of:
 
 | status | count | meaning |
 | --- | --- | --- |

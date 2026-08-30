@@ -81,15 +81,51 @@ ORDER_BEFORE_THE_REGISTRY = [
 ]
 
 
+#: What each election elects. `savivaldybiu` covers the council generals
+#: (2023's combined council-and-mayor ballot included); `mero` the purely
+#: mayoral races. The candidacy table's election_kind column and
+#: scraper/shared/kandidatura.py's office resolution both read this field.
+KINDS = {"seimo", "savivaldybiu", "prezidento", "ep", "mero"}
+
+
 class RegistryShapeTests(unittest.TestCase):
-    def test_every_entry_has_the_four_required_fields(self):
+    def test_every_entry_has_the_five_required_fields(self):
         for entry in REGISTRY:
             with self.subTest(entry.get("id")):
                 self.assertEqual(
-                    set(entry), {"id", "date", "name", "shortName"}, entry.get("id")
+                    set(entry), {"id", "date", "kind", "name", "shortName"}, entry.get("id")
                 )
-                for field in ("id", "date", "name", "shortName"):
+                for field in ("id", "date", "kind", "name", "shortName"):
                     self.assertTrue(str(entry[field]).strip(), field)
+
+    def test_kind_is_one_of_the_five(self):
+        for entry in REGISTRY:
+            with self.subTest(entry["id"]):
+                self.assertIn(entry["kind"], KINDS)
+
+    def test_kind_agrees_with_the_id(self):
+        # The id encodes what was elected; a kind that contradicts it is a
+        # typo. The two 2015 municipal repeats carry no marker in their id
+        # and are pinned explicitly.
+        for entry in REGISTRY:
+            eid, kind = entry["id"], entry["kind"]
+            with self.subTest(eid):
+                if eid in {
+                    "2015-birzelio-7-pakartotiniai-sirvintos-trakai",
+                    "2015-birzelio-21-pakartotiniai-silutes",
+                }:
+                    self.assertEqual(kind, "savivaldybiu")
+                elif "prezidento" in eid:
+                    self.assertEqual(kind, "prezidento")
+                elif eid.endswith("-ep"):
+                    self.assertEqual(kind, "ep")
+                elif "savivaldybiu" in eid or "tarybos" in eid:
+                    self.assertEqual(kind, "savivaldybiu")
+                elif "meru" in eid or "mero" in eid:
+                    self.assertEqual(kind, "mero")
+                else:
+                    self.assertIn("seimo", eid)
+                    self.assertEqual(kind, "seimo")
 
     def test_ids_are_unique(self):
         ids = [e["id"] for e in REGISTRY]
