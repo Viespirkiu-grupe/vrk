@@ -164,6 +164,10 @@ class Prezidento2019AnketaParserTests(unittest.TestCase):
 
     def test_turto_ir_pajamu_normalized(self) -> None:
         turtas = self.nauseda["normalized"]["turto-ir-pajamu-deklaracijos"]
+        # The first seven keys are the corpus's long-standing set; the four
+        # GPM lines and the year/form/scope/per-extract block after them are
+        # what issue #98's shared declaration reading recovers from the same
+        # page (scraper/shared/deklaracijos.py::DECLARATION_BLOCK_KEYS).
         self.assertEqual(
             list(turtas.keys()),
             [
@@ -174,10 +178,21 @@ class Prezidento2019AnketaParserTests(unittest.TestCase):
                 "gautos-paskolos",
                 "gautos-pajamos",
                 "sumoketas-pajamu-mokestis",
+                "individualios-veiklos-pajamos",
+                "individualios-veiklos-atskaitymai",
+                "turto-pardavimo-pajamos",
+                "turto-isigijimo-kaina",
+                "deklaracijos-metai",
+                "deklaracijos-forma",
+                "deklaracijos-apimtis",
+                "deklaracijos",
             ],
         )
         self.assertEqual(turtas["privalomas-registruoti-turtas"], 335386)
         self.assertEqual(turtas["gautos-pajamos"], 103551.22)
+        self.assertEqual(turtas["deklaracijos-metai"], 2017)
+        self.assertEqual(turtas["deklaracijos-forma"], "GPM308")
+        self.assertEqual(turtas["deklaracijos-apimtis"], "gyventojo-seimos")
         # Comma-decimal amounts parse correctly (EU Commissioner, taxed abroad).
         self.assertEqual(
             self.andriukaitis["normalized"]["turto-ir-pajamu-deklaracijos"]["gautos-pajamos"],
