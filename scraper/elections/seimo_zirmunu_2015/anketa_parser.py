@@ -1385,7 +1385,7 @@ def parse_anketa_sample(
     results_lookup: dict[str, dict[str, Any]] | None = None,
 ) -> tuple[Path, dict[str, Any]]:
     if results_lookup is None and election_id == ELECTION_ID:
-        results_lookup = load_results_lookup(DEFAULT_RESULTS_PATH)
+        results_lookup = load_results(DEFAULT_RESULTS_PATH)
     candidate_dir = samples_root / candidate_id
     anketa_path = candidate_dir / "anketa.html"
     if not anketa_path.exists():
@@ -1583,35 +1583,80 @@ def _vrk_candidate_id(candidate_meta: dict[str, Any], candidate_source_url: str 
     return match.group(1) if match else None
 
 
+def _apply_votes(candidacy: dict[str, Any], votes: dict[str, Any]) -> None:
+    """The candidate's own vote counts, mirroring the pre-2005 field names
+    (issue #99): `pirmumoBalsai` with its post-election list number, and
+    `vienmandatesBalsai` (round one) / `vienmandatesBalsai2` (the runoff)
+    shaped exactly like the 2000-2004 records' blocks."""
+    for key in ("porinkiminisNumerisSarase", "pirmumoBalsai", "reitingoBalai", "pirmumoBalsuSaltinis"):
+        if votes.get(key) is not None:
+            candidacy[key] = votes[key]
+    for row in votes.get("vienmandate") or []:
+        target = "vienmandatesBalsai2" if row.get("turas") == 2 else "vienmandatesBalsai"
+        candidacy[target] = {
+            "balsadezese": row.get("balsadezese"),
+            "pastu": row.get("pastu"),
+            "isViso": row.get("isViso"),
+            "procentai": row.get("procentai"),
+            "vieta": row.get("vieta"),
+            "saltinis": row.get("saltinis"),
+        }
+
+
 def _apply_results(
     output_payload: dict[str, Any],
     candidate_meta: dict[str, Any],
     candidate_source_url: str | None,
-    results_lookup: dict[str, dict[str, Any]],
+    results_lookup: dict[str, Any],
 ) -> None:
     vrk_id = _vrk_candidate_id(candidate_meta, candidate_source_url)
+    # `load_results` wraps the elected map with the votes map (issue #99); a
+    # caller holding a bare elected map — keyed by numeric VRK ids, which can
+    # never collide with the "elected" key — still joins correctly.
+    if isinstance(results_lookup.get("elected"), dict):
+        elected_lookup = results_lookup["elected"]
+        votes_lookup = results_lookup.get("votes") or {}
+    else:
+        elected_lookup = results_lookup
+        votes_lookup = {}
     candidacy = output_payload.get("kandidatavimas")
     if not isinstance(candidacy, dict):
         candidacy = {"vrkCandidateId": vrk_id}
         output_payload["kandidatavimas"] = candidacy
-    hit = results_lookup.get(vrk_id) if vrk_id else None
-    if hit is None:
+    hit = elected_lookup.get(vrk_id) if vrk_id else None
+    if hit is not None:
+        annulled = hit.get("annulled")
+        candidacy["isrinktas"] = not annulled
+        candidacy["isrinktasKaip"] = hit.get("seat")
+        candidacy["rezultatuSaltinis"] = hit.get("sourceUrl")
+        if hit.get("round"):
+            candidacy["rezultatuTuras"] = hit["round"]
+        if annulled:
+            # The results page named this candidate; VRK then declared those
+            # results void. Recorded so the record says both things.
+            candidacy["rezultataiPanaikinti"] = annulled
+    else:
         candidacy["isrinktas"] = False
-        return
-    annulled = hit.get("annulled")
-    candidacy["isrinktas"] = not annulled
-    candidacy["isrinktasKaip"] = hit.get("seat")
-    candidacy["rezultatuSaltinis"] = hit.get("sourceUrl")
-    if hit.get("round"):
-        candidacy["rezultatuTuras"] = hit["round"]
-    if annulled:
-        # The results page named this candidate; VRK then declared those
-        # results void. Recorded so the record says both things.
-        candidacy["rezultataiPanaikinti"] = annulled
+    votes = votes_lookup.get(vrk_id) if vrk_id else None
+    if votes:
+        _apply_votes(candidacy, votes)
 
 
-def load_results(results_path: Path | None) -> dict[str, dict[str, Any]] | None:
-    return load_results_lookup(results_path)
+def load_results(results_path: Path | None) -> dict[str, Any] | None:
+    """The results file's `elected` map and its `details.votes` map — the
+    two things the parse stage joins — or None when the file is absent, in
+    which case `isrinktas` stays unknown rather than false."""
+    elected = load_results_lookup(results_path)
+    if elected is None:
+        return None
+    votes: dict[str, Any] = {}
+    if results_path is not None and results_path.exists():
+        payload = json.loads(results_path.read_text(encoding="utf-8"))
+        if isinstance(payload, dict):
+            details = payload.get("details")
+            if isinstance(details, dict) and isinstance(details.get("votes"), dict):
+                votes = details["votes"]
+    return {"elected": elected, "votes": votes}
 
 
 def parse_anketa_samples(

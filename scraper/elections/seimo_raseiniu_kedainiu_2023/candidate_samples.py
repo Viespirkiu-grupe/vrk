@@ -11,6 +11,11 @@ from bs4 import BeautifulSoup
 
 from scraper.elections.seimo_raseiniu_kedainiu_2023.sitemap import ELECTION_ID, resolve_candidate_url
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.campaign_tabs import (
+    derive_subtab_links,
+    is_absent_derived_tab,
+    merge_campaign_tab_links,
+)
 from scraper.shared.files import slugify
 from scraper.shared.http import fetch_text
 
@@ -185,12 +190,20 @@ def _fetch_campaign_tabs(
             "indexPath": "",
         }
 
-    tab_links = _extract_tab_links(root_html)
+    extracted_links = _extract_tab_links(root_html)
     has_tabnav = BeautifulSoup(root_html, "lxml").select_one("ul#tabnav") is not None
+    # The rendered tab list depends on the participant type — an
+    # atstovaujamasis root lists one tab of five, or none — so the five
+    # sub-tab URLs are derived from the pkdId and the list only adds labels
+    # (issue #99). A derived URL answering 404 is VRK not publishing that
+    # sub-page (the 2016-2020-era trees), recorded rather than treated as a
+    # download failure.
+    tab_links = merge_campaign_tab_links(extracted_links, derive_subtab_links(campaign_url))
     seen_file_slugs: dict[str, int] = {}
     saved_tabs: list[dict[str, Any]] = []
+    absent_tab_slugs: list[str] = []
 
-    if not tab_links:
+    if not extracted_links:
         if has_tabnav:
             anomalies.append(
                 build_anomaly_event(
@@ -208,58 +221,65 @@ def _fetch_campaign_tabs(
             )
         root_path = campaign_dir / "root.html"
         root_path.write_text(root_html, encoding="utf-8")
-    else:
-        for tab in tab_links:
-            fallback_slug = _label_slug_from_url(tab["url"])
-            file_slug = _dedupe_filename_slug(tab["slug"] or fallback_slug, seen_file_slugs)
-            file_path = campaign_dir / f"{file_slug}.html"
+    for tab in tab_links:
+        fallback_slug = _label_slug_from_url(tab["url"])
+        file_slug = _dedupe_filename_slug(tab["slug"] or fallback_slug, seen_file_slugs)
+        file_path = campaign_dir / f"{file_slug}.html"
 
-            if tab["url"] == campaign_url:
-                file_path.write_text(root_html, encoding="utf-8")
-                fetched = False
-            else:
-                try:
-                    tab_html = fetch_text(tab["url"])
-                except Exception as exc:
-                    anomalies.append(
-                        build_anomaly_event(
-                            event_type="CampaignTabDownloadFailed",
-                            severity="error",
-                            stage="fetch",
-                            election_id=ELECTION_ID,
-                            candidate_id=candidate_id,
-                            source_url=candidate_url,
-                            detail={
-                                "campaignUrl": campaign_url,
-                                "tabLabel": tab["label"],
-                                "tabSlug": tab["slug"],
-                                "tabUrl": tab["url"],
-                                "error": str(exc),
-                            },
-                        )
-                    )
+        if tab["url"] == campaign_url:
+            file_path.write_text(root_html, encoding="utf-8")
+            fetched = False
+        else:
+            try:
+                tab_html = fetch_text(tab["url"])
+            except Exception as exc:
+                if is_absent_derived_tab(tab, exc):
+                    absent_tab_slugs.append(file_slug)
                     continue
-                file_path.write_text(tab_html, encoding="utf-8")
-                fetched = True
+                anomalies.append(
+                    build_anomaly_event(
+                        event_type="CampaignTabDownloadFailed",
+                        severity="error",
+                        stage="fetch",
+                        election_id=ELECTION_ID,
+                        candidate_id=candidate_id,
+                        source_url=candidate_url,
+                        detail={
+                            "campaignUrl": campaign_url,
+                            "tabLabel": tab["label"],
+                            "tabSlug": tab["slug"],
+                            "tabUrl": tab["url"],
+                            "error": str(exc),
+                        },
+                    )
+                )
+                continue
+            file_path.write_text(tab_html, encoding="utf-8")
+            fetched = True
 
-            saved_tabs.append(
-                {
-                    "label": tab["label"],
-                    "slug": file_slug,
-                    "url": tab["url"],
-                    "path": str(file_path),
-                    "fetched": fetched,
-                }
-            )
+        saved_tabs.append(
+            {
+                "label": tab["label"],
+                "slug": file_slug,
+                "url": tab["url"],
+                "path": str(file_path),
+                "fetched": fetched,
+                **({"derived": True} if tab.get("derived") else {}),
+            }
+        )
 
     index_path = campaign_dir / "index.json"
+    # tabCount keeps its retained meaning — links the page itself listed — so
+    # tabCount < len(tabSamples) is exactly the participant-type gap the
+    # derivation closed.
     index_payload = {
         "campaignKey": campaign_key,
         "campaignLabel": campaign_link.get("label", ""),
         "campaignUrl": campaign_url,
-        "tabCount": len(tab_links),
+        "tabCount": len(extracted_links),
         "tabSamples": saved_tabs,
-        "campaignRootPath": str(campaign_dir / "root.html") if not tab_links else "",
+        "campaignRootPath": str(campaign_dir / "root.html") if not extracted_links else "",
+        **({"derivedTabsAbsent": absent_tab_slugs} if absent_tab_slugs else {}),
     }
     index_path.write_text(
         json.dumps(index_payload, ensure_ascii=False, indent=2) + "\n",
@@ -271,7 +291,7 @@ def _fetch_campaign_tabs(
         "campaignLabel": campaign_link.get("label", ""),
         "campaignUrl": campaign_url,
         "campaignDir": str(campaign_dir),
-        "tabCount": len(tab_links),
+        "tabCount": len(extracted_links),
         "tabSamples": saved_tabs,
         "indexPath": str(index_path),
     }

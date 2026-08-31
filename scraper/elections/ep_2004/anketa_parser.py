@@ -763,6 +763,9 @@ def _apply_mandate_notes(
     # member recognised in the seat); the era join carries seat, source and
     # annulment only, so the substitution facts are copied here.
     vrk_id = str(candidate_meta.get("vrkCandidateId", "") or "").strip()
+    # `load_results` wraps the elected map since issue #99.
+    if isinstance(results_lookup.get("elected"), dict):
+        results_lookup = results_lookup["elected"]
     hit = results_lookup.get(vrk_id) if vrk_id else None
     if not isinstance(hit, dict):
         return
