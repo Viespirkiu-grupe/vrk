@@ -52,9 +52,10 @@ takes `meras` and keeps its council list fields. `constituency` (Seimas
 single-mandate), `municipality`, `list_name`, `list_position`,
 `post_election_position`. `party_id` / `party_name_raw` / `nomination_kind`
 are the canonical nominator join (`scraper/parties.json`, issue #82).
-`elected` is 1/0, empty only where no results exist: the 1997 municipal pair
-(issue #92) and the five 2000 municipalities whose results tree VRK does not
-publish — 93.6 % filled overall.
+`elected` is 1/0, empty only where no results exist: the five 2000
+municipalities whose results tree VRK does not publish (the 1997 municipal
+pair was the larger gap until issue #92 joined its elected pages) — 99.3 %
+filled overall.
 
 **Education** (issue #88; `scraper/shared/education.py`).
 `education_status` types the absence — the difference between a candidate

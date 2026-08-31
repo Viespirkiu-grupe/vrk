@@ -1805,9 +1805,9 @@
       ],
       "states": {
         "vaidmuo": "seimo-narys | tarybos-narys | meras | prezidentas | ep-narys -- from the record's roles where it has them, from the election kind where it does not. A 2019/2023 council-and-mayor dual candidacy takes meras and keeps its council list fields.",
-        "isrinktas": "true | false | null. Null only where no results exist: the 1997 municipal pair (issue #92) and the five 2000-kovo-19 municipalities whose results tree VRK does not publish."
+        "isrinktas": "true | false | null. Null only where no results exist: the five 2000-kovo-19 municipalities whose results tree VRK does not publish. (The 1997 municipal pair was the other gap until issue #92 joined its elected pages.)"
       },
-      "note": "One answer -- role, constituency, municipality, list name, pre- and post-election list position, elected -- for the corpus's five kandidatavimas shapes, including the string-vs-dict split of savivaldybe and tarybosNarys.partyList (a plain string in seven municipal elections, {id, number, name} in 2019/2023). Role counts measured over all 113,073 records on 2026-08-30; isrinktas true 11,852 / false 94,029 / null 7,192.",
+      "note": "One answer -- role, constituency, municipality, list name, pre- and post-election list position, elected -- for the corpus's five kandidatavimas shapes, including the string-vs-dict split of savivaldybe and tarybosNarys.partyList (a plain string in seven municipal elections, {id, number, name} in 2019/2023). Role counts measured over all 113,073 records on 2026-08-30; isrinktas true 13,336 / false 98,931 / null 806 (re-measured 2026-08-31 after issue #92).",
       "counts": {
         "tarybos-narys": 98226,
         "seimo-narys": 12088,

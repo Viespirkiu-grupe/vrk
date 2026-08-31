@@ -72,9 +72,26 @@ class Municipal1997(unittest.TestCase):
         self.assertEqual(answer["savivaldybe"], "Švenčionių rajono")
         self.assertEqual(answer["sarasas"], "Lietuvos socialdemokratų partija")
         self.assertEqual(answer["numeris-sarase"], 2)
-        # No results were ever joined for the 1997 pair (issue #92): the
-        # absence must stay None, never read as false.
+        # A record parsed without the election's results file carries no
+        # `isrinktas` key: the absence must stay None, never read as false.
         self.assertIsNone(answer["isrinktas"])
+
+    def test_dict_shape_carries_the_joined_elected_flag(self):
+        # Since issue #92 the 1997 pair's records carry `isrinktas` joined
+        # from VRK's per-municipality elected pages, a bool on every record.
+        record = {
+            "normalized": {
+                "kandidatavimas": {
+                    "savivaldybe": "Švenčionių rajono",
+                    "iskele": "Lietuvos liberalų sąjunga",
+                    "numeris-sarase": 1,
+                    "isrinktas": True,
+                    "isrinktas-kaip": "tarybos-narys",
+                    "rezultatu-saltinis": "https://www.vrk.lt/…/rikl.htm-264.htm",
+                }
+            }
+        }
+        self.assertIs(kandidatura(record, "savivaldybiu")["isrinktas"], True)
 
 
 class Seimas2000Root(unittest.TestCase):

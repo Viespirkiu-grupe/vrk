@@ -686,6 +686,8 @@ from scraper.elections.seimo_aukstaitijos_1997_gruodzio.results import build_res
 from scraper.elections.seimo_pakartotiniai_1998_kovo.results import build_results as build_seimo_pakartotiniai_1998_kovo_results
 from scraper.elections.seimo_nevezio_1998_lapkricio.results import build_results as build_seimo_nevezio_1998_lapkricio_results
 from scraper.elections.seimo_pakartotiniai_1999_kovo.results import build_results as build_seimo_pakartotiniai_1999_kovo_results
+from scraper.elections.savivaldybiu_1997.results import build_results as build_savivaldybiu_1997_results
+from scraper.elections.svencioniu_tarybos_1997.results import build_results as build_svencioniu_tarybos_1997_results
 from scraper.shared import anomaly_report
 from scraper.shared.anomalies import write_jsonl
 
@@ -842,6 +844,8 @@ RESULTS_ELECTION_IDS = [
     SEIMO_PAKARTOTINIAI_1998_KOVO_ELECTION_ID,
     SEIMO_NEVEZIO_1998_LAPKRICIO_ELECTION_ID,
     SEIMO_PAKARTOTINIAI_1999_KOVO_ELECTION_ID,
+    SAVIVALDYBIU_1997_ELECTION_ID,
+    SVENCIONIU_TARYBOS_1997_ELECTION_ID,
 ]
 
 _RESULTS_BUILDERS = {
@@ -878,6 +882,8 @@ _RESULTS_BUILDERS = {
     SEIMO_PAKARTOTINIAI_1998_KOVO_ELECTION_ID: build_seimo_pakartotiniai_1998_kovo_results,
     SEIMO_NEVEZIO_1998_LAPKRICIO_ELECTION_ID: build_seimo_nevezio_1998_lapkricio_results,
     SEIMO_PAKARTOTINIAI_1999_KOVO_ELECTION_ID: build_seimo_pakartotiniai_1999_kovo_results,
+    SAVIVALDYBIU_1997_ELECTION_ID: build_savivaldybiu_1997_results,
+    SVENCIONIU_TARYBOS_1997_ELECTION_ID: build_svencioniu_tarybos_1997_results,
 }
 
 

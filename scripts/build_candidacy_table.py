@@ -747,7 +747,6 @@ def _known_zero_note(column: str, election: dict[str, Any]) -> str | None:
         (column in {"list_name", "list_position"} and kind == "mero", "the mayoral card prints its Sąrašas row empty (verified upstream)"),
         (column == "post_election_position" and (kind == "mero" or eid in POST_RANKING_ABSENT), "VRK publishes no post-election list ranking for this election"),
         (column in {"party_id", "party_name_raw", "nomination_kind"} and kind == "prezidento", "presidential candidates self-nominate; the pages name no nominator"),
-        (column == "elected" and eid in {"1997-kovo-23-savivaldybiu-tarybu", "1997-birzelio-29-svenciniu-tarybos-pakartotiniai"}, "no results were ever joined for the 1997 municipal pair (issue #92)"),
         (column in {"campaign_key", "campaign_status"} and not campaign_era, "no campaign-finance pages before the 2007-10 Dzūkija by-election"),
         (column in {"campaign_key", "campaign_status"} and eid in NO_CAMPAIGN_PAGES, "VRK publishes no campaign-participant section for this election's candidates"),
         (column in {"education_level", "education_level_rank", "education_higher", "education_unfinished"} and eid in education.LEVEL_NOT_PUBLISHED, "the election publishes no education level for anyone (education_status: neskelbta)"),

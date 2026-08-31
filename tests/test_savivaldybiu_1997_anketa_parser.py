@@ -3,7 +3,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scraper.elections.savivaldybiu_1997.anketa_parser import parse_anketa_samples
+from local_data import require
+
+from scraper.elections.savivaldybiu_1997.anketa_parser import (
+    DEFAULT_RESULTS_PATH,
+    parse_anketa_samples,
+)
 from scraper.shared.savivaldybiu_archive_1997 import education_record
 
 
@@ -92,6 +97,44 @@ class Savivaldybiu1997AnketaParserTests(unittest.TestCase):
             self.tamulevicius_2["rawData"]["candidacy"]["municipalityName"], "Druskininkų miesto"
         )
 
+
+
+class ElectedStatusTests(unittest.TestCase):
+    """`isrinktas`, joined from VRK's per-municipality elected pages (#92).
+
+    The join needs the built results file, so these skip where
+    `sitemaps/<id>.results.json` is absent (`python -m scraper build-results`
+    produces it); everything above parses fine without it — the candidacy
+    then simply carries no `isrinktas` at all.
+    """
+
+    def setUp(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+
+    def _parse(self, candidate_id: str) -> dict:
+        results = parse_anketa_samples(
+            candidate_ids=[candidate_id], output_root=Path(self._tmp.name)
+        )
+        return json.loads(Path(results[0]["outputPath"]).read_text(encoding="utf-8"))
+
+    def test_a_winner_carries_the_seat_and_the_source(self) -> None:
+        # Margevičienė led the LPKTS list in Kaunas (Nr. 5) and took one of
+        # its seats; the page naming her is the municipality's rikl page.
+        candidacy = self._parse("margeviciene-vince-vaidevute")["normalized"]["kandidatavimas"]
+        self.assertIs(candidacy["isrinktas"], True)
+        self.assertEqual(candidacy["isrinktas-kaip"], "tarybos-narys")
+        self.assertEqual(
+            candidacy["rezultatu-saltinis"],
+            "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-148.htm",
+        )
+
+    def test_a_non_winner_is_a_known_false(self) -> None:
+        candidacy = self._parse("pilvelis-algirdas")["normalized"]["kandidatavimas"]
+        self.assertIs(candidacy["isrinktas"], False)
+        self.assertNotIn("isrinktas-kaip", candidacy)
+        self.assertNotIn("rezultatai-negalioja", candidacy)
 
 
 class EducationShapeTests(unittest.TestCase):

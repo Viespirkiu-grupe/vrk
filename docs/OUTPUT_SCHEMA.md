@@ -1900,7 +1900,10 @@ field map all resolve them with no election-specific case.
   `sutuoktinio-vardas-pavarde` and `vaiku-vardai-pavardes`.
 - `normalized.kandidatavimas` is a single object here (contrast the Seimas
   archive's list): `savivaldybe`, `savivaldybes-numeris`,
-  `savivaldybes-nuoroda`, `iskele`, `iskele-nuoroda`, `numeris-sarase`.
+  `savivaldybes-nuoroda`, `iskele`, `iskele-nuoroda`, `numeris-sarase`,
+  `isrinktas` — plus, per the elected bullet below, `isrinktas-kaip` and
+  `rezultatu-saltinis` on winners and `rezultatai-negalioja` on the voided
+  March Švenčionys records.
 - `rawData.candidacy` is a single object (not a list — this family has no
   multi-mandate-list concept): `{municipalityName, municipalityNumber,
   municipalityUrl, nominator, nominatorUrl, listNumber}`.
@@ -1948,9 +1951,36 @@ field map all resolve them with no election-specific case.
   its records carry a null `gautos-pajamos` and a populated
   `gautos-pajamos-darbo-santykiu`. The same failure appears, rarely, elsewhere:
   9 of 879 in 1996 and 1 of 108 in Švenčionys.
-- No elected data, no biography subpage, no private-interest or
-  campaign-finance sections — same scope decision as the Seimas archive
-  appendix above.
+- **Elected status lives on `kandidatavimas.isrinktas`**, joined from VRK's
+  per-municipality results pages (issue #92; `python -m scraper
+  build-results <id>`, `scraper/shared/savivaldybiu_archive_1997_results.py`).
+  Each municipality publishes a `rapgpl.htm-<code>.htm` votes page (per-list
+  votes and mandate counts) linking a `rikl.htm-<code>.htm` "Apygardoje
+  išrinkti kandidatai" page whose rows carry VRK's candidate id — the same
+  id the sitemap URL carries, so the join is by id. The keys are the Seimas
+  archive family's kebab-case ones, on this family's kandidatavimas *dict*:
+  - `isrinktas` — `true`/`false` on **every** record, never null (absent
+    only if a record were parsed without the results file). The general
+    election seated **1,459** councillors across 55 municipalities; the
+    Švenčionys repeat seated **25**. All 1,484 members are in their
+    election's sitemap, and every municipality's member count equals its own
+    mandate column and totals row.
+  - On the elected record only: `isrinktas-kaip` (always `"tarybos-narys"`)
+    and `rezultatu-saltinis` (the rikl page).
+  - `rezultatai-negalioja` — on the general election's 104 Švenčionių rajono
+    (Nr. 47) records only: VRK voided that municipality's March result
+    (decision Nr. 149 of 1997-03-29, printed on the results pages in place
+    of winners) and re-ran it on 1997-06-29, so those candidates'
+    `isrinktas: false` is VRK's own verdict and the key carries the decision
+    text (`pastaba`) and its page (`saltinis`). The seats actually taken are
+    the repeat election's 25.
+  - 31 of the general election's elected rows print a list position 1–3
+    below the listing's and the card's own — the elected page renumbers a
+    list after withdrawals. Recorded as `memberMismatches` in the results
+    file and as an `ElectedCandidacyMismatch` warning on each of the 31
+    records; the join keys on VRK's id, so electedness is unaffected.
+- No biography subpage, no private-interest or campaign-finance sections —
+  same scope decision as the Seimas archive appendix above.
 - `normalized.anketa.issilavinimas` is the corpus's education object,
   `{"aprasas", "irasai": [...]}`, like every era from 2007 on. These pages
   publish a single level from a controlled list ("Aukštasis",

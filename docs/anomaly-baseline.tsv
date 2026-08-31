@@ -4,6 +4,7 @@ election	eventType	severity	count
 1996-spalio-20-seimo	ResidenceMissing	warning	1
 1997-birzelio-29-svenciniu-tarybos-pakartotiniai	DeclarationTotalBelowItsOwnRow	info	1
 1997-kovo-23-savivaldybiu-tarybu	DeclarationTotalBelowItsOwnRow	info	8597
+1997-kovo-23-savivaldybiu-tarybu	ElectedCandidacyMismatch	warning	31
 1997-kovo-23-savivaldybiu-tarybu	ResidenceMissing	warning	8
 2000-kovo-19-savivaldybiu-tarybu	DeclarationPageUnreadable	error	1
 2000-kovo-19-savivaldybiu-tarybu	DeclarationTotalBelowItsOwnRow	warning	297

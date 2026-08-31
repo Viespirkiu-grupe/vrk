@@ -559,8 +559,8 @@ function activeFilters() {
 }
 
 // The tri-state elected flag (issue #87): `w` is true, false, or absent —
-// absent meaning VRK published no results for that ballot (the 1997
-// municipal pair, five 2000 municipalities), which is not a loss.
+// absent meaning VRK published no results for that ballot (five 2000
+// municipalities; the 1997 pair joined its results in #92), not a loss.
 function candidacyMatches(e, f) {
   if (f.election && e.id !== f.election) return false;
   if (f.party && e.p !== f.party) return false;

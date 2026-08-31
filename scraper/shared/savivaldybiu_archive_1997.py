@@ -56,6 +56,11 @@ from scraper.shared.archive_1990s_card import (
 from scraper.shared.deklaracija_archive_1990s import parse_declaration
 from scraper.shared.files import slugify, write_candidate_record, write_json
 from scraper.shared.http import fetch_text
+from scraper.shared.savivaldybiu_archive_1997_results import (
+    apply_municipal_results,
+    load_municipal_results,
+)
+from scraper.shared.seimo_archive_1990s_results import candidate_id_from_url
 
 VRK_STATINIAI_BASE = "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/"
 
@@ -686,6 +691,7 @@ def build_candidate_record(
     entry: dict[str, Any],
     samples_root: Path,
     election_id: str,
+    results: dict[str, Any] | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     candidate_dir = samples_root / candidate_id
     candidate_html = (candidate_dir / "candidate.html").read_text(encoding="utf-8")
@@ -779,6 +785,31 @@ def build_candidate_record(
         **({"turto-ir-pajamu-deklaracijos": declaration} if declaration else {}),
     }
 
+    # Elected status, joined in from VRK's per-municipality results pages
+    # when `python -m scraper build-results <id>` has written the election's
+    # results file (issue #92). Without one the candidacy keeps its old shape
+    # and says nothing about the outcome, rather than claiming a false; with
+    # one, `isrinktas` is a read verdict on both sides -- the elected pages
+    # name every seat, and the one municipality without them (the voided
+    # March Švenčionys result) is a `false` by VRK's own decision, carried
+    # under `rezultatai-negalioja`.
+    for problem in apply_municipal_results(
+        normalized["kandidatavimas"],
+        candidate_id_from_url(entry["url"]),
+        results or {},
+    ):
+        anomalies.append(
+            build_anomaly_event(
+                event_type=problem["eventType"],
+                severity="warning",
+                stage="parse",
+                election_id=election_id,
+                candidate_id=candidate_id,
+                source_url=entry["url"],
+                detail=problem["detail"],
+            )
+        )
+
     # Same as the Seimas archive: the party-list page prints the name
     # surname-first ("Laužadis Šarūnas") while the candidate page heading
     # prints it given-name-first ("Šarūnas Laužadis"), which is the order the
@@ -801,11 +832,13 @@ def parse_anketa_samples(
     sitemap_path: Path,
     samples_root: Path,
     output_root: Path,
+    results_path: Path | None = None,
 ) -> list[dict[str, Any]]:
     # anomalies.jsonl is written by cli.py's generic parse-anketa-samples
     # handler (same as every other election module) from the `anomalies` key
     # in each returned result, not here.
     entries_by_id = _load_sitemap_entries_by_candidate_id(sitemap_path)
+    results_data = load_municipal_results(results_path)
 
     if candidate_ids:
         target_ids = candidate_ids
@@ -821,7 +854,9 @@ def parse_anketa_samples(
         entry = entries_by_id.get(candidate_id)
         if entry is None:
             raise ValueError(f"Candidate id not found in sitemap: {candidate_id}")
-        record, anomalies = build_candidate_record(candidate_id, entry, samples_root, election_id)
+        record, anomalies = build_candidate_record(
+            candidate_id, entry, samples_root, election_id, results_data
+        )
         output_path = output_root / f"{candidate_id}-{election_id}.json"
         write_candidate_record(output_path, record)
 

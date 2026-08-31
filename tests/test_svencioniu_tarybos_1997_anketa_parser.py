@@ -3,7 +3,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scraper.elections.svencioniu_tarybos_1997.anketa_parser import parse_anketa_samples
+from local_data import require
+
+from scraper.elections.svencioniu_tarybos_1997.anketa_parser import (
+    DEFAULT_RESULTS_PATH,
+    parse_anketa_samples,
+)
 
 
 class SvencioniuTarybos1997AnketaParserTests(unittest.TestCase):
@@ -63,6 +68,45 @@ class SvencioniuTarybos1997AnketaParserTests(unittest.TestCase):
                 {"name": "Agnė", "relation": "Vaikas"},
             ],
         )
+
+
+class ElectedStatusTests(unittest.TestCase):
+    """`isrinktas`, joined from the one rikl page this election has (#92).
+
+    Skips where `sitemaps/<id>.results.json` is absent (`python -m scraper
+    build-results` produces it); the parses above then simply carry no
+    `isrinktas` key at all.
+    """
+
+    def setUp(self) -> None:
+        require(DEFAULT_RESULTS_PATH)
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+
+    def _parse(self, candidate_id: str) -> dict:
+        results = parse_anketa_samples(
+            candidate_ids=[candidate_id], output_root=Path(self._tmp.name)
+        )
+        return json.loads(Path(results[0]["outputPath"]).read_text(encoding="utf-8"))
+
+    def test_a_winner_carries_the_seat_and_the_source(self) -> None:
+        # Klipčius led the LLS list, which took 10 of the 25 seats.
+        candidacy = self._parse("klipcius-rimas")["normalized"]["kandidatavimas"]
+        self.assertIs(candidacy["isrinktas"], True)
+        self.assertEqual(candidacy["isrinktas-kaip"], "tarybos-narys")
+        self.assertEqual(
+            candidacy["rezultatu-saltinis"],
+            "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+        )
+
+    def test_a_non_winner_is_a_known_false(self) -> None:
+        # Laužadis led the tautininkai list, which won no seat ("-" in the
+        # mandate column) — a stated nothing, so false, not null.
+        candidacy = self._parse("lauzadis-sarunas")["normalized"]["kandidatavimas"]
+        self.assertIs(candidacy["isrinktas"], False)
+        self.assertNotIn("isrinktas-kaip", candidacy)
+        # The invalidation belongs to the *March* election's records only.
+        self.assertNotIn("rezultatai-negalioja", candidacy)
 
 
 if __name__ == "__main__":
