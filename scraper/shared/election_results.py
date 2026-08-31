@@ -530,6 +530,11 @@ def collect_seimo_votes(
                 == record["constituencyNumber"]
             )
         ]
+        # The single-constituency by-elections' sitemaps carry no per-entry
+        # constituency block at all (2015 Žirmūnai, Varėna-Eišiškės); the
+        # whole sitemap is that one constituency's field.
+        if not field:
+            field = entries
         for round_info in record.get("rounds", []):
             for row in round_info["rows"]:
                 vrk_id = row.get("vrkCandidateId")

@@ -33,7 +33,7 @@ removed from the corpus instead of documented (issues #86 and #91).
 
 ## Record anatomy
 
-Six top-level fields on every record:
+Seven top-level fields on every record:
 
 - `electionId`, `candidateId`, `candidateName`
 - `source` — the VRK page URL(s) the record was parsed from
@@ -43,6 +43,11 @@ Six top-level fields on every record:
   (`profilis`, `anketa`, `biografija`, `turto-ir-pajamu-deklaracijos`,
   `privaciu-interesu-deklaracija`, `politines-kampanijos-dalyvio-duomenys`,
   `kita`)
+- `provenance` — when the primary page was fetched, when this record was
+  parsed, by parsers at which commit, and the source page's sha256
+  ([docs/OUTPUT_SCHEMA.md](OUTPUT_SCHEMA.md#provenance)). Compare records by
+  content, not by `parsedAt`/`parserCommit` — those stamp the parse run.
+  Absent only where no page is retained (a handful of records).
 
 Query `normalized`; fall back to `rawData` when you need the verbatim source
 text (nearly every normalized value is traceable to a byte-identical string
@@ -191,6 +196,19 @@ elections — see `docs/OUTPUT_SCHEMA.md`. Five traps:
   carry `kandidatavimas.rezultataiPanaikinti` (the VRK decision) and
   `isrinktas: false` — VRK's results page named them, its decision unmade
   it, and the June repeat elections' records hold the seats actually won.
+
+**Votes.** From 1996 through 2015, `kandidatavimas` carries the candidate's
+own showing under one set of names: `pirmumoBalsai` (with
+`porinkiminisNumerisSarase` and `pirmumoBalsuSaltinis`, plus `reitingoBalai`
+where VRK computed rating points) for list candidates, and
+`vienmandatesBalsai` `{balsadezese, pastu, isViso, procentai, vieta,
+saltinis}` for constituency candidates (`vienmandatesBalsai2` for a runoff;
+the 1996-1999 archive family spells the same facts kebab-case inside its
+per-candidacy `turai` list). The 2004-and-earlier figures come off the
+candidate's own pages, the 2007-2015 ones are joined from the results trees
+(issue #99). The 2016-2025 elections publish no results tree the records
+link, so their records hold no vote counts at all — an upstream absence,
+not a parse gap.
 
 **Placeholders.** Four placeholder forms normalize to `null`: `Nenurodė`,
 `-`, the empty string, and a value that is nothing but the replacement

@@ -40,6 +40,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from scraper.shared.files import write_json  # noqa: E402
 from scraper.shared.provenance import (  # noqa: E402
     PROVENANCE_SCHEMA_VERSION,
+    fetched_at_for,
     utc_iso,
 )
 
@@ -74,7 +75,7 @@ def backfill_record(record_path: Path, repo_root: Path, election_id: str, force:
     parsed_at = utc_iso(record_path.stat().st_mtime)
     existing = record.get("provenance") if isinstance(record.get("provenance"), dict) else {}
     record["provenance"] = {
-        "fetchedAt": utc_iso(source_path.stat().st_mtime),
+        "fetchedAt": fetched_at_for(source_path),
         # A --force rerun keeps the moment the content was produced from the
         # existing block; the file's mtime by then says when the block landed.
         "parsedAt": existing.get("parsedAt") or parsed_at,

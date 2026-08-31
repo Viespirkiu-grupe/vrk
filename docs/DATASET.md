@@ -1890,6 +1890,21 @@ and makes `STOP_ON_ANOMALY=1` usable on an archive election for the first time.
 The five affected elections were re-parsed from their retained HTML to
 regenerate their anomaly files; all 18,415 records came back byte-identical.
 
+A fourth answers the question the others assume away: *which* corpus is this?
+Since issue #89 every record carries a `provenance` block — the fetch time of
+its primary page, the parse time, the parser commit and the source page's
+sha256 (`docs/OUTPUT_SCHEMA.md`) — stamped by every parse and backfilled onto
+all 113,073 pre-existing records by `scripts/backfill_provenance.py`
+(2026-09-01; `parserCommit` stays `null` there, because which commit wrote a
+pre-provenance record is unknown and a guess would be worse). `people.json`'s
+stats block now states its own vintage (`generatedAt`, `parserCommit`,
+`corpusParsedAt`) and the dashboard prints it, so the two builds of it that
+once coexisted on one machine, 21,000 records apart with nothing naming
+either, cannot recur unlabelled. `reparse_diff.py` excludes the block from
+its diff (the run-stamps differ between honest runs) but reads the source
+hash, so a drifted record is attributed to "the page changed" against "the
+parser changed" — the distinction issue #89 was filed for.
+
 ## Known gaps
 
 - The corpus covers the elections implemented so far. VRK publishes further

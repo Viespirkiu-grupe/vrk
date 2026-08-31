@@ -17,10 +17,12 @@ lives inside every record, stamped by ``write_candidate_record``:
 ``fetchedAt`` is the retained source file's modification time. The fetchers
 write each page the moment it arrives and never touch it again, so the mtime
 *is* the fetch time; measured against the sitemaps' ``generatedAt`` it agrees
-for every retained tree, and it survived the corpus's one disk move. A
-fixture tree freshly checked out of git carries checkout times instead — the
-approximation is documented rather than dressed up, and the corpus itself is
-regenerated from ``samples-full/``, where the times are real.
+for every retained tree, and it survived the corpus's one disk move. The
+exception is the tracked fixture tree (``samples/html/``): git rewrites its
+mtimes on every checkout, so a record parsed from a fixture — the small
+elections whose fixture tree is the whole election — takes the election
+sitemap's ``generatedAt`` instead, the scrape run's own timestamp. A wrong
+plausible time is exactly the kind of metadata this block exists to end.
 
 ``sourceSha256`` hashes the retained file's bytes — the record's *primary*
 page, the one at ``source.candidateSourceUrl`` — the same way
@@ -40,6 +42,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from functools import lru_cache
 import hashlib
+import json
 from pathlib import Path
 import subprocess
 from typing import Any
@@ -99,11 +102,38 @@ def parser_commit() -> str | None:
     return f"{commit}-dirty" if dirty else commit
 
 
+@lru_cache(maxsize=128)
+def _sitemap_generated_at(sitemap_path: Path) -> str | None:
+    try:
+        payload = json.loads(sitemap_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    generated = payload.get("generatedAt") if isinstance(payload, dict) else None
+    return generated if isinstance(generated, str) and generated else None
+
+
+def fetched_at_for(source_path: Path) -> str:
+    """When the source page was fetched: the file's own mtime, except for a
+    tracked fixture (``…/samples/html/<election>/…``), whose mtime is just
+    the git checkout — there the election sitemap's ``generatedAt`` stands
+    in, the timestamp of the scrape run that fetched the page."""
+    resolved = source_path.resolve()
+    parts = resolved.parts
+    for index in range(len(parts) - 3):
+        if parts[index] == "samples" and parts[index + 1] == "html":
+            sitemap_path = Path(*parts[:index]) / "sitemaps" / f"{parts[index + 2]}.json"
+            generated = _sitemap_generated_at(sitemap_path)
+            if generated:
+                return generated
+            break
+    return utc_iso(source_path.stat().st_mtime)
+
+
 def build_provenance(source_path: Path) -> dict[str, Any]:
     """The provenance block for a record parsed from ``source_path``."""
     raw = source_path.read_bytes()
     return {
-        "fetchedAt": utc_iso(source_path.stat().st_mtime),
+        "fetchedAt": fetched_at_for(source_path),
         "parsedAt": utc_now_iso(),
         "parserCommit": parser_commit(),
         "sourceSha256": hashlib.sha256(raw).hexdigest(),
