@@ -116,6 +116,7 @@ class Savivaldybiu2023AnketaParserTests(unittest.TestCase):
                 "source",
                 "rawData",
                 "normalized",
+                "provenance",
             ],
         )
         self.assertEqual(self.gudaitis["electionId"], ELECTION_ID)

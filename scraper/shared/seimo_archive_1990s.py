@@ -1029,7 +1029,9 @@ def parse_anketa_samples(
             candidate_id, entry, samples_root, election_id, results_data
         )
         output_path = output_root / f"{candidate_id}-{election_id}.json"
-        write_candidate_record(output_path, record)
+        write_candidate_record(
+            output_path, record, source_path=samples_root / candidate_id / "candidate.html"
+        )
 
         # No anketa question rows exist on these pages; "rows" here are the
         # scalar identity/candidacy fields, so cli.py's generic row-count

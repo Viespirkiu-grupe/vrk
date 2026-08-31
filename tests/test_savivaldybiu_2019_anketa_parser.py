@@ -219,6 +219,7 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
                 "source",
                 "rawData",
                 "normalized",
+                "provenance",
             ],
         )
         self.assertEqual(self.dauksys["electionId"], ELECTION_ID)

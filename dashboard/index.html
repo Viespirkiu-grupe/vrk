@@ -444,10 +444,22 @@ async function boot() {
     if (spec["label-lt"]) CONCEPT_LABELS[id] = spec["label-lt"];
   }
   const s = INDEX.stats;
-  document.getElementById("topstats").textContent =
+  // The corpus vintage rides in stats (issue #89): the newest record's
+  // provenance.parsedAt and the parser commit that built the index. Without
+  // it, two coexisting people.json builds were indistinguishable on sight.
+  const vintage = s.corpusParsedAt
+    ? ` · duomenys ${s.corpusParsedAt.slice(0, 10)}${s.parserCommit ? ` (${s.parserCommit})` : ""}`
+    : "";
+  const topstats = document.getElementById("topstats");
+  topstats.textContent =
     `${fmtInt(s.persons)} ${plural(s.persons, "asmuo", "asmenys", "asmenų")} · ` +
     `${fmtInt(s.records)} ${plural(s.records, "kandidatavimas", "kandidatavimai", "kandidatavimų")} · ` +
-    `${fmtInt(s.personsInMultipleElections)} dalyvavo 2+ rinkimuose`;
+    `${fmtInt(s.personsInMultipleElections)} dalyvavo 2+ rinkimuose` + vintage;
+  if (s.corpusParsedAt) {
+    topstats.title = `korpuso naujausias įrašas ${s.corpusParsedAt}` +
+      (s.generatedAt ? `; indeksas sugeneruotas ${s.generatedAt}` : "") +
+      (s.parserCommit ? `; parserio versija ${s.parserCommit}` : "");
+  }
   // A merged person answers to every name they ran under, so the search
   // haystack folds in each natural key's name — the canonical key's (the
   // display name follows the latest election and can differ from it: the

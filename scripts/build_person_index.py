@@ -92,6 +92,7 @@ from scraper.shared.education import issilavinimas  # noqa: E402
 from scraper.shared.kandidatura import ROLE_MAYOR, kandidatura  # noqa: E402
 from scraper.shared.parties import entry as party_entry  # noqa: E402
 from scraper.shared.parties import partija  # noqa: E402
+from scraper.shared.provenance import parser_commit, utc_now_iso  # noqa: E402
 
 import field_coverage  # noqa: E402
 
@@ -370,6 +371,7 @@ def build_index(
     people: dict[str, dict] = {}
     grouped: dict[str, list[dict]] = defaultdict(list)
     total = missing_birth = year_only = 0
+    newest_parse = ""
     seen_elections: set[str] = set()
     municipalities: set[str] = set()
 
@@ -381,6 +383,13 @@ def build_index(
                 continue
             record = json.loads(path.read_text(encoding="utf-8"))
             total += 1
+            # The corpus's own vintage: the newest record `provenance.parsedAt`
+            # (issue #89). ISO-8601 UTC strings compare as timestamps.
+            provenance = record.get("provenance")
+            if isinstance(provenance, dict):
+                parsed_at = provenance.get("parsedAt")
+                if isinstance(parsed_at, str) and parsed_at > newest_parse:
+                    newest_parse = parsed_at
             name = normalize_name(record.get("candidateName"))
             birth = birth_key_of(record)
             if birth is None:
@@ -554,6 +563,12 @@ def build_index(
             {"id": t, "label": EDUCATION_LEVEL_LABELS[t]} for t in EDUCATION_LEVELS
         ],
         "stats": {
+            # What this index is a snapshot *of* (issue #89): when it was
+            # built, by parsers at which commit, over a corpus whose newest
+            # record was parsed when. Two builds that disagree now say why.
+            "generatedAt": utc_now_iso(),
+            "parserCommit": parser_commit(),
+            "corpusParsedAt": newest_parse or None,
             "records": total,
             "persons": len(entries),
             "personsInMultipleElections": multi,
@@ -579,6 +594,7 @@ def main() -> int:
         encoding="utf-8",
     )
     stats = index["stats"]
+    print(f"vintage:                  corpus parsed ≤ {stats['corpusParsedAt']}, index built by {stats['parserCommit']}")
     print(f"records:                  {stats['records']}")
     print(f"distinct persons:         {stats['persons']}")
     print(f"in multiple elections:    {stats['personsInMultipleElections']}")
