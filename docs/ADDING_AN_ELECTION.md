@@ -207,7 +207,9 @@ configures which VRK results tree to walk (`scraper/shared/election_results.py`
 has walkers for the Seimas elected-members page, constituency pages with
 rounds, the EP members page, the presidential final-results page and the
 municipal results/ranking pages; `scraper/shared/seimo_archive_1990s_results.py`
-reads the 1996-1999 archive's `rapgpl` pages), `python -m scraper build-results <id>`
+reads the 1996-1999 Seimas archive's `rapgpl` pages, and
+`scraper/shared/savivaldybiu_archive_1997_results.py` the 1997 municipal
+pair's `rapgpl`/`rikl` pairs), `python -m scraper build-results <id>`
 writes `sitemaps/<id>.results.json`, and the era parser joins it into
 `kandidatavimas.isrinktas`. Read the builder's reconciliation stats before
 shipping: every winner must resolve to a VRK candidate id that is in the

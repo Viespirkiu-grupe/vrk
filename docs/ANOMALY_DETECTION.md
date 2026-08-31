@@ -83,13 +83,15 @@ events completely and stopped every archive run on its first batch.
 
 ## The eight types that fire
 
-Measured over all 55 elections on 2026-08-29. Forty-one event types are
-declared in the code; these eight are the ones the corpus has ever recorded.
+Measured over all 55 elections on 2026-08-29 (the `ElectedCandidacyMismatch`
+row added 2026-08-31 with issue #92's join). Forty-two event types are
+declared in the code; these nine are the ones the corpus has ever recorded.
 
 | count | type | severity | what it means |
 | --- | --- | --- | --- |
 | 8,598 | `DeclarationTotalBelowItsOwnRow` | `info` | An archive declaration whose row-20 total is below its own row 1, on a page carrying VRK's query-error banner. The total is refused rather than published, so the record has `null` and not a false zero. |
 | 327 | `DeclarationTotalBelowItsOwnRow` | `warning` | The same contradiction on a page that printed no banner. A readable page contradicting itself is a finding. |
+| 31 | `ElectedCandidacyMismatch` | `warning` | A 1997 municipal winner whose elected-page list position disagrees with the card's own (a renumbering after withdrawals; the join keys on VRK's candidate id, so electedness is unaffected). |
 | 11 | `ResidenceMissing` | `warning` | A 1996–2000 card with no residence line. |
 | 3 | `DeclarationPageUnreadable` | `error` | A declaration page with no figures on it at all. |
 | 3 | `DeclarationSectionMissing` | `warning` | The 2002 municipal page published the declaration table as an empty cell. |

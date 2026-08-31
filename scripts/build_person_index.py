@@ -186,12 +186,13 @@ def birth_key_of(record: dict) -> str | None:
 
 # Elected status resolves through scraper/shared/kandidatura.py, the one
 # resolver over the corpus's five kandidatavimas shapes. Its `isrinktas` is
-# tri-state -- True, False, or None where no results exist (the 1997
-# municipal pair and 2000-kovo-19's five unpublished municipalities) -- and
-# people.json carries all three: `"w": true`, `"w": false`, or no key. The
-# index used to emit `"w"` only when won, which made "lost" and "no results
-# data" the same absence, and the dashboard read 7,192 unknown outcomes as
-# losses (issue #87).
+# tri-state -- True, False, or None where no results exist (2000-kovo-19's
+# five unpublished municipalities; the 1997 municipal pair was the larger
+# gap until issue #92 joined its elected pages) -- and people.json carries
+# all three: `"w": true`, `"w": false`, or no key. The index used to emit
+# `"w"` only when won, which made "lost" and "no results data" the same
+# absence, and the dashboard read 7,192 unknown outcomes as losses
+# (issue #87).
 
 
 # The asset/income fields carried into the index so the dashboard can chart

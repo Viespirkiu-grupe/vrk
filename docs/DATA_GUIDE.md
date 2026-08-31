@@ -155,14 +155,13 @@ conviction declaration. Structured conviction *details* are another matter;
 see the traps below.
 
 **Elected.** `kandidatavimas.isrinktas` is now `true`/`false` on every
-record of every election except the 1997 municipal pair (issue #92) —
-either joined in from VRK's results trees (the 1996–2015 families, whose
-pages mark no winner and whose `pastaba` is always null; `isrinktasKaip`
-names the seat, `rezultatuSaltinis` the page, a `null` means no results
-file exists) or, on the 2016–2025 layouts, derived from the profile's
-prose note (`profilis.pastaba` starting `Išrink`), which names the
-complete winner set in every one of those elections — see
-`docs/OUTPUT_SCHEMA.md`. Four traps:
+record of every election — either joined in from VRK's results trees (the
+1996–2015 families, whose pages mark no winner and whose `pastaba` is
+always null; `isrinktasKaip` names the seat, `rezultatuSaltinis` the page,
+a `null` means no results file exists) or, on the 2016–2025 layouts,
+derived from the profile's prose note (`profilis.pastaba` starting
+`Išrink`), which names the complete winner set in every one of those
+elections — see `docs/OUTPUT_SCHEMA.md`. Five traps:
 
 - *`kandidatavimas` is a list in the 1996-1999 Seimas archive family*, one
   entry per candidacy — a 1996 candidate could stand in a constituency and on
@@ -171,6 +170,15 @@ complete winner set in every one of those elections — see
   (`isrinktas-kaip`, `rezultatu-saltinis`, `rezultatu-turas`) rather than the
   camelCase the other families use. `isrinktas` is never null in that family:
   its pages state an outcome for every constituency, `neįvyko` included.
+
+- *The 1997 municipal pair* (the last gap, closed by issue #92) uses the
+  same kebab-case keys on its kandidatavimas *dict*: `isrinktas` on every
+  record, `isrinktas-kaip` (`tarybos-narys`) and `rezultatu-saltinis` on the
+  1,459 + 25 winners, joined from VRK's per-municipality `rikl` elected
+  pages. The March election's Švenčionys result (Nr. 47, 104 candidates)
+  was voided by VRK decision — those records are `isrinktas: false` and
+  carry the decision under `kandidatavimas.rezultatai-negalioja`; the seats
+  actually taken are the June repeat's 25.
 
 - *Presidential:* `pastaba` is non-null for every candidate (`Dalyvavo
   I ture` and the like), so non-null ≠ elected there.

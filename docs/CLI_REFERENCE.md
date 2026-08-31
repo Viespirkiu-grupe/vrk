@@ -1133,15 +1133,31 @@ reach a candidate:
   two different people named `Tamulevičius Kęstutis` (VRK ids 37862 and
   37809) become `tamulevicius-kestutis` and `tamulevicius-kestutis-2`; see
   `tests/test_savivaldybiu_1997_anketa_parser.py`.
+- `build-results` (issue #92) reads each municipality's `rapgpl.htm-<code>.htm`
+  votes page and its `rikl.htm-<code>.htm` "Apygardoje išrinkti kandidatai"
+  page (the `<code>` is VRK's internal id — 144–199 for the general
+  election's municipalities 1–56, 264 for the Švenčionys repeat — read off
+  the retained `apgtl` pages, never derived), and the parse joins the result
+  into `kandidatavimas.isrinktas`
+  (`scraper/shared/savivaldybiu_archive_1997_results.py`). The shipping
+  builds reconcile clean — 1,459 + 25 members, all in the sitemaps,
+  `seatCountMismatches` 0 — except `memberMismatches` 31, elected rows whose
+  list position sits 1–3 below the listing's (a renumbering after
+  withdrawals; the join keys on VRK's candidate id, so electedness is
+  unaffected). Švenčionių rajono (Nr. 47) returns no March winners at all:
+  VRK voided its result (decision Nr. 149) and its 104 candidates carry
+  `rezultatai-negalioja` with `isrinktas: false`.
 
 ```bash
 python -m scraper fetch-sample 1997-kovo-23-savivaldybiu-tarybu
 python -m scraper sitemap 1997-kovo-23-savivaldybiu-tarybu
+python -m scraper build-results 1997-kovo-23-savivaldybiu-tarybu
 python -m scraper fetch-candidate-samples 1997-kovo-23-savivaldybiu-tarybu --candidate-id pilvelis-algirdas --allow-new-samples
 python -m scraper parse-anketa-samples 1997-kovo-23-savivaldybiu-tarybu
 
 python -m scraper fetch-sample 1997-birzelio-29-svenciniu-tarybos-pakartotiniai
 python -m scraper sitemap 1997-birzelio-29-svenciniu-tarybos-pakartotiniai
+python -m scraper build-results 1997-birzelio-29-svenciniu-tarybos-pakartotiniai
 python -m scraper parse-anketa-samples 1997-birzelio-29-svenciniu-tarybos-pakartotiniai
 ```
 

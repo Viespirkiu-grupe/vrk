@@ -29,8 +29,9 @@ fields and takes `vaidmuo` from the mayoral run — the more specific office.
 everywhere it exists (joined from VRK's results trees for the eras whose
 pages mark no winner, prose-derived for 2016–2025 — see DATA_GUIDE), any()
 over the archive family's candidacy list, and None only where no results
-exist: the 1997 municipal pair (issue #92) and the five 2000 municipalities
-whose results tree VRK does not publish.
+exist: the five 2000 municipalities whose results tree VRK does not publish.
+(The 1997 municipal pair used to be the other gap; issue #92 joined its
+per-municipality elected pages, so its dict shape now carries a bool too.)
 """
 
 from __future__ import annotations
@@ -162,9 +163,11 @@ def kandidatura(record: dict[str, Any], kind: str | None = None) -> dict[str, An
     if isinstance(norm_candidacy, list):
         return _from_archive_list(norm_candidacy, kind)
     if isinstance(norm_candidacy, dict):
-        # The 1997 municipal archive pair: no results were ever joined
-        # (issue #92), so elected stays None rather than reading as false.
-        answer = _empty(ROLE_COUNCIL, None)
+        # The 1997 municipal archive pair. `isrinktas` is joined in from
+        # VRK's per-municipality elected pages (issue #92) and is a bool on
+        # every record; a record parsed without the results file carries no
+        # key, and the absence stays None rather than reading as false.
+        answer = _empty(ROLE_COUNCIL, norm_candidacy.get("isrinktas"))
         answer["savivaldybe"] = _municipality_of(norm_candidacy.get("savivaldybe"))
         answer["sarasas"] = _name_of(norm_candidacy.get("iskele"))
         answer["numeris-sarase"] = _int_of(norm_candidacy.get("numeris-sarase"))

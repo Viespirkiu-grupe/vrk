@@ -98,8 +98,8 @@ election was re-parsed offline the same day.
 | `1998-kovo-22-seimo-pakartotiniai` | 11 | 0 | 0 | 0 |
 | `1998-lapkricio-15-seimo-pakartotiniai` | 11 | 0 | 0 | 0 |
 | `1999-kovo-21-seimo-pakartotiniai` | 22 | 0 | 0 | 0 |
-| `1997-kovo-23-savivaldybiu-tarybu` | 6276 | 0 | 0 | 0 |
-| `1997-birzelio-29-svenciniu-tarybos-pakartotiniai` | 110 | 0 | 0 | 0 |
+| `1997-kovo-23-savivaldybiu-tarybu` | 6276 | 1459 | 0 | 0 |
+| `1997-birzelio-29-svenciniu-tarybos-pakartotiniai` | 110 | 25 | 0 | 0 |
 | `2012-seimo` | 1927 | 139 | 45 | 1927 |
 | `2013-kovo-3-seimo-birzai-zarasai-ukmerge` | 37 | 3 | 2 | 37 |
 | `2014-prezidento` | 7 | 1 | 0 | 7 |
@@ -121,7 +121,7 @@ election was re-parsed offline the same day.
 | `2005-lapkricio-20-seimo-kedainiai` | 5 | 1 | 0 | 0 |
 | `2000-seimo` | 1271 | 141 | 5 | 0 |
 | `2000-kovo-19-savivaldybiu-tarybu` | 9879 | 1433 | 9 | 0 |
-| **total** | **113073** | **11852** | **1634** | **20199** |
+| **total** | **113073** | **13336** | **1634** | **20199** |
 
 The elected column counts records whose `profilis.pastaba` starts with
 `Išrink` — the note reads `Išrinktas`/`Išrinkta` (verb agreeing with the
@@ -130,7 +130,7 @@ the presidential elections**, where every candidate carries a participation
 note (`Dalyvavo I ture`, `Dalyvavo II ture`, or `Išrinktas II ture` for the
 winner). Counting non-null `pastaba` there reports 9 and 8 "elected" for a
 race one person won; match on the `Išrink` prefix, not on presence. The
-1996–2015 pages mark no winner at all, so for those twenty-three elections the column
+1996–2015 pages mark no winner at all, so for those twenty-five elections the column
 counts `kandidatavimas.isrinktas == true` instead (and so does the 2000
 row: its cards do carry a winner note, on 139 of the 141 — the other two
 pages are VRK's pre-results capture — but the flag is the results join) — the flag joined in from
@@ -765,6 +765,47 @@ Reconciliation, all clean on the shipping build: `constituencyPageDiff` 0 (the
 constituency half), `seatMismatches` 0, `listMandateMismatches` 0,
 `allocationMismatches` 0 over 5 lists, `unresolvedRows` 0 and
 `candidatesWithoutVotes` 0 across all six elections.
+
+### The 2026-08-31 elected-status join for the 1997 municipal pair
+
+GitHub issue #92 — the Seimas archive got its elected status in #79; its
+municipal sibling, the larger of the two, had none at all: 6,386 records
+with no `isrinktas` key of any kind, which the documented consumer rule read
+as **zero winners for a nationwide election that seated over a thousand
+councillors**. Both elections now emit `kandidatavimas.isrinktas`, joined
+from VRK's per-municipality results pages by
+`python -m scraper build-results <id>`
+(`scraper/shared/savivaldybiu_archive_1997_results.py`). Nothing outside
+`kandidatavimas` changed on any record.
+
+| election | records | elected | source |
+|---|---:|---:|---|
+| `1997-kovo-23-savivaldybiu-tarybu` | 6276 | 1459 | `19970323/rikl.htm-144…199.htm` |
+| `1997-birzelio-29-svenciniu-tarybos-pakartotiniai` | 110 | 25 | `19970323/rikl.htm-264.htm` |
+
+Each municipality's `apgtl` page links its `rapgpl.htm-<code>.htm` votes
+page (per-list votes and mandate counts — the `<code>` is VRK's internal id,
+144 for municipality 1, not the municipality number), which links the
+`rikl.htm-<code>.htm` "Apygardoje išrinkti kandidatai" page. The rikl rows
+carry VRK's candidate id, so the join is by id, as in #79. **Every
+non-winner is a known `false`, not a null**: the elected pages name every
+seat, and the one municipality without them — Švenčionių rajono (Nr. 47),
+whose March result VRK voided by decision Nr. 149 for gross violations of
+the municipal election law and re-ran on 1997-06-29 — prints that decision
+in place of winners, so its 104 March candidates' `false` is VRK's own
+verdict; those records carry the decision under
+`kandidatavimas.rezultatai-negalioja`, and the June repeat's records hold
+the 25 seats actually taken.
+
+Reconciliation on the shipping build: `electedNotInSitemap` 0 and
+`seatCountMismatches` 0 across all 56 + 1 municipalities — every member is
+in the sitemap and every municipality's member count equals its own mandate
+column and totals row. The one finding is `memberMismatches` 31: rows whose
+rikl list position sits 1–3 below the listing's and the card's own, a
+renumbering after withdrawals, concentrated in a handful of lists (ten of
+them on the TS list in Vilnius). Each of the 31 records carries an
+`ElectedCandidacyMismatch` warning naming both numbers; the join keys on
+VRK's id, so electedness is unaffected.
 
 ### The 2026-08-26 build of the 1998 March Seimo by-election
 
@@ -1869,6 +1910,12 @@ regenerate their anomaly files; all 18,415 records came back byte-identical.
   closed 2026-08-27 by issue #79: all six elections now carry a per-candidacy
   true/false on all 950 records, read from VRK's `rapgpl` results pages and,
   for 1996, from its elected-members page. See the join's own section above.
+- ~~The 1997 municipal pair emits no `isrinktas` at all~~ — closed
+  2026-08-31 by issue #92: all 6,386 records now carry a true/false read
+  from VRK's per-municipality `rikl` elected pages (1,459 + 25 seats, every
+  member in the sitemaps), and the voided March Švenčionys result is a
+  flagged `false` (`rezultatai-negalioja`) rather than a silence. See the
+  join's own section above.
 - One 2015 candidacy has no questionnaire at all: VRK published Marija Puč's
   Trakai council page as `Rengiama`. Its record keeps the profile card and
   carries the corpus's only `AnketaNotPublished` warning. The same person's

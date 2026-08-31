@@ -112,9 +112,9 @@ is adding a concept id to `CONCEPT_ROWS`; if the concept is new, map it in
 `docs/concept-map.json` and re-run `field_coverage.py --update-baseline`.
 
 **Won flag.** `"w"` is tri-state: `true`, `false`, or absent where VRK
-published no results — the 1997 municipal pair (issue #92) and the five
-2000-kovo-19 municipalities whose results tree VRK does not publish, 7,192
-candidacies in all. It is `kandidatura(record, kind)["isrinktas"]`
+published no results — the five 2000-kovo-19 municipalities whose results
+tree VRK does not publish, 806 candidacies in all (the 1997 municipal pair
+was the larger gap until issue #92 joined its elected pages). It is `kandidatura(record, kind)["isrinktas"]`
 (`scraper/shared/kandidatura.py`), the one resolver over the corpus's five
 `kandidatavimas` shapes; the prose-note pathway lives in the parsers
 (`candidacy_from_elected_note`, issue #100), which emit the root block this
