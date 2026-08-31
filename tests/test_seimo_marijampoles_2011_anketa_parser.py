@@ -63,7 +63,10 @@ class SeimoMarijampoles2011ResultsTests(unittest.TestCase):
     def test_winners_resolve_from_the_constituency_pages(self) -> None:
         self.assertEqual(RESULTS_TREE, "2011_seimo_rinkimai")
         payload = json.loads((SITEMAPS / f"{ELECTION_ID}.results.json").read_text(encoding="utf-8"))
-        self.assertEqual(payload["stats"], {'constituencies': 1, 'winnersResolved': 1, 'unresolved': 0, 'decidedInRoundTwo': 1, 'byRunoffPlurality': 1})
+        self.assertEqual(
+            payload["stats"],
+            {'constituencies': 1, 'winnersResolved': 1, 'unresolved': 0, 'decidedInRoundTwo': 1, 'byRunoffPlurality': 1, 'candidatesWithVotes': 9, 'voteRowsUnresolved': 0},
+        )
         self.assertEqual(payload["elected"]["26312"]["method"], "runoff-plurality")
         self.assertEqual(payload["elected"]["26312"]["round"], 2)
 
@@ -94,6 +97,22 @@ class SeimoMarijampoles2011AnketaParserTests(unittest.TestCase):
                 "isrinktasKaip": "vienmandate",
                 "rezultatuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2011_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda{}aktyvumasdesc2turas.html".format(self.winner["kandidatavimas"]["rezultatuSaltinis"].split("apygarda")[-1].split("aktyvumas")[0]),
                 "rezultatuTuras": 2,
+                "vienmandatesBalsai": {
+                    "balsadezese": 1933,
+                    "pastu": 272,
+                    "isViso": 2205,
+                    "procentai": 25.64,
+                    "vieta": 1,
+                    "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2011_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7192aktyvumasdesc1turas.html",
+                },
+                "vienmandatesBalsai2": {
+                    "balsadezese": 6174,
+                    "pastu": 825,
+                    "isViso": 6999,
+                    "procentai": 55.52,
+                    "vieta": 1,
+                    "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2011_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7194aktyvumasdesc2turas.html",
+                },
             },
         )
         self.assertIs(self.other["kandidatavimas"]["isrinktas"], False)

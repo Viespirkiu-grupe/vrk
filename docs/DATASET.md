@@ -1930,7 +1930,38 @@ parser changed" — the distinction issue #89 was filed for.
   from VRK's per-municipality `rikl` elected pages (1,459 + 25 seats, every
   member in the sitemaps), and the voided March Švenčionys result is a
   flagged `false` (`rezultatai-negalioja`) rather than a silence. See the
-  join's own section above.
+  join's own section above. (That run's two `sitemaps/<id>.results.json`
+  files never left its worktree — found 2026-09-01 when the re-parse gate
+  reported the fixture parse dropping `isrinktas` the corpus holds — and
+  were rebuilt from the same pages: 1,459 + 25 seats again, byte-identical
+  records.)
+- ~~No election after 2004 has a vote count~~ — closed 2026-09-01 by issue
+  #99 for the 2007–2015 results-tree family: 35,692 records across 12
+  elections now carry the candidate's own votes in `kandidatavimas`, under
+  the pre-2005 field names (`pirmumoBalsai` + `porinkiminisNumerisSarase`
+  from the per-list preference/ranking pages — 2008: 1,603/1,603 records,
+  2012: 1,927/1,927, 2011 municipal: 16,257, March 2015 municipal: 15,127 —
+  and `vienmandatesBalsai`/`2` from the constituency pages, 883 + 152
+  records). 34 preference pages were the only new fetches; everything else
+  came off already-retained results pages. One vote row corpus-wide resolves
+  to nobody: Jonas Smalinskas (Rokiškis 2011), one of the three candidates
+  VRK never published a page for. Still open: the 2016–2025 elections
+  publish no results tree the records link (their votes stay absent), and
+  the mayoral `rezultatai_sav_kand` pages and 2011's 34 self-nominated
+  individuals' own rows are unread.
+- ~~2,189 atstovaujamasis campaigns have no funding-report structure~~ —
+  closed 2026-09-01 by issue #99 where VRK published the pages at all: the
+  campaign walkers now derive the five finance sub-tab URLs from the
+  participant id instead of trusting the participant-type tab list, and the
+  retained corpus was refetched — 2012 Seimas (544 campaigns), March 2015
+  municipal (408), 2023 municipal (422), 2024 Seimas (511), plus stragglers
+  in 2009 EP and the Širvintos–Trakai repeat. Represented participants'
+  pages mostly carry explicit "Duomenų nėra" tables — a known empty in
+  place of an unfetched page. The 2016–2020-era trees answer 404 for every
+  derived atstovaujamasis sub-page (probed live, recorded per campaign as
+  `derivedTabsAbsent`): VRK never published them, so 348 (2016) + 460
+  (2020) + 395 (2019-03) + 13 (2019-09) + 1 (2018) campaigns stay
+  root-only by the source's own absence.
 - One 2015 candidacy has no questionnaire at all: VRK published Marija Puč's
   Trakai council page as `Rengiama`. Its record keeps the profile card and
   carries the corpus's only `AnketaNotPublished` warning. The same person's

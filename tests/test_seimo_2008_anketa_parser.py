@@ -218,6 +218,26 @@ class Seimo2008AnketaParserTests(unittest.TestCase):
                 "isrinktas": True,
                 "isrinktasKaip": "vienmandate",
                 "rezultatuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2008_seimo_rinkimai/output_lt/rinkimu_diena/isrinkti_seimo_nariai_kadencijaik.html",
+                "porinkiminisNumerisSarase": 1,
+                "pirmumoBalsai": 81951,
+                "reitingoBalai": 81951,
+                "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2008_seimo_rinkimai/output_lt/rezultatai_daugiamand_apygardose/partijos_pirmumo_balsai3433.html",
+                "vienmandatesBalsai": {
+                    "balsadezese": 6899,
+                    "pastu": 316,
+                    "isViso": 7215,
+                    "procentai": 34.33,
+                    "vieta": 1,
+                    "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2008_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda6875aktyvumasdesc1turas.html",
+                },
+                "vienmandatesBalsai2": {
+                    "balsadezese": 7183,
+                    "pastu": 431,
+                    "isViso": 7614,
+                    "procentai": 59.49,
+                    "vieta": 1,
+                    "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2008_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda6950aktyvumasdesc2turas.html",
+                },
             },
         )
         self.assertEqual(self.grauziniene["kandidatavimas"]["isrinktasKaip"], "daugiamandate")

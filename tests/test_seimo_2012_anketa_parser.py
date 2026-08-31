@@ -166,6 +166,18 @@ class Seimo2012AnketaParserTests(unittest.TestCase):
                 "isrinktas": True,
                 "isrinktasKaip": "vienmandate",
                 "rezultatuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2012_seimo_rinkimai/output_lt/rinkimu_diena/isrinkti_seimo_nariai_kadencijaik.html",
+                "porinkiminisNumerisSarase": 1,
+                "pirmumoBalsai": 75469,
+                "reitingoBalai": 75469,
+                "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2012_seimo_rinkimai/output_lt/rezultatai_daugiamand_apygardose/partijos_pirmumo_balsai4136.html",
+                "vienmandatesBalsai": {
+                    "balsadezese": 9885,
+                    "pastu": 1484,
+                    "isViso": 11369,
+                    "procentai": 69.24,
+                    "vieta": 1,
+                    "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2012_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7277aktyvumasdesc1turas.html",
+                },
             },
         )
         self.assertEqual(self.balsys["kandidatavimas"]["roles"], ["vienmandate"])

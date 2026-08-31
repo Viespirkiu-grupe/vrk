@@ -132,7 +132,10 @@ class SeimoDzukijos2007ResultsTests(unittest.TestCase):
 
     def test_built_results(self) -> None:
         payload = json.loads((SITEMAPS / f"{ELECTION_ID}.results.json").read_text(encoding="utf-8"))
-        self.assertEqual(payload["stats"], {"constituencies": 1, "winnersResolved": 1, "unresolved": 0, "decidedInRoundTwo": 1, "byRunoffPlurality": 1})
+        self.assertEqual(
+            payload["stats"],
+            {"constituencies": 1, "winnersResolved": 1, "unresolved": 0, "decidedInRoundTwo": 1, "byRunoffPlurality": 1, "candidatesWithVotes": 10, "voteRowsUnresolved": 0},
+        )
         self.assertEqual(list(payload["elected"]), ["19310"])
         self.assertEqual(payload["details"]["constituencies"][0]["field"][:2], ["Kęstutis ČILINSKAS", "Viktor USPASKICH"])
 
@@ -206,6 +209,22 @@ class SeimoDzukijos2007AnketaParserTests(unittest.TestCase):
                 "isrinktasKaip": "vienmandate",
                 "rezultatuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2007_seimo_rinkimai/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda6840aktyvumasdesc2turas.html",
                 "rezultatuTuras": 2,
+                "vienmandatesBalsai": {
+                    "balsadezese": 2636,
+                    "pastu": 503,
+                    "isViso": 3139,
+                    "procentai": 30.76,
+                    "vieta": 1,
+                    "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2007_seimo_rinkimai/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda6838aktyvumasdesc1turas.html",
+                },
+                "vienmandatesBalsai2": {
+                    "balsadezese": 5377,
+                    "pastu": 1219,
+                    "isViso": 6596,
+                    "procentai": 56.42,
+                    "vieta": 1,
+                    "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2007_seimo_rinkimai/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda6840aktyvumasdesc2turas.html",
+                },
             },
         )
         self.assertIs(self.uspaskich["kandidatavimas"]["isrinktas"], False)

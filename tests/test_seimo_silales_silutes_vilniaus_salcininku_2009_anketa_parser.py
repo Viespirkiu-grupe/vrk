@@ -63,7 +63,10 @@ class SeimoSilalesSilutesVilniausSalcininku2009ResultsTests(unittest.TestCase):
     def test_winners_resolve_from_the_constituency_pages(self) -> None:
         self.assertEqual(RESULTS_TREE, "2009_seimo_rinkimai")
         payload = json.loads((SITEMAPS / f"{ELECTION_ID}.results.json").read_text(encoding="utf-8"))
-        self.assertEqual(payload["stats"], {'constituencies': 2, 'winnersResolved': 2, 'unresolved': 0, 'decidedInRoundTwo': 1, 'byRunoffPlurality': 1})
+        self.assertEqual(
+            payload["stats"],
+            {'constituencies': 2, 'winnersResolved': 2, 'unresolved': 0, 'decidedInRoundTwo': 1, 'byRunoffPlurality': 1, 'candidatesWithVotes': 17, 'voteRowsUnresolved': 0},
+        )
         self.assertEqual(payload["elected"]["26249"]["method"], "runoff-plurality")
         self.assertEqual(payload["elected"]["26249"]["round"], 2)
         # The other constituency was decided outright in round one: no verdict
@@ -99,6 +102,22 @@ class SeimoSilalesSilutesVilniausSalcininku2009AnketaParserTests(unittest.TestCa
                 "isrinktasKaip": "vienmandate",
                 "rezultatuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda{}aktyvumasdesc2turas.html".format(self.winner["kandidatavimas"]["rezultatuSaltinis"].split("apygarda")[-1].split("aktyvumas")[0]),
                 "rezultatuTuras": 2,
+                "vienmandatesBalsai": {
+                    "balsadezese": 3133,
+                    "pastu": 428,
+                    "isViso": 3561,
+                    "procentai": 28.55,
+                    "vieta": 2,
+                    "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7126aktyvumasdesc1turas.html",
+                },
+                "vienmandatesBalsai2": {
+                    "balsadezese": 6549,
+                    "pastu": 1123,
+                    "isViso": 7672,
+                    "procentai": 57.7,
+                    "vieta": 1,
+                    "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7128aktyvumasdesc2turas.html",
+                },
             },
         )
         self.assertIs(self.other["kandidatavimas"]["isrinktas"], True)
