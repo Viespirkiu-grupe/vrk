@@ -58,7 +58,10 @@ REPLACEMENT_CHARACTER_VALUES = 20
 #: 58 more `VšĮ`-style junctions and the 2000 municipal family split one
 #: child's name, all of them VRK's own spelling in fields that were dropped
 #: before, not new gluing.
-GLUED_VALUES = 20710
+#: Issue #99 raised it by 1: the refetched campaign sub-tabs carry one more
+#: `VšĮ`-style counterparty in a contracts table -- again VRK's own spelling
+#: in a page that was never fetched before.
+GLUED_VALUES = 20711
 
 
 def _leaves(node, path, out):

@@ -8,8 +8,40 @@
       "label": "Aukų ir aukotojų sąrašas",
       "slug": "auku-ir-aukotoju-sarasas",
       "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1726/dalyviai/savarankiskasAukotojai_pkdId-19734.html",
-      "path": "samples/html/2024-seimo/gabrielius-landsbergis/campaigns/atstovaujamasis-pkdid-19734/auku-ir-aukotoju-sarasas.html",
+      "path": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2024-seimo/gabrielius-landsbergis/campaigns/atstovaujamasis-pkdid-19734/auku-ir-aukotoju-sarasas.html",
       "fetched": true
+    },
+    {
+      "label": "Iždininkas",
+      "slug": "izdininkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1726/dalyviai/savarankiskasIzdininkas_pkdId-19734.html",
+      "path": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2024-seimo/gabrielius-landsbergis/campaigns/atstovaujamasis-pkdid-19734/izdininkas.html",
+      "fetched": true,
+      "derived": true
+    },
+    {
+      "label": "Auditorius",
+      "slug": "auditorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1726/dalyviai/savarankiskasAuditorius_pkdId-19734.html",
+      "path": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2024-seimo/gabrielius-landsbergis/campaigns/atstovaujamasis-pkdid-19734/auditorius.html",
+      "fetched": true,
+      "derived": true
+    },
+    {
+      "label": "Finansavimo ataskaitos",
+      "slug": "finansavimo-ataskaitos",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1726/dalyviai/savarankiskasFinansavimas_pkdId-19734.html",
+      "path": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2024-seimo/gabrielius-landsbergis/campaigns/atstovaujamasis-pkdid-19734/finansavimo-ataskaitos.html",
+      "fetched": true,
+      "derived": true
+    },
+    {
+      "label": "Sutartys",
+      "slug": "sutartys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1726/dalyviai/savarankiskasSutartys_pkdId-19734.html",
+      "path": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2024-seimo/gabrielius-landsbergis/campaigns/atstovaujamasis-pkdid-19734/sutartys.html",
+      "fetched": true,
+      "derived": true
     }
   ],
   "campaignRootPath": ""
