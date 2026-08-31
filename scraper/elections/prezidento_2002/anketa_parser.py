@@ -276,7 +276,7 @@ def parse_anketa_sample(
     }
 
     output_path = output_root / f"{candidate_id}-{ELECTION_ID}.json"
-    write_candidate_record(output_path, output_payload)
+    write_candidate_record(output_path, output_payload, source_path=anketa_path)
 
     # No questionnaire text exists in this tree, so "rows" are the record's
     # scalar sources — the card fields and the two parsed texts — and

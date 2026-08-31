@@ -1890,6 +1890,21 @@ and makes `STOP_ON_ANOMALY=1` usable on an archive election for the first time.
 The five affected elections were re-parsed from their retained HTML to
 regenerate their anomaly files; all 18,415 records came back byte-identical.
 
+A fourth answers the question the others assume away: *which* corpus is this?
+Since issue #89 every record carries a `provenance` block — the fetch time of
+its primary page, the parse time, the parser commit and the source page's
+sha256 (`docs/OUTPUT_SCHEMA.md`) — stamped by every parse and backfilled onto
+all 113,073 pre-existing records by `scripts/backfill_provenance.py`
+(2026-09-01; `parserCommit` stays `null` there, because which commit wrote a
+pre-provenance record is unknown and a guess would be worse). `people.json`'s
+stats block now states its own vintage (`generatedAt`, `parserCommit`,
+`corpusParsedAt`) and the dashboard prints it, so the two builds of it that
+once coexisted on one machine, 21,000 records apart with nothing naming
+either, cannot recur unlabelled. `reparse_diff.py` excludes the block from
+its diff (the run-stamps differ between honest runs) but reads the source
+hash, so a drifted record is attributed to "the page changed" against "the
+parser changed" — the distinction issue #89 was filed for.
+
 ## Known gaps
 
 - The corpus covers the elections implemented so far. VRK publishes further
@@ -1915,7 +1930,38 @@ regenerate their anomaly files; all 18,415 records came back byte-identical.
   from VRK's per-municipality `rikl` elected pages (1,459 + 25 seats, every
   member in the sitemaps), and the voided March Švenčionys result is a
   flagged `false` (`rezultatai-negalioja`) rather than a silence. See the
-  join's own section above.
+  join's own section above. (That run's two `sitemaps/<id>.results.json`
+  files never left its worktree — found 2026-09-01 when the re-parse gate
+  reported the fixture parse dropping `isrinktas` the corpus holds — and
+  were rebuilt from the same pages: 1,459 + 25 seats again, byte-identical
+  records.)
+- ~~No election after 2004 has a vote count~~ — closed 2026-09-01 by issue
+  #99 for the 2007–2015 results-tree family: 35,692 records across 12
+  elections now carry the candidate's own votes in `kandidatavimas`, under
+  the pre-2005 field names (`pirmumoBalsai` + `porinkiminisNumerisSarase`
+  from the per-list preference/ranking pages — 2008: 1,603/1,603 records,
+  2012: 1,927/1,927, 2011 municipal: 16,257, March 2015 municipal: 15,127 —
+  and `vienmandatesBalsai`/`2` from the constituency pages, 883 + 152
+  records). 34 preference pages were the only new fetches; everything else
+  came off already-retained results pages. One vote row corpus-wide resolves
+  to nobody: Jonas Smalinskas (Rokiškis 2011), one of the three candidates
+  VRK never published a page for. Still open: the 2016–2025 elections
+  publish no results tree the records link (their votes stay absent), and
+  the mayoral `rezultatai_sav_kand` pages and 2011's 34 self-nominated
+  individuals' own rows are unread.
+- ~~2,189 atstovaujamasis campaigns have no funding-report structure~~ —
+  closed 2026-09-01 by issue #99 where VRK published the pages at all: the
+  campaign walkers now derive the five finance sub-tab URLs from the
+  participant id instead of trusting the participant-type tab list, and the
+  retained corpus was refetched — 2012 Seimas (544 campaigns), March 2015
+  municipal (408), 2023 municipal (422), 2024 Seimas (511), plus stragglers
+  in 2009 EP and the Širvintos–Trakai repeat. Represented participants'
+  pages mostly carry explicit "Duomenų nėra" tables — a known empty in
+  place of an unfetched page. The 2016–2020-era trees answer 404 for every
+  derived atstovaujamasis sub-page (probed live, recorded per campaign as
+  `derivedTabsAbsent`): VRK never published them, so 348 (2016) + 460
+  (2020) + 395 (2019-03) + 13 (2019-09) + 1 (2018) campaigns stay
+  root-only by the source's own absence.
 - One 2015 candidacy has no questionnaire at all: VRK published Marija Puč's
   Trakai council page as `Rengiama`. Its record keeps the profile card and
   carries the corpus's only `AnketaNotPublished` warning. The same person's

@@ -267,8 +267,24 @@ def seimo_district_pages(results_dir: Path, tree: str, round_number: int) -> lis
     return pages
 
 
+def _int_cell(value: str) -> int | None:
+    digits = re.sub(r"[^\d]", "", value or "")
+    return int(digits) if digits else None
+
+
+def _percent_cell(value: str) -> float | None:
+    match = re.search(r"(\d+(?:[.,]\d+)?)\s*%", value or "")
+    return float(match.group(1).replace(",", ".")) if match else None
+
+
 def parse_seimo_district_page(html: str) -> dict[str, Any]:
-    """Verdict and candidate rows (name, votes) of one constituency/round page."""
+    """Verdict and candidate rows of one constituency/round page.
+
+    A row is `name | apylinkėse | paštu | iš viso | % nuo galiojančių | % nuo
+    dalyvavusių` on every vintage of the page; the counts and the first
+    percentage are kept per candidate (issue #99), with `vieta` computed from
+    the totals rather than trusted to the page's sort order — the retained
+    copies are the "aktyvumasdesc" sort variant."""
     text = page_text(html)
     verdict = None
     runoff = bool(RUNOFF_PATTERN.search(text))
@@ -277,21 +293,36 @@ def parse_seimo_district_page(html: str) -> dict[str, Any]:
         verdict = normalize_space(match.group(1)).rstrip(".")
     rows: list[dict[str, Any]] = []
     soup = BeautifulSoup(html, "lxml")
+    seen_rows: set[int] = set()
     for anchor in soup.find_all("a", href=True):
         # The candidate row pages are "rezultatai_sm_kand<ID>…" from 2012
         # on; the 2009 and 2011 by-election trees reuse the presidential
         # template's "rezultatai_prezidento_kand<ID>…" stem for them; the
-        # 2007 tree links each row straight to the candidate's anketa.
-        if not (DISTRICT_ROW_PATTERN.search(anchor["href"]) or ANKETA_ID_PATTERN.search(anchor["href"])):
+        # 2007 and 2008 trees link each row straight to the candidate's
+        # anketa — which also puts VRK's candidate id on the row.
+        anketa_match = ANKETA_ID_PATTERN.search(anchor["href"])
+        if not (DISTRICT_ROW_PATTERN.search(anchor["href"]) or anketa_match):
             continue
         tr = anchor.find_parent("tr")
+        if tr is not None:
+            if id(tr) in seen_rows:
+                continue
+            seen_rows.add(id(tr))
         cells = [normalize_space(td.get_text(" ", strip=True)) for td in tr.find_all("td")] if tr else []
-        total = None
-        # name | apylinkėse | paštu | iš viso | % | %
-        if len(cells) >= 4:
-            digits = cells[3].replace(" ", "")
-            total = int(digits) if digits.isdigit() else None
-        rows.append({"name": normalize_space(anchor.get_text(" ", strip=True)), "votes": total})
+        rows.append(
+            {
+                "vrkCandidateId": anketa_match.group(1) if anketa_match else None,
+                "name": normalize_space(anchor.get_text(" ", strip=True)),
+                "votesPrecinct": _int_cell(cells[1]) if len(cells) > 1 else None,
+                "votesPostal": _int_cell(cells[2]) if len(cells) > 2 else None,
+                "votes": _int_cell(cells[3]) if len(cells) > 3 else None,
+                "percentValid": _percent_cell(cells[4]) if len(cells) > 4 else None,
+            }
+        )
+    # Standard competition ranking on the totals: ties share a place.
+    totals = sorted((row["votes"] for row in rows if row["votes"] is not None), reverse=True)
+    for row in rows:
+        row["vieta"] = (totals.index(row["votes"]) + 1) if row["votes"] is not None else None
     # Constituency heading: "Biržų - Kupiškio rinkimų apygarda" / "Nr. 48" appear in the page text.
     number_match = re.search(r"apygard[ao]s? Nr\.?\s*(\d+)|Nr\.\s*(\d+)", text)
     number = None
@@ -324,7 +355,9 @@ def first_round_elected_by_label(results_dir: Path, tree: str) -> dict[str, dict
 
 def seimo_constituency_winners(results_dir: Path, tree: str) -> list[dict[str, Any]]:
     """One record per constituency: the winner's name, the deciding round and
-    how it was read (verdict sentence or runoff plurality)."""
+    how it was read (verdict sentence or runoff plurality), plus every round's
+    candidate rows under `rounds` — the per-candidate votes issue #99 joins
+    onto the records."""
     winners: list[dict[str, Any]] = []
     round_one = seimo_district_pages(results_dir, tree, 1)
     round_two = seimo_district_pages(results_dir, tree, 2)
@@ -334,11 +367,23 @@ def seimo_constituency_winners(results_dir: Path, tree: str) -> list[dict[str, A
     first_round_elected = first_round_elected_by_label(results_dir, tree)
     for page in round_one:
         parsed = parse_seimo_district_page(fetch_page(results_dir, page["url"]))
+        second = round_two_by_label.get(page["label"])
+        if second is None and len(round_two) == 1 and len(round_one) == 1:
+            second = round_two[0]
+        parsed_two = (
+            parse_seimo_district_page(fetch_page(results_dir, second["url"]))
+            if second is not None
+            else None
+        )
+        rounds = [{"round": 1, "sourceUrl": page["url"], "rows": parsed["rows"]}]
+        if parsed_two is not None:
+            rounds.append({"round": 2, "sourceUrl": second["url"], "rows": parsed_two["rows"]})
         record: dict[str, Any] = {
             "constituencyLabel": page["label"],
             "constituencyNumber": parsed["number"],
             "resultDistrictId": page["resultDistrictId"],
             "field": [row["name"] for row in parsed["rows"]],
+            "rounds": rounds,
             "winnerName": None,
             "round": None,
             "method": None,
@@ -349,21 +394,16 @@ def seimo_constituency_winners(results_dir: Path, tree: str) -> list[dict[str, A
         elif page["label"] in first_round_elected:
             member = first_round_elected[page["label"]]
             record.update(winnerName=member["name"], round=1, method="first-round-list", sourceUrl=member["sourceUrl"])
-        else:
-            second = round_two_by_label.get(page["label"])
-            if second is None and len(round_two) == 1 and len(round_one) == 1:
-                second = round_two[0]
-            if second is not None:
-                parsed_two = parse_seimo_district_page(fetch_page(results_dir, second["url"]))
-                if parsed_two["verdictName"]:
-                    record.update(winnerName=parsed_two["verdictName"], round=2, method="verdict", sourceUrl=second["url"])
-                else:
-                    ranked = [row for row in parsed_two["rows"] if row["votes"] is not None]
-                    ranked.sort(key=lambda row: -row["votes"])
-                    if len(ranked) >= 2 and ranked[0]["votes"] > ranked[1]["votes"]:
-                        record.update(
-                            winnerName=ranked[0]["name"], round=2, method="runoff-plurality", sourceUrl=second["url"]
-                        )
+        elif parsed_two is not None:
+            if parsed_two["verdictName"]:
+                record.update(winnerName=parsed_two["verdictName"], round=2, method="verdict", sourceUrl=second["url"])
+            else:
+                ranked = [row for row in parsed_two["rows"] if row["votes"] is not None]
+                ranked.sort(key=lambda row: -row["votes"])
+                if len(ranked) >= 2 and ranked[0]["votes"] > ranked[1]["votes"]:
+                    record.update(
+                        winnerName=ranked[0]["name"], round=2, method="runoff-plurality", sourceUrl=second["url"]
+                    )
         winners.append(record)
     return winners
 
@@ -397,6 +437,140 @@ def parse_elected_members_page(html: str, base_url: str) -> list[dict[str, Any]]
             }
         )
     return members
+
+
+# ---------------------------------------------------------------------------
+# Votes (issue #99): preference pages and district rows
+# ---------------------------------------------------------------------------
+
+
+def parse_preference_page(html: str, url: str) -> list[dict[str, Any]]:
+    """One `partijos_pirmumo_balsai<listId>.html` page: the list in its
+    post-election order — post-election number, name (an anketa link, so
+    VRK's candidate id is on the row), pre-election number, preference votes
+    and rating points. The 2008 and 2012 trees print the same five columns."""
+    soup = BeautifulSoup(html, "lxml")
+    rows: list[dict[str, Any]] = []
+    seen_rows: set[int] = set()
+    for anchor in soup.find_all("a", href=True):
+        match = ANKETA_ID_PATTERN.search(anchor["href"])
+        if match is None:
+            continue
+        tr = anchor.find_parent("tr")
+        if tr is None or id(tr) in seen_rows:
+            continue
+        seen_rows.add(id(tr))
+        cells = [normalize_space(td.get_text(" ", strip=True)) for td in tr.find_all("td")]
+        if len(cells) < 4:
+            continue
+        rows.append(
+            {
+                "vrkCandidateId": match.group(1),
+                "name": normalize_space(anchor.get_text(" ", strip=True)),
+                "porinkiminisNumerisSarase": _int_cell(cells[0]),
+                "numerisSarase": _int_cell(cells[2]),
+                "pirmumoBalsai": _int_cell(cells[3]),
+                "reitingoBalai": _int_cell(cells[4]) if len(cells) > 4 else None,
+            }
+        )
+    return rows
+
+
+def collect_seimo_votes(
+    results_dir: Path,
+    tree: str,
+    entries: list[dict[str, Any]],
+    winners: list[dict[str, Any]],
+) -> tuple[dict[str, dict[str, Any]], dict[str, Any]]:
+    """Every candidate's votes, keyed by VRK candidate id (issue #99).
+
+    Preference votes come from one `partijos_pirmumo_balsai<listId>.html`
+    page per list — the list ids are on the sitemap's own candidacies (the
+    2012 form carries a `-1` suffix the page name drops) and the rows carry
+    anketa links, so that join is by id. District votes ride the constituency
+    pages `seimo_constituency_winners` already walked: a row with an anketa
+    link (2007-2008) joins by id, one without (the 2012-on `sm_kand` row
+    pages, whose ids are re-issued) resolves by name within the
+    constituency's own candidates, and a row resolving to neither is a
+    counted finding, not a silent drop.
+    """
+    votes: dict[str, dict[str, Any]] = {}
+    list_ids = sorted(
+        {
+            str((entry.get("daugiamandateCandidacy") or {}).get("sarasoId") or "").split("-")[0]
+            for entry in entries
+        }
+        - {""}
+    )
+    preference_pages_missing: list[str] = []
+    for list_id in list_ids:
+        url = f"{tree_root(tree)}/rezultatai_daugiamand_apygardose/partijos_pirmumo_balsai{list_id}.html"
+        try:
+            html = fetch_page(results_dir, url)
+        except Exception:
+            preference_pages_missing.append(url)
+            continue
+        for row in parse_preference_page(html, url):
+            entry = votes.setdefault(row["vrkCandidateId"], {})
+            entry["porinkiminisNumerisSarase"] = row["porinkiminisNumerisSarase"]
+            entry["pirmumoBalsai"] = row["pirmumoBalsai"]
+            if row["reitingoBalai"] is not None:
+                entry["reitingoBalai"] = row["reitingoBalai"]
+            entry["pirmumoBalsuSaltinis"] = url
+
+    unresolved_rows: list[dict[str, Any]] = []
+    for record in winners:
+        field = [
+            entry
+            for entry in entries
+            if entry.get("vienmandateCandidacy")
+            and (
+                record["constituencyNumber"] is None
+                or (entry.get("vienmandateCandidacy") or {}).get("apygardosNumeris")
+                == record["constituencyNumber"]
+            )
+        ]
+        # The single-constituency by-elections' sitemaps carry no per-entry
+        # constituency block at all (2015 Žirmūnai, Varėna-Eišiškės); the
+        # whole sitemap is that one constituency's field.
+        if not field:
+            field = entries
+        for round_info in record.get("rounds", []):
+            for row in round_info["rows"]:
+                vrk_id = row.get("vrkCandidateId")
+                if vrk_id is None:
+                    hit = resolve_name(row["name"], field)
+                    vrk_id = hit.get("vrkCandidateId") if hit else None
+                if not vrk_id:
+                    unresolved_rows.append(
+                        {
+                            "name": row["name"],
+                            "constituency": record["constituencyLabel"],
+                            "sourceUrl": round_info["sourceUrl"],
+                        }
+                    )
+                    continue
+                votes.setdefault(vrk_id, {}).setdefault("vienmandate", []).append(
+                    {
+                        "turas": round_info["round"],
+                        "balsadezese": row["votesPrecinct"],
+                        "pastu": row["votesPostal"],
+                        "isViso": row["votes"],
+                        "procentai": row["percentValid"],
+                        "vieta": row["vieta"],
+                        "saltinis": round_info["sourceUrl"],
+                    }
+                )
+
+    in_sitemap = {entry["vrkCandidateId"] for entry in entries if entry.get("vrkCandidateId")}
+    stats = {
+        "preferencePages": len(list_ids) - len(preference_pages_missing),
+        "preferencePagesMissing": preference_pages_missing,
+        "candidatesWithVotes": len(votes),
+        "votesNotInSitemap": len(set(votes) - in_sitemap),
+        "voteRowsUnresolved": unresolved_rows,
+    }
+    return votes, stats
 
 
 # ---------------------------------------------------------------------------
@@ -505,7 +679,8 @@ def parse_municipality_results_page(html: str, url: str) -> dict[str, Any]:
 
 
 def parse_list_ranking_page(html: str, url: str) -> list[dict[str, Any]]:
-    """Post-preference ranking rows: rank, anketa id, name, mayor-elect marker."""
+    """Post-preference ranking rows: rank, anketa id, name, mayor-elect marker,
+    and the preference votes the ranking was computed from (issue #99)."""
     soup = BeautifulSoup(html, "lxml")
     rows: list[dict[str, Any]] = []
     for anchor in soup.find_all("a", href=True):
@@ -519,11 +694,13 @@ def parse_list_ranking_page(html: str, url: str) -> list[dict[str, Any]]:
         rank_text = normalize_space(cells[0].get_text(" ", strip=True)) if cells else ""
         # rank | name (+ mayor-elect marker) | pre-election position | preference votes
         pre_text = normalize_space(cells[2].get_text(" ", strip=True)) if len(cells) > 2 else ""
+        votes_text = normalize_space(cells[3].get_text(" ", strip=True)) if len(cells) > 3 else ""
         name_cell_text = normalize_space(anchor.parent.get_text(" ", strip=True)) if anchor.parent else ""
         rows.append(
             {
                 "rank": int(rank_text) if rank_text.isdigit() else None,
                 "preElectionPosition": int(pre_text) if pre_text.isdigit() else None,
+                "preferenceVotes": _int_cell(votes_text),
                 "vrkCandidateId": match.group(1),
                 "name": normalize_space(anchor.get_text(" ", strip=True)),
                 "mayorElect": MAYOR_ELECT_MARKER in name_cell_text,
@@ -635,6 +812,9 @@ def municipal_winners(
                     "rankedCandidates": len(ranking),
                     "electedIds": [row["vrkCandidateId"] for row in elected_rows],
                     "electedShort": max(0, mandates - len(elected_rows)),
+                    # Every ranked candidate's row, winners and losers alike —
+                    # the preference votes issue #99 joins onto the records.
+                    "rankingRows": ranking,
                 }
             )
             record["council"].extend(
@@ -740,6 +920,7 @@ def build_seimo_constituency_results(
     constituency's candidates."""
     entries = load_sitemap_entries(sitemap_path)
     winners = seimo_constituency_winners(results_dir, tree)
+    votes, vote_stats = collect_seimo_votes(results_dir, tree, entries, winners)
     elected: dict[str, dict[str, Any]] = {}
     unresolved: list[dict[str, Any]] = []
     for record in winners:
@@ -774,9 +955,21 @@ def build_seimo_constituency_results(
         "unresolved": len(unresolved),
         "decidedInRoundTwo": sum(1 for record in winners if record["round"] == 2),
         "byRunoffPlurality": sum(1 for record in winners if record["method"] == "runoff-plurality"),
+        "candidatesWithVotes": vote_stats["candidatesWithVotes"],
+        "voteRowsUnresolved": len(vote_stats["voteRowsUnresolved"]),
     }
     sources = [record["sourceUrl"] for record in winners if record["sourceUrl"]]
-    write_results(output_path, election_id, elected, stats, sources, {"unresolved": unresolved, "constituencies": winners})
+    details = {
+        "unresolved": unresolved,
+        # The per-candidate rows live under `votes`; repeating them inside
+        # every constituency record would double the file.
+        "constituencies": [
+            {key: value for key, value in record.items() if key != "rounds"} for record in winners
+        ],
+        "votes": votes,
+        "voteRowsUnresolved": vote_stats["voteRowsUnresolved"],
+    }
+    write_results(output_path, election_id, elected, stats, sources, details)
     return output_path, stats
 
 
@@ -810,6 +1003,7 @@ def build_seimo_members_results(
         )
     # Cross-check against the constituency pages.
     winners = seimo_constituency_winners(results_dir, tree)
+    votes, vote_stats = collect_seimo_votes(results_dir, tree, entries, winners)
     agree = disagree = unresolved = 0
     disagreements: list[dict[str, Any]] = []
     for record in winners:
@@ -839,8 +1033,24 @@ def build_seimo_members_results(
         "constituencyWinnersAgree": agree,
         "constituencyWinnersDisagree": disagree,
         "constituencyWinnersUnresolved": unresolved,
+        "preferencePages": vote_stats["preferencePages"],
+        "preferencePagesMissing": len(vote_stats["preferencePagesMissing"]),
+        "candidatesWithVotes": vote_stats["candidatesWithVotes"],
+        "voteRowsUnresolved": len(vote_stats["voteRowsUnresolved"]),
     }
-    write_results(output_path, election_id, elected, stats, [url], {"notInSitemap": not_in_sitemap, "disagreements": disagreements, "constituencies": winners})
+    details = {
+        "notInSitemap": not_in_sitemap,
+        "disagreements": disagreements,
+        # The per-candidate rows live under `votes`; repeating them inside
+        # every constituency record would double the file.
+        "constituencies": [
+            {key: value for key, value in record.items() if key != "rounds"} for record in winners
+        ],
+        "votes": votes,
+        "voteRowsUnresolved": vote_stats["voteRowsUnresolved"],
+        "preferencePagesMissing": vote_stats["preferencePagesMissing"],
+    }
+    write_results(output_path, election_id, elected, stats, [url], details)
     return output_path, stats
 
 
@@ -928,6 +1138,8 @@ def build_municipal_results(
     has_roles = any(entry.get("roles") for entry in entries)
     walked = municipal_winners(results_dir, tree, composition_tree=composition_tree)
     elected: dict[str, dict[str, Any]] = {}
+    votes: dict[str, dict[str, Any]] = {}
+    vote_rows_unresolved: list[dict[str, Any]] = []
     per_municipality: list[dict[str, Any]] = []
     unresolved_mayors: list[dict[str, Any]] = []
     council_not_in_sitemap: list[dict[str, Any]] = []
@@ -1011,6 +1223,39 @@ def build_municipal_results(
             if annulment and annulment.get("scope") == "all":
                 entry["annulled"] = annulment["decision"]
             elected[vrk_id] = entry
+        # Preference votes for the whole field, winners and losers alike
+        # (issue #99): every ranking row carries an anketa id, so the join is
+        # by id; a dual mayor-and-council candidate's ranking id can be their
+        # *other* VRK id, resolved the same way the council seats are.
+        for list_info in muni["lists"]:
+            for row in list_info.get("rankingRows", []):
+                vrk_id = row["vrkCandidateId"]
+                if vrk_id not in by_id:
+                    same_list = [
+                        entry for entry in council_candidates
+                        if normalize_person_name((entry.get("councilCandidacy") or {}).get("partyList") or "")
+                        == normalize_person_name(list_info["listName"])
+                    ]
+                    same_position = [
+                        entry for entry in same_list
+                        if (entry.get("councilCandidacy") or {}).get("listPosition") == row.get("preElectionPosition")
+                    ]
+                    hit = (
+                        resolve_name(row["name"], same_position)
+                        or resolve_name(row["name"], same_list)
+                        or resolve_name(row["name"], council_candidates)
+                    )
+                    if hit is None or not hit.get("vrkCandidateId"):
+                        vote_rows_unresolved.append(
+                            {"municipality": muni["label"], "listName": list_info["listName"], **{k: row[k] for k in ("name", "rank", "vrkCandidateId")}}
+                        )
+                        continue
+                    vrk_id = hit["vrkCandidateId"]
+                votes[vrk_id] = {
+                    "porinkiminisNumerisSarase": row["rank"],
+                    "pirmumoBalsai": row.get("preferenceVotes"),
+                    "pirmumoBalsuSaltinis": list_info["rankingUrl"],
+                }
         derived_total = len(council_ids) + (1 if mayor_id else 0)
         # The mayor's seat is on top of the list mandates only where a mayor
         # was elected at all — the page then carries a mayoral field. 2011
@@ -1078,6 +1323,8 @@ def build_municipal_results(
         "derivedNotInComposition": composition_missing_total,
         "seats": count_stats(elected),
         "annulledWinners": sum(1 for e in elected.values() if e.get("annulled")),
+        "candidatesWithVotes": len(votes),
+        "voteRowsUnresolved": len(vote_rows_unresolved),
     }
     details = {
         "annulments": annulments,
@@ -1085,6 +1332,8 @@ def build_municipal_results(
         "unresolvedMayors": unresolved_mayors,
         "councilNotInSitemap": council_not_in_sitemap,
         "seatCountMismatches": seat_mismatches,
+        "votes": votes,
+        "voteRowsUnresolved": vote_rows_unresolved,
     }
     sources = [muni["sourceUrl"] for muni in walked["municipalities"]]
     write_results(output_path, election_id, elected, stats, sources, details)

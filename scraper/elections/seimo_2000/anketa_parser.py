@@ -696,7 +696,7 @@ def parse_anketa_sample(
     }
 
     output_path = output_root / f"{candidate_id}-{ELECTION_ID}.json"
-    write_candidate_record(output_path, output_payload)
+    write_candidate_record(output_path, output_payload, source_path=page_path)
 
     answered = sum(1 for q in parsed["questions"] if q["answer"]) + sum(1 for f in parsed["fields"] if f["items"])
     stats = {

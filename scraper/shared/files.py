@@ -8,6 +8,8 @@ import unicodedata
 from pathlib import Path
 from typing import Any
 
+from scraper.shared.provenance import build_provenance
+
 
 def ensure_parent(path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -96,7 +98,18 @@ def externalize_record_photo(record: Any, output_path: Path) -> None:
         profilis["nuotrauka"] = relative_path
 
 
-def write_candidate_record(output_path: Path, record: Any) -> None:
+def write_candidate_record(
+    output_path: Path,
+    record: Any,
+    source_path: Path | None = None,
+) -> None:
+    # `source_path` is the record's primary page as retained on disk — the one
+    # at source.candidateSourceUrl — and stamps the `provenance` block from it
+    # (scraper/shared/provenance.py, issue #89). Every parser passes it; the
+    # parameter stays optional so a caller without a retained page (none today)
+    # writes an honest record with no block rather than a fabricated one.
+    if isinstance(record, dict) and source_path is not None and source_path.is_file():
+        record["provenance"] = build_provenance(source_path)
     # The photo sidecar is written first on purpose: resume is keyed on the
     # record file's existence, so the record has to be the last thing to land —
     # a crash in between leaves an orphan photo a re-run overwrites, never a

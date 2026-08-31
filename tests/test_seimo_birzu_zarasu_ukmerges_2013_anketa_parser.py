@@ -110,6 +110,14 @@ class SeimoBirzuZarasuUkmerges2013AnketaParserTests(unittest.TestCase):
                 },
                 "daugiamandate": None,
                 "isrinktas": False,
+                "vienmandatesBalsai": {
+                    "balsadezese": 764,
+                    "pastu": 317,
+                    "isViso": 1081,
+                    "procentai": 8.91,
+                    "vieta": 5,
+                    "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7433aktyvumasdesc1turas.html",
+                },
             },
         )
 

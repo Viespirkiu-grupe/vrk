@@ -37,7 +37,10 @@ The comparison is structural, not textual: both records are walked in parallel
 and every differing JSON path is classified `added` / `removed` / `changed` /
 `type` / `length`, with list indices collapsed to `[]`. That is what turns "10
 records differ" into "77 records gained `rawData.profile.photoMeta`" -- the
-histogram is the finding, not the record count.
+histogram is the finding, not the record count. The `provenance` block is not
+diffed -- its run-stamps (`parsedAt`, `parserCommit`) differ between any two
+honest runs -- but its `sourceSha256` is read, so a drifted record is
+attributed to "the page changed" or "the parser changed" (issue #89).
 
 `--apply` copies the freshly parsed records over `data/<election-id>/`, along
 with any `photos/` sidecars the parse externalized. It requires `--full`,
@@ -222,9 +225,18 @@ def diff_paths(stored: Any, fresh: Any, prefix: str = "") -> list[tuple[str, str
 def compare(
     fresh_root: Path,
     stored_root: Path,
-) -> tuple[int, int, int, Counter, list[str]]:
-    """Diff every freshly parsed record against its stored counterpart."""
+) -> tuple[int, int, int, Counter, list[str], int]:
+    """Diff every freshly parsed record against its stored counterpart.
+
+    The `provenance` block is excluded from the diff: `parsedAt` and
+    `parserCommit` describe the parse *run* and differ between two honest runs
+    of the same code, and `fetchedAt` follows file mtimes a git checkout of the
+    fixture trees rewrites. It is read instead of compared — a differing record
+    whose stored and fresh `sourceSha256` disagree drifted because *the page
+    changed*, not the parser, and the two causes are counted apart (issue #89).
+    """
     compared = differing = missing = 0
+    source_changed = 0
     histogram: Counter = Counter()
     differing_records: list[str] = []
 
@@ -234,25 +246,34 @@ def compare(
             missing += 1
             continue
         compared += 1
-        differences = diff_paths(
-            json.loads(stored_path.read_text(encoding="utf-8")),
-            json.loads(fresh_path.read_text(encoding="utf-8")),
-        )
+        stored = json.loads(stored_path.read_text(encoding="utf-8"))
+        fresh = json.loads(fresh_path.read_text(encoding="utf-8"))
+        stored_provenance = stored.pop("provenance", None) if isinstance(stored, dict) else None
+        fresh_provenance = fresh.pop("provenance", None) if isinstance(fresh, dict) else None
+        differences = diff_paths(stored, fresh)
         if differences:
             differing += 1
             differing_records.append(fresh_path.name)
             histogram.update(differences)
+            if (
+                isinstance(stored_provenance, dict)
+                and isinstance(fresh_provenance, dict)
+                and stored_provenance.get("sourceSha256")
+                and fresh_provenance.get("sourceSha256")
+                and stored_provenance["sourceSha256"] != fresh_provenance["sourceSha256"]
+            ):
+                source_changed += 1
 
-    return compared, differing, missing, histogram, differing_records
+    return compared, differing, missing, histogram, differing_records, source_changed
 
 
 def apply_records(fresh_root: Path, stored_root: Path, record_names: list[str]) -> tuple[int, int]:
     """Copy the records that differ, and any new photo sidecars, into `data/`.
 
-    Only the differing records are written. An election whose re-parse comes
-    back byte-identical is left untouched down to its mtimes, which is what
-    lets "when was this record last written" stay a usable provenance signal
-    until issue #89 puts the parser version inside the record.
+    Only the differing records are written -- so a record rewritten here gets
+    the fresh parse's `provenance` (its content really is this run's product),
+    while an unchanged record keeps the block saying when its content was
+    actually produced.
     """
     stored_root.mkdir(parents=True, exist_ok=True)
     records = 0
@@ -360,7 +381,9 @@ def run_election(
     for error in errors:
         print(f"{election_id}: parse failed\n{error}", file=sys.stderr)
 
-    compared, differing, unknown, histogram, differing_records = compare(fresh_root, stored_root)
+    compared, differing, unknown, histogram, differing_records, source_changed = compare(
+        fresh_root, stored_root
+    )
     stored_total = stored_record_count(stored_root)
 
     kind = "retained" if sources[0][0].parent.name == "samples-full" else "fixtures"
@@ -369,6 +392,7 @@ def run_election(
     print(
         f"{election_id}: {compared} of {stored_total} stored records re-parsed"
         f" from {kind}, {differing} differ"
+        + (f" ({source_changed} from changed source HTML)" if source_changed else "")
         + (f", {unknown} not in data/" if unknown else "")
         + (f", {len(anomalies)} anomalies" if anomalies else "")
     )

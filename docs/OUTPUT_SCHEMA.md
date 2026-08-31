@@ -30,10 +30,41 @@ Each record contains:
 - `source`
 - `rawData`
 - `normalized`
+- `provenance`
 
 `source` currently includes:
 
 - `candidateSourceUrl`
+
+### `provenance`
+
+What the record was made from, when, and by what (issue #89) — stamped by
+`write_candidate_record` on every parse, and backfilled onto the pre-existing
+corpus by `scripts/backfill_provenance.py`:
+
+- `fetchedAt` — when the record's primary page (the one at
+  `source.candidateSourceUrl`) was fetched: the retained file's own
+  modification time, which the fetchers set on arrival and nothing rewrites.
+  For a record parsed from the tracked fixture tree (whose mtimes are git
+  checkout times), the election sitemap's `generatedAt` — the scrape run's
+  timestamp — stands in.
+- `parsedAt` — when this record's content was produced. The backfill read it
+  off the record file's mtime; every later write stamps the parse's own
+  clock.
+- `parserCommit` — `git rev-parse --short HEAD` where the parsers live at
+  parse time, `-dirty` appended when the checkout had uncommitted changes.
+  `null` on records written before provenance existed: which commit produced
+  them is genuinely unknown, and stays unknown until a re-parse rewrites the
+  record.
+- `sourceSha256` — the primary page's bytes as retained, hashed the same way
+  `photoMeta.sha256` fingerprints portraits. `scripts/reparse_diff.py` reads
+  it to split "the parser changed" from "the page changed", and excludes the
+  block from its diff otherwise (the run-stamps differ between any two honest
+  runs).
+- `schemaVersion` — `1`.
+
+About 0.4 % of records have no retained primary page anywhere; they carry no
+`provenance` block rather than a fabricated one.
 
 ## `rawData`
 
@@ -356,6 +387,35 @@ lands in `kandidatavimas`:
 Elections without a listing-derived `kandidatavimas` block (the 2014
 presidential election, the 2015 Seimo by-elections, Telšiai) get a minimal
 one — `vrkCandidateId` plus the keys above — from the join alone.
+
+### Votes in the 2007–2015 family (issue #99)
+
+The same results trees carry every candidate's votes, not just the winners',
+and the same join writes them into `kandidatavimas` under **the pre-2005
+records' field names**, so a candidate's showing reads identically from 1996
+to 2015:
+
+- `pirmumoBalsai` + `porinkiminisNumerisSarase` (+ `reitingoBalai` where the
+  tree prints rating points) + `pirmumoBalsuSaltinis` — preference votes and
+  the post-election list position. Seimas 2008/2012 read them from the
+  per-list `partijos_pirmumo_balsai<listId>.html` pages (rows carry anketa
+  links, so the join is by VRK candidate id); the 2011/2015 municipal
+  elections from the per-list ranking pages the elected-status walk already
+  fetches. Both losers and winners carry them.
+- `vienmandatesBalsai` — the constituency round-one block
+  `{balsadezese, pastu, isViso, procentai, vieta, saltinis}` exactly as the
+  2000–2004 records shape it (`balsadezese` is the page's "apylinkėse"
+  column, `procentai` the share of valid ballots, `vieta` computed from the
+  totals); `vienmandatesBalsai2`, same shape, where the candidate stood in a
+  runoff. On the 2007–2008 pages the rows link the anketa (id join); from
+  2012 on they link re-issued row ids and resolve by name within the
+  constituency's own candidates, unresolved rows landing in the results
+  file's `voteRowsUnresolved` rather than being dropped silently.
+
+Mayoral votes (the `rezultatai_sav_kand` pages) and the 2011 self-nominated
+individuals' own list rows are not read; the 2016-on elections publish no
+results tree the records link, so their votes remain absent (issue #99
+documents the gap).
 
 ### Elected status on the 2016–2025 pages (derived from `profilis.pastaba`)
 

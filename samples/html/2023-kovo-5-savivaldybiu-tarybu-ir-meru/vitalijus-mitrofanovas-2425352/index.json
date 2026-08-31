@@ -3,8 +3,8 @@
   "candidate": {
     "candidateName": "Vitalijus MITROFANOVAS",
     "candidateId": "vitalijus-mitrofanovas-2425352",
-    "candidateNote": "",
     "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasAnketa_2023_rkndId-2425352.html",
+    "candidateNote": "",
     "vrkCandidateId": "2425352",
     "municipality": {
       "id": "21944",
@@ -31,49 +31,49 @@
       "elected": true
     }
   },
-  "anketaPath": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/anketa.html",
+  "anketaPath": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/anketa.html",
   "tabCount": 6,
   "tabSamples": [
     {
       "label": "Anketa",
       "slug": "anketa",
       "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasAnketa_2023_rkndId-2425352.html",
-      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/anketa.html",
+      "path": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/anketa.html",
       "fetched": false
     },
     {
       "label": "Biografija",
       "slug": "biografija",
       "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasBiografija_rkndId-2425352.html",
-      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/biografija.html",
+      "path": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/biografija.html",
       "fetched": true
     },
     {
       "label": "Turto ir pajamų deklaracijos",
       "slug": "turto-ir-pajamu-deklaracijos",
       "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasTurtoPajDekl_rkndId-2425352.html",
-      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/turto-ir-pajamu-deklaracijos.html",
+      "path": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/turto-ir-pajamu-deklaracijos.html",
       "fetched": true
     },
     {
       "label": "Privačių interesų deklaracijos",
       "slug": "privaciu-interesu-deklaracijos",
       "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasPrivInterDekl_rkndId-2425352.html",
-      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/privaciu-interesu-deklaracijos.html",
+      "path": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/privaciu-interesu-deklaracijos.html",
       "fetched": true
     },
     {
       "label": "Politinės kampanijos dalyvio duomenys",
       "slug": "politines-kampanijos-dalyvio-duomenys",
       "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/atstovaujamasis_pkdId-17712.html",
-      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/politines-kampanijos-dalyvio-duomenys.html",
+      "path": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/politines-kampanijos-dalyvio-duomenys.html",
       "fetched": true
     },
     {
       "label": "Kita",
       "slug": "kita",
       "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1304/rnk1630/kandidatai/savKandidatasKt_rkndId-2425352.html",
-      "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/kita.html",
+      "path": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/kita.html",
       "fetched": true
     }
   ],
@@ -83,18 +83,50 @@
       "campaignKey": "atstovaujamasis-pkdid-17712",
       "campaignLabel": "",
       "campaignUrl": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/atstovaujamasis_pkdId-17712.html",
-      "campaignDir": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/campaigns/atstovaujamasis-pkdid-17712",
+      "campaignDir": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/campaigns/atstovaujamasis-pkdid-17712",
       "tabCount": 1,
       "tabSamples": [
         {
           "label": "Aukų ir aukotojų sąrašas",
           "slug": "auku-ir-aukotoju-sarasas",
           "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasAukotojai_pkdId-17712.html",
-          "path": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/campaigns/atstovaujamasis-pkdid-17712/auku-ir-aukotoju-sarasas.html",
+          "path": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/campaigns/atstovaujamasis-pkdid-17712/auku-ir-aukotoju-sarasas.html",
           "fetched": true
+        },
+        {
+          "label": "Iždininkas",
+          "slug": "izdininkas",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasIzdininkas_pkdId-17712.html",
+          "path": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/campaigns/atstovaujamasis-pkdid-17712/izdininkas.html",
+          "fetched": true,
+          "derived": true
+        },
+        {
+          "label": "Auditorius",
+          "slug": "auditorius",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasAuditorius_pkdId-17712.html",
+          "path": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/campaigns/atstovaujamasis-pkdid-17712/auditorius.html",
+          "fetched": true,
+          "derived": true
+        },
+        {
+          "label": "Finansavimo ataskaitos",
+          "slug": "finansavimo-ataskaitos",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasFinansavimas_pkdId-17712.html",
+          "path": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/campaigns/atstovaujamasis-pkdid-17712/finansavimo-ataskaitos.html",
+          "fetched": true,
+          "derived": true
+        },
+        {
+          "label": "Sutartys",
+          "slug": "sutartys",
+          "url": "https://www.vrk.lt/statiniai/puslapiai/politKamp/1484/dalyviai/savarankiskasSutartys_pkdId-17712.html",
+          "path": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/campaigns/atstovaujamasis-pkdid-17712/sutartys.html",
+          "fetched": true,
+          "derived": true
         }
       ],
-      "indexPath": "samples/html/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/campaigns/atstovaujamasis-pkdid-17712/index.json"
+      "indexPath": "/Volumes/Disk 1/IT/scraping/vrk/samples-full/2023-kovo-5-savivaldybiu-tarybu-ir-meru/vitalijus-mitrofanovas-2425352/campaigns/atstovaujamasis-pkdid-17712/index.json"
     }
   ],
   "anomalies": []

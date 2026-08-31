@@ -10,6 +10,11 @@ from bs4 import BeautifulSoup
 
 from scraper.elections.seimo_zirmunu_2015.sitemap import ELECTION_ID, resolve_candidate_url
 from scraper.shared.anomalies import build_anomaly_event
+from scraper.shared.campaign_tabs import (
+    derive_subtab_links,
+    is_absent_derived_tab,
+    merge_campaign_tab_links,
+)
 from scraper.shared.files import slugify
 from scraper.shared.http import fetch_text
 
@@ -197,8 +202,8 @@ def _fetch_campaign_tabs(
             "indexPath": "",
         }
 
-    tab_links = _extract_campaign_tab_links(root_html)
-    if not tab_links and REPRESENTED_PARTICIPANT_MARKER not in root_html:
+    extracted_links = _extract_campaign_tab_links(root_html)
+    if not extracted_links and REPRESENTED_PARTICIPANT_MARKER not in root_html:
         anomalies.append(
             build_anomaly_event(
                 event_type="CampaignTabLinkExtractionEmpty",
@@ -214,8 +219,17 @@ def _fetch_campaign_tabs(
             )
         )
 
+    # An atstovaujamasis participant's root renders no tab list at all in this
+    # family, while its five Dalyvio<id>* sub-pages exist (measured 2026-08-31)
+    # — so the sub-tab URLs are derived from the participant id and the
+    # rendered list only supplies labels (issue #99). A derived URL answering
+    # 404 is VRK not publishing that sub-page, recorded rather than treated as
+    # a download failure.
+    tab_links = merge_campaign_tab_links(extracted_links, derive_subtab_links(campaign_url))
+
     seen_file_slugs: dict[str, int] = {}
     saved_tabs: list[dict[str, Any]] = []
+    absent_tab_slugs: list[str] = []
 
     for tab in tab_links:
         file_slug = _dedupe_filename_slug(tab["slug"], seen_file_slugs)
@@ -228,6 +242,9 @@ def _fetch_campaign_tabs(
             try:
                 tab_html = fetch_text(tab["url"])
             except Exception as exc:
+                if is_absent_derived_tab(tab, exc):
+                    absent_tab_slugs.append(file_slug)
+                    continue
                 anomalies.append(
                     build_anomaly_event(
                         event_type="CampaignTabDownloadFailed",
@@ -256,21 +273,26 @@ def _fetch_campaign_tabs(
                 "url": tab["url"],
                 "path": str(file_path),
                 "fetched": fetched,
+                **({"derived": True} if tab.get("derived") else {}),
             }
         )
 
-    if not tab_links:
+    if not extracted_links:
         root_path = campaign_dir / "root.html"
         root_path.write_text(root_html, encoding="utf-8")
 
     index_path = campaign_dir / "index.json"
+    # tabCount keeps its retained meaning — links the page itself listed — so
+    # tabCount < len(tabSamples) is exactly the participant-type gap the
+    # derivation closed.
     index_payload = {
         "campaignKey": campaign_key,
         "campaignLabel": campaign_link.get("label", ""),
         "campaignUrl": campaign_url,
-        "tabCount": len(tab_links),
+        "tabCount": len(extracted_links),
         "tabSamples": saved_tabs,
-        "campaignRootPath": str(campaign_dir / "root.html") if not tab_links else "",
+        "campaignRootPath": str(campaign_dir / "root.html") if not extracted_links else "",
+        **({"derivedTabsAbsent": absent_tab_slugs} if absent_tab_slugs else {}),
     }
     index_path.write_text(
         json.dumps(index_payload, ensure_ascii=False, indent=2) + "\n",
@@ -282,7 +304,7 @@ def _fetch_campaign_tabs(
         "campaignLabel": campaign_link.get("label", ""),
         "campaignUrl": campaign_url,
         "campaignDir": str(campaign_dir),
-        "tabCount": len(tab_links),
+        "tabCount": len(extracted_links),
         "tabSamples": saved_tabs,
         "indexPath": str(index_path),
     }

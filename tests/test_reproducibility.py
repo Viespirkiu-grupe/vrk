@@ -98,8 +98,20 @@ def _parse_into(output_root: Path) -> list[Path]:
     return sorted(output_root.rglob("*.json"))
 
 
+def _load_without_run_stamps(path: Path) -> dict:
+    """The record with `provenance.parsedAt` dropped — the one field two
+    honest parses of the same bytes may disagree on (issue #89)."""
+    record = json.loads(path.read_text(encoding="utf-8"))
+    if isinstance(record.get("provenance"), dict):
+        record["provenance"].pop("parsedAt", None)
+    return record
+
+
 class ReparseByteIdentity(unittest.TestCase):
-    def test_two_parses_of_the_fixtures_are_byte_identical(self):
+    def test_two_parses_of_the_fixtures_are_identical(self):
+        # Identical up to `provenance.parsedAt`, which stamps the parse run's
+        # own wall clock; everything else — the parse content, the source
+        # hash, the fetch time, the parser commit — must reproduce exactly.
         with tempfile.TemporaryDirectory() as tmp:
             first = _parse_into(Path(tmp) / "a")
             second = _parse_into(Path(tmp) / "b")
@@ -110,19 +122,30 @@ class ReparseByteIdentity(unittest.TestCase):
             )
             for left, right in zip(first, second):
                 self.assertEqual(
-                    left.read_bytes(), right.read_bytes(), f"{left.name} is not deterministic"
+                    _load_without_run_stamps(left),
+                    _load_without_run_stamps(right),
+                    f"{left.name} is not deterministic",
                 )
 
     def test_reparse_matches_the_corpus_records(self):
+        # The whole `provenance` block is excluded here, exactly as the
+        # re-parse gate excludes it: its run-stamps differ between honest
+        # runs, and a fixture tree's file mtimes (its `fetchedAt`) follow the
+        # git checkout rather than the fetch. The claim under test is that
+        # the parse *content* reproduces the corpus byte for byte.
         corpus_root = REPO_ROOT / "data" / ELECTION_ID
         require(corpus_root)
         with tempfile.TemporaryDirectory() as tmp:
             for produced in _parse_into(Path(tmp)):
                 stored = corpus_root / produced.name
+                produced_record = json.loads(produced.read_text(encoding="utf-8"))
+                stored_record = json.loads(stored.read_text(encoding="utf-8"))
+                produced_record.pop("provenance", None)
+                stored_record.pop("provenance", None)
                 self.assertEqual(
-                    produced.read_bytes(),
-                    stored.read_bytes(),
-                    f"{produced.name} re-parses to different bytes than the corpus holds",
+                    json.dumps(produced_record, ensure_ascii=False, indent=2),
+                    json.dumps(stored_record, ensure_ascii=False, indent=2),
+                    f"{produced.name} re-parses to different content than the corpus holds",
                 )
 
 
