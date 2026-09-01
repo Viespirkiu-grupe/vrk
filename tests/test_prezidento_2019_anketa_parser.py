@@ -10,6 +10,8 @@ from scraper.elections.prezidento_2019.anketa_parser import (
     parse_anketa_sample,
 )
 
+from local_data import Fixture
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SAMPLES_ROOT = REPO_ROOT / "samples" / "html" / "2019-prezidento"
@@ -88,10 +90,13 @@ class AnketaNestedTableTests(unittest.TestCase):
 
 
 class Prezidento2019AnketaParserTests(unittest.TestCase):
-    def setUp(self) -> None:
-        self.nauseda = _parse("gitanas-nauseda")
-        self.andriukaitis = _parse("vytenis-povilas-andriukaitis")
-        self.simonyte = _parse("ingrida-simonyte")
+    # Nausėda's page is the one a clone carries; the other two embed a
+    # multi-megabyte portrait (test_prezidento_2019_sample_allowlist.py), so
+    # the tests that read them run here and skip on CI. Each is parsed the
+    # first time a test reads it, so that the skip is theirs alone.
+    nauseda = Fixture(_parse, "gitanas-nauseda")
+    andriukaitis = Fixture(_parse, "vytenis-povilas-andriukaitis")
+    simonyte = Fixture(_parse, "ingrida-simonyte")
 
     def test_top_level_fields(self) -> None:
         self.assertEqual(self.nauseda["electionId"], "2019-prezidento")
@@ -121,9 +126,13 @@ class Prezidento2019AnketaParserTests(unittest.TestCase):
     def test_status_note_captured_for_winner_and_losers(self) -> None:
         # The single-cell status row is captured for every candidate, not only
         # the elected president.
-        self.assertEqual(self.nauseda["normalized"]["profilis"]["pastaba"], "Išrinktas II ture")
-        self.assertEqual(self.simonyte["normalized"]["profilis"]["pastaba"], "Dalyvavo II ture")
-        self.assertEqual(self.andriukaitis["normalized"]["profilis"]["pastaba"], "Dalyvavo I ture")
+        for name, note in (
+            ("nauseda", "Išrinktas II ture"),
+            ("simonyte", "Dalyvavo II ture"),
+            ("andriukaitis", "Dalyvavo I ture"),
+        ):
+            with self.subTest(candidate=name):
+                self.assertEqual(getattr(self, name)["normalized"]["profilis"]["pastaba"], note)
 
     def test_anketa_core_answers(self) -> None:
         anketa = self.nauseda["normalized"]["anketa"]
@@ -193,7 +202,9 @@ class Prezidento2019AnketaParserTests(unittest.TestCase):
         self.assertEqual(turtas["deklaracijos-metai"], 2017)
         self.assertEqual(turtas["deklaracijos-forma"], "GPM308")
         self.assertEqual(turtas["deklaracijos-apimtis"], "gyventojo-seimos")
-        # Comma-decimal amounts parse correctly (EU Commissioner, taxed abroad).
+
+    def test_comma_decimal_income_parses_to_a_fraction(self) -> None:
+        # "32,15 EUR" on the page: an EU Commissioner, taxed abroad.
         self.assertEqual(
             self.andriukaitis["normalized"]["turto-ir-pajamu-deklaracijos"]["gautos-pajamos"],
             32.15,

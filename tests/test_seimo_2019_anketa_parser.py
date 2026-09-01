@@ -5,6 +5,8 @@ from pathlib import Path
 
 from scraper.elections.seimo_2019.anketa_parser import parse_anketa_sample
 
+from local_data import Fixture
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SAMPLES_ROOT = REPO_ROOT / "samples" / "html" / "2019-rugsejo-8-seimo"
@@ -21,13 +23,17 @@ def _parse(candidate_id: str) -> dict:
 
 
 class Seimo2019AnketaParserTests(unittest.TestCase):
-    def setUp(self) -> None:
-        self.jonaitis = _parse("liudas-jonaitis")
-        self.kuzmickiene = _parse("paule-kuzmickiene")
-        self.janutiene = _parse("ruta-janutiene")
-        self.bilkstyte = _parse("ruta-bilkstyte")
-        self.paluckas = _parse("gintautas-paluckas")
-        self.juraitis = _parse("kazimieras-juraitis")
+    # Janutienė's page is the one a clone carries; the other five embed the
+    # portrait (test_seimo_2019_sample_allowlist.py). Each is parsed the first
+    # time a test reads it, so only the tests that read those five skip on CI.
+    jonaitis = Fixture(_parse, "liudas-jonaitis")
+    kuzmickiene = Fixture(_parse, "paule-kuzmickiene")
+    janutiene = Fixture(_parse, "ruta-janutiene")
+    bilkstyte = Fixture(_parse, "ruta-bilkstyte")
+    paluckas = Fixture(_parse, "gintautas-paluckas")
+    juraitis = Fixture(_parse, "kazimieras-juraitis")
+
+    EVERYONE = ("jonaitis", "kuzmickiene", "janutiene", "bilkstyte", "paluckas", "juraitis")
 
     def test_top_level_fields(self) -> None:
         self.assertEqual(self.jonaitis["electionId"], "2019-rugsejo-8-seimo")
@@ -40,18 +46,20 @@ class Seimo2019AnketaParserTests(unittest.TestCase):
         )
 
     def test_normalized_section_order(self) -> None:
-        self.assertEqual(
-            list(self.jonaitis["normalized"].keys()),
-            [
-                "profilis",
-                "anketa",
-                "biografija",
-                "turto-ir-pajamu-deklaracijos",
-                "privaciu-interesu-deklaracija",
-                "politines-kampanijos-dalyvio-duomenys",
-                "kita",
-            ],
-        )
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
+                self.assertEqual(
+                    list(getattr(self, name)["normalized"].keys()),
+                    [
+                        "profilis",
+                        "anketa",
+                        "biografija",
+                        "turto-ir-pajamu-deklaracijos",
+                        "privaciu-interesu-deklaracija",
+                        "politines-kampanijos-dalyvio-duomenys",
+                        "kita",
+                    ],
+                )
 
     def test_one_winner_per_constituency(self) -> None:
         # Three constituencies voted, so three candidates carry an elected note.
@@ -70,20 +78,22 @@ class Seimo2019AnketaParserTests(unittest.TestCase):
         # An extra nominator is rendered as a profile row with an empty label
         # cell. Kept as its own field it normalizes away, because a field
         # without a key has nowhere to go — so it is folded into the one above.
-        self.assertEqual(
-            self.janutiene["normalized"]["profilis"]["kita"]["iskele"]["reiksme"],
-            "Lietuvos valstiečių ir žaliųjų sąjunga; Lietuvos centro partija",
-        )
+        with self.subTest(candidate="janutiene"):
+            self.assertEqual(
+                self.janutiene["normalized"]["profilis"]["kita"]["iskele"]["reiksme"],
+                "Lietuvos valstiečių ir žaliųjų sąjunga; Lietuvos centro partija",
+            )
         # Single-nominator candidates are unaffected.
-        self.assertEqual(
-            self.bilkstyte["normalized"]["profilis"]["kita"]["iskele"]["reiksme"],
-            "Išsikėlė pati",
-        )
+        with self.subTest(candidate="bilkstyte"):
+            self.assertEqual(
+                self.bilkstyte["normalized"]["profilis"]["kita"]["iskele"]["reiksme"],
+                "Išsikėlė pati",
+            )
 
     def test_declarations(self) -> None:
-        for payload in (self.jonaitis, self.kuzmickiene, self.janutiene, self.bilkstyte):
-            with self.subTest(candidate=payload["candidateId"]):
-                answers = payload["normalized"]["anketa"]["pareiskimai"]
+        for name in ("jonaitis", "kuzmickiene", "janutiene", "bilkstyte"):
+            with self.subTest(candidate=name):
+                answers = getattr(self, name)["normalized"]["anketa"]["pareiskimai"]
                 self.assertIsNone(answers["teisiniai-argumentai"])
                 self.assertTrue(
                     all(v is not None for k, v in answers.items() if k != "teisiniai-argumentai")
@@ -94,29 +104,31 @@ class Seimo2019AnketaParserTests(unittest.TestCase):
         # table reached rawData from the first run and was normalized nowhere
         # until issue #86, so the corpus could say they had been convicted and
         # nothing about what for.
-        self.assertEqual(
-            self.paluckas["normalized"]["anketa"]["teistumo-detales"],
-            {
-                "irasai": [
-                    {
-                        "nuosprendzio-data": "2012-04-03",
-                        "nuosprendzio-valstybe": "Lietuva",
-                        "nuosprendzio-institucija": "Lietuvos Aukščiausiasis Teismas",
-                        "nusikalstama-veika": "Piktnaudžiavimas tarnybine padėtimi",
-                    }
-                ]
-            },
-        )
-        self.assertEqual(
-            self.juraitis["normalized"]["anketa"]["teistumo-detales"]["irasai"][0][
-                "nusikalstama-veika"
-            ],
-            "Oficialaus dokumento suklastojimas ir panaudojimas",
-        )
+        with self.subTest(candidate="paluckas"):
+            self.assertEqual(
+                self.paluckas["normalized"]["anketa"]["teistumo-detales"],
+                {
+                    "irasai": [
+                        {
+                            "nuosprendzio-data": "2012-04-03",
+                            "nuosprendzio-valstybe": "Lietuva",
+                            "nuosprendzio-institucija": "Lietuvos Aukščiausiasis Teismas",
+                            "nusikalstama-veika": "Piktnaudžiavimas tarnybine padėtimi",
+                        }
+                    ]
+                },
+            )
+        with self.subTest(candidate="juraitis"):
+            self.assertEqual(
+                self.juraitis["normalized"]["anketa"]["teistumo-detales"]["irasai"][0][
+                    "nusikalstama-veika"
+                ],
+                "Oficialaus dokumento suklastojimas ir panaudojimas",
+            )
         # Everyone else carries the key, empty.
-        for payload in (self.jonaitis, self.kuzmickiene, self.janutiene, self.bilkstyte):
-            with self.subTest(candidate=payload["candidateId"]):
-                anketa = payload["normalized"]["anketa"]
+        for name in ("jonaitis", "kuzmickiene", "janutiene", "bilkstyte"):
+            with self.subTest(candidate=name):
+                anketa = getattr(self, name)["normalized"]["anketa"]
                 self.assertEqual(anketa["pareiskimai"]["ar-buvote-pripazintas-kaltu"], "Ne")
                 self.assertEqual(anketa["teistumo-detales"], {"irasai": []})
 

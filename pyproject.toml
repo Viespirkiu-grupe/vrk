@@ -5,3 +5,8 @@
 [tool.pytest.ini_options]
 minversion = "8.4"
 testpaths = ["tests"]
+# Count subtests in the summary at every verbosity. A loop that reads each
+# fixture inside its own subTest skips the untracked candidates one by one on
+# a clone (tests/local_data.py::Fixture); at pytest's default subtest
+# verbosity those skips are silent and the test just reads as passed.
+verbosity_subtests = 1

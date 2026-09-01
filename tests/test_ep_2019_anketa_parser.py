@@ -10,6 +10,8 @@ from scraper.elections.ep_2019.anketa_parser import (
     parse_anketa_sample,
 )
 
+from local_data import Fixture
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SAMPLES_ROOT = REPO_ROOT / "samples" / "html" / "2019-ep"
@@ -113,10 +115,16 @@ def _parse(candidate_id: str) -> dict:
 
 
 class Ep2019AnketaParserTests(unittest.TestCase):
-    def setUp(self) -> None:
-        self.daiva = _parse("daiva-adutaviciene")
-        self.petras = _parse("petras-austrevicius")
-        self.laima = _parse("laima-liucija-andrikiene")
+    # Kubilius is the one 2019 EP fixture a clone carries; the other three
+    # embed the portrait (test_ep_2019_sample_allowlist.py). Each is parsed
+    # the first time a test reads it, so the shape checks below run on CI
+    # against him and only the value pins on the other three skip there.
+    daiva = Fixture(_parse, "daiva-adutaviciene")
+    petras = Fixture(_parse, "petras-austrevicius")
+    laima = Fixture(_parse, "laima-liucija-andrikiene")
+    kubilius = Fixture(_parse, "andrius-kubilius")
+
+    EVERYONE = ("daiva", "petras", "laima", "kubilius")
 
     def test_top_level_fields(self) -> None:
         self.assertEqual(self.daiva["electionId"], "2019-ep")
@@ -127,25 +135,27 @@ class Ep2019AnketaParserTests(unittest.TestCase):
         )
 
     def test_every_candidate_carries_the_conviction_key(self) -> None:
-        for payload in (self.daiva, self.petras, self.laima):
-            with self.subTest(candidate=payload["candidateId"]):
-                anketa = payload["normalized"]["anketa"]
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
+                anketa = getattr(self, name)["normalized"]["anketa"]
                 self.assertEqual(anketa["pareiskimai"]["ar-buvote-pripazintas-kaltu"], "Ne")
                 self.assertEqual(anketa["teistumo-detales"], {"irasai": []})
 
     def test_normalized_section_order(self) -> None:
-        self.assertEqual(
-            list(self.daiva["normalized"].keys()),
-            [
-                "profilis",
-                "anketa",
-                "biografija",
-                "turto-ir-pajamu-deklaracijos",
-                "privaciu-interesu-deklaracija",
-                "politines-kampanijos-dalyvio-duomenys",
-                "kita",
-            ],
-        )
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
+                self.assertEqual(
+                    list(getattr(self, name)["normalized"].keys()),
+                    [
+                        "profilis",
+                        "anketa",
+                        "biografija",
+                        "turto-ir-pajamu-deklaracijos",
+                        "privaciu-interesu-deklaracija",
+                        "politines-kampanijos-dalyvio-duomenys",
+                        "kita",
+                    ],
+                )
 
     def test_profile_fields(self) -> None:
         profilis = self.daiva["normalized"]["profilis"]
@@ -172,21 +182,27 @@ class Ep2019AnketaParserTests(unittest.TestCase):
         self.assertEqual(anketa["uzsienio-kalbos"], ["Anglų", "Rusų"])
 
     def test_anketa_pareiskimai_keys(self) -> None:
-        pareiskimai = self.daiva["normalized"]["anketa"]["pareiskimai"]
-        self.assertEqual(
-            set(pareiskimai.keys()),
-            {
-                "ar-nebaigta-teismo-paskirta-bausme",
-                "ar-atliekate-karo-tarnyba",
-                "ar-turite-kitos-valstybes-pilietybe",
-                "ar-bendradarbiavote-su-uzsienio-tarnybomis",
-                "ar-buvote-pripazintas-kaltu",
-                "ar-veika-dekriminalizuota",
-                "ar-buvote-pripazintas-kaltu-uzsienyje",
-                "ar-buvote-pripazintas-kaltu-del-politinio-persekiojimo",
-            },
-        )
-        self.assertEqual(pareiskimai["ar-nebaigta-teismo-paskirta-bausme"], "Neturiu")
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
+                pareiskimai = getattr(self, name)["normalized"]["anketa"]["pareiskimai"]
+                self.assertEqual(
+                    set(pareiskimai.keys()),
+                    {
+                        "ar-nebaigta-teismo-paskirta-bausme",
+                        "ar-atliekate-karo-tarnyba",
+                        "ar-turite-kitos-valstybes-pilietybe",
+                        "ar-bendradarbiavote-su-uzsienio-tarnybomis",
+                        "ar-buvote-pripazintas-kaltu",
+                        "ar-veika-dekriminalizuota",
+                        "ar-buvote-pripazintas-kaltu-uzsienyje",
+                        "ar-buvote-pripazintas-kaltu-del-politinio-persekiojimo",
+                    },
+                )
+        with self.subTest(candidate="daiva"):
+            self.assertEqual(
+                self.daiva["normalized"]["anketa"]["pareiskimai"]["ar-nebaigta-teismo-paskirta-bausme"],
+                "Neturiu",
+            )
 
     def test_question_9x_answers_are_not_dropped(self) -> None:
         # EP numbers 9.1-9.5 without a trailing dot ("9.1 " not "9.1. "); the
@@ -246,9 +262,11 @@ class Ep2019AnketaParserTests(unittest.TestCase):
         self.assertEqual(first["juridinio-asmens-kodas"], "126297314")
 
     def test_privaciu_has_no_sekcija_fallback_keys(self) -> None:
-        privaciu = self.daiva["normalized"]["privaciu-interesu-deklaracija"]
-        for key in privaciu:
-            self.assertFalse(key.startswith("sekcija-"), f"Unexpected fallback key: {key!r}")
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
+                privaciu = getattr(self, name)["normalized"]["privaciu-interesu-deklaracija"]
+                for key in privaciu:
+                    self.assertFalse(key.startswith("sekcija-"), f"Unexpected fallback key: {key!r}")
 
     def test_biografija_is_free_text(self) -> None:
         biografija = self.daiva["normalized"]["biografija"]

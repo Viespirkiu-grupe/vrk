@@ -46,6 +46,13 @@ SAVIVALDYBIU_ELECTION_ID = "2023-kovo-5-savivaldybiu-tarybu-ir-meru"
 ZEBRAUSKAS = "algirdas-zebrauskas-2424292"
 # A registered campaign participant that declared no donations at all.
 MITROFANOVAS = "vitalijus-mitrofanovas-2425352"
+# The VRK decisions each 2019 presidential fixture's campaign page lists.
+# Nausėda's page is the one a clone carries; Šimonytė's embeds the portrait
+# and runs only where the full sample set is.
+PREZIDENTO_2019_DECISIONS = {
+    "gitanas-nauseda": ["Sp-390"],
+    "ingrida-simonyte": ["Sp-411", "Sp-392"],
+}
 
 
 def _parse(parse_fn, election_id: str, candidate_id: str) -> dict:
@@ -214,26 +221,29 @@ class SprendimaiTabNormalizationTests(unittest.TestCase):
         # 2019-prezidento is one of the 9 elections whose parsed output changed
         # when the shared handler landed; it reaches the same seimo_2016
         # _normalize_campaigns through its own module.
-        record = _parse(parse_prezidento_2019_sample, "2019-prezidento", "ingrida-simonyte")
+        for candidate_id, numbers in PREZIDENTO_2019_DECISIONS.items():
+            with self.subTest(candidate=candidate_id):
+                record = _parse(parse_prezidento_2019_sample, "2019-prezidento", candidate_id)
 
-        decisions = _all_decisions(record)
+                decisions = _all_decisions(record)
 
-        self.assertEqual([decision["number"] for decision in decisions], ["Sp-411", "Sp-392"])
-        for decision in decisions:
-            self.assertTrue(decision["title"])
-            self.assertTrue(decision["urls"])
+                self.assertEqual([decision["number"] for decision in decisions], numbers)
+                for decision in decisions:
+                    self.assertTrue(decision["title"])
+                    self.assertTrue(decision["urls"])
 
     def test_committed_output_matches_reparse(self) -> None:
-        committed = json.loads(
-            (
-                DATA_ROOT / "2019-prezidento" / "ingrida-simonyte-2019-prezidento.json"
-            ).read_text(encoding="utf-8")
-        )
+        for candidate_id, numbers in PREZIDENTO_2019_DECISIONS.items():
+            with self.subTest(candidate=candidate_id):
+                committed = json.loads(
+                    (
+                        DATA_ROOT / "2019-prezidento" / f"{candidate_id}-2019-prezidento.json"
+                    ).read_text(encoding="utf-8")
+                )
 
-        self.assertEqual(
-            [decision["number"] for decision in _all_decisions(committed)],
-            ["Sp-411", "Sp-392"],
-        )
+                self.assertEqual(
+                    [decision["number"] for decision in _all_decisions(committed)], numbers
+                )
 
 
 class PrivaciuInteresuFreeTextTests(unittest.TestCase):
