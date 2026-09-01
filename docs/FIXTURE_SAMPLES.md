@@ -40,8 +40,29 @@ need it: `git add` alone will not see them.
 A test that needs something outside the subset — or `sitemaps/`, or `data/`,
 or `samples-full/` — skips rather than fails, naming the command that would
 produce it. `tests/local_data.py` holds that machinery and the root
-`conftest.py` applies it. On a clone the suite is about 1,014 passed and 372
-skipped; here, with everything scraped, 1,383 passed and none skipped.
+`conftest.py` applies it. On a clone the suite is 1,415 passed and 338
+skipped, plus 174 subtests skipped one candidate at a time; here, with
+everything scraped, 1,753 passed and none skipped.
+
+A skip is a test that did not run, and a test that only ever runs on the
+scraping laptop can sit asserting a shape two refactors old while CI stays
+green — the 2019 declaration tests did exactly that after issue #98 (issue
+#111). Two rules keep the skipped set small:
+
+- **Load fixtures lazily, one per attribute.** A test class whose `setUp`
+  parses every fixture it uses skips wholesale on a clone the moment one of
+  them is untracked. `local_data.Fixture` declares each as a class attribute
+  parsed on first read, so only the tests that read an untracked one skip —
+  and inside a `subTest`, only that subtest. Loops over a partly tracked set
+  read each candidate inside its own subtest for that reason.
+- **Pin shapes on a tracked fixture.** Key order, section order and the like
+  hold for every candidate of an election, so assert them on one a clone
+  carries (the election's `TRACKED_CANDIDATE_DIRS`) and keep the untracked
+  ones for the values only they publish.
+
+What still skips on a clone is what no tracked fixture can stand in for: the
+municipal `lists/` walks and the sitemap tests over them, the two `results/`
+trees over the limit, and a handful of value pins on portrait-bearing pages.
 
 ## Why fixtures are versioned
 
@@ -908,8 +929,11 @@ To intentionally add a new fixture directory, pass:
 If the new fixture is over the 1 MiB unit limit, step 5 leaves it untracked on
 purpose. Name it in the election's allowlist test as one a clone does not carry
 (`TRACKED_CANDIDATE_DIRS` in `tests/test_ep_2019_sample_allowlist.py` is the
-worked example), and if it is the only fixture that covers a shape, consider
-whether a smaller candidate covers the same one.
+worked example), declare it in the parser test with `local_data.Fixture`
+rather than parsing it in `setUp` so that only the tests reading it skip on a
+clone (`tests/test_prezidento_2019_anketa_parser.py` shows the pattern), and if
+it is the only fixture that covers a shape, consider whether a smaller candidate
+covers the same one.
 
 ## Recommended baseline checks
 

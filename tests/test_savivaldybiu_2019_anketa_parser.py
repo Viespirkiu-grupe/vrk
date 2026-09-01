@@ -7,6 +7,8 @@ from pathlib import Path
 from scraper.elections.savivaldybiu_2019.anketa_parser import parse_anketa_sample
 from scraper.elections.savivaldybiu_2019.candidate_samples import expected_tabs_for
 
+from local_data import Fixture
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SAMPLES_ROOT = REPO_ROOT / "samples" / "html" / "2019-kovo-3-savivaldybiu-tarybu"
@@ -165,79 +167,70 @@ class Savivaldybiu2019ExpectedTabsTests(unittest.TestCase):
 
 
 class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls) -> None:
-        cls.aleksejevaite = _parse("agne-aleksejevaite-2409490")
-        cls.dauksys = _parse("gediminas-dauksys-2408494")
-        cls.ziliene = _parse("judita-ziliene-2409466")
-        cls.armonas = _parse("kestutis-armonas-2404237")
-        cls.cesiulis = _parse("nerijus-cesiulis-2406286")
-        cls.juska = _parse("ricardas-juska-2413847")
-        cls.mockevicius = _parse("skirmantas-mockevicius-2400117")
-        cls.mitrofanovas = _parse("vitalijus-mitrofanovas-2406746")
-        cls.jareckas = _parse("vytas-jareckas-2404239")
-        # The only fixture that answers the conviction question "Taip"; VRK
-        # nests the conviction-detail table inside the anketa for these pages.
-        cls.orda = _parse("gintas-orda-2400958")
+    # Five of the ten fixtures embed a base64 portrait that puts them over the
+    # 1 MiB tracked-unit limit, so a clone -- and CI -- carries only the other
+    # five (test_savivaldybiu_2019_sample_allowlist.py). Each is parsed the
+    # first time a test reads it, so a test that reads an absent one skips
+    # alone; the loops below read each candidate inside its own subTest, so
+    # the tracked half is checked on CI and the rest skip by name (issue #111).
+    aleksejevaite = Fixture(_parse, "agne-aleksejevaite-2409490")
+    dauksys = Fixture(_parse, "gediminas-dauksys-2408494")
+    ziliene = Fixture(_parse, "judita-ziliene-2409466")
+    armonas = Fixture(_parse, "kestutis-armonas-2404237")
+    cesiulis = Fixture(_parse, "nerijus-cesiulis-2406286")
+    juska = Fixture(_parse, "ricardas-juska-2413847")
+    mockevicius = Fixture(_parse, "skirmantas-mockevicius-2400117")
+    mitrofanovas = Fixture(_parse, "vitalijus-mitrofanovas-2406746")
+    jareckas = Fixture(_parse, "vytas-jareckas-2404239")
+    # The only fixture that answers the conviction question "Taip"; VRK
+    # nests the conviction-detail table inside the anketa for these pages.
+    orda = Fixture(_parse, "gintas-orda-2400958")
 
-    @property
-    def by_id(self) -> dict[str, dict]:
-        return {payload["candidateId"]: payload for payload in self.everyone}
-
-    @property
-    def council_only(self) -> tuple[dict, ...]:
-        return (self.aleksejevaite, self.ziliene, self.armonas, self.orda)
-
-    @property
-    def mayoral(self) -> tuple[dict, ...]:
-        return (
-            self.dauksys,
-            self.cesiulis,
-            self.juska,
-            self.mockevicius,
-            self.mitrofanovas,
-            self.jareckas,
-        )
-
-    @property
-    def everyone(self) -> tuple[dict, ...]:
-        return self.council_only + self.mayoral
+    COUNCIL_ONLY = ("aleksejevaite", "ziliene", "armonas", "orda")
+    MAYORAL = ("dauksys", "cesiulis", "juska", "mockevicius", "mitrofanovas", "jareckas")
+    EVERYONE = COUNCIL_ONLY + MAYORAL
 
     # ------------------------------------------------------------------
     # Top-level record
     # ------------------------------------------------------------------
 
     def test_top_level_fields(self) -> None:
-        self.assertEqual(
-            list(self.dauksys.keys()),
-            [
-                "electionId",
-                "candidateId",
-                "candidateName",
-                "candidateNote",
-                "kandidatavimas",
-                "source",
-                "rawData",
-                "normalized",
-                "provenance",
-            ],
-        )
-        self.assertEqual(self.dauksys["electionId"], ELECTION_ID)
-        self.assertEqual(self.dauksys["candidateId"], "gediminas-dauksys-2408494")
-        self.assertEqual(self.dauksys["candidateName"], "Gediminas DAUKŠYS")
-        self.assertEqual(self.ziliene["candidateName"], "Judita ŽILIENĖ")
-        for payload in self.everyone:
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
+                self.assertEqual(
+                    list(payload.keys()),
+                    [
+                        "electionId",
+                        "candidateId",
+                        "candidateName",
+                        "candidateNote",
+                        "kandidatavimas",
+                        "source",
+                        "rawData",
+                        "normalized",
+                        "provenance",
+                    ],
+                )
                 self.assertEqual(payload["electionId"], ELECTION_ID)
                 self.assertIsNone(payload["candidateNote"])
+        for name, candidate_id, candidate_name in (
+            ("dauksys", "gediminas-dauksys-2408494", "Gediminas DAUKŠYS"),
+            ("ziliene", "judita-ziliene-2409466", "Judita ŽILIENĖ"),
+        ):
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
+                self.assertEqual(payload["candidateId"], candidate_id)
+                self.assertEqual(payload["candidateName"], candidate_name)
 
     def test_candidate_id_carries_the_vrk_candidate_id(self) -> None:
         # Name slugs collide across 13,666 candidates and the batch runner
         # resumes off data/<candidateId>-<electionId>.json, so the id has to be
         # stable rather than order-dependent. Unlike 2023 the page stem has no
         # year in it: savKandidatasAnketa_rkndId-N.html.
-        for payload in self.everyone:
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
                 vrk_id = payload["kandidatavimas"]["vrkCandidateId"]
                 self.assertTrue(payload["candidateId"].endswith(f"-{vrk_id}"))
                 self.assertTrue(
@@ -252,8 +245,9 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
     # ------------------------------------------------------------------
 
     def test_kandidatavimas_block_shape(self) -> None:
-        for payload in self.everyone:
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
                 self.assertEqual(
                     list(payload["kandidatavimas"].keys()),
                     [
@@ -320,8 +314,9 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
 
     def test_kandidatavimas_mayor_only(self) -> None:
         # 31 people stood only for mayor. They hold no list seat at all.
-        for payload in (self.juska, self.mockevicius):
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in ("juska", "mockevicius"):
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
                 self.assertEqual(payload["kandidatavimas"]["roles"], ["meras"])
                 self.assertIsNone(payload["kandidatavimas"]["tarybosNarys"])
 
@@ -345,8 +340,9 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
     def test_kandidatavimas_dual_candidates_carry_both_roles(self) -> None:
         # 379 people stood for both a council seat and the mayoralty under one
         # VRK candidate id; the two candidacies are decided independently.
-        for payload in (self.dauksys, self.cesiulis, self.mitrofanovas, self.jareckas):
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in ("dauksys", "cesiulis", "mitrofanovas", "jareckas"):
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
                 self.assertEqual(
                     payload["kandidatavimas"]["roles"], ["tarybos-narys", "meras"]
                 )
@@ -354,43 +350,46 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
                 self.assertIsInstance(payload["kandidatavimas"]["meras"], dict)
 
         # Elected mayor in round II; the list seat went to the runner-up rules.
-        self.assertEqual(
-            self.cesiulis["kandidatavimas"]["meras"],
-            {
-                "round": "II",
-                "nominatedBy": "Lietuvos socialdemokratų partija",
-                "elected": True,
-            },
-        )
-        self.assertFalse(self.cesiulis["kandidatavimas"]["tarybosNarys"]["elected"])
-        self.assertTrue(self.cesiulis["kandidatavimas"]["isrinktas"])
+        with self.subTest(candidate="cesiulis"):
+            self.assertEqual(
+                self.cesiulis["kandidatavimas"]["meras"],
+                {
+                    "round": "II",
+                    "nominatedBy": "Lietuvos socialdemokratų partija",
+                    "elected": True,
+                },
+            )
+            self.assertFalse(self.cesiulis["kandidatavimas"]["tarybosNarys"]["elected"])
+            self.assertTrue(self.cesiulis["kandidatavimas"]["isrinktas"])
 
         # Elected mayor in round I.
-        self.assertEqual(
-            self.mitrofanovas["kandidatavimas"]["meras"],
-            {
-                "round": "I",
-                "nominatedBy": "Lietuvos socialdemokratų partija",
-                "elected": True,
-            },
-        )
-        self.assertFalse(self.mitrofanovas["kandidatavimas"]["tarybosNarys"]["elected"])
+        with self.subTest(candidate="mitrofanovas"):
+            self.assertEqual(
+                self.mitrofanovas["kandidatavimas"]["meras"],
+                {
+                    "round": "I",
+                    "nominatedBy": "Lietuvos socialdemokratų partija",
+                    "elected": True,
+                },
+            )
+            self.assertFalse(self.mitrofanovas["kandidatavimas"]["tarybosNarys"]["elected"])
 
         # Jareckas is nominated for mayor by one of the coalition's two parties
         # while standing on the coalition's list — the two nominations differ.
-        self.assertEqual(
-            self.jareckas["kandidatavimas"]["meras"],
-            {
-                "round": "I",
-                "nominatedBy": "Lietuvos valstiečių ir žaliųjų sąjunga",
-                "elected": True,
-            },
-        )
-        self.assertEqual(
-            self.jareckas["kandidatavimas"]["tarybosNarys"]["partyList"]["name"],
-            "VYTO JARECKO koalicija „VIENINGI BIRŽAI“ (Lietuvos valstiečių ir "
-            "žaliųjų sąjunga, Lietuvos Respublikos liberalų sąjūdis)",
-        )
+        with self.subTest(candidate="jareckas"):
+            self.assertEqual(
+                self.jareckas["kandidatavimas"]["meras"],
+                {
+                    "round": "I",
+                    "nominatedBy": "Lietuvos valstiečių ir žaliųjų sąjunga",
+                    "elected": True,
+                },
+            )
+            self.assertEqual(
+                self.jareckas["kandidatavimas"]["tarybosNarys"]["partyList"]["name"],
+                "VYTO JARECKO koalicija „VIENINGI BIRŽAI“ (Lietuvos valstiečių ir "
+                "žaliųjų sąjunga, Lietuvos Respublikos liberalų sąjūdis)",
+            )
 
     def test_dauksys_won_the_council_seat_and_lost_the_mayoralty(self) -> None:
         # The asymmetry that a single "elected" boolean would destroy: Daukšys
@@ -434,8 +433,9 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
     # ------------------------------------------------------------------
 
     def test_normalized_section_order_for_mayoral_candidates(self) -> None:
-        for payload in self.mayoral:
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in self.MAYORAL:
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
                 self.assertEqual(list(payload["normalized"].keys()), MAYORAL_SECTIONS)
 
     def test_council_only_candidates_have_no_campaign_section(self) -> None:
@@ -444,8 +444,9 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
         # tabs for them and never a campaign one. The absence is expected, and
         # the candidate_samples expectation above is what keeps it from being
         # reported as a MissingExpectedTab anomaly.
-        for payload in self.council_only:
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in self.COUNCIL_ONLY:
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
                 self.assertEqual(list(payload["normalized"].keys()), BASE_SECTIONS)
                 self.assertNotIn(
                     "politinesKampanijosDalyvioDuomenys", payload["rawData"]
@@ -457,8 +458,9 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
                 )
 
     def test_raw_data_section_order(self) -> None:
+        # One mayoral page and one council-only page, both ones a clone carries.
         self.assertEqual(
-            list(self.dauksys["rawData"].keys()),
+            list(self.mitrofanovas["rawData"].keys()),
             [
                 "profile",
                 "anketa",
@@ -486,19 +488,21 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
     # ------------------------------------------------------------------
 
     def test_profilis_shape_and_photo(self) -> None:
-        for payload in self.everyone:
-            with self.subTest(candidate=payload["candidateId"]):
-                profilis = payload["normalized"]["profilis"]
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
+                profilis = getattr(self, name)["normalized"]["profilis"]
                 self.assertEqual(
                     list(profilis.keys()),
                     ["vardas-pavarde", "pastaba", "nuotrauka", "kita", "kandidatuoja-i", "dokumentu-pateikimo-data"],
                 )
-        self.assertEqual(self.dauksys["normalized"]["profilis"]["vardas-pavarde"], "GEDIMINAS DAUKŠYS")
+        with self.subTest(candidate="dauksys"):
+            self.assertEqual(self.dauksys["normalized"]["profilis"]["vardas-pavarde"], "GEDIMINAS DAUKŠYS")
 
         # This vintage embeds the portrait; it is externalized to a sidecar
         # file and both photo fields carry the relative path.
-        for payload in self.mayoral:
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in self.MAYORAL:
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
                 expected = f"photos/{payload['candidateId']}.jpg"
                 self.assertEqual(payload["normalized"]["profilis"]["nuotrauka"], expected)
                 self.assertEqual(payload["rawData"]["profile"]["photoSrc"], expected)
@@ -506,8 +510,9 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
 
         # The three council-only fixtures publish no portrait at all — their
         # pages carry no image element, not an image the parser missed.
-        for payload in self.council_only:
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in self.COUNCIL_ONLY:
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
                 self.assertIsNone(payload["normalized"]["profilis"]["nuotrauka"])
                 self.assertEqual(
                     payload["rawData"]["profile"].get("candidatePhoto"), None
@@ -515,8 +520,9 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
 
     def test_profilis_kita_keys_vary_by_role(self) -> None:
         # Council-only pages carry no nomination line and no round.
-        for payload in self.council_only:
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in self.COUNCIL_ONLY:
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
                 kita = payload["normalized"]["profilis"]["kita"]
                 self.assertEqual(
                     list(kita.keys()),
@@ -534,8 +540,9 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
         # narius - merus", where 2023 says "Iškėlė į tarybos narius ir merus"
         # for dual candidates and "Iškėlė į savivaldybės merus" for mayor-only
         # ones. Keying off the 2023 wording finds nothing here.
-        for payload in self.mayoral:
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in self.MAYORAL:
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
                 kita = payload["normalized"]["profilis"]["kita"]
                 self.assertEqual(
                     list(kita.keys()),
@@ -579,8 +586,9 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
 
         # Mayor-only candidates stand on no list, so the three list rows are
         # published empty rather than dropped.
-        for payload in (self.juska, self.mockevicius):
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in ("juska", "mockevicius"):
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
                 mayor_kita = payload["normalized"]["profilis"]["kita"]
                 self.assertIsNone(mayor_kita["sarasas"]["reiksme"])
                 self.assertIsNone(mayor_kita["numeris-sarase"]["reiksme"])
@@ -588,61 +596,51 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
                 self.assertIsNone(payload["kandidatavimas"]["tarybosNarys"])
 
         # Self-nomination is written in the nomination row itself.
-        self.assertEqual(
-            self.mockevicius["normalized"]["profilis"]["kita"][
-                "iskele-i-tarybos-narius-merus"
-            ]["reiksme"],
-            "išsikėlė pats",
-        )
+        with self.subTest(candidate="mockevicius"):
+            self.assertEqual(
+                self.mockevicius["normalized"]["profilis"]["kita"][
+                    "iskele-i-tarybos-narius-merus"
+                ]["reiksme"],
+                "išsikėlė pats",
+            )
 
     def test_profilis_pastaba_forms(self) -> None:
         # Three shapes appear on the 2019 pages, all gendered.
         #
-        # 1. The list-seat note, naming the list in the genitive.
-        self.assertEqual(
-            self.ziliene["normalized"]["profilis"]["pastaba"],
-            "Išrinkta pagal Lietuvos valstiečių ir žaliųjų sąjungos sąrašą",
-        )
-        self.assertEqual(
-            self.armonas["normalized"]["profilis"]["pastaba"],
-            "Išrinktas pagal VYTO JARECKO koalicijos „VIENINGI BIRŽAI“ (Lietuvos "
-            "valstiečių ir žaliųjų sąjungos, Lietuvos Respublikos liberalų "
-            "sąjūdžio) sąrašą",
-        )
-        # A dual candidate who won the seat but lost the mayoralty gets the
-        # list note, not the mayoral one.
-        self.assertEqual(
-            self.dauksys["normalized"]["profilis"]["pastaba"],
-            "Išrinktas pagal Visuomeninio rinkimų komiteto „Už Alytų“ sąrašą",
-        )
-
+        # 1. The list-seat note, naming the list in the genitive. A dual
+        #    candidate who won the seat but lost the mayoralty (Daukšys) gets
+        #    the list note, not the mayoral one.
+        list_seat_notes = {
+            "ziliene": "Išrinkta pagal Lietuvos valstiečių ir žaliųjų sąjungos sąrašą",
+            "armonas": (
+                "Išrinktas pagal VYTO JARECKO koalicijos „VIENINGI BIRŽAI“ (Lietuvos "
+                "valstiečių ir žaliųjų sąjungos, Lietuvos Respublikos liberalų "
+                "sąjūdžio) sąrašą"
+            ),
+            "dauksys": "Išrinktas pagal Visuomeninio rinkimų komiteto „Už Alytų“ sąrašą",
+        }
         # 2. The mayoral note, naming the municipality and the round.
-        self.assertEqual(
-            self.mitrofanovas["normalized"]["profilis"]["pastaba"],
-            "Išrinktas Akmenės rajono (Nr.1) savivaldybėje I ture",
-        )
-        self.assertEqual(
-            self.jareckas["normalized"]["profilis"]["pastaba"],
-            "Išrinktas Biržų rajono (Nr.6) savivaldybėje I ture",
-        )
-        self.assertEqual(
-            self.cesiulis["normalized"]["profilis"]["pastaba"],
-            "Išrinktas Alytaus miesto (Nr.2) savivaldybėje II ture",
-        )
-        self.assertEqual(
-            self.mockevicius["normalized"]["profilis"]["pastaba"],
-            "Išrinktas Jurbarko rajono (Nr.12) savivaldybėje II ture",
-        )
+        mayoral_notes = {
+            "mitrofanovas": "Išrinktas Akmenės rajono (Nr.1) savivaldybėje I ture",
+            "jareckas": "Išrinktas Biržų rajono (Nr.6) savivaldybėje I ture",
+            "cesiulis": "Išrinktas Alytaus miesto (Nr.2) savivaldybėje II ture",
+            "mockevicius": "Išrinktas Jurbarko rajono (Nr.12) savivaldybėje II ture",
+        }
+        for name, note in {**list_seat_notes, **mayoral_notes}.items():
+            with self.subTest(candidate=name):
+                self.assertEqual(getattr(self, name)["normalized"]["profilis"]["pastaba"], note)
 
         # 3. Nothing at all, for everyone who won neither contest.
-        for payload in (self.aleksejevaite, self.juska):
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in ("aleksejevaite", "juska"):
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
                 self.assertIsNone(payload["normalized"]["profilis"]["pastaba"])
                 self.assertFalse(payload["kandidatavimas"]["isrinktas"])
 
         # The note and the sitemap's elected flags never disagree.
-        for payload in self.everyone:
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
                 self.assertEqual(
                     payload["normalized"]["profilis"]["pastaba"] is not None,
                     payload["kandidatavimas"]["isrinktas"],
@@ -656,43 +654,45 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
         # Q5-Q21 with the biography questions inside the anketa — no separate
         # biography question block, no membership table, no conviction detail
         # sub-object. This is the meru_2017 shape, not the 2023 one.
-        for payload in self.everyone:
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
                 self.assertEqual(
                     list(payload["normalized"]["anketa"].keys()), ANKETA_KEYS
                 )
 
     def test_anketa_core_fields(self) -> None:
-        anketa = self.dauksys["normalized"]["anketa"]
-        self.assertEqual(anketa["gimimo-data"], "1963-04-29")
-        self.assertEqual(anketa["gimimo-vieta"], "Alytus")
-        self.assertEqual(anketa["tautybe"], "Lietuvis")
-        self.assertEqual(anketa["uzsienio-kalbos"], ["Anglų", "Rusų", "Lenkų"])
-        self.assertEqual(anketa["pagrindine-darboviete"], "UAB Vėtrija, Direktorius")
-        self.assertEqual(anketa["pomegiai"], "Futbolas, žvejyba, kalnų slidinėjimas")
-        self.assertEqual(anketa["seimine-padetis"], "Vedęs")
-        self.assertEqual(anketa["sutuoktinio-vardas-pavarde"], "Inga")
-        self.assertEqual(anketa["vaiku-vardai-pavardes"], "Laurynas, Eglė ir Martynas")
-
         # Q6 is answered "Neskelbiamas" throughout this election — the address
         # is withheld on the page, not missing from the parse.
-        for payload in self.everyone:
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
                 self.assertEqual(
-                    payload["normalized"]["anketa"]["adresas"], "Neskelbiamas"
+                    getattr(self, name)["normalized"]["anketa"]["adresas"], "Neskelbiamas"
                 )
 
+        with self.subTest(candidate="dauksys"):
+            anketa = self.dauksys["normalized"]["anketa"]
+            self.assertEqual(anketa["gimimo-data"], "1963-04-29")
+            self.assertEqual(anketa["gimimo-vieta"], "Alytus")
+            self.assertEqual(anketa["tautybe"], "Lietuvis")
+            self.assertEqual(anketa["uzsienio-kalbos"], ["Anglų", "Rusų", "Lenkų"])
+            self.assertEqual(anketa["pagrindine-darboviete"], "UAB Vėtrija, Direktorius")
+            self.assertEqual(anketa["pomegiai"], "Futbolas, žvejyba, kalnų slidinėjimas")
+            self.assertEqual(anketa["seimine-padetis"], "Vedęs")
+            self.assertEqual(anketa["sutuoktinio-vardas-pavarde"], "Inga")
+            self.assertEqual(anketa["vaiku-vardai-pavardes"], "Laurynas, Eglė ir Martynas")
+            # "Nenurodė" normalizes to null rather than being carried through.
+            self.assertIsNone(anketa["politine-organizacija"])
+            self.assertIsNone(anketa["kita-apie-save"])
+
         # Feminine forms occur.
-        self.assertEqual(
-            self.aleksejevaite["normalized"]["anketa"]["tautybe"], "Lietuvė"
-        )
-        self.assertEqual(
-            self.aleksejevaite["normalized"]["anketa"]["politine-organizacija"],
-            "Jokiai politinei partinei nepriklausau ir nesu priklausiusi.",
-        )
-        # "Nenurodė" normalizes to null rather than being carried through.
-        self.assertIsNone(self.dauksys["normalized"]["anketa"]["politine-organizacija"])
-        self.assertIsNone(self.dauksys["normalized"]["anketa"]["kita-apie-save"])
+        with self.subTest(candidate="aleksejevaite"):
+            anketa = self.aleksejevaite["normalized"]["anketa"]
+            self.assertEqual(anketa["tautybe"], "Lietuvė")
+            self.assertEqual(
+                anketa["politine-organizacija"],
+                "Jokiai politinei partinei nepriklausau ir nesu priklausiusi.",
+            )
 
     def test_anketa_of_a_candidate_who_answered_nothing(self) -> None:
         # Juška filled in Q5, Q6 and the declarations and answered "Nenurodė"
@@ -719,53 +719,56 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
         self.assertEqual(anketa["anksciau-isrinktas"], {"aprasas": None, "irasai": []})
 
     def test_record_tables_attached_to_their_questions(self) -> None:
-        anketa = self.aleksejevaite["normalized"]["anketa"]
-        issilavinimas = anketa["issilavinimas"]["irasai"]
-        self.assertEqual(len(issilavinimas), 3)
-        self.assertEqual(
-            issilavinimas[0],
-            {
-                "issilavinimas": "Aukštasis universitetinis",
-                "mokymo-istaigos-pavadinimas": "Mykolo Romerio universitetas",
-                "specialybe": "Civilinė teisė",
-                "baigimo-metai": "2016",
-            },
-        )
-        # Q12 and Q15 render as record tables with no free-text description in
-        # this era, so `aprasas` is legitimately null wherever records exist.
-        self.assertIsNone(anketa["issilavinimas"]["aprasas"])
-        # Never elected before: the table is absent, the list empty.
-        self.assertEqual(anketa["anksciau-isrinktas"]["irasai"], [])
-
-        mandates = self.dauksys["normalized"]["anketa"]["anksciau-isrinktas"]
-        self.assertIsNone(mandates["aprasas"])
-        self.assertEqual(
-            mandates["irasai"],
-            [
+        with self.subTest(candidate="aleksejevaite"):
+            anketa = self.aleksejevaite["normalized"]["anketa"]
+            issilavinimas = anketa["issilavinimas"]["irasai"]
+            self.assertEqual(len(issilavinimas), 3)
+            self.assertEqual(
+                issilavinimas[0],
                 {
-                    "institucijos-pavadinimas-pareigos": (
-                        "Alytaus miesto savivaldybės taryba, Tarybos narys"
-                    ),
-                    "laikotarpis": "2000 - 2015",
-                }
-            ],
-        )
+                    "issilavinimas": "Aukštasis universitetinis",
+                    "mokymo-istaigos-pavadinimas": "Mykolo Romerio universitetas",
+                    "specialybe": "Civilinė teisė",
+                    "baigimo-metai": "2016",
+                },
+            )
+            # Q12 and Q15 render as record tables with no free-text description
+            # in this era, so `aprasas` is legitimately null wherever records
+            # exist.
+            self.assertIsNone(anketa["issilavinimas"]["aprasas"])
+            # Never elected before: the table is absent, the list empty.
+            self.assertEqual(anketa["anksciau-isrinktas"]["irasai"], [])
+
+        with self.subTest(candidate="dauksys"):
+            mandates = self.dauksys["normalized"]["anketa"]["anksciau-isrinktas"]
+            self.assertIsNone(mandates["aprasas"])
+            self.assertEqual(
+                mandates["irasai"],
+                [
+                    {
+                        "institucijos-pavadinimas-pareigos": (
+                            "Alytaus miesto savivaldybės taryba, Tarybos narys"
+                        ),
+                        "laikotarpis": "2000 - 2015",
+                    }
+                ],
+            )
 
     def test_unnumbered_rows_matched_by_prompt(self) -> None:
         # Two rows carry no question number. The first asks for the pedagogic
         # title *and* the academic degree in one prompt ("Jei turite,
         # nurodykite pedagoginį vardą, mokslo laipsnį"), which is why a degree
         # lands under `pedagoginis-vardas` — one published row, one field.
-        self.assertEqual(
-            self.dauksys["normalized"]["anketa"]["pedagoginis-vardas"], "Magistras"
-        )
-        self.assertEqual(
-            self.aleksejevaite["normalized"]["anketa"]["pedagoginis-vardas"],
-            "Magistras",
-        )
-        self.assertEqual(
-            self.dauksys["normalized"]["anketa"]["sutuoktinio-vardas-pavarde"], "Inga"
-        )
+        for name in ("dauksys", "aleksejevaite"):
+            with self.subTest(candidate=name):
+                self.assertEqual(
+                    getattr(self, name)["normalized"]["anketa"]["pedagoginis-vardas"],
+                    "Magistras",
+                )
+        with self.subTest(candidate="dauksys"):
+            self.assertEqual(
+                self.dauksys["normalized"]["anketa"]["sutuoktinio-vardas-pavarde"], "Inga"
+            )
 
     def test_pareiskimai_are_the_savivaldybiu_tarybu_istatymas_declarations(
         self,
@@ -781,8 +784,9 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
         # conviction question across the whole fixture set, which certified as
         # working the one path that was broken — a candidate who answers "Taip"
         # used to lose the entire questionnaire.
-        for payload in self.everyone:
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
                 pareiskimai = payload["normalized"]["anketa"]["pareiskimai"]
                 published = {
                     str(row.get("questionNumber")): row.get("answer")
@@ -800,11 +804,14 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
 
         # Both answers occur in the fixture set, so the assertion above is not
         # vacuous in either direction.
-        answers = {
-            payload["normalized"]["anketa"]["pareiskimai"]["ar-buvote-pripazintas-kaltu"]
-            for payload in self.everyone
-        }
-        self.assertEqual(answers, {"Ne", "Taip"})
+        with self.subTest("both answers occur in the fixture set"):
+            answers = {
+                getattr(self, name)["normalized"]["anketa"]["pareiskimai"][
+                    "ar-buvote-pripazintas-kaltu"
+                ]
+                for name in self.EVERYONE
+            }
+            self.assertEqual(answers, {"Ne", "Taip"})
 
         # Two declarations in the fixture set carry a non-default answer, and
         # both are on the page — a parser that always returned the negative
@@ -812,30 +819,32 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
         #
         # Q8.3: Jareckas was the sitting Biržų mayor, so he declared "Einu" —
         # he does hold office incompatible with a council seat.
-        self.assertEqual(
-            self.jareckas["normalized"]["anketa"]["pareiskimai"][
-                "ar-eina-nesuderinamas-pareigas"
-            ],
-            "Einu",
-        )
+        with self.subTest(candidate="jareckas"):
+            self.assertEqual(
+                self.jareckas["normalized"]["anketa"]["pareiskimai"][
+                    "ar-eina-nesuderinamas-pareigas"
+                ],
+                "Einu",
+            )
         # Q8.4: Aleksejevaitė declared "Esu" — a member of another state's
         # elected authority.
-        self.assertEqual(
-            self.aleksejevaite["normalized"]["anketa"]["pareiskimai"][
-                "ar-kitos-valstybes-institucijos-narys"
-            ],
-            "Esu",
-        )
-        for payload in self.everyone:
-            with self.subTest(candidate=payload["candidateId"]):
-                pareiskimai = payload["normalized"]["anketa"]["pareiskimai"]
+        with self.subTest(candidate="aleksejevaite"):
+            self.assertEqual(
+                self.aleksejevaite["normalized"]["anketa"]["pareiskimai"][
+                    "ar-kitos-valstybes-institucijos-narys"
+                ],
+                "Esu",
+            )
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
+                pareiskimai = getattr(self, name)["normalized"]["anketa"]["pareiskimai"]
                 self.assertEqual(
                     pareiskimai["ar-eina-nesuderinamas-pareigas"],
-                    "Einu" if payload is self.jareckas else "Neinu",
+                    "Einu" if name == "jareckas" else "Neinu",
                 )
                 self.assertEqual(
                     pareiskimai["ar-kitos-valstybes-institucijos-narys"],
-                    "Esu" if payload is self.aleksejevaite else "Nesu",
+                    "Esu" if name == "aleksejevaite" else "Nesu",
                 )
 
     def test_every_published_declaration_is_normalized(self) -> None:
@@ -849,8 +858,9 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
         # The list is exact on purpose: the earlier version of this test
         # prescribed only six keys, which would have locked in the loss of
         # 9.2-9.4 the moment it went green.
-        for payload in self.everyone:
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
                 rows = payload["rawData"]["anketa"]["rows"]
                 published = {
                     str(row.get("questionNumber")): row.get("answer") for row in rows
@@ -889,7 +899,7 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
         # every question from birth date to nationality along with all nine
         # declarations — silently, with no anomaly raised. This fixture is the
         # only one in the set that answers "Taip".
-        payload = self.by_id["gintas-orda-2400958"]
+        payload = self.orda
         anketa = payload["normalized"]["anketa"]
 
         self.assertEqual(anketa["pareiskimai"]["ar-buvote-pripazintas-kaltu"], "Taip")
@@ -909,7 +919,7 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
         # used to drop that row before anything could read it, so the details
         # reached neither rawData nor normalized. The keys and the shape match
         # meru_2021, which asks the same questions under the same statute.
-        payload = self.by_id["gintas-orda-2400958"]
+        payload = self.orda
         self.assertEqual(
             payload["normalized"]["anketa"]["teistumo-detales"],
             {
@@ -924,9 +934,9 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
             },
         )
         # Every candidate carries the key; without a "Taip" answer it is empty.
-        for candidate in self.everyone:
-            with self.subTest(candidate=candidate["candidateId"]):
-                anketa = candidate["normalized"]["anketa"]
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
+                anketa = getattr(self, name)["normalized"]["anketa"]
                 self.assertIn("teistumo-detales", anketa)
                 if anketa["pareiskimai"]["ar-buvote-pripazintas-kaltu"] != "Taip":
                     self.assertEqual(anketa["teistumo-detales"], {"irasai": []})
@@ -938,40 +948,37 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
     def test_biografija_is_free_text(self) -> None:
         # 2016-era pages publish the biography as one prose block, not the
         # question-keyed object of the 2023+ modules.
-        for payload in self.everyone:
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
                 self.assertEqual(
-                    list(payload["normalized"]["biografija"].keys()), ["tekstas"]
+                    list(getattr(self, name)["normalized"]["biografija"].keys()), ["tekstas"]
                 )
 
-        self.assertTrue(
-            self.dauksys["normalized"]["biografija"]["tekstas"].startswith(
-                "Gimė 1963 m. balandžio 29 d. Alytuje."
+        with self.subTest(candidate="dauksys"):
+            tekstas = self.dauksys["normalized"]["biografija"]["tekstas"]
+            self.assertTrue(tekstas.startswith("Gimė 1963 m. balandžio 29 d. Alytuje."))
+            self.assertIn("Vilniaus universiteto", tekstas)
+        with self.subTest(candidate="mockevicius"):
+            self.assertTrue(
+                self.mockevicius["normalized"]["biografija"]["tekstas"].startswith(
+                    "Gimė 1965 m. gruodžio 18 d. Jurbarke."
+                )
             )
-        )
-        self.assertIn(
-            "Vilniaus universiteto",
-            self.dauksys["normalized"]["biografija"]["tekstas"],
-        )
-        self.assertTrue(
-            self.mockevicius["normalized"]["biografija"]["tekstas"].startswith(
-                "Gimė 1965 m. gruodžio 18 d. Jurbarke."
-            )
-        )
 
         # The three council-only fixtures have an empty biography tab: VRK
         # wrote no biography for them, so null is the page's own answer.
-        for payload in self.council_only:
-            with self.subTest(candidate=payload["candidateId"]):
-                self.assertIsNone(payload["normalized"]["biografija"]["tekstas"])
+        for name in self.COUNCIL_ONLY:
+            with self.subTest(candidate=name):
+                self.assertIsNone(getattr(self, name)["normalized"]["biografija"]["tekstas"])
 
     # ------------------------------------------------------------------
     # turto ir pajamu deklaracijos
     # ------------------------------------------------------------------
 
     def test_turto_ir_pajamu_key_order(self) -> None:
-        for payload in self.everyone:
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
                 self.assertEqual(
                     list(payload["normalized"]["turto-ir-pajamu-deklaracijos"].keys()),
                     TURTO_PAJAMU_BLOCK_KEYS,
@@ -983,8 +990,9 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
         # null for 9 of 9 fixtures — and for the whole election — while the
         # figures sat untouched in rawData. Nothing may be null when the page
         # prints a number.
-        for payload in self.everyone:
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
                 normalized = payload["normalized"]["turto-ir-pajamu-deklaracijos"]
                 published = _published_amounts(payload)
                 # All seven rows are printed on every 2019 declaration page.
@@ -1011,9 +1019,8 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
             "deklaracijos-forma": "GPM308",
             "deklaracijos-apimtis": "gyventojo-seimos",
         }
-        self.assertEqual(
-            scalars(self.dauksys),
-            {
+        expected = {
+            "dauksys": {
                 "privalomas-registruoti-turtas": 29223,
                 "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": 91805,
                 "pinigines-lesos": 76824,
@@ -1027,10 +1034,7 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
                 "turto-isigijimo-kaina": 0,
                 **GPM308_2017,
             },
-        )
-        self.assertEqual(
-            scalars(self.ziliene),
-            {
+            "ziliene": {
                 "privalomas-registruoti-turtas": 246338,
                 "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": 0,
                 "pinigines-lesos": 24674,
@@ -1044,10 +1048,7 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
                 "turto-isigijimo-kaina": 976,
                 **GPM308_2017,
             },
-        )
-        self.assertEqual(
-            scalars(self.armonas),
-            {
+            "armonas": {
                 "privalomas-registruoti-turtas": 481880,
                 "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": 0,
                 "pinigines-lesos": 13241,
@@ -1061,10 +1062,7 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
                 "turto-isigijimo-kaina": 0,
                 **GPM308_2017,
             },
-        )
-        self.assertEqual(
-            scalars(self.mockevicius),
-            {
+            "mockevicius": {
                 "privalomas-registruoti-turtas": 9413,
                 "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": 29,
                 "pinigines-lesos": 3173,
@@ -1078,12 +1076,10 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
                 "turto-isigijimo-kaina": 0,
                 **GPM308_2017,
             },
-        )
-        # A declaration whose asset half is all zeros — the rows are published
-        # as "0 EUR", so zero and "not declared" stay distinguishable.
-        self.assertEqual(
-            scalars(self.aleksejevaite),
-            {
+            # A declaration whose asset half is all zeros — the rows are
+            # published as "0 EUR", so zero and "not declared" stay
+            # distinguishable.
+            "aleksejevaite": {
                 "privalomas-registruoti-turtas": 0,
                 "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai": 0,
                 "pinigines-lesos": 0,
@@ -1097,13 +1093,17 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
                 "turto-isigijimo-kaina": 0,
                 **GPM308_2017,
             },
-        )
-        self.assertEqual(
-            self.cesiulis["normalized"]["turto-ir-pajamu-deklaracijos"][
-                "suteiktos-paskolos"
-            ],
-            29049,
-        )
+        }
+        for name, amounts in expected.items():
+            with self.subTest(candidate=name):
+                self.assertEqual(scalars(getattr(self, name)), amounts)
+        with self.subTest(candidate="cesiulis"):
+            self.assertEqual(
+                self.cesiulis["normalized"]["turto-ir-pajamu-deklaracijos"][
+                    "suteiktos-paskolos"
+                ],
+                29049,
+            )
 
     def test_gpm308_breakdown_is_normalized(self) -> None:
         # 2019 also publishes individual-activity income, its deductions, and
@@ -1169,73 +1169,69 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
     def test_privaciu_interesu_sections_keyed_by_id(self) -> None:
         # The 2016-era private-interest pages use ID001x section anchors rather
         # than the named sections of the 2023 modules.
-        privaciu = self.dauksys["normalized"]["privaciu-interesu-deklaracija"]
-        self.assertEqual(privaciu["deklaruojantis-asmuo"], "GEDIMINAS DAUKŠYS")
-        sutuoktinis = privaciu[
-            "deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris"
-        ]
-        self.assertEqual(sutuoktinis["vardas"], "INGA")
-        self.assertEqual(sutuoktinis["pavarde"], "DAUKŠIENĖ")
-        self.assertEqual(len(privaciu["id001j"]), 3)
-        self.assertEqual(
-            privaciu["id001j"][0]["juridinio-asmens-pavadinimas"],
-            "ALYTAUS APSKRITIES FUTBOLO FEDERACIJA",
-        )
-        self.assertEqual(privaciu["id001j"][0]["rysio-pradzios-data"], "2012-04-27")
-        self.assertIsNone(privaciu["id001j"][0]["rysio-pabaigos-data"])
+        with self.subTest(candidate="dauksys"):
+            privaciu = self.dauksys["normalized"]["privaciu-interesu-deklaracija"]
+            self.assertEqual(privaciu["deklaruojantis-asmuo"], "GEDIMINAS DAUKŠYS")
+            sutuoktinis = privaciu[
+                "deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris"
+            ]
+            self.assertEqual(sutuoktinis["vardas"], "INGA")
+            self.assertEqual(sutuoktinis["pavarde"], "DAUKŠIENĖ")
+            self.assertEqual(len(privaciu["id001j"]), 3)
+            self.assertEqual(
+                privaciu["id001j"][0]["juridinio-asmens-pavadinimas"],
+                "ALYTAUS APSKRITIES FUTBOLO FEDERACIJA",
+            )
+            self.assertEqual(privaciu["id001j"][0]["rysio-pradzios-data"], "2012-04-27")
+            self.assertIsNone(privaciu["id001j"][0]["rysio-pabaigos-data"])
 
         # Sections appear only when the declaration carries them, and the set
         # differs per declarant — id001s/id001a/id001f/id001i all occur.
-        self.assertEqual(
-            list(self.cesiulis["normalized"]["privaciu-interesu-deklaracija"].keys()),
-            [
-                "deklaruojantis-asmuo",
-                "deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris",
-                "id001j",
-                "id001s",
-                "id001i",
-            ],
-        )
-        self.assertEqual(
-            list(self.mitrofanovas["normalized"]["privaciu-interesu-deklaracija"].keys()),
-            [
-                "deklaruojantis-asmuo",
-                "deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris",
-                "id001j",
-                "id001s",
-                "id001f",
-            ],
-        )
+        for name, sections in (
+            ("cesiulis", ["id001j", "id001s", "id001i"]),
+            ("mitrofanovas", ["id001j", "id001s", "id001f"]),
+        ):
+            with self.subTest(candidate=name):
+                self.assertEqual(
+                    list(getattr(self, name)["normalized"]["privaciu-interesu-deklaracija"].keys()),
+                    [
+                        "deklaruojantis-asmuo",
+                        "deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris",
+                        *sections,
+                    ],
+                )
 
         # An unmarried declarant still gets the spouse block, with null fields
         # rather than the block being dropped.
-        aleksejevaite = self.aleksejevaite["normalized"][
-            "privaciu-interesu-deklaracija"
-        ]
-        self.assertEqual(
-            list(aleksejevaite.keys()),
-            [
-                "deklaruojantis-asmuo",
-                "deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris",
-            ],
-        )
-        self.assertEqual(
-            aleksejevaite["deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris"],
-            {
-                "vardas": None,
-                "pavarde": None,
-                "sutuoktinio-sugyventinio-partnerio-darboviete-kitos-darbovietes-"
-                "nurodomos-id001j-priede": None,
-            },
-        )
+        with self.subTest(candidate="aleksejevaite"):
+            aleksejevaite = self.aleksejevaite["normalized"][
+                "privaciu-interesu-deklaracija"
+            ]
+            self.assertEqual(
+                list(aleksejevaite.keys()),
+                [
+                    "deklaruojantis-asmuo",
+                    "deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris",
+                ],
+            )
+            self.assertEqual(
+                aleksejevaite["deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris"],
+                {
+                    "vardas": None,
+                    "pavarde": None,
+                    "sutuoktinio-sugyventinio-partnerio-darboviete-kitos-darbovietes-"
+                    "nurodomos-id001j-priede": None,
+                },
+            )
 
     # ------------------------------------------------------------------
     # politines kampanijos dalyvio duomenys
     # ------------------------------------------------------------------
 
     def test_campaign_shape(self) -> None:
-        for payload in self.mayoral:
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in self.MAYORAL:
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
                 campaigns = payload["normalized"][
                     "politines-kampanijos-dalyvio-duomenys"
                 ]
@@ -1262,14 +1258,9 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
         # money. Their participant page carries a status and two contact rows
         # and literally nothing else: no registration date, no treasurer, no
         # donations table. The empties are the page, not a failed fetch.
-        for payload in (
-            self.dauksys,
-            self.cesiulis,
-            self.juska,
-            self.mitrofanovas,
-            self.jareckas,
-        ):
-            with self.subTest(candidate=payload["candidateId"]):
+        for name in ("dauksys", "cesiulis", "juska", "mitrofanovas", "jareckas"):
+            with self.subTest(candidate=name):
+                payload = getattr(self, name)
                 campaign = payload["normalized"][
                     "politines-kampanijos-dalyvio-duomenys"
                 ][0]
@@ -1300,16 +1291,17 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
 
         # The contact rows are the participant's own, not a constant: Jareckas
         # published a phone number where the other four withheld theirs.
-        self.assertEqual(
-            self.jareckas["normalized"]["politines-kampanijos-dalyvio-duomenys"][0][
-                "kontaktai"
-            ],
-            {"telefonas-pasiteirauti": "68575567", "el-pastas": "neskelbtina"},
-        )
-        for payload in (self.dauksys, self.cesiulis, self.juska, self.mitrofanovas):
-            with self.subTest(candidate=payload["candidateId"]):
+        with self.subTest(candidate="jareckas"):
+            self.assertEqual(
+                self.jareckas["normalized"]["politines-kampanijos-dalyvio-duomenys"][0][
+                    "kontaktai"
+                ],
+                {"telefonas-pasiteirauti": "68575567", "el-pastas": "neskelbtina"},
+            )
+        for name in ("dauksys", "cesiulis", "juska", "mitrofanovas"):
+            with self.subTest(candidate=name):
                 self.assertEqual(
-                    payload["normalized"]["politines-kampanijos-dalyvio-duomenys"][0][
+                    getattr(self, name)["normalized"]["politines-kampanijos-dalyvio-duomenys"][0][
                         "kontaktai"
                     ]["telefonas-pasiteirauti"],
                     "neskelbtina",
@@ -1368,24 +1360,25 @@ class Savivaldybiu2019AnketaParserTests(unittest.TestCase):
     def test_kita_tab_carries_the_published_attachments(self) -> None:
         # Daukšys is the only fixture whose "Kita" tab has anything on it: the
         # signed pledge not to bribe voters, with its download link.
-        self.assertEqual(
-            self.dauksys["normalized"]["kita"],
-            {
-                "tekstai": ["Pasižadėjimas laikytis draudimo papirkti rinkėjus.pdf"],
-                "nuorodos": [
-                    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/864/rnk1144/"
-                    "kandidatai/kpdFileDownload/17736/"
-                    "G_DAUKSYS_PASIZADEJIMAS_NEPAPIRKTI.pdf"
-                ],
-            },
-        )
+        with self.subTest(candidate="dauksys"):
+            self.assertEqual(
+                self.dauksys["normalized"]["kita"],
+                {
+                    "tekstai": ["Pasižadėjimas laikytis draudimo papirkti rinkėjus.pdf"],
+                    "nuorodos": [
+                        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/864/rnk1144/"
+                        "kandidatai/kpdFileDownload/17736/"
+                        "G_DAUKSYS_PASIZADEJIMAS_NEPAPIRKTI.pdf"
+                    ],
+                },
+            )
 
-        for payload in self.everyone:
-            if payload is self.dauksys:
+        for name in self.EVERYONE:
+            if name == "dauksys":
                 continue
-            with self.subTest(candidate=payload["candidateId"]):
+            with self.subTest(candidate=name):
                 self.assertEqual(
-                    payload["normalized"]["kita"], {"tekstai": [], "nuorodos": []}
+                    getattr(self, name)["normalized"]["kita"], {"tekstai": [], "nuorodos": []}
                 )
 
 

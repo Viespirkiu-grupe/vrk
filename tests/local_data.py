@@ -17,20 +17,26 @@ than by cloning it, and `.gitignore` keeps them out of git:
 A test that reads one of them used to fail on a machine that had never scraped
 anything: 990 failures and 194 errors on a fresh clone, all of them
 `FileNotFoundError` (issue #83). They skip now, naming the command that would
-produce what they wanted. Two ways in:
+produce what they wanted. Three ways in:
 
 * the root `conftest.py` turns a `FileNotFoundError` raised under one of these
   roots into a skip, which covers every test that simply opens a fixture;
 * `require(path)` is for the tests that would otherwise fail an assertion
   instead of raising -- a glob over a missing directory yields nothing, and
-  `0 != 600` does not say what is wrong.
+  `0 != 600` does not say what is wrong;
+* `Fixture(load, ...)` is for a class that parses several fixtures of which a
+  clone carries only some. Parsed in `setUp`, one absent fixture skips every
+  test in the class; declared as a lazily loaded attribute, only the tests
+  that read it skip (issue #111).
 """
 
 from __future__ import annotations
 
 import os
 import unittest
+from collections.abc import Callable
 from pathlib import Path
+from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -89,3 +95,37 @@ def require(*paths: Path) -> None:
     for path in paths:
         if not path.exists():
             raise unittest.SkipTest(describe(path) or f"{path} is missing")
+
+
+class Fixture:
+    """A parsed fixture, loaded the first time a test reads it.
+
+    A `setUp` that parses every fixture its class uses lets one untracked
+    fixture skip the whole class on a clone -- the tests that read only
+    tracked fixtures included. That is how the 2019 declaration tests sat
+    asserting a shape two refactors old while CI stayed green (issue #111):
+    CI never ran them. Declared as a class attribute instead,
+
+        nauseda = Fixture(_parse, "gitanas-nauseda")
+
+    the fixture is parsed once, on the first test that reads `self.nauseda`,
+    and the `FileNotFoundError` for an absent one is raised in that test alone,
+    where the root conftest turns it into a skip. Raised inside `subTest` it
+    skips that subtest alone, so a loop that reads each candidate inside its
+    own subtest checks the tracked candidates on a clone and skips the rest
+    by name.
+    """
+
+    _UNSET = object()
+
+    def __init__(self, load: Callable[..., Any], *args: Any) -> None:
+        self._load = load
+        self._args = args
+        self._value: Any = self._UNSET
+
+    def __get__(self, instance: object, owner: type | None = None) -> Any:
+        if instance is None:
+            return self
+        if self._value is self._UNSET:
+            self._value = self._load(*self._args)
+        return self._value

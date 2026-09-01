@@ -5,6 +5,8 @@ from pathlib import Path
 
 from scraper.elections.seimo_zanavyku_2018.anketa_parser import parse_anketa_sample
 
+from local_data import Fixture
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SAMPLES_ROOT = REPO_ROOT / "samples" / "html" / "2018-rugsejo-16-seimo-zanavykai"
@@ -21,10 +23,15 @@ def _parse(candidate_id: str) -> dict:
 
 
 class SeimoZanavyku2018AnketaParserTests(unittest.TestCase):
-    def setUp(self) -> None:
-        self.haase = _parse("irena-haase")
-        self.bastys = _parse("mindaugas-bastys")
-        self.jukna = _parse("vigilijus-jukna")
+    # Jukna's page is one a clone carries; Haase's and Bastys' embed the
+    # portrait (test_seimo_zanavyku_2018_sample_allowlist.py). Each is parsed
+    # the first time a test reads it, so only the tests that read those two
+    # skip on CI.
+    haase = Fixture(_parse, "irena-haase")
+    bastys = Fixture(_parse, "mindaugas-bastys")
+    jukna = Fixture(_parse, "vigilijus-jukna")
+
+    EVERYONE = ("haase", "bastys", "jukna")
 
     def test_top_level_fields(self) -> None:
         self.assertEqual(self.haase["electionId"], "2018-rugsejo-16-seimo-zanavykai")
@@ -38,41 +45,46 @@ class SeimoZanavyku2018AnketaParserTests(unittest.TestCase):
         )
 
     def test_normalized_section_order(self) -> None:
-        self.assertEqual(
-            list(self.haase["normalized"].keys()),
-            [
-                "profilis",
-                "anketa",
-                "biografija",
-                "turto-ir-pajamu-deklaracijos",
-                "privaciu-interesu-deklaracija",
-                "politines-kampanijos-dalyvio-duomenys",
-                "kita",
-            ],
-        )
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
+                self.assertEqual(
+                    list(getattr(self, name)["normalized"].keys()),
+                    [
+                        "profilis",
+                        "anketa",
+                        "biografija",
+                        "turto-ir-pajamu-deklaracijos",
+                        "privaciu-interesu-deklaracija",
+                        "politines-kampanijos-dalyvio-duomenys",
+                        "kita",
+                    ],
+                )
 
     def test_profile_card_fields(self) -> None:
-        profilis = self.haase["normalized"]["profilis"]
-        self.assertEqual(profilis["vardas-pavarde"], "Irena HAASE")
-        # The embedded photo is externalized to a sidecar file; both photo
-        # fields carry the relative path.
-        self.assertTrue(str(profilis["nuotrauka"]).startswith("photos/"))
-        self.assertTrue(str(profilis["nuotrauka"]).endswith(".jpg"))
-        self.assertEqual(
-            profilis["pastaba"], "Išrinkta vienmandatėje Zanavykų (Nr.64) apygardoje II ture"
-        )
-        self.assertIsNone(self.jukna["normalized"]["profilis"]["pastaba"])
+        with self.subTest(candidate="haase"):
+            profilis = self.haase["normalized"]["profilis"]
+            self.assertEqual(profilis["vardas-pavarde"], "Irena HAASE")
+            # The embedded photo is externalized to a sidecar file; both photo
+            # fields carry the relative path.
+            self.assertTrue(str(profilis["nuotrauka"]).startswith("photos/"))
+            self.assertTrue(str(profilis["nuotrauka"]).endswith(".jpg"))
+            self.assertEqual(
+                profilis["pastaba"], "Išrinkta vienmandatėje Zanavykų (Nr.64) apygardoje II ture"
+            )
 
-        kita = profilis["kita"]
-        self.assertEqual(kita["vienmandate-apygarda"]["reiksme"], "Zanavykų")
-        self.assertEqual(
-            kita["iskele"]["reiksme"], "Tėvynės sąjunga-Lietuvos krikščionys demokratai"
-        )
-        self.assertEqual(kita["turas"]["reiksme"], "II")
+            kita = profilis["kita"]
+            self.assertEqual(kita["vienmandate-apygarda"]["reiksme"], "Zanavykų")
+            self.assertEqual(
+                kita["iskele"]["reiksme"], "Tėvynės sąjunga-Lietuvos krikščionys demokratai"
+            )
+            self.assertEqual(kita["turas"]["reiksme"], "II")
+        with self.subTest(candidate="jukna"):
+            self.assertIsNone(self.jukna["normalized"]["profilis"]["pastaba"])
         # Self-nomination is recorded in the same field.
-        self.assertEqual(
-            self.bastys["normalized"]["profilis"]["kita"]["iskele"]["reiksme"], "Išsikėlė pats"
-        )
+        with self.subTest(candidate="bastys"):
+            self.assertEqual(
+                self.bastys["normalized"]["profilis"]["kita"]["iskele"]["reiksme"], "Išsikėlė pats"
+            )
 
     def test_anketa_core_fields(self) -> None:
         anketa = self.haase["normalized"]["anketa"]
@@ -82,29 +94,33 @@ class SeimoZanavyku2018AnketaParserTests(unittest.TestCase):
         self.assertEqual(anketa["seimine-padetis"], "Ištekėjusi")
 
     def test_declarations(self) -> None:
-        pareiskimai = self.haase["normalized"]["anketa"]["pareiskimai"]
-        self.assertEqual(
-            list(pareiskimai.keys()),
-            [
-                "ar-nebaigta-teismo-paskirta-bausme",
-                "ar-atliekate-karo-tarnyba",
-                "ar-turite-kitos-valstybes-pilietybe",
-                "ar-susijes-priesaika-uzsienio-valstybei",
-                "ar-bendradarbiavote-su-uzsienio-tarnybomis",
-                "ar-buvote-pripazintas-kaltu",
-                "ar-veika-dekriminalizuota",
-                "ar-buvote-pripazintas-kaltu-uzsienyje",
-                "ar-buvote-pripazintas-kaltu-uzsienyje-del-politinio-persekiojimo",
-                "teisiniai-argumentai",
-            ],
-        )
-        # Q9.3.4 is the free-text justification, filled only on a "Taip" answer.
-        for payload in (self.haase, self.bastys, self.jukna):
-            with self.subTest(candidate=payload["candidateId"]):
-                answers = payload["normalized"]["anketa"]["pareiskimai"]
-                self.assertIsNone(answers["teisiniai-argumentai"])
+        for name in self.EVERYONE:
+            with self.subTest(candidate=name):
+                pareiskimai = getattr(self, name)["normalized"]["anketa"]["pareiskimai"]
+                self.assertEqual(
+                    list(pareiskimai.keys()),
+                    [
+                        "ar-nebaigta-teismo-paskirta-bausme",
+                        "ar-atliekate-karo-tarnyba",
+                        "ar-turite-kitos-valstybes-pilietybe",
+                        "ar-susijes-priesaika-uzsienio-valstybei",
+                        "ar-bendradarbiavote-su-uzsienio-tarnybomis",
+                        "ar-buvote-pripazintas-kaltu",
+                        "ar-veika-dekriminalizuota",
+                        "ar-buvote-pripazintas-kaltu-uzsienyje",
+                        "ar-buvote-pripazintas-kaltu-uzsienyje-del-politinio-persekiojimo",
+                        "teisiniai-argumentai",
+                    ],
+                )
+                # Q9.3.4 is the free-text justification, filled only on a "Taip"
+                # answer.
+                self.assertIsNone(pareiskimai["teisiniai-argumentai"])
                 self.assertTrue(
-                    all(v is not None for k, v in answers.items() if k != "teisiniai-argumentai")
+                    all(
+                        v is not None
+                        for k, v in pareiskimai.items()
+                        if k != "teisiniai-argumentai"
+                    )
                 )
 
     def test_prior_mandate_records(self) -> None:
