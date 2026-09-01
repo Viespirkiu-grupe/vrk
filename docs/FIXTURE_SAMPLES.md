@@ -41,7 +41,8 @@ A test that needs something outside the subset — or `sitemaps/`, or `data/`,
 or `samples-full/` — skips rather than fails, naming the command that would
 produce it. `tests/local_data.py` holds that machinery and the root
 `conftest.py` applies it. On a clone the suite is about 1,410 passed and 340
-skipped, and a further 174 subtests skip one untracked candidate at a time;
+skipped, and a further 174 subtests skip one untracked candidate at a time
+(`verbosity_subtests` in `pyproject.toml` makes the summary line count them);
 here, with everything scraped, 1,753 passed and none skipped.
 
 A skip is a test that did not run, and a test that only ever runs on the
