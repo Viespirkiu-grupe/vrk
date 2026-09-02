@@ -14,6 +14,13 @@ module at a time, with `shortName` mixing nominative and genitive, month and
 no month, institution and place, and `name` sometimes carrying the day and
 sometimes not (issue #121). NamingConventionTests pins one rule per field, so
 a new entry either follows the convention or fails here.
+
+The by-elections then had no home (issue #122): 28 of the 55 entries fill a
+seat of some general election's term, and the dashboard treated all 55 as
+peers, so selecting "2016 Seimas" silently left out the 2017-2019 seat-fills
+for that same Seimas. TermGroupingTests pins the `parent` field that groups
+them -- one mechanical rule, checked against the marker VRK itself puts in
+the name.
 """
 
 from __future__ import annotations
@@ -97,10 +104,12 @@ KINDS = {"seimo", "savivaldybiu", "prezidento", "ep", "mero"}
 
 class RegistryShapeTests(unittest.TestCase):
     def test_every_entry_has_the_five_required_fields(self):
+        # `parent` is the one optional field; TermGroupingTests says exactly
+        # which entries carry it.
         for entry in REGISTRY:
             with self.subTest(entry.get("id")):
                 self.assertEqual(
-                    set(entry), {"id", "date", "kind", "name", "shortName"}, entry.get("id")
+                    set(entry) - {"parent"}, {"id", "date", "kind", "name", "shortName"}, entry.get("id")
                 )
                 for field in ("id", "date", "kind", "name", "shortName"):
                     self.assertTrue(str(entry[field]).strip(), field)
@@ -244,13 +253,18 @@ def name_body(entry: dict) -> str:
     return entry["name"][len(prefix):] if entry["name"].startswith(prefix) else entry["name"]
 
 
-def is_general(entry: dict) -> bool:
+def has_vrk_marker(entry: dict) -> bool:
     # VRK names every election that is not a general one as `nauji` (new),
     # `pakartotiniai` (repeat) or `pakartotinis balsavimas` (re-vote), and the
-    # registry keeps that word, so the name is the structural signal. The
-    # by-election grouping ticket (issue #122) plans a `parent` field; once
-    # it exists, "no parent" is the same test.
-    return re.search(r"\b(?:nauji|pakartotin\w*)\b", name_body(entry)) is None
+    # registry keeps that word in `name`.
+    return re.search(r"\b(?:nauji|pakartotin\w*)\b", name_body(entry)) is not None
+
+
+def is_general(entry: dict) -> bool:
+    # A general election is one with no `parent` (issue #122). The name
+    # marker was the test before the field existed; TermGroupingTests keeps
+    # the two agreeing, so neither can drift from the other.
+    return "parent" not in entry
 
 
 def expected_short_name(entry: dict, registry: list[dict]) -> str:
@@ -344,6 +358,91 @@ class NamingConventionTests(unittest.TestCase):
             self.assertRegex(good, OTHER_ID)
         for bad in ("2027-savivaldybiu-tarybu", "2026-03-15-seimo", "2026-kovo-05-seimo", "2026-kovo-15-meru"):
             self.assertIsNone(GENERAL_ID.match(bad) or OTHER_ID.match(bad), bad)
+
+
+#: Which general election a seat-fill belongs to: the latest general of the
+#: same family before it. There is no mayoral general -- the 2023
+#: council-and-mayor ballot is `savivaldybiu` -- so a mayoral by-election
+#: belongs to the municipal council term, and `mero` folds into it.
+FAMILY = {"mero": "savivaldybiu"}
+
+
+def family(entry: dict) -> str:
+    return FAMILY.get(entry["kind"], entry["kind"])
+
+
+def expected_parent(entry: dict, registry: list[dict]) -> str:
+    earlier = [
+        other
+        for other in registry
+        if is_general(other) and family(other) == family(entry) and other["date"] < entry["date"]
+    ]
+    return max(earlier, key=lambda other: other["date"])["id"]
+
+
+class TermGroupingTests(unittest.TestCase):
+    """`parent` groups the 28 by-elections, repeats and re-votes under the
+    general election whose term they fill (issue #122): the dashboard lists
+    the generals, folds the children under them, and selecting a general
+    includes its seat-fills. One rule derives every parent, so a new entry
+    cannot point at the wrong term."""
+
+    def test_the_parent_and_the_vrk_name_marker_agree(self):
+        # "No parent" is what makes an entry a general election; VRK's own
+        # nauji / pakartotiniai marker in the name must say the same.
+        for entry in REGISTRY:
+            with self.subTest(entry["id"]):
+                self.assertEqual("parent" in entry, has_vrk_marker(entry))
+
+    def test_a_parent_is_a_registered_general_election(self):
+        by_id = {e["id"]: e for e in REGISTRY}
+        for entry in REGISTRY:
+            if "parent" not in entry:
+                continue
+            with self.subTest(entry["id"]):
+                self.assertIn(entry["parent"], by_id)
+                self.assertTrue(is_general(by_id[entry["parent"]]), "a parent has no parent of its own")
+                self.assertLess(by_id[entry["parent"]]["date"], entry["date"])
+
+    def test_a_parent_is_the_latest_earlier_general_of_the_same_family(self):
+        for entry in REGISTRY:
+            if "parent" not in entry:
+                continue
+            with self.subTest(entry["id"]):
+                self.assertEqual(entry["parent"], expected_parent(entry, REGISTRY))
+
+    def test_grouping_is_by_term_not_by_kind(self):
+        # Every mayoral by-election and re-vote belongs to a municipal
+        # council term.
+        by_id = {e["id"]: e for e in REGISTRY}
+        mayoral = [e for e in REGISTRY if e["kind"] == "mero"]
+        self.assertEqual(len(mayoral), 8)
+        for entry in mayoral:
+            with self.subTest(entry["id"]):
+                self.assertEqual(by_id[entry["parent"]]["kind"], "savivaldybiu")
+
+    def test_the_cases_the_issue_names(self):
+        by_id = {e["id"]: e for e in REGISTRY}
+        for child, parent in (
+            ("2017-balandzio-23-seimo-anyksciai-panevezys", "2016-seimo"),
+            ("2018-rugsejo-16-seimo-zanavykai", "2016-seimo"),
+            # "pakartotiniai ir nauji" in one event: still one parent.
+            ("2013-kovo-3-seimo-birzai-zarasai-ukmerge", "2012-seimo"),
+            ("1997-birzelio-29-svenciniu-tarybos-pakartotiniai", "1997-kovo-23-savivaldybiu-tarybu"),
+            ("2015-lapkricio-8-telsiu-mero", "2015-kovo-1-savivaldybiu"),
+            # The Visaginas re-vote: the strongest case for never being a
+            # top-level row.
+            ("2023-geguzes-7-visagino-mero", "2023-kovo-5-savivaldybiu-tarybu-ir-meru"),
+        ):
+            with self.subTest(child):
+                self.assertEqual(by_id[child]["parent"], parent)
+
+    def test_the_children_are_the_expected_twenty_eight(self):
+        # Seventeen Seimas seat-fills, three municipal repeats, eight mayoral
+        # by-elections and re-votes; the presidency and the EP have none.
+        children = collections.Counter(e["kind"] for e in REGISTRY if "parent" in e)
+        self.assertEqual(children, {"seimo": 17, "savivaldybiu": 3, "mero": 8})
+        self.assertEqual(len(REGISTRY), 27 + 28)
 
 
 class DashboardCarriesNoElectionListTests(unittest.TestCase):

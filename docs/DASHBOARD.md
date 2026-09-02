@@ -79,7 +79,12 @@ key stops matching, so the file cannot rot silently.
 The left pane is search plus facets, all answered from `people.json` alone:
 free text over names, canonical party names and each candidacy's
 workplace/position string; selects for election, nominating party/committee,
-municipality, office and outcome. Filters conjoin at the candidacy level — a
+municipality, office and outcome. The election select lists terms, newest
+first: a general election is one row, or a group holding itself and its
+seat-fills, and picking the general — `2016 Seimas (visa kadencija)` —
+includes the 2017–2019 by-elections of that same Seimas, which an exact-id
+match used to drop silently; a by-election stays pickable on its own from
+its group (issue #122). Filters conjoin at the candidacy level — a
 person matches when at least one of their candidacies passes every active
 filter — and **⬇ CSV** exports the current selection (semicolon-separated,
 BOM-prefixed for lt-LT Excel, uncapped even when the list shows only the
@@ -215,12 +220,14 @@ table marks the cell with a `*` and a footnote, and `people.json` carries
 `people.json`'s `"m"` array follows `MONEY_FIELDS`, and the Biggest movers
 picker indexes into it by position.
 
-## Election names
+## Election names and terms
 
 `scraper/elections.json` is the **one** registry of elections: id, first-round
-date, official Lithuanian name, and a short label for chart axes. The index
-builder reads it, orders the corpus by its dates, and copies the entries into
-`people.json`, so `dashboard/index.html` holds no election list of its own.
+date, kind, official Lithuanian name, a short label for chart axes, and for a
+by-election, repeat or re-vote the general election whose term it fills. The
+index builder reads it, orders the corpus by its dates, and copies the entries
+into `people.json`, so `dashboard/index.html` holds no election list of its
+own.
 
 Adding an election means adding one entry there. If a scraped
 `data/<id>/` has no entry, the builder names it in its output and exits
@@ -237,9 +244,10 @@ Same-day elections keep the order the registry file lists them in; the sort is
 stable on the date alone, because 2015-06-07 ran a Seimas by-election and two
 repeat municipal votes and there is no other order between them.
 
-The two display fields each follow one convention (issue #121 — the entries
-had accreted module by module, so the dropdown mixed `1996 Seimas`, `2002
-prezidento`, `1997-12 Aukštaitija` and `2003 Seimas (nauji)`):
+Each field follows one convention (issue #121 for the two display fields —
+the entries had accreted module by module, so the dropdown mixed `1996
+Seimas`, `2002 prezidento`, `1997-12 Aukštaitija` and `2003 Seimas (nauji)` —
+and issue #122 for `parent`):
 
 - **`shortName`** — `YYYY <Institucija>` for a general election, `YYYY-MM
   <Institucija>` for a by-election, repeat or re-vote, the institution one
@@ -257,12 +265,25 @@ prezidento`, `1997-12 Aukštaitija` and `2003 Seimas (nauji)`):
   or mayor), and for a Seimas by-election its constituencies (`Žirmūnų
   apygardoje Nr. 4`; `Žirmūnų Nr. 4, Gargždų Nr. 31 ir Žiemgalos Nr. 46
   apygardose`).
+- **`parent`** — on a by-election, repeat or re-vote, the id of the general
+  election whose term it fills; absent from a general election, and that
+  absence is what makes it one (28 of the 55 entries carry it). The rule is
+  mechanical: the latest earlier general of the same family, `mero` folding
+  into `savivaldybiu` — grouping is by term, not kind, so the 2015 Telšiai
+  mayoral by-election belongs to `2015 Savivaldybės`, and the 2013
+  Biržai–Zarasai–Ukmergė event, repeat and new in one, has the one parent
+  `2012 Seimas`. The page's two election pickers fold each general's
+  children under it, `candidacyMatches` accepts a candidacy whose election
+  *or parent* is the selection, and the Rinkimų suvestinė names the
+  seat-fills its figures cover. `people.json` copies the field with the rest
+  of the entry; `vrk.sqlite`'s `elections` table carries it as a column, so
+  `COALESCE(parent, id)` is the term key there.
 
 Ids are frozen: they name `data/<id>/`, the sitemaps, the modules' constants,
 the release assets and every export's join key, so the four slug shapes the
 old ones carry stay. Only an election added from now on follows one pattern —
 see [ADDING_AN_ELECTION.md](ADDING_AN_ELECTION.md). `tests/test_elections_registry.py`
-pins all three rules, so a new entry either follows them or fails there.
+pins every rule, so a new entry either follows them or fails there.
 
 ## Files
 
@@ -289,7 +310,8 @@ pins all three rules, so a new entry either follows them or fails there.
 - `tests/test_identity_merge_review.py` — pins the review scorer's tiers on
   the real shapes from the issue #96 review.
 - `tests/test_elections_registry.py` — pins the registry's shape, its
-  chronology, and that every scraped election has an entry.
+  chronology, the naming conventions, the term grouping (`parent`), and
+  that every scraped election has an entry.
 - `tests/test_dashboard_money_rendering.py` — pins that both renderers
   convert litas and that `parseMoney`/`parse_money_text` follow one shared
   string rule over one fixture list; lifts the helpers out of the page and
@@ -297,7 +319,8 @@ pins all three rules, so a new entry either follows them or fails there.
 - `tests/test_dashboard_ui.py` — pins the page's Lithuanian chrome, the
   sidebar's `nowrap`, the plural rule across the 11/21 boundaries, the
   tri-state outcome rendering, keyboard reachability, boot failure
-  reporting, and the archive-era concept rows end to end.
+  reporting, the term-grouped election pickers and their match rule, and
+  the archive-era concept rows end to end.
 - `tests/test_dashboard_concept_rows.py` — closes issue #87's test gap: the
   rows name real, corpus-measured concepts; the page's resolver agrees with
   `field_coverage.concept_value` on the shapes a naive walker gets wrong;

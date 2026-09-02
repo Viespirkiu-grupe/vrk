@@ -396,6 +396,103 @@ class ComparisonTableRenderingTests(unittest.TestCase):
         self.assertIn("th.textContent = electionShortName(e.id);", SOURCE)
 
 
+class ElectionTermGroupingSourceTests(unittest.TestCase):
+    """The election facet lists terms, not 55 peers (issue #122).
+
+    `parent` in the registry names the general election a by-election,
+    repeat or re-vote fills a seat of. Both election pickers group each
+    general with its seat-fills, and selecting the general matches them too
+    -- "2016 Seimas" used to exclude the 2017-2019 by-elections of that same
+    Seimas, silently.
+    """
+
+    def test_the_facet_and_the_stats_picker_share_the_term_aware_list(self):
+        self.assertIn("function fillElectionSelect(select)", SOURCE)
+        self.assertIn("fillElectionSelect(fElection);", SOURCE)
+        self.assertIn("fillElectionSelect(select);", SOURCE)
+        self.assertNotIn(".reverse()) addOption(", SOURCE)
+
+    def test_the_filter_and_the_stats_view_match_through_the_parent(self):
+        self.assertIn("if (f.election && !inElection(e, f.election)) return false;", SOURCE)
+        self.assertIn("if (inElection(e, id)) candidacies.push(e);", SOURCE)
+        self.assertNotIn("e.id !== f.election", SOURCE)
+
+    def test_a_term_row_says_what_it_covers(self):
+        # The closed select shows the chosen option's text, so the general's
+        # own row inside a group says it spans the term; the stats view then
+        # names the seat-fills its figures include.
+        self.assertIn("(visa kadencija)", UNCOMMENTED)
+        self.assertIn("Skaičiai apima ir tos kadencijos naujus bei pakartotinius rinkimus", UNCOMMENTED)
+
+
+@unittest.skipIf(NODE is None, "node not installed — behavioural checks skipped")
+class ElectionTermGroupingTests(unittest.TestCase):
+    """The grouping and the match rule, run under node on a small index."""
+
+    ELECTIONS = [
+        {"id": "1996-spalio-20-seimo", "date": "1996-10-20", "shortName": "1996 Seimas"},
+        {"id": "1997-kovo-23-seimo-pakartotiniai", "date": "1997-03-23",
+         "parent": "1996-spalio-20-seimo", "shortName": "1997-03 Seimas"},
+        {"id": "1997-gruodzio-21-seimo-pakartotiniai", "date": "1997-12-21",
+         "parent": "1996-spalio-20-seimo", "shortName": "1997-12 Seimas"},
+        {"id": "2000-kovo-19-savivaldybiu-tarybu", "date": "2000-03-19", "shortName": "2000 Savivaldybės"},
+        {"id": "2000-seimo", "date": "2000-10-08", "shortName": "2000 Seimas"},
+        {"id": "2003-birzelio-15-seimo-nauji", "date": "2003-06-15",
+         "parent": "2000-seimo", "shortName": "2003-06 Seimas"},
+    ]
+
+    def _run(self, expression, elections=None):
+        helpers = "\n".join(
+            re.search(pattern, SOURCE, re.S | re.M).group(0)
+            for pattern in (
+                r"^const electionParent = .*?;$",
+                r"^const inElection = .*?;$",
+                r"^function electionTree\(.*?^}",
+            )
+        )
+        script = (
+            f"const ELECTIONS = new Map({json.dumps(elections or self.ELECTIONS)}.map(e => [e.id, e]));\n"
+            f"{helpers}\nconsole.log(JSON.stringify({expression}));"
+        )
+        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        return json.loads(out.stdout)
+
+    TREE = "electionTree([...ELECTIONS.values()]).map(n => [n.election.id, n.children.map(e => e.id)])"
+
+    def test_a_general_groups_its_seat_fills_and_the_terms_run_newest_first(self):
+        # Terms newest first; inside a term the general leads and its
+        # seat-fills follow in order, the way the term happened.
+        self.assertEqual(
+            self._run(self.TREE),
+            [
+                ["2000-seimo", ["2003-birzelio-15-seimo-nauji"]],
+                ["2000-kovo-19-savivaldybiu-tarybu", []],
+                ["1996-spalio-20-seimo", ["1997-kovo-23-seimo-pakartotiniai", "1997-gruodzio-21-seimo-pakartotiniai"]],
+            ],
+        )
+
+    def test_a_child_whose_parent_the_index_lacks_stands_on_its_own(self):
+        # A subset build carries the by-election but not its general.
+        orphan = {"id": "2015-lapkricio-8-telsiu-mero", "date": "2015-11-08",
+                  "parent": "2015-kovo-1-savivaldybiu", "shortName": "2015-11 Merai"}
+        tree = self._run(self.TREE, [self.ELECTIONS[0], orphan])
+        self.assertEqual(tree, [["2015-lapkricio-8-telsiu-mero", []], ["1996-spalio-20-seimo", []]])
+
+    def test_selecting_a_general_includes_its_seat_fills_but_a_seat_fill_stands_alone(self):
+        self.assertEqual(
+            self._run(
+                '[inElection({id: "1997-kovo-23-seimo-pakartotiniai"}, "1996-spalio-20-seimo"),'
+                ' inElection({id: "1996-spalio-20-seimo"}, "1996-spalio-20-seimo"),'
+                ' inElection({id: "1997-kovo-23-seimo-pakartotiniai"}, "1997-kovo-23-seimo-pakartotiniai"),'
+                ' inElection({id: "1996-spalio-20-seimo"}, "1997-kovo-23-seimo-pakartotiniai"),'
+                ' inElection({id: "2003-birzelio-15-seimo-nauji"}, "1996-spalio-20-seimo")]'
+            ),
+            [True, True, True, False, False],
+        )
+
+
 class KeyboardAccessTests(unittest.TestCase):
     """The people list used to be unreachable by keyboard: two focusable
     elements in the whole document, 300 rendered rows of tabIndex -1 divs."""

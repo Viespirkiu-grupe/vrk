@@ -62,6 +62,50 @@ class BirthDateTests(unittest.TestCase):
         self.assertIsNone(build_person_index.birth_date_of(_record("X")))
 
 
+class RegistryCarriageTests(unittest.TestCase):
+    """people.json copies the registry entries whole, `parent` included: the
+    dashboard's term grouping (issue #122) reads that field and nothing else,
+    and a parent that names no registered election must fail the build
+    rather than leave its by-election ungrouped."""
+
+    REGISTRY = [
+        {"id": "2016-seimo", "date": "2016-10-09", "kind": "seimo",
+         "name": "2016 m. spalio 9 d. Lietuvos Respublikos Seimo rinkimai", "shortName": "2016 Seimas"},
+        {"id": "2017-balandzio-23-seimo-anyksciai-panevezys", "date": "2017-04-23", "kind": "seimo",
+         "parent": "2016-seimo", "name": "2017 m. balandžio 23 d. nauji Lietuvos Respublikos Seimo rinkimai",
+         "shortName": "2017-04 Seimas"},
+        {"id": "2020-seimo", "date": "2020-10-11", "kind": "seimo",
+         "name": "2020 m. spalio 11 d. Lietuvos Respublikos Seimo rinkimai", "shortName": "2020 Seimas"},
+    ]
+
+    def test_present_elections_ride_whole_into_the_index_parent_included(self):
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for eid in ("2016-seimo", "2017-balandzio-23-seimo-anyksciai-panevezys"):
+                (root / eid).mkdir()
+                record = dict(_record("Jonas JONAITIS", "1970-01-01"), candidateId="jonas-jonaitis")
+                (root / eid / f"jonas-jonaitis-{eid}.json").write_text(
+                    json.dumps(record, ensure_ascii=False), encoding="utf-8"
+                )
+            index = build_person_index.build_index(
+                root, registry=self.REGISTRY, overrides={"decisions": []}
+            )
+        self.assertEqual(index["elections"], self.REGISTRY[:2])
+
+    def test_a_parent_that_names_no_registered_election_fails_to_load(self):
+        import tempfile
+
+        broken = [dict(e) for e in self.REGISTRY]
+        broken[1]["parent"] = "2016-seimas"
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "elections.json"
+            path.write_text(json.dumps({"elections": broken}), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "unregistered parent"):
+                build_person_index.load_registry(path)
+
+
 class GroupingTests(unittest.TestCase):
     def _build(self, tmp_records, overrides=None):
         # lay records out as data/<election>/<cid>-<election>.json

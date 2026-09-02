@@ -166,6 +166,13 @@ class DistributionBuild(unittest.TestCase):
         self.assertEqual(by_candidate["jonas-b-2"], JPEG_SHA)
         self.assertIsNone(by_candidate["petras-c-3"])  # URL-form stays a URL
 
+    def test_the_elections_table_carries_the_term_parent(self):
+        # The registry as a table (issue #122): `parent` is the general
+        # election a by-election fills a seat of, NULL for a general.
+        connection = self.corpus_connection()
+        rows = connection.execute("SELECT id, kind, parent FROM elections").fetchall()
+        self.assertEqual([(r["id"], r["kind"], r["parent"]) for r in rows], [(ELECTION, "seimo", None)])
+
     def test_corpus_database_carries_the_analysis_tables_too(self):
         connection = self.corpus_connection()
         tables = {

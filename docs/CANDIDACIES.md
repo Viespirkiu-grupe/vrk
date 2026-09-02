@@ -175,6 +175,11 @@ python scripts/build_distribution.py 2019-prezidento    # subset, no gate
 | `vrk-corpus.sqlite.gz` | **everything**: the analysis tables plus `records`, `photos`, `anomalies` |
 | `MANIFEST.json` | per-election record counts, build date, parser commit, sha256 + bytes per asset |
 
+`elections` is the registry as a table — `id, date, kind, parent, name,
+shortName, records` — where `parent` is the general election whose term a
+by-election, repeat or re-vote fills, NULL for a general election, so
+`COALESCE(parent, id)` groups candidacies by term (issue #122).
+
 The build refuses a table that fails the fill gate, an envelope key it does
 not know, a photo sidecar that is missing or hashes differently from the
 record's own `photoMeta.sha256`, and an inline base64 portrait (zero remain
