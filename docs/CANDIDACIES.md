@@ -20,7 +20,7 @@ Reads `data/`, `docs/concept-map.json` and the registries; writes to
 |---|---|
 | `candidacies.csv.gz` | 113,073 rows × 52 columns, ~12 MB gzipped |
 | `campaigns.csv.gz` | one row per campaign-finance participant (4,729) |
-| `vrk.sqlite` | the same two as tables, plus `elections`, `persons`, `parties`, with indexes |
+| `vrk.sqlite` | the same two as tables, plus `elections`, `persons`, `parties`, `party_predecessors`, with indexes |
 
 Nothing here overwrites `normalized`: the projector only reads, and every
 value it emits is derivable again from the record files. The one hand-curated
@@ -179,6 +179,20 @@ python scripts/build_distribution.py 2019-prezidento    # subset, no gate
 shortName, records` — where `parent` is the general election whose term a
 by-election, repeat or re-vote fills, NULL for a general election, so
 `COALESCE(parent, id)` groups candidacies by term (issue #122).
+`party_predecessors(party_id, predecessor_id)` is the nominator registry's
+lineage (issue #123): one row per organisation a party, coalition or
+committee continues — the merged parties behind `ts-lkd`, the committee and
+the 2011 coalition behind `vieningas-kaunas`. The links form a forest, so a
+recursive CTE from a `party_id` down the `predecessor_id` column collects
+its whole history without cycles:
+
+```sql
+WITH RECURSIVE lineage(party_id) AS (
+  SELECT 'ts-lkd'
+  UNION SELECT predecessor_id FROM party_predecessors JOIN lineage USING (party_id)
+)
+SELECT party_id, COUNT(*) FROM candidacies WHERE party_id IN lineage GROUP BY 1;
+```
 
 The build refuses a table that fails the fill gate, an envelope key it does
 not know, a photo sidecar that is missing or hashes differently from the

@@ -1,5 +1,5 @@
 {
- "description": "Canonical registry of every nominator the corpus records: parties, coalitions, electoral committees and self-nomination (issue #82). Bootstrapped 2026-08-30 from the 427 distinct nominator/party-list surface forms measured over all 113,073 records; every measured form is an exact alias of exactly one entry. Matching is exact alias -> punctuation/case-folded alias -> unmatched (reported, never guessed) -- scraper/shared/parties.py. Renames stay one entry (the old name is an alias); mergers get a new entry with the merged organisations as predecessors. Coalitions carry their member party ids as `nariai` only where the coalition's own name enumerates them or the line-up is unambiguous; an absent `nariai` means not recovered, never empty. A line naming a party plus 'issikele pats' is the party's alias: the line names it. `unmatched` is the escape hatch for future scrapes -- a form that matches no entry lands there via scripts/nominator_report.py, and tests/test_party_registry.py asserts it is empty.",
+ "description": "Canonical registry of every nominator the corpus records: parties, coalitions, electoral committees and self-nomination (issue #82). Bootstrapped 2026-08-30 from the distinct nominator/party-list surface forms measured over all 113,073 records; every measured form is an exact alias of exactly one entry. Matching is exact alias -> punctuation/case-folded alias -> unmatched (reported, never guessed) -- scraper/shared/parties.py. An entry is one organisation (issue #123, audited against the Ministry of Justice party register and the corpus): a rename of a continuing organisation stays one entry with the old name an alias, including a committee's brand across the visuomeninis-rinkimu-komitetas / politinis-komitetas legal forms and a coalition line-up VRK spelled several ways; an organisation that another one continues -- by a merger under a new name, by a change of legal form (komitetas -> partija, 2011 issikelusiu-kandidatu koalicija -> komitetas), by a differently led project taking over its registration, or by a re-brand that carried at least a third of its candidates -- is listed under the successor's `predecessors`, which form a forest the dashboard groups by. `note` records the evidence (JAR code, dates, shared candidates). Coalitions carry their member party ids as `nariai` only where the coalition's own name enumerates them or the line-up is unambiguous; an absent `nariai` means not recovered, never empty. A line naming a party plus 'issikele pats' is the party's alias: the line names it. `unmatched` is the escape hatch for future scrapes -- a form that matches no entry lands there via scripts/nominator_report.py, and tests/test_party_registry.py asserts it is empty. `reviewedDistinct` lists the pairs scripts/party_lineage_report.py flags on candidate continuity that review found to be two organisations, with the reason, so they stop resurfacing.",
  "entries": {
   "birzu-atgimimas": {
    "name": "Biržų atgimimas",
@@ -10,16 +10,19 @@
    "name": "Darbo partija",
    "type": "partija",
    "shortName": "DP",
-   "since": "2003",
+   "since": "2003-11-25",
    "predecessors": [
-    "naujoji-sajunga"
+    "naujoji-sajunga",
+    "leiboristu-partija",
+    "krikscioniu-partija"
    ],
-   "note": "2011 m. prisijungė Naujoji sąjunga (socialliberalai).",
+   "note": "Įkurta 2003 m. (JAR 195725423). 2011 m. prijungta Naujoji sąjunga (socialliberalai); 2013-05-14 sujungimo būdu su Leiboristų partija įsteigta Darbo partija (leiboristai), 2013-11-15 sujungimo būdu su Krikščionių partija – vėl Darbo partija (JAR 303189064). Registras tai laiko naujais juridiniais asmenimis; čia – vienas įrašas, nes organizacija ta pati.",
    "aliases": []
   },
   "demokratine-darbo-ir-vienybes-partija": {
    "name": "Demokratinė darbo ir vienybės partija",
    "type": "partija",
+   "note": "K. Brazauskienės partija (JAR 302771955); likviduota. Ne ta pati kaip LDDP ar Darbo partija.",
    "aliases": []
   },
   "drasos-kelias": {
@@ -31,6 +34,8 @@
   "emigrantu-partija": {
    "name": "Emigrantų partija",
    "type": "partija",
+   "since": "2012-08-02",
+   "note": "Įregistruota 2012-08-02 (JAR 302813361); 2020-05-24 registraciją perėmė partija LIETUVA – VISŲ (žr. lietuva-visu).",
    "aliases": []
   },
   "fronto-partija": {
@@ -44,8 +49,8 @@
   "jaunoji-lietuva": {
    "name": "Partija „Jaunoji Lietuva“",
    "type": "partija",
-   "since": "1994",
-   "note": "Viena organizacija, kelis kartus keitusi pavadinimą (1996-2023).",
+   "since": "1994-09-07",
+   "note": "Viena partija (JAR 191763259), keitusi pavadinimą: Lietuvių nacionalinė partija „Jaunoji Lietuva“ (1994-09-07), Lietuvių nacionalinė partija-„Jaunoji Lietuva“ (1998-03-09), Lietuvių nacionalinės partijos ir „Jaunosios Lietuvos“ sąjunga (1999-04-26), „Jaunosios Lietuvos“, naujųjų tautininkų ir politinių kalinių sąjunga (2000-06-21), „Jaunosios Lietuvos“ ir naujųjų tautininkų sąjunga (2000-10-18), Partija „Jaunoji Lietuva“ (2005-05-17); po 2023 m. rinkimų – Lietuvos šeimų sąjunga (Jaunoji Lietuva), nuo 2024 m. – Sąjūdis už miškus – Jaunoji Lietuva.",
    "aliases": [
     "\"Jaunosios Lietuvos\" ir naujųjų tautininkų sąjunga",
     "\"Jaunosios Lietuvos\", naujųjų tautininkų ir politinių kalinių sąjunga",
@@ -58,14 +63,14 @@
   "kartu-solidarumo-sajunga": {
    "name": "Kartų solidarumo sąjunga – Santalka Lietuvai",
    "type": "partija",
+   "since": "2020-04-06",
+   "predecessors": [
+    "lietuvos-pensininku-partija"
+   ],
+   "note": "A. Juozaičio judėjimas „Santalka Lietuvai“ 2020-04-06 perėmė Kartų solidarumo sąjungos (buv. Lietuvos pensininkų partijos, JAR 300872539) registraciją su papildytu pavadinimu (su 2011–2015 m. pensininkų sąrašais bendras 1 kandidatas iš 41); 2021 m. birželį pervadinta į „Kartu su Vyčiu“.",
    "aliases": [
     "KARTŲ SOLIDARUMO SĄJUNGA - SANTALKA LIETUVAI"
    ]
-  },
-  "kovotoju-uz-lietuva-sajunga": {
-   "name": "Kovotojų už Lietuvą sąjunga",
-   "type": "partija",
-   "aliases": []
   },
   "krikscioniu-demokratu-sajunga": {
    "name": "Krikščionių demokratų sąjunga",
@@ -75,15 +80,15 @@
     "Krikščionių demokratų sąjungos"
    ]
   },
-  "krikscioniu-konservatoriu-socialine-sajunga": {
-   "name": "Krikščionių konservatorių socialinė sąjunga",
-   "type": "partija",
-   "aliases": []
-  },
   "krikscioniu-partija": {
    "name": "Krikščionių partija",
    "type": "partija",
-   "aliases": []
+   "since": "2000-07-14",
+   "note": "G. Vagnoriaus partija: įregistruota 2000-07-14 kaip Nuosaikiųjų konservatorių sąjunga (JAR 195713798), 2004-04-15 pervadinta į Krikščionių konservatorių socialinę sąjungą (35 % bendrų kandidatų), 2010-03-29 – į Krikščionių partiją, prisijungus iš Tautos prisikėlimo partijos pasitraukusiai frakcijai; 2013-11-15 sujungimo būdu su Darbo partija (leiboristais) tapo Darbo partija (žr. darbo-partija).",
+   "aliases": [
+    "Krikščionių konservatorių socialinė sąjunga",
+    "Nuosaikiųjų konservatorių sąjunga"
+   ]
   },
   "krikscioniu-sajunga": {
    "name": "Krikščionių sąjunga",
@@ -94,11 +99,12 @@
   "laisve-ir-teisingumas": {
    "name": "Partija „Laisvė ir teisingumas“",
    "type": "partija",
-   "since": "2020",
+   "since": "2020-08-07",
    "predecessors": [
     "tvarka-ir-teisingumas",
     "lietuvos-laisves-sajunga-liberalai"
    ],
+   "note": "2020-08-07 Lietuvos laisvės sąjunga (liberalai), į kurią susijungė ir Tvarkos ir teisingumo bei judėjimo „Pirmyn, Lietuva“ žmonės, pervadinta į partiją „Laisvė ir teisingumas“ (JAR 195725238 tęsiamas); nuo 2025-07-28 vadinasi Centro dešinės sąjunga.",
    "aliases": [
     "Partija \"Laisvė ir teisingumas\""
    ]
@@ -121,33 +127,50 @@
   "leiboristu-partija": {
    "name": "Leiboristų partija",
    "type": "partija",
+   "since": "2008-06-15",
+   "note": "2008-06-15 Darbo partijos aplinkos įkurta partija (V. Fiodorovas; JAR 301817780) – 2008 m. Seimo rinkimuose 35 iš 37 jos kandidatų kandidatavo ir su Darbo partija; 2013-05-14 sujungimo būdu su Darbo partija įsteigta Darbo partija (leiboristai) (žr. darbo-partija).",
    "aliases": []
   },
   "liberalu-ir-centro-sajunga": {
    "name": "Liberalų ir centro sąjunga",
    "type": "partija",
    "shortName": "LiCS",
-   "since": "2003",
+   "since": "2003-06-26",
    "predecessors": [
     "lietuvos-liberalu-sajunga",
     "lietuvos-centro-sajunga",
-    "moderniuju-krikscioniu-demokratu-sajunga"
+    "moderniuju-krikscioniu-demokratu-sajunga",
+    "tautos-prisikelimo-partija"
    ],
+   "note": "2003-06-26 sujungimo būdu iš Lietuvos liberalų sąjungos, Lietuvos centro sąjungos ir Moderniųjų krikščionių demokratų sąjungos įsteigtas juridinis asmuo (JAR 195725238); 2012-01-03 prijungta Tautos prisikėlimo partija; 2014-09-09 prijungus „Sąjungą Taip“ pervadintas į Lietuvos laisvės sąjungą (liberalus) (žr.).",
    "aliases": []
   },
   "lietuva-visu": {
    "name": "Partija LIETUVA – VISŲ",
    "type": "partija",
+   "since": "2020-05-24",
+   "predecessors": [
+    "emigrantu-partija"
+   ],
+   "note": "2020-05-24 T. Pačėso vadovaujama jėga perėmė ir pervadino Emigrantų partijos registraciją (JAR 302813361; su 2012–2013 m. sąrašais bendras 1 kandidatas iš 31).",
    "aliases": []
   },
   "lietuviu-tautininku-ir-respublikonu-sajunga": {
    "name": "Lietuvių tautininkų ir respublikonų sąjunga",
    "type": "partija",
+   "since": "2017-06-20",
+   "predecessors": [
+    "tautininku-sajunga",
+    "respublikonu-partija"
+   ],
+   "note": "2011 m. atkurta Tautininkų sąjunga (JAR 302726860) 2017-06-20 prijungė Respublikonų partiją (18 iš 2019 m. 40 kandidatų anksčiau kandidatavo su respublikonais) ir pasivadino Lietuvių tautininkų ir respublikonų sąjunga; 2022-04-21 susijungė su Centro partija – tautininkais į Tautos ir teisingumo sąjungą (žr.).",
    "aliases": []
   },
   "lietuviu-tautininku-sajunga": {
    "name": "Lietuvių tautininkų sąjunga",
    "type": "partija",
+   "since": "1990-02-23",
+   "note": "Atkurta 1989 m., įregistruota 1990-02-23 (JAR 191362736); 2008-04-22 prijungimo būdu įsiliejo į Tėvynės sąjungą (žr. tevynes-sajunga). 2011 m. įsteigta Tautininkų sąjunga skelbiasi ją atkūrusi (žr.).",
    "aliases": [
     "Lietuvių tautininkų sąjungos"
    ]
@@ -155,17 +178,19 @@
   "lietuvos-centro-partija": {
    "name": "Lietuvos centro partija",
    "type": "partija",
-   "since": "2003",
-   "note": "2020 m. tapo partija „Centro partija – tautininkai“ (žr. tautos-ir-teisingumo-sajunga).",
+   "since": "2003-07-04",
+   "note": "Įregistruota 2003-07-04 kaip Nacionalinė centro partija (R. Ozolo grupė, atskilusi nuo Lietuvos centro sąjungos šiai jungiantis į LiCS; JAR 195725380), 2005-07-28 pervadinta į Lietuvos centro partiją, 2019-12-18 – į Centro partiją „Gerovės Lietuva“, 2020-08-24 – į Centro partiją – tautininkus (tuo vardu 2020 m. Seimo rinkimuose). 2022-04-21 prijungusi Lietuvių tautininkų ir respublikonų sąjungą tapo Tautos ir teisingumo sąjunga (žr. tautos-ir-teisingumo-sajunga).",
    "aliases": [
+    "Centro partija - tautininkai",
     "Lietuvos centro partija, išsikėlė pati",
-    "Lietuvos centro partija, išsikėlė pats"
+    "Lietuvos centro partija, išsikėlė pats",
+    "Nacionalinė centro partija"
    ]
   },
   "lietuvos-centro-sajunga": {
    "name": "Lietuvos centro sąjunga",
    "type": "partija",
-   "note": "2003 m. susijungė į Liberalų ir centro sąjungą.",
+   "note": "2003 m. sujungimo būdu su LLS ir MKDS įsteigė Liberalų ir centro sąjungą (JAR 191611828 baigėsi); tuo metu nuo jos atskilo R. Ozolo Nacionalinė centro partija (žr. lietuvos-centro-partija).",
    "aliases": [
     "Lietuvos centro sąjungos"
    ]
@@ -173,6 +198,7 @@
   "lietuvos-demokratu-partija": {
    "name": "Lietuvos demokratų partija",
    "type": "partija",
+   "note": "2001 m. spalį sujungimo būdu su dar trimis partijomis įsteigė Lietuvos dešiniųjų sąjungą (žr. lietuvos-desiniuju-sajunga).",
    "aliases": [
     "Lietuvos demokratų partijos"
    ]
@@ -180,16 +206,27 @@
   "lietuvos-desiniuju-sajunga": {
    "name": "Lietuvos dešiniųjų sąjunga",
    "type": "partija",
+   "since": "2001-10",
+   "predecessors": [
+    "lietuvos-demokratu-partija",
+    "tevynes-liaudies-partija",
+    "nepriklausomybes-partija",
+    "lietuvos-laisves-lyga"
+   ],
+   "note": "2001 m. spalį sujungimo būdu iš Lietuvos demokratų partijos, Tėvynės liaudies partijos, Nepriklausomybės partijos ir Lietuvos laisvės lygos įsteigtas naujas juridinis asmuo (JAR 195724321); 2003–2004 m. prijungimo būdu įsiliejo į Tėvynės sąjungą.",
    "aliases": []
   },
   "lietuvos-gyvenimo-logikos-partija": {
    "name": "Lietuvos gyvenimo logikos partija",
    "type": "partija",
+   "note": "Prijungimo būdu įsiliejo į Naująją sąjungą (socialliberalus) (JAR 191929841).",
    "aliases": []
   },
   "lietuvos-kelias": {
    "name": "Tautinė partija Lietuvos kelias",
    "type": "partija",
+   "since": "2003-06-23",
+   "note": "2003-06-23 įregistruota kaip Politinė partija Lietuvos kelias (JAR 195725195), 2004-08-31 pervadinta; vėliau prijungimo būdu įsiliejo į Lietuvos liaudies partiją.",
    "aliases": [
     "Tautinė partija LIETUVOS KELIAS"
    ]
@@ -197,11 +234,14 @@
   "lietuvos-krikscioniskosios-demokratijos-partija": {
    "name": "Lietuvos krikščioniškosios demokratijos partija",
    "type": "partija",
+   "since": "2003-01-28",
+   "note": "Įregistruota 2003-01-28 (JAR 195725042); ne ta pati kaip LKDP/LKD. 2010 m. dalis narių įsiliejo į Krikščionių partiją.",
    "aliases": []
   },
   "lietuvos-laisves-lyga": {
    "name": "Lietuvos laisvės lyga",
    "type": "partija",
+   "note": "2001 m. spalį sujungimo būdu su dar trimis partijomis įsteigė Lietuvos dešiniųjų sąjungą (žr. lietuvos-desiniuju-sajunga).",
    "aliases": [
     "Lietuvos laisvės lygos"
    ]
@@ -209,20 +249,22 @@
   "lietuvos-laisves-sajunga": {
    "name": "Lietuvos laisvės sąjunga",
    "type": "partija",
-   "note": "1990-ųjų partija (V. Šustauskas). Ne ta pati organizacija kaip 2014 m. įkurta Lietuvos laisvės sąjunga (liberalai).",
+   "since": "1994-09-13",
+   "note": "V. Šustausko partija: 1992 m. atskilo nuo Lietuvos laisvės lygos, įregistruota 1994-09-13 (JAR 190771228), 2012-01-13 pervadinta į Kovotojų už Lietuvą sąjungą (13 iš 2012–2015 m. 33 kandidatų kandidatavo ir senuoju vardu). Ne ta pati organizacija kaip 2014 m. iš Liberalų ir centro sąjungos išaugusi Lietuvos laisvės sąjunga (liberalai).",
    "aliases": [
+    "Kovotojų už Lietuvą sąjunga",
     "Lietuvos laisvės sąjungos"
    ]
   },
   "lietuvos-laisves-sajunga-liberalai": {
    "name": "Lietuvos laisvės sąjunga (liberalai)",
    "type": "partija",
-   "since": "2014",
+   "since": "2014-09-09",
    "predecessors": [
     "liberalu-ir-centro-sajunga",
     "sajunga-taip"
    ],
-   "note": "2020 m. susijungė į partiją „Laisvė ir teisingumas“.",
+   "note": "2014-09-09 Liberalų ir centro sąjunga, prijungusi „Sąjungą Taip“, pervadinta į Lietuvos laisvės sąjungą (liberalus) (JAR 195725238 tęsiamas); 2020-08-07 pervadinta į partiją „Laisvė ir teisingumas“ (žr.). Ne ta pati organizacija kaip V. Šustausko Lietuvos laisvės sąjunga.",
    "aliases": [
     "Lietuvos laisvės sąjunga (liberalai), išsikėlė pats"
    ]
@@ -230,24 +272,32 @@
   "lietuvos-lenku-liaudies-partija": {
    "name": "Lietuvos lenkų liaudies partija",
    "type": "partija",
+   "since": "2002-09-23",
+   "note": "Įregistruota 2002-09-23 (JAR 295724660); 2010-07-09 pervadinta į Respublikonų lygą (tuo vardu rinkimuose nedalyvavo); likviduota.",
    "aliases": []
   },
   "lietuvos-liaudies-partija": {
    "name": "Lietuvos liaudies partija",
    "type": "partija",
-   "note": "Vienas pavadinimas, dvi registracijos: 1990-ųjų partija (1996-1997) ir 2009 m. K. Prunskienės įkurtoji (2011-2024). Registras jų atskirti negali.",
+   "since": "2010-04-19",
+   "predecessors": [
+    "lietuvos-kelias"
+   ],
+   "note": "Vienas pavadinimas, dvi registracijos: 1996–2000 m. tuo vardu veikė vėlesnė Lietuvos liaudies sąjunga „Už teisingą Lietuvą“ (JAR 191929318; 32 šio įrašo kandidatavimai 1996–1997 m. yra jos), o 2010-04-19 įregistruota K. Prunskienės partija (JAR 302500733; kandidatavimai nuo 2011 m.). Eilutės registras atskirti negali. Prijungimo būdu prisijungė Tautinė partija Lietuvos kelias.",
    "aliases": []
   },
   "lietuvos-liaudies-sajunga": {
    "name": "Lietuvos liaudies sąjunga \"Už teisingą Lietuvą\"",
    "type": "partija",
+   "since": "1996-08-02",
+   "note": "Įregistruota 1996-08-02 kaip Lietuvos Liaudies Partija (JAR 191929318; V. Lazinka), 2000-05-24 pervadinta į Lietuvos liaudies sąjungą „Už teisingą Lietuvą“ (J. Veselka; vardas paimtas iš 2000 m. savivaldos rinkimų Liaudies koalicijos „Už teisingą Lietuvą“); 2010 m. prijungimo būdu įsiliejo į Naująją sąjungą (socialliberalus). Jos 1996–1997 m. formos „Lietuvos liaudies partija“ registro eilute nesiskiria nuo 2010 m. K. Prunskienės partijos ir lieka prie lietuvos-liaudies-partija.",
    "aliases": []
   },
   "lietuvos-liberalu-sajunga": {
    "name": "Lietuvos liberalų sąjunga",
    "type": "partija",
    "shortName": "LLS",
-   "note": "2003 m. susijungė į Liberalų ir centro sąjungą.",
+   "note": "2003 m. sujungimo būdu su LCS ir MKDS įsteigė Liberalų ir centro sąjungą (JAR 290735140 baigėsi); 2006 m. nuo LiCS atskilęs Liberalų sąjūdis yra atskira organizacija.",
    "aliases": [
     "Lietuvos liberalų sąjungos"
    ]
@@ -255,6 +305,7 @@
   "lietuvos-nacionaldemokratu-partija": {
    "name": "Lietuvos nacionaldemokratų partija",
    "type": "partija",
+   "note": "R. Smetonos partija (JAR 291970910); nuo 2009-02-27 likviduojama registro tvarkytojo iniciatyva.",
    "aliases": [
     "Lietuvos nacionaldemokratų partijos"
    ]
@@ -262,11 +313,17 @@
   "lietuvos-pensininku-partija": {
    "name": "Lietuvos pensininkų partija",
    "type": "partija",
-   "aliases": []
+   "since": "2007-06-12",
+   "note": "Įregistruota 2007-06-12 kaip PENSININKŲ PARTIJA (JAR 300872539; tuo vardu 2007 m. Dzūkijos apygardoje kandidatavo jos pirmininkas V. J. Kadžys), 2010-01-13 pervadinta į Lietuvos pensininkų partiją, 2017-12-14 – į Kartų solidarumo sąjungą. 2020-04-06 registraciją su papildytu pavadinimu perėmė A. Juozaičio judėjimas (žr. kartu-solidarumo-sajunga).",
+   "aliases": [
+    "Pensininkų partija"
+   ]
   },
   "lietuvos-pilieciu-aljansas": {
    "name": "Lietuvos piliečių aljansas",
    "type": "partija",
+   "since": "1996-08-14",
+   "note": "Įregistruota 1996-08-14 kaip Lietuvos tautinių mažumų aljansas (JAR 191929656), 1997-02-06 pervadinta į Lietuvos piliečių aljansą, 2005-07-25 – į Piliečių sąjungą; 2006 m. registraciją perėmė kita politinė jėga (žr. pilietines-demokratijos-partija).",
    "aliases": [
     "Lietuvos piliečių aljanso"
    ]
@@ -274,6 +331,7 @@
   "lietuvos-reformu-partija": {
    "name": "Lietuvos reformų partija",
    "type": "partija",
+   "note": "Likviduota (JAR 191929275).",
    "aliases": []
   },
   "lietuvos-regionu-partija": {
@@ -288,6 +346,7 @@
   "lietuvos-rusu-sajunga": {
    "name": "Lietuvos rusų sąjunga",
    "type": "partija",
+   "note": "Įregistruota 1995 m. (JAR 193025269); 2021-09-21 išregistruota.",
    "aliases": [
     "Lietuvos rusų sąjungos"
    ]
@@ -302,11 +361,17 @@
   "lietuvos-socialdemokratu-sajunga": {
    "name": "Lietuvos socialdemokratų sąjunga",
    "type": "partija",
-   "aliases": []
+   "since": "1999-12-27",
+   "note": "Įregistruota 1999-12-27 kaip Lietuvos partija „Socialdemokratija 2000“ (R. Dagio grupė, nesutikusi su LSDP ir LDDP jungimusi; JAR 291984130), 2003-12-06 pervadinta į Lietuvos socialdemokratų sąjungą; 2014 m. likviduota.",
+   "aliases": [
+    "Lietuvos partija \"Socialdemokratija 2000\"",
+    "Lietuvos partijos \"Socialdemokratija 2000\""
+   ]
   },
   "lietuvos-socialinio-teisingumo-sajunga": {
    "name": "Lietuvos socialinio teisingumo sąjunga",
    "type": "partija",
+   "note": "Likviduota (JAR 191929122).",
    "aliases": []
   },
   "lietuvos-socialistu-partija": {
@@ -318,6 +383,7 @@
   "lietuvos-teisingumo-partija": {
    "name": "Lietuvos teisingumo partija",
    "type": "partija",
+   "note": "1995 m. įregistruota B. Simanavičiaus partija (JAR 291867390); 2007-02-21 prijungimo būdu įsiliejo į Naująją sąjungą (socialliberalus).",
    "aliases": [
     "Lietuvos teisingumo partijos"
    ]
@@ -325,6 +391,7 @@
   "lietuvos-ukio-partija": {
    "name": "Lietuvos ūkio partija",
    "type": "partija",
+   "note": "Nuo 2009-02-12 likviduojama registro tvarkytojo iniciatyva (JAR 291929080).",
    "aliases": [
     "Lietuvos ūkio partijos"
    ]
@@ -332,7 +399,7 @@
   "lietuvos-valstieciu-partija": {
    "name": "Lietuvos valstiečių partija",
    "type": "partija",
-   "note": "2001 m. susijungė į Valstiečių ir Naujosios demokratijos partijų sąjungą.",
+   "note": "Iki 1994 m. Lietuvos valstiečių sąjunga (JAR 190657630); 2002-03-15 sujungimo būdu su Naujosios demokratijos partija įsteigė Valstiečių ir Naujosios demokratijos partijų sąjungą.",
    "aliases": [
     "Lietuvos valstiečių partijos"
    ]
@@ -341,36 +408,35 @@
    "name": "Lietuvos žaliųjų partija",
    "type": "partija",
    "shortName": "LŽP",
-   "aliases": []
-  },
-  "lietuvos-zaliuju-sajudis": {
-   "name": "Politinė partija „Lietuvos žaliųjų sąjūdis“",
-   "type": "partija",
-   "note": "Ne tas pats kaip Lietuvos žaliųjų partija.",
-   "aliases": []
+   "since": "2011-05-11",
+   "note": "Įregistruota 2011-05-11 kaip Politinė partija „Lietuvos žaliųjų sąjūdis“ (JAR 302626187; tuo vardu 2012 m. Seimo rinkimuose – 4 iš 5 jos kandidatų kandidatavo ir kaip LŽP), 2012-11-24 pervadinta į Lietuvos žaliųjų partiją. Ne tas pats kaip 1990-ųjų Lietuvos žalioji partija (likviduota).",
+   "aliases": [
+    "Politinė partija „Lietuvos žaliųjų sąjūdis“"
+   ]
   },
   "lietuvos-zmoniu-partija": {
    "name": "Lietuvos žmonių partija",
    "type": "partija",
+   "note": "Likviduota (JAR 302756615).",
    "aliases": []
   },
   "lkd": {
    "name": "Lietuvos krikščionys demokratai",
    "type": "partija",
    "shortName": "LKD",
-   "since": "2001",
+   "since": "2001-07-04",
    "predecessors": [
     "lkdp",
     "krikscioniu-demokratu-sajunga"
    ],
-   "note": "2008 m. susijungė į Tėvynės sąjungą – Lietuvos krikščionis demokratus.",
+   "note": "2001-07-04 Lietuvos krikščionių demokratų partija pervadinta į Lietuvos krikščionis demokratus (JAR 191362540 tęsiamas), sujungimo būdu prisijungus Krikščionių demokratų sąjungai; 2008 m. birželį sujungimo būdu su Tėvynės sąjunga įsteigtas naujas juridinis asmuo TS-LKD.",
    "aliases": []
   },
   "lkdp": {
    "name": "Lietuvos krikščionių demokratų partija",
    "type": "partija",
    "shortName": "LKDP",
-   "note": "2001 m. susijungė į Lietuvos krikščionis demokratus.",
+   "note": "2001-07-04 pervadinta į Lietuvos krikščionis demokratus prijungus Krikščionių demokratų sąjungą (žr. lkd); 2000 m. nuo jos atskilo Moderniųjų krikščionių demokratų sąjunga (21 iš 49 jos kandidatų).",
    "aliases": [
     "Lietuvos krikščionių demokratų partijos"
    ]
@@ -380,7 +446,7 @@
    "type": "partija",
    "shortName": "LLRA-KŠS",
    "since": "1994",
-   "note": "Iki 2016 m. vadinosi Lietuvos lenkų rinkimų akcija; pavadinimo keitimas, ne susijungimas.",
+   "note": "Iki 2016-06-16 vadinosi Lietuvos lenkų rinkimų akcija (JAR 191783856); pavadinimo keitimas, ne susijungimas.",
    "aliases": [
     "Lietuvos lenkų rinkimų akcija",
     "Lietuvos lenkų rinkimų akcija - Krikščioniškų šeimų sąjunga",
@@ -429,7 +495,7 @@
     "lietuvos-valstieciu-partija",
     "naujosios-demokratijos-partija"
    ],
-   "note": "Įkurta 2001 m. kaip Valstiečių ir Naujosios demokratijos partijų sąjunga; nuo 2006 m. Lietuvos valstiečių liaudininkų sąjunga, nuo 2012 m. dabartinis pavadinimas.",
+   "note": "2001 m. gruodį sutarta, 2002-03-15 įregistruota kaip Valstiečių ir Naujosios demokratijos partijų sąjunga (naujas juridinis asmuo JAR 195724474, sujungus Lietuvos valstiečių partiją ir Naujosios demokratijos partiją); nuo 2006-01-18 Lietuvos valstiečių liaudininkų sąjunga, nuo 2012-02-23 dabartinis pavadinimas.",
    "aliases": [
     "Lietuvos valstiečių ir žaliųjų sąjunga, išsikėlė pats",
     "Lietuvos valstiečių liaudininkų sąjunga",
@@ -440,7 +506,8 @@
    "name": "Moderniųjų krikščionių demokratų sąjunga",
    "type": "partija",
    "shortName": "MKDS",
-   "note": "2003 m. susijungė į Liberalų ir centro sąjungą.",
+   "since": "2000",
+   "note": "2000 m. nuo LKDP atskilusi V. Bogušio partija (JAR 195712543); 2003 m. sujungimo būdu su LLS ir LCS įsteigė Liberalų ir centro sąjungą.",
    "aliases": []
   },
   "moletai-kartu": {
@@ -450,11 +517,6 @@
     "komitetas-moletai-kartu"
    ],
    "note": "2023 m. įregistruota partija, tęsianti to paties pavadinimo rinkimų komiteto veiklą.",
-   "aliases": []
-  },
-  "nacionaline-centro-partija": {
-   "name": "Nacionalinė centro partija",
-   "type": "partija",
    "aliases": []
   },
   "nacionalinis-susivienijimas": {
@@ -472,7 +534,12 @@
    "type": "partija",
    "shortName": "NS",
    "since": "1998",
-   "note": "2011 m. susijungė su Darbo partija.",
+   "predecessors": [
+    "lietuvos-teisingumo-partija",
+    "lietuvos-gyvenimo-logikos-partija",
+    "lietuvos-liaudies-sajunga"
+   ],
+   "note": "Įkurta 1998 m. (JAR 191957591). Prijungimo būdu prisijungė Lietuvos teisingumo partija (2007-02-21), Lietuvos gyvenimo logikos partija ir Lietuvos liaudies sąjunga „Už teisingą Lietuvą“ (2010 m.); 2011 m. pati prijungimo būdu įsiliejo į Darbo partiją.",
    "aliases": [
     "Naujosios sąjungos (socialliberalų)"
    ]
@@ -481,7 +548,7 @@
    "name": "Naujosios demokratijos partija",
    "type": "partija",
    "since": "1995",
-   "note": "Įkurta 1995 m. kaip Lietuvos moterų partija (K. Prunskienė), nuo 1998 m. Naujoji demokratija/Moterų partija; 2001 m. susijungė į Valstiečių ir Naujosios demokratijos partijų sąjungą.",
+   "note": "Įkurta 1995 m. kaip Lietuvos moterų partija (K. Prunskienė; JAR 191835438), 1998-03-30 pervadinta į Naująją demokratiją/Moterų partiją, 2000-05-10 – į Naujosios demokratijos partiją; 2002-03-15 sujungimo būdu su Lietuvos valstiečių partija įsteigė Valstiečių ir Naujosios demokratijos partijų sąjungą.",
    "aliases": [
     "Lietuvos moterų partija",
     "Naujoji demokratija/ Moterų partija",
@@ -500,23 +567,20 @@
   "nepriklausomybes-partija": {
    "name": "Nepriklausomybės partija",
    "type": "partija",
-   "aliases": []
-  },
-  "nuosaikiuju-konservatoriu-sajunga": {
-   "name": "Nuosaikiųjų konservatorių sąjunga",
-   "type": "partija",
-   "aliases": []
-  },
-  "pensininku-partija": {
-   "name": "Pensininkų partija",
-   "type": "partija",
-   "note": "Vienintelis 2007 m. paminėjimas; ne tas pats kaip 2009 m. įkurta Lietuvos pensininkų partija.",
+   "note": "2001 m. spalį sujungimo būdu su dar trimis partijomis įsteigė Lietuvos dešiniųjų sąjungą (žr. lietuvos-desiniuju-sajunga).",
    "aliases": []
   },
   "pilietines-demokratijos-partija": {
    "name": "Pilietinės demokratijos partija",
    "type": "partija",
-   "aliases": []
+   "since": "2006-06-05",
+   "predecessors": [
+    "lietuvos-pilieciu-aljansas"
+   ],
+   "note": "V. Muntiano grupė (atskilusi nuo Darbo partijos) 2006-06-05 perėmė ir pervadino Piliečių sąjungos registraciją (JAR 191929656 – 1996 m. Lietuvos tautinių mažumų aljansas, 1997–2005 m. Lietuvos piliečių aljansas, žr. lietuvos-pilieciu-aljansas; tik 2 bendri kandidatai iš 74). 2012-03-01 pervadinta į Tautos vienybės sąjungą (tuo vardu 2012 m. Seimo rinkimuose); likviduojama.",
+   "aliases": [
+    "Tautos vienybės sąjunga"
+   ]
   },
   "profesiniu-sajungu-centras": {
    "name": "Politinė partija „Profesinių sąjungų centras“",
@@ -528,11 +592,18 @@
   "raseiniu-zemaitis": {
    "name": "Raseinių žemaitis",
    "type": "partija",
+   "since": "2023",
+   "predecessors": [
+    "komitetas-pilietiskas-pasirinkimas"
+   ],
+   "note": "2023 m. įregistruota partija, tęsianti 2019 m. komiteto „Pilietiškas pasirinkimas“ veiklą (5 iš 14 kandidatų bendri).",
    "aliases": []
   },
   "respublikonu-partija": {
    "name": "Respublikonų partija",
    "type": "partija",
+   "since": "1991-02-06",
+   "note": "Įregistruota 1991-02-06 (JAR 190727769); 2017-06-20 prijungimo būdu įsiliejo į Tautininkų sąjungą, kuri pasivadino Lietuvių tautininkų ir respublikonų sąjunga (žr.).",
    "aliases": [
     "Lietuvos Respublikonų partijos"
    ]
@@ -540,11 +611,13 @@
   "rinkimai-96": {
    "name": "Nepartinių judėjimas \"Rinkimai 96\"",
    "type": "partija",
+   "note": "Nuo 2008-09-19 likviduojama registro tvarkytojo iniciatyva (JAR 191929460).",
    "aliases": []
   },
   "rusu-aljansas": {
    "name": "Politinė partija Rusų aljansas",
    "type": "partija",
+   "note": "Klaipėdos partija (JAR 195724855), nuo 2002 m.; ne ta pati kaip Lietuvos rusų sąjunga.",
    "aliases": [
     "Politinė partija Rusų Aljansas"
    ]
@@ -552,7 +625,11 @@
   "sajunga-taip": {
    "name": "Politinė partija „Sąjunga Taip“",
    "type": "partija",
-   "note": "2014 m. susijungė į Lietuvos laisvės sąjungą (liberalus).",
+   "since": "2012-01-13",
+   "predecessors": [
+    "koalicija-arturo-zuoko-ir-vilniaus-koalicija"
+   ],
+   "note": "A. Zuoko partija, įregistruota 2012-01-13 (JAR 302711260) iš jo 2011 m. Vilniaus išsikėlusių kandidatų koalicijos (24 iš jos 51 kandidato kandidatavo su partija 2012 m.); 2014-09-09 prijungimo būdu įsiliejo į Liberalų ir centro sąjungą, kuri pasivadino Lietuvos laisvės sąjunga (liberalai).",
    "aliases": []
   },
   "siauliu-labui": {
@@ -563,19 +640,18 @@
   "silales-centristai": {
    "name": "Šilalės centristai",
    "type": "partija",
+   "since": "2023",
+   "predecessors": [
+    "komitetas-centro-judejimas-uz-silales-krasta"
+   ],
+   "note": "2023 m. įregistruota partija, tęsianti 2019 m. komiteto „Centro judėjimas už Šilalės kraštą“ veiklą (18 iš 50 kandidatų bendri).",
    "aliases": []
   },
   "smulkaus-ir-vidutinio-verslo-partija": {
    "name": "Smulkaus ir vidutinio verslo partija",
    "type": "partija",
+   "note": "Likviduota (JAR 300617481).",
    "aliases": []
-  },
-  "socialdemokratija-2000": {
-   "name": "Lietuvos partija \"Socialdemokratija 2000\"",
-   "type": "partija",
-   "aliases": [
-    "Lietuvos partijos \"Socialdemokratija 2000\""
-   ]
   },
   "socialistinis-liaudies-frontas": {
    "name": "Socialistinis liaudies Frontas",
@@ -595,25 +671,25 @@
   "tautininku-sajunga": {
    "name": "Tautininkų sąjunga",
    "type": "partija",
-   "note": "2020 m. susijungė į partiją „Centro partija – tautininkai“ (žr. tautos-ir-teisingumo-sajunga).",
+   "since": "2011-12-17",
+   "note": "2011-12-17 iš TS-LKD pasitraukusių tautininkų įsteigta partija (naujas juridinis asmuo, JAR 302726860), pasiskelbusi tęsianti 2008 m. į Tėvynės sąjungą įsiliejusios Lietuvių tautininkų sąjungos tradiciją – čia ne pirmtakė, o atkūrimas: LTS juridinis asmuo baigėsi prijungimu prie TS, ir tik 11 iš 2012–2016 m. 119 kandidatų buvo kandidatavę su ja. 2017-06-20 prijungus Respublikonų partiją pervadinta į Lietuvių tautininkų ir respublikonų sąjungą (žr.).",
    "aliases": []
   },
   "tautos-ir-teisingumo-sajunga": {
    "name": "Tautos ir teisingumo sąjunga (centristai, tautininkai)",
    "type": "partija",
-   "since": "2020",
+   "since": "2022-04-21",
    "predecessors": [
     "lietuvos-centro-partija",
-    "tautininku-sajunga"
+    "lietuviu-tautininku-ir-respublikonu-sajunga"
    ],
-   "note": "2020 m. Lietuvos centro partijai susijungus su Tautininkų sąjunga; iki 2022 m. vadinosi „Centro partija – tautininkai“.",
-   "aliases": [
-    "Centro partija - tautininkai"
-   ]
+   "note": "2021-09-29 paskelbtas, 2022-04-21 teisiškai užbaigtas Centro partijos – tautininkų (buv. Lietuvos centro partija, JAR 195725380 – jos juridinis asmuo tęsiamas), Lietuvių tautininkų ir respublikonų sąjungos ir P. Gražulio judėjimo „Už Lietuvą – vyrai!“ susijungimas.",
+   "aliases": []
   },
   "tautos-pazangos-partija": {
    "name": "Tautos pažangos partija",
    "type": "partija",
+   "note": "Likviduota (JAR 190739928).",
    "aliases": [
     "Tautos pažangos partijos"
    ]
@@ -621,21 +697,24 @@
   "tautos-prisikelimo-partija": {
    "name": "Tautos prisikėlimo partija",
    "type": "partija",
-   "aliases": []
-  },
-  "tautos-vienybes-sajunga": {
-   "name": "Tautos vienybės sąjunga",
-   "type": "partija",
+   "since": "2008-06-30",
+   "note": "2008-06-30 įkurta A. Valinsko partija (JAR 301768632); 2010 m. nuo jos atskilusi frakcija įsiliejo į Krikščionių partiją; 2012-01-03 prijungimo būdu įsiliejo į Liberalų ir centro sąjungą.",
    "aliases": []
   },
   "tavo-balsas-uz-jurbarko-krasta": {
    "name": "Tavo balsas už Jurbarko kraštą",
    "type": "partija",
+   "since": "2023",
+   "predecessors": [
+    "komitetas-k-simkaus-komanda-uz-jurbarko-krasta"
+   ],
+   "note": "2023 m. įregistruota partija, tęsianti 2019 m. komiteto „K. Šimkaus komanda „Už Jurbarko kraštą“ veiklą (12 iš 25 jo kandidatų).",
    "aliases": []
   },
   "tevynes-liaudies-partija": {
    "name": "Tėvynės liaudies partija",
    "type": "partija",
+   "note": "2001 m. spalį sujungimo būdu su dar trimis partijomis įsteigė Lietuvos dešiniųjų sąjungą (žr. lietuvos-desiniuju-sajunga).",
    "aliases": [
     "Tėvynės liaudies partijos"
    ]
@@ -646,9 +725,11 @@
    "shortName": "TS",
    "since": "1993",
    "predecessors": [
-    "lpkts"
+    "lpkts",
+    "lietuvos-desiniuju-sajunga",
+    "lietuviu-tautininku-sajunga"
    ],
-   "note": "1993-2008; ilgasis 2004-2007 m. pavadinimas atsirado prisijungus politinių kalinių ir tremtinių bei krikščionių demokratų srovėms. 2008 m. susijungusi su LKD tapo TS-LKD.",
+   "note": "1993–2008. Registre – du juridiniai asmenys: Tėvynės sąjunga (konservatoriai) (JAR 191597218; 2003-05-25 – „konservatoriai, krikščioniškieji demokratai, laisvės kovotojai“, prijungus Lietuvos dešiniųjų sąjungą) ir 2004-04-08 sujungimo būdu su LPKTS įsteigta Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai) (JAR 300016534), 2008-04-22 prijungusi Lietuvių tautininkų sąjungą; čia – vienas įrašas, nes organizacija ta pati. 2008 m. birželį sujungimo būdu su LKD įsteigtas naujas juridinis asmuo TS-LKD.",
    "aliases": [
     "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
     "Tėvynės sąjungos (Lietuvos konservatorių)"
@@ -675,8 +756,8 @@
    "name": "Partija Tvarka ir teisingumas",
    "type": "partija",
    "shortName": "TT",
-   "since": "2002",
-   "note": "Įkurta kaip Liberalų demokratų partija; 2006 m. persivadino. 2020 m. susijungė į partiją „Laisvė ir teisingumas“.",
+   "since": "2002-03-19",
+   "note": "Įregistruota 2002-03-19 kaip Liberalų demokratų partija (JAR 195724517), 2006-07-12 pervadinta į Partiją Tvarka ir teisingumas (liberalai demokratai), 2008-05-06 – į Partiją Tvarka ir teisingumas; 2020 m. susijungė į partiją „Laisvė ir teisingumas“, juridinis asmuo likviduojamas.",
    "aliases": [
     "Liberalų demokratų partija",
     "Partija Tvarka ir teisingumas (liberalai demokratai)",
@@ -705,6 +786,8 @@
   "zemaiciu-partija": {
    "name": "Žemaičių partija",
    "type": "partija",
+   "since": "2009-02-13",
+   "note": "Įregistruota 2009-02-13 (JAR 302306408); ne ta pati kaip likviduota Žemaitijos partija.",
    "aliases": []
   },
   "dp-ir-komitetas-permainu-laikas": {
@@ -771,6 +854,7 @@
   "koalicija-arturo-zuoko-ir-vilniaus-koalicija": {
    "name": "Artūro Zuoko ir Vilniaus koalicija",
    "type": "koalicija",
+   "note": "2011 m. išsikėlusių kandidatų koalicija Vilniuje – A. Zuoko judėjimo pirmoji teisinė forma (žr. sajunga-taip).",
    "aliases": []
   },
   "koalicija-bendras-kelias-nepartiniu-kandidatu-tevynes-sajungos-ir-politiniu-kaliniu-ir-tremtiniu-sajungos-jungtinis-sarasas": {
@@ -792,17 +876,10 @@
   "koalicija-centro-desines-koalicija": {
    "name": "Centro dešinės koalicija",
    "type": "koalicija",
-   "aliases": []
-  },
-  "koalicija-centro-desines-koalicija-tevynes-sajunga-lietuvos-krikscionys-demokratai-liberalu-sajudis-laisves-partija": {
-   "name": "Centro dešinės koalicija (Tėvynės sąjunga-Lietuvos krikščionys demokratai, Liberalų sąjūdis, Laisvės partija)",
-   "type": "koalicija",
-   "nariai": [
-    "ts-lkd",
-    "lrls",
-    "laisves-partija"
-   ],
-   "aliases": []
+   "note": "Vilniaus rajono koalicija tuo pačiu vardu 2011, 2019 ir 2023 m. (2019→2023 m. 41 % bendrų kandidatų); 2023 m. VRK įvardija sudėtį – TS-LKD, Liberalų sąjūdis ir Laisvės partija (įkurta 2019 m., tad ankstesnė sudėtis kitokia), todėl `nariai` nerašomi. 2015 m. ta pati TS-LKD vedama koalicija ėjo vardu „Kartu – už pažangą Vilniaus rajone!“ (69 % bendrų kandidatų) – atskiras įrašas, nes vardas kitas, o šis ėjo ir prieš, ir po jo.",
+   "aliases": [
+    "Centro dešinės koalicija (Tėvynės sąjunga-Lietuvos krikščionys demokratai, Liberalų sąjūdis, Laisvės partija)"
+   ]
   },
   "koalicija-centro-desiniuju-koalicija": {
    "name": "Centro dešiniųjų koalicija",
@@ -863,6 +940,7 @@
   "koalicija-kitaip": {
    "name": "Koalicija \"Kitaip\"",
    "type": "koalicija",
+   "note": "2011 m. išsikėlusių kandidatų koalicija (žr. komitetas-kitaip).",
    "aliases": []
   },
   "koalicija-konservatoriu-liberalu-bei-politiniu-kaliniu-ir-tremtiniu-koalicija-vienybe": {
@@ -891,13 +969,16 @@
     "llra-kss",
     "rusu-aljansas"
    ],
+   "note": "LLRA(-KŠS) ir Rusų aljanso koalicija tuo pačiu vardu 2011 ir 2015 m. savivaldos bei 2014 ir 2019 m. EP rinkimuose (2019 m. EP sąraše 20 iš 22 kandidatų kandidatavo ir 2011–2015 m.); 2019 m. savivaldos rinkimų koalicija „Krikščioniškų šeimų sąjunga“ – ta pati sudėtis, kitas vardas, atskiras įrašas.",
    "aliases": [
-    "Lenkų rinkimų akcijos ir Rusų Aljanso koalicija \"Valdemaro Tomaševskio blokas\""
+    "Lenkų rinkimų akcijos ir Rusų Aljanso koalicija \"Valdemaro Tomaševskio blokas\"",
+    "„Valdemaro Tomaševskio blokas“ – Krikščioniškų šeimų sąjungos ir Rusų aljanso koalicija"
    ]
   },
   "koalicija-liaudies-koalicija-uz-teisinga-lietuva": {
    "name": "Liaudies koalicija \"UŽ TEISINGĄ LIETUVĄ\"",
    "type": "koalicija",
+   "note": "2000 m. savivaldos rinkimų koalicija Vilniuje, kurios branduolys – Lietuvos liaudies sąjunga (12 iš 24 kandidatų): partija 2000-05-24 perėmė koalicijos vardą, bet koalicija nėra jos pirmtakė.",
    "aliases": [
     "Liaudies koalicijos \"UŽ TEISINGĄ LIETUVĄ\""
    ]
@@ -905,15 +986,6 @@
   "koalicija-liberalu-koalicija": {
    "name": "Liberalų koalicija",
    "type": "koalicija",
-   "aliases": []
-  },
-  "koalicija-liberalu-sajudzio-ir-lietuvos-zaliuju-partijos-koalicija-uz-laisve-augti": {
-   "name": "Liberalų sąjūdžio ir Lietuvos žaliųjų partijos koalicija „Už laisvę augti“",
-   "type": "koalicija",
-   "nariai": [
-    "lrls",
-    "lietuvos-zaliuju-partija"
-   ],
    "aliases": []
   },
   "koalicija-liberalu-sajudzio-ir-tevynes-sajungos-lietuvos-krikscioniu-demokratu-koalicija-visaginieciu-koalicija": {
@@ -925,15 +997,6 @@
    ],
    "aliases": []
   },
-  "koalicija-liberalu-sajungos-ir-centro-sajungos-koalicija": {
-   "name": "Liberalų sąjungos ir Centro sąjungos koalicija",
-   "type": "koalicija",
-   "nariai": [
-    "lietuvos-liberalu-sajunga",
-    "lietuvos-centro-sajunga"
-   ],
-   "aliases": []
-  },
   "koalicija-lietuviu-tautininku-ir-lietuvos-demokratu-partijos-koalicija": {
    "name": "Lietuvių tautininkų ir Lietuvos demokratų partijos koalicija",
    "type": "koalicija",
@@ -941,7 +1004,11 @@
     "lietuviu-tautininku-sajunga",
     "lietuvos-demokratu-partija"
    ],
-   "aliases": []
+   "note": "Ta pati dviejų partijų koalicija 1996 m. Seimo ir 2000 m. Kauno miesto savivaldybės rinkimuose.",
+   "aliases": [
+    "Lietuvos Demokratų Partijos ir Lietuvių Tautininkų Sąjungos koalicija",
+    "Lietuvos Demokratų Partijos ir Lietuvių Tautininkų Sąjungos koalicijos"
+   ]
   },
   "koalicija-lietuvos-centro-sajungos-ir-lietuvos-liberalu-sajungos-koalicija": {
    "name": "Lietuvos centro sąjungos ir Lietuvos liberalų sąjungos koalicija",
@@ -950,17 +1017,9 @@
     "lietuvos-centro-sajunga",
     "lietuvos-liberalu-sajunga"
    ],
-   "aliases": []
-  },
-  "koalicija-lietuvos-demokratu-partijos-ir-lietuviu-tautininku-sajungos-koalicija": {
-   "name": "Lietuvos Demokratų Partijos ir Lietuvių Tautininkų Sąjungos koalicija",
-   "type": "koalicija",
-   "nariai": [
-    "lietuvos-demokratu-partija",
-    "lietuviu-tautininku-sajunga"
-   ],
+   "note": "2002 m. savivaldos rinkimų koalicija Kėdainių ir Pakruojo rajonuose, VRK užrašyta dviem būdais; abi partijos 2003 m. susijungė į Liberalų ir centro sąjungą.",
    "aliases": [
-    "Lietuvos Demokratų Partijos ir Lietuvių Tautininkų Sąjungos koalicijos"
+    "Liberalų sąjungos ir Centro sąjungos koalicija"
    ]
   },
   "koalicija-lietuvos-krikscioniu-demokratu-partijos-ir-lietuvos-politiniu-kaliniu-ir-tremtiniu-saj-koalicija": {
@@ -999,15 +1058,6 @@
    ],
    "aliases": []
   },
-  "koalicija-lietuvos-politiniu-kaliniu-ir-tremtiniu-sajungos-ir-tevynes-sajungos-lk-koalicija": {
-   "name": "Lietuvos politinių kalinių ir tremtinių sąjungos ir Tėvynės Sąjungos (LK) koalicija",
-   "type": "koalicija",
-   "nariai": [
-    "lpkts",
-    "tevynes-sajunga"
-   ],
-   "aliases": []
-  },
   "koalicija-lietuvos-valstieciu-ir-lietuvos-ukio-partiju-koalicija": {
    "name": "Lietuvos valstiečių ir Lietuvos ūkio partijų koalicija",
    "type": "koalicija",
@@ -1015,7 +1065,10 @@
     "lietuvos-valstieciu-partija",
     "lietuvos-ukio-partija"
    ],
-   "aliases": []
+   "note": "1997 m. savivaldos rinkimų koalicija Kėdainių ir Telšių rajonuose, VRK užrašyta dviem būdais.",
+   "aliases": [
+    "Ūkio ir valstiečių partijų koalicija"
+   ]
   },
   "koalicija-lietuvos-valstieciu-liaudininku-ir-krikscioniu-demokratu-koalicija": {
    "name": "Lietuvos valstiečių liaudininkų ir krikščionių demokratų koalicija",
@@ -1054,13 +1107,14 @@
     "lietuvos-centro-partija",
     "lietuvos-socialdemokratu-sajunga",
     "tautininku-sajunga",
-    "tautos-vienybes-sajunga"
+    "pilietines-demokratijos-partija"
    ],
    "aliases": []
   },
   "koalicija-nepartine-jaunosios-suduvos-koalicija": {
    "name": "Nepartinė \"Jaunosios Sūduvos\" koalicija",
    "type": "koalicija",
+   "note": "2011 m. išsikėlusių kandidatų koalicija (žr. komitetas-jaunoji-kazlu-ruda).",
    "aliases": []
   },
   "koalicija-nepartine-koalicija-elektrenu-krastas": {
@@ -1149,12 +1203,17 @@
   "koalicija-rasai": {
    "name": "Koalicija \"Rasai\"",
    "type": "koalicija",
+   "note": "2011 m. išsikėlusių kandidatų koalicija (žr. komitetas-uz-rasus).",
    "aliases": []
   },
   "koalicija-rokiskio-krasto-koalicija-uz-laisve-augti": {
    "name": "Rokiškio krašto koalicija UŽ LAISVĘ AUGTI",
    "type": "koalicija",
-   "aliases": []
+   "note": "Rokiškio rajono koalicija tuo pačiu vardu 2015, 2019 ir 2023 m. (2019→2023 m. 52 % bendrų kandidatų); 2023 m. VRK įvardija sudėtį – Liberalų sąjūdis ir Lietuvos žaliųjų partija, 2015 ir 2019 m. eilutės sudėties neįvardija, todėl `nariai` nerašomi.",
+   "aliases": [
+    "Liberalų sąjūdžio ir Lietuvos žaliųjų partijos koalicija „Už laisvę augti“",
+    "Valiaus Kazlausko koalicija „UŽ LAISVĘ AUGTI“"
+   ]
   },
   "koalicija-rolando-pakso-koalicija-uz-tvarka-ir-teisinguma": {
    "name": "Rolando Pakso koalicija \"Už tvarką ir teisingumą\"",
@@ -1180,6 +1239,7 @@
   "koalicija-silaliskiu-koalicija": {
    "name": "Šilališkių koalicija",
    "type": "koalicija",
+   "note": "2011 m. išsikėlusių kandidatų koalicija (žr. komitetas-silaliskiai).",
    "aliases": []
   },
   "koalicija-stasio-zirgulio-nepriklausomu-kandidatu-koalicija": {
@@ -1232,16 +1292,12 @@
     "tevynes-sajunga",
     "lpkts"
    ],
-   "aliases": []
-  },
-  "koalicija-tevynes-sajungos-lietuvos-konservatoriu-ir-lietuvos-politiniu-kaliniu-ir-tremtiniu-sajungos-koalicija": {
-   "name": "Tėvynės sąjungos (Lietuvos konservatorių) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicija",
-   "type": "koalicija",
-   "nariai": [
-    "tevynes-sajunga",
-    "lpkts"
-   ],
+   "note": "Ta pati dviejų partijų koalicija 2000 ir 2002 m. savivaldos rinkimuose skirtingose savivaldybėse, VRK užrašyta keturiais būdais (žodžių tvarka, linksnis, TS pavadinimo variantas); vardu pažymėtos tų pačių partijų koalicijos („Bendras kelias“, „Šilutės kraštas“) lieka atskiri įrašai.",
    "aliases": [
+    "Lietuvos politinių kalinių ir tremtinių sąjungos ir Tėvynės Sąjungos (LK) koalicija",
+    "Tėvynės Sąjungos (LK) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicija",
+    "Tėvynės Sąjungos (LK) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicijos",
+    "Tėvynės sąjungos (Lietuvos konservatorių) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicija",
     "Tėvynės sąjungos (Lietuvos konservatorių) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicijos"
    ]
   },
@@ -1255,26 +1311,6 @@
    "aliases": [
     "Tėvynės sąjungos (Lietuvos konservatorių) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicijos \"Šilutės kraštas\""
    ]
-  },
-  "koalicija-tevynes-sajungos-lk-ir-lietuvos-politiniu-kaliniu-ir-tremtiniu-sajungos-koalicija": {
-   "name": "Tėvynės Sąjungos (LK) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicija",
-   "type": "koalicija",
-   "nariai": [
-    "tevynes-sajunga",
-    "lpkts"
-   ],
-   "aliases": [
-    "Tėvynės Sąjungos (LK) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicijos"
-   ]
-  },
-  "koalicija-ukio-ir-valstieciu-partiju-koalicija": {
-   "name": "Ūkio ir valstiečių partijų koalicija",
-   "type": "koalicija",
-   "nariai": [
-    "lietuvos-ukio-partija",
-    "lietuvos-valstieciu-partija"
-   ],
-   "aliases": []
   },
   "koalicija-uz-anyksciu-krasta": {
    "name": "Koalicija \"Už Anykščių kraštą\"",
@@ -1308,20 +1344,6 @@
     "Koalicijos \"Už tikrąją savivaldą\"-Lietuvos demokratinės darbo partijos, Naujosios sąjungos (socialliberalų) ir Naujosios demokratijos/Moterų partijos"
    ]
   },
-  "koalicija-valdemaro-tomasevskio-blokas-krikscionisku-seimu-sajungos-ir-rusu-aljanso-koalicija": {
-   "name": "„Valdemaro Tomaševskio blokas“ – Krikščioniškų šeimų sąjungos ir Rusų aljanso koalicija",
-   "type": "koalicija",
-   "nariai": [
-    "llra-kss",
-    "rusu-aljansas"
-   ],
-   "aliases": []
-  },
-  "koalicija-valiaus-kazlausko-koalicija-uz-laisve-augti": {
-   "name": "Valiaus Kazlausko koalicija „UŽ LAISVĘ AUGTI“",
-   "type": "koalicija",
-   "aliases": []
-  },
   "koalicija-veikliu-mazeikieciu-koalicija": {
    "name": "Veiklių mažeikiečių koalicija",
    "type": "koalicija",
@@ -1335,11 +1357,13 @@
   "koalicija-vieninga-plunge": {
    "name": "Koalicija \"Vieninga Plungė\"",
    "type": "koalicija",
+   "note": "2011 m. išsikėlusių kandidatų koalicija (žr. komitetas-vieninga-plunge).",
    "aliases": []
   },
   "koalicija-vieningas-kaunas": {
    "name": "Koalicija \"Vieningas Kaunas\"",
    "type": "koalicija",
+   "note": "2011 m. išsikėlusių kandidatų koalicija (komitetų dar nebuvo) – V. Matijošaičio judėjimo pirmoji teisinė forma (žr. komitetas-vieningas-kaunas).",
    "aliases": []
   },
   "koalicija-vilhelmo-dziugelio-jungtine-lyderiu-koalicija-mums-rupi-mazeikiu-krastas": {
@@ -1416,11 +1440,6 @@
    "type": "komitetas",
    "aliases": []
   },
-  "komitetas-algio-kasetos-sarasas-drauge-su-jumis": {
-   "name": "Visuomeninis rinkimų komitetas „Algio Kašėtos sąrašas „Drauge su Jumis“",
-   "type": "komitetas",
-   "aliases": []
-  },
   "komitetas-algirdo-maciulaicio": {
    "name": "Algirdo Mačiulaičio visuomeninis rinkimų komitetas",
    "type": "komitetas",
@@ -1441,15 +1460,14 @@
    "type": "komitetas",
    "aliases": []
   },
-  "komitetas-arturo-visocko-nepartinis-sarasas": {
-   "name": "Visuomeninis rinkimų komitetas „Artūro Visocko nepartinis sąrašas“",
-   "type": "komitetas",
-   "aliases": []
-  },
   "komitetas-arturo-visocko-sarasas-dirbame-miestui": {
    "name": "Visuomeninis rinkimų komitetas „Artūro Visocko sąrašas „Dirbame miestui“",
    "type": "komitetas",
-   "aliases": []
+   "note": "A. Visocko komitetas Šiauliuose: 2015 m. VRK „Artūro Visocko nepartinis sąrašas“, 2019 m. VRK „Artūro Visocko sąrašas „Dirbame miestui“, 2023 m. politinis komitetas Nepartinis sąrašas „Dirbame miestui“ (34 % ir 33 % bendrų kandidatų tarp gretimų rinkimų).",
+   "aliases": [
+    "Politinis komitetas Nepartinis sąrašas „Dirbame miestui“",
+    "Visuomeninis rinkimų komitetas „Artūro Visocko nepartinis sąrašas“"
+   ]
   },
   "komitetas-atsigrezkime-i-zmogu": {
    "name": "Politinis komitetas „Atsigręžkime į žmogų“",
@@ -1459,6 +1477,10 @@
   "komitetas-atsinaujinanciam-paneveziui": {
    "name": "Visuomeninis rinkimų komitetas „Atsinaujinančiam Panevėžiui“",
    "type": "komitetas",
+   "predecessors": [
+    "komitetas-povilas-urbsys-uz-sarasa-kartu"
+   ],
+   "note": "Panevėžio miesto komitetas 2019, 2023 ir 2025 m., tęsiantis 2015 m. komitetą „Povilas Urbšys už sąrašą KARTU“ (10 iš 29 jo kandidatų).",
    "aliases": [
     "Politinis komitetas „Atsinaujinančiam Panevėžiui“"
    ]
@@ -1493,7 +1515,10 @@
   "komitetas-drauge-su-jumis": {
    "name": "Politinis komitetas „Drauge su Jumis“",
    "type": "komitetas",
-   "aliases": []
+   "note": "A. Kašėtos komitetas Varėnos rajone: 2019 m. VRK „Algio Kašėtos sąrašas „Drauge su Jumis“, 2023 m. politinis komitetas „Drauge su Jumis“ (48 % bendrų kandidatų).",
+   "aliases": [
+    "Visuomeninis rinkimų komitetas „Algio Kašėtos sąrašas „Drauge su Jumis“"
+   ]
   },
   "komitetas-druskininkai": {
    "name": "Visuomeninis rinkimų komitetas „Druskininkai“",
@@ -1548,7 +1573,13 @@
   "komitetas-jaunoji-kazlu-ruda": {
    "name": "Politinis komitetas „Jaunoji Kazlų Rūda“",
    "type": "komitetas",
-   "aliases": []
+   "predecessors": [
+    "koalicija-nepartine-jaunosios-suduvos-koalicija"
+   ],
+   "note": "Kazlų Rūdos komitetas: 2019 m. VRK „Už Jaunąją Sūduvą“, 2023 m. politinis komitetas „Jaunoji Kazlų Rūda“ (59 % bendrų kandidatų); išaugęs iš 2011 m. Nepartinės „Jaunosios Sūduvos“ koalicijos.",
+   "aliases": [
+    "Visuomeninis rinkimų komitetas „Už Jaunąją Sūduvą“"
+   ]
   },
   "komitetas-judek-vilniau": {
    "name": "Visuomeninis rinkimų komitetas „Judėk, Vilniau“",
@@ -1575,14 +1606,13 @@
    "type": "komitetas",
    "aliases": []
   },
-  "komitetas-kartu-kurkime-kupiskio-krasta": {
-   "name": "Visuomeninis rinkimų komitetas „Kartu kurkime Kupiškio kraštą“",
-   "type": "komitetas",
-   "aliases": []
-  },
   "komitetas-kartu-mes-galime": {
    "name": "Politinis komitetas „Kartu mes galime“",
    "type": "komitetas",
+   "predecessors": [
+    "komitetas-saukiame-tauta"
+   ],
+   "note": "Skuodo rajono politinis komitetas 2023 m., tęsiantis 2019 m. komitetą „Šaukiame tautą“ (8 iš 23 kandidatų bendri). Marijampolės „Šaukiam tautą“ (2019) – kitas komitetas, 0 bendrų kandidatų.",
    "aliases": []
   },
   "komitetas-kartu-pagegiu-krastui": {
@@ -1620,6 +1650,10 @@
   "komitetas-kitaip": {
    "name": "Visuomeninis rinkimų komitetas „Kitaip“",
    "type": "komitetas",
+   "predecessors": [
+    "koalicija-kitaip"
+   ],
+   "note": "Mažeikių rajono komitetas 2015 m., išaugęs iš 2011 m. išsikėlusių kandidatų koalicijos „Kitaip“ (tas pats vardas, ta pati savivaldybė, 2 bendri kandidatai).",
    "aliases": []
   },
   "komitetas-klaipedos": {
@@ -1652,7 +1686,10 @@
   "komitetas-kupiskio-krasta-keiskime-kartu": {
    "name": "Visuomeninis rinkimų komitetas „Kupiškio kraštą keiskime kartu“",
    "type": "komitetas",
-   "aliases": []
+   "note": "Kupiškio rajono komitetas: 2015 m. „Kupiškio kraštą keiskime kartu“, 2019 m. „Kartu kurkime Kupiškio kraštą“ (50 % bendrų kandidatų).",
+   "aliases": [
+    "Visuomeninis rinkimų komitetas „Kartu kurkime Kupiškio kraštą“"
+   ]
   },
   "komitetas-kuriam-kartu": {
    "name": "Visuomeninis rinkimų komitetas „Kuriam kartu“",
@@ -1729,6 +1766,10 @@
   "komitetas-musu-jonava": {
    "name": "Politinis komitetas „Mūsų Jonava“",
    "type": "komitetas",
+   "predecessors": [
+    "komitetas-su-sinkeviciumi-ir-osausku"
+   ],
+   "note": "Jonavos rajono politinis komitetas 2023 m., tęsiantis 2019 m. komitetą „Su Sinkevičiumi ir Osausku“ (16 iš 28 jo kandidatų).",
    "aliases": []
   },
   "komitetas-musu-krastas": {
@@ -1749,12 +1790,10 @@
   "komitetas-naujas-startas": {
    "name": "Visuomeninis rinkimų komitetas „Naujas startas“",
    "type": "komitetas",
-   "aliases": []
-  },
-  "komitetas-naujas-startas-vilkaviskio-krastui": {
-   "name": "Politinis komitetas „Naujas startas Vilkaviškio kraštui“",
-   "type": "komitetas",
-   "aliases": []
+   "note": "Vilkaviškio rajono komitetas: 2019 m. VRK „Naujas startas“, 2023 m. politinis komitetas „Naujas startas Vilkaviškio kraštui“ (35 % bendrų kandidatų).",
+   "aliases": [
+    "Politinis komitetas „Naujas startas Vilkaviškio kraštui“"
+   ]
   },
   "komitetas-nepartine-savivalda": {
    "name": "Politinis komitetas „Nepartinė savivalda“",
@@ -1765,11 +1804,6 @@
   },
   "komitetas-nepartine-taurage": {
    "name": "Visuomeninis rinkimų komitetas „Nepartinė Tauragė“",
-   "type": "komitetas",
-   "aliases": []
-  },
-  "komitetas-nepartinis-sarasas-dirbame-miestui": {
-   "name": "Politinis komitetas Nepartinis sąrašas „Dirbame miestui“",
    "type": "komitetas",
    "aliases": []
   },
@@ -1848,11 +1882,6 @@
    "type": "komitetas",
    "aliases": []
   },
-  "komitetas-rasai": {
-   "name": "Visuomeninis rinkimų komitetas „Rasai“",
-   "type": "komitetas",
-   "aliases": []
-  },
   "komitetas-renkuosi-ateiti": {
    "name": "Visuomeninis rinkimų komitetas „Renkuosi ateitį“",
    "type": "komitetas",
@@ -1866,6 +1895,7 @@
   "komitetas-saukiam-tauta": {
    "name": "Visuomeninis rinkimų komitetas „Šaukiam tautą“",
    "type": "komitetas",
+   "note": "Marijampolės savivaldybės komitetas 2019 m.; Skuodo rajono „Šaukiame tautą“ tais pačiais metais – kitas komitetas (0 bendrų kandidatų).",
    "aliases": []
   },
   "komitetas-saukiame-tauta": {
@@ -1881,12 +1911,13 @@
   "komitetas-silaliskiai": {
    "name": "Visuomeninis rinkimų komitetas „Šilališkiai“",
    "type": "komitetas",
-   "aliases": []
-  },
-  "komitetas-silaliskiu": {
-   "name": "„Šilališkių“ visuomeninis rinkimų komitetas",
-   "type": "komitetas",
-   "aliases": []
+   "predecessors": [
+    "koalicija-silaliskiu-koalicija"
+   ],
+   "note": "Šilalės rajono komitetas 2015 ir 2019 m. (56 % bendrų kandidatų), išaugęs iš 2011 m. išsikėlusių kandidatų Šilališkių koalicijos (12 iš jos 13 kandidatų kandidatavo 2015 m.).",
+   "aliases": [
+    "„Šilališkių“ visuomeninis rinkimų komitetas"
+   ]
   },
   "komitetas-silutes-krastas": {
    "name": "Visuomeninis rinkimų komitetas „Šilutės kraštas“",
@@ -1960,12 +1991,10 @@
   "komitetas-uz-druskininkus": {
    "name": "Politinis komitetas „Už Druskininkus“",
    "type": "komitetas",
-   "aliases": []
-  },
-  "komitetas-uz-druskininkus-su-ricardu-malinausku": {
-   "name": "Visuomeninis rinkimų komitetas „Už Druskininkus su Ričardu Malinausku“",
-   "type": "komitetas",
-   "aliases": []
+   "note": "R. Malinausko komitetas Druskininkuose: 2019 m. VRK „Už Druskininkus su Ričardu Malinausku“, 2023 m. politinis komitetas „Už Druskininkus“ (66 % bendrų kandidatų).",
+   "aliases": [
+    "Visuomeninis rinkimų komitetas „Už Druskininkus su Ričardu Malinausku“"
+   ]
   },
   "komitetas-uz-geresne-ateiti-marijampoleje": {
    "name": "Visuomeninis rinkimų komitetas „Už geresnę ateitį Marijampolėje“",
@@ -1974,11 +2003,6 @@
   },
   "komitetas-uz-geresni-gyvenima-visiems": {
    "name": "Visuomeninis rinkimų komitetas „Už geresnį gyvenimą visiems“",
-   "type": "komitetas",
-   "aliases": []
-  },
-  "komitetas-uz-jaunaja-suduva": {
-   "name": "Visuomeninis rinkimų komitetas „Už Jaunąją Sūduvą“",
    "type": "komitetas",
    "aliases": []
   },
@@ -2010,7 +2034,13 @@
   "komitetas-uz-rasus": {
    "name": "Visuomeninis rinkimų komitetas „Už Rasus“",
    "type": "komitetas",
-   "aliases": []
+   "predecessors": [
+    "koalicija-rasai"
+   ],
+   "note": "Raseinių rajono komitetas: 2015 m. VRK „Rasai“, 2019 m. VRK „Už Rasus“; išaugęs iš 2011 m. išsikėlusių kandidatų koalicijos „Rasai“ (41 % bendrų kandidatų su 2015 m. komitetu).",
+   "aliases": [
+    "Visuomeninis rinkimų komitetas „Rasai“"
+   ]
   },
   "komitetas-uz-sakiu-rajono-gyventoju-ateiti": {
    "name": "Visuomeninis rinkimų komitetas „Už Šakių rajono gyventojų ateitį“",
@@ -2035,7 +2065,10 @@
   "komitetas-uz-vieningus-zanavykus": {
    "name": "Visuomeninis rinkimų komitetas „Už vieningus zanavykus“",
    "type": "komitetas",
-   "aliases": []
+   "note": "Šakių rajono komitetas: 2019 m. VRK „Už vieningus zanavykus“, 2023 m. politinis komitetas „Vieningi zanavykai“ (32 % bendrų kandidatų).",
+   "aliases": [
+    "Politinis komitetas „Vieningi zanavykai“"
+   ]
   },
   "komitetas-uz-visagina": {
    "name": "Visuomeninis rinkimų komitetas „Už Visaginą“",
@@ -2085,6 +2118,10 @@
   "komitetas-vieninga-plunge": {
    "name": "Visuomeninis rinkimų komitetas „Vieninga Plungė“",
    "type": "komitetas",
+   "predecessors": [
+    "koalicija-vieninga-plunge"
+   ],
+   "note": "Plungės rajono komitetas 2015, 2019 ir 2023 m.; išaugęs iš 2011 m. išsikėlusių kandidatų koalicijos „Vieninga Plungė“ (4 iš jos 5 kandidatų).",
    "aliases": [
     "Politinis komitetas „Vieninga Plungė“"
    ]
@@ -2097,15 +2134,14 @@
   "komitetas-vieningas-kaunas": {
    "name": "Visuomeninis rinkimų komitetas „Vieningas Kaunas“",
    "type": "komitetas",
+   "predecessors": [
+    "koalicija-vieningas-kaunas"
+   ],
+   "note": "V. Matijošaičio judėjimo komitetas 2015 ir 2019 m.; 2011 m. tas pats judėjimas ėjo kaip išsikėlusių kandidatų koalicija (14 iš jos 19 kandidatų kandidatavo su komitetu), 2022 m. įregistruotas kaip partija (žr. vieningas-kaunas).",
    "aliases": []
   },
   "komitetas-vieningi-su-ramunu-godeliausku": {
    "name": "Visuomeninis rinkimų komitetas „Vieningi su Ramūnu Godeliausku“",
-   "type": "komitetas",
-   "aliases": []
-  },
-  "komitetas-vieningi-zanavykai": {
-   "name": "Politinis komitetas „Vieningi zanavykai“",
    "type": "komitetas",
    "aliases": []
   },
@@ -2181,5 +2217,37 @@
    ]
   }
  },
+ "reviewedDistinct": [
+  {
+   "a": "koalicija-cia-musu-namai",
+   "b": "koalicija-lietuvos-valstieciu-partijos-ir-krikscioniu-demokratu-sajungos-koalicija",
+   "why": "1997 m. Šiaulių rajono vietinė koalicija ir 2000 m. dviejų partijų koalicija: 9 bendri kandidatai, bet skirtingos organizacijos, o partijų koalicijos tęstinumas yra partijų."
+  },
+  {
+   "a": "koalicija-lietuvos-lenku-rinkimu-akcijos-ir-lietuvos-rusu-sajungos-koalicija-kartu-mes-jega",
+   "b": "koalicija-lenku-rinkimu-akcijos-ir-rusu-aljanso-koalicija-valdemaro-tomasevskio-blokas",
+   "why": "LLRA vedamos koalicijos su skirtingais partneriais (2004 m. su Lietuvos rusų sąjunga, nuo 2011 m. su Rusų aljansu); tęstinumas – LLRA, ne koalicijos."
+  },
+  {
+   "a": "komitetas-visaginas-tai-mes",
+   "b": "koalicija-liberalu-sajudzio-ir-tevynes-sajungos-lietuvos-krikscioniu-demokratu-koalicija-visaginieciu-koalicija",
+   "why": "Komiteto žmonės 2023 m. kandidatavo LRLS ir TS-LKD koalicijoje; partijų koalicija nėra komiteto tęsinys."
+  },
+  {
+   "a": "lietuvos-rusu-sajunga",
+   "b": "komitetas-titov-ir-teisingumas",
+   "why": "Partijai (išregistruota 2021 m.) nustojus dalyvauti rinkimuose, jos Klaipėdos skyriaus žmonės 2019 m. sudarė komitetą; visos šalies partija nesutapatinama su vienu skyriumi."
+  },
+  {
+   "a": "lietuvos-socialdemokratu-sajunga",
+   "b": "komitetas-plunges-krastas",
+   "why": "Partijai 2014 m. likvidavusis, jos Plungės skyriaus žmonės 2015 m. sudarė komitetą (9 iš 15); visos šalies partija nesutapatinama su vienu skyriumi."
+  },
+  {
+   "a": "komitetas-stipri-lietuva-vieningoje-europoje",
+   "b": "laisve-ir-teisingumas",
+   "why": "A. Paulausko 2019 m. EP rinkimų komiteto žmonės 2020 m. kandidatavo su „Laisve ir teisingumu“ – prisijungimas prie iš LLS(l) ir TT susijungusios partijos, ne jos pirmtakas."
+  }
+ ],
  "unmatched": []
 }

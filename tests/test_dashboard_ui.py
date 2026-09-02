@@ -493,6 +493,97 @@ class ElectionTermGroupingTests(unittest.TestCase):
         )
 
 
+class PartyLineageSourceTests(unittest.TestCase):
+    """The party facet groups a nominator with what it continues (issue #123).
+
+    people.json's parties table carries `pr`, the registry's `predecessors`;
+    a lineage root gets a group whose first row -- "<name> ir pirmtakai" --
+    matches the whole lineage, while every plain row still matches the one
+    nominator, so the exact counts the facet showed before are all still
+    there.
+    """
+
+    def test_the_facet_offers_a_lineage_row_per_root(self):
+        self.assertIn("ir pirmtakai", UNCOMMENTED)
+        self.assertIn("partyLineageRoots(INDEX.parties || {})", SOURCE)
+        self.assertIn("PARTY_LINEAGE_PREFIX + row.root", SOURCE)
+
+    def test_the_filter_matches_through_the_lineage(self):
+        self.assertIn("if (f.party && !inParty(e, f.party)) return false;", SOURCE)
+        self.assertNotIn("e.p !== f.party", SOURCE)
+
+
+@unittest.skipIf(NODE is None, "node not installed — behavioural checks skipped")
+class PartyLineageTests(unittest.TestCase):
+    """The lineage walk and the roots, run under node on a small parties table."""
+
+    PARTIES = {
+        "ts-lkd": {"n": "TS-LKD", "t": "partija", "pr": ["tevynes-sajunga", "lkd"]},
+        "tevynes-sajunga": {"n": "TS", "t": "partija", "pr": ["lpkts"]},
+        "lkd": {"n": "LKD", "t": "partija", "pr": ["lkdp", "krikscioniu-demokratu-sajunga"]},
+        "lpkts": {"n": "LPKTS", "t": "partija"},
+        "lkdp": {"n": "LKDP", "t": "partija"},
+        "krikscioniu-demokratu-sajunga": {"n": "Krikščionių demokratų sąjunga", "t": "partija"},
+        "lsdp": {"n": "LSDP", "t": "partija", "pr": ["lddp"]},
+        "lddp": {"n": "LDDP", "t": "partija"},
+        "vieningas-kaunas": {"n": "Vieningas Kaunas", "t": "partija", "pr": ["komitetas-vieningas-kaunas"]},
+        "komitetas-vieningas-kaunas": {"n": "VRK „Vieningas Kaunas“", "t": "komitetas", "pr": ["koalicija-vieningas-kaunas"]},
+        "darbo-partija": {"n": "DP", "t": "partija"},
+    }
+
+    def _run(self, expression, parties=None):
+        helpers = "\n".join(
+            re.search(pattern, SOURCE, re.S | re.M).group(0)
+            for pattern in (
+                r"^const PARTY_LINEAGE_PREFIX = .*?;$",
+                r"^let PARTY_LINEAGES = .*?;$",
+                r"^const inParty = .*?;$",
+                r"^function partyLineage\(.*?^}",
+                r"^function partyLineageRoots\(.*?^}",
+            )
+        )
+        script = (
+            f"const PARTIES = {json.dumps(parties or self.PARTIES, ensure_ascii=False)};\n"
+            f"{helpers}\nconsole.log(JSON.stringify({expression}));"
+        )
+        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        return json.loads(out.stdout)
+
+    def test_a_lineage_walks_depth_first_in_registry_order(self):
+        self.assertEqual(
+            self._run('partyLineage(PARTIES, "ts-lkd").map(l => [l.id, l.depth])'),
+            [["ts-lkd", 0], ["tevynes-sajunga", 1], ["lpkts", 2], ["lkd", 1],
+             ["lkdp", 2], ["krikscioniu-demokratu-sajunga", 2]],
+        )
+
+    def test_a_predecessor_the_index_lacks_is_skipped_not_invented(self):
+        # The 2011 coalition is in the registry but not in this (subset) index.
+        self.assertEqual(
+            self._run('partyLineage(PARTIES, "vieningas-kaunas").map(l => l.id)'),
+            ["vieningas-kaunas", "komitetas-vieningas-kaunas"],
+        )
+
+    def test_the_roots_are_the_entries_nothing_continues(self):
+        # TS and LKD have predecessors but are themselves listed by TS-LKD;
+        # DP has none at all; the committee is listed by the party.
+        self.assertEqual(
+            sorted(self._run("partyLineageRoots(PARTIES)")),
+            ["lsdp", "ts-lkd", "vieningas-kaunas"],
+        )
+
+    def test_a_lineage_row_matches_the_whole_lineage_and_a_plain_row_one_nominator(self):
+        self.assertEqual(
+            self._run(
+                'PARTY_LINEAGES.set("ts-lkd", new Set(partyLineage(PARTIES, "ts-lkd").map(l => l.id))) && '
+                '[inParty({p: "lkdp"}, "+ts-lkd"), inParty({p: "ts-lkd"}, "+ts-lkd"), inParty({p: "lsdp"}, "+ts-lkd"),'
+                ' inParty({p: "lkdp"}, "ts-lkd"), inParty({p: "ts-lkd"}, "ts-lkd"), inParty({p: "lkdp"}, "+lsdp")]'
+            ),
+            [True, True, False, False, True, False],
+        )
+
+
 class KeyboardAccessTests(unittest.TestCase):
     """The people list used to be unreachable by keyboard: two focusable
     elements in the whole document, 300 rendered rows of tabIndex -1 divs."""

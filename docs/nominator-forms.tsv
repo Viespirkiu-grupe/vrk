@@ -39,7 +39,7 @@ Pilietinės demokratijos partija	533	pilietines-demokratijos-partija	partija
 Laisvės partija	512	laisves-partija	partija
 Naujoji demokratija/ Moterų partija	472	naujosios-demokratijos-partija	partija
 Tautos ir teisingumo sąjunga (centristai, tautininkai)	450	tautos-ir-teisingumo-sajunga	partija
-Lietuvos partija "Socialdemokratija 2000"	444	socialdemokratija-2000	partija
+Lietuvos partija "Socialdemokratija 2000"	444	lietuvos-socialdemokratu-sajunga	partija
 Lietuvos socialdemokratų sąjunga	435	lietuvos-socialdemokratu-sajunga	partija
 Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“	414	koalicija-lenku-rinkimu-akcijos-ir-rusu-aljanso-koalicija-valdemaro-tomasevskio-blokas	koalicija
 Lietuvos rusų sąjunga	397	lietuvos-rusu-sajunga	partija
@@ -48,7 +48,7 @@ Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Krikščioniškų šeimų 
 Lietuvos valstiečių partijos ir Krikščionių demokratų sąjungos koalicija	322	koalicija-lietuvos-valstieciu-partijos-ir-krikscioniu-demokratu-sajungos-koalicija	koalicija
 Respublikonų partija	321	respublikonu-partija	partija
 Lenkų rinkimų akcijos ir Rusų Aljanso koalicija "Valdemaro Tomaševskio blokas"	301	koalicija-lenku-rinkimu-akcijos-ir-rusu-aljanso-koalicija-valdemaro-tomasevskio-blokas	koalicija
-Nuosaikiųjų konservatorių sąjunga	277	nuosaikiuju-konservatoriu-sajunga	partija
+Nuosaikiųjų konservatorių sąjunga	277	krikscioniu-partija	partija
 Žemaičių partija	271	zemaiciu-partija	partija
 Krikščionių sąjunga	268	krikscioniu-sajunga	partija
 „Drąsos kelias“ politinė partija	243	drasos-kelias	partija
@@ -68,7 +68,7 @@ Politinė partija „Sąjunga Taip“	144	sajunga-taip	partija
 Krikščionių demokratų sąjunga	143	krikscioniu-demokratu-sajunga	partija
 Lietuvos lenkų rinkimų akcija - Krikščioniškų šeimų sąjunga	143	llra-kss	partija
 Tėvynės Sąjungos (Lietuvos konservatoriai) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicija	130	koalicija-tevynes-sajungos-lietuvos-konservatoriai-ir-lietuvos-politiniu-kaliniu-ir-tremtiniu-sajungos-koalicija	koalicija
-Krikščionių konservatorių socialinė sąjunga	128	krikscioniu-konservatoriu-socialine-sajunga	partija
+Krikščionių konservatorių socialinė sąjunga	128	krikscioniu-partija	partija
 Lietuvos pensininkų partija	125	lietuvos-pensininku-partija	partija
 Visuomeninis rinkimų komitetas „Valerijaus Simulik judėjimas „Už Šiaulius“	124	komitetas-valerijaus-simulik-judejimas-uz-siaulius	komitetas
 Lietuvių nacionalinė partija - "Jaunoji Lietuva"	121	jaunoji-lietuva	partija
@@ -83,7 +83,7 @@ A. Zuoko ir vilniečių koalicija „Laimingas Vilnius“	100	koalicija-a-zuoko-
 Lietuvos lenkų liaudies partija	100	lietuvos-lenku-liaudies-partija	partija
 Visuomeninis rinkimų komitetas „Už Alytų“	100	komitetas-uz-alytu	komitetas
 Demokratinė darbo ir vienybės partija	95	demokratine-darbo-ir-vienybes-partija	partija
-Centro partija - tautininkai	94	tautos-ir-teisingumo-sajunga	partija
+Centro partija - tautininkai	94	lietuvos-centro-partija	partija
 Centro dešinės koalicija	92	koalicija-centro-desines-koalicija	koalicija
 "Fronto" partija	88	fronto-partija	partija
 Tautinė partija Lietuvos kelias	85	lietuvos-kelias	partija
@@ -105,11 +105,11 @@ Visuomeninis rinkimų komitetas „R. Šimašiaus komanda „Už Vilnių, kuriuo
 Lietuvos lenkų rinkimų akcija – Krikščioniškų šeimų sąjunga	63	llra-kss	partija
 Visuomeninis rinkimų komitetas „Artūro Visocko sąrašas „Dirbame miestui“	62	komitetas-arturo-visocko-sarasas-dirbame-miestui	komitetas
 Koalicija Darbo partija + jaunimas	61	koalicija-darbo-partija-jaunimas	koalicija
-Politinis komitetas Nepartinis sąrašas „Dirbame miestui“	61	komitetas-nepartinis-sarasas-dirbame-miestui	komitetas
-Centro dešinės koalicija (Tėvynės sąjunga-Lietuvos krikščionys demokratai, Liberalų sąjūdis, Laisvės partija)	59	koalicija-centro-desines-koalicija-tevynes-sajunga-lietuvos-krikscionys-demokratai-liberalu-sajudis-laisves-partija	koalicija
+Politinis komitetas Nepartinis sąrašas „Dirbame miestui“	61	komitetas-arturo-visocko-sarasas-dirbame-miestui	komitetas
+Centro dešinės koalicija (Tėvynės sąjunga-Lietuvos krikščionys demokratai, Liberalų sąjūdis, Laisvės partija)	59	koalicija-centro-desines-koalicija	koalicija
 Lietuvos žmonių partija	59	lietuvos-zmoniu-partija	partija
 Politinė partija "Profesinių sąjungų centras"	59	profesiniu-sajungu-centras	partija
-Visuomeninis rinkimų komitetas „Artūro Visocko nepartinis sąrašas“	58	komitetas-arturo-visocko-nepartinis-sarasas	komitetas
+Visuomeninis rinkimų komitetas „Artūro Visocko nepartinis sąrašas“	58	komitetas-arturo-visocko-sarasas-dirbame-miestui	komitetas
 Visuomeninis rinkimų komitetas „Vieninga Plungė“	58	komitetas-vieninga-plunge	komitetas
 Tėvynės sąjungos (Lietuvos konservatorių) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicija "Šilutės kraštas"	55	koalicija-tevynes-sajungos-lietuvos-konservatoriu-ir-lietuvos-politiniu-kaliniu-ir-tremtiniu-sajungos-koalicija-silutes-krastas	koalicija
 S. Buškevičiaus ir Tautininkų koalicija „Prieš korupciją ir skurdą“ (Partija „Jaunoji Lietuva“, Tautininkų sąjunga)	54	koalicija-s-buskeviciaus-ir-tautininku-koalicija-pries-korupcija-ir-skurda-partija-jaunoji-lietuva-tautininku-sajunga	koalicija
@@ -126,27 +126,27 @@ Politinis komitetas „Kartu už Utenos kraštą“	50	komitetas-kartu-uz-utenos
 Politinis komitetas „Už Druskininkus“	50	komitetas-uz-druskininkus	komitetas
 Politinis komitetas „Vardan Šilalės krašto“	50	komitetas-vardan-silales-krasto	komitetas
 Visuomeninis rinkimų komitetas „A. Margelio komanda „Pirmyn!“	50	komitetas-a-margelio-komanda-pirmyn	komitetas
-Visuomeninis rinkimų komitetas „Algio Kašėtos sąrašas „Drauge su Jumis“	50	komitetas-algio-kasetos-sarasas-drauge-su-jumis	komitetas
+Visuomeninis rinkimų komitetas „Algio Kašėtos sąrašas „Drauge su Jumis“	50	komitetas-drauge-su-jumis	komitetas
 Visuomeninis rinkimų komitetas „Centro judėjimas už Šilalės kraštą“	50	komitetas-centro-judejimas-uz-silales-krasta	komitetas
 Visuomeninis rinkimų komitetas „Klaipėdos rajono žemaičiai“	50	komitetas-klaipedos-rajono-zemaiciai	komitetas
 Visuomeninis rinkimų komitetas „Pilietiškas pasirinkimas“	50	komitetas-pilietiskas-pasirinkimas	komitetas
 Visuomeninis rinkimų komitetas „Šilališkiai“	50	komitetas-silaliskiai	komitetas
 Visuomeninis rinkimų komitetas „Žinau ir galiu – Česlovas Daugėla“	50	komitetas-zinau-ir-galiu-ceslovas-daugela	komitetas
 Šilalės centristai	50	silales-centristai	partija
-„Šilališkių“ visuomeninis rinkimų komitetas	50	komitetas-silaliskiu	komitetas
+„Šilališkių“ visuomeninis rinkimų komitetas	50	komitetas-silaliskiai	komitetas
 Moderniųjų krikščionių demokratų sąjunga	49	moderniuju-krikscioniu-demokratu-sajunga	partija
-Tėvynės Sąjungos (LK) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicija	49	koalicija-tevynes-sajungos-lk-ir-lietuvos-politiniu-kaliniu-ir-tremtiniu-sajungos-koalicija	koalicija
+Tėvynės Sąjungos (LK) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicija	49	koalicija-tevynes-sajungos-lietuvos-konservatoriai-ir-lietuvos-politiniu-kaliniu-ir-tremtiniu-sajungos-koalicija	koalicija
 Visuomeninis rinkimų komitetas „Kęstučio Tubio sąrašas „Anykščių krašto labui“	49	komitetas-kestucio-tubio-sarasas-anyksciu-krasto-labui	komitetas
 Koalicija „Geriausias pasirinkimas“ (Partija „Laisvė ir teisingumas“, Laisvės partija, Liberalų sąjūdis)	48	koalicija-geriausias-pasirinkimas-partija-laisve-ir-teisingumas-laisves-partija-liberalu-sajudis	koalicija
 Partija LIETUVA – VISŲ	48	lietuva-visu	partija
 Visuomeninis rinkimų komitetas „Už Rasus“	48	komitetas-uz-rasus	komitetas
 Koalicija "Teisingas sprendimas"	47	koalicija-teisingas-sprendimas	koalicija
 Rokiškio krašto koalicija UŽ LAISVĘ AUGTI	47	koalicija-rokiskio-krasto-koalicija-uz-laisve-augti	koalicija
-Valiaus Kazlausko koalicija „UŽ LAISVĘ AUGTI“	47	koalicija-valiaus-kazlausko-koalicija-uz-laisve-augti	koalicija
+Valiaus Kazlausko koalicija „UŽ LAISVĘ AUGTI“	47	koalicija-rokiskio-krasto-koalicija-uz-laisve-augti	koalicija
 Visuomeninis rinkimų komitetas „Kaunas plius Puteikis“	47	komitetas-kaunas-plius-puteikis	komitetas
 Visuomeninis rinkimų komitetas „Renkuosi ateitį“	47	komitetas-renkuosi-ateiti	komitetas
-Nacionalinė centro partija	46	nacionaline-centro-partija	partija
-Tėvynės sąjungos (Lietuvos konservatorių) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicija	46	koalicija-tevynes-sajungos-lietuvos-konservatoriu-ir-lietuvos-politiniu-kaliniu-ir-tremtiniu-sajungos-koalicija	koalicija
+Nacionalinė centro partija	46	lietuvos-centro-partija	partija
+Tėvynės sąjungos (Lietuvos konservatorių) ir Lietuvos politinių kalinių ir tremtinių sąjungos koalicija	46	koalicija-tevynes-sajungos-lietuvos-konservatoriai-ir-lietuvos-politiniu-kaliniu-ir-tremtiniu-sajungos-koalicija	koalicija
 "Jaunosios Lietuvos" ir naujųjų tautininkų sąjunga	45	jaunoji-lietuva	partija
 Tavo balsas už Jurbarko kraštą	45	tavo-balsas-uz-jurbarko-krasta	partija
 VYTO JARECKO koalicija „VIENINGI BIRŽAI“ (Lietuvos valstiečių ir žaliųjų sąjunga, Lietuvos Respublikos liberalų sąjūdis)	45	koalicija-vyto-jarecko-koalicija-vieningi-birzai-lietuvos-valstieciu-ir-zaliuju-sajunga-lietuvos-respublikos-liberalu-sajudis	koalicija
@@ -155,12 +155,12 @@ Politinė partija Rusų aljansas	44	rusu-aljansas	partija
 STIPRI UTENA	44	stipri-utena	partija
 Vieningas Kaunas	44	vieningas-kaunas	partija
 Visuomeninis rinkimų komitetas „Kitaip“	44	komitetas-kitaip	komitetas
-Visuomeninis rinkimų komitetas „Už Druskininkus su Ričardu Malinausku“	44	komitetas-uz-druskininkus-su-ricardu-malinausku	komitetas
+Visuomeninis rinkimų komitetas „Už Druskininkus su Ričardu Malinausku“	44	komitetas-uz-druskininkus	komitetas
 Lietuvos moterų partija	43	naujosios-demokratijos-partija	partija
 Lietuvos socialistų partija	43	lietuvos-socialistu-partija	partija
 Visuomeninis rinkimų komitetas „Bendruomeniškas Vilnius“	43	komitetas-bendruomeniskas-vilnius	komitetas
 Koalicija "Pagėgių kraštui, Pagėgių žmonėms, Pagėgių ateičiai"	42	koalicija-pagegiu-krastui-pagegiu-zmonems-pagegiu-ateiciai	koalicija
-Liberalų sąjūdžio ir Lietuvos žaliųjų partijos koalicija „Už laisvę augti“	42	koalicija-liberalu-sajudzio-ir-lietuvos-zaliuju-partijos-koalicija-uz-laisve-augti	koalicija
+Liberalų sąjūdžio ir Lietuvos žaliųjų partijos koalicija „Už laisvę augti“	42	koalicija-rokiskio-krasto-koalicija-uz-laisve-augti	koalicija
 Veiklių mažeikiečių koalicija	42	koalicija-veikliu-mazeikieciu-koalicija	koalicija
 Visuomeninis rinkimų komitetas „Kretingos kraštas“	42	komitetas-kretingos-krastas	komitetas
 KARTŲ SOLIDARUMO SĄJUNGA - SANTALKA LIETUVAI	41	kartu-solidarumo-sajunga	partija
@@ -187,7 +187,7 @@ Visuomeninis rinkimų komitetas „Nepriklausomų kandidatų sąrašas Prienų k
 Visuomeninis rinkimų komitetas „Vilniečių „Lokys“	35	komitetas-vilnieciu-lokys	komitetas
 Visuomeninis rinkimų komitetas „A. Bacevičiaus pilietinis sąrašas“	34	komitetas-a-baceviciaus-pilietinis-sarasas	komitetas
 Visuomeninis rinkimų komitetas „Už pasitikėjimą, atsakomybę ir sėkmę“	34	komitetas-uz-pasitikejima-atsakomybe-ir-sekme	komitetas
-Kovotojų už Lietuvą sąjunga	33	kovotoju-uz-lietuva-sajunga	partija
+Kovotojų už Lietuvą sąjunga	33	lietuvos-laisves-sajunga	partija
 Liberalų koalicija	33	koalicija-liberalu-koalicija	koalicija
 Lietuvos piliečių aljanso ir rusų sąjungos koalicija	33	koalicija-lietuvos-pilieciu-aljanso-ir-rusu-sajungos-koalicija	koalicija
 Visuomeninis rinkimų komitetas „E. Kuturio komanda „Už permainas Pagėgių krašte“	33	komitetas-e-kuturio-komanda-uz-permainas-pagegiu-kraste	komitetas
@@ -200,14 +200,14 @@ Visuomeninis rinkimų komitetas „Gedimino miestas“	32	komitetas-gedimino-mie
 Visuomeninis rinkimų komitetas „Junkis“	32	komitetas-junkis	komitetas
 Visuomeninis rinkimų komitetas „Už Prienų kraštą“	32	komitetas-uz-prienu-krasta	komitetas
 Emigrantų partija	31	emigrantu-partija	partija
-Politinis komitetas „Naujas startas Vilkaviškio kraštui“	31	komitetas-naujas-startas-vilkaviskio-krastui	komitetas
+Politinis komitetas „Naujas startas Vilkaviškio kraštui“	31	komitetas-naujas-startas	komitetas
 Visuomeninis rinkimų komitetas „Gintauto Labanausko komanda „Dirbam Kaunui“	31	komitetas-gintauto-labanausko-komanda-dirbam-kaunui	komitetas
 Visuomeninis rinkimų komitetas „Mūsų kraštas“	31	komitetas-musu-krastas	komitetas
 Visuomeninis rinkimų komitetas „Už Zarasų krašto ateitį!“	31	komitetas-uz-zarasu-krasto-ateiti	komitetas
 Visuomeninis rinkimų komitetas „Valentino Tamulio komanda – mūsų krašto sėkmei“	31	komitetas-valentino-tamulio-komanda-musu-krasto-sekmei	komitetas
 Koalicija "Už mūsų Neringą"	30	koalicija-uz-musu-neringa	koalicija
 Lietuvos laisvės lyga	30	lietuvos-laisves-lyga	partija
-Lietuvos politinių kalinių ir tremtinių sąjungos ir Tėvynės Sąjungos (LK) koalicija	30	koalicija-lietuvos-politiniu-kaliniu-ir-tremtiniu-sajungos-ir-tevynes-sajungos-lk-koalicija	koalicija
+Lietuvos politinių kalinių ir tremtinių sąjungos ir Tėvynės Sąjungos (LK) koalicija	30	koalicija-tevynes-sajungos-lietuvos-konservatoriai-ir-lietuvos-politiniu-kaliniu-ir-tremtiniu-sajungos-koalicija	koalicija
 Lietuvos teisingumo partija	30	lietuvos-teisingumo-partija	partija
 Politinis komitetas „Mūsų Jonava“	30	komitetas-musu-jonava	komitetas
 Politinis komitetas „Vieninga Plungė“	30	komitetas-vieninga-plunge	komitetas
@@ -220,7 +220,7 @@ Visuomeninis rinkimų komitetas „Antano Vagonio komitetas“	29	komitetas-anta
 Visuomeninis rinkimų komitetas „Bendrai geriau“	29	komitetas-bendrai-geriau	komitetas
 Visuomeninis rinkimų komitetas „Pagėgių krašto vardan“	29	komitetas-pagegiu-krasto-vardan	komitetas
 Visuomeninis rinkimų komitetas „Povilas Urbšys už sąrašą KARTU“	29	komitetas-povilas-urbsys-uz-sarasa-kartu	komitetas
-Visuomeninis rinkimų komitetas „Rasai“	29	komitetas-rasai	komitetas
+Visuomeninis rinkimų komitetas „Rasai“	29	komitetas-uz-rasus	komitetas
 „Šiaulių labui!“	29	siauliu-labui	partija
 Lietuvos centro sąjungos ir Lietuvos liberalų sąjungos koalicija	28	koalicija-lietuvos-centro-sajungos-ir-lietuvos-liberalu-sajungos-koalicija	koalicija
 Visuomeninis rinkimų komitetas „Su Sinkevičiumi ir Osausku“	28	komitetas-su-sinkeviciumi-ir-osausku	komitetas
@@ -263,8 +263,8 @@ Lietuvos krikščionių demokratų partijos ir Lietuvos politinių kalinių ir t
 Taikos koalicija (Lietuvos krikščioniškosios demokratijos partija, Žemaičių partija)	22	koalicija-taikos-koalicija-lietuvos-krikscioniskosios-demokratijos-partija-zemaiciu-partija	koalicija
 Visuomeninis rinkimų komitetas „Komanda – už Kėdainių krašto žmones“	22	komitetas-komanda-uz-kedainiu-krasto-zmones	komitetas
 Visuomeninis rinkimų komitetas „Mūsų Telšiai“	22	komitetas-musu-telsiai	komitetas
-„Valdemaro Tomaševskio blokas“ – Krikščioniškų šeimų sąjungos ir Rusų aljanso koalicija	22	koalicija-valdemaro-tomasevskio-blokas-krikscionisku-seimu-sajungos-ir-rusu-aljanso-koalicija	koalicija
-Liberalų sąjungos ir Centro sąjungos koalicija	21	koalicija-liberalu-sajungos-ir-centro-sajungos-koalicija	koalicija
+„Valdemaro Tomaševskio blokas“ – Krikščioniškų šeimų sąjungos ir Rusų aljanso koalicija	22	koalicija-lenku-rinkimu-akcijos-ir-rusu-aljanso-koalicija-valdemaro-tomasevskio-blokas	koalicija
+Liberalų sąjungos ir Centro sąjungos koalicija	21	koalicija-lietuvos-centro-sajungos-ir-lietuvos-liberalu-sajungos-koalicija	koalicija
 Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“	21	koalicija-lietuvos-lenku-rinkimu-akcijos-ir-lietuvos-rusu-sajungos-koalicija-kartu-mes-jega	koalicija
 Molėtai kartu	21	moletai-kartu	partija
 Politinis komitetas Ištikimi Klaipėdai	21	komitetas-istikimi-klaipedai	komitetas
@@ -280,7 +280,7 @@ Centro ir tautininkų sąjungų koalicija "Vidurio kelias"	19	koalicija-centro-i
 Koalicija "Kitaip"	19	koalicija-kitaip	koalicija
 Koalicija "Vieningas Kaunas"	19	koalicija-vieningas-kaunas	koalicija
 Politinis komitetas „Tau, kraštieti!“	19	komitetas-tau-krastieti	komitetas
-Politinis komitetas „Vieningi zanavykai“	19	komitetas-vieningi-zanavykai	komitetas
+Politinis komitetas „Vieningi zanavykai“	19	komitetas-uz-vieningus-zanavykus	komitetas
 Politinė partija Rusų Aljansas	19	rusu-aljansas	partija
 Visuomeninis rinkimų komitetas „I. Sedleckaitės pilietinis sąrašas korupcijai ne“	19	komitetas-i-sedleckaites-pilietinis-sarasas-korupcijai-ne	komitetas
 Visuomeninis rinkimų komitetas „Už vieningą Kelmę“	19	komitetas-uz-vieninga-kelme	komitetas
@@ -299,7 +299,7 @@ Visuomeninis rinkimų komitetas „Laisvieji piliečiai“	17	komitetas-laisviej
 Visuomeninis rinkimų komitetas „Permainų laikas“	17	komitetas-permainu-laikas	komitetas
 Visuomeninis rinkimų komitetas „Rusakalbė Klaipėda“	17	komitetas-rusakalbe-klaipeda	komitetas
 Visuomeninis rinkimų komitetas „Titov ir teisingumas“	17	komitetas-titov-ir-teisingumas	komitetas
-Visuomeninis rinkimų komitetas „Už Jaunąją Sūduvą“	17	komitetas-uz-jaunaja-suduva	komitetas
+Visuomeninis rinkimų komitetas „Už Jaunąją Sūduvą“	17	komitetas-jaunoji-kazlu-ruda	komitetas
 Visuomeninis rinkimų komitetas „Už savo kraštą“	17	komitetas-uz-savo-krasta	komitetas
 Algirdo Mačiulaičio visuomeninis rinkimų komitetas	16	komitetas-algirdo-maciulaicio	komitetas
 Nepartinė "Jaunosios Sūduvos" koalicija	16	koalicija-nepartine-jaunosios-suduvos-koalicija	koalicija
@@ -311,10 +311,10 @@ Visuomeninis rinkimų komitetas „Laimutės Šlamienės ir Algirdo Fergelio kom
 Visuomeninis rinkimų komitetas „Mums svarbu“	16	komitetas-mums-svarbu	komitetas
 Visuomeninis rinkimų komitetas „N. Puteikio komanda“	16	komitetas-n-puteikio-komanda	komitetas
 Visuomeninis rinkimų komitetas „Pilietinė iniciatyva“	16	komitetas-pilietine-iniciatyva	komitetas
-Lietuvos Demokratų Partijos ir Lietuvių Tautininkų Sąjungos koalicija	15	koalicija-lietuvos-demokratu-partijos-ir-lietuviu-tautininku-sajungos-koalicija	koalicija
+Lietuvos Demokratų Partijos ir Lietuvių Tautininkų Sąjungos koalicija	15	koalicija-lietuviu-tautininku-ir-lietuvos-demokratu-partijos-koalicija	koalicija
 Lietuvos reformų partija	15	lietuvos-reformu-partija	partija
 Politinis komitetas „Siekime kartu“	15	komitetas-siekime-kartu	komitetas
-Tautos vienybės sąjunga	15	tautos-vienybes-sajunga	partija
+Tautos vienybės sąjunga	15	pilietines-demokratijos-partija	partija
 Visuomeninis rinkimų komitetas „Biržai – mūsų kraštas“	15	komitetas-birzai-musu-krastas	komitetas
 Visuomeninis rinkimų komitetas „Kretingiškiai – už bočius, tėvus ir vaikus“	15	komitetas-kretingiskiai-uz-bocius-tevus-ir-vaikus	komitetas
 Visuomeninis rinkimų komitetas „Mes esame Kitokie“	15	komitetas-mes-esame-kitokie	komitetas
@@ -338,14 +338,14 @@ Visuomeninis rinkimų komitetas „Vieninga Neringa“	13	komitetas-vieninga-ner
 Šilališkių koalicija	13	koalicija-silaliskiu-koalicija	koalicija
 Lietuvos socialinio teisingumo sąjunga	12	lietuvos-socialinio-teisingumo-sajunga	partija
 Violetos Grigienės visuomeninis rinkimų komitetas „Drauge“	12	komitetas-violetos-grigienes-visuomeninis-rinkimu-komitetas-drauge	komitetas
-Visuomeninis rinkimų komitetas „Kartu kurkime Kupiškio kraštą“	12	komitetas-kartu-kurkime-kupiskio-krasta	komitetas
+Visuomeninis rinkimų komitetas „Kartu kurkime Kupiškio kraštą“	12	komitetas-kupiskio-krasta-keiskime-kartu	komitetas
 Visuomeninis rinkimų komitetas „Lemiamas šuolis“	12	komitetas-lemiamas-suolis	komitetas
 Visuomeninis rinkimų komitetas „Už Kupiškio kraštą“	12	komitetas-uz-kupiskio-krasta	komitetas
 "FRONTO" PARTIJA	11	fronto-partija	partija
 Nepartinių ir nepriklausomų koalicija	11	koalicija-nepartiniu-ir-nepriklausomu-koalicija	koalicija
 Nepriklausomų kandidatų koalicija	11	koalicija-nepriklausomu-kandidatu-koalicija	koalicija
 Tautinė partija LIETUVOS KELIAS	11	lietuvos-kelias	partija
-Ūkio ir valstiečių partijų koalicija	11	koalicija-ukio-ir-valstieciu-partiju-koalicija	koalicija
+Ūkio ir valstiečių partijų koalicija	11	koalicija-lietuvos-valstieciu-ir-lietuvos-ukio-partiju-koalicija	koalicija
 Visuomeninis rinkimų komitetas „Palangiškiai“	10	komitetas-palangiskiai	komitetas
 Visuomeninis rinkimų komitetas „Prezidento Rolando Pakso judėjimas“	10	komitetas-prezidento-rolando-pakso-judejimas	komitetas
 Visuomeninis rinkimų komitetas „Vieningas Birštonas“	10	komitetas-vieningas-birstonas	komitetas
@@ -363,7 +363,7 @@ Koalicija "Už pokyčius"	5	koalicija-uz-pokycius	koalicija
 Koalicija "Vieninga Plungė"	5	koalicija-vieninga-plunge	koalicija
 Lietuvos lenkų rinkimų akcija – Krikščioniškų šeimų sąjunga, Politinė partija Rusų aljansas	5	llra-ir-rusu-aljansas	koalicija
 Nepartinių kandidatų koalicija "Už Birštono jaunimą"	5	koalicija-nepartiniu-kandidatu-koalicija-uz-birstono-jaunima	koalicija
-Politinė partija „Lietuvos žaliųjų sąjūdis“	5	lietuvos-zaliuju-sajudis	partija
+Politinė partija „Lietuvos žaliųjų sąjūdis“	5	lietuvos-zaliuju-partija	partija
 Veiklių moterų koalicija	4	koalicija-veikliu-moteru-koalicija	koalicija
 Lietuvos centro partija, išsikėlė pats	3	lietuvos-centro-partija	partija
 Nepriklausomų Pasvalio krašto kandidatų koalicija "Už teigiamas permainas"	3	koalicija-nepriklausomu-pasvalio-krasto-kandidatu-koalicija-uz-teigiamas-permainas	koalicija
@@ -385,7 +385,7 @@ Lietuvos laisvės sąjunga (liberalai), išsikėlė pats	1	lietuvos-laisves-saju
 Lietuvos valstiečių ir žaliųjų sąjunga, išsikėlė pats	1	lvzs	partija
 Lietuvos valstiečių ir žaliųjų sąjunga; Lietuvos centro partija	1	lvzs-ir-lcp	koalicija
 Partija "Laisvė ir teisingumas"	1	laisve-ir-teisingumas	partija
-Pensininkų partija	1	pensininku-partija	partija
+Pensininkų partija	1	lietuvos-pensininku-partija	partija
 Politinė partija Rusų aljansas, Lietuvos lenkų rinkimų akcija – Krikščioniškų šeimų sąjunga	1	llra-ir-rusu-aljansas	koalicija
 Politinė partija „Lietuvos sąrašas“, išsikėlė pats	1	lietuvos-sarasas	partija
 Tėvynės sąjunga - Lietuvos krikščionys demokratai, išsikėlė pats	1	ts-lkd	partija

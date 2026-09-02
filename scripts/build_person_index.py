@@ -535,6 +535,11 @@ def build_index(
     # rather than shipping as a slug.
     # The registry rows for every party id the index actually uses, so the
     # dashboard can label a candidacy's "p" without carrying scraper/parties.json.
+    # "pr" is the entry's `predecessors` (issue #123): the organisations it
+    # continues -- the merged parties behind TS-LKD, the committee and the
+    # 2011 coalition behind the Vieningas Kaunas party -- which the party
+    # facet offers as one lineage row beside the entry's own. The list is
+    # the registry's whole; an id a subset build lacks is not offered.
     used_party_ids = sorted({e["p"] for p in entries for e in p["e"] if "p" in e})
     parties = {}
     for pid in used_party_ids:
@@ -549,6 +554,7 @@ def build_index(
                 if data.get("shortName") and data["shortName"] != data["name"]
                 else {}
             ),
+            **({"pr": list(data["predecessors"])} if data.get("predecessors") else {}),
         }
 
     missing_labels = [t for t in EDUCATION_LEVELS if t not in EDUCATION_LEVEL_LABELS]

@@ -127,6 +127,45 @@ const electionParent = (id) => (ELECTIONS.get(id) || {}).parent || null;
 // one seat-fill on its own -- though each stays pickable from its group.
 const inElection = (e, id) => e.id === id || electionParent(e.id) === id;
 
+// A nominator's lineage (issue #123): people.json's parties table carries
+// `pr`, the registry's `predecessors` -- the organisations an entry
+// continues, by a merger under a new name (TS-LKD from Tėvynės sąjunga and
+// LKD), a change of legal form (the Vieningas Kaunas party from its
+// committee from its 2011 independents' coalition), a registration taken
+// over, or a re-brand that kept a third of its candidates. The links form a
+// forest, so an entry has at most one successor and one root; the party
+// facet offers each root once more as "<name> ir pirmtakai", and that row
+// matches the whole lineage where the plain row matches the one nominator.
+const PARTY_LINEAGE_PREFIX = "+";
+let PARTY_LINEAGES = new Map();
+const inParty = (e, value) => value.startsWith(PARTY_LINEAGE_PREFIX)
+  ? (PARTY_LINEAGES.get(value.slice(PARTY_LINEAGE_PREFIX.length)) || new Set()).has(e.p)
+  : e.p === value;
+
+// The entry and everything it continues, depth-first in registry order, as
+// [{id, depth}] over the ids the index carries -- a predecessor a subset
+// build lacks is skipped, not invented.
+function partyLineage(parties, id) {
+  const out = [];
+  const seen = new Set();
+  const walk = (pid, depth) => {
+    if (seen.has(pid) || !parties[pid]) return;
+    seen.add(pid);
+    out.push({ id: pid, depth });
+    for (const pred of parties[pid].pr || []) walk(pred, depth + 1);
+  };
+  walk(id, 0);
+  return out;
+}
+
+// The lineage roots: entries with predecessors that no other entry lists as
+// one. Each becomes a group in the party facet.
+function partyLineageRoots(parties) {
+  const listed = new Set();
+  for (const party of Object.values(parties)) for (const pred of party.pr || []) listed.add(pred);
+  return Object.keys(parties).filter(id => (parties[id].pr || []).length && !listed.has(id));
+}
+
 // Money series for the assets & income chart. The first three are the keys
 // every election from 2007 on declares under. The fourth exists because the
 // 1996-1997 form does not split turtas from piniginės lėšos -- it publishes
@@ -569,11 +608,42 @@ function buildFilters() {
   for (const p of INDEX.people) {
     for (const e of p.e) if (e.p) partyCounts.set(e.p, (partyCounts.get(e.p) || 0) + 1);
   }
+  // One row per nominator, most candidacies first -- except that a lineage
+  // root becomes a group: its "ir pirmtakai" row first, then itself and
+  // every organisation it continues, indented by depth, each with its own
+  // count. A group sorts by the lineage's total, so Vieningas Kaunas (44 as
+  // a party, 148 with its committee and coalition) sits where its history
+  // puts it. Nothing is listed twice: an organisation inside a lineage has
+  // its row in the group only.
   const fParty = document.getElementById("fParty");
   addOption(fParty, "", "— visi iškėlėjai —");
-  const byCount = [...partyCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
-  for (const [id, count] of byCount) {
-    addOption(fParty, id, `${(INDEX.parties[id] || {}).n || id} (${fmtInt(count)})`);
+  const partyLabel = (id) => (INDEX.parties[id] || {}).n || id;
+  PARTY_LINEAGES = new Map();
+  const grouped = new Set();
+  const rows = [];
+  for (const root of partyLineageRoots(INDEX.parties || {})) {
+    const lineage = partyLineage(INDEX.parties, root);
+    if (lineage.length < 2) continue;
+    const ids = lineage.map(l => l.id);
+    PARTY_LINEAGES.set(root, new Set(ids));
+    for (const id of ids) grouped.add(id);
+    rows.push({ key: ids.reduce((n, id) => n + (partyCounts.get(id) || 0), 0), root, lineage });
+  }
+  for (const [id, count] of partyCounts) if (!grouped.has(id)) rows.push({ key: count, id });
+  rows.sort((a, b) => b.key - a.key || (a.root || a.id).localeCompare(b.root || b.id));
+  for (const row of rows) {
+    if (!row.root) {
+      addOption(fParty, row.id, `${partyLabel(row.id)} (${fmtInt(row.key)})`);
+      continue;
+    }
+    const group = document.createElement("optgroup");
+    group.label = partyLabel(row.root);
+    fParty.appendChild(group);
+    addOption(group, PARTY_LINEAGE_PREFIX + row.root, `${partyLabel(row.root)} ir pirmtakai (${fmtInt(row.key)})`).title =
+      "Kartu su organizacijomis, iš kurių ši išaugo: susijungimai, pakeista teisinė forma, perimta registracija";
+    for (const { id, depth } of row.lineage) {
+      addOption(group, id, `${"· ".repeat(depth)}${partyLabel(id)} (${fmtInt(partyCounts.get(id) || 0)})`);
+    }
   }
 
   const fMunicipality = document.getElementById("fMunicipality");
@@ -615,7 +685,7 @@ function activeFilters() {
 // municipalities; the 1997 pair joined its results in #92), not a loss.
 function candidacyMatches(e, f) {
   if (f.election && !inElection(e, f.election)) return false;
-  if (f.party && e.p !== f.party) return false;
+  if (f.party && !inParty(e, f.party)) return false;
   if (f.municipality !== "" && e.sv !== +f.municipality) return false;
   if (f.role && roleOf(e) !== f.role) return false;
   if (f.won === "won" && e.w !== true) return false;
