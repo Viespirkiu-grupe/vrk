@@ -106,6 +106,39 @@ class RegistryCarriageTests(unittest.TestCase):
                 build_person_index.load_registry(path)
 
 
+class PartyTableTests(unittest.TestCase):
+    """people.json's parties table carries, per used nominator id, the label,
+    the kind and -- since issue #123 -- `pr`, the registry's `predecessors`,
+    which the dashboard's party facet turns into lineage rows."""
+
+    def test_predecessors_ride_into_the_parties_table_whole(self):
+        import tempfile
+
+        registry = build_person_index.load_registry()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "2023-kovo-5-savivaldybiu-tarybu-ir-meru").mkdir()
+            record = dict(
+                _record("Jonas JONAITIS", "1970-01-01"),
+                candidateId="jonas-jonaitis",
+                kandidatavimas={
+                    "roles": ["tarybos-narys"],
+                    "savivaldybe": "Kauno miesto",
+                    "tarybosNarys": {"partyList": {"name": "Vieningas Kaunas"}},
+                },
+            )
+            (root / "2023-kovo-5-savivaldybiu-tarybu-ir-meru" / "jonas-jonaitis.json").write_text(
+                json.dumps(record, ensure_ascii=False), encoding="utf-8"
+            )
+            index = build_person_index.build_index(root, registry=registry, overrides={"decisions": []})
+        self.assertEqual(index["people"][0]["e"][0]["p"], "vieningas-kaunas")
+        # The whole registry list, even though this index carries no candidacy
+        # of the committee: the page skips what it lacks rather than the
+        # builder deciding what a lineage is.
+        self.assertEqual(index["parties"]["vieningas-kaunas"]["pr"], ["komitetas-vieningas-kaunas"])
+        self.assertEqual(index["parties"]["vieningas-kaunas"]["t"], "partija")
+
+
 class GroupingTests(unittest.TestCase):
     def _build(self, tmp_records, overrides=None):
         # lay records out as data/<election>/<cid>-<election>.json

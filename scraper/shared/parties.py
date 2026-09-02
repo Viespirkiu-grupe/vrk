@@ -7,8 +7,15 @@ holds one entry per organisation (parties, coalitions, electoral committees,
 self-nomination), bootstrapped from the 427 distinct nominator strings the
 corpus records, each of which is an exact alias of exactly one entry. The
 registry, not the corpus, carries renames (one entry, the old name an alias:
-LVŽS spans its 2001 and 2006 names) and mergers (a new entry with the merged
-organisations as `predecessors`: TS-LKD points at Tėvynės sąjunga and LKD).
+LVŽS spans its 2001 and 2006 names) and lineage (`predecessors`: the
+organisations an entry continues -- TS-LKD points at Tėvynės sąjunga and
+LKD, the Vieningas Kaunas party at its committee, which points at the 2011
+independents' coalition). Issue #123 audited every entry against the
+Ministry of Justice party register and the corpus: an entry is one
+organisation, a rename of a continuing one is an alias, and a merger under a
+new name, a change of legal form, a takeover of a registration or a re-brand
+that kept a third of its candidates is a `predecessors` link. The links form
+a forest; `ancestors()` walks it.
 
 Matching never guesses:
 
@@ -105,6 +112,23 @@ def match(raw: str | None) -> str | None:
     exact, folded = _indexes()
     name = raw.strip()
     return exact.get(name) or folded.get(fold(name))
+
+
+def ancestors(party_id: str) -> set[str]:
+    """Every organisation `party_id` continues, through the `predecessors`
+    chain (issue #123): the merged parties behind TS-LKD, the committee and
+    the 2011 coalition behind the Vieningas Kaunas party. Never includes the
+    entry itself. The links form a forest -- tests/test_party_registry.py
+    holds that no entry is listed by two successors and no chain loops -- so
+    the walk terminates and a lineage has one root."""
+    out: set[str] = set()
+    todo = list(entry(party_id).get("predecessors", []))
+    while todo:
+        pid = todo.pop()
+        if pid not in out:
+            out.add(pid)
+            todo.extend(entry(pid).get("predecessors", []))
+    return out
 
 
 def partija(record: dict[str, Any], election_id: str | None = None) -> dict[str, Any]:

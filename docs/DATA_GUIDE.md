@@ -345,12 +345,40 @@ Party identity is therefore *created*, by
 [`scraper/parties.json`](../scraper/parties.json): one entry per
 organisation — parties, coalitions (with member party ids under `nariai`
 where the coalition's own name states them), electoral committees,
-self-nomination — with every one of the 427 measured nominator surface forms
+self-nomination — with every one of the 393 measured nominator surface forms
 an exact alias of exactly one entry. The registry, not the corpus, carries
 renames (one entry, the old name an alias: LVŽS spans its 2001 and 2006
-names) and mergers (a new entry with `predecessors`: `ts-lkd` points at
-`tevynes-sajunga` and `lkd`, so pre-2008 candidacies group under the
-predecessor rather than anachronistically under the merged party).
+names) and lineage (`predecessors`: `ts-lkd` points at `tevynes-sajunga`
+and `lkd`, so pre-2008 candidacies group under the predecessor rather than
+anachronistically under the merged party).
+
+**What one entry is** (issue #123, which audited every entry against the
+Ministry of Justice party register and the corpus): one organisation. A
+rename of a continuing organisation is an alias — the 1999 „Socialdemokratija
+2000“ that became the Lietuvos socialdemokratų sąjunga in 2003, the 2007
+„Pensininkų partija“ whose chairman ran under that name in the Dzūkija
+by-election, a committee's brand across the visuomeninis rinkimų komitetas /
+politinis komitetas legal forms, a coalition line-up VRK spelled four ways.
+An organisation that another one *continues* is a `predecessors` link on the
+successor: a merger under a new name (TS-LKD), a change of legal form
+(`vieningas-kaunas` ← its committee ← its 2011 independents' coalition), a
+differently led project taking over a registration (Muntianas's Pilietinės
+demokratijos partija on the Lietuvos piliečių aljansas registration, two
+shared candidates of 74), or a re-brand that carried at least a third of its
+candidates (Jonava's „Su Sinkevičiumi ir Osausku“ → „Mūsų Jonava“). The
+links form a forest — one successor per organisation, no loops — which the
+dashboard's party facet groups by and `dist/vrk.sqlite` ships as
+`party_predecessors`. Each entry's `note` records the evidence: the JAR
+code, the register's dates, the shared-candidate count. The audit found 28
+same-organisation splits (the registry went from 340 entries to 312) and 34
+lineages; Šustauskas's 1994 Lietuvos laisvės sąjunga and the liberals' 2014
+one are, as suspected, two registrations, and the one string the registry
+still cannot split is „Lietuvos liaudies partija“, used by two different
+registrations (1996–1997 and 2011 on), because matching is by string alone.
+`scripts/party_lineage_report.py` keeps the lineage honest against the
+corpus: it lists every pair of nominators whose candidates carried over and
+fails on one the registry neither links nor records under
+`reviewedDistinct`.
 
 The join is `scraper/shared/parties.py`:
 

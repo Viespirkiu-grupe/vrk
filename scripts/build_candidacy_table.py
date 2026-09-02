@@ -13,7 +13,8 @@ This is the projector. One pass over `data/` writes:
 
     dist/candidacies.csv.gz   one row per candidacy, every column defined below
     dist/campaigns.csv.gz     one row per campaign-finance participant
-    dist/vrk.sqlite           the same, plus elections / persons / parties tables
+    dist/vrk.sqlite           the same, plus elections / persons / parties /
+                              party_predecessors tables
 
 Three rules make it trustworthy (all three are #93's):
 
@@ -691,6 +692,21 @@ def write_sqlite(
                     "type": data["type"],
                 }
                 for party_id, data in sorted(registry.items())
+            ],
+        )
+        # The lineage the registry records (issue #123): one row per
+        # (successor, predecessor) link -- the merged parties behind TS-LKD,
+        # the committee behind the Vieningas Kaunas party -- so a query can
+        # roll a nominator up with what it continues (a recursive CTE over
+        # this table). The links form a forest: one successor per party_id
+        # on the right-hand side.
+        create(
+            "party_predecessors",
+            ("party_id", "predecessor_id"),
+            [
+                {"party_id": party_id, "predecessor_id": predecessor}
+                for party_id, data in sorted(registry.items())
+                for predecessor in data.get("predecessors", [])
             ],
         )
         for index in (

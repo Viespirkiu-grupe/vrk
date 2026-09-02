@@ -84,7 +84,9 @@ first: a general election is one row, or a group holding itself and its
 seat-fills, and picking the general — `2016 Seimas (visa kadencija)` —
 includes the 2017–2019 by-elections of that same Seimas, which an exact-id
 match used to drop silently; a by-election stays pickable on its own from
-its group (issue #122). Filters conjoin at the candidacy level — a
+its group (issue #122). The nominator select does the same for lineage: a
+party that grew out of a committee, or a union of parties, is a group whose
+`… ir pirmtakai` row matches all of them (issue #123). Filters conjoin at the candidacy level — a
 person matches when at least one of their candidacies passes every active
 filter — and **⬇ CSV** exports the current selection (semicolon-separated,
 BOM-prefixed for lt-LT Excel, uncapped even when the list shows only the
@@ -142,6 +144,19 @@ party shows on the list rows (latest candidacy), on each election card, as
 the person header's nominator trajectory (`LLS → LiCS → …`), as a facet, and
 in the search haystack; the comparison's *Iškėlė / sąrašas* row shows the
 per-election raw string, which is where coalition compositions differ.
+
+The parties table also carries `pr`, the registry's `predecessors` (issue
+#123): the organisations an entry continues — the merged parties behind
+TS-LKD, the committee and the 2011 independents' coalition behind the
+Vieningas Kaunas party. The party facet turns each lineage root into a group:
+its first row, `<name> ir pirmtakai`, matches the whole lineage, and the rows
+below it — the root and everything it continues, indented by depth — match
+one nominator each with the counts the flat list used to show. A group sorts
+by its lineage's total, so Vieningas Kaunas sits where its 148 candidacies
+put it rather than where its 44 as a party would. An organisation inside a
+lineage is listed in its group only, never twice; a predecessor the index
+lacks (a subset build) is skipped. The stats view, the CSV and the person
+header keep the exact ids.
 
 **The other per-candidacy fields** (issue #87): `"sv"` indexes the top-level
 `municipalities` list (~127 names interned rather than repeated 99,594

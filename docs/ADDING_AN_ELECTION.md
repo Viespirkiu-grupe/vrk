@@ -253,7 +253,15 @@ would have made a null mean two different things depending on the election.
   writes the new forms into `docs/nominator-forms.tsv` and any unclaimed
   ones into the registry's `unmatched` block, which
   `tests/test_party_registry.py` keeps empty: add each as an alias of an
-  existing entry (a rename or glyph variant) or as a new entry.
+  existing entry (a rename or glyph variant) or as a new entry. An entry is
+  one organisation (issue #123): a committee that came back under a new
+  legal form or a re-worded brand is the same entry with an alias, and an
+  organisation that continues an earlier one — a party grown out of a
+  committee, a union of parties, a registration taken over — lists it under
+  `predecessors`. After `python scripts/build_person_index.py`,
+  `python scripts/party_lineage_report.py` lists every pair of nominators
+  whose candidates carried over and fails on one the registry neither links
+  nor records under `reviewedDistinct`.
 - **`scraper/elections.json`** — add the election: id, first-round date,
   kind, official Lithuanian name, short label for chart axes, and — unless
   it is a general election — the `parent` whose term it fills. This is what
@@ -318,6 +326,7 @@ reviewer cannot see a field that silently stopped arriving; these can.
 ```bash
 python scripts/field_coverage.py --update-baseline   # then paste your election's rows
 python scripts/nominator_report.py --update          # forms table + registry unmatched
+python scripts/party_lineage_report.py               # nominator lineage vs the rebuilt index
 python -m scraper anomalies-report <election-id>
 python scripts/reparse_diff.py
 ```

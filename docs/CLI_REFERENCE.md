@@ -2242,6 +2242,31 @@ of an existing entry, or a new entry) is what turns the suite green again. The
 full per-election table goes to `data/nominator-report.tsv` on every run; the
 whole corpus takes about half a minute.
 
+## The lineage report (`scripts/party_lineage_report.py`)
+
+The registry's `predecessors` links (issue #123) say which organisation
+another one continues — a merger under a new name, a committee that became
+a party, a registration taken over, a re-brand. Names cannot find those
+pairs; candidates can. This script reads the person index the dashboard is
+built from and lists every ordered pair of nominators where the earlier
+one's last election precedes the later one's first and at least a third of
+the smaller side's persons (three or more) stood for both, then checks that
+each is either linked in the registry or recorded, with a reason, under its
+`reviewedDistinct` block. A nationwide party is never proposed as a local
+list's successor.
+
+```bash
+python scripts/build_person_index.py                 # the index it reads
+python scripts/party_lineage_report.py               # findings, exit 1 on any
+python scripts/party_lineage_report.py --all         # every pair, linked ones too
+```
+
+The full pair table goes to `data/party-lineage-report.tsv` on every run. A
+finding is settled by adding the earlier id to the later entry's
+`predecessors`, or by adding the pair to `reviewedDistinct` with why they are
+two organisations; `tests/test_party_registry.py` holds the links to a forest
+and the reviewed pairs to entries that exist and stay unlinked.
+
 ## Helpful Checks
 
 ```bash
@@ -2249,5 +2274,6 @@ python -m scraper --help
 python -m scraper parse-anketa-samples --help
 python scripts/reparse_diff.py          # the corpus still matches the parsers
 python scripts/nominator_report.py      # every record still resolves and joins a nominator
+python scripts/party_lineage_report.py  # every continuity pair is linked or reviewed
 pytest tests/
 ```

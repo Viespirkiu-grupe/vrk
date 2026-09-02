@@ -181,7 +181,7 @@ class DistributionBuild(unittest.TestCase):
         }
         self.assertLessEqual(
             {"candidacies", "campaigns", "elections", "persons", "parties",
-             "records", "photos", "anomalies"},
+             "party_predecessors", "records", "photos", "anomalies"},
             tables,
         )
         self.assertEqual(
