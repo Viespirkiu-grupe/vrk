@@ -666,9 +666,12 @@ def write_sqlite(
 
         create("candidacies", COLUMNS, rows)
         create("campaigns", CAMPAIGN_COLUMNS, sorted(campaigns.values(), key=lambda c: (c["election_id"], c["campaign_key"])))
+        # The registry as a table. `parent` is the general election whose
+        # term a by-election, repeat or re-vote fills (NULL for a general),
+        # so COALESCE(parent, id) is the term key (issue #122).
         create(
             "elections",
-            ("id", "date", "kind", "name", "shortName", "records"),
+            ("id", "date", "kind", "parent", "name", "shortName", "records"),
             elections_table,
         )
         create(

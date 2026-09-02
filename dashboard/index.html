@@ -118,6 +118,14 @@ let ELECTIONS = new Map();
 
 const electionName = (id) => (ELECTIONS.get(id) || {}).name || id;
 const electionShortName = (id) => (ELECTIONS.get(id) || {}).shortName || id;
+// The general election whose term a by-election, repeat or re-vote fills --
+// the registry's `parent` (issue #122); a general election has none.
+const electionParent = (id) => (ELECTIONS.get(id) || {}).parent || null;
+// Selecting an election means its term: the general itself and every
+// seat-fill grouped under it. Matching the id alone made "2016 Seimas"
+// exclude the 2017-2019 by-elections of that same Seimas, and nobody wants
+// one seat-fill on its own -- though each stays pickable from its group.
+const inElection = (e, id) => e.id === id || electionParent(e.id) === id;
 
 // Money series for the assets & income chart. The first three are the keys
 // every election from 2007 on declares under. The fourth exists because the
@@ -517,13 +525,45 @@ function addOption(select, value, label) {
   option.value = value;
   option.textContent = label;
   select.appendChild(option);
+  return option;
+}
+
+// The election dropdowns show terms, newest first: a general election is one
+// row, or a group holding itself and its seat-fills when it has any (issue
+// #122 -- 55 peers in one list hid which by-election belonged to which
+// Seimas). people.json lists elections chronologically and a parent always
+// precedes its children, so one pass suffices; a child whose parent the
+// index does not carry (a subset build) stands on its own rather than vanish.
+function electionTree(elections) {
+  const groups = new Map();
+  for (const e of elections) {
+    const parent = e.parent && groups.get(e.parent);
+    if (parent) parent.children.push(e);
+    else groups.set(e.id, { election: e, children: [] });
+  }
+  return [...groups.values()].reverse();
+}
+
+function fillElectionSelect(select) {
+  for (const { election, children } of electionTree(INDEX.elections || [])) {
+    const label = election.shortName || election.id;
+    if (!children.length) {
+      addOption(select, election.id, label).title = election.name || "";
+      continue;
+    }
+    const group = document.createElement("optgroup");
+    group.label = label;
+    select.appendChild(group);
+    addOption(group, election.id, `${label} (visa kadencija)`).title =
+      "Kartu su tos kadencijos naujais ir pakartotiniais rinkimais";
+    for (const e of children) addOption(group, e.id, e.shortName || e.id).title = e.name || "";
+  }
 }
 
 function buildFilters() {
-  const elections = [...(INDEX.elections || [])].reverse();
   const fElection = document.getElementById("fElection");
   addOption(fElection, "", "— visi rinkimai —");
-  for (const e of elections) addOption(fElection, e.id, e.shortName || e.id);
+  fillElectionSelect(fElection);
 
   const partyCounts = new Map();
   for (const p of INDEX.people) {
@@ -574,7 +614,7 @@ function activeFilters() {
 // absent meaning VRK published no results for that ballot (five 2000
 // municipalities; the 1997 pair joined its results in #92), not a loss.
 function candidacyMatches(e, f) {
-  if (f.election && e.id !== f.election) return false;
+  if (f.election && !inElection(e, f.election)) return false;
   if (f.party && e.p !== f.party) return false;
   if (f.municipality !== "" && e.sv !== +f.municipality) return false;
   if (f.role && roleOf(e) !== f.role) return false;
@@ -1174,7 +1214,7 @@ function showAggregates() {
   const select = document.createElement("select");
   select.id = "aggElection";
   select.style.cssText = "padding:6px 8px;border:1px solid var(--line);border-radius:6px";
-  for (const e of [...(INDEX.elections || [])].reverse()) addOption(select, e.id, e.shortName || e.id);
+  fillElectionSelect(select);
   const filtered = document.getElementById("fElection").value;
   if (filtered) select.value = filtered;
   bar.append(h2, select);
@@ -1189,7 +1229,7 @@ function showAggregates() {
   function render() {
     const id = select.value;
     const candidacies = [];
-    for (const p of INDEX.people) for (const e of p.e) if (e.id === id) candidacies.push(e);
+    for (const p of INDEX.people) for (const e of p.e) if (inElection(e, id)) candidacies.push(e);
     const total = candidacies.length;
     holder.replaceChildren();
 
@@ -1201,6 +1241,18 @@ function showAggregates() {
       `išrinkta: ${fmtInt(won)}` +
       (unknown ? `, be rezultatų duomenų: ${fmtInt(unknown)}` : "");
     holder.appendChild(summary);
+    // A term's figures cover its seat-fills too; say which, and how many
+    // candidacies each adds, so the denominator stays explicit.
+    const seatFills = new Map();
+    for (const e of candidacies) if (e.id !== id) seatFills.set(e.id, (seatFills.get(e.id) || 0) + 1);
+    if (seatFills.size) {
+      const dateOf = (eid) => (ELECTIONS.get(eid) || {}).date || "";
+      const note = document.createElement("div"); note.className = "aggnote";
+      note.textContent = "Skaičiai apima ir tos kadencijos naujus bei pakartotinius rinkimus: " +
+        [...seatFills].sort((a, b) => dateOf(a[0]).localeCompare(dateOf(b[0])))
+          .map(([eid, n]) => `${electionShortName(eid)} (${fmtInt(n)})`).join(", ") + ".";
+      holder.appendChild(note);
+    }
 
     const section = (title, denominatorText) => {
       const wrap = document.createElement("div"); wrap.className = "sec";

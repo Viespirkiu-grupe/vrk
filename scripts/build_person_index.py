@@ -55,10 +55,13 @@ Identity (issue #96) is carried two ways on top of that join:
   build — the override file must never rot silently.
 
 Election names and chronology come from the one registry,
-`scraper/elections.json` -- id, first-round date, official Lithuanian name,
-short label -- and are copied into people.json so the dashboard carries no
-election list of its own. An election directory with no registry entry is
-reported by the run and falls back to its raw id in the UI.
+`scraper/elections.json` -- id, first-round date, kind, official Lithuanian
+name, short label, and for a by-election, repeat or re-vote the `parent`
+general election whose term it fills (issue #122) -- and are copied whole
+into people.json so the dashboard carries no election list of its own: the
+`parent` field is what lets its election filter fold the 2017-2019
+seat-fills under `2016 Seimas`. An election directory with no registry entry
+is reported by the run and falls back to its raw id in the UI.
 
 Run from the repo root:
 
@@ -141,6 +144,14 @@ def load_registry(path: Path = REGISTRY_PATH) -> list[dict]:
     votes -- keep the order the file lists them in, there being no other.
     """
     entries = json.loads(path.read_text(encoding="utf-8"))["elections"]
+    # A `parent` that names nothing would leave its by-election a top-level
+    # row in the dashboard and outside its general's selection -- the very
+    # gap issue #122 closes -- so the registry fails to load rather than rot.
+    ids = {e["id"] for e in entries}
+    for entry in entries:
+        parent = entry.get("parent")
+        if parent is not None and parent not in ids:
+            raise ValueError(f"{path}: {entry['id']} names an unregistered parent {parent!r}")
     return sorted(entries, key=lambda e: e["date"])
 
 
@@ -518,9 +529,10 @@ def build_index(
     entries = sorted(people.values(), key=lambda p: (-len(p["e"]), p["n"] or ""))
     multi = sum(1 for p in entries if len({e["id"] for e in p["e"]}) > 1)
     # Only the elections actually present are carried into people.json; the
-    # dashboard reads its labels and chronology from this list and nothing
-    # else. An unregistered directory keeps its raw id as its own label, and
-    # is reported so it gets a registry entry rather than shipping as a slug.
+    # dashboard reads its labels, chronology and term grouping (`parent`)
+    # from this list and nothing else. An unregistered directory keeps its
+    # raw id as its own label, and is reported so it gets a registry entry
+    # rather than shipping as a slug.
     # The registry rows for every party id the index actually uses, so the
     # dashboard can label a candidacy's "p" without carrying scraper/parties.json.
     used_party_ids = sorted({e["p"] for p in entries for e in p["e"] if "p" in e})
@@ -608,7 +620,11 @@ def main() -> int:
         f"{stats['candidaciesWithoutResultsData']} without results data"
     )
     print(f"municipalities:           {len(index['municipalities'])}")
-    print(f"elections:                {len(index['elections'])} of {len(load_registry())} registered")
+    generals = sum(1 for e in index["elections"] if "parent" not in e)
+    print(
+        f"elections:                {len(index['elections'])} of {len(load_registry())} registered "
+        f"({generals} general, {len(index['elections']) - generals} grouped under a parent)"
+    )
     print(f"wrote {OUTPUT_PATH} ({OUTPUT_PATH.stat().st_size // 1024} KB)")
     failed = False
     unregistered = index["unregisteredElections"]

@@ -255,8 +255,10 @@ would have made a null mean two different things depending on the election.
   `tests/test_party_registry.py` keeps empty: add each as an alias of an
   existing entry (a rename or glyph variant) or as a new entry.
 - **`scraper/elections.json`** — add the election: id, first-round date,
-  kind, official Lithuanian name, short label for chart axes. This is what
-  names it in the dashboard and places it in the cross-election chronology.
+  kind, official Lithuanian name, short label for chart axes, and — unless
+  it is a general election — the `parent` whose term it fills. This is what
+  names it in the dashboard, places it in the cross-election chronology and
+  groups it under its term.
   Skipping it fails `tests/test_elections_registry.py` and makes
   `scripts/build_person_index.py` exit non-zero, because the id would
   otherwise reach the UI as a raw slug — which is how the 2011 municipal
@@ -278,6 +280,13 @@ would have made a null mean two different things depending on the election.
   - `shortName`: `YYYY <Institucija>` for a general election, `YYYY-MM
     <Institucija>` otherwise — Seimas, Savivaldybės, Prezidentas, EP or Merai
     — with the day only if another non-general label shares the month.
+  - `parent`: for a by-election, repeat or re-vote, the id of the general
+    election whose term it fills — the latest earlier general of the same
+    family, a mayoral race grouping under the municipal general
+    (`2026-birzelio-7-mero-trakai` → `2023-kovo-5-savivaldybiu-tarybu-ir-meru`,
+    `2026-kovo-15-seimo-zirmunai` → `2024-seimo`). A general election has no
+    `parent`. The dashboard folds the entry under its parent and includes it
+    when the parent is selected (issue #122).
 
 ## 6. Full scrape
 
