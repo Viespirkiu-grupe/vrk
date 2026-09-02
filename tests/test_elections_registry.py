@@ -8,10 +8,17 @@ municipal general (16,400 records) was invisible to the dashboard and six more
 elections rendered as raw slugs. These tests pin the registry's shape and,
 when a local corpus is present, that every election in it has an entry --
 which is the check that was missing. See GitHub issue #63.
+
+The display fields then drifted in their own way: 55 entries written one
+module at a time, with `shortName` mixing nominative and genitive, month and
+no month, institution and place, and `name` sometimes carrying the day and
+sometimes not (issue #121). NamingConventionTests pins one rule per field, so
+a new entry either follows the convention or fails here.
 """
 
 from __future__ import annotations
 
+import collections
 import datetime as dt
 import importlib.util
 import json
@@ -161,6 +168,182 @@ class RegistryShapeTests(unittest.TestCase):
             [eid for eid in ordered if eid in set(ORDER_BEFORE_THE_REGISTRY)],
             ORDER_BEFORE_THE_REGISTRY,
         )
+
+
+#: The Lithuanian month names in the genitive, as a date reads in a heading
+#: ("2019 m. kovo 3 d."), and their ASCII forms as an id spells them.
+MONTHS_LT = (
+    "sausio", "vasario", "kovo", "balandžio", "gegužės", "birželio",
+    "liepos", "rugpjūčio", "rugsėjo", "spalio", "lapkričio", "gruodžio",
+)
+MONTHS_ASCII = (
+    "sausio", "vasario", "kovo", "balandzio", "geguzes", "birzelio",
+    "liepos", "rugpjucio", "rugsejo", "spalio", "lapkricio", "gruodzio",
+)
+
+#: The institution word of a shortName: one capitalised nominative per kind.
+INSTITUTION = {
+    "seimo": "Seimas",
+    "savivaldybiu": "Savivaldybės",
+    "prezidento": "Prezidentas",
+    "ep": "EP",
+    "mero": "Merai",
+}
+
+#: What follows the date in a `name`, per kind. A general election is the
+#: bare body phrase; anything else opens with VRK's own marker -- `nauji`
+#: (new) or `pakartotiniai` (repeat), `pakartotinis balsavimas` for the one
+#: re-vote -- and a Seimas by-election closes with its constituencies.
+#: One constituency ("Naujosios Vilnios apygardoje Nr. 10") or several
+#: ("Žirmūnų Nr. 4, Gargždų Nr. 31 ir Žiemgalos Nr. 46 apygardose").
+CONSTITUENCY = r"[^,]+? Nr\. \d+"
+CONSTITUENCIES = (
+    r"(?:[^,]+? apygardoje Nr\. \d+"
+    r"|(?:" + CONSTITUENCY + r", )*" + CONSTITUENCY + r" ir " + CONSTITUENCY + r" apygardose)"
+)
+NAME_BODY = {
+    "seimo": re.compile(
+        r"^(?:Lietuvos Respublikos Seimo rinkimai"
+        r"|(?:nauji|pakartotiniai) Lietuvos Respublikos Seimo rinkimai " + CONSTITUENCIES
+        + r"(?: ir nauji rinkimai " + CONSTITUENCIES + r")?)$"
+    ),
+    "savivaldybiu": re.compile(
+        r"^(?:savivaldybių tarybų(?: ir merų)? rinkimai"
+        r"|pakartotiniai \S+ rajono savivaldybės tarybos(?: nario–mero)?"
+        r"(?: ir \S+ rajono savivaldybės tarybos)? rinkimai)$"
+    ),
+    "prezidento": re.compile(r"^Respublikos Prezidento rinkimai$"),
+    "ep": re.compile(r"^Europos Parlamento rinkimai$"),
+    "mero": re.compile(
+        r"^(?:nauji .+ savivaldyb(?:ės tarybos nario–mero|ių tarybų narių–merų|ės mero|ių merų) rinkimai"
+        r"|\S+ savivaldybės mero rinkimų pakartotinis balsavimas)$"
+    ),
+}
+
+#: Ids are frozen as of the newest election in the registry when issue #121
+#: settled the conventions: an id names data/<id>/, the sitemaps, the module
+#: constants, the release assets and the join key of every export, so the old
+#: ones keep the slug shapes they were born with. Elections after this date
+#: follow one pattern: `YYYY-<kind>` for a general election, and
+#: `YYYY-<menuo>-<D>-<kind>[-<vieta>...]` for anything else.
+ID_FREEZE_DATE = "2025-03-16"
+GENERAL_ID = re.compile(r"^\d{4}-(?:seimo|savivaldybiu|prezidento|ep)$")
+OTHER_ID = re.compile(
+    r"^\d{4}-(?:" + "|".join(MONTHS_ASCII) + r")-[1-9]\d?-(?:seimo|savivaldybiu|prezidento|ep|mero)(?:-[a-z0-9]+)*$"
+)
+
+
+def date_in_words(iso: str) -> str:
+    date = dt.date.fromisoformat(iso)
+    return f"{date.year} m. {MONTHS_LT[date.month - 1]} {date.day} d."
+
+
+def name_body(entry: dict) -> str:
+    """The part of `name` after the date -- the date prefix is checked apart."""
+    prefix = date_in_words(entry["date"]) + " "
+    return entry["name"][len(prefix):] if entry["name"].startswith(prefix) else entry["name"]
+
+
+def is_general(entry: dict) -> bool:
+    # VRK names every election that is not a general one as `nauji` (new),
+    # `pakartotiniai` (repeat) or `pakartotinis balsavimas` (re-vote), and the
+    # registry keeps that word, so the name is the structural signal. The
+    # by-election grouping ticket (issue #122) plans a `parent` field; once
+    # it exists, "no parent" is the same test.
+    return re.search(r"\b(?:nauji|pakartotin\w*)\b", name_body(entry)) is None
+
+
+def expected_short_name(entry: dict, registry: list[dict]) -> str:
+    date = dt.date.fromisoformat(entry["date"])
+    word = INSTITUTION[entry["kind"]]
+    if is_general(entry):
+        return f"{date.year} {word}"
+    same_month = [
+        other
+        for other in registry
+        if not is_general(other)
+        and INSTITUTION[other["kind"]] == word
+        and other["date"][:7] == entry["date"][:7]
+    ]
+    return f"{entry['date'] if len(same_month) > 1 else entry['date'][:7]} {word}"
+
+
+class NamingConventionTests(unittest.TestCase):
+    """One rule per display field, so the dropdown stops reading as a style
+    lottery: `2016 Seimas` beside `2002 prezidento` beside `1997-12 Aukštaitija`
+    beside `2003 Seimas (nauji)` was the state before issue #121."""
+
+    def test_name_opens_with_the_registry_date_in_words(self):
+        for entry in REGISTRY:
+            with self.subTest(entry["id"]):
+                self.assertTrue(
+                    entry["name"].startswith(date_in_words(entry["date"]) + " "),
+                    f"{entry['name']!r} should open with {date_in_words(entry['date'])!r}",
+                )
+
+    def test_name_body_follows_the_kind_template(self):
+        for entry in REGISTRY:
+            with self.subTest(entry["id"]):
+                self.assertRegex(name_body(entry), NAME_BODY[entry["kind"]])
+
+    def test_a_seimas_by_election_names_its_constituencies_and_a_general_does_not(self):
+        for entry in REGISTRY:
+            if entry["kind"] != "seimo":
+                continue
+            with self.subTest(entry["id"]):
+                self.assertEqual("apygard" in entry["name"], not is_general(entry))
+
+    def test_short_name_is_the_year_or_year_month_plus_the_institution(self):
+        for entry in REGISTRY:
+            with self.subTest(entry["id"]):
+                self.assertEqual(entry["shortName"], expected_short_name(entry, REGISTRY))
+
+    def test_short_names_are_unique(self):
+        labels = [e["shortName"] for e in REGISTRY]
+        self.assertEqual(sorted(set(labels)), sorted(labels))
+
+    def test_the_day_reaches_a_short_name_only_where_the_month_collides(self):
+        # The two June 2015 municipal repeats are the one collision; nothing
+        # else should ever need the day, and generals never carry a month.
+        dated = sorted(e["id"] for e in REGISTRY if re.match(r"^\d{4}-\d{2}-\d{2} ", e["shortName"]))
+        self.assertEqual(
+            dated,
+            ["2015-birzelio-21-pakartotiniai-silutes", "2015-birzelio-7-pakartotiniai-sirvintos-trakai"],
+        )
+        for entry in REGISTRY:
+            with self.subTest(entry["id"]):
+                self.assertEqual(re.match(r"^\d{4} ", entry["shortName"]) is not None, is_general(entry))
+
+    def test_the_generals_are_the_expected_twenty_seven(self):
+        # Eight Seimas, eight municipal, six presidential and five EP general
+        # elections; everything else is a by-election, a repeat or a re-vote.
+        generals = collections.Counter(e["kind"] for e in REGISTRY if is_general(e))
+        self.assertEqual(generals, {"seimo": 8, "savivaldybiu": 8, "prezidento": 6, "ep": 5})
+
+    def test_ids_added_after_the_freeze_follow_the_slug_convention(self):
+        for entry in REGISTRY:
+            if entry["date"] <= ID_FREEZE_DATE:
+                continue
+            with self.subTest(entry["id"]):
+                date = dt.date.fromisoformat(entry["date"])
+                if is_general(entry):
+                    self.assertRegex(entry["id"], GENERAL_ID)
+                else:
+                    self.assertRegex(entry["id"], OTHER_ID)
+                    self.assertTrue(
+                        entry["id"].startswith(f"{date.year}-{MONTHS_ASCII[date.month - 1]}-{date.day}-"),
+                        entry["id"],
+                    )
+
+    def test_the_slug_convention_itself(self):
+        # No election is newer than the freeze yet, so the rule above has
+        # nothing to bite; this pins the patterns it will bite with.
+        for good in ("2028-seimo", "2027-savivaldybiu", "2029-prezidento", "2029-ep"):
+            self.assertRegex(good, GENERAL_ID)
+        for good in ("2026-kovo-15-seimo-zirmunai", "2026-birzelio-7-mero-trakai", "2026-spalio-4-seimo"):
+            self.assertRegex(good, OTHER_ID)
+        for bad in ("2027-savivaldybiu-tarybu", "2026-03-15-seimo", "2026-kovo-05-seimo", "2026-kovo-15-meru"):
+            self.assertIsNone(GENERAL_ID.match(bad) or OTHER_ID.match(bad), bad)
 
 
 class DashboardCarriesNoElectionListTests(unittest.TestCase):

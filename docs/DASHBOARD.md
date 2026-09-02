@@ -237,6 +237,33 @@ Same-day elections keep the order the registry file lists them in; the sort is
 stable on the date alone, because 2015-06-07 ran a Seimas by-election and two
 repeat municipal votes and there is no other order between them.
 
+The two display fields each follow one convention (issue #121 — the entries
+had accreted module by module, so the dropdown mixed `1996 Seimas`, `2002
+prezidento`, `1997-12 Aukštaitija` and `2003 Seimas (nauji)`):
+
+- **`shortName`** — `YYYY <Institucija>` for a general election, `YYYY-MM
+  <Institucija>` for a by-election, repeat or re-vote, the institution one
+  capitalised nominative per kind: Seimas, Savivaldybės, Prezidentas, EP,
+  Merai. The month is the signal that a label is not the general — `2019
+  Seimas` cannot be the September 2019 seat-fills — and the day joins only
+  where two non-general labels would otherwise collide (the two June 2015
+  municipal repeats, `2015-06-07 Savivaldybės` and `2015-06-21 Savivaldybės`).
+  Labels stay within the 24 characters a chart axis can show.
+- **`name`** — VRK's own heading form: the registry date in words (`2019 m.
+  kovo 3 d.`), then `nauji` or `pakartotiniai` when the election is not a
+  general one, then one body phrase per kind (`Lietuvos Respublikos Seimo
+  rinkimai`, `savivaldybių tarybų rinkimai`, `Respublikos Prezidento
+  rinkimai`, `Europos Parlamento rinkimai`, the named municipality's council
+  or mayor), and for a Seimas by-election its constituencies (`Žirmūnų
+  apygardoje Nr. 4`; `Žirmūnų Nr. 4, Gargždų Nr. 31 ir Žiemgalos Nr. 46
+  apygardose`).
+
+Ids are frozen: they name `data/<id>/`, the sitemaps, the modules' constants,
+the release assets and every export's join key, so the four slug shapes the
+old ones carry stay. Only an election added from now on follows one pattern —
+see [ADDING_AN_ELECTION.md](ADDING_AN_ELECTION.md). `tests/test_elections_registry.py`
+pins all three rules, so a new entry either follows them or fails there.
+
 ## Files
 
 - `scraper/elections.json` — the election registry (version controlled).
