@@ -255,12 +255,29 @@ would have made a null mean two different things depending on the election.
   `tests/test_party_registry.py` keeps empty: add each as an alias of an
   existing entry (a rename or glyph variant) or as a new entry.
 - **`scraper/elections.json`** — add the election: id, first-round date,
-  official Lithuanian name, short label for chart axes. This is what names it
-  in the dashboard and places it in the cross-election chronology. Skipping it
-  fails `tests/test_elections_registry.py` and makes
+  kind, official Lithuanian name, short label for chart axes. This is what
+  names it in the dashboard and places it in the cross-election chronology.
+  Skipping it fails `tests/test_elections_registry.py` and makes
   `scripts/build_person_index.py` exit non-zero, because the id would
   otherwise reach the UI as a raw slug — which is how the 2011 municipal
-  general stayed invisible (issue #63).
+  general stayed invisible (issue #63). Each field follows one convention,
+  and the same test file rejects an entry that strays (issue #121):
+  - `id`: `YYYY-<kind>` for a general election (`2028-seimo`,
+    `2027-savivaldybiu`), otherwise `YYYY-<menuo>-<D>-<kind>[-<vieta>...]`
+    (`2026-kovo-15-seimo-zirmunai`, `2026-birzelio-7-mero-trakai`) — ASCII,
+    the month in the genitive, the day without a leading zero, the kind
+    spelled exactly as the `kind` field. The existing ids predate the rule
+    and are frozen: an id names `data/<id>/`, the sitemaps, the module's
+    constants and the release assets, so nothing renames one.
+  - `name`: VRK's heading form — the date in words (`2026 m. kovo 15 d.`),
+    then `nauji` or `pakartotiniai` unless it is a general election, then the
+    kind's body phrase (`Lietuvos Respublikos Seimo rinkimai`, `savivaldybių
+    tarybų rinkimai`, `Respublikos Prezidento rinkimai`, `Europos Parlamento
+    rinkimai`, `<Vieta> savivaldybės mero rinkimai`), and for a Seimas
+    by-election its constituencies (`Žirmūnų apygardoje Nr. 4`).
+  - `shortName`: `YYYY <Institucija>` for a general election, `YYYY-MM
+    <Institucija>` otherwise — Seimas, Savivaldybės, Prezidentas, EP or Merai
+    — with the day only if another non-general label shares the month.
 
 ## 6. Full scrape
 

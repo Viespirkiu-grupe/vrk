@@ -1,406 +1,430 @@
 {
   "_comment": [
     "The one registry of elections in this corpus: id -> official Lithuanian",
-    "name, a short label for chart axes, the first-round date, and the kind",
-    "of body elected (seimo | savivaldybiu | prezidento | ep | mero).",
-    "Before this file there were three hand-maintained lists -- ELECTION_ORDER",
-    "in scripts/build_person_index.py plus ELECTION_LABELS and SHORT_LABELS in",
-    "dashboard/index.html -- and adding an election meant editing all three.",
-    "The last additions edited none of them, so 2011-vasario-27-savivaldybiu",
-    "(16,400 records) was invisible to the dashboard and six more elections",
-    "rendered as raw slugs. See GitHub issue #63.",
+    "name, a short label for chart axes and the filter dropdown, the first-round",
+    "date, and the kind of body elected (seimo | savivaldybiu | prezidento |",
+    "ep | mero). Before this file there were three hand-maintained lists --",
+    "ELECTION_ORDER in scripts/build_person_index.py plus ELECTION_LABELS and",
+    "SHORT_LABELS in dashboard/index.html -- and adding an election meant",
+    "editing all three. The last additions edited none of them, so",
+    "2011-vasario-27-savivaldybiu (16,400 records) was invisible to the",
+    "dashboard and six more elections rendered as raw slugs. See GitHub issue #63.",
     "",
     "`date` is the first round; its job is chronological ordering, which is why",
     "entries are stored sorted by it. Dates and scopes come from the election",
     "table in docs/CLI_REFERENCE.md. Adding an election means adding one entry",
     "here -- tests/test_elections_registry.py fails if data/<id>/ exists",
-    "without one."
+    "without one.",
+    "",
+    "The three fields follow one convention each (issue #121; the same test",
+    "file pins all three, so a new entry cannot drift):",
+    "- `name` is VRK's own heading form: the registry date in words",
+    "  (`YYYY m. <mėnesio> D d.`), then `nauji` or `pakartotiniai` when the",
+    "  election is not a general one, then one body phrase per kind --",
+    "  `Lietuvos Respublikos Seimo rinkimai`, `savivaldybių tarybų rinkimai`",
+    "  (2023 adds `ir merų`), `Respublikos Prezidento rinkimai`, `Europos",
+    "  Parlamento rinkimai`, the named municipality's council or mayor -- and",
+    "  for a Seimas by-election its constituencies: `X apygardoje Nr. N`, or",
+    "  `X Nr. N, Y Nr. M ir Z Nr. K apygardose`.",
+    "- `shortName` is `YYYY <Institucija>` for a general election and",
+    "  `YYYY-MM <Institucija>` for everything else; the institution is one",
+    "  capitalised nominative per kind: Seimas, Savivaldybės, Prezidentas, EP,",
+    "  Merai. The day joins the label only where two non-general elections",
+    "  share a month and an institution (the two June 2015 municipal repeats).",
+    "- `id` is frozen. It names data/<id>/, the sitemaps, every module's",
+    "  constants, the release assets and the join key of every export, so the",
+    "  old ids keep the slug shapes they were born with. A new election's id is",
+    "  `YYYY-<kind>` for a general election (2028-seimo, 2027-savivaldybiu) and",
+    "  `YYYY-<menuo>-<D>-<kind>[-<vieta>...]` for anything else",
+    "  (2026-kovo-15-seimo-zirmunai, 2026-birzelio-7-mero-trakai): ASCII, the",
+    "  month in the genitive, the day without a leading zero, the kind spelled",
+    "  exactly as the `kind` field."
   ],
   "elections": [
     {
       "id": "1996-spalio-20-seimo",
       "date": "1996-10-20",
       "kind": "seimo",
-      "name": "1996 m. Lietuvos Respublikos Seimo rinkimai",
+      "name": "1996 m. spalio 20 d. Lietuvos Respublikos Seimo rinkimai",
       "shortName": "1996 Seimas"
     },
     {
       "id": "1997-kovo-23-savivaldybiu-tarybu",
       "date": "1997-03-23",
       "kind": "savivaldybiu",
-      "name": "1997 m. savivaldybių tarybų rinkimai",
-      "shortName": "1997 savivaldybės"
+      "name": "1997 m. kovo 23 d. savivaldybių tarybų rinkimai",
+      "shortName": "1997 Savivaldybės"
     },
     {
       "id": "1997-kovo-23-seimo-pakartotiniai",
       "date": "1997-03-23",
       "kind": "seimo",
-      "name": "1997 m. kovo 23 d. Lietuvos Respublikos Seimo pakartotiniai rinkimai",
+      "name": "1997 m. kovo 23 d. pakartotiniai Lietuvos Respublikos Seimo rinkimai Naujosios Vilnios Nr. 10, Vilniaus–Šalčininkų Nr. 56, Vilniaus–Trakų Nr. 57 ir Trakų Nr. 58 apygardose",
       "shortName": "1997-03 Seimas"
     },
     {
       "id": "1997-birzelio-29-svenciniu-tarybos-pakartotiniai",
       "date": "1997-06-29",
       "kind": "savivaldybiu",
-      "name": "1997 m. Švenčionių rajono savivaldybės tarybos pakartotiniai rinkimai",
-      "shortName": "1997 Švenčionys"
+      "name": "1997 m. birželio 29 d. pakartotiniai Švenčionių rajono savivaldybės tarybos rinkimai",
+      "shortName": "1997-06 Savivaldybės"
     },
     {
       "id": "1997-gruodzio-21-seimo-pakartotiniai",
       "date": "1997-12-21",
       "kind": "seimo",
-      "name": "1997 m. Lietuvos Respublikos Seimo pakartotiniai rinkimai Aukštaitijos apygardoje Nr. 28",
-      "shortName": "1997-12 Aukštaitija"
+      "name": "1997 m. gruodžio 21 d. pakartotiniai Lietuvos Respublikos Seimo rinkimai Aukštaitijos apygardoje Nr. 28",
+      "shortName": "1997-12 Seimas"
     },
     {
       "id": "1998-kovo-22-seimo-pakartotiniai",
       "date": "1998-03-22",
       "kind": "seimo",
-      "name": "1998 m. Lietuvos Respublikos Seimo pakartotiniai rinkimai Naujosios Vilnios apygardoje Nr. 10 ir Vilniaus Trakų apygardoje Nr. 57",
+      "name": "1998 m. kovo 22 d. pakartotiniai Lietuvos Respublikos Seimo rinkimai Naujosios Vilnios Nr. 10 ir Vilniaus–Trakų Nr. 57 apygardose",
       "shortName": "1998-03 Seimas"
     },
     {
       "id": "1998-lapkricio-15-seimo-pakartotiniai",
       "date": "1998-11-15",
       "kind": "seimo",
-      "name": "1998 m. Lietuvos Respublikos Seimo pakartotiniai rinkimai Nevėžio apygardoje Nr. 26",
-      "shortName": "1998-11 Nevėžis"
+      "name": "1998 m. lapkričio 15 d. pakartotiniai Lietuvos Respublikos Seimo rinkimai Nevėžio apygardoje Nr. 26",
+      "shortName": "1998-11 Seimas"
     },
     {
       "id": "1999-kovo-21-seimo-pakartotiniai",
       "date": "1999-03-21",
       "kind": "seimo",
-      "name": "1999 m. Lietuvos Respublikos Seimo pakartotiniai rinkimai Naujosios Vilnios, Nevėžio ir Vilniaus Trakų apygardose",
+      "name": "1999 m. kovo 21 d. pakartotiniai Lietuvos Respublikos Seimo rinkimai Naujosios Vilnios Nr. 10, Nevėžio Nr. 26 ir Vilniaus–Trakų Nr. 57 apygardose",
       "shortName": "1999-03 Seimas"
     },
     {
       "id": "2000-kovo-19-savivaldybiu-tarybu",
       "date": "2000-03-19",
       "kind": "savivaldybiu",
-      "name": "2000 m. savivaldybių tarybų rinkimai",
-      "shortName": "2000 savivaldybės"
+      "name": "2000 m. kovo 19 d. savivaldybių tarybų rinkimai",
+      "shortName": "2000 Savivaldybės"
     },
     {
       "id": "2000-seimo",
       "date": "2000-10-08",
       "kind": "seimo",
-      "name": "2000 m. Lietuvos Respublikos Seimo rinkimai",
+      "name": "2000 m. spalio 8 d. Lietuvos Respublikos Seimo rinkimai",
       "shortName": "2000 Seimas"
     },
     {
       "id": "2002-prezidento",
       "date": "2002-12-22",
       "kind": "prezidento",
-      "name": "2002 m. Lietuvos Respublikos Prezidento rinkimai",
-      "shortName": "2002 prezidento"
+      "name": "2002 m. gruodžio 22 d. Respublikos Prezidento rinkimai",
+      "shortName": "2002 Prezidentas"
     },
     {
       "id": "2002-gruodzio-22-savivaldybiu-tarybu",
       "date": "2002-12-22",
       "kind": "savivaldybiu",
       "name": "2002 m. gruodžio 22 d. savivaldybių tarybų rinkimai",
-      "shortName": "2002 savivaldybės"
+      "shortName": "2002 Savivaldybės"
     },
     {
       "id": "2003-birzelio-15-seimo-nauji",
       "date": "2003-06-15",
       "kind": "seimo",
-      "name": "2003 m. birželio 15 d. nauji Lietuvos Respublikos Seimo narių rinkimai",
-      "shortName": "2003 Seimas (nauji)"
+      "name": "2003 m. birželio 15 d. nauji Lietuvos Respublikos Seimo rinkimai Senamiesčio Nr. 2, Antakalnio Nr. 3, Šeškinės Nr. 6 ir Nevėžio Nr. 26 apygardose",
+      "shortName": "2003-06 Seimas"
     },
     {
       "id": "2004-ep",
       "date": "2004-06-13",
       "kind": "ep",
-      "name": "2004 m. rinkimai į Europos Parlamentą",
+      "name": "2004 m. birželio 13 d. Europos Parlamento rinkimai",
       "shortName": "2004 EP"
     },
     {
       "id": "2004-prezidento",
       "date": "2004-06-13",
       "kind": "prezidento",
-      "name": "2004 m. Lietuvos Respublikos Prezidento rinkimai",
-      "shortName": "2004 prezidento"
+      "name": "2004 m. birželio 13 d. Respublikos Prezidento rinkimai",
+      "shortName": "2004 Prezidentas"
     },
     {
       "id": "2004-seimo",
       "date": "2004-10-10",
       "kind": "seimo",
-      "name": "2004 m. Lietuvos Respublikos Seimo rinkimai",
+      "name": "2004 m. spalio 10 d. Lietuvos Respublikos Seimo rinkimai",
       "shortName": "2004 Seimas"
     },
     {
       "id": "2005-lapkricio-20-seimo-kedainiai",
       "date": "2005-11-20",
       "kind": "seimo",
-      "name": "2005 m. nauji Seimo nario rinkimai Kėdainių apygardoje Nr. 43",
-      "shortName": "2005 Kėdainiai"
+      "name": "2005 m. lapkričio 20 d. nauji Lietuvos Respublikos Seimo rinkimai Kėdainių apygardoje Nr. 43",
+      "shortName": "2005-11 Seimas"
     },
     {
       "id": "2007-vasario-25-savivaldybiu",
       "date": "2007-02-25",
       "kind": "savivaldybiu",
-      "name": "2007 m. savivaldybių tarybų rinkimai",
-      "shortName": "2007 savivaldybės"
+      "name": "2007 m. vasario 25 d. savivaldybių tarybų rinkimai",
+      "shortName": "2007 Savivaldybės"
     },
     {
       "id": "2007-spalio-7-seimo-dzukija",
       "date": "2007-10-07",
       "kind": "seimo",
-      "name": "2007 m. Lietuvos Respublikos Seimo nauji rinkimai Dzūkijos apygardoje Nr. 69",
-      "shortName": "2007 Dzūkija"
+      "name": "2007 m. spalio 7 d. nauji Lietuvos Respublikos Seimo rinkimai Dzūkijos apygardoje Nr. 69",
+      "shortName": "2007-10 Seimas"
     },
     {
       "id": "2008-seimo",
       "date": "2008-10-12",
       "kind": "seimo",
-      "name": "2008 m. Lietuvos Respublikos Seimo rinkimai",
+      "name": "2008 m. spalio 12 d. Lietuvos Respublikos Seimo rinkimai",
       "shortName": "2008 Seimas"
     },
     {
       "id": "2009-prezidento",
       "date": "2009-05-17",
       "kind": "prezidento",
-      "name": "2009 m. Lietuvos Respublikos Prezidento rinkimai",
-      "shortName": "2009 prezidento"
+      "name": "2009 m. gegužės 17 d. Respublikos Prezidento rinkimai",
+      "shortName": "2009 Prezidentas"
     },
     {
       "id": "2009-ep",
       "date": "2009-06-07",
       "kind": "ep",
-      "name": "2009 m. Europos Parlamento rinkimai",
+      "name": "2009 m. birželio 7 d. Europos Parlamento rinkimai",
       "shortName": "2009 EP"
     },
     {
       "id": "2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai",
       "date": "2009-11-15",
       "kind": "seimo",
-      "name": "2009 m. Lietuvos Respublikos Seimo nauji rinkimai Šilalės–Šilutės apygardoje Nr. 33 ir Vilniaus–Šalčininkų apygardoje Nr. 56",
+      "name": "2009 m. lapkričio 15 d. nauji Lietuvos Respublikos Seimo rinkimai Šilalės–Šilutės Nr. 33 ir Vilniaus–Šalčininkų Nr. 56 apygardose",
       "shortName": "2009-11 Seimas"
     },
     {
       "id": "2011-vasario-13-seimo-marijampole",
       "date": "2011-02-13",
       "kind": "seimo",
-      "name": "2011 m. Lietuvos Respublikos Seimo nauji rinkimai Marijampolės apygardoje Nr. 29",
-      "shortName": "2011 Marijampolė"
+      "name": "2011 m. vasario 13 d. nauji Lietuvos Respublikos Seimo rinkimai Marijampolės apygardoje Nr. 29",
+      "shortName": "2011-02 Seimas"
     },
     {
       "id": "2011-vasario-27-savivaldybiu",
       "date": "2011-02-27",
       "kind": "savivaldybiu",
-      "name": "2011 m. savivaldybių tarybų rinkimai",
-      "shortName": "2011 savivaldybės"
+      "name": "2011 m. vasario 27 d. savivaldybių tarybų rinkimai",
+      "shortName": "2011 Savivaldybės"
     },
     {
       "id": "2012-seimo",
       "date": "2012-10-14",
       "kind": "seimo",
-      "name": "2012 m. Lietuvos Respublikos Seimo rinkimai",
+      "name": "2012 m. spalio 14 d. Lietuvos Respublikos Seimo rinkimai",
       "shortName": "2012 Seimas"
     },
     {
       "id": "2013-kovo-3-seimo-birzai-zarasai-ukmerge",
       "date": "2013-03-03",
       "kind": "seimo",
-      "name": "2013 m. Lietuvos Respublikos Seimo pakartotiniai ir nauji rinkimai",
+      "name": "2013 m. kovo 3 d. pakartotiniai Lietuvos Respublikos Seimo rinkimai Biržų–Kupiškio Nr. 48 ir Zarasų–Visagino Nr. 52 apygardose ir nauji rinkimai Ukmergės apygardoje Nr. 61",
       "shortName": "2013-03 Seimas"
     },
     {
       "id": "2014-prezidento",
       "date": "2014-05-11",
       "kind": "prezidento",
-      "name": "2014 m. Lietuvos Respublikos Prezidento rinkimai",
-      "shortName": "2014 prezidento"
+      "name": "2014 m. gegužės 11 d. Respublikos Prezidento rinkimai",
+      "shortName": "2014 Prezidentas"
     },
     {
       "id": "2014-ep",
       "date": "2014-05-25",
       "kind": "ep",
-      "name": "2014 m. Europos Parlamento rinkimai",
+      "name": "2014 m. gegužės 25 d. Europos Parlamento rinkimai",
       "shortName": "2014 EP"
     },
     {
       "id": "2015-kovo-1-savivaldybiu",
       "date": "2015-03-01",
       "kind": "savivaldybiu",
-      "name": "2015 m. savivaldybių tarybų rinkimai",
-      "shortName": "2015 savivaldybės"
+      "name": "2015 m. kovo 1 d. savivaldybių tarybų rinkimai",
+      "shortName": "2015 Savivaldybės"
     },
     {
       "id": "2015-kovo-1-seimo-zirmunai",
       "date": "2015-03-01",
       "kind": "seimo",
-      "name": "2015 m. Lietuvos Respublikos Seimo nauji rinkimai Žirmūnų apygardoje Nr. 4",
-      "shortName": "2015-03 Žirmūnai"
+      "name": "2015 m. kovo 1 d. nauji Lietuvos Respublikos Seimo rinkimai Žirmūnų apygardoje Nr. 4",
+      "shortName": "2015-03 Seimas"
     },
     {
       "id": "2015-birzelio-7-seimo-varena-eisiskes",
       "date": "2015-06-07",
       "kind": "seimo",
-      "name": "2015 m. Lietuvos Respublikos Seimo nauji rinkimai Varėnos–Eišiškių apygardoje Nr. 70",
-      "shortName": "2015-06 Varėna"
+      "name": "2015 m. birželio 7 d. nauji Lietuvos Respublikos Seimo rinkimai Varėnos–Eišiškių apygardoje Nr. 70",
+      "shortName": "2015-06 Seimas"
     },
     {
       "id": "2015-birzelio-7-pakartotiniai-sirvintos-trakai",
       "date": "2015-06-07",
       "kind": "savivaldybiu",
-      "name": "2015 m. Širvintų rajono mero ir Trakų rajono tarybos bei mero pakartotiniai rinkimai",
-      "shortName": "2015-06 Širvintos"
+      "name": "2015 m. birželio 7 d. pakartotiniai Širvintų rajono savivaldybės tarybos nario–mero ir Trakų rajono savivaldybės tarybos rinkimai",
+      "shortName": "2015-06-07 Savivaldybės"
     },
     {
       "id": "2015-birzelio-21-pakartotiniai-silutes",
       "date": "2015-06-21",
       "kind": "savivaldybiu",
-      "name": "2015 m. Šilutės rajono savivaldybės tarybos pakartotiniai rinkimai",
-      "shortName": "2015-06 Šilutė"
+      "name": "2015 m. birželio 21 d. pakartotiniai Šilutės rajono savivaldybės tarybos rinkimai",
+      "shortName": "2015-06-21 Savivaldybės"
     },
     {
       "id": "2015-lapkricio-8-telsiu-mero",
       "date": "2015-11-08",
       "kind": "mero",
-      "name": "2015 m. Telšių rajono savivaldybės tarybos nario–mero nauji rinkimai",
-      "shortName": "2015-11 Telšiai"
+      "name": "2015 m. lapkričio 8 d. nauji Telšių rajono savivaldybės tarybos nario–mero rinkimai",
+      "shortName": "2015-11 Merai"
     },
     {
       "id": "2016-seimo",
       "date": "2016-10-09",
       "kind": "seimo",
-      "name": "2016 m. Lietuvos Respublikos Seimo rinkimai",
+      "name": "2016 m. spalio 9 d. Lietuvos Respublikos Seimo rinkimai",
       "shortName": "2016 Seimas"
     },
     {
       "id": "2017-balandzio-23-meru",
       "date": "2017-04-23",
       "kind": "mero",
-      "name": "2017 m. Jonavos ir Šakių rajonų savivaldybių merų nauji rinkimai",
-      "shortName": "2017-04 merai"
+      "name": "2017 m. balandžio 23 d. nauji Jonavos ir Šakių rajonų savivaldybių tarybų narių–merų rinkimai",
+      "shortName": "2017-04 Merai"
     },
     {
       "id": "2017-balandzio-23-seimo-anyksciai-panevezys",
       "date": "2017-04-23",
       "kind": "seimo",
-      "name": "2017 m. Lietuvos Respublikos Seimo nauji rinkimai Anykščių–Panevėžio apygardoje Nr. 49",
+      "name": "2017 m. balandžio 23 d. nauji Lietuvos Respublikos Seimo rinkimai Anykščių–Panevėžio apygardoje Nr. 49",
       "shortName": "2017-04 Seimas"
     },
     {
       "id": "2017-rugsejo-10-marijampoles-mero",
       "date": "2017-09-10",
       "kind": "mero",
-      "name": "2017 m. Marijampolės savivaldybės mero nauji rinkimai",
-      "shortName": "2017-09 Marijampolė"
+      "name": "2017 m. rugsėjo 10 d. nauji Marijampolės savivaldybės tarybos nario–mero rinkimai",
+      "shortName": "2017-09 Merai"
     },
     {
       "id": "2018-rugsejo-16-seimo-zanavykai",
       "date": "2018-09-16",
       "kind": "seimo",
-      "name": "2018 m. Lietuvos Respublikos Seimo nauji rinkimai Zanavykų apygardoje Nr. 64",
-      "shortName": "2018 Zanavykai"
+      "name": "2018 m. rugsėjo 16 d. nauji Lietuvos Respublikos Seimo rinkimai Zanavykų apygardoje Nr. 64",
+      "shortName": "2018-09 Seimas"
     },
     {
       "id": "2019-kovo-3-savivaldybiu-tarybu",
       "date": "2019-03-03",
       "kind": "savivaldybiu",
-      "name": "2019 m. savivaldybių tarybų rinkimai",
-      "shortName": "2019 savivaldybės"
+      "name": "2019 m. kovo 3 d. savivaldybių tarybų rinkimai",
+      "shortName": "2019 Savivaldybės"
     },
     {
       "id": "2019-prezidento",
       "date": "2019-05-12",
       "kind": "prezidento",
-      "name": "2019 m. Lietuvos Respublikos Prezidento rinkimai",
-      "shortName": "2019 prezidento"
+      "name": "2019 m. gegužės 12 d. Respublikos Prezidento rinkimai",
+      "shortName": "2019 Prezidentas"
     },
     {
       "id": "2019-ep",
       "date": "2019-05-26",
       "kind": "ep",
-      "name": "2019 m. Europos Parlamento rinkimai",
+      "name": "2019 m. gegužės 26 d. Europos Parlamento rinkimai",
       "shortName": "2019 EP"
     },
     {
       "id": "2019-rugsejo-8-seimo",
       "date": "2019-09-08",
       "kind": "seimo",
-      "name": "2019 m. Lietuvos Respublikos Seimo nauji rinkimai Žirmūnų Nr. 4, Gargždų Nr. 31 ir Žiemgalos Nr. 46 apygardose",
+      "name": "2019 m. rugsėjo 8 d. nauji Lietuvos Respublikos Seimo rinkimai Žirmūnų Nr. 4, Gargždų Nr. 31 ir Žiemgalos Nr. 46 apygardose",
       "shortName": "2019-09 Seimas"
     },
     {
       "id": "2020-seimo",
       "date": "2020-10-11",
       "kind": "seimo",
-      "name": "2020 m. Lietuvos Respublikos Seimo rinkimai",
+      "name": "2020 m. spalio 11 d. Lietuvos Respublikos Seimo rinkimai",
       "shortName": "2020 Seimas"
     },
     {
       "id": "2021-balandzio-11-radviliskio-mero",
       "date": "2021-04-11",
       "kind": "mero",
-      "name": "2021 m. Radviliškio rajono savivaldybės mero nauji rinkimai",
-      "shortName": "2021 Radviliškis"
+      "name": "2021 m. balandžio 11 d. nauji Radviliškio rajono savivaldybės tarybos nario–mero rinkimai",
+      "shortName": "2021-04 Merai"
     },
     {
       "id": "2021-spalio-10-meru",
       "date": "2021-10-10",
       "kind": "mero",
-      "name": "2021 m. Kelmės ir Trakų rajonų savivaldybių merų nauji rinkimai",
-      "shortName": "2021-10 merai"
+      "name": "2021 m. spalio 10 d. nauji Kelmės ir Trakų rajonų savivaldybių tarybų narių–merų rinkimai",
+      "shortName": "2021-10 Merai"
     },
     {
       "id": "2023-kovo-5-savivaldybiu-tarybu-ir-meru",
       "date": "2023-03-05",
       "kind": "savivaldybiu",
-      "name": "2023 m. savivaldybių tarybų ir merų rinkimai",
-      "shortName": "2023 savivaldybės"
+      "name": "2023 m. kovo 5 d. savivaldybių tarybų ir merų rinkimai",
+      "shortName": "2023 Savivaldybės"
     },
     {
       "id": "2023-geguzes-7-visagino-mero",
       "date": "2023-05-07",
       "kind": "mero",
-      "name": "2023 m. Visagino savivaldybės mero pakartotinis balsavimas",
-      "shortName": "2023 Visaginas"
+      "name": "2023 m. gegužės 7 d. Visagino savivaldybės mero rinkimų pakartotinis balsavimas",
+      "shortName": "2023-05 Merai"
     },
     {
       "id": "2023-rugsejo-3-seimo-raseiniai-kedainiai",
       "date": "2023-09-03",
       "kind": "seimo",
-      "name": "2023 m. Lietuvos Respublikos Seimo nauji rinkimai Raseinių–Kėdainių apygardoje Nr. 42",
+      "name": "2023 m. rugsėjo 3 d. nauji Lietuvos Respublikos Seimo rinkimai Raseinių–Kėdainių apygardoje Nr. 42",
       "shortName": "2023-09 Seimas"
     },
     {
       "id": "2023-spalio-8-kupiskio-mero",
       "date": "2023-10-08",
       "kind": "mero",
-      "name": "2023 m. Kupiškio rajono savivaldybės mero nauji rinkimai",
-      "shortName": "2023 Kupiškis"
+      "name": "2023 m. spalio 8 d. nauji Kupiškio rajono savivaldybės mero rinkimai",
+      "shortName": "2023-10 Merai"
     },
     {
       "id": "2024-prezidento",
       "date": "2024-05-12",
       "kind": "prezidento",
-      "name": "2024 m. Lietuvos Respublikos Prezidento rinkimai",
-      "shortName": "2024 prezidento"
+      "name": "2024 m. gegužės 12 d. Respublikos Prezidento rinkimai",
+      "shortName": "2024 Prezidentas"
     },
     {
       "id": "2024-ep",
       "date": "2024-06-09",
       "kind": "ep",
-      "name": "2024 m. Europos Parlamento rinkimai",
+      "name": "2024 m. birželio 9 d. Europos Parlamento rinkimai",
       "shortName": "2024 EP"
     },
     {
       "id": "2024-seimo",
       "date": "2024-10-13",
       "kind": "seimo",
-      "name": "2024 m. Lietuvos Respublikos Seimo rinkimai",
+      "name": "2024 m. spalio 13 d. Lietuvos Respublikos Seimo rinkimai",
       "shortName": "2024 Seimas"
     },
     {
       "id": "2025-kovo-16-meru",
       "date": "2025-03-16",
       "kind": "mero",
-      "name": "2025 m. Jonavos, Joniškio ir Panevėžio savivaldybių merų nauji rinkimai",
-      "shortName": "2025 merai"
+      "name": "2025 m. kovo 16 d. nauji Jonavos rajono, Joniškio rajono ir Panevėžio miesto savivaldybių merų rinkimai",
+      "shortName": "2025-03 Merai"
     }
   ]
 }
