@@ -54,7 +54,10 @@ class RadviliskioMero2021AnketaParserTests(unittest.TestCase):
     def test_profile_card_fields(self) -> None:
         profilis = self.simelis["normalized"]["profilis"]
         self.assertEqual(profilis["vardas-pavarde"], "VYTAUTAS SIMELIS")
-        self.assertIn("kandImg", profilis["nuotrauka"])
+        # The page links the portrait on vrk.lt; the record carries the archived
+        # sidecar and photoMeta remembers the URL it came from (issue #118).
+        self.assertEqual(profilis["nuotrauka"], f"photos/{self.simelis['candidateId']}.jpg")
+        self.assertIn("kandImg", self.simelis["rawData"]["profile"]["photoMeta"]["url"])
 
         kita = profilis["kita"]
         self.assertEqual(kita["savivaldybe"]["reiksme"], "Radviliškio rajono (37)")

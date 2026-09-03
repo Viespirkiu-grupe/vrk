@@ -43,10 +43,14 @@ honest runs -- but its `sourceSha256` is read, so a drifted record is
 attributed to "the page changed" or "the parser changed" (issue #89).
 
 `--apply` copies the freshly parsed records over `data/<election-id>/`, along
-with any `photos/` sidecars the parse externalized. It requires `--full`,
-because applying a fixture run would rewrite five records and leave the other
-13,661 stale. `anomalies.jsonl` is replaced only when the run covered every
-stored record; a partial run leaves the stored file alone rather than
+with any `photos/` sidecars the parse externalized -- the base64 era's, and
+the URL era's from the `portrait.json` retained beside each page (issue #118).
+It requires `--full`, because applying a fixture run would rewrite five
+records and leave the other 13,661 stale. `anomalies.jsonl` is replaced only
+when the run covered every stored record, and only its `parse`-stage events
+are: what the fetch stage recorded (a candidate page the runner could not
+land, a portrait URL that answered 404) describes fetches a re-parse never
+made, and stays. A partial run leaves the stored file alone rather than
 truncating it to the subset it saw.
 
 Exit status is the gate: 0 when nothing differs, 1 when something does, 2 when
@@ -297,26 +301,44 @@ def apply_records(fresh_root: Path, stored_root: Path, record_names: list[str]) 
 
 
 def write_anomalies(path: Path, anomalies: list[dict[str, Any]]) -> bool:
-    """Rewrite an election's anomalies file, if the re-parse changed it.
+    """Rewrite an election's parse-stage anomalies, if the re-parse changed them.
 
-    Every anomaly in the corpus is a `parse`-stage event, so a complete
-    re-parse reproduces the whole file -- but only a complete one, which is
-    why the caller checks coverage first. Order is not compared: the stored
-    files are in scrape order and a re-parse emits candidate order, and the
-    file is a set of events either way. Unchanged content is left alone so
-    the file's mtime keeps meaning "when this election last changed".
+    A complete re-parse reproduces every `parse`-stage event, and only those
+    -- which is why the caller checks coverage first. Events of any other
+    stage are kept as they are: a `CandidateFetchFailed` from the runner or a
+    `PortraitFetchFailed` from scripts/backfill_url_portraits.py describes a
+    fetch this run did not make, and dropping it would turn a recorded
+    failure back into "never tried". Neither order nor `timestamp` is
+    compared: the stored files are in scrape order and a re-parse emits
+    candidate order, every fresh event is stamped with the re-parse's own
+    clock, and the file is a set of findings either way. Unchanged findings
+    are left alone -- with the timestamps of when they were first recorded --
+    so the file's mtime keeps meaning "when this election last changed".
     """
-    fresh = sorted(json.dumps(event, ensure_ascii=False, sort_keys=True) for event in anomalies)
+    fresh = sorted(_comparable_event(event) for event in anomalies)
+    kept: list[dict[str, Any]] = []
     if path.exists():
-        stored = sorted(
-            json.dumps(json.loads(line), ensure_ascii=False, sort_keys=True)
+        stored_events = [
+            json.loads(line)
             for line in path.read_text(encoding="utf-8").splitlines()
             if line.strip()
+        ]
+        kept = [event for event in stored_events if event.get("stage") != "parse"]
+        stored = sorted(
+            _comparable_event(event) for event in stored_events if event.get("stage") == "parse"
         )
         if stored == fresh:
             return False
-    write_jsonl(path, anomalies)
+    write_jsonl(path, kept + anomalies)
     return True
+
+
+def _comparable_event(event: dict[str, Any]) -> str:
+    return json.dumps(
+        {key: value for key, value in event.items() if key != "timestamp"},
+        ensure_ascii=False,
+        sort_keys=True,
+    )
 
 
 def resolve_sample_sources(

@@ -252,5 +252,54 @@ class SampleSourceTests(unittest.TestCase):
             self.assertEqual(script.resolve_sample_sources(Path(tmp), ELECTION_ID, full=True), [])
 
 
+
+class AnomalyFileTests(unittest.TestCase):
+    """`--apply` owns the parse-stage events and nothing else."""
+
+    PARSE_A = {"stage": "parse", "eventType": "ResidenceMissing", "candidateId": "a"}
+    PARSE_B = {"stage": "parse", "eventType": "ResidenceMissing", "candidateId": "b"}
+    FETCH = {"stage": "fetch", "eventType": "PortraitFetchFailed", "candidateId": "a"}
+
+    def _write(self, path: Path, events: list[dict]) -> None:
+        path.write_text("".join(json.dumps(e) + "\n" for e in events), encoding="utf-8")
+
+    def _read(self, path: Path) -> list[dict]:
+        return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
+
+    def test_fetch_stage_events_survive_a_rewrite(self) -> None:
+        # A portrait URL that answered 404 is a fetch the re-parse never made;
+        # replacing the file wholesale would turn it back into "never tried".
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "anomalies.jsonl"
+            self._write(path, [self.FETCH, self.PARSE_A])
+            self.assertTrue(script.write_anomalies(path, [self.PARSE_B]))
+            self.assertEqual(self._read(path), [self.FETCH, self.PARSE_B])
+
+    def test_unchanged_parse_events_leave_the_file_alone(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "anomalies.jsonl"
+            self._write(path, [self.PARSE_A, self.FETCH])
+            before = path.read_text(encoding="utf-8")
+            self.assertFalse(script.write_anomalies(path, [self.PARSE_A]))
+            self.assertEqual(path.read_text(encoding="utf-8"), before)
+
+    def test_a_fresh_timestamp_on_the_same_finding_is_not_a_change(self) -> None:
+        # Every re-parse stamps its events with its own clock; a file whose
+        # findings did not change keeps the timestamps of when they were found.
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "anomalies.jsonl"
+            self._write(path, [{**self.PARSE_A, "timestamp": "2026-08-29T00:00:00+00:00"}])
+            self.assertFalse(
+                script.write_anomalies(path, [{**self.PARSE_A, "timestamp": "2026-09-03T00:00:00+00:00"}])
+            )
+            self.assertEqual(self._read(path)[0]["timestamp"], "2026-08-29T00:00:00+00:00")
+
+    def test_a_file_of_only_fetch_events_gains_the_parse_events(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "anomalies.jsonl"
+            self._write(path, [self.FETCH])
+            self.assertTrue(script.write_anomalies(path, [self.PARSE_A]))
+            self.assertEqual(self._read(path), [self.FETCH, self.PARSE_A])
+
 if __name__ == "__main__":
     unittest.main()

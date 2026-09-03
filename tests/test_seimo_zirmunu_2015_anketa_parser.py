@@ -57,10 +57,12 @@ class SeimoZirmunu2015AnketaParserTests(unittest.TestCase):
         self.assertEqual(profilis["vardas-pavarde"], "Radvilė Morkūnaitė-Mikulėnienė")
         # No 2015 page marks the winner anywhere, so the note is always empty.
         self.assertIsNone(profilis["pastaba"])
-        # The photo is an external JPG on vrk.lt, not a base64 payload, so the
-        # reference stays a URL like the 2020+ eras.
+        # The photo is an external JPG on vrk.lt, not a base64 payload; the
+        # record carries it as the archived sidecar and photoMeta remembers
+        # the URL it came from (issue #118).
+        self.assertEqual(profilis["nuotrauka"], f"photos/{self.morkunaite['candidateId']}.jpg")
         self.assertEqual(
-            profilis["nuotrauka"],
+            self.morkunaite["rawData"]["profile"]["photoMeta"]["url"],
             "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt"
             "/Kandidatai/Kandidatas87326/Kandidato87326Foto.jpg",
         )

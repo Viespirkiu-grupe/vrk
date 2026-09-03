@@ -105,6 +105,16 @@ class DistributionBuild(unittest.TestCase):
         jonas["rawData"]["profile"]["photoMeta"] = {
             "mime": "image/jpeg", "bytes": len(JPEG), "sha256": JPEG_SHA,
         }
+        # The envelope's third optional key (issue #89): on every record with
+        # a retained page, and the reason no build could run from 2026-09-01
+        # until the builder learned it.
+        jonas["provenance"] = {
+            "fetchedAt": "2026-08-18T10:40:58+00:00",
+            "parsedAt": "2026-09-03T09:51:58+00:00",
+            "parserCommit": "959f055",
+            "sourceSha256": "0" * 64,
+            "schemaVersion": 1,
+        }
 
         petras = make_record("petras-c-3", "Petras C")
         petras["rawData"]["profile"]["photoSrc"] = "https://www.vrk.lt/petras.jpg"
@@ -287,6 +297,39 @@ class RefusedCorruption(unittest.TestCase):
         with self.assertRaisesRegex(SystemExit, "share \\(election_id, candidate_id\\)"):
             self.build_one(mutate)
 
+
+
+class PortraitKeyTests(unittest.TestCase):
+    """`record_photo` reads whichever key the family writes the reference under."""
+
+    def _root(self) -> Path:
+        root = Path(tempfile.mkdtemp(prefix="vrk-dist-photo-"))
+        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        (root / "photos").mkdir()
+        (root / "photos" / "alvydas.jpg").write_bytes(JPEG)
+        return root
+
+    def test_the_archive_family_photo_url_sidecar_is_stored(self) -> None:
+        # The 1996-1999 Seimas archive profile has `photoUrl`, not `photoSrc`;
+        # once archived (issue #118) it points at the sidecar like the rest.
+        root = self._root()
+        record = make_record("alvydas", "Alvydas")
+        record["rawData"]["profile"] = {
+            "candidateDisplayName": "Alvydas",
+            "photoUrl": "photos/alvydas.jpg",
+            "photoMeta": {"mime": "image/jpeg", "bytes": len(JPEG), "sha256": JPEG_SHA},
+        }
+        digest, mime, raw = dist_mod.record_photo(record, root / "alvydas.json")
+        self.assertEqual((digest, mime, raw), (JPEG_SHA, "image/jpeg", JPEG))
+
+    def test_a_tried_and_failed_url_stays_a_url_with_nothing_to_store(self) -> None:
+        root = self._root()
+        record = make_record("alvydas", "Alvydas")
+        record["rawData"]["profile"] = {
+            "photoUrl": "https://www.vrk.lt/gone.jpg",
+            "photoMeta": {"url": "https://www.vrk.lt/gone.jpg", "error": "HTTP 404"},
+        }
+        self.assertIsNone(dist_mod.record_photo(record, root / "alvydas.json"))
 
 if __name__ == "__main__":
     unittest.main()

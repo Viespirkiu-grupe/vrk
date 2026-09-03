@@ -17,12 +17,15 @@ What git carries now is a subset, chosen by one rule:
 A *unit* is a candidate directory with all its files together, a listing
 subdirectory (`lists/`, `districts/`, `municipalities/`, ...), one election's
 `samples/results/<election-id>/` tree, or a single top-level listing file. Only
-the extensions a parser opens count — `.html`, `.htm`, `.json`, `.doc` — so
-the 2002 presidential declaration scans (`.jpg`, about 1 MB per candidate,
-recorded by path and never read) stay local.
+what a parser opens counts — the extensions `.html`, `.htm`, `.json`, `.doc`,
+and a candidate's retained portrait (`portrait.json` and the `portrait.<ext>`
+it names, which the record writer reads to externalize the photo; issue #118)
+— so the 2002 presidential declaration scans (`.jpg`, about 1 MB per
+candidate, recorded by path and never read) stay local.
 
-That is 5,348 files and 43 MiB, and it leaves every election with at least one
-candidate to parse; `tests/test_tracked_fixtures.py` asserts exactly that,
+That is 6,230 files and 69 MiB — 852 of them, 25 MiB, the retained portraits
+of the URL-era fixture candidates — and it leaves every election with at
+least one candidate to parse; `tests/test_tracked_fixtures.py` asserts exactly that,
 along with git and the rule still agreeing. What a clone does *not* get is 48
 candidates, all of them 2018-2019 pages carrying the portrait as a base64 data
 URI, ten listing trees, nine `results/` trees and four `list.html` listings.
@@ -43,7 +46,7 @@ produce it. `tests/local_data.py` holds that machinery and the root
 `conftest.py` applies it. On a clone the suite is about 1,410 passed and 340
 skipped, and a further 174 subtests skip one untracked candidate at a time
 (`verbosity_subtests` in `pyproject.toml` makes the summary line count them);
-here, with everything scraped, 1,753 passed and none skipped.
+here, with everything scraped, 1,824 passed.
 
 A skip is a test that did not run, and a test that only ever runs on the
 scraping laptop can sit asserting a shape two refactors old while CI stays

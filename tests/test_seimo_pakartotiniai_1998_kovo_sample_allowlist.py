@@ -1,6 +1,8 @@
 import unittest
 from pathlib import Path
 
+from local_data import page_names
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SAMPLES_ROOT = REPO_ROOT / "samples" / "html" / "1998-kovo-22-seimo-pakartotiniai"
@@ -41,7 +43,7 @@ class SeimoPakartotiniai1998KovoSampleAllowlistTests(unittest.TestCase):
     def test_every_candidate_holds_the_pages_their_card_actually_links(self) -> None:
         for candidate_id in sorted(ALLOWED_CANDIDATE_DIRS):
             with self.subTest(candidate_id):
-                files = {c.name for c in (SAMPLES_ROOT / candidate_id).iterdir() if c.is_file()}
+                files = page_names(SAMPLES_ROOT / candidate_id)
                 expected = {"candidate.html", "biography.html", "index.json"}
                 if candidate_id in CANDIDATES_WITH_A_DECLARATION:
                     expected.add("declaration.html")

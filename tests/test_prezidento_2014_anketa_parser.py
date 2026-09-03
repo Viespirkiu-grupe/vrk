@@ -126,8 +126,14 @@ class Prezidento2014AnketaParserTests(unittest.TestCase):
         profilis = self.grybauskaite["normalized"]["profilis"]
         self.assertEqual(profilis["vardas-pavarde"], "DALIA GRYBAUSKAITĖ")
         self.assertIsNone(profilis["pastaba"])
+        # The page links the portrait on vrk.lt; the record carries the archived
+        # sidecar and photoMeta remembers the URL it came from (issue #118).
+        # VRK serves this one as PNG bytes under a .jpg name; the sidecar's
+        # extension follows the bytes, not the URL.
+        self.assertEqual(profilis["nuotrauka"], f"photos/{self.grybauskaite['candidateId']}.png")
+        self.assertEqual(self.grybauskaite["rawData"]["profile"]["photoMeta"]["mime"], "image/png")
         self.assertEqual(
-            profilis["nuotrauka"],
+            self.grybauskaite["rawData"]["profile"]["photoMeta"]["url"],
             "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt"
             "/Kandidatai/Kandidatas70873/Kandidato70873Foto.jpg",
         )

@@ -80,10 +80,16 @@ class VisaginoMero2023AnketaParserTests(unittest.TestCase):
         )
         self.assertIsNone(self.straupaite["normalized"]["profilis"]["pastaba"])
 
-    def test_photo_src_is_url(self) -> None:
-        photo = self.galaguz["normalized"]["profilis"]["nuotrauka"]
-        self.assertIn("kandImg", photo)
-        self.assertTrue(photo.startswith("https://"))
+    def test_photo_is_the_archived_sidecar(self) -> None:
+        # The page links a kandImg URL; the record carries the archived
+        # sidecar and photoMeta remembers the URL (issue #118).
+        self.assertEqual(
+            self.galaguz["normalized"]["profilis"]["nuotrauka"],
+            f"photos/{self.galaguz['candidateId']}.jpg",
+        )
+        photo_url = self.galaguz["rawData"]["profile"]["photoMeta"]["url"]
+        self.assertIn("kandImg", photo_url)
+        self.assertTrue(photo_url.startswith("https://"))
 
     def test_anketa_core_fields(self) -> None:
         self.assertEqual(self.galaguz["normalized"]["anketa"]["adresas"], "Visaginas")

@@ -1,6 +1,8 @@
 import unittest
 from pathlib import Path
 
+from local_data import page_names
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SAMPLES_ROOT = REPO_ROOT / "samples" / "html" / "2005-lapkricio-20-seimo-kedainiai"
@@ -32,7 +34,7 @@ class SeimoKedainiu2005SampleAllowlistTests(unittest.TestCase):
     def test_each_candidate_holds_the_three_pages(self) -> None:
         for candidate_id in ALLOWED_CANDIDATE_DIRS:
             with self.subTest(candidate_id):
-                files = {child.name for child in (SAMPLES_ROOT / candidate_id).iterdir()}
+                files = page_names(SAMPLES_ROOT / candidate_id)
                 self.assertEqual(files, {"anketa.html", "biografija.html", "turto-ir-pajamu-deklaracijos.html", "index.json"})
 
 

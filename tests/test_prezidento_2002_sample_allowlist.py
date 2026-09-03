@@ -1,6 +1,8 @@
 import unittest
 from pathlib import Path
 
+from local_data import page_names
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SAMPLES_ROOT = REPO_ROOT / "samples" / "html" / "2002-prezidento"
@@ -62,7 +64,7 @@ class Prezidento2002SampleAllowlistTests(unittest.TestCase):
         }
         for candidate_id in ALLOWED_CANDIDATE_DIRS:
             with self.subTest(candidate_id):
-                files = {child.name for child in (SAMPLES_ROOT / candidate_id).iterdir()}
+                files = page_names(SAMPLES_ROOT / candidate_id)
                 expected = parsed | scans
                 if candidate_id == "vytautas-sustauskas":
                     expected -= {"duomenu-anketa-2.jpg"}

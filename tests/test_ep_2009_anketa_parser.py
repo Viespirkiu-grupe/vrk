@@ -139,7 +139,14 @@ class Ep2009AnketaParserTests(unittest.TestCase):
         profilis = self.landsbergis["normalized"]["profilis"]
         self.assertEqual(profilis["vardas-pavarde"], "VYTAUTAS LANDSBERGIS")
         self.assertIsNone(profilis["pastaba"])
-        self.assertTrue(profilis["nuotrauka"].endswith("Kandidatas25370/Kandidato25370Foto.jpg"))
+        # The page links the portrait on vrk.lt; the record carries the archived
+        # sidecar and photoMeta remembers the URL it came from (issue #118).
+        self.assertEqual(profilis["nuotrauka"], f"photos/{self.landsbergis['candidateId']}.jpg")
+        self.assertTrue(
+            self.landsbergis["rawData"]["profile"]["photoMeta"]["url"].endswith(
+                "Kandidatas25370/Kandidato25370Foto.jpg"
+            )
+        )
         self.assertEqual(
             list(profilis["kita"].keys()),
             ["iskele", "numeris-sarase", "savarankisko-politines-kampanijos-dalyvio-duomenys"],

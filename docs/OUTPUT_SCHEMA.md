@@ -84,11 +84,23 @@ Expected section order in current implementation:
 
 - `candidateDisplayName`
 - `electedNote`
-- `photoSrc` — a VRK URL (2020+ page eras) or, for the eras whose pages embed
-  the portrait as a base64 data URI, the relative sidecar path
-  `photos/<candidateId>.<ext>` written beside the records; `photoMeta`
-  (`mime`, `bytes`, `sha256`) then identifies the file against the bytes VRK
-  served. `normalized.profilis.nuotrauka` carries the same reference.
+- `photoSrc` — the portrait reference. The page either embeds the portrait
+  as a base64 data URI (the 2016-2019 eras) or links it as a URL on vrk.lt
+  (every other era); the record carries the relative sidecar path
+  `photos/<candidateId>.<ext>` of a file written beside the records, and
+  `photoMeta` (`mime`, `bytes`, `sha256`) identifies that file against the
+  bytes VRK served. A linked portrait reaches the sidecar form once it has
+  been fetched into the retained tree beside the page
+  (`scripts/backfill_url_portraits.py`, issue #118), and its `photoMeta` then
+  also carries the `url` it came from and the `fetchedAt` of that fetch. A
+  URL whose fetch failed keeps the URL, with a `photoMeta` of only `url`,
+  `fetchedAt` and `error` — 38 records: the lrs.lt-hosted portraits of the
+  2000 Seimas and 2005 Kėdainiai elections, which neither lrs.lt host serves
+  any more, and one 2020 Seimas image vrk.lt itself answers 404 for; a URL
+  with no `photoMeta` at all was never tried. The extension follows
+  the bytes, not the URL: a few `.jpg` links serve PNG. The 1996-1999
+  Seimas archive family calls the key `photoUrl` and is rewritten the same
+  way. `normalized.profilis.nuotrauka` carries the same reference.
 - `fields[]` where each item contains:
   - `key`
   - `displayValue`
@@ -581,8 +593,9 @@ the party lists), so the `normalized` section order is `profilis`, `anketa`,
   `rysiai-su-juridiniais-asmenimis`, `rysiai-sudarius-sandorius`, …), each a
   list of records. The `kiti-duomenys` section is free text published without
   a label, so it lands under a `tekstas` key inside the record.
-- `profilis.nuotrauka` is a URL to the candidate photo (`kandImg/...`), not a
-  base64 data URI as in 2019.
+- `profilis.nuotrauka` is the candidate photo, which the page links as a
+  `kandImg/...` URL rather than embedding as a base64 data URI as in 2019 —
+  archived as a `photos/` sidecar like every era's (see `rawData.profile`).
 
 ## Appendix: 2019 Presidential (`2019-prezidento`)
 
@@ -635,8 +648,8 @@ five-tab set of `2024-ep` — there is no trustees tab and no campaign tab (unli
   run-off), or `Dalyvavo I ture` (first round only). The nomination line is
   captured under `profilis.kita.kandidata-iskele` (e.g. `išsikėlė pats` for a
   self-nominated candidate, or the nominating party name).
-- `profilis.nuotrauka` is a URL to the candidate photo (`kandImg/...`), as in
-  2024 EP.
+- `profilis.nuotrauka` is the candidate photo, linked by the page as a
+  `kandImg/...` URL as in 2024 EP and archived as a `photos/` sidecar.
 - `normalized.anketa` follows the 2024 question numbering: `adresas` (Q6),
   `einamos-pareigos` (Q7), and `narystes-politinese-organizacijose.irasai`
   (the Q8 membership table). Candidates who declare no membership answer Q8 with
@@ -704,9 +717,10 @@ that question's wording to scientific and pedagogical activity ("mokslinė,
 pedagoginė, visuomeninė veikla"), so this election's answers cover more ground
 than the shared key name suggests.
 
-Despite the pages keeping the 2016-era layout, `profilis.nuotrauka` is a URL
-to the candidate photo (`kandImg/...`) on all 1,754 records — not the base64
-data URI the other 2016-era-layout elections embed.
+Despite the pages keeping the 2016-era layout, the photo is a `kandImg/...`
+URL on all 1,754 pages — not the base64 data URI the other 2016-era-layout
+elections embed. In the record `profilis.nuotrauka` is the archived `photos/`
+sidecar either way (issue #118).
 
 `turto-ir-pajamu-deklaracijos` is the corpus's shared shape, but the two
 headline money keys were **null on all 1,753 declaration records** until
@@ -737,7 +751,8 @@ pages carry a campaign tab).
   Non-elected candidates have `null`. Constituency fields land under
   `profilis.kita`: `vienmandate-apygarda`, `iskele`, `turas`, `sarasas`,
   `numeris-sarase`, `porinkiminis-eiles-numeris`.
-- `profilis.nuotrauka` is a URL to the candidate photo (`kandImg/...`).
+- `profilis.nuotrauka` is the candidate photo: a `kandImg/...` URL on the
+  page, a `photos/` sidecar in the record.
 - `normalized.anketa` uses the 2024 numbering: `adresas` (Q6),
   `einamos-pareigos` (Q7) and `narystes-politinese-organizacijose.irasai` (the
   Q8 membership table, as in 2024 EP).
@@ -772,8 +787,8 @@ Election-specific notes:
   `profilis.kita`: `savivaldybe`, `iskele-i-savivaldybes-merus`, `turas`
   (`I`/`II`, the round the candidate ran in), `sarasas`, `numeris-sarase`,
   `porinkiminis-numeris-sarase`.
-- `profilis.nuotrauka` is a URL to the candidate photo (`kandImg/...`), as in
-  2024 EP.
+- `profilis.nuotrauka` is the candidate photo, linked by the page as a
+  `kandImg/...` URL as in 2024 EP and archived as a `photos/` sidecar.
 - `normalized.anketa` follows the 2024 question numbering: `adresas` (Q6) and
   `einamos-pareigos` (Q7). Q8 asks for a single membership
   ("Narystė politinėje partijoje, politiniame komitete, asociacijoje") and is
@@ -846,7 +861,8 @@ Election-specific notes:
   Constituency fields land under `profilis.kita`: `vienmandate-apygarda`,
   `iskele`, `turas` (`I`/`II`), `sarasas`, `numeris-sarase`,
   `porinkiminis-eiles-numeris`.
-- `profilis.nuotrauka` is a URL to the candidate photo (`kandImg/...`).
+- `profilis.nuotrauka` is the candidate photo: a `kandImg/...` URL on the
+  page, a `photos/` sidecar in the record.
 - `normalized.anketa` follows the 2024 question numbering: `adresas` (Q6) and
   `einamos-pareigos` (Q7). Q8 is answered inline, so
   `narystes-politinese-organizacijose` carries both `tekstas` and `irasai`
@@ -1288,7 +1304,8 @@ Records are written as
 `data/2021-spalio-10-meru/<candidate-id>-2021-spalio-10-meru.json`. The page
 shape matches `2023-spalio-8-kupiskio-mero` — same profile card,
 `<div>`-wrapped tab bodies, biography numbering with nationality as Q2, and
-`profilis.nuotrauka` as a URL — but the anketa follows the 2020 Seimo numbering:
+the photo linked as a URL rather than embedded — but the anketa follows the
+2020 Seimo numbering:
 
 - `adresas` (Q6) and `kontaktai` — `telefonas` (Q6.1), `el-pastas` (Q6.2),
   `socialiniu-tinklu-paskyros` (Q6.3)
@@ -1383,8 +1400,9 @@ repository — so several record shapes are this era's own:
   Both by-elections were decided in a second round; Žirmūnai's round-two
   page states no verdict sentence, so its winner is read as the plurality of
   the two-candidate runoff (`method: "runoff-plurality"` in the results file).
-- `profilis.nuotrauka` is a URL to an external JPG
-  (`Kandidato<ID>Foto.jpg`) — this era never embedded base64 photos.
+- `profilis.nuotrauka` is the candidate photo, which this era links as an
+  external JPG (`Kandidato<ID>Foto.jpg`) and never embeds as base64; the
+  record carries it as a `photos/` sidecar.
   `profilis.kita` holds `apygarda` and `iskele`, plus a
   `savarankisko-`/`atstovaujamojo-politines-kampanijos-dalyvio-duomenys` entry
   whose link is the campaign participant page.
@@ -1424,7 +1442,7 @@ repository — so several record shapes are this era's own:
 Records are written as
 `data/2015-lapkricio-8-telsiu-mero/<candidate-id>-2015-lapkricio-8-telsiu-mero.json`.
 The pages are the 2015 era described in the appendix above — every era shape
-there (no elected data, URL photos, litas amounts with `valiuta`/`pastaba`,
+there (no elected data, linked rather than embedded photos, litas amounts with `valiuta`/`pastaba`,
 retained spouse block, the campaign additions) applies here too. What differs
 is the municipal question set and the profile card:
 
@@ -1708,14 +1726,17 @@ section … these pages carry no questionnaire" — was wrong).
   `biography`, `declaration`. `normalized` order: `profilis`, `anketa`,
   `kandidatavimas`, `gyvenamoji-vieta`, `biografija`,
   `turto-ir-pajamu-deklaracijos`.
-- `normalized.profilis` holds `vardas-pavarde`, `nuotrauka` (the external
-  photo URL), `biografijos-nuoroda` and `pajamu-deklaracijos-nuoroda`. There
+- `normalized.profilis` holds `vardas-pavarde`, `nuotrauka` (the photo, a
+  `photos/` sidecar archived from the card's external link — issue #118),
+  `biografijos-nuoroda` and `pajamu-deklaracijos-nuoroda`. There
   is no `pastaba`: nothing on the *candidate* page marks a winner. Elected
   status lives on `kandidatavimas[].isrinktas`, joined from VRK's results
   pages — see the candidacy bullet below.
-- `rawData.profile` holds `candidateDisplayName`, `photoUrl` (an external URL,
-  never downloaded — unlike the base64-embedded-photo eras, this family's
-  photos stay as source links), `biographyUrl` and `incomeDeclarationUrl`
+- `rawData.profile` holds `candidateDisplayName`, `photoUrl` (the portrait
+  reference — this family's name for what every other era calls `photoSrc`;
+  the card links an external URL, the record carries the archived `photos/`
+  sidecar and `photoMeta.url` remembers the link), `biographyUrl` and
+  `incomeDeclarationUrl`
   (both fetched: the declaration is parsed into
   `normalized.turto-ir-pajamu-deklaracijos` as described below, while biography
   text is captured verbatim but not further structured).
@@ -2113,7 +2134,8 @@ an option).
 
 `vardas-pavarde` from the page's second heading ("Justas Vincas
 PALECKIS"), `pastaba` always null (no winner mark on any page),
-`nuotrauka` a VRK URL under `2004/euro/nuotraukos/`, and `kita` with
+`nuotrauka` the photo (linked under `2004/euro/nuotraukos/`, archived as a
+`photos/` sidecar), and `kita` with
 exactly two keys on every record: `iskele` (the nominating list, linking
 its page) and `priesrinkiminis-numeris-sarase` (the pre-election position,
 as text). The card's Biografija / Pajamų links are the page-set, not
@@ -2221,7 +2243,8 @@ Paksas in the accusative.
 
 `vardas-pavarde` from the card (mixed case, "Rolandas Paksas"),
 `pastaba` always null, `nuotrauka` the card's photo
-(`docs/<Name>_nuotrauka.jpg`), and `kita` with the card's facts:
+(`docs/<Name>_nuotrauka.jpg` on the site, a `photos/` sidecar in the
+record), and `kita` with the card's facts:
 `registracija` (the sentence, linking the decision on lrs.lt),
 `pareiskimas`, `duomenu-anketa` (two scan URLs), the declaration under
 its own label as the key — `seimos-turto-pajamu-deklaracija` on eleven
@@ -2284,8 +2307,9 @@ page. Each round's `balsai` sum to its valid ballots.
 ### `profilis`
 
 `vardas-pavarde` from the card, `pastaba` always null, `nuotrauka` the
-**full portrait** (the `nuotrauka.html` page's image; the card's
-thumbnail is kept as `rawData.nuotrauka.thumbnailUrl`), and `kita` with
+**full portrait** (the `nuotrauka.html` page's image, archived as a
+`photos/` sidecar; the card's thumbnail is kept as
+`rawData.nuotrauka.thumbnailUrl`, a URL), and `kita` with
 the card's facts: `registracija` (the sentence — "2004 m. gegužės 12
 dienos VRK sprendimu Nr. 120 registruotas kandidatu į Respublikos
 Prezidentus." — linking the decision on lrs.lt), `pareiskimas` (the
@@ -2438,7 +2462,8 @@ cards carry no campaign registration line, that starts in 2004.
 
 `vardas-pavarde` from the card's `<h2>` (surname in caps, "Vilija
 ALEKNAITĖ ABRAMIKIENĖ"), `pastaba` always null — these pages mark no
-winner — `nuotrauka` the photo URL, and `kita` exactly
+winner — `nuotrauka` the photo (a `photos/` sidecar archived from the
+page's link), and `kita` exactly
 `apygarda`/`iskele` on all 27: the constituency ("Senamiesčio (Nr.2)",
 linking the constituency page) and the nominating party (linking the
 party page).
@@ -2565,7 +2590,9 @@ of the 141 members carry it; the two who do not — Babravičius and
 **pre-results vintage**, whose links point at the live CGI
 (`cgi-bin/ora7dbcgi/…`) instead of the static pages and which predate the
 note; their `ElectedNoteMismatch` warning records the gap, and
-`kandidatavimas.isrinktas` is the results page's answer either way), `nuotrauka` (the external `lm…jpg` URL; null where
+`kandidatavimas.isrinktas` is the results page's answer either way), `nuotrauka` (the card's `lm…jpg` image, archived as a
+`photos/` sidecar — still the URL, with `photoMeta.error`, for the 32 cards
+whose image lived on lrs.lt, which no longer serves it; null where
 the card has no image), and `kita` with one `apygarda`/`iskele` pair per
 card block in card order (the multi-member block first for most dual
 candidates), `priesrinkiminis-numeris-sarase`, and for a coalition's

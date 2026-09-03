@@ -85,8 +85,11 @@ class Meru2021AnketaParserTests(unittest.TestCase):
     def test_profile_card_fields(self) -> None:
         profilis = self.jokubauskas["normalized"]["profilis"]
         self.assertEqual(profilis["vardas-pavarde"], "STASYS JOKUBAUSKAS")
-        # Photos are URLs again, unlike the base64 data URIs of the 2017 pages.
-        self.assertIn("kandImg", profilis["nuotrauka"])
+        # The page links the portrait (a kandImg URL, unlike the base64 data
+        # URIs of the 2017 pages); the record carries the archived sidecar and
+        # photoMeta remembers the URL it came from (issue #118).
+        self.assertEqual(profilis["nuotrauka"], f"photos/{self.jokubauskas['candidateId']}.jpg")
+        self.assertIn("kandImg", self.jokubauskas["rawData"]["profile"]["photoMeta"]["url"])
 
         kita = profilis["kita"]
         self.assertEqual(kita["savivaldybe"]["reiksme"], "Kelmės rajono (18)")

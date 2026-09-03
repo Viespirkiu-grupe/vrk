@@ -58,12 +58,18 @@ measurement that justifies the event lives.
   into the election's file.
 - **`parse`** — everything the parsers find in a page they already have.
 
-Every event now in the corpus is a `parse` event. That is not because fetching
-never failed: until issue #85 the fetch command computed its events, printed a
-count and dropped them — `--anomalies-path` existed only on the parse
-subparser, and the batch runner sent the fetch command's output to
-`/dev/null`. The plumbing exists now; the corpus's record of past fetches does
-not, and cannot be recovered.
+Until 2026-09-02 every event in the corpus was a `parse` event. That was not
+because fetching never failed: until issue #85 the fetch command computed its
+events, printed a count and dropped them — `--anomalies-path` existed only on
+the parse subparser, and the batch runner sent the fetch command's output to
+`/dev/null`. The plumbing exists now; the corpus's record of past page
+fetches does not, and cannot be recovered. The first `fetch`-stage events in
+the corpus are the `PortraitFetchFailed` rows `scripts/backfill_url_portraits.py`
+writes (issue #118): one per candidate whose portrait URL answered anything
+but an image, replaced on every run of the script so that a retry which
+succeeds clears the row and one which fails again does not double it.
+`scripts/reparse_diff.py --apply` regenerates an election's `parse`-stage
+events from the re-parse and keeps every other stage's as they are.
 
 ## Severities
 
@@ -84,13 +90,15 @@ events completely and stopped every archive run on its first batch.
 ## The eight types that fire
 
 Measured over all 55 elections on 2026-08-29 (the `ElectedCandidacyMismatch`
-row added 2026-08-31 with issue #92's join). Forty-two event types are
-declared in the code; these nine are the ones the corpus has ever recorded.
+row added 2026-08-31 with issue #92's join, the `PortraitFetchFailed` row
+2026-09-03 with issue #118's portrait archive). Forty-three event types are
+declared in the code; these ten are the ones the corpus has ever recorded.
 
 | count | type | severity | what it means |
 | --- | --- | --- | --- |
 | 8,598 | `DeclarationTotalBelowItsOwnRow` | `info` | An archive declaration whose row-20 total is below its own row 1, on a page carrying VRK's query-error banner. The total is refused rather than published, so the record has `null` and not a false zero. |
 | 327 | `DeclarationTotalBelowItsOwnRow` | `warning` | The same contradiction on a page that printed no banner. A readable page contradicting itself is a finding. |
+| 38 | `PortraitFetchFailed` | `warning` | A candidate's portrait URL that answered anything but an image when `scripts/backfill_url_portraits.py` fetched it — the corpus's only `fetch`-stage events. 32 (2000 Seimas) and 5 (2005 Kėdainiai) point at lrs.lt hosts that answer 520 and 503; one 2020 Seimas image is a 404 on vrk.lt itself. The record keeps the URL with a `photoMeta` naming the error. |
 | 31 | `ElectedCandidacyMismatch` | `warning` | A 1997 municipal winner whose elected-page list position disagrees with the card's own (a renumbering after withdrawals; the join keys on VRK's candidate id, so electedness is unaffected). |
 | 11 | `ResidenceMissing` | `warning` | A 1996–2000 card with no residence line. |
 | 3 | `DeclarationPageUnreadable` | `error` | A declaration page with no figures on it at all. |

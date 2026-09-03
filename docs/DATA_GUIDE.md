@@ -485,15 +485,22 @@ and none of it is canonicalised by the registry.
   EUR-converted with the rate in its own column. The dashboard's index
   builder converts the same way and flags the converted candidacies.
 - **Photos are sidecar files.** `profilis.nuotrauka` (and
-  `rawData.profile.photoSrc`) is always a *reference*: a VRK URL from
-  `2020-seimo` on, and the relative path `photos/<candidateId>.<ext>` in the
-  2016–2019 page eras, whose file sits beside the records in
-  `data/<election-id>/photos/`. `rawData.profile.photoMeta` carries the
-  file's size and sha256, verifiable against the byte payload VRK served
-  (the raw HTML retains the original data URI). **If you copy records
-  elsewhere, bring the election's `photos/` folder along** — a record alone
-  no longer contains its portrait. One curiosity survives faithfully: one
-  candidate's "photo" is a ZIP archive, stored as `.zip`.
+  `rawData.profile.photoSrc`, or `photoUrl` in the 1996–1999 Seimas archive)
+  is a *reference*: the relative path `photos/<candidateId>.<ext>` of a file
+  beside the records in `data/<election-id>/photos/`, whatever the page did
+  — embedded the portrait as base64 (2016–2019) or linked it on vrk.lt
+  (every other era; fetched into the retained trees by
+  `scripts/backfill_url_portraits.py`, issue #118). `rawData.profile.photoMeta`
+  carries the file's size and sha256, verifiable against the bytes VRK
+  served, plus the `url` and `fetchedAt` of a fetched one. A reference that
+  is still an `http(s)://` URL is a portrait the fetch could not get: its
+  `photoMeta` says when it was tried and how it failed (`error`), and a URL
+  with no `photoMeta` was never tried. **If you copy records elsewhere,
+  bring the election's `photos/` folder along** — a record alone does not
+  contain its portrait. Two curiosities survive faithfully: one candidate's
+  "photo" is a ZIP archive, stored as `.zip`, and a handful of portraits VRK
+  serves as PNG bytes under a `.jpg` URL are stored as `.png`, because the
+  extension follows the bytes.
 - **20 values still hold a replacement character, and that is VRK's.**
   `U+FFFD` reached the corpus in 203 values. Fetching one of those pages live
   returns the replacement character in VRK's own bytes, so the original was

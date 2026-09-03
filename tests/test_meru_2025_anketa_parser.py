@@ -89,7 +89,10 @@ class Meru2025AnketaParserTests(unittest.TestCase):
     def test_profile_municipal_fields(self) -> None:
         profilis = self.cepulis["normalized"]["profilis"]
         self.assertEqual(profilis["vardas-pavarde"], "GEDIMINAS ČEPULIS")
-        self.assertIn("kandImg", profilis["nuotrauka"])
+        # The page links the portrait on vrk.lt; the record carries the archived
+        # sidecar and photoMeta remembers the URL it came from (issue #118).
+        self.assertEqual(profilis["nuotrauka"], f"photos/{self.cepulis['candidateId']}.jpg")
+        self.assertIn("kandImg", self.cepulis["rawData"]["profile"]["photoMeta"]["url"])
 
         kita = profilis["kita"]
         self.assertEqual(kita["savivaldybe"]["reiksme"], "Joniškio rajono (11)")
