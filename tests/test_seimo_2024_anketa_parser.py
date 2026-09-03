@@ -63,7 +63,10 @@ class Seimo2024AnketaParserTests(unittest.TestCase):
         # stray "kita" entry.
         profilis = self.algirdas["normalized"]["profilis"]
         self.assertEqual(profilis["vardas-pavarde"], "Algirdas BUTKEVIČIUS")
-        self.assertIn("kandImg", profilis["nuotrauka"])
+        # The page links the portrait on vrk.lt; the record carries the archived
+        # sidecar and photoMeta remembers the URL it came from (issue #118).
+        self.assertEqual(profilis["nuotrauka"], f"photos/{self.algirdas['candidateId']}.jpg")
+        self.assertIn("kandImg", self.algirdas["rawData"]["profile"]["photoMeta"]["url"])
 
         kita = profilis["kita"]
         self.assertEqual(kita["vienmandate-apygarda"]["reiksme"], "Vilkaviškio Nr. 68")

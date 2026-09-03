@@ -175,8 +175,11 @@ class Prezidento2004RecordTests(unittest.TestCase):
         self.assertEqual(anketa["gimimo-data"], "1926-11-03")
         self.assertEqual(anketa["gimimo-data-saltinis"], "biografijos-tekstas")
 
-        # The full portrait replaces the card thumbnail as the photo.
-        self.assertTrue(record["normalized"]["profilis"]["nuotrauka"].endswith("19_32611030033d.jpg"))
+        # The full portrait replaces the card thumbnail as the photo; the
+        # record carries it as the archived sidecar and photoMeta remembers
+        # the URL it came from (issue #118).
+        self.assertEqual(record["normalized"]["profilis"]["nuotrauka"], f"photos/{record['candidateId']}.jpg")
+        self.assertTrue(record["rawData"]["profile"]["photoMeta"]["url"].endswith("19_32611030033d.jpg"))
         self.assertEqual(
             record["rawData"]["nuotrauka"]["thumbnailUrl"].rsplit("/", 1)[-1],
             "19_32611030033.jpg",

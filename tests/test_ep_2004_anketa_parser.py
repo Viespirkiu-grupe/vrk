@@ -260,7 +260,13 @@ class Ep2004AnketaParserTests(unittest.TestCase):
         profilis = self.paleckis["normalized"]["profilis"]
         self.assertEqual(profilis["vardas-pavarde"], "Justas Vincas PALECKIS")
         self.assertIsNone(profilis["pastaba"])
-        self.assertEqual(profilis["nuotrauka"], "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/nuotraukos/1698_34201010105.jpg")
+        # The page links the portrait on vrk.lt; the record carries the archived
+        # sidecar and photoMeta remembers the URL it came from (issue #118).
+        self.assertEqual(profilis["nuotrauka"], f"photos/{self.paleckis['candidateId']}.jpg")
+        self.assertEqual(
+            self.paleckis["rawData"]["profile"]["photoMeta"]["url"],
+            "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/nuotraukos/1698_34201010105.jpg",
+        )
         self.assertEqual(
             profilis["kita"],
             {

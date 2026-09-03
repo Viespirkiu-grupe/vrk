@@ -324,8 +324,12 @@ class Savivaldybiu2023AnketaParserTests(unittest.TestCase):
                     list(profilis.keys()),
                     ["vardas-pavarde", "pastaba", "nuotrauka", "kita", "kandidatuoja-i", "dokumentu-pateikimo-data"],
                 )
-                self.assertIn("kandImg", profilis["nuotrauka"])
-                self.assertTrue(profilis["nuotrauka"].startswith("https://"))
+                # The page links a kandImg URL; the record carries the archived
+                # sidecar and photoMeta remembers the URL (issue #118).
+                self.assertEqual(profilis["nuotrauka"], f"photos/{payload['candidateId']}.jpg")
+                photo_url = payload["rawData"]["profile"]["photoMeta"]["url"]
+                self.assertIn("kandImg", photo_url)
+                self.assertTrue(photo_url.startswith("https://"))
 
     def test_profilis_kita_keys_vary_by_role(self) -> None:
         # Council-only pages carry neither a nomination line nor a round; the

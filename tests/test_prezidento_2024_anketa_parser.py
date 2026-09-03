@@ -62,10 +62,16 @@ class Prezidento2024AnketaParserTests(unittest.TestCase):
         self.assertEqual(self.simonyte["normalized"]["profilis"]["pastaba"], "Dalyvavo II ture")
         self.assertEqual(self.vaitkus["normalized"]["profilis"]["pastaba"], "Dalyvavo I ture")
 
-    def test_photo_src_is_url(self) -> None:
-        photo = self.nauseda["normalized"]["profilis"]["nuotrauka"]
-        self.assertIn("kandImg", photo)
-        self.assertTrue(photo.startswith("https://"))
+    def test_photo_is_the_archived_sidecar(self) -> None:
+        # The page links a kandImg URL; the record carries the archived
+        # sidecar and photoMeta remembers the URL (issue #118).
+        self.assertEqual(
+            self.nauseda["normalized"]["profilis"]["nuotrauka"],
+            f"photos/{self.nauseda['candidateId']}.jpg",
+        )
+        photo_url = self.nauseda["rawData"]["profile"]["photoMeta"]["url"]
+        self.assertIn("kandImg", photo_url)
+        self.assertTrue(photo_url.startswith("https://"))
 
     def test_nomination_captured(self) -> None:
         # Self-nominated vs party-nominated is captured under profilis.kita.

@@ -15,6 +15,7 @@ module the CLI can parse must have at least one candidate to parse.
 
 import importlib.util
 import subprocess
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -90,6 +91,44 @@ class TrackedFixtureTests(unittest.TestCase):
             "parser tests for them can only skip",
         )
 
+
+
+class PortraitRuleTests(unittest.TestCase):
+    """A candidate's retained portrait is tracked with its unit (issue #118)."""
+
+    def _candidate(self, root: Path, portrait_bytes: int) -> Path:
+        directory = root / "samples" / "html" / "2020-seimo" / "jonas"
+        directory.mkdir(parents=True)
+        (directory / "anketa.html").write_text("<html></html>", encoding="utf-8")
+        (directory / "index.json").write_text("{}", encoding="utf-8")
+        (directory / "portrait.json").write_text("{}", encoding="utf-8")
+        (directory / "portrait.jpg").write_bytes(b"\xff" * portrait_bytes)
+        # The 2002 presidential declaration scans, by analogy: an image the
+        # parsers never open stays local.
+        (directory / "deklaracija-1.jpg").write_bytes(b"\xff" * 10)
+        return directory
+
+    def test_the_portrait_travels_with_its_pages_and_other_images_do_not(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self._candidate(root, 100)
+            self.assertEqual(
+                policy.selected_paths(root),
+                [
+                    "samples/html/2020-seimo/jonas/anketa.html",
+                    "samples/html/2020-seimo/jonas/index.json",
+                    "samples/html/2020-seimo/jonas/portrait.jpg",
+                    "samples/html/2020-seimo/jonas/portrait.json",
+                ],
+            )
+
+    def test_a_portrait_over_the_limit_takes_its_unit_out_whole(self) -> None:
+        # Half a unit -- pages tracked, portrait not -- would parse to a record
+        # no scrape could produce; the rule stays per unit.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self._candidate(root, policy.UNIT_LIMIT_BYTES)
+            self.assertEqual(policy.selected_paths(root), [])
 
 if __name__ == "__main__":
     unittest.main()

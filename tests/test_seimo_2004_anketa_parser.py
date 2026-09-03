@@ -299,7 +299,13 @@ class Seimo2004AnketaParserTests(unittest.TestCase):
         profilis = self.mazuronis["normalized"]["profilis"]
         self.assertEqual(profilis["vardas-pavarde"], "Valentinas MAZURONIS")
         self.assertIsNone(profilis["pastaba"])
-        self.assertEqual(profilis["nuotrauka"], "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/nuotraukos/294409.jpg")
+        # The page links the portrait on vrk.lt; the record carries the archived
+        # sidecar and photoMeta remembers the URL it came from (issue #118).
+        self.assertEqual(profilis["nuotrauka"], f"photos/{self.mazuronis['candidateId']}.jpg")
+        self.assertEqual(
+            self.mazuronis["rawData"]["profile"]["photoMeta"]["url"],
+            "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/seimas/nuotraukos/294409.jpg",
+        )
         kita = profilis["kita"]
         self.assertEqual(
             list(kita.keys()),

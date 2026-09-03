@@ -70,10 +70,16 @@ class KupiskioMero2023AnketaParserTests(unittest.TestCase):
         )
         self.assertIsNone(self.aukstikalnis["normalized"]["profilis"]["pastaba"])
 
-    def test_photo_src_is_url(self) -> None:
-        photo = self.aukstikalnis["normalized"]["profilis"]["nuotrauka"]
-        self.assertIn("kandImg", photo)
-        self.assertTrue(photo.startswith("https://"))
+    def test_photo_is_the_archived_sidecar(self) -> None:
+        # The page links a kandImg URL; the record carries the archived
+        # sidecar and photoMeta remembers the URL (issue #118).
+        self.assertEqual(
+            self.aukstikalnis["normalized"]["profilis"]["nuotrauka"],
+            f"photos/{self.aukstikalnis['candidateId']}.jpg",
+        )
+        photo_url = self.aukstikalnis["rawData"]["profile"]["photoMeta"]["url"]
+        self.assertIn("kandImg", photo_url)
+        self.assertTrue(photo_url.startswith("https://"))
 
     def test_anketa_core_fields(self) -> None:
         anketa = self.aukstikalnis["normalized"]["anketa"]

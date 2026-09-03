@@ -318,6 +318,21 @@ deletes as it parses, prints a warning (issue #95). The runner also builds
 `isrinktas` from a results tree, and its final report refuses to say
 "complete" until every sitemap id has a record on disk.
 
+The portraits the pages *link* (every era but 2016-2019, which embed them)
+are not part of that retention until you fetch them. Once the scrape is
+complete:
+
+```bash
+python scripts/backfill_url_portraits.py <election-id>
+python scripts/reparse_diff.py --full --jobs 8 --apply <election-id>
+```
+
+The first lands each portrait beside its candidate's pages — in
+`samples-full/` and in the fixture tree, where the tracked subset carries it
+— and the second turns the records' URLs into `photos/` sidecars, the same
+form the embedded eras have (issue #118). A URL that cannot be fetched is
+recorded as a `PortraitFetchFailed` anomaly and on the record's `photoMeta`.
+
 ## 7. Before you open the PR
 
 Three commands, and the first two produce numbers that go in the PR body. A
@@ -328,6 +343,7 @@ python scripts/field_coverage.py --update-baseline   # then paste your election'
 python scripts/nominator_report.py --update          # forms table + registry unmatched
 python scripts/party_lineage_report.py               # nominator lineage vs the rebuilt index
 python -m scraper anomalies-report <election-id>
+python scripts/backfill_url_portraits.py --dry-run <election-id>   # 0 to fetch, or step 6 was skipped
 python scripts/reparse_diff.py
 ```
 

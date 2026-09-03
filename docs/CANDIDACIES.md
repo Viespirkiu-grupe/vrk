@@ -205,17 +205,19 @@ In `vrk-corpus.sqlite` the three extra tables are:
 
 - `records(election_id, candidate_id, candidate_name, record_file,
   source_json, kandidatavimas_json, candidate_note, photo_sha256, raw_json,
-  norm_json)` — one row per record file, primary key
+  norm_json, provenance_json)` — one row per record file, primary key
   `(election_id, candidate_id)`. `raw_json` / `norm_json` are the record's
   `rawData` / `normalized`, compact-serialized (the files are
   pretty-printed; 34.5 % of `data/` was whitespace). The original record
   reassembles losslessly from the row — `reconstruct_record` in the script
   is the contract and a test pins the round trip.
 - `photos(sha256, mime, bytes, data)` — every sidecar portrait, stored once
-  by content hash; `records.photo_sha256` is the join. URL-form portraits
-  (25,305 records, the pre-2016 and 2020+ eras) remain URLs pointing at
-  vrk.lt — VRK never served this scraper those bytes, and archiving them is
-  issue #94's still-open network job.
+  by content hash; `records.photo_sha256` is the join. The pre-2016 and
+  2020+ eras link their portraits rather than embedding them, and those are
+  archived the same way since issue #118 (`scripts/backfill_url_portraits.py`);
+  a record still carrying an `http(s)://` reference is one whose portrait
+  could not be fetched — its `photoMeta.error` says why — and has no row
+  here.
 - `anomalies(election_id, event_json)` — the per-election
   `anomalies.jsonl` logs, so "what went wrong" travels with the data.
 

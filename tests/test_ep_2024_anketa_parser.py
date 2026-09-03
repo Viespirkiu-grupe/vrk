@@ -54,7 +54,12 @@ class Ep2024AnketaParserTests(unittest.TestCase):
         profilis = self.vitalijus["normalized"]["profilis"]
         self.assertEqual(profilis["vardas-pavarde"], "Vitalijus MITROFANOVAS")
         self.assertIsNone(profilis["pastaba"])
-        self.assertTrue(str(profilis["nuotrauka"]).endswith("kandImg/photo_2435638.jpeg"))
+        # The page links the portrait on vrk.lt; the record carries the archived
+        # sidecar and photoMeta remembers the URL it came from (issue #118).
+        self.assertEqual(profilis["nuotrauka"], f"photos/{self.vitalijus['candidateId']}.jpg")
+        self.assertTrue(
+            self.vitalijus["rawData"]["profile"]["photoMeta"]["url"].endswith("kandImg/photo_2435638.jpeg")
+        )
         self.assertEqual(profilis["kita"]["sarasas"]["reiksme"], "Lietuvos socialdemokratų partija")
         self.assertEqual(profilis["kita"]["numeris-sarase"]["reiksme"], "8")
         self.assertEqual(profilis["kita"]["porinkiminis-numeris-sarase"]["reiksme"], "12")

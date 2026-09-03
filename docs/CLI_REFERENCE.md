@@ -2182,10 +2182,14 @@ Options:
   the run actually reached, and names the fixture fill-in when there is one
   (`re-parsed from retained + 9 from fixtures`).
 - `--apply`: copy the freshly parsed records over `data/<id>/`, with any
-  photo sidecars the parse externalized. Only the records that differ are
-  written, so an election that re-parses identically is not touched at all.
-  Requires `--full` — applying a fixture run would rewrite five records and
-  leave the other 13,661 stale.
+  photo sidecars the parse externalized — the base64 era's, and the URL
+  era's from the `portrait.json` retained beside each page (see
+  `scripts/backfill_url_portraits.py` below). Only the records that differ
+  are written, so an election that re-parses identically is not touched at
+  all; the election's `anomalies.jsonl` is regenerated from the re-parse's
+  `parse`-stage events and keeps every other stage's. Requires `--full` —
+  applying a fixture run would rewrite five records and leave the other
+  13,661 stale.
 - `--jobs N`: parser processes. The default is 1, which lets each module
   enumerate its own sample tree; above 1 the script enumerates (a candidate
   directory is one with an `index.json` in it) and cross-checks the count
@@ -2215,6 +2219,41 @@ python scripts/backfill_value_hygiene.py --election 2019-rugsejo-8-seimo
 
 Idempotent, and `tests/test_backfill_value_hygiene.py` pins that a record the
 parser just wrote is a fixed point of it.
+
+### `scripts/backfill_url_portraits.py`
+
+Every era but 2016-2019 links the candidate's portrait as a URL on vrk.lt
+instead of embedding it, and for 25,332 records that URL was all the corpus
+held (issue #118). This fetches those portraits into the retained trees —
+`portrait.<ext>` plus a `portrait.json` naming the URL, the fetch time and
+the hash, beside the candidate's pages in `samples-full/` and, for fixture
+candidates, `samples/html/` — and touches nothing in `data/`. The record
+rewrite is the parsers': `write_candidate_record` reads the retained
+portrait beside the page it parses and externalizes it exactly as it does a
+base64 payload, so the corpus is regenerated with the gate's own `--apply`
+and the gate stays honest — a re-parse from the retained tree reproduces
+the sidecar, because the portrait is part of what was retained.
+
+```bash
+python scripts/backfill_url_portraits.py                  # every election
+python scripts/backfill_url_portraits.py 2020-seimo       # named elections
+python scripts/backfill_url_portraits.py --dry-run        # count, no network
+python scripts/backfill_url_portraits.py --only-fixtures  # the fixture trees first
+python scripts/backfill_url_portraits.py --retry-failed 2000-seimo
+python scripts/reparse_diff.py --full --jobs 8 --apply <election-id> …   # then
+```
+
+A candidate whose `portrait.json` already names the record's URL is done,
+so a re-run costs nothing, and a tree that lacks a portrait another tree
+holds gets a copy rather than a request. A URL that answers anything but an
+image — a 404, a 5xx, an HTML page served with a 200 — is recorded as a
+failure in `portrait.json`, stamped onto the record's `photoMeta` by the next
+re-parse (`url`, `fetchedAt`, `error`; the URL stays), and written to the
+election's `anomalies.jsonl` as a `PortraitFetchFailed` event (stage
+`fetch`, one per candidate, replaced on every run). `--retry-failed` is the
+only thing that asks the network about a recorded failure again. The
+default pause between requests is 0.2 s; the whole corpus took about three
+hours on 2026-09-02.
 
 ## The nominator gate (`scripts/nominator_report.py`)
 

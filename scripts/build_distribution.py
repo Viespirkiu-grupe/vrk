@@ -33,14 +33,19 @@ What makes the artifact trustworthy:
   difference from the file — 34.5 % of `data/` is pretty-print whitespace),
   and both passes must agree on the record count.
 * The record envelope is closed. Issue #89's census measured it at six keys
-  everywhere plus two optional; a key this script does not know means the
-  schema moved, and the build fails rather than dropping it.
+  everywhere plus two optional, and #89 itself then added a third optional
+  one, the `provenance` block (on every record but the 0.4 % with no
+  retained page) — which this script did not know, so no distribution could
+  be built from the corpus between 2026-09-01 and 2026-09-03. A key this
+  script does not know means the schema moved, and the build fails rather
+  than dropping it.
 * Photos are stored once and verified. Every `photos/…` sidecar a record
   points at must exist and hash to the record's own `photoMeta.sha256`;
   the bytes land in `photos(sha256, …, data)` and `records.photo_sha256`
-  is the join. URL-form portraits (25,305 records) stay URLs — VRK never
-  served this scraper those bytes, and archiving them is issue #94's
-  separate network job, not a build step. An inline base64 portrait is a
+  is the join. A portrait still in URL form is one whose fetch failed or
+  was never attempted (scripts/backfill_url_portraits.py, issue #118) — the
+  record keeps the URL and, if it was tried, a `photoMeta` saying how the
+  fetch failed; there are no bytes to store. An inline base64 portrait is a
   build error: the 2026-08-29 re-parse (issue #91) externalized the last
   487, and shipping one again would mean an election regressed.
 
@@ -69,13 +74,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import build_candidacy_table as table  # noqa: E402
 import build_person_index as identity  # noqa: E402
+from scraper.shared.files import PORTRAIT_KEYS  # noqa: E402
 
 #: The record envelope, as issue #89's census measured it over the whole
 #: corpus: six keys on every record, two optional. Closed on purpose.
 ENVELOPE = frozenset(
     {"electionId", "candidateId", "candidateName", "source", "rawData", "normalized"}
 )
-OPTIONAL_ENVELOPE = frozenset({"kandidatavimas", "candidateNote"})
+OPTIONAL_ENVELOPE = frozenset({"kandidatavimas", "candidateNote", "provenance"})
 
 #: What a release ships, beside MANIFEST.json (which checksums these four).
 RELEASE_ARTIFACTS = (
@@ -100,6 +106,7 @@ RECORD_COLUMNS = (
     "photo_sha256",
     "raw_json",
     "norm_json",
+    "provenance_json",
 )
 
 
@@ -115,11 +122,14 @@ def record_photo(record: dict[str, Any], record_path: Path) -> tuple[str, str | 
     zero remain since the 2026-08-29 re-parse, so one reappearing means an
     election was rewritten by a pre-migration parser and should be healed
     with `scripts/reparse_diff.py --full --apply`, not shipped as base64.
+    The reference sits under `photoSrc` in every family but the 1996-1999
+    Seimas archive, whose profile calls it `photoUrl`.
     """
     profile = (record.get("rawData") or {}).get("profile")
     if not isinstance(profile, dict):
         return None
-    source = profile.get("photoSrc")
+    key = next((name for name in PORTRAIT_KEYS if name in profile), None)
+    source = profile.get(key) if key else None
     if not isinstance(source, str):
         return None
     if source.startswith("data:"):
@@ -191,6 +201,7 @@ def write_corpus_sqlite(
                 photo_sha256 TEXT REFERENCES photos(sha256),
                 raw_json TEXT,
                 norm_json TEXT,
+                provenance_json TEXT,
                 PRIMARY KEY (election_id, candidate_id)
             )"""
         )
@@ -257,6 +268,7 @@ def write_corpus_sqlite(
                             digest,
                             _compact(record["rawData"]),
                             _compact(record["normalized"]),
+                            _compact(record["provenance"]) if "provenance" in record else None,
                         ),
                     )
                 except sqlite3.IntegrityError as error:
@@ -305,6 +317,8 @@ def reconstruct_record(row: sqlite3.Row) -> dict[str, Any]:
         record["kandidatavimas"] = json.loads(row["kandidatavimas_json"])
     if row["candidate_note"] is not None:
         record["candidateNote"] = row["candidate_note"]
+    if row["provenance_json"] is not None:
+        record["provenance"] = json.loads(row["provenance_json"])
     return record
 
 

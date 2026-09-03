@@ -20,10 +20,15 @@ was not would not fail -- it would quietly parse to a candidate with no
 biography, and the test asserting on that biography would blame the parser.
 
 Only the extensions the parsers open are eligible: `.html`, `.htm`, `.json`,
-`.doc`. The 2002 presidential declaration scans (`.jpg`, about 1 MB per
-candidate) are recorded by path and never read, so they stay local.
+`.doc` -- and a candidate's retained portrait, `portrait.<ext>` beside the
+`portrait.json` that names it, which the record writer reads to externalize
+the photo (issue #118); a fixture holding the one and not the other would
+parse to a record no scrape could produce. The 2002 presidential declaration
+scans (`.jpg`, about 1 MB per candidate) are recorded by path and never read,
+so they stay local.
 
-That yields 5,348 files and 43 MiB -- every election keeps at least one
+That yields 6,230 files and 69 MiB (852 of them, 25 MiB, the retained
+portraits of issue #118) -- every election keeps at least one
 candidate fixture, and the 48 candidates that exceed the limit are all
 2018-2019 pages carrying the portrait as a base64 data URI in the HTML itself
 (`2018-rugsejo-16-seimo-zanavykai/giedrius-surplys` is 86 MB of it). Tests that
@@ -53,16 +58,21 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 #: referenced by path only and is not worth a clone's bytes.
 TRACKED_SUFFIXES = frozenset({".html", ".htm", ".json", ".doc"})
 
+#: The one file a parser opens regardless of extension: the retained portrait
+#: beside a candidate's pages, whatever container VRK served it in
+#: (scraper/shared/files.py reads it when it writes the record).
+PORTRAIT_STEM = "portrait"
+
 #: The whole policy. Per unit, not per file -- see the module docstring.
 UNIT_LIMIT_BYTES = 1 << 20
 
 
+def _eligible(path: Path) -> bool:
+    return path.suffix.lower() in TRACKED_SUFFIXES or path.stem == PORTRAIT_STEM
+
+
 def _unit_files(directory: Path) -> list[Path]:
-    return sorted(
-        path
-        for path in directory.rglob("*")
-        if path.is_file() and path.suffix.lower() in TRACKED_SUFFIXES
-    )
+    return sorted(path for path in directory.rglob("*") if path.is_file() and _eligible(path))
 
 
 def _unit_size(paths: list[Path]) -> int:

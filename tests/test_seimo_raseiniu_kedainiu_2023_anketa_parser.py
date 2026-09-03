@@ -58,7 +58,10 @@ class SeimoRaseiniuKedainiu2023AnketaParserTests(unittest.TestCase):
     def test_profile_constituency_fields(self) -> None:
         profilis = self.skamarakas["normalized"]["profilis"]
         self.assertEqual(profilis["vardas-pavarde"], "Matas SKAMARAKAS")
-        self.assertIn("kandImg", profilis["nuotrauka"])
+        # The page links the portrait on vrk.lt; the record carries the archived
+        # sidecar and photoMeta remembers the URL it came from (issue #118).
+        self.assertEqual(profilis["nuotrauka"], f"photos/{self.skamarakas['candidateId']}.jpg")
+        self.assertIn("kandImg", self.skamarakas["rawData"]["profile"]["photoMeta"]["url"])
 
         kita = profilis["kita"]
         self.assertEqual(kita["vienmandate-apygarda"]["reiksme"], "Raseinių–Kėdainių( 42)")

@@ -4,8 +4,9 @@ Four directories in this repository are produced by running the scraper rather
 than by cloning it, and `.gitignore` keeps them out of git:
 
 * `samples/` -- the fixture tree. A subset of it *is* tracked: every unit at
-  most 1 MiB, which is 5,344 files covering at least one candidate of every
-  election (`scripts/tracked_fixtures.py` holds the rule). What a clone lacks is
+  most 1 MiB, which is 6,230 files covering at least one candidate of every
+  election, retained portraits included (`scripts/tracked_fixtures.py` holds
+  the rule). What a clone lacks is
   the rest -- the 2016-2019 candidates whose portrait is a multi-megabyte base64
   data URI inside the HTML, the full `lists/` walks of the municipal elections,
   and the larger `results/` trees.
@@ -83,6 +84,18 @@ def describe(path: Path | str) -> str | None:
     if not parts or parts[0] not in LOCAL_DATA_ROOTS:
         return None
     return f"{relative.as_posix()} is not in this checkout: {_remedy(parts)}"
+
+
+def page_names(directory: Path) -> set[str]:
+    """The names in a fixture candidate directory, less its retained portrait.
+
+    The allowlists pin what a candidate directory holds *of the site* -- the
+    pages the walker fetched. The `portrait.json` and `portrait.<ext>` that
+    scripts/backfill_url_portraits.py leaves beside them (issue #118) are the
+    portrait those pages link, retained so the record writer can externalize
+    it; `tests/test_retained_portraits.py` checks those, not the allowlists.
+    """
+    return {child.name for child in directory.iterdir() if child.stem != "portrait"}
 
 
 def require(*paths: Path) -> None:

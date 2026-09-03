@@ -1,6 +1,8 @@
 import unittest
 from pathlib import Path
 
+from local_data import page_names
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SAMPLES_ROOT = REPO_ROOT / "samples" / "html" / "2004-prezidento"
@@ -42,7 +44,7 @@ class Prezidento2004SampleAllowlistTests(unittest.TestCase):
                 }
                 if candidate_id not in CANDIDATES_WITHOUT_PROGRAMA:
                     expected.add("programa.doc")
-                files = {child.name for child in (SAMPLES_ROOT / candidate_id).iterdir()}
+                files = page_names(SAMPLES_ROOT / candidate_id)
                 self.assertEqual(files, expected)
 
 

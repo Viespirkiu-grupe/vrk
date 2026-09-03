@@ -1041,8 +1041,11 @@ async function showPerson(p) {
   // The newest election's portrait, not the oldest: people age, and the
   // recent photo is the one a reader recognises. Three shapes are accepted:
   // the externalized sidecar (photos/<id>.<ext>, resolved against the
-  // election dir), VRK's own hosted URL — the only shape 29% of persons have
-  // — and a legacy inline data: URI from a pre-externalization corpus.
+  // election dir — every archived portrait since issue #118, whether the
+  // page embedded it or linked it), VRK's own hosted URL (what a record
+  // keeps when the fetch failed: 38 records, on hosts that no longer serve
+  // them, so the error handler below usually removes these) and a legacy
+  // inline data: URI from a pre-externalization corpus.
   for (const [e, r] of [...loaded].reverse()) {
     const photo = resolvePath(r, "rawData.profile.photoSrc") || resolvePath(r, "normalized.profilis.nuotrauka");
     if (typeof photo !== "string" || !photo) continue;

@@ -172,13 +172,14 @@ of it comes from the shared resolvers, not rules of the builder's own:
 `kandidatura()` for office/municipality/elected, `issilavinimas()` for the
 rank, `field_coverage.concept_value()` for the workplace.
 
-**Photos.** The corpus stores portraits three ways — an externalized sidecar
-(`photos/<candidateId>.<ext>`, 2,199 records), VRK's own hosted URL (25,332
-records, the only shape 29 % of persons have), and nothing (85,542). The
-page accepts all of the first two plus a legacy inline `data:` URI, prefers
-the **newest** election's portrait, loads lazily, and drops the `<img>` on
-error rather than showing a broken icon — VRK has been known to retire old
-image paths.
+**Photos.** The corpus stores portraits as externalized sidecars
+(`photos/<candidateId>.<ext>`, 27,493 records — the 2,199 the pages embedded
+and, since issue #118, the 25,294 they linked), keeps VRK's own hosted URL
+only where the fetch failed (38 records, all on hosts that no longer serve
+them), and has nothing for the other 85,542. The page accepts both of those
+plus a legacy inline `data:` URI, prefers the **newest** election's
+portrait, loads lazily, and drops the `<img>` on error rather than showing a
+broken icon — which is what happens to the 38.
 
 **Currency.** The 2012–2015 pages declare assets and income in litas
 (`turto-ir-pajamu-deklaracijos.valiuta` is `"Lt"` on those records); 2016 on
