@@ -15,7 +15,9 @@ Two things make the pile readable:
 * **a baseline**: `docs/anomaly-baseline.tsv` records one line per (election,
   event type, severity) with the count the corpus holds today. A run that
   produces an event type the baseline does not name, or more of one than it
-  records, is a finding; fewer is progress and is reported without failing.
+  records, is a finding; fewer is progress and is reported without failing --
+  unless an election lost more than half its events at once, which is what a
+  wiped file looks like (`collapsed`).
 
 The baseline keys on severity as well as type, so that reclassifying an event
 -- which is a real change to what stops an unattended run -- shows up as a
@@ -131,6 +133,29 @@ def diff(
         if counts.get(key, 0) < was
     ]
     return new, regressed, improved
+
+
+def collapsed(counts: dict[Key, int], baseline: dict[Key, int]) -> list[tuple[str, int, int]]:
+    """Elections whose event total fell to less than half of the baseline's.
+
+    `diff` calls fewer events progress, and one by one they are. All of them
+    at once is not: a file that lost most of its lines was wiped, not fixed
+    (issue #139 measured a re-parse of one candidate taking an election from
+    8,636 events to 8, and the report calling it progress). Returns
+    (election, count now, count in the baseline), for the elections the
+    baseline knows.
+    """
+    now: dict[str, int] = {}
+    was: dict[str, int] = {}
+    for key, count in counts.items():
+        now[key.election] = now.get(key.election, 0) + count
+    for key, count in baseline.items():
+        was[key.election] = was.get(key.election, 0) + count
+    return [
+        (election, now.get(election, 0), total)
+        for election, total in sorted(was.items())
+        if total and now.get(election, 0) * 2 < total
+    ]
 
 
 def by_election(counts: dict[Key, int]) -> dict[str, list[tuple[Key, int]]]:

@@ -689,7 +689,7 @@ from scraper.elections.seimo_pakartotiniai_1999_kovo.results import build_result
 from scraper.elections.savivaldybiu_1997.results import build_results as build_savivaldybiu_1997_results
 from scraper.elections.svencioniu_tarybos_1997.results import build_results as build_svencioniu_tarybos_1997_results
 from scraper.shared import anomaly_report
-from scraper.shared.anomalies import write_jsonl
+from scraper.shared.anomalies import write_jsonl, write_run_events
 
 ANOMALY_BASELINE = anomaly_report.BASELINE
 
@@ -2405,18 +2405,36 @@ def _summarize_anomalies(anomalies: list[dict[str, Any]]) -> tuple[dict[str, int
     return by_type, by_severity
 
 
-def _write_and_report_anomalies(path: Path, anomalies: list[dict[str, Any]]) -> None:
+def _write_and_report_anomalies(
+    path: Path,
+    anomalies: list[dict[str, Any]],
+    *,
+    stage: str | None = None,
+    candidate_ids: list[str] | None = None,
+) -> None:
     """Persist a run's anomaly events and print what they were.
 
     Both the fetch and the parse command end here. Until issue #85 only parse
     did: `fetch-candidate-samples` counted its events and dropped them, so the
     corpus held 8,949 anomalies of which not one was a `fetch` event, against
     the 147 fetch-stage call sites that can raise them.
+
+    With `stage` given, the run owns only that stage's events for
+    `candidate_ids` and the rest of the file is kept (issue #139: the parse
+    command's default path is the election's own `anomalies.jsonl`, and
+    writing it whole from a one-candidate run emptied it). Without it the
+    file is the run's alone and is written whole -- the fetch command, whose
+    path has no default and which the batch runner points at a fresh
+    per-candidate file.
     """
-    write_jsonl(path, anomalies)
+    if stage is None:
+        write_jsonl(path, anomalies)
+        kept = 0
+    else:
+        kept, _ = write_run_events(path, anomalies, stage=stage, candidate_ids=candidate_ids)
     by_type, by_severity = _summarize_anomalies(anomalies)
     print(f"Anomalies saved: {path}")
-    print(f"Total anomalies: {len(anomalies)}")
+    print(f"Total anomalies: {len(anomalies)}" + (f" (this run; {kept} kept from other runs and stages)" if kept else ""))
     if by_severity:
         print(
             "By severity: "
@@ -2521,10 +2539,11 @@ def main() -> int:
         if args.anomalies_path is not None:
             _write_and_report_anomalies(args.anomalies_path, all_anomalies)
         elif all_anomalies:
-            # No default path: the parse command owns
-            # data/<election-id>/anomalies.jsonl and writes it whole, so a
-            # fetch that defaulted there would truncate it. The batch runner
-            # passes a per-candidate path and appends.
+            # No default path: this command writes the file it is given whole
+            # (a portrait backfill's fetch events for the same candidate are
+            # not this command's to replace), so a default of the election's
+            # own anomalies.jsonl would truncate it. The batch runner passes a
+            # per-candidate path and appends.
             by_type, _ = _summarize_anomalies(all_anomalies)
             print(
                 f"Fetch anomalies: {len(all_anomalies)} "
@@ -2563,8 +2582,17 @@ def main() -> int:
             if anomalies:
                 print(f"  anomalies={len(anomalies)}")
 
+        # The default path is the election's own file, shared with the batch
+        # runner's appends and the portrait backfill's fetch events: this run
+        # replaces only its own parse-stage events for the candidates it
+        # parsed and keeps every other line (issue #139).
         anomalies_path = args.anomalies_path or (output_root / "anomalies.jsonl")
-        _write_and_report_anomalies(anomalies_path, all_anomalies)
+        _write_and_report_anomalies(
+            anomalies_path,
+            all_anomalies,
+            stage="parse",
+            candidate_ids=[str(result["candidateId"]) for result in results],
+        )
         return 0
 
     if args.command == "anomalies-report":
@@ -2593,7 +2621,11 @@ def _anomalies_report(
     Exit 1 when the run holds an event type the baseline does not name, or
     more of one than it records. Fewer is progress: it is printed and does not
     fail, so that a parser fix does not have to touch the baseline in the same
-    commit as the fix.
+    commit as the fix -- up to a point. An election whose total fell to less
+    than half of what the baseline records also exits 1: a wiped
+    `anomalies.jsonl` looks exactly like that (issue #139 measured 8,636 -> 8
+    passing as "progress"), and a parser fix that large is a deliberate change
+    that updates the baseline in the same commit.
     """
     if not data_root.is_dir():
         print(f"No such data root: {data_root}", file=sys.stderr)
@@ -2650,13 +2682,24 @@ def _anomalies_report(
         baseline = {key: count for key, count in baseline.items() if key.severity == "error"}
 
     new, regressed, improved = anomaly_report.diff(counts, baseline)
+    collapsed = anomaly_report.collapsed(counts, baseline)
 
     if improved:
         print(f"\n{len(improved)} row(s) below the baseline:")
         for key, count, was in improved:
             print(f"    {key.election}  {key.event_type} [{key.severity}]  {was} -> {count}")
 
-    if not new and not regressed:
+    if collapsed:
+        print(
+            f"\n{len(collapsed)} election(s) lost more than half their events since the"
+            " baseline -- a wiped anomalies.jsonl looks exactly like this. If the drop"
+            " is a parser fix, rerun with --update-baseline:",
+            file=sys.stderr,
+        )
+        for election, count, was in collapsed:
+            print(f"    {election}  {was} -> {count}", file=sys.stderr)
+
+    if not new and not regressed and not collapsed:
         print("\nNothing new against the baseline.")
         return 0
 

@@ -25,7 +25,7 @@ from pathlib import Path
 from unittest import mock
 
 from scraper import cli
-from scraper.shared import anomaly_report
+from scraper.shared import anomalies, anomaly_report
 from scraper.shared.anomaly_report import Key
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -117,6 +117,23 @@ class DiffTests(unittest.TestCase):
         new, regressed, improved = anomaly_report.diff({key: 10}, self.KNOWN)
         self.assertEqual((new, regressed), ([], []))
         self.assertEqual(improved, [(key, 10, 8597)])
+
+    def test_an_election_that_lost_most_of_its_events_collapsed(self) -> None:
+        # Fewer is progress one row at a time; most of an election's events
+        # gone at once is what a wiped anomalies.jsonl looks like (issue #139:
+        # a one-candidate re-parse took the 1997 municipal file from 8,636
+        # events to 8, and the report called it progress).
+        baseline = {Key("a", "X", "info"): 8_600, Key("a", "Y", "warning"): 36, Key("b", "Z", "error"): 4}
+        counts = {Key("a", "X", "info"): 6, Key("a", "Y", "warning"): 2, Key("b", "Z", "error"): 4}
+        self.assertEqual(anomaly_report.collapsed(counts, baseline), [("a", 8, 8_636)])
+
+    def test_keeping_half_or_more_of_the_events_is_still_progress(self) -> None:
+        baseline = {Key("a", "X", "info"): 10, Key("a", "Y", "warning"): 10}
+        self.assertEqual(anomaly_report.collapsed({Key("a", "X", "info"): 10}, baseline), [])
+        self.assertEqual(anomaly_report.collapsed({Key("a", "X", "info"): 9}, baseline), [("a", 9, 20)])
+
+    def test_an_election_the_baseline_does_not_know_cannot_collapse(self) -> None:
+        self.assertEqual(anomaly_report.collapsed({Key("new", "X", "info"): 1}, {}), [])
 
     def test_a_reclassified_severity_is_visible_on_both_sides(self) -> None:
         # Reclassifying changes what stops an unattended run, so it may not
@@ -224,6 +241,27 @@ class ReportCommandTests(unittest.TestCase):
         code, _, err = self._run(self.root, "--baseline", str(self.baseline))
         self.assertEqual(code, 1)
         self.assertIn("1 -> 2 (+1)", err)
+
+    def test_a_wiped_election_file_fails_the_run(self) -> None:
+        self._run(self.root, "--baseline", str(self.baseline), "--update-baseline")
+        path = self.root / "1997-kovo-23-savivaldybiu-tarybu" / anomaly_report.ANOMALIES_NAME
+        events = path.read_text(encoding="utf-8").splitlines()
+        path.write_text(events[0] + "\n", encoding="utf-8")  # 5 -> 1: a wipe, not a fix
+        code, _out, err = self._run(self.root, "--baseline", str(self.baseline))
+        self.assertEqual(code, 1)
+        self.assertIn("lost more than half their events", err)
+        self.assertIn("1997-kovo-23-savivaldybiu-tarybu  5 -> 1", err)
+        self.assertIn("--update-baseline", err)
+
+    def test_a_drop_that_keeps_half_the_events_is_progress(self) -> None:
+        self._run(self.root, "--baseline", str(self.baseline), "--update-baseline")
+        path = self.root / "1997-kovo-23-savivaldybiu-tarybu" / anomaly_report.ANOMALIES_NAME
+        events = path.read_text(encoding="utf-8").splitlines()
+        path.write_text("\n".join(events[:3]) + "\n", encoding="utf-8")  # 5 -> 3
+        code, out, err = self._run(self.root, "--baseline", str(self.baseline))
+        self.assertEqual(code, 0)
+        self.assertIn("5 -> 3", out)
+        self.assertNotIn("lost more than half", err)
 
     def test_errors_only_hides_the_archive_noise(self) -> None:
         code, out, _ = self._run(self.root, "--baseline", str(self.baseline), "--errors-only")
@@ -344,6 +382,95 @@ class FetchAnomalyPlumbingTests(unittest.TestCase):
                         cli.main()
             self.assertTrue(path.exists())
             self.assertEqual(path.read_text(encoding="utf-8"), "")
+
+
+class ParseAnomalyOwnershipTests(unittest.TestCase):
+    """A run owns its own stage's events for the candidates it processed, and
+    nothing else in the file (issue #139).
+
+    The parse command's default `--anomalies-path` is the election's own
+    `data/<id>/anomalies.jsonl` -- the file the batch runner appends to and
+    the portrait backfill writes its fetch events into -- and it used to open
+    that file with "w" and write only its run: the documented one-candidate
+    form took the 1997 municipal election from 8,636 events to 2.
+    """
+
+    ELECTION = "2023-geguzes-7-visagino-mero"
+
+    @staticmethod
+    def _event(candidate: str, stage: str, event_type: str) -> dict:
+        return {**_event("2023-geguzes-7-visagino-mero", event_type, "warning"), "candidateId": candidate, "stage": stage}
+
+    def test_merge_replaces_only_the_runs_own_stage_and_candidates(self) -> None:
+        other_parse = self._event("b", "parse", "ResidenceMissing")
+        own_fetch = self._event("a", "fetch", "PortraitFetchFailed")
+        own_stale = self._event("a", "parse", "Stale")
+        fresh = self._event("a", "parse", "Fresh")
+        merged = anomalies.merge_run([other_parse, own_fetch, own_stale], [fresh], stage="parse", candidate_ids=["a"])
+        self.assertEqual(merged, [other_parse, own_fetch, fresh])
+
+    def test_a_whole_election_run_owns_every_parse_event(self) -> None:
+        # scripts/reparse_diff.py --apply: candidate_ids=None means the run
+        # covered every candidate, so only the other stages survive.
+        stored = [self._event("a", "parse", "X"), self._event("b", "parse", "Y"), self._event("a", "fetch", "Z")]
+        fresh = [self._event("b", "parse", "Y")]
+        self.assertEqual(
+            anomalies.merge_run(stored, fresh, stage="parse", candidate_ids=None),
+            [stored[2], fresh[0]],
+        )
+
+    def test_an_event_without_a_candidate_is_never_owned_by_a_candidate_run(self) -> None:
+        stored = [{**self._event("a", "parse", "ElectionLevel"), "candidateId": None}]
+        self.assertEqual(anomalies.merge_run(stored, [], stage="parse", candidate_ids=["a"]), stored)
+
+    def test_write_run_events_round_trips_and_counts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "anomalies.jsonl"
+            stored = [self._event("b", "parse", "X"), self._event("a", "fetch", "F"), self._event("a", "parse", "Old")]
+            anomalies.write_jsonl(path, stored)
+            kept, replaced = anomalies.write_run_events(path, [self._event("a", "parse", "New")], stage="parse", candidate_ids=["a"])
+            self.assertEqual((kept, replaced), (2, 1))
+            self.assertEqual(
+                [(e["candidateId"], e["stage"], e["eventType"]) for e in anomalies.read_jsonl(path)],
+                [("b", "parse", "X"), ("a", "fetch", "F"), ("a", "parse", "New")],
+            )
+
+    def test_a_missing_file_reads_as_no_events(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            self.assertEqual(anomalies.read_jsonl(Path(tmp) / "none.jsonl"), [])
+
+    def test_a_truncated_last_line_does_not_lose_the_rest(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "anomalies.jsonl"
+            path.write_text(json.dumps(self._event("b", "parse", "X")) + "\n{\"eventType\": \"Trunc", encoding="utf-8")
+            self.assertEqual(len(anomalies.read_jsonl(path)), 1)
+
+    def test_the_documented_one_candidate_parse_keeps_the_other_lines(self) -> None:
+        # The command itself, against a real tracked fixture, into a scratch
+        # output root seeded the way the corpus's file is: another
+        # candidate's parse events, this candidate's fetch event (a portrait
+        # fetch no re-parse can regenerate) and this candidate's stale
+        # parse event.
+        other_parse = self._event("erlandas-galaguz", "parse", "ResidenceMissing")
+        own_fetch = self._event("dalia-straupaite", "fetch", "PortraitFetchFailed")
+        own_stale = self._event("dalia-straupaite", "parse", "Stale")
+        with tempfile.TemporaryDirectory() as tmp:
+            out_root = Path(tmp) / "out"
+            out_root.mkdir()
+            path = out_root / anomaly_report.ANOMALIES_NAME
+            anomalies.write_jsonl(path, [other_parse, own_fetch, own_stale])
+            argv = [
+                "scraper", "parse-anketa-samples", self.ELECTION,
+                "--candidate-id", "dalia-straupaite", "--output-root", str(out_root),
+            ]
+            with mock.patch.object(sys, "argv", argv), contextlib.redirect_stdout(io.StringIO()):
+                code = cli.main()
+            self.assertEqual(code, 0)
+            left = anomalies.read_jsonl(path)
+        self.assertIn(other_parse, left)
+        self.assertIn(own_fetch, left)
+        self.assertNotIn(own_stale, left)
+        self.assertTrue(all(e["candidateId"] == "dalia-straupaite" for e in left if e not in (other_parse, own_fetch)))
 
 
 if __name__ == "__main__":
