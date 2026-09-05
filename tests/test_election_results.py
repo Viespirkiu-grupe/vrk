@@ -12,6 +12,9 @@ import unittest
 from unittest import mock
 from pathlib import Path
 
+import requests
+
+from scraper.shared import election_results
 from scraper.shared.election_results import (
     MAYOR_WINNER_PATTERN,
     PRESIDENT_WINNER_PATTERN,
@@ -106,8 +109,15 @@ class SeimoDistrictPageTests(unittest.TestCase):
             by_label = first_round_elected_by_label(Path(tmp), "2009_seimo_rinkimai")
         self.assertEqual(list(by_label), ["56. Vilniaus - Šalčininkų"])
         self.assertEqual(by_label["56. Vilniaus - Šalčininkų"]["vrkCandidateId"], "26261")
-        # A tree without the page (2011, 2013) is an empty map, not an error.
-        with tempfile.TemporaryDirectory() as tmp, mock.patch("scraper.shared.election_results.fetch_text", side_effect=RuntimeError("404")):
+        # A tree without the page (2011, 2013) is an empty map, not an error --
+        # and "without" means VRK answered 404; any other failure propagates
+        # (issue #134, OptionalPageFetchTests).
+        missing = requests.Response()
+        missing.status_code = 404
+        with tempfile.TemporaryDirectory() as tmp, mock.patch(
+            "scraper.shared.election_results.fetch_text",
+            side_effect=requests.HTTPError("404", response=missing),
+        ):
             self.assertEqual(first_round_elected_by_label(Path(tmp), "2013_seimo_rinkimai"), {})
 
 
@@ -275,6 +285,113 @@ class ResultsLookupTests(unittest.TestCase):
             path = Path(tmp) / "x.results.json"
             path.write_text(json.dumps({"elected": {"1": {"seat": "meras"}}}), encoding="utf-8")
             self.assertEqual(load_results_lookup(path), {"1": {"seat": "meras"}})
+
+    def test_an_empty_map_without_the_statement_is_unknown_not_lost(self):
+        # An empty join used to read as "everyone lost" -- worse than no file
+        # at all, which at least left isrinktas unknown (issue #134).
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "x.results.json"
+            path.write_text(json.dumps({"elected": {}, "sources": [], "stats": {}}), encoding="utf-8")
+            self.assertIsNone(load_results_lookup(path))
+
+    def test_an_empty_map_the_builder_vouched_for_is_a_known_false(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "x.results.json"
+            path.write_text(json.dumps({"elected": {}, election_results.NOBODY_ELECTED_KEY: True}), encoding="utf-8")
+            self.assertEqual(load_results_lookup(path), {})
+
+
+class WriteResultsTests(unittest.TestCase):
+    """A results file with nobody in it has to say so, or it is not written."""
+
+    def test_an_unexplained_empty_map_is_refused(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "x.results.json"
+            with self.assertRaises(ValueError):
+                election_results.write_results(path, "e", {}, {"winnersResolved": 0}, [])
+            self.assertFalse(path.exists())
+
+    def test_nobody_elected_is_written_into_the_file(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "x.results.json"
+            election_results.write_results(path, "e", {}, {}, ["https://x"], nobody_elected=True)
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            self.assertIs(payload[election_results.NOBODY_ELECTED_KEY], True)
+            self.assertEqual(load_results_lookup(path), {})
+
+    def test_winners_and_nobody_elected_contradict(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaises(ValueError):
+                election_results.write_results(Path(tmp) / "x.json", "e", {"1": {"seat": "meras"}}, {}, [], nobody_elected=True)
+
+    def test_a_results_file_with_winners_needs_no_statement(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "x.results.json"
+            election_results.write_results(path, "e", {"1": {"seat": "meras"}}, {}, [])
+            self.assertNotIn(election_results.NOBODY_ELECTED_KEY, json.loads(path.read_text(encoding="utf-8")))
+
+
+class OptionalPageFetchTests(unittest.TestCase):
+    """The page families a tree may not publish: absent means 404 and nothing
+    else. Every other failure used to be swallowed into an empty result, so a
+    build with the network down wrote a file marking everyone `false`."""
+
+    @staticmethod
+    def _http_error(status: int) -> requests.HTTPError:
+        response = requests.Response()
+        response.status_code = status
+        return requests.HTTPError(f"{status}", response=response)
+
+    def test_a_404_is_an_absent_page_family(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with mock.patch.object(election_results, "fetch_text", side_effect=self._http_error(404)):
+                self.assertEqual(election_results.seimo_district_pages(Path(tmp), "2013_seimo_rinkimai", 2), [])
+                self.assertEqual(election_results.first_round_elected_by_label(Path(tmp), "2013_seimo_rinkimai"), {})
+                self.assertEqual(election_results.municipal_index_pages(Path(tmp), "2015_savivaldybiu_tarybu_rinkimai", 2), [])
+
+    def test_a_connection_error_propagates(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with mock.patch.object(election_results, "fetch_text", side_effect=requests.ConnectionError("down")):
+                with self.assertRaises(requests.ConnectionError):
+                    election_results.seimo_district_pages(Path(tmp), "2013_seimo_rinkimai", 1)
+                with self.assertRaises(requests.ConnectionError):
+                    election_results.first_round_elected_by_label(Path(tmp), "2013_seimo_rinkimai")
+                with self.assertRaises(requests.ConnectionError):
+                    election_results.municipal_index_pages(Path(tmp), "2015_savivaldybiu_tarybu_rinkimai", 1)
+
+    def test_a_server_error_propagates_too(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with mock.patch.object(election_results, "fetch_text", side_effect=self._http_error(503)):
+                with self.assertRaises(requests.HTTPError):
+                    election_results.fetch_optional_page(Path(tmp), "https://www.vrk.lt/x.html")
+
+    def test_a_build_with_the_network_down_raises_rather_than_writing(self):
+        # The issue's reproduction: build_results() for a Seimas by-election
+        # with fetch_text raising returned normally after four failed fetches
+        # and wrote elected={}, sources=[].
+        with tempfile.TemporaryDirectory() as tmp:
+            sitemap = Path(tmp) / "sitemap.json"
+            sitemap.write_text(json.dumps({"entries": []}), encoding="utf-8")
+            output = Path(tmp) / "out.results.json"
+            with mock.patch.object(election_results, "fetch_text", side_effect=requests.ConnectionError("down")):
+                with self.assertRaises(requests.ConnectionError):
+                    election_results.build_seimo_constituency_results(
+                        "2013-kovo-3-seimo-birzai-zarasai-ukmerge", "2013_seimo_rinkimai", sitemap, Path(tmp) / "pages", output
+                    )
+            self.assertFalse(output.exists())
+
+    def test_the_four_elections_nobody_won_say_so(self):
+        for election_id in (
+            "1998-kovo-22-seimo-pakartotiniai",
+            "1998-lapkricio-15-seimo-pakartotiniai",
+            "1999-kovo-21-seimo-pakartotiniai",
+            "2003-birzelio-15-seimo-nauji",
+        ):
+            with self.subTest(election_id):
+                payload = _results(election_id)
+                self.assertEqual(payload["elected"], {})
+                self.assertIs(payload.get(election_results.NOBODY_ELECTED_KEY), True)
+                self.assertEqual(payload["stats"]["constituenciesNotHeld"], payload["stats"]["constituencies"])
 
 
 class BuiltResultsPins(unittest.TestCase):

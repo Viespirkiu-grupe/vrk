@@ -1,5 +1,7 @@
 import argparse
 import sys
+
+import requests
 from pathlib import Path
 from typing import Any
 
@@ -2477,7 +2479,15 @@ def main() -> int:
         return 0
 
     if args.command == "build-results":
-        output_path, stats = _build_results_for_election(args.election_id)
+        # A page that could not be fetched, or a build that resolved no winner
+        # without the pages saying nobody was elected, is a failed build: no
+        # file is written and the exit status says so, which is what
+        # scripts/run_election_batches.sh tests before it parses (issue #134).
+        try:
+            output_path, stats = _build_results_for_election(args.election_id)
+        except (requests.RequestException, ValueError) as exc:
+            print(f"build-results failed for {args.election_id}: {exc}", file=sys.stderr)
+            return 1
         print(f"Saved results: {output_path}")
         for key, value in stats.items():
             print(f"  {key}: {value}")

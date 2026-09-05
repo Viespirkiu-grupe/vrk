@@ -386,7 +386,11 @@ lands in `kandidatavimas`:
 - `isrinktas` — `true` / `false` when a results file exists for the election
   (a false is then a real statement: the results pages name every winner,
   and this candidate is not among them); `null` only when no results file
-  has been built, meaning unknown.
+  has been built, meaning unknown. A results file whose `elected` map is
+  empty counts as no file unless it carries `"nobodyElected": true`, which
+  the builder writes only when every constituency page says the election was
+  not held (the 1998–1999 Seimas by-elections, the 2003 new elections); an
+  empty map for any other reason is refused at build time (issue #134).
 - `isrinktasKaip` — the seat: `vienmandate`, `daugiamandate` (Seimas / EP
   list), `prezidentas`, `meras`, `tarybos-narys`.
 - `rezultatuSaltinis` — the results page the seat was read from;

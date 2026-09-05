@@ -127,7 +127,11 @@ fi
 # 32 elections' candidate pages mark no winner: their `isrinktas` joins in at
 # parse time from sitemaps/<id>.results.json, and load_results_lookup leaves it
 # silently unknown when that file is absent. A full run used to skip this stage
-# entirely — two thirds of the corpus without winners (issue #95).
+# entirely — two thirds of the corpus without winners (issue #95). The exit
+# status below is a real guard since issue #134: build-results exits 1 and
+# writes nothing when a page could not be fetched or no winner resolved without
+# the pages saying nobody was elected, where it used to swallow the fetch
+# failure and write an empty map that parsed everyone as `false`.
 if (cd "$ROOT_DIR" && "$PYTHON_BIN" -c 'import sys
 from scraper.cli import RESULTS_ELECTION_IDS
 sys.exit(0 if sys.argv[1] in RESULTS_ELECTION_IDS else 1)' "$ELECTION_ID"); then

@@ -174,6 +174,18 @@ Fetch VRK's results pages for an election whose candidate pages mark no
 winner — every static-page family from 1996 to 2015 — and write
 `sitemaps/<election-id>.results.json`, the map of VRK candidate id → seat
 that `parse-anketa-samples` then joins into `kandidatavimas.isrinktas`.
+
+Exit status: 1, and no file written, when a results page could not be fetched
+or the build resolved no winner without the pages saying that nobody was
+elected. A page family the tree genuinely does not publish (VRK answers 404 —
+a round-two folder, a first-round members list) is still read as absent; any
+other failure propagates, because a build that swallowed it used to write a
+well-formed file with an empty `elected` map, and every candidate parsed
+against that file became `isrinktas: false` (issue #134). The four elections in
+which nobody was elected — the 1998 and 1999 Seimas by-elections and the 2003
+new elections, every constituency `neįvyko` — carry `"nobodyElected": true`,
+and an empty map without that key is treated by the parse stage as no results
+at all (`isrinktas` stays `null`).
 Pages are cached under `samples/results/<election-id>/` so a re-run is
 offline. The command prints the reconciliation stats; read them before
 trusting the file (`unresolved`, `*NotInSitemap`, `seatCountMismatches`

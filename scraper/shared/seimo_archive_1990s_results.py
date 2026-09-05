@@ -578,6 +578,11 @@ def build_constituency_results(
         stats,
         [page["sourceUrl"] for page in parsed],
         details,
+        # Every constituency page read and every one of them `neįvyko`: the
+        # 1998-1999 by-elections, whose candidates are a known `false`. An
+        # empty map for any other reason is refused by write_results
+        # (issue #134).
+        nobody_elected=bool(parsed) and stats["constituenciesNotHeld"] == stats["constituencies"],
     )
     return output_path, stats
 
