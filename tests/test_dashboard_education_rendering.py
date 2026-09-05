@@ -31,7 +31,7 @@ def _education_cell() -> str:
     return match.group(0)
 
 
-def run(value: dict) -> object:
+def run(value: dict | list) -> object:
     script = (
         f"{_education_cell()}\n"
         f"console.log(JSON.stringify(educationCell({json.dumps(value, ensure_ascii=False)})));"
@@ -61,6 +61,22 @@ class Behavioural(unittest.TestCase):
             "specialybe": "teisė", "baigimo-metai": "1996",
         }]})
         self.assertEqual(rendered, "Aukštasis — Vilniaus universitetas, teisė (1996)")
+
+    def test_the_entry_array_the_concept_map_hands_the_cell_renders(self):
+        # docs/concept-map.json maps `issilavinimas` to `….issilavinimas.irasai`
+        # on 43 of 55 elections, so resolveConcept hands the formatter the
+        # entry ARRAY, not the object holding it. `value.irasai` off an array
+        # is undefined, and the row read an em dash on 69,726 candidacies
+        # whose records carry an education (issue #131).
+        rendered = run([{
+            "issilavinimas": "Aukštasis universitetinis",
+            "mokymo-istaigos-pavadinimas": "Vilniaus universitetas",
+            "specialybe": "teisė", "baigimo-metai": "1996",
+        }])
+        self.assertEqual(rendered, "Aukštasis universitetinis — Vilniaus universitetas, teisė (1996)")
+
+    def test_an_empty_entry_array_is_a_dash(self):
+        self.assertIsNone(run([]))
 
     def test_2004_ep_spelling_renders_identically(self):
         rendered = run({"irasai": [{

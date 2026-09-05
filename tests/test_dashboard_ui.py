@@ -670,7 +670,8 @@ class ArchiveComparisonRowTests(unittest.TestCase):
         }
     }
 
-    def _cells(self, record):
+    def _cells(self, record, election=None):
+        election = election or self.ELECTION
         concept_map = json.loads(
             (REPO_ROOT / "docs" / "concept-map.json").read_text(encoding="utf-8")
         )
@@ -706,7 +707,7 @@ class ArchiveComparisonRowTests(unittest.TestCase):
             f"const r = {json.dumps(self.RECORD if record is None else record)};\n"
             "const out = {};\n"
             "for (const row of CONCEPT_ROWS) {\n"
-            f"  const {{ value }} = resolveRow(row, r, {json.dumps(self.ELECTION)});\n"
+            f"  const {{ value }} = resolveRow(row, r, {json.dumps(election)});\n"
             "  const c = row.format ? row.format(value, r) : compactValue(value);\n"
             "  out[rowLabel(row)] = c == null ? null : c;\n"
             "}\n"
@@ -736,6 +737,37 @@ class ArchiveComparisonRowTests(unittest.TestCase):
             }],
         }
         self.assertEqual(self._cells(record)["Išsilavinimas"], "Aukštasis")
+
+    @unittest.skipUnless(NODE, "node not installed")
+    def test_the_entry_array_eras_render_their_education(self):
+        # The 43 elections mapped through `….issilavinimas.irasai` handed the
+        # cell an array and rendered an em dash for every one of their
+        # 69,726 educated candidacies (issue #131): the 2020-era biography
+        # shape and the 2016-era anketa shape, through the real map.
+        entry = {"issilavinimas": "Aukštasis universitetinis",
+                 "mokymo-istaigos-pavadinimas": "Vilniaus universitetas",
+                 "specialybe": "teisė", "baigimo-metai": "1996"}
+        biography = {"normalized": {"biografija": {"issilavinimas": {"aprasas": None, "irasai": [entry]}}}}
+        self.assertEqual(
+            self._cells(biography, "2020-seimo")["Išsilavinimas"],
+            "Aukštasis universitetinis — Vilniaus universitetas, teisė (1996)",
+        )
+        anketa = {"normalized": {"anketa": {"issilavinimas": {"aprasas": None, "irasai": [entry]}}}}
+        self.assertEqual(
+            self._cells(anketa, "2016-seimo")["Išsilavinimas"],
+            "Aukštasis universitetinis — Vilniaus universitetas, teisė (1996)",
+        )
+
+    @unittest.skipUnless(NODE, "node not installed")
+    def test_the_municipality_row_reads_the_2019_dict_and_the_mayoral_card(self):
+        # 27,523 candidacies carried kandidatavimas.savivaldybe or the
+        # mayoral card's savivaldybe and rendered "this election never
+        # published this field" (issue #131).
+        record = {"normalized": {}, "kandidatavimas": {"savivaldybe": {"id": "19972", "number": 15, "name": "Kauno miesto"}}}
+        self.assertEqual(self._cells(record, "2019-kovo-3-savivaldybiu-tarybu")["Savivaldybė"], "Kauno miesto")
+        self.assertEqual(self._cells(record, "2023-kovo-5-savivaldybiu-tarybu-ir-meru")["Savivaldybė"], "Kauno miesto")
+        mayoral = {"normalized": {"profilis": {"kita": {"savivaldybe": {"pavadinimas": "Savivaldybė", "reiksme": "Jonavos rajono (10)", "nuorodos": []}}}}}
+        self.assertEqual(self._cells(mayoral, "2017-balandzio-23-meru")["Savivaldybė"], "Jonavos rajono (10)")
 
     @unittest.skipUnless(NODE, "node not installed")
     def test_a_label_the_card_omits_still_reads_as_nothing(self):

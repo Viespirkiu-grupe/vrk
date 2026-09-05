@@ -17,7 +17,7 @@ them:
     python scripts/field_coverage.py 2020-seimo         # one election's cells
     python scripts/field_coverage.py --update-baseline  # after a deliberate change
 
-Two rules fail the run:
+Two rules fail the run, and a third is opt-in:
 
 * **zero fill** -- a mapped cell no record fills. Every one of them has to be
   classified in the baseline (`upstream-absent`, `parser-gap`) with a note
@@ -28,6 +28,15 @@ Two rules fail the run:
 * **regression** -- a fill rate that fell more than `--max-drop` points below
   the baseline. Re-parsing an election is allowed to change what it recovers;
   losing five points of a field without saying so is not.
+* **unmapped fill** (`--unmapped`) -- a concept's own path form that fills on
+  at least one percent of an election the map does not give the concept for.
+  The dashboard renders an unmapped cell as "this election never published
+  this field", and issue #131 found 30 cells saying so over data the record
+  on the same page carried (savivaldybe on 27,523 municipal and mayoral
+  candidacies, the two declaration concepts on the 1996-1999 archive
+  elections). Opt-in because it resolves every form of every concept against
+  every election, several times the work of the mapped cells; the suite runs
+  it on a sample of each election.
 
 Two resolution rules, both of which a naive walker gets wrong:
 
@@ -380,6 +389,66 @@ def check(
     return findings
 
 
+#: The unmapped-fill rule's floor: below this share of an election's records a
+#: filled path form is a stray record on a form that does not ask the
+#: question (anketa.pomegiai on 1 of 10,138 records of 2002-gruodzio-22,
+#: anketa.kita-apie-save on 3 of 9,879 of 2000-kovo-19), not a missing mapping.
+UNMAPPED_FLOOR_PCT = 1.0
+
+
+def path_forms(paths_by_concept: dict[str, dict[str, str | list[str]]]) -> dict[str, list[str]]:
+    """Every distinct path a concept is mapped through, per concept."""
+    return {
+        concept: sorted({path for mapping in paths.values() for path in ([mapping] if isinstance(mapping, str) else mapping)})
+        for concept, paths in paths_by_concept.items()
+    }
+
+
+def unmapped_fills(
+    data_root: Path,
+    paths_by_concept: dict[str, dict[str, str | list[str]]],
+    election_ids: list[str],
+    *,
+    sample: int | None = None,
+    floor_pct: float = UNMAPPED_FLOOR_PCT,
+) -> list[str]:
+    """The third rule: a concept's own path form filling an election the map
+    does not give the concept for. One line per finding.
+
+    `sample` caps the records read per election (the suite's use); None reads
+    them all. A form that fills below `floor_pct` of the records read is a
+    stray, not a mapping gap.
+    """
+    forms = path_forms(paths_by_concept)
+    findings: list[str] = []
+    for election_id in election_ids:
+        candidates = [
+            (concept, form)
+            for concept, concept_forms in forms.items()
+            if election_id not in paths_by_concept[concept]
+            for form in concept_forms
+        ]
+        if not candidates:
+            continue
+        records = 0
+        filled = {key: 0 for key in candidates}
+        for record in election_records(data_root, election_id):
+            records += 1
+            for key in candidates:
+                if resolve(record, key[1])[1]:
+                    filled[key] += 1
+            if sample is not None and records >= sample:
+                break
+        for (concept, form), count in filled.items():
+            if records and count and 100.0 * count / records >= floor_pct:
+                findings.append(
+                    f"{concept}\t{election_id}\t{form} fills {count} of {records} records"
+                    f" ({100.0 * count / records:.1f}%), and the map does not give this"
+                    " election the concept"
+                )
+    return findings
+
+
 def unmapped_elections(data_root: Path, paths_by_concept: dict[str, dict[str, Any]]) -> list[str]:
     """Elections whose records no concept resolves against.
 
@@ -425,6 +494,11 @@ def main() -> int:
         help="Where the full table is written. Defaults to <repo-root>/data/coverage.tsv.",
     )
     parser.add_argument("--top", type=int, default=40, help="Findings to list (default 40).")
+    parser.add_argument(
+        "--unmapped",
+        action="store_true",
+        help="Also apply the unmapped-fill rule: a concept's path form filling an election the map does not give it.",
+    )
     args = parser.parse_args()
 
     repo_root = args.repo_root
@@ -477,6 +551,8 @@ def main() -> int:
         return 0
 
     findings = check(cells, baseline, args.max_drop)
+    if args.unmapped:
+        findings.extend(unmapped_fills(data_root, paths_by_concept, election_ids))
     if not findings:
         print("No findings.")
         return 0

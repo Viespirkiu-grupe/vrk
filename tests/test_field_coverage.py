@@ -24,6 +24,7 @@ from scraper.cli import _parse_anketa_samples_for_election
 REPO_ROOT = Path(__file__).resolve().parents[1]
 ELECTION_ID = "2019-prezidento"
 FIXTURES_ROOT = REPO_ROOT / "samples" / "html" / ELECTION_ID
+DATA_ROOT = REPO_ROOT / "data"
 
 
 def _load_script():
@@ -271,6 +272,66 @@ class CheckedInBaselineTests(unittest.TestCase):
             sorted(key for key, row in self.baseline.items() if row.pct and row.status != script.OK),
             [],
         )
+
+
+class UnmappedFillTests(unittest.TestCase):
+    """The third rule (issue #131): a concept's own path form filling an
+    election the map does not give the concept for. The dashboard renders
+    such a cell as "this election never published this field"."""
+
+    PATHS = {
+        "savivaldybe": {"a": "kandidatavimas.savivaldybe", "b": "profilis.kita.savivaldybe.reiksme"},
+        "pomegiai": {"a": "anketa.pomegiai"},
+    }
+
+    def _corpus(self, root: Path, election: str, records: list[dict]) -> None:
+        directory = root / election
+        directory.mkdir(parents=True)
+        for index, record in enumerate(records):
+            (directory / f"c{index:04d}-{election}.json").write_text(json.dumps(record), encoding="utf-8")
+
+    def test_a_filled_form_on_an_unmapped_election_is_a_finding(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            # `c` is not mapped for savivaldybe, yet every record carries the
+            # 2019 shape of it -- the 27,523-candidacy cell of issue #131.
+            self._corpus(root, "c", [{"normalized": {}, "kandidatavimas": {"savivaldybe": {"name": "Kauno miesto"}}}] * 5)
+            findings = script.unmapped_fills(root, self.PATHS, ["c"])
+        self.assertEqual(len(findings), 1)
+        self.assertTrue(findings[0].startswith("savivaldybe\tc\tkandidatavimas.savivaldybe fills 5 of 5"))
+
+    def test_a_stray_record_below_the_floor_is_not(self) -> None:
+        # anketa.pomegiai on 1 of 10,138 records of 2002-gruodzio-22 is a
+        # form that does not ask the question, not a missing mapping.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            records = [{"normalized": {"anketa": {"pomegiai": None}}}] * 199 + [{"normalized": {"anketa": {"pomegiai": "šachmatai"}}}]
+            self._corpus(root, "c", records)
+            self.assertEqual(script.unmapped_fills(root, self.PATHS, ["c"]), [])
+            self.assertEqual(len(script.unmapped_fills(root, self.PATHS, ["c"], floor_pct=0.1)), 1)
+
+    def test_a_mapped_election_is_not_checked_against_itself(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self._corpus(root, "a", [{"normalized": {}, "kandidatavimas": {"savivaldybe": "Trakų rajono"}}] * 3)
+            self.assertEqual(script.unmapped_fills(root, self.PATHS, ["a"]), [])
+
+    def test_the_sample_caps_the_records_read(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self._corpus(root, "c", [{"normalized": {}, "kandidatavimas": {"savivaldybe": "X"}}] * 10)
+            findings = script.unmapped_fills(root, self.PATHS, ["c"], sample=4)
+        self.assertIn("fills 4 of 4 records", findings[0])
+
+    def test_the_corpus_has_no_unmapped_fill(self) -> None:
+        # The real map against a sample of every election under data/: the
+        # 30 cells of issue #131 are mapped, and the two stray-record cells
+        # the map excludes on purpose (anketa.pomegiai on 2002-gruodzio-22,
+        # anketa.kita-apie-save on 2000-kovo-19) sit under the floor.
+        local_data.require(DATA_ROOT)
+        paths = script.concept_paths(CONCEPT_MAP)
+        election_ids = sorted(child.name for child in DATA_ROOT.iterdir() if child.is_dir() and any(child.glob("*.json")))
+        self.assertEqual(script.unmapped_fills(DATA_ROOT, paths, election_ids, sample=300), [])
 
 
 class RealRecordTests(unittest.TestCase):

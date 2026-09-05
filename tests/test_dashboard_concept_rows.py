@@ -184,6 +184,131 @@ class ResolverAgreementTests(unittest.TestCase):
         self.assertEqual(js_side, json.loads(json.dumps(python_side)))
 
 
+# The value a path form's leaf holds in the corpus, by the form's tail. What
+# the cell is handed depends on where the map's path stops -- at an object,
+# at the entry list inside it, or at a string -- and each formatter has to
+# take every shape the map produces for its concept (issue #131: educationCell
+# took the object and was handed the array on 43 elections).
+EDUCATION_ENTRY = {
+    "issilavinimas": "Aukštasis universitetinis",
+    "mokymo-istaigos-pavadinimas": "Vilniaus universitetas",
+    "specialybe": "teisė",
+    "baigimo-metai": "1996",
+}
+
+
+def leaf_for(concept: str, form: str):
+    if form == "anketa.issilavinimas":
+        return {"aprasas": None, "irasai": [EDUCATION_ENTRY]}
+    if form.endswith(".issilavinimas.irasai"):
+        return [EDUCATION_ENTRY]
+    if form == "biografija.darbo-patirtis":
+        return {"irasai": [{"darboviete": "UAB Įmonė", "pareigos": "direktorius", "darbo-pradzia": "2010", "darbo-pabaiga": "2014"}]}
+    if form.endswith("partyList"):
+        return {"id": "28392", "number": 6, "name": "Tėvynės sąjunga"}
+    if form.endswith(".irasai") or form.endswith("uzsienio-kalbos"):
+        return ["Lietuvos socialdemokratų partija"]
+    return "Reikšmė"
+
+
+def plant(form: str, leaf):
+    """A record carrying `leaf` at `form` -- under `normalized`, or at the
+    record root for the hoisted sections, exactly where the parsers put it."""
+    segments = form.split(".")
+    record: dict = {"normalized": {}}
+    node = record if segments[0] in field_coverage.RECORD_ROOT_SECTIONS else record["normalized"]
+    for segment in segments[:-1]:
+        node = node.setdefault(segment, {})
+    node[segments[-1]] = leaf
+    return record
+
+
+class EveryPathShapeRendersTests(unittest.TestCase):
+    """For every row the comparison table shows and every path form its
+    concept is mapped through, a record carrying that form renders a cell --
+    through the page's own resolver, formatter and the real concept map.
+    The gate issue #131 asked for: the formatter is fed what the map hands
+    it, not a hand-written object."""
+
+    #: Rows whose formatter reads the whole declaration through helpers the
+    #: lift-and-run harness stubs to null; their resolution is covered by
+    #: field_coverage and the money-rendering tests.
+    STUBBED_FORMATS = {"moneyCell", "incomeCell"}
+
+    def _rows(self):
+        block = re.search(r"^const CONCEPT_ROWS = \[(.*?)^\];", SOURCE, re.S | re.M).group(1)
+        rows = []
+        for line in block.splitlines():
+            concept = re.search(r'concept: "([a-z0-9-]+)"', line)
+            if not concept or "derived: true" in line:
+                continue
+            fmt = re.search(r"format: (\w+)", line)
+            rows.append((concept.group(1), fmt.group(1) if fmt else None))
+        return rows
+
+    def _render(self, cases):
+        helpers = "\n".join(
+            re.search(rf"^function {name}\(.*?^}}", SOURCE, re.S | re.M).group(0)
+            for name in (
+                "compactValue", "educationCell", "workHistoryCell", "nameCell", "convictionCell",
+                "convictionLines", "deslug", "labelFor", "isFilledValue", "walkValue", "resolveConcept",
+                "resolveRow", "rowLabel",
+            )
+        )
+        consts = "\n".join(
+            re.search(pattern, SOURCE, flags).group(0)
+            for pattern, flags in (
+                (r"^const AFFIRMATIVE_ANSWERS = .*;$", re.M),
+                (r"^const isAffirmative = .*;$", re.M),
+                (r"^const RELATED_DECLARATIONS = \{.*?^\};", re.S | re.M),
+                (r"^const OFFENCE_KEYS = .*;$", re.M),
+                (r"^const SECTION_LABELS = \{.*?^\};", re.S | re.M),
+                (r"^const ROOT_SECTIONS = .*?;$", re.S | re.M),
+                (r"^const CONCEPT_ROWS = \[.*?^\];", re.S | re.M),
+            )
+        )
+        script = (
+            f"const CONCEPTS = {json.dumps(CONCEPT_MAP['concepts'])};\n"
+            "const CONCEPT_LABELS = {}; const SEGMENT_LABELS = {};\n"
+            f"{consts}\n{helpers}\n"
+            "function moneyCell() { return null; }\nfunction incomeCell() { return null; }\n"
+            f"const cases = {json.dumps(cases, ensure_ascii=False)};\n"
+            "const out = cases.map(({concept, election, record}) => {\n"
+            "  const row = CONCEPT_ROWS.find(r => r.concept === concept);\n"
+            "  const { mapped, value } = resolveRow(row, record, election);\n"
+            "  const c = row.format ? row.format(value, record) : compactValue(value);\n"
+            "  return { mapped, cell: c == null ? null : c };\n"
+            "});\n"
+            "console.log(JSON.stringify(out));"
+        )
+        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=60)
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        return json.loads(out.stdout)
+
+    @unittest.skipUnless(NODE, "node not installed")
+    def test_every_form_of_every_row_concept_renders_a_cell(self):
+        cases = []
+        for concept, fmt in self._rows():
+            if fmt in self.STUBBED_FORMATS:
+                continue
+            paths = CONCEPT_MAP["concepts"][concept]["paths"]
+            for form in field_coverage.path_forms({concept: paths})[concept]:
+                election = next(
+                    eid for eid, mapping in paths.items()
+                    if form in ([mapping] if isinstance(mapping, str) else mapping)
+                )
+                cases.append({"concept": concept, "form": form, "election": election, "record": plant(form, leaf_for(concept, form))})
+        self.assertGreaterEqual(len(cases), 20)
+        rendered = self._render(cases)
+        blank = [
+            f"{case['concept']} via {case['form']} ({case['election']})"
+            for case, result in zip(cases, rendered)
+            if not result["mapped"] or result["cell"] is None
+        ]
+        self.assertEqual(blank, [], "a mapped path form the page renders as an em dash")
+
+
 class EraFallbackTests(unittest.TestCase):
     """The one row bridging einamos-pareigos (2020 on) and
     pagrindine-darboviete (before): each era resolves through its own

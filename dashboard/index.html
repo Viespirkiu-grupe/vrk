@@ -212,10 +212,18 @@ function incomeCell(value, record) {
 // reads as what it is. (The 1997 municipal archive published a bare level
 // string and is reshaped into this same object by
 // scripts/reshape_1997_education.py, so there is one shape to render.)
+//
+// The concept map hands this cell two shapes, not one: `issilavinimas` maps
+// to the object (`anketa.issilavinimas`) on the 1996-2002 elections and to
+// the entry ARRAY (`….issilavinimas.irasai`) on the 43 others -- the fill
+// gate measures the entries, not the container. Reading `value.irasai` off
+// an array gave null, and the row rendered an em dash for 69,726
+// candidacies whose records carry an education (issue #131).
 function educationCell(value) {
   if (value == null || value === "") return null;
   if (typeof value !== "object") return String(value);
-  const lines = (value.irasai || []).map((entry) => {
+  const entries = Array.isArray(value) ? value : (value.irasai || []);
+  const lines = entries.map((entry) => {
     // 2004-ep spells the institution key from its own column heading
     // ("Mokyklos įstaigos pavadinimas") on 360 of its 361 entries; reading
     // only the corpus-wide spelling rendered those institutions blank.
@@ -225,7 +233,7 @@ function educationCell(value) {
     return [entry.issilavinimas, where && `${where}${year}`].filter(Boolean).join(" — ")
         || (year ? year.trim() : "");
   }).filter(Boolean);
-  if (value.aprasas) lines.unshift(value.aprasas);
+  if (!Array.isArray(value) && value.aprasas) lines.unshift(value.aprasas);
   return lines.length ? lines.join("\n") : null;
 }
 
