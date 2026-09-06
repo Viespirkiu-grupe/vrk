@@ -18,7 +18,7 @@ Reads `data/`, `docs/concept-map.json` and the registries; writes to
 
 | file | contents |
 |---|---|
-| `candidacies.csv.gz` | 113,073 rows × 53 columns, ~12 MB gzipped |
+| `candidacies.csv.gz` | 113,073 rows × 55 columns, ~12 MB gzipped |
 | `campaigns.csv.gz` | one row per campaign-finance participant (4,729) |
 | `vrk.sqlite` | the same two as tables, plus `elections`, `persons`, `parties`, `party_predecessors`, `municipalities`, with indexes |
 
@@ -60,10 +60,20 @@ official name — `Vilniaus miesto savivaldybė` whether the era's card said
 1997 Marijampolė bodies the 2000 reform merged keep ids of their own
 (`marijampoles-miesto`, `marijampoles-rajono`, `until: 2000` in the
 `municipalities` table). The published wording stays in the record file.
-`elected` is 1/0, empty only where no results exist: the five 2000
-municipalities whose results tree VRK does not publish (the 1997 municipal
-pair was the larger gap until issue #92 joined its elected pages) — 99.3 %
-filled overall.
+`elected` is 1/0 for **any office on this ballot**, empty only where no
+results exist: the five 2000 municipalities whose results tree VRK does not
+publish (the 1997 municipal pair was the larger gap until issue #92 joined its
+elected pages) — 99.3 % filled overall. A council-and-mayor dual candidacy
+(1,212 rows in 2015/2019/2023) is two offices with two outcomes, so
+`elected_council` and `elected_mayor` carry each office's own: 1/0 where the
+office was on the ballot and the result is known, empty otherwise. Read the
+mayoralty off `elected_mayor`, never off `role = 'meras' AND elected = 1` —
+that query returned 410 rows for 2019 and 433 for 2023, in a country with 60
+mayors, because 448 of them won a council seat and lost the mayoral race
+(issue #140). The per-office outcome comes from the 2019/2023 records' own
+flags and, on the 2015 ballots, from the seat VRK's results named
+(`isrinktasKaip`); 2015 has 57 elected mayors rather than 60 because three
+mayoral races were annulled and re-run in June.
 
 **Education** (issue #88; `scraper/shared/education.py`).
 `education_status` types the absence — the difference between a candidate

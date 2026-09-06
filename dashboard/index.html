@@ -358,17 +358,38 @@ const CONCEPT_ROWS = [
   { concept: "teistumas", derived: true, format: convictionCell },
 ];
 
-// The office a candidacy ran for: the election's kind decides it everywhere
+// The offices a candidacy ran for: the election's kind decides it everywhere
 // except the council-and-mayor ballots, where the record itself says which
-// via "r" (scripts/build_person_index.py, from scraper/shared/kandidatura.py).
+// via "r" (scripts/build_person_index.py, from scraper/shared/kandidatura.py):
+// "m" a mayoral run alone, "tm" council and mayor on one ballot, absent a
+// council run. A dual candidacy is two offices with two outcomes -- 448
+// people in 2019/2023 won a council seat and lost the mayoralty -- so it
+// carries "wt"/"wm", the per-office flags, beside "w", the any-office one;
+// collapsing it to one office made those 448 "elected mayors" (issue #140).
 const ROLE_LABELS = new Map([
   ["s", "Seimo narys"], ["t", "Tarybos narys"], ["m", "Meras"],
   ["p", "Prezidentas"], ["e", "EP narys"],
 ]);
 const ROLE_BY_KIND = { seimo: "s", ep: "e", prezidento: "p", mero: "m" };
-function roleOf(e) {
+function rolesOf(e) {
   const kind = (ELECTIONS.get(e.id) || {}).kind;
-  return ROLE_BY_KIND[kind] || (e.r === "m" ? "m" : "t");
+  if (ROLE_BY_KIND[kind]) return [ROLE_BY_KIND[kind]];
+  return [...(e.r || "t")];
+}
+// The outcome for one office: the per-office flag where the ballot had two
+// offices, the candidacy's flag everywhere else.
+function electedAs(e, role) {
+  if (role === "m" && e.wm !== undefined) return e.wm;
+  if (role === "t" && e.wt !== undefined) return e.wt;
+  return e.w;
+}
+function roleLabel(e) {
+  return rolesOf(e).map(c => ROLE_LABELS.get(c) || c).join(" / ");
+}
+// The offices actually won -- "Tarybos narys" for a dual candidate who took
+// the council seat and lost the mayoralty; empty when nothing was won.
+function electedLabel(e) {
+  return rolesOf(e).filter(c => electedAs(e, c) === true).map(c => ROLE_LABELS.get(c) || c).join(" / ");
 }
 
 // ---------------------------------------------------------------------------
@@ -695,10 +716,14 @@ function candidacyMatches(e, f) {
   if (f.election && !inElection(e, f.election)) return false;
   if (f.party && !inParty(e, f.party)) return false;
   if (f.municipality !== "" && e.sv !== +f.municipality) return false;
-  if (f.role && roleOf(e) !== f.role) return false;
-  if (f.won === "won" && e.w !== true) return false;
-  if (f.won === "lost" && e.w !== false) return false;
-  if (f.won === "unknown" && e.w !== undefined) return false;
+  if (f.role && !rolesOf(e).includes(f.role)) return false;
+  // With an office chosen, the outcome is that office's: "Meras" + "tik
+  // išrinkti" is the 60 mayors of a year, not the 60 plus the council
+  // winners who also ran for mayor (issue #140).
+  const w = f.role ? electedAs(e, f.role) : e.w;
+  if (f.won === "won" && w !== true) return false;
+  if (f.won === "lost" && w !== false) return false;
+  if (f.won === "unknown" && w !== undefined) return false;
   return true;
 }
 
@@ -815,7 +840,7 @@ function exportCSV() {
   const f = activeFilters();
   const header = [
     "pid", "vardas_pavarde", "gimimo_data", "rinkimai", "data",
-    "pareigos", "savivaldybe", "partijos_id", "partija", "isrinktas",
+    "pareigos", "savivaldybe", "partijos_id", "partija", "isrinktas", "isrinktas_kaip",
     "issilavinimas",
     "turtas_eur", "pinigines_lesos_eur", "pajamos_eur",
     "turtas_ir_lesos_eur", "deklaruota_litais", "tik_darbo_santykiu_pajamos",
@@ -830,10 +855,11 @@ function exportCSV() {
       rows.push([
         p.pid, p.n, p.b || "",
         e.id, (ELECTIONS.get(e.id) || {}).date || "",
-        ROLE_LABELS.get(roleOf(e)) || "",
+        roleLabel(e),
         e.sv != null ? INDEX.municipalities[e.sv] : "",
         e.p || "", e.p ? ((INDEX.parties[e.p] || {}).n || "") : "",
         e.w === true ? "taip" : e.w === false ? "ne" : "",
+        electedLabel(e),
         e.ed ? ((INDEX.educationLevels || [])[e.ed - 1] || {}).label || "" : "",
         m[0] ?? "", m[1] ?? "", m[2] ?? "", m[3] ?? "",
         e.lt ? "taip" : "", e.ds ? "taip" : "",
@@ -1103,7 +1129,12 @@ async function showPerson(p) {
       party.textContent = partyName;
       sum.appendChild(party);
     }
-    if (e.w === true) { const win = document.createElement("span"); win.className = "win"; win.textContent = "✓ išrinktas (-a)"; sum.appendChild(win); }
+    if (e.w === true) {
+      const win = document.createElement("span"); win.className = "win";
+      // A council-and-mayor candidacy says which office was won.
+      win.textContent = "✓ išrinktas (-a)" + (rolesOf(e).length > 1 ? `: ${electedLabel(e)}` : "");
+      sum.appendChild(win);
+    }
     else if (e.w === undefined) { const na = document.createElement("span"); na.className = "nores"; na.textContent = "rezultatų duomenų nėra"; sum.appendChild(na); }
     card.appendChild(sum);
     const body = document.createElement("div"); body.className = "body";

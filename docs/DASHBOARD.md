@@ -162,8 +162,16 @@ header keep the exact ids.
 `municipalities` list — the 62 official names of `scraper/municipalities.json`
 (issue #137; the eras' 127 wordings used to be 127 facet rows, every
 municipality twice, each row hiding half its history), interned rather than
-repeated 99,594 times — `"r": "m"` marks a mayoral run on a council-and-mayor ballot (the
-election's `kind` decides every other office), `"wp"` is the
+repeated 99,594 times — `"r"` names the offices of a council-and-mayor ballot
+(`"m"` a mayoral run alone, `"tm"` council and mayor on one ballot, absent a
+council run; the election's `kind` decides every other office), and a `"tm"`
+candidacy carries `"wt"` and `"wm"`, the council seat's and the mayoralty's
+own outcomes, beside `"w"` — issue #140: 448 people in 2019/2023 won a
+council seat and lost the mayoralty, and one code with one flag showed them as
+elected mayors, absent from the *Tarybos narys* facet. The page's `rolesOf` /
+`electedAs` read both, so *Meras* + *tik išrinkti* is a year's 60 mayors, the
+CSV's `pareigos` lists both offices and `isrinktas_kaip` the one won, and a
+dual candidacy's election card says which. `"wp"` is the
 workplace/position string the search box matches (resolved through the
 concept map's `einamos-pareigos`/`pagrindine-darboviete`, whichever the era
 asks), and `"ed"` is the education rank in

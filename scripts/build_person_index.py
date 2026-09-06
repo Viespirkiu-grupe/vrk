@@ -92,7 +92,7 @@ from scraper.shared.deklaracijos import (  # noqa: E402
 )
 from scraper.shared.education import LEVELS as EDUCATION_LEVELS  # noqa: E402
 from scraper.shared.education import issilavinimas  # noqa: E402
-from scraper.shared.kandidatura import ROLE_MAYOR, kandidatura  # noqa: E402
+from scraper.shared.kandidatura import ROLE_COUNCIL, ROLE_MAYOR, kandidatura  # noqa: E402
 from scraper.shared.parties import entry as party_entry  # noqa: E402
 from scraper.shared.parties import partija  # noqa: E402
 from scraper.shared.provenance import parser_commit, utc_now_iso  # noqa: E402
@@ -366,6 +366,13 @@ def apply_merges(
     return former, unmatched
 
 
+def _role_code(offices: list[str]) -> str | None:
+    """people.json's "r": the offices of a council-and-mayor ballot as a code
+    string ("m", "tm"), None for the council-only default."""
+    code = "".join("m" if office == ROLE_MAYOR else "t" for office in offices if office in (ROLE_COUNCIL, ROLE_MAYOR))
+    return None if code in ("", "t") else code
+
+
 def build_index(
     data_root: Path,
     registry: list[dict] | None = None,
@@ -448,9 +455,14 @@ def build_index(
                     "party": partija(record, election_id)["partija-id"],
                     "municipality": candidacy["savivaldybe"],
                     # The kind decides the office for every other election, so
-                    # the flag is only carried where the ballot had two.
-                    "mayor": candidacy["vaidmuo"] == ROLE_MAYOR
-                    and kind_of.get(election_id) == "savivaldybiu",
+                    # the offices are only carried where the ballot had two:
+                    # "m" a mayoral run alone, "tm" council and mayor, with the
+                    # per-office outcomes beside them (issue #140).
+                    "roles": _role_code(candidacy["vaidmenys"])
+                    if kind_of.get(election_id) == "savivaldybiu"
+                    else None,
+                    "electedCouncil": candidacy["isrinktas-tarybos-nariu"],
+                    "electedMayor": candidacy["isrinktas-meru"],
                     "workplace": workplace,
                     "educationRank": issilavinimas(record, election_id)["rangas"],
                 }
@@ -508,8 +520,12 @@ def build_index(
             # "ds" an income figure that is the 1990s form's employment row
             # rather than a declared total (the `deklaruotos-pajamos` concept).
             # "p" is the canonical nominator id, "sv" an index into the
-            # top-level municipalities list, "r": "m" a mayoral run on a
-            # council-and-mayor ballot (the kind decides every other office),
+            # top-level municipalities list, "r" the offices on a
+            # council-and-mayor ballot -- "m" a mayoral run alone, "tm" both,
+            # absent a council run (the kind decides every other office) --
+            # with "wt"/"wm", the council seat's and the mayoralty's own
+            # outcomes, beside "w" where a dual candidacy makes them differ
+            # (issue #140: 448 council winners who lost the mayoralty),
             # "wp" the workplace/position string the search box matches, and
             # "ed" the education rank in scraper/shared/education.py's
             # 13-tier ordinal (the top-level educationLevels list).
@@ -527,7 +543,14 @@ def build_index(
                         if r["municipality"]
                         else {}
                     ),
-                    **({"r": "m"} if r["mayor"] else {}),
+                    **({"r": r["roles"]} if r["roles"] else {}),
+                    **(
+                        {"wt": r["electedCouncil"], "wm": r["electedMayor"]}
+                        if r["roles"] == "tm"
+                        and isinstance(r["electedCouncil"], bool)
+                        and isinstance(r["electedMayor"], bool)
+                        else {}
+                    ),
                     **({"wp": r["workplace"]} if r["workplace"] else {}),
                     **({"ed": r["educationRank"]} if r["educationRank"] else {}),
                 }

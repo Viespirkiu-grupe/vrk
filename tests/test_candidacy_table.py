@@ -166,6 +166,23 @@ class MunicipalityJoin(unittest.TestCase):
         self.assertEqual({row["municipality"] for row in rows}, {"Kauno miesto savivaldybė"})
         self.assertEqual({row["municipality_id"] for row in rows}, {"kauno-miesto"})
 
+    def test_a_dual_candidacy_projects_both_outcomes(self):
+        # Issue #140: role='meras' AND elected=1 returned 410 rows for 2019.
+        record = {"electionId": "2019-kovo-3-savivaldybiu-tarybu", "candidateId": "x", "candidateName": "X Y",
+                  "kandidatavimas": {"savivaldybe": {"id": "1", "number": 13, "name": "Kaišiadorių rajono"},
+                                     "roles": ["tarybos-narys", "meras"],
+                                     "tarybosNarys": {"partyList": {"id": "2", "number": 4, "name": "LSDP"}, "listPosition": 1, "elected": True},
+                                     "meras": {"round": "I", "elected": False}, "isrinktas": True},
+                  "normalized": {}}
+        row = table.project_record(record, _election("2019-kovo-3-savivaldybiu-tarybu", "2019-03-03", "savivaldybiu"), PATHS)
+        self.assertEqual(row["role"], "meras")
+        self.assertIs(row["elected"], True)
+        self.assertIs(row["elected_council"], True)
+        self.assertIs(row["elected_mayor"], False)
+        seimas = table.project_record(MODERN_RECORD, _election("2016-seimo", "2016-10-09", "seimo"), PATHS)
+        self.assertIsNone(seimas["elected_council"])
+        self.assertIsNone(seimas["elected_mayor"])
+
     def test_a_seimas_row_has_no_municipality(self):
         row = table.project_record(MODERN_RECORD, _election("2016-seimo", "2016-10-09", "seimo"), PATHS)
         self.assertIsNone(row["municipality"])

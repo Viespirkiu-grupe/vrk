@@ -144,6 +144,8 @@ COLUMNS = (
     "party_name_raw",
     "nomination_kind",
     "elected",
+    "elected_council",
+    "elected_mayor",
     "education_status",
     "education_level",
     "education_level_rank",
@@ -407,7 +409,12 @@ def project_record(
     row["list_name"] = candidacy["sarasas"]
     row["list_position"] = candidacy["numeris-sarase"]
     row["post_election_position"] = candidacy["porinkiminis-numeris"]
+    # `elected` is any office on the ballot; the two per-office columns are
+    # what a council-and-mayor candidacy needs (issue #140: 448 council
+    # winners who lost the mayoralty shipped as role=meras, elected=1).
     row["elected"] = candidacy["isrinktas"]
+    row["elected_council"] = candidacy["isrinktas-tarybos-nariu"]
+    row["elected_mayor"] = candidacy["isrinktas-meru"]
 
     party = partija(record, election_id)
     row["party_id"] = party["partija-id"]
@@ -631,6 +638,8 @@ def _sqlite_type(column: str) -> str:
         return "REAL"
     if column.endswith(("_rank", "_position", "_year")) or column in {
         "elected",
+        "elected_council",
+        "elected_mayor",
         "education_higher",
         "education_unfinished",
         "income_floor_only",
@@ -779,6 +788,9 @@ def _known_zero_note(column: str, election: dict[str, Any]) -> str | None:
     rules: list[tuple[bool, str]] = [
         (column == "constituency" and kind != "seimo", "not a Seimas election; no single-mandate constituency"),
         (column in {"municipality", "municipality_id"} and kind not in {"savivaldybiu", "mero"}, "not a municipal or mayoral election"),
+        (column == "elected_council" and kind != "savivaldybiu", "no council seat on this ballot"),
+        (column == "elected_mayor" and kind not in {"savivaldybiu", "mero"}, "no mayoral seat on this ballot"),
+        (column == "elected_mayor" and kind == "savivaldybiu" and date < "2015", "no directly elected mayor before the 2015 municipal general; the council alone was on the ballot"),
         (column in {"list_name", "list_position", "post_election_position"} and kind == "prezidento", "presidential candidates stand on no list"),
         (column in {"list_name", "list_position", "post_election_position"} and seimas_by_election, "a single-mandate Seimas by-election; no party list on the ballot"),
         (column in {"list_name", "list_position"} and kind == "mero", "the mayoral card prints its Sąrašas row empty (verified upstream)"),
