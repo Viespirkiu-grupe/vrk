@@ -226,6 +226,11 @@ class Seimo2000ResultsTests(unittest.TestCase):
         self.assertEqual(page["candidates"][0], {"vrkCandidateId": "152839", "name": "Vytautas Kvietkauskas", "ballotBox": 5680, "postal": 649, "total": 6329, "percent": 23.03})
 
     def test_members_lists_and_constituencies_reconcile(self) -> None:
+        # The rebuild reads VRK's results pages from the cache tree, which is
+        # larger than the tracked-fixture limit; without the tree it would
+        # fetch them live (issue #145: with the sitemap tracked, that is
+        # exactly what happened on CI -- a 403 from the runner).
+        require(RESULTS_DIR)
         with tempfile.TemporaryDirectory() as tmp:
             _, stats = build_results(sitemap_path=SITEMAPS / f"{ELECTION_ID}.json", results_dir=RESULTS_DIR, output_path=Path(tmp) / "results.json")
             payload = json.loads((Path(tmp) / "results.json").read_text(encoding="utf-8"))

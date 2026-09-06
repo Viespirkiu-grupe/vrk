@@ -22,11 +22,18 @@ builds lives: a one-character bug in one parser turned 18 passing tests into
 18 skips and the suite exited 0. Tests that would pass vacuously rather than
 raise call `tests/local_data.py`'s `require()` / `require_corpus()` instead.
 
-The same file holds the one environment contract CI has: the dashboard tests
-run their JavaScript under node, and without it 42 of them skip. Locally that
-is a skip; on CI (`CI` set, as GitHub Actions does) it is a broken runner, and
-the session refuses to start rather than report a green suite that verified
-less than it claims.
+The same file holds the two environment contracts the suite has. The
+dashboard tests run their JavaScript under node, and without it 42 of them
+skip: locally that is a skip; on CI (`CI` set, as GitHub Actions does) it is
+a broken runner, and the session refuses to start rather than report a green
+suite that verified less than it claims. And no test reaches the network:
+every page a test reads is a fixture, so `requests` is refused for any host
+but the loopback the HTTP tests serve from. A results-rebuild test whose
+sitemap was tracked but whose page cache was not fetched 89 pages from vrk.lt
+on this laptop and passed, then hit a 403 on the runner and failed (issue
+#145); now it skips on the absent cache, and any test that would fetch fails
+here first, naming the URL. `VRK_TESTS_ALLOW_NETWORK=1` lifts the refusal
+for a deliberate live run.
 """
 
 from __future__ import annotations
@@ -35,8 +42,10 @@ import os
 import shutil
 import sys
 from pathlib import Path
+from urllib.parse import urlsplit
 
 import pytest
+import requests.adapters
 
 REPO_ROOT = Path(__file__).resolve().parent
 
@@ -58,6 +67,37 @@ def _missing_local_data(error: BaseException | None) -> str | None:
                 return reason
         error = error.__cause__ or error.__context__
     return None
+
+
+LOOPBACK_HOSTS = {"127.0.0.1", "localhost", "::1"}
+
+
+def refuse_network_send(self, request, *args, **kwargs):
+    """The stand-in for HTTPAdapter.send while the suite runs."""
+    host = (urlsplit(request.url).hostname or "").lower()
+    if host in LOOPBACK_HOSTS:
+        return _original_send(self, request, *args, **kwargs)
+    raise RuntimeError(
+        f"the suite reached the network: {request.method} {request.url}. Every page a"
+        " test reads is a fixture; a test that needs one the checkout lacks calls"
+        " local_data.require() on it and skips. Set VRK_TESTS_ALLOW_NETWORK=1 for a"
+        " deliberate live run."
+    )
+
+
+_original_send = requests.adapters.HTTPAdapter.send
+
+
+@pytest.fixture(autouse=True, scope="session")
+def _no_network():
+    if os.environ.get("VRK_TESTS_ALLOW_NETWORK"):
+        yield
+        return
+    requests.adapters.HTTPAdapter.send = refuse_network_send
+    try:
+        yield
+    finally:
+        requests.adapters.HTTPAdapter.send = _original_send
 
 
 def pytest_sessionstart(session):

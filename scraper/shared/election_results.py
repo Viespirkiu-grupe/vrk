@@ -164,12 +164,39 @@ def page_path(results_dir: Path, url: str) -> Path:
     return results_dir / tail
 
 
+#: Beside a cached page tree, `<page>.404` records that VRK answered 404 for
+#: the page: the five 2000 municipalities whose results were never
+#: published, the round-two folder a tree does not have. Without it a 404
+#: was the one answer the cache could not hold, and an offline rebuild asked
+#: vrk.lt for it on every run (issue #145).
+NOT_FOUND_MARKER_SUFFIX = ".404"
+
+
+def _not_found(url: str) -> requests.HTTPError:
+    response = requests.Response()
+    response.status_code = 404
+    response.url = url
+    return requests.HTTPError(f"404 Client Error (cached): {url}", response=response)
+
+
 def fetch_page(results_dir: Path, url: str) -> str:
-    """Fetch a results page once; later calls read the saved copy."""
+    """Fetch a results page once; later calls read the saved copy -- or the
+    saved absence: a page VRK answered 404 for raises the same 404 from its
+    marker file without a request."""
     path = page_path(results_dir, url)
     if path.exists():
         return path.read_text(encoding="utf-8")
-    html = fetch_text(url)
+    marker = path.with_name(path.name + NOT_FOUND_MARKER_SUFFIX)
+    if marker.exists():
+        raise _not_found(url)
+    try:
+        html = fetch_text(url)
+    except requests.HTTPError as exc:
+        response = getattr(exc, "response", None)
+        if response is not None and response.status_code == 404:
+            marker.parent.mkdir(parents=True, exist_ok=True)
+            marker.write_text(url + "\n", encoding="utf-8")
+        raise
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(html, encoding="utf-8")
     time.sleep(FETCH_PAUSE_SECONDS)

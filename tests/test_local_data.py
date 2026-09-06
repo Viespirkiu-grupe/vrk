@@ -18,6 +18,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import requests
+
 import conftest
 import local_data
 from local_data import REPO_ROOT, describe, unit_of
@@ -118,6 +120,27 @@ class ConftestPredicateTests(unittest.TestCase):
         outer = ValueError("wrapped")
         outer.__cause__ = inner
         self.assertIsNotNone(conftest._missing_local_data(outer))
+
+    def test_the_suite_refuses_the_network_and_names_the_url(self):
+        # A results-rebuild test fetched 89 pages from vrk.lt on the laptop
+        # and passed, then met a 403 on the runner (issue #145).
+        with self.assertRaises(RuntimeError) as caught:
+            requests.get("https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20001008/ril.htm-13+2.htm", timeout=5)
+        self.assertIn("reached the network", str(caught.exception))
+        self.assertIn("ril.htm-13+2.htm", str(caught.exception))
+        self.assertIn("VRK_TESTS_ALLOW_NETWORK", str(caught.exception))
+
+    def test_the_scrapers_shared_session_is_refused_too(self):
+        from scraper.shared.http import fetch_text
+
+        with self.assertRaises(RuntimeError):
+            fetch_text("https://www.vrk.lt/")
+
+    def test_loopback_is_not_the_network(self):
+        # tests/test_shared_http.py serves from 127.0.0.1; the refusal must
+        # let that through, and a connection refused there is the proof.
+        with self.assertRaises(requests.ConnectionError):
+            requests.get("http://127.0.0.1:9/", timeout=1)
 
     def test_ci_refuses_to_run_without_node(self):
         source = (REPO_ROOT / "conftest.py").read_text(encoding="utf-8")

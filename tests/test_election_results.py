@@ -365,6 +365,35 @@ class OptionalPageFetchTests(unittest.TestCase):
                 with self.assertRaises(requests.HTTPError):
                     election_results.fetch_optional_page(Path(tmp), "https://www.vrk.lt/x.html")
 
+    def test_a_404_is_remembered_and_answered_offline(self):
+        # The one answer the cache could not hold: the 2000 municipal
+        # rebuild re-fetched its five unpublished members pages on every
+        # run (issue #145). The marker answers as the same 404, without a
+        # request.
+        url = "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/20000319/rikl.htm-570.htm"
+        with tempfile.TemporaryDirectory() as tmp:
+            with mock.patch.object(election_results, "fetch_text", side_effect=self._http_error(404)) as fetch:
+                with self.assertRaises(requests.HTTPError):
+                    election_results.fetch_page(Path(tmp), url)
+                self.assertEqual(fetch.call_count, 1)
+            page = election_results.page_path(Path(tmp), url)
+            marker = page.with_name(page.name + election_results.NOT_FOUND_MARKER_SUFFIX)
+            self.assertTrue(marker.exists(), sorted(p.name for p in Path(tmp).rglob("*")))
+            self.assertEqual(marker.name, "20000319__rikl.htm-570.htm.404")
+            with mock.patch.object(election_results, "fetch_text", side_effect=AssertionError("fetched")):
+                with self.assertRaises(requests.HTTPError) as caught:
+                    election_results.fetch_page(Path(tmp), url)
+                self.assertEqual(caught.exception.response.status_code, 404)
+                self.assertIsNone(election_results.fetch_optional_page(Path(tmp), url))
+
+    def test_other_failures_leave_no_marker(self):
+        url = "https://www.vrk.lt/x.html"
+        with tempfile.TemporaryDirectory() as tmp:
+            with mock.patch.object(election_results, "fetch_text", side_effect=self._http_error(503)):
+                with self.assertRaises(requests.HTTPError):
+                    election_results.fetch_page(Path(tmp), url)
+            self.assertEqual(list(Path(tmp).rglob("*.404")), [])
+
     def test_a_build_with_the_network_down_raises_rather_than_writing(self):
         # The issue's reproduction: build_results() for a Seimas by-election
         # with fetch_text raising returned normally after four failed fetches

@@ -28,7 +28,8 @@ stay local are the municipal generals' 10,000-entry listings and their
 results trees, whose tests are the `lists/` walks that skip anyway.
 
 Only the extensions the parsers open are eligible: `.html`, `.htm`, `.json`,
-`.doc` -- and a candidate's retained portrait, `portrait.<ext>` beside the
+`.doc`, the results cache's `.404` absence markers -- and a candidate's
+retained portrait, `portrait.<ext>` beside the
 `portrait.json` that names it, which the record writer reads to externalize
 the photo (issue #118); a fixture holding the one and not the other would
 parse to a record no scrape could produce. The 2002 presidential declaration
@@ -63,8 +64,10 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 #: The extensions a parser or a test opens. Everything else in a fixture tree is
-#: referenced by path only and is not worth a clone's bytes.
-TRACKED_SUFFIXES = frozenset({".html", ".htm", ".json", ".doc"})
+#: referenced by path only and is not worth a clone's bytes. `.404` is the
+#: results cache's record of a page VRK does not publish (issue #145): the
+#: absence is part of the tree, and a clone without it would fetch.
+TRACKED_SUFFIXES = frozenset({".html", ".htm", ".json", ".doc", ".404"})
 
 #: The one file a parser opens regardless of extension: the retained portrait
 #: beside a candidate's pages, whatever container VRK served it in

@@ -68,12 +68,18 @@ actually there (a `data/` holding only a coverage report is not a corpus —
 every registered election is, which is what a pin on the whole corpus's record
 count assumes. CI installs node explicitly (`actions/setup-node`) and the
 conftest refuses to start a `CI` session without it: 42 dashboard tests run
-their JavaScript under node and would otherwise skip in silence.
+their JavaScript under node and would otherwise skip in silence. And the
+suite never reaches the network: the conftest refuses `requests` for any host
+but the loopback the HTTP tests serve from, naming the URL. A results-rebuild
+test whose sitemap was tracked but whose page cache was not fetched 89 pages
+from vrk.lt on the laptop and passed, then met a 403 on the runner — it skips
+on the absent cache now, and any other test that would fetch fails locally
+first. `VRK_TESTS_ALLOW_NETWORK=1` lifts the refusal for a deliberate live run.
 
-On a clone the suite is about 1,682 passed and 406 skipped
-(down from 1,484 / 516 before the sitemaps were tracked), 2,140
+On a clone the suite is about 1,685 passed and 408 skipped
+(from 1,484 / 516 before the sitemaps were tracked), 2,140
 subtests passed (`verbosity_subtests` in `pyproject.toml` makes the summary
-line count them); here, with everything scraped, 1,914 passed.
+line count them); here, with everything scraped, 1,919 passed.
 
 A skip is a test that did not run, and a test that only ever runs on the
 scraping laptop can sit asserting a shape two refactors old while CI stays
