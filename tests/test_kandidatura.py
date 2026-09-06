@@ -69,7 +69,9 @@ class Municipal1997(unittest.TestCase):
         }
         answer = kandidatura(record, "savivaldybiu")
         self.assertEqual(answer["vaidmuo"], "tarybos-narys")
-        self.assertEqual(answer["savivaldybe"], "Švenčionių rajono")
+        self.assertEqual(answer["savivaldybe"], "Švenčionių rajono savivaldybė")
+        self.assertEqual(answer["savivaldybe-id"], "svencioniu-rajono")
+        self.assertEqual(answer["savivaldybe-raw"], "Švenčionių rajono")
         self.assertEqual(answer["sarasas"], "Lietuvos socialdemokratų partija")
         self.assertEqual(answer["numeris-sarase"], 2)
         # A record parsed without the election's results file carries no
@@ -134,7 +136,9 @@ class Municipal2019(unittest.TestCase):
 
     def test_dict_valued_fields_resolve_to_names(self):
         answer = kandidatura(self.RECORD, "savivaldybiu")
-        self.assertEqual(answer["savivaldybe"], "Kauno miesto")
+        self.assertEqual(answer["savivaldybe"], "Kauno miesto savivaldybė")
+        self.assertEqual(answer["savivaldybe-id"], "kauno-miesto")
+        self.assertEqual(answer["savivaldybe-raw"], "Kauno miesto")
         self.assertEqual(answer["sarasas"], "Tėvynės sąjunga")
         self.assertEqual(answer["numeris-sarase"], 28)
         self.assertEqual(answer["porinkiminis-numeris"], 32)
@@ -157,9 +161,35 @@ class Municipal2019(unittest.TestCase):
         }
         answer = kandidatura(record, "savivaldybiu")
         self.assertEqual(answer["vaidmuo"], "tarybos-narys")
-        self.assertEqual(answer["savivaldybe"], "Vilniaus miesto")
+        self.assertEqual(answer["savivaldybe"], "Vilniaus miesto savivaldybė")
         self.assertEqual(answer["sarasas"], "Darbo partija")
         self.assertEqual(answer["porinkiminis-numeris"], 2)
+
+    def test_every_eras_wording_joins_to_one_municipality(self):
+        # Issue #137: 'Vilniaus miesto' (1997/2000/2002/2019/2023) and
+        # 'Vilniaus miesto savivaldybė' (2007/2011/2015) are one body; so are
+        # 1997's 'Birštono miesto' and the later 'Birštono' / 'Birštono
+        # savivaldybė'. The 1997 Marijampolė city and district stay apart from
+        # the 2000 municipality that replaced them both.
+        def resolve(raw):
+            record = {"kandidatavimas": {"savivaldybe": raw, "isrinktas": False}, "normalized": {}}
+            answer = kandidatura(record, "savivaldybiu")
+            return answer["savivaldybe-id"], answer["savivaldybe"]
+
+        self.assertEqual(resolve("Vilniaus miesto"), resolve("Vilniaus miesto savivaldybė"))
+        self.assertEqual(resolve("Birštono miesto"), resolve("Birštono savivaldybė"))
+        self.assertEqual(resolve("Palangos savivaldybė")[0], "palangos-miesto")
+        self.assertEqual(resolve("Marijampolės miesto")[0], "marijampoles-miesto")
+        self.assertEqual(resolve("Marijampolės rajono")[0], "marijampoles-rajono")
+        self.assertEqual(resolve("Marijampolės")[0], "marijampoles")
+        self.assertNotEqual(resolve("Alytaus miesto")[0], resolve("Alytaus rajono")[0])
+
+    def test_an_unregistered_wording_keeps_itself_and_no_id(self):
+        record = {"kandidatavimas": {"savivaldybe": "Nežinoma vietovė (3)", "isrinktas": False}, "normalized": {}}
+        answer = kandidatura(record, "savivaldybiu")
+        self.assertIsNone(answer["savivaldybe-id"])
+        self.assertEqual(answer["savivaldybe"], "Nežinoma vietovė")
+        self.assertEqual(answer["savivaldybe-raw"], "Nežinoma vietovė (3)")
 
 
 class Era2016(unittest.TestCase):
@@ -181,12 +211,13 @@ class Era2016(unittest.TestCase):
 
     def test_mayoral_card_municipality_number_is_stripped(self):
         # "Telšių rajono (Nr. 51)" and "Jonavos rajono (10)" must join with
-        # the municipal generals' own clean names.
+        # the municipal generals' own names.
         record = _kita({"kandidatavimas": {"isrinktas": False}}, savivaldybe="Jonavos rajono (10)")
-        self.assertEqual(kandidatura(record, "mero")["savivaldybe"], "Jonavos rajono")
+        self.assertEqual(kandidatura(record, "mero")["savivaldybe-id"], "jonavos-rajono")
         record = _kita({"kandidatavimas": {"isrinktas": False}}, savivaldybe="Telšių rajono (Nr. 51)")
         answer = kandidatura(record, "mero")
-        self.assertEqual(answer["savivaldybe"], "Telšių rajono")
+        self.assertEqual(answer["savivaldybe"], "Telšių rajono savivaldybė")
+        self.assertEqual(answer["savivaldybe-raw"], "Telšių rajono (Nr. 51)")
         self.assertEqual(answer["vaidmuo"], "meras")
 
 

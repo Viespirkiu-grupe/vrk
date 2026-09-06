@@ -159,8 +159,10 @@ lacks (a subset build) is skipped. The stats view, the CSV and the person
 header keep the exact ids.
 
 **The other per-candidacy fields** (issue #87): `"sv"` indexes the top-level
-`municipalities` list (~127 names interned rather than repeated 99,594
-times), `"r": "m"` marks a mayoral run on a council-and-mayor ballot (the
+`municipalities` list — the 62 official names of `scraper/municipalities.json`
+(issue #137; the eras' 127 wordings used to be 127 facet rows, every
+municipality twice, each row hiding half its history), interned rather than
+repeated 99,594 times — `"r": "m"` marks a mayoral run on a council-and-mayor ballot (the
 election's `kind` decides every other office), `"wp"` is the
 workplace/position string the search box matches (resolved through the
 concept map's `einamos-pareigos`/`pagrindine-darboviete`, whichever the era

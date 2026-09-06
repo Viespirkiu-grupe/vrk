@@ -14,7 +14,11 @@ This resolver flattens all of that into one answer per record:
     {"vaidmuo":     "seimo-narys" | "tarybos-narys" | "meras"
                     | "prezidentas" | "ep-narys",
      "apygarda":               the single-mandate constituency, Seimas eras,
-     "savivaldybe":            the municipality, municipal/mayoral eras,
+     "savivaldybe":            the municipality's official name, municipal/
+                               mayoral eras (scraper/municipalities.json),
+     "savivaldybe-id":         its registry id, None when no entry claims
+                               the published form,
+     "savivaldybe-raw":        the form the record carries,
      "sarasas":                the list stood on (name),
      "numeris-sarase":         pre-election list position,
      "porinkiminis-numeris":   post-election list position,
@@ -24,6 +28,14 @@ A candidacy that is both constituency and list (1996–2012 Seimas) is still
 one row: `apygarda` and `sarasas` are separate facts and both fill. A
 2019/2023 candidate standing for council *and* mayor keeps the council list
 fields and takes `vaidmuo` from the mayoral run — the more specific office.
+
+The municipality is canonicalised through `scraper/shared/municipalities.py`
+(issue #137): the parsers pass each era's wording through — "Vilniaus
+miesto" on five elections, "Vilniaus miesto savivaldybė" on three, the
+mayoral cards' "Telšių rajono (Nr. 51)" — and left as they were, all 60
+municipalities appeared twice in every consumer. `savivaldybe` is the
+official name, `savivaldybe-id` the join key, `savivaldybe-raw` what the
+record says.
 
 `isrinktas` is the corpus-wide elected flag: the root `kandidatavimas` value
 everywhere it exists (joined from VRK's results trees for the eras whose
@@ -36,8 +48,9 @@ per-municipality elected pages, so its dict shape now carries a bool too.)
 
 from __future__ import annotations
 
-import re
 from typing import Any
+
+from scraper.shared.municipalities import savivaldybe as _savivaldybe
 
 ROLE_SEIMAS = "seimo-narys"
 ROLE_COUNCIL = "tarybos-narys"
@@ -66,16 +79,12 @@ def _name_of(value: Any) -> str | None:
     return None
 
 
-_MUNICIPALITY_NUMBER = re.compile(r"\s*\((Nr\.\s*)?\d+\)\s*$")
-
-
-def _municipality_of(value: Any) -> str | None:
-    """The municipality name alone. The mayoral-election profile cards append
-    the constituency number ("Telšių rajono (Nr. 51)") that the municipal
-    generals' own field does not carry; stripping it is what lets the column
-    join across elections."""
-    name = _name_of(value)
-    return _MUNICIPALITY_NUMBER.sub("", name) if name else None
+def _set_municipality(answer: dict[str, Any], value: Any) -> None:
+    """Resolve the published municipality -- a plain string, or the 2019/2023
+    `{id, number, name}` dict -- through the registry. The mayoral cards'
+    constituency number ("Telšių rajono (Nr. 51)") is stripped there, and the
+    era's wording joins to the one official name."""
+    answer.update(_savivaldybe(_name_of(value)))
 
 
 def _int_of(value: Any) -> int | None:
@@ -108,6 +117,8 @@ def _empty(role: str | None, elected: Any) -> dict[str, Any]:
         "vaidmuo": role,
         "apygarda": None,
         "savivaldybe": None,
+        "savivaldybe-id": None,
+        "savivaldybe-raw": None,
         "sarasas": None,
         "numeris-sarase": None,
         "porinkiminis-numeris": None,
@@ -168,7 +179,7 @@ def kandidatura(record: dict[str, Any], kind: str | None = None) -> dict[str, An
         # every record; a record parsed without the results file carries no
         # key, and the absence stays None rather than reading as false.
         answer = _empty(ROLE_COUNCIL, norm_candidacy.get("isrinktas"))
-        answer["savivaldybe"] = _municipality_of(norm_candidacy.get("savivaldybe"))
+        _set_municipality(answer, norm_candidacy.get("savivaldybe"))
         answer["sarasas"] = _name_of(norm_candidacy.get("iskele"))
         answer["numeris-sarase"] = _int_of(norm_candidacy.get("numeris-sarase"))
         return answer
@@ -181,8 +192,9 @@ def kandidatura(record: dict[str, Any], kind: str | None = None) -> dict[str, An
         role = ROLE_MAYOR if "meras" in roles else ROLE_COUNCIL
     answer = _empty(role, root.get("isrinktas"))
 
-    answer["savivaldybe"] = _municipality_of(root.get("savivaldybe")) or _municipality_of(
-        _kita_value(record, "savivaldybe")
+    _set_municipality(
+        answer,
+        root.get("savivaldybe") if _name_of(root.get("savivaldybe")) else _kita_value(record, "savivaldybe"),
     )
 
     single = root.get("vienmandate")

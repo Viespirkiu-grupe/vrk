@@ -413,11 +413,33 @@ class GroupingTests(unittest.TestCase):
         }
         index = self._build([("2019-kovo-3-savivaldybiu-tarybu", "a-b", record)])
         entry = index["people"][0]["e"][0]
-        self.assertEqual(index["municipalities"], ["Šiaulių rajono"])
+        # The facet lists the registry's official name, whatever the era's
+        # card said (issue #137).
+        self.assertEqual(index["municipalities"], ["Šiaulių rajono savivaldybė"])
+        self.assertEqual(index["unresolvedMunicipalities"], [])
         self.assertEqual(entry["sv"], 0)
         self.assertEqual(entry["r"], "m")
         self.assertEqual(entry["wp"], "AB Žeimena, inspektorė")
         self.assertEqual(entry["ed"], 10)
+
+    def test_two_wordings_of_one_municipality_are_one_facet_row(self):
+        # 'Vilniaus miesto' (2019) and 'Vilniaus miesto savivaldybė' (2015)
+        # were two adjacent rows in the select, each showing half the
+        # history (issue #137).
+        older = _record("A B", "1970-01-01")
+        older["kandidatavimas"] = {"savivaldybe": "Vilniaus miesto savivaldybė", "roles": ["tarybos-narys"], "isrinktas": False}
+        newer = _record("A B", "1970-01-01")
+        newer["kandidatavimas"] = {"savivaldybe": {"id": "1", "number": 1, "name": "Vilniaus miesto"}, "roles": ["tarybos-narys"], "isrinktas": False}
+        index = self._build([("2015-kovo-1-savivaldybiu", "a-b", older), ("2019-kovo-3-savivaldybiu-tarybu", "a-b", newer)])
+        self.assertEqual(index["municipalities"], ["Vilniaus miesto savivaldybė"])
+        self.assertEqual([e["sv"] for e in index["people"][0]["e"]], [0, 0])
+
+    def test_a_wording_the_registry_lacks_is_reported_not_hidden(self):
+        record = _record("A B", "1970-01-01")
+        record["kandidatavimas"] = {"savivaldybe": "Naujoji savivaldybė", "roles": ["tarybos-narys"], "isrinktas": False}
+        index = self._build([("2019-kovo-3-savivaldybiu-tarybu", "a-b", record)])
+        self.assertEqual(index["municipalities"], ["Naujoji savivaldybė"])
+        self.assertEqual(index["unresolvedMunicipalities"], ["Naujoji savivaldybė"])
 
     def test_the_mayor_flag_is_only_carried_on_two_office_ballots(self):
         # On a mero-kind election the kind alone decides the office, so the

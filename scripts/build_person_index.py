@@ -385,6 +385,7 @@ def build_index(
     newest_parse = ""
     seen_elections: set[str] = set()
     municipalities: set[str] = set()
+    unresolved_municipalities: set[str] = set()
 
     for election_dir in sorted(p for p in data_root.iterdir() if p.is_dir()):
         election_id = election_dir.name
@@ -414,6 +415,12 @@ def build_index(
             candidacy = kandidatura(record, kind_of.get(election_id))
             if candidacy["savivaldybe"]:
                 municipalities.add(candidacy["savivaldybe"])
+                if candidacy["savivaldybe-id"] is None:
+                    # A wording scraper/municipalities.json does not claim
+                    # (issue #137): it still gets a facet row of its own, so
+                    # nothing is hidden, and the run reports it so the
+                    # registry gets the alias rather than the facet a twin.
+                    unresolved_municipalities.add(candidacy["savivaldybe-raw"])
             workplace = None
             for paths in workplace_paths:
                 mapped = paths.get(election_id)
@@ -452,9 +459,11 @@ def build_index(
     order = {e["id"]: i for i, e in enumerate(registry)}
     former, unmatched_override_keys = apply_merges(grouped, overrides, order)
     pid_of: dict[str, str] = {}
-    # Municipality names are interned: the corpus writes ~100k of them over
-    # ~127 distinct values, so each candidacy carries an index into the
-    # top-level "municipalities" list instead of the string.
+    # Municipality names are interned: the corpus writes ~100k of them, so
+    # each candidacy carries an index into the top-level "municipalities"
+    # list instead of the string. The names are the registry's official ones
+    # (scraper/municipalities.json, issue #137): the 127 published wordings
+    # are 62 bodies, and the facet used to list all 127.
     municipality_list = sorted(municipalities)
     municipality_index = {name: i for i, name in enumerate(municipality_list)}
 
@@ -572,6 +581,7 @@ def build_index(
         "elections": [e for e in registry if e["id"] in seen_elections],
         "unregisteredElections": sorted(seen_elections - set(order)),
         "unmatchedOverrideKeys": sorted(unmatched_override_keys),
+        "unresolvedMunicipalities": sorted(unresolved_municipalities),
         "parties": parties,
         "municipalities": municipality_list,
         # The 13-tier education ordinal, rank order ("ed" is a 1-based index
@@ -625,7 +635,7 @@ def main() -> int:
         f"{stats['candidaciesLost']} lost, "
         f"{stats['candidaciesWithoutResultsData']} without results data"
     )
-    print(f"municipalities:           {len(index['municipalities'])}")
+    print(f"municipalities:           {len(index['municipalities'])} (scraper/municipalities.json bodies)")
     generals = sum(1 for e in index["elections"] if "parent" not in e)
     print(
         f"elections:                {len(index['elections'])} of {len(load_registry())} registered "
@@ -642,6 +652,16 @@ def main() -> int:
         )
         for eid in unregistered:
             print(f"  {eid}", file=sys.stderr)
+        failed = True
+    unresolved = index["unresolvedMunicipalities"]
+    if unresolved:
+        print(
+            f"\n{len(unresolved)} municipality wording(s) no entry of scraper/municipalities.json claims —\n"
+            "each is a facet row of its own until the registry gets the alias:",
+            file=sys.stderr,
+        )
+        for form in unresolved:
+            print(f"  {form}", file=sys.stderr)
         failed = True
     stale = index["unmatchedOverrideKeys"]
     if stale:

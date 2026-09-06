@@ -1,0 +1,516 @@
+{
+  "_comment": "The municipality join (issue #137): one entry per municipal body, and every spelling VRK's pages publish for it as an alias. The parsers pass each era's wording through verbatim -- 'Vilniaus miesto' on the 1997/2000/2002/2019/2023 cards, 'Vilniaus miesto savivaldybė' on 2007/2011/2015, 'Palangos savivaldybė' in 2011 alone -- so without this file every one of the 60 municipalities appeared twice in the dashboard's facet and in the shipped `municipality` column, each half hiding the other half of its history. `name` is the official name of the body; `kind` its type (miesto / rajono / savivaldybe); `aliases` the published forms, matched exactly after whitespace normalisation and the mayoral cards' constituency number ('Telšių rajono (Nr. 51)') is stripped -- scraper/shared/municipalities.py never guesses. The two 1997 Marijampolė bodies stay separate entries with `until`: the 2000 reform merged a city and a district into one new municipality, and a facet that folded them would put a 1997 district councillor under a body that did not exist. docs/municipality-forms.tsv is the measured form table and tests/test_municipality_registry.py holds every form to exactly one entry.",
+  "entries": {
+    "akmenes-rajono": {
+      "name": "Akmenės rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Akmenės rajono",
+        "Akmenės rajono savivaldybė"
+      ]
+    },
+    "alytaus-miesto": {
+      "name": "Alytaus miesto savivaldybė",
+      "kind": "miesto",
+      "aliases": [
+        "Alytaus miesto",
+        "Alytaus miesto savivaldybė"
+      ]
+    },
+    "alytaus-rajono": {
+      "name": "Alytaus rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Alytaus rajono",
+        "Alytaus rajono savivaldybė"
+      ]
+    },
+    "anyksciu-rajono": {
+      "name": "Anykščių rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Anykščių rajono",
+        "Anykščių rajono savivaldybė"
+      ]
+    },
+    "birstono": {
+      "name": "Birštono savivaldybė",
+      "kind": "savivaldybe",
+      "aliases": [
+        "Birštono",
+        "Birštono savivaldybė",
+        "Birštono miesto"
+      ],
+      "note": "Birštono miesto savivaldybė until the 2000 reform re-typed it; the 1997 cards name it that way."
+    },
+    "birzu-rajono": {
+      "name": "Biržų rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Biržų rajono",
+        "Biržų rajono savivaldybė"
+      ]
+    },
+    "druskininku": {
+      "name": "Druskininkų savivaldybė",
+      "kind": "savivaldybe",
+      "aliases": [
+        "Druskininkų",
+        "Druskininkų savivaldybė",
+        "Druskininkų miesto"
+      ],
+      "note": "Druskininkų miesto savivaldybė until the 2000 reform re-typed it; the 1997 cards name it that way."
+    },
+    "elektrenu": {
+      "name": "Elektrėnų savivaldybė",
+      "kind": "savivaldybe",
+      "aliases": [
+        "Elektrėnų",
+        "Elektrėnų savivaldybė"
+      ]
+    },
+    "ignalinos-rajono": {
+      "name": "Ignalinos rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Ignalinos rajono",
+        "Ignalinos rajono savivaldybė"
+      ]
+    },
+    "jonavos-rajono": {
+      "name": "Jonavos rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Jonavos rajono",
+        "Jonavos rajono savivaldybė"
+      ]
+    },
+    "joniskio-rajono": {
+      "name": "Joniškio rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Joniškio rajono",
+        "Joniškio rajono savivaldybė"
+      ]
+    },
+    "jurbarko-rajono": {
+      "name": "Jurbarko rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Jurbarko rajono",
+        "Jurbarko rajono savivaldybė"
+      ]
+    },
+    "kaisiadoriu-rajono": {
+      "name": "Kaišiadorių rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Kaišiadorių rajono",
+        "Kaišiadorių rajono savivaldybė"
+      ]
+    },
+    "kalvarijos": {
+      "name": "Kalvarijos savivaldybė",
+      "kind": "savivaldybe",
+      "aliases": [
+        "Kalvarijos",
+        "Kalvarijos savivaldybė"
+      ]
+    },
+    "kauno-miesto": {
+      "name": "Kauno miesto savivaldybė",
+      "kind": "miesto",
+      "aliases": [
+        "Kauno miesto",
+        "Kauno miesto savivaldybė"
+      ]
+    },
+    "kauno-rajono": {
+      "name": "Kauno rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Kauno rajono",
+        "Kauno rajono savivaldybė"
+      ]
+    },
+    "kazlu-rudos": {
+      "name": "Kazlų Rūdos savivaldybė",
+      "kind": "savivaldybe",
+      "aliases": [
+        "Kazlų Rūdos",
+        "Kazlų Rūdos savivaldybė"
+      ]
+    },
+    "kedainiu-rajono": {
+      "name": "Kėdainių rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Kėdainių rajono",
+        "Kėdainių rajono savivaldybė"
+      ]
+    },
+    "kelmes-rajono": {
+      "name": "Kelmės rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Kelmės rajono",
+        "Kelmės rajono savivaldybė"
+      ]
+    },
+    "klaipedos-miesto": {
+      "name": "Klaipėdos miesto savivaldybė",
+      "kind": "miesto",
+      "aliases": [
+        "Klaipėdos miesto",
+        "Klaipėdos miesto savivaldybė"
+      ]
+    },
+    "klaipedos-rajono": {
+      "name": "Klaipėdos rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Klaipėdos rajono",
+        "Klaipėdos rajono savivaldybė"
+      ]
+    },
+    "kretingos-rajono": {
+      "name": "Kretingos rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Kretingos rajono",
+        "Kretingos rajono savivaldybė"
+      ]
+    },
+    "kupiskio-rajono": {
+      "name": "Kupiškio rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Kupiškio rajono",
+        "Kupiškio rajono savivaldybė"
+      ]
+    },
+    "lazdiju-rajono": {
+      "name": "Lazdijų rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Lazdijų rajono",
+        "Lazdijų rajono savivaldybė"
+      ]
+    },
+    "marijampoles": {
+      "name": "Marijampolės savivaldybė",
+      "kind": "savivaldybe",
+      "aliases": [
+        "Marijampolės",
+        "Marijampolės savivaldybė"
+      ],
+      "note": "Formed by the 2000 reform from Marijampolės miesto and Marijampolės rajono savivaldybės (Kalvarijos and Kazlų Rūdos savivaldybės were carved out of the same district). The two 1997 bodies are separate entries: merging either into this one would put a 1997 district councillor under a body that did not exist.",
+      "since": "2000"
+    },
+    "marijampoles-miesto": {
+      "name": "Marijampolės miesto savivaldybė (iki 2000 m.)",
+      "kind": "miesto",
+      "aliases": [
+        "Marijampolės miesto",
+        "Marijampolės miesto savivaldybė"
+      ],
+      "until": "2000",
+      "note": "The city municipality of 1995-2000, merged into Marijampolės savivaldybė by the 2000 reform. Appears in 1997-kovo-23-savivaldybiu-tarybu only."
+    },
+    "marijampoles-rajono": {
+      "name": "Marijampolės rajono savivaldybė (iki 2000 m.)",
+      "kind": "rajono",
+      "aliases": [
+        "Marijampolės rajono",
+        "Marijampolės rajono savivaldybė"
+      ],
+      "until": "2000",
+      "note": "The district municipality of 1995-2000, merged into Marijampolės savivaldybė by the 2000 reform. Appears in 1997-kovo-23-savivaldybiu-tarybu only."
+    },
+    "mazeikiu-rajono": {
+      "name": "Mažeikių rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Mažeikių rajono",
+        "Mažeikių rajono savivaldybė"
+      ]
+    },
+    "moletu-rajono": {
+      "name": "Molėtų rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Molėtų rajono",
+        "Molėtų rajono savivaldybė"
+      ]
+    },
+    "neringos": {
+      "name": "Neringos savivaldybė",
+      "kind": "savivaldybe",
+      "aliases": [
+        "Neringos",
+        "Neringos savivaldybė",
+        "Neringos miesto"
+      ],
+      "note": "Neringos miesto savivaldybė until the 2000 reform re-typed it; the 1997 cards name it that way."
+    },
+    "pagegiu": {
+      "name": "Pagėgių savivaldybė",
+      "kind": "savivaldybe",
+      "aliases": [
+        "Pagėgių",
+        "Pagėgių savivaldybė"
+      ]
+    },
+    "pakruojo-rajono": {
+      "name": "Pakruojo rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Pakruojo rajono",
+        "Pakruojo rajono savivaldybė"
+      ]
+    },
+    "palangos-miesto": {
+      "name": "Palangos miesto savivaldybė",
+      "kind": "miesto",
+      "aliases": [
+        "Palangos miesto",
+        "Palangos miesto savivaldybė",
+        "Palangos savivaldybė"
+      ]
+    },
+    "panevezio-miesto": {
+      "name": "Panevėžio miesto savivaldybė",
+      "kind": "miesto",
+      "aliases": [
+        "Panevėžio miesto",
+        "Panevėžio miesto savivaldybė"
+      ]
+    },
+    "panevezio-rajono": {
+      "name": "Panevėžio rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Panevėžio rajono",
+        "Panevėžio rajono savivaldybė"
+      ]
+    },
+    "pasvalio-rajono": {
+      "name": "Pasvalio rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Pasvalio rajono",
+        "Pasvalio rajono savivaldybė"
+      ]
+    },
+    "plunges-rajono": {
+      "name": "Plungės rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Plungės rajono",
+        "Plungės rajono savivaldybė"
+      ]
+    },
+    "prienu-rajono": {
+      "name": "Prienų rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Prienų rajono",
+        "Prienų rajono savivaldybė"
+      ]
+    },
+    "radviliskio-rajono": {
+      "name": "Radviliškio rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Radviliškio rajono",
+        "Radviliškio rajono savivaldybė"
+      ]
+    },
+    "raseiniu-rajono": {
+      "name": "Raseinių rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Raseinių rajono",
+        "Raseinių rajono savivaldybė"
+      ]
+    },
+    "rietavo": {
+      "name": "Rietavo savivaldybė",
+      "kind": "savivaldybe",
+      "aliases": [
+        "Rietavo",
+        "Rietavo savivaldybė"
+      ]
+    },
+    "rokiskio-rajono": {
+      "name": "Rokiškio rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Rokiškio rajono",
+        "Rokiškio rajono savivaldybė"
+      ]
+    },
+    "sakiu-rajono": {
+      "name": "Šakių rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Šakių rajono",
+        "Šakių rajono savivaldybė"
+      ]
+    },
+    "salcininku-rajono": {
+      "name": "Šalčininkų rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Šalčininkų rajono",
+        "Šalčininkų rajono savivaldybė"
+      ]
+    },
+    "siauliu-miesto": {
+      "name": "Šiaulių miesto savivaldybė",
+      "kind": "miesto",
+      "aliases": [
+        "Šiaulių miesto",
+        "Šiaulių miesto savivaldybė"
+      ]
+    },
+    "siauliu-rajono": {
+      "name": "Šiaulių rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Šiaulių rajono",
+        "Šiaulių rajono savivaldybė"
+      ]
+    },
+    "silales-rajono": {
+      "name": "Šilalės rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Šilalės rajono",
+        "Šilalės rajono savivaldybė"
+      ]
+    },
+    "silutes-rajono": {
+      "name": "Šilutės rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Šilutės rajono",
+        "Šilutės rajono savivaldybė"
+      ]
+    },
+    "sirvintu-rajono": {
+      "name": "Širvintų rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Širvintų rajono",
+        "Širvintų rajono savivaldybė"
+      ]
+    },
+    "skuodo-rajono": {
+      "name": "Skuodo rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Skuodo rajono",
+        "Skuodo rajono savivaldybė"
+      ]
+    },
+    "svencioniu-rajono": {
+      "name": "Švenčionių rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Švenčionių rajono",
+        "Švenčionių rajono savivaldybė"
+      ]
+    },
+    "taurages-rajono": {
+      "name": "Tauragės rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Tauragės rajono",
+        "Tauragės rajono savivaldybė"
+      ]
+    },
+    "telsiu-rajono": {
+      "name": "Telšių rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Telšių rajono",
+        "Telšių rajono savivaldybė"
+      ]
+    },
+    "traku-rajono": {
+      "name": "Trakų rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Trakų rajono",
+        "Trakų rajono savivaldybė"
+      ]
+    },
+    "ukmerges-rajono": {
+      "name": "Ukmergės rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Ukmergės rajono",
+        "Ukmergės rajono savivaldybė"
+      ]
+    },
+    "utenos-rajono": {
+      "name": "Utenos rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Utenos rajono",
+        "Utenos rajono savivaldybė"
+      ]
+    },
+    "varenos-rajono": {
+      "name": "Varėnos rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Varėnos rajono",
+        "Varėnos rajono savivaldybė"
+      ]
+    },
+    "vilkaviskio-rajono": {
+      "name": "Vilkaviškio rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Vilkaviškio rajono",
+        "Vilkaviškio rajono savivaldybė"
+      ]
+    },
+    "vilniaus-miesto": {
+      "name": "Vilniaus miesto savivaldybė",
+      "kind": "miesto",
+      "aliases": [
+        "Vilniaus miesto",
+        "Vilniaus miesto savivaldybė"
+      ]
+    },
+    "vilniaus-rajono": {
+      "name": "Vilniaus rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Vilniaus rajono",
+        "Vilniaus rajono savivaldybė"
+      ]
+    },
+    "visagino": {
+      "name": "Visagino savivaldybė",
+      "kind": "savivaldybe",
+      "aliases": [
+        "Visagino",
+        "Visagino savivaldybė",
+        "Visagino miesto"
+      ],
+      "note": "Visagino miesto savivaldybė until the 2000 reform re-typed it; the 1997 cards name it that way."
+    },
+    "zarasu-rajono": {
+      "name": "Zarasų rajono savivaldybė",
+      "kind": "rajono",
+      "aliases": [
+        "Zarasų rajono",
+        "Zarasų rajono savivaldybė"
+      ]
+    }
+  }
+}

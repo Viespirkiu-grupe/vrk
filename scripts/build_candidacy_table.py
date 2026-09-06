@@ -14,7 +14,7 @@ This is the projector. One pass over `data/` writes:
     dist/candidacies.csv.gz   one row per candidacy, every column defined below
     dist/campaigns.csv.gz     one row per campaign-finance participant
     dist/vrk.sqlite           the same, plus elections / persons / parties /
-                              party_predecessors tables
+                              party_predecessors / municipalities tables
 
 Three rules make it trustworthy (all three are #93's):
 
@@ -88,6 +88,7 @@ from scraper.shared.deklaracijos import (  # noqa: E402
     pajamu_matas,
 )
 from scraper.shared.kandidatura import kandidatura  # noqa: E402
+from scraper.shared.municipalities import entries as municipality_entries  # noqa: E402
 from scraper.shared.parties import partija  # noqa: E402
 
 import build_person_index as identity  # noqa: E402
@@ -135,6 +136,7 @@ COLUMNS = (
     "role",
     "constituency",
     "municipality",
+    "municipality_id",
     "list_name",
     "list_position",
     "post_election_position",
@@ -396,7 +398,12 @@ def project_record(
     candidacy = kandidatura(record, election["kind"])
     row["role"] = candidacy["vaidmuo"]
     row["constituency"] = candidacy["apygarda"]
+    # The official name and the registry id (scraper/municipalities.json,
+    # issue #137): the eras' own wordings -- "Vilniaus miesto" on five
+    # elections, "Vilniaus miesto savivaldybė" on three -- used to ship as
+    # two municipalities. The published form stays in the record file.
     row["municipality"] = candidacy["savivaldybe"]
+    row["municipality_id"] = candidacy["savivaldybe-id"]
     row["list_name"] = candidacy["sarasas"]
     row["list_position"] = candidacy["numeris-sarase"]
     row["post_election_position"] = candidacy["porinkiminis-numeris"]
@@ -680,6 +687,17 @@ def write_sqlite(
             ("person_id", "name", "birth_key", "candidacies", "elections", "merged_keys"),
             persons,
         )
+        # The municipality registry as a table (issue #137): one row per
+        # body, `until` set on the two the 2000 reform dissolved, so
+        # candidacies.municipality_id joins to an official name and a kind.
+        create(
+            "municipalities",
+            ("municipality_id", "name", "kind", "until"),
+            [
+                {"municipality_id": municipality_id, "name": data["name"], "kind": data["kind"], "until": data.get("until")}
+                for municipality_id, data in sorted(municipality_entries().items())
+            ],
+        )
         registry = json.loads(parties_path.read_text(encoding="utf-8"))["entries"]
         create(
             "parties",
@@ -760,7 +778,7 @@ def _known_zero_note(column: str, election: dict[str, Any]) -> str | None:
     seimas_by_election = kind == "seimo" and eid not in SEIMAS_GENERALS
     rules: list[tuple[bool, str]] = [
         (column == "constituency" and kind != "seimo", "not a Seimas election; no single-mandate constituency"),
-        (column == "municipality" and kind not in {"savivaldybiu", "mero"}, "not a municipal or mayoral election"),
+        (column in {"municipality", "municipality_id"} and kind not in {"savivaldybiu", "mero"}, "not a municipal or mayoral election"),
         (column in {"list_name", "list_position", "post_election_position"} and kind == "prezidento", "presidential candidates stand on no list"),
         (column in {"list_name", "list_position", "post_election_position"} and seimas_by_election, "a single-mandate Seimas by-election; no party list on the ballot"),
         (column in {"list_name", "list_position"} and kind == "mero", "the mayoral card prints its Sąrašas row empty (verified upstream)"),
