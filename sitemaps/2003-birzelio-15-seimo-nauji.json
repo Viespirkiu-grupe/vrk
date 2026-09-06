@@ -1,0 +1,430 @@
+{
+  "electionId": "2003-birzelio-15-seimo-nauji",
+  "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_vien_l-p_ri_id=17.htm",
+  "districtsUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_vien_l-p_ri_id=17.htm",
+  "partiesUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.part_sar_l-p_ri_id=17.htm",
+  "districtUrls": [
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.apg_kand_vien_l-id=1476.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.apg_kand_vien_l-id=1477.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.apg_kand_vien_l-id=1478.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.apg_kand_vien_l-id=1479.htm"
+  ],
+  "generatedAt": "2026-08-27T22:37:09+00:00",
+  "stats": {
+    "rows": 27,
+    "extracted": 27,
+    "duplicateCandidateIds": 0,
+    "districts": 4,
+    "parties": 12,
+    "partyPageRows": 27,
+    "partyPageDiff": 0,
+    "selfNominated": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Vilija Aleknaitė Abramikienė",
+      "candidateId": "vilija-aleknaite-abramikiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241265.htm",
+      "vrkCandidateId": "241265",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Senamiesčio",
+        "apygardosNumeris": 2,
+        "apygardosId": "1476",
+        "iskele": "Tėvynės sąjunga (Lietuvos konservatoriai)"
+      }
+    },
+    {
+      "candidateName": "Vytautas Bernatonis",
+      "candidateId": "vytautas-bernatonis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241223.htm",
+      "vrkCandidateId": "241223",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Senamiesčio",
+        "apygardosNumeris": 2,
+        "apygardosId": "1476",
+        "iskele": "Lietuvos liaudies sąjunga \"Už teisingą Lietuvą\""
+      }
+    },
+    {
+      "candidateName": "Alfonsas Butė",
+      "candidateId": "alfonsas-bute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241228.htm",
+      "vrkCandidateId": "241228",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Senamiesčio",
+        "apygardosNumeris": 2,
+        "apygardosId": "1476",
+        "iskele": "Lietuvos krikščionys demokratai"
+      }
+    },
+    {
+      "candidateName": "Juzef Kvetkovskij",
+      "candidateId": "juzef-kvetkovskij",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241258.htm",
+      "vrkCandidateId": "241258",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Senamiesčio",
+        "apygardosNumeris": 2,
+        "apygardosId": "1476",
+        "iskele": "Lietuvos lenkų rinkimų akcija"
+      }
+    },
+    {
+      "candidateName": "Rimantas Vaitkus",
+      "candidateId": "rimantas-vaitkus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241235.htm",
+      "vrkCandidateId": "241235",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Senamiesčio",
+        "apygardosNumeris": 2,
+        "apygardosId": "1476",
+        "iskele": "Lietuvos socialdemokratų partija"
+      }
+    },
+    {
+      "candidateName": "Nijolė Veličkienė",
+      "candidateId": "nijole-velickiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241246.htm",
+      "vrkCandidateId": "241246",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Senamiesčio",
+        "apygardosNumeris": 2,
+        "apygardosId": "1476",
+        "iskele": "Liberalų demokratų partija"
+      }
+    },
+    {
+      "candidateName": "Tatjana Vojeika",
+      "candidateId": "tatjana-vojeika",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241241.htm",
+      "vrkCandidateId": "241241",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Senamiesčio",
+        "apygardosNumeris": 2,
+        "apygardosId": "1476",
+        "iskele": "Lietuvos rusų sąjunga"
+      }
+    },
+    {
+      "candidateName": "Eugenijus Gentvilas",
+      "candidateId": "eugenijus-gentvilas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241248.htm",
+      "vrkCandidateId": "241248",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Antakalnio",
+        "apygardosNumeris": 3,
+        "apygardosId": "1477",
+        "iskele": "Lietuvos liberalų sąjunga"
+      }
+    },
+    {
+      "candidateName": "Valerijus Gorškovas",
+      "candidateId": "valerijus-gorskovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241243.htm",
+      "vrkCandidateId": "241243",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Antakalnio",
+        "apygardosNumeris": 3,
+        "apygardosId": "1477",
+        "iskele": "Lietuvos rusų sąjunga"
+      }
+    },
+    {
+      "candidateName": "Jonas Kaliačius",
+      "candidateId": "jonas-kaliacius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241227.htm",
+      "vrkCandidateId": "241227",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Antakalnio",
+        "apygardosNumeris": 3,
+        "apygardosId": "1477",
+        "iskele": "Lietuvos liaudies sąjunga \"Už teisingą Lietuvą\""
+      }
+    },
+    {
+      "candidateName": "Virgilijus Kęstutis Noreika",
+      "candidateId": "virgilijus-kestutis-noreika",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241242.htm",
+      "vrkCandidateId": "241242",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Antakalnio",
+        "apygardosNumeris": 3,
+        "apygardosId": "1477",
+        "iskele": "Liberalų demokratų partija"
+      }
+    },
+    {
+      "candidateName": "Algirdas Paleckis",
+      "candidateId": "algirdas-paleckis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241234.htm",
+      "vrkCandidateId": "241234",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Antakalnio",
+        "apygardosNumeris": 3,
+        "apygardosId": "1477",
+        "iskele": "Lietuvos socialdemokratų partija"
+      }
+    },
+    {
+      "candidateName": "Zigfrid Račkovskis",
+      "candidateId": "zigfrid-rackovskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241233.htm",
+      "vrkCandidateId": "241233",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Antakalnio",
+        "apygardosNumeris": 3,
+        "apygardosId": "1477",
+        "iskele": "Lietuvos lenkų liaudies partija"
+      }
+    },
+    {
+      "candidateName": "Vladislav Voinič",
+      "candidateId": "vladislav-voinic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241259.htm",
+      "vrkCandidateId": "241259",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Antakalnio",
+        "apygardosNumeris": 3,
+        "apygardosId": "1477",
+        "iskele": "Lietuvos lenkų rinkimų akcija"
+      }
+    },
+    {
+      "candidateName": "Viktor Balakin",
+      "candidateId": "viktor-balakin",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241244.htm",
+      "vrkCandidateId": "241244",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Šeškinės",
+        "apygardosNumeris": 6,
+        "apygardosId": "1478",
+        "iskele": "Lietuvos rusų sąjunga"
+      }
+    },
+    {
+      "candidateName": "Vilija Blinkevičiūtė",
+      "candidateId": "vilija-blinkeviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241262.htm",
+      "vrkCandidateId": "241262",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Šeškinės",
+        "apygardosNumeris": 6,
+        "apygardosId": "1478",
+        "iskele": "Naujoji sąjunga (socialliberalai)"
+      }
+    },
+    {
+      "candidateName": "Giedrė Kvieskienė",
+      "candidateId": "giedre-kvieskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241250.htm",
+      "vrkCandidateId": "241250",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Šeškinės",
+        "apygardosNumeris": 6,
+        "apygardosId": "1478",
+        "iskele": "Lietuvos centro sąjunga"
+      }
+    },
+    {
+      "candidateName": "Vytautas Aleksas Lazinka",
+      "candidateId": "vytautas-aleksas-lazinka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241226.htm",
+      "vrkCandidateId": "241226",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Šeškinės",
+        "apygardosNumeris": 6,
+        "apygardosId": "1478",
+        "iskele": "Lietuvos liaudies sąjunga \"Už teisingą Lietuvą\""
+      }
+    },
+    {
+      "candidateName": "Eduardas Pabarčius",
+      "candidateId": "eduardas-pabarcius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241225.htm",
+      "vrkCandidateId": "241225",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Šeškinės",
+        "apygardosNumeris": 6,
+        "apygardosId": "1478",
+        "iskele": "Lietuvos krikščionys demokratai"
+      }
+    },
+    {
+      "candidateName": "Gediminas Ramanauskas",
+      "candidateId": "gediminas-ramanauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241245.htm",
+      "vrkCandidateId": "241245",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Šeškinės",
+        "apygardosNumeris": 6,
+        "apygardosId": "1478",
+        "iskele": "Liberalų demokratų partija"
+      }
+    },
+    {
+      "candidateName": "Danielius Sadauskas",
+      "candidateId": "danielius-sadauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241230.htm",
+      "vrkCandidateId": "241230",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Šeškinės",
+        "apygardosNumeris": 6,
+        "apygardosId": "1478",
+        "iskele": "Lietuvos politinių kalinių ir tremtinių sąjunga"
+      }
+    },
+    {
+      "candidateName": "Edmund Šot",
+      "candidateId": "edmund-sot",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241260.htm",
+      "vrkCandidateId": "241260",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Šeškinės",
+        "apygardosNumeris": 6,
+        "apygardosId": "1478",
+        "iskele": "Lietuvos lenkų rinkimų akcija"
+      }
+    },
+    {
+      "candidateName": "Julius Dautartas",
+      "candidateId": "julius-dautartas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241264.htm",
+      "vrkCandidateId": "241264",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Nevėžio",
+        "apygardosNumeris": 26,
+        "apygardosId": "1479",
+        "iskele": "Tėvynės sąjunga (Lietuvos konservatoriai)"
+      }
+    },
+    {
+      "candidateName": "Stasys Karčinskas",
+      "candidateId": "stasys-karcinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241240.htm",
+      "vrkCandidateId": "241240",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Nevėžio",
+        "apygardosNumeris": 26,
+        "apygardosId": "1479",
+        "iskele": "Liberalų demokratų partija"
+      }
+    },
+    {
+      "candidateName": "Danutė Kriščiūnienė",
+      "candidateId": "danute-krisciuniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=239960.htm",
+      "vrkCandidateId": "239960",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Nevėžio",
+        "apygardosNumeris": 26,
+        "apygardosId": "1479",
+        "iskele": "Lietuvos krikščionys demokratai"
+      }
+    },
+    {
+      "candidateName": "Zita Kukuraitienė",
+      "candidateId": "zita-kukuraitiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241263.htm",
+      "vrkCandidateId": "241263",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Nevėžio",
+        "apygardosNumeris": 26,
+        "apygardosId": "1479",
+        "iskele": "Naujoji sąjunga (socialliberalai)"
+      }
+    },
+    {
+      "candidateName": "Ramūnas Vyžintas",
+      "candidateId": "ramunas-vyzintas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/kandidatai/w3_smn_kand.kand_anketa_l-id=241249.htm",
+      "vrkCandidateId": "241249",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Nevėžio",
+        "apygardosNumeris": 26,
+        "apygardosId": "1479",
+        "iskele": "Lietuvos liberalų sąjunga"
+      }
+    }
+  ]
+}

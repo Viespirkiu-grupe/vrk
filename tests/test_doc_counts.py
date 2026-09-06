@@ -15,7 +15,7 @@ import re
 import unittest
 from pathlib import Path
 
-from local_data import require
+from local_data import require_corpus
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 README = REPO_ROOT / "README.md"
@@ -43,7 +43,9 @@ class HeadlineCounts(unittest.TestCase):
         self.assertEqual(elections, len(registry))
 
     def test_record_count_is_the_corpus(self):
-        require(REPO_ROOT / "data")
+        # A whole-corpus pin: one election copied into data/ made this
+        # `113073 != 9` rather than a skip (issue #145).
+        require_corpus(complete=True)
         records = sum(
             1
             for child in (REPO_ROOT / "data").iterdir()

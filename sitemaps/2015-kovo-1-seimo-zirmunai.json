@@ -1,0 +1,79 @@
+{
+  "electionId": "2015-kovo-1-seimo-zirmunai",
+  "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Apygardos/Apygarda7822/KandidataiApygardos7822.html",
+  "generatedAt": "2026-08-19T21:25:59+00:00",
+  "stats": {
+    "rows": 13,
+    "extracted": 12,
+    "skipped": 1,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Anžela ANDRUŠKEVIČ",
+      "candidateId": "anzela-andruskevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas87388/Kandidato87388Anketa.html"
+    },
+    {
+      "candidateName": "Lilijana ASTRA",
+      "candidateId": "lilijana-astra",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas80423/Kandidato80423Anketa.html"
+    },
+    {
+      "candidateName": "Renata CYTACKA",
+      "candidateId": "renata-cytacka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas87392/Kandidato87392Anketa.html"
+    },
+    {
+      "candidateName": "Algis ČAPLIKAS",
+      "candidateId": "algis-caplikas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas83782/Kandidato83782Anketa.html"
+    },
+    {
+      "candidateName": "Ričardas GARUOLIS",
+      "candidateId": "ricardas-garuolis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas87393/Kandidato87393Anketa.html"
+    },
+    {
+      "candidateName": "Vanda Birutė GINEVIČIENĖ",
+      "candidateId": "vanda-birute-gineviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas81837/Kandidato81837Anketa.html"
+    },
+    {
+      "candidateName": "Šarūnas GUSTAINIS",
+      "candidateId": "sarunas-gustainis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas87277/Kandidato87277Anketa.html"
+    },
+    {
+      "candidateName": "Radvilė MORKŪNAITĖ-MIKULĖNIENĖ",
+      "candidateId": "radvile-morkunaite-mikuleniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas87326/Kandidato87326Anketa.html"
+    },
+    {
+      "candidateName": "Žydrūnas PLYTNIKAS",
+      "candidateId": "zydrunas-plytnikas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas85347/Kandidato85347Anketa.html"
+    },
+    {
+      "candidateName": "Algirdas RASLANAS",
+      "candidateId": "algirdas-raslanas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas85214/Kandidato85214Anketa.html"
+    },
+    {
+      "candidateName": "Joana TAMKEVIČIŪTĖ",
+      "candidateId": "joana-tamkeviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas83742/Kandidato83742Anketa.html"
+    },
+    {
+      "candidateName": "Gediminas VAGNORIUS",
+      "candidateId": "gediminas-vagnorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/448_lt/Kandidatai/Kandidatas87391/Kandidato87391Anketa.html"
+    }
+  ],
+  "skipped": [
+    {
+      "rowIndex": 1,
+      "reason": "no-cells"
+    }
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "electionId": "2011-vasario-13-seimo-marijampole",
+  "generatedAt": "2026-08-31T21:10:19+00:00",
+  "sources": [
+    "https://www.vrk.lt/statiniai/puslapiai/2011_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7194aktyvumasdesc2turas.html"
+  ],
+  "stats": {
+    "constituencies": 1,
+    "winnersResolved": 1,
+    "unresolved": 0,
+    "decidedInRoundTwo": 1,
+    "byRunoffPlurality": 1,
+    "candidatesWithVotes": 9,
+    "voteRowsUnresolved": 0
+  },
+  "elected": {
+    "26312": {
+      "seat": "vienmandate",
+      "method": "runoff-plurality",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2011_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7194aktyvumasdesc2turas.html",
+      "round": 2,
+      "constituency": "29. Marijampolės"
+    }
+  },
+  "details": {
+    "unresolved": [],
+    "constituencies": [
+      {
+        "constituencyLabel": "29. Marijampolės",
+        "constituencyNumber": 29,
+        "resultDistrictId": "7192",
+        "field": [
+          "Albinas MITRULEVIČIUS",
+          "Valdas PILECKAS",
+          "Paulius ULECKAS",
+          "Rolandas JONIKAITIS",
+          "Gediminas AKELAITIS",
+          "Algis ŽVALIAUSKAS",
+          "Vaida GIRAITYTĖ",
+          "Nora RIBOKIENĖ",
+          "Ramūnas MAŽĖTIS"
+        ],
+        "winnerName": "Albinas MITRULEVIČIUS",
+        "round": 2,
+        "method": "runoff-plurality",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2011_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7194aktyvumasdesc2turas.html"
+      }
+    ],
+    "votes": {
+      "26312": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 1933,
+            "pastu": 272,
+            "isViso": 2205,
+            "procentai": 25.64,
+            "vieta": 1,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2011_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7192aktyvumasdesc1turas.html"
+          },
+          {
+            "turas": 2,
+            "balsadezese": 6174,
+            "pastu": 825,
+            "isViso": 6999,
+            "procentai": 55.52,
+            "vieta": 1,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2011_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7194aktyvumasdesc2turas.html"
+          }
+        ]
+      },
+      "26490": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 1645,
+            "pastu": 186,
+            "isViso": 1831,
+            "procentai": 21.29,
+            "vieta": 2,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2011_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7192aktyvumasdesc1turas.html"
+          },
+          {
+            "turas": 2,
+            "balsadezese": 5032,
+            "pastu": 576,
+            "isViso": 5608,
+            "procentai": 44.48,
+            "vieta": 2,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2011_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7194aktyvumasdesc2turas.html"
+          }
+        ]
+      },
+      "26316": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 1050,
+            "pastu": 99,
+            "isViso": 1149,
+            "procentai": 13.36,
+            "vieta": 3,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2011_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7192aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "26314": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 970,
+            "pastu": 110,
+            "isViso": 1080,
+            "procentai": 12.56,
+            "vieta": 4,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2011_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7192aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "26527": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 772,
+            "pastu": 100,
+            "isViso": 872,
+            "procentai": 10.14,
+            "vieta": 5,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2011_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7192aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "26535": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 656,
+            "pastu": 62,
+            "isViso": 718,
+            "procentai": 8.35,
+            "vieta": 6,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2011_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7192aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "26529": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 308,
+            "pastu": 138,
+            "isViso": 446,
+            "procentai": 5.19,
+            "vieta": 7,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2011_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7192aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "26315": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 127,
+            "pastu": 37,
+            "isViso": 164,
+            "procentai": 1.91,
+            "vieta": 8,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2011_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7192aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "26313": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 121,
+            "pastu": 13,
+            "isViso": 134,
+            "procentai": 1.56,
+            "vieta": 9,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2011_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7192aktyvumasdesc1turas.html"
+          }
+        ]
+      }
+    },
+    "voteRowsUnresolved": []
+  }
+}

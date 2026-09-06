@@ -1,0 +1,253 @@
+{
+  "electionId": "2002-prezidento",
+  "generatedAt": "2026-08-24T11:07:27+00:00",
+  "sources": [
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezl.htm-14+1.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezl.htm-14+2.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/protokolas/index.html"
+  ],
+  "stats": {
+    "rounds": 2,
+    "candidatesRound1": 17,
+    "candidatesRound2": 2,
+    "candidatesInSitemap": 17,
+    "notInSitemap": 0,
+    "runoffIsRound1TopTwo": true,
+    "voteSumMismatches": 0,
+    "winnerName": "Rolandas Paksas",
+    "verdictMatchesVoteLeader": true,
+    "winnersResolved": 1,
+    "unresolved": 0
+  },
+  "elected": {
+    "168284": {
+      "seat": "prezidentas",
+      "method": "verdict",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/protokolas/index.html",
+      "round": 2
+    }
+  },
+  "details": {
+    "rounds": [
+      {
+        "round": 1,
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezl.htm-14+1.htm",
+        "summary": {
+          "apylinkes": 2015,
+          "rinkeju-skaicius": 2719608,
+          "dalyvavo": 1466536,
+          "negaliojantys-biuleteniai": 19419,
+          "galiojantys-biuleteniai": 1447117
+        },
+        "candidates": [
+          {
+            "vrkRegistrationId": "948562",
+            "name": "Valdas Adamkus",
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezkapgl.htm-948562+1.htm",
+            "balsai-apylinkese": 475850,
+            "balsai-pastu": 38304,
+            "balsai": 514154,
+            "procentai-nuo-galiojanciu": 35.53,
+            "procentai-nuo-dalyvavusiu": 35.06
+          },
+          {
+            "vrkRegistrationId": "948551",
+            "name": "Rolandas Paksas",
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezkapgl.htm-948551+1.htm",
+            "balsai-apylinkese": 267971,
+            "balsai-pastu": 16588,
+            "balsai": 284559,
+            "procentai-nuo-galiojanciu": 19.66,
+            "procentai-nuo-dalyvavusiu": 19.4
+          },
+          {
+            "vrkRegistrationId": "948565",
+            "name": "Artūras Paulauskas",
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezkapgl.htm-948565+1.htm",
+            "balsai-apylinkese": 109630,
+            "balsai-pastu": 10608,
+            "balsai": 120238,
+            "procentai-nuo-galiojanciu": 8.31,
+            "procentai-nuo-dalyvavusiu": 8.2
+          },
+          {
+            "vrkRegistrationId": "948553",
+            "name": "Vytautas Šerėnas",
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezkapgl.htm-948553+1.htm",
+            "balsai-apylinkese": 106829,
+            "balsai-pastu": 5386,
+            "balsai": 112215,
+            "procentai-nuo-galiojanciu": 7.75,
+            "procentai-nuo-dalyvavusiu": 7.65
+          },
+          {
+            "vrkRegistrationId": "948549",
+            "name": "Vytenis Povilas Andriukaitis",
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezkapgl.htm-948549+1.htm",
+            "balsai-apylinkese": 98167,
+            "balsai-pastu": 7417,
+            "balsai": 105584,
+            "procentai-nuo-galiojanciu": 7.3,
+            "procentai-nuo-dalyvavusiu": 7.2
+          },
+          {
+            "vrkRegistrationId": "948561",
+            "name": "Kazimira Danutė Prunskienė",
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezkapgl.htm-948561+1.htm",
+            "balsai-apylinkese": 68739,
+            "balsai-pastu": 4186,
+            "balsai": 72925,
+            "procentai-nuo-galiojanciu": 5.04,
+            "procentai-nuo-dalyvavusiu": 4.97
+          },
+          {
+            "vrkRegistrationId": "948563",
+            "name": "Juozas Edvardas Petraitis",
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezkapgl.htm-948563+1.htm",
+            "balsai-apylinkese": 51322,
+            "balsai-pastu": 2817,
+            "balsai": 54139,
+            "procentai-nuo-galiojanciu": 3.74,
+            "procentai-nuo-dalyvavusiu": 3.69
+          },
+          {
+            "vrkRegistrationId": "948550",
+            "name": "Eugenijus Gentvilas",
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezkapgl.htm-948550+1.htm",
+            "balsai-apylinkese": 42750,
+            "balsai-pastu": 1812,
+            "balsai": 44562,
+            "procentai-nuo-galiojanciu": 3.08,
+            "procentai-nuo-dalyvavusiu": 3.04
+          },
+          {
+            "vrkRegistrationId": "948564",
+            "name": "Julius Veselka",
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezkapgl.htm-948564+1.htm",
+            "balsai-apylinkese": 30350,
+            "balsai-pastu": 1943,
+            "balsai": 32293,
+            "procentai-nuo-galiojanciu": 2.23,
+            "procentai-nuo-dalyvavusiu": 2.2
+          },
+          {
+            "vrkRegistrationId": "948556",
+            "name": "Algimantas Matulevičius",
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezkapgl.htm-948556+1.htm",
+            "balsai-apylinkese": 29803,
+            "balsai-pastu": 2334,
+            "balsai": 32137,
+            "procentai-nuo-galiojanciu": 2.22,
+            "procentai-nuo-dalyvavusiu": 2.19
+          },
+          {
+            "vrkRegistrationId": "948559",
+            "name": "Kazys Bobelis",
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezkapgl.htm-948559+1.htm",
+            "balsai-apylinkese": 25148,
+            "balsai-pastu": 2465,
+            "balsai": 27613,
+            "procentai-nuo-galiojanciu": 1.91,
+            "procentai-nuo-dalyvavusiu": 1.88
+          },
+          {
+            "vrkRegistrationId": "948555",
+            "name": "Vytautas Antanas Matulevičius",
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezkapgl.htm-948555+1.htm",
+            "balsai-apylinkese": 25030,
+            "balsai-pastu": 1858,
+            "balsai": 26888,
+            "procentai-nuo-galiojanciu": 1.86,
+            "procentai-nuo-dalyvavusiu": 1.83
+          },
+          {
+            "vrkRegistrationId": "948557",
+            "name": "Kęstutis Glaveckas",
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezkapgl.htm-948557+1.htm",
+            "balsai-apylinkese": 7041,
+            "balsai-pastu": 513,
+            "balsai": 7554,
+            "procentai-nuo-galiojanciu": 0.52,
+            "procentai-nuo-dalyvavusiu": 0.52
+          },
+          {
+            "vrkRegistrationId": "948554",
+            "name": "Vytautas Šustauskas",
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezkapgl.htm-948554+1.htm",
+            "balsai-apylinkese": 4863,
+            "balsai-pastu": 509,
+            "balsai": 5372,
+            "procentai-nuo-galiojanciu": 0.37,
+            "procentai-nuo-dalyvavusiu": 0.37
+          },
+          {
+            "vrkRegistrationId": "948558",
+            "name": "Vytautas Bernatonis",
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezkapgl.htm-948558+1.htm",
+            "balsai-apylinkese": 3121,
+            "balsai-pastu": 425,
+            "balsai": 3546,
+            "procentai-nuo-galiojanciu": 0.25,
+            "procentai-nuo-dalyvavusiu": 0.24
+          },
+          {
+            "vrkRegistrationId": "948552",
+            "name": "Algirdas Pilvelis",
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezkapgl.htm-948552+1.htm",
+            "balsai-apylinkese": 1844,
+            "balsai-pastu": 230,
+            "balsai": 2074,
+            "procentai-nuo-galiojanciu": 0.14,
+            "procentai-nuo-dalyvavusiu": 0.14
+          },
+          {
+            "vrkRegistrationId": "948560",
+            "name": "Rimantas Jonas Dagys",
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezkapgl.htm-948560+1.htm",
+            "balsai-apylinkese": 1115,
+            "balsai-pastu": 149,
+            "balsai": 1264,
+            "procentai-nuo-galiojanciu": 0.09,
+            "procentai-nuo-dalyvavusiu": 0.09
+          }
+        ]
+      },
+      {
+        "round": 2,
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezl.htm-14+2.htm",
+        "summary": {
+          "apylinkes": 2015,
+          "rinkeju-skaicius": 2727805,
+          "dalyvavo": 1436322,
+          "negaliojantys-biuleteniai": 14683,
+          "galiojantys-biuleteniai": 1421639
+        },
+        "candidates": [
+          {
+            "vrkRegistrationId": "948551",
+            "name": "Rolandas Paksas",
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezkapgl.htm-948551+2.htm",
+            "balsai-apylinkese": 727250,
+            "balsai-pastu": 50519,
+            "balsai": 777769,
+            "procentai-nuo-galiojanciu": 54.71,
+            "procentai-nuo-dalyvavusiu": 54.15
+          },
+          {
+            "vrkRegistrationId": "948562",
+            "name": "Valdas Adamkus",
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/rezultatai/rezkapgl.htm-948562+2.htm",
+            "balsai-apylinkese": 589851,
+            "balsai-pastu": 54019,
+            "balsai": 643870,
+            "procentai-nuo-galiojanciu": 45.29,
+            "procentai-nuo-dalyvavusiu": 44.83
+          }
+        ]
+      }
+    ],
+    "verdictName": "Rolandą Paksą",
+    "notInSitemap": [],
+    "voteSumMismatches": []
+  }
+}

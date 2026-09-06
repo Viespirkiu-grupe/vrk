@@ -1,10 +1,13 @@
 # The suite, on every push and pull request.
 #
-# It runs on a clone and nothing else: `samples/` carries the tracked fixture
-# subset (`scripts/tracked_fixtures.py`), and the tests that need the rest of
-# the scrape -- the larger fixtures, `sitemaps/`, `data/` -- skip themselves
-# with the command that would produce it. About 1,000 tests run here; the whole
-# job is a couple of minutes.
+# It runs on a clone and nothing else: `samples/` and `sitemaps/` carry the
+# tracked fixture subset (`scripts/tracked_fixtures.py`), and the tests that
+# need the rest of the scrape -- the larger fixtures, the municipal generals'
+# sitemaps, `data/` -- skip themselves with the command that would produce it.
+# The dashboard tests run their JavaScript under node, which is installed
+# here on purpose rather than inherited from the runner image: without it 42
+# of them skip, and the root conftest refuses to start a CI session that has
+# no node (issue #145). The whole job is a couple of minutes.
 
 name: tests
 
@@ -22,11 +25,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # The floor from .python-version, and the newest release the code is
-        # known to run on.
-        python-version: ["3.11", "3.13"]
+        # The floor from .python-version, the release the scraping laptop's
+        # `python3` resolves to, and the newest release the code is known to
+        # run on.
+        python-version: ["3.11", "3.13", "3.14"]
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}

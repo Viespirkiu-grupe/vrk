@@ -14,6 +14,7 @@ module the CLI can parse must have at least one candidate to parse.
 """
 
 import importlib.util
+import json
 import subprocess
 import tempfile
 import unittest
@@ -91,6 +92,36 @@ class TrackedFixtureTests(unittest.TestCase):
             "parser tests for them can only skip",
         )
 
+
+
+class SitemapRuleTests(unittest.TestCase):
+    """A sitemap file is a unit of its own (issue #145): the small ones travel,
+    the municipal generals' multi-megabyte listings stay local."""
+
+    def test_a_small_sitemap_is_selected_and_a_large_one_is_not(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "sitemaps").mkdir()
+            (root / "sitemaps" / "2019-ep.json").write_text("{}", encoding="utf-8")
+            (root / "sitemaps" / "2019-ep.results.json").write_text("{}", encoding="utf-8")
+            (root / "sitemaps" / "2019-kovo-3-savivaldybiu-tarybu.json").write_bytes(b"{" + b" " * policy.UNIT_LIMIT_BYTES + b"}")
+            (root / "sitemaps" / "notes.txt").write_text("not a plan", encoding="utf-8")
+            self.assertEqual(
+                policy.selected_paths(root),
+                ["sitemaps/2019-ep.json", "sitemaps/2019-ep.results.json"],
+            )
+
+    def test_most_elections_have_their_plan_in_the_checkout(self) -> None:
+        # What the tracking buys CI. The rule keeps 76 of the 90 sitemap
+        # files: what stays local is the municipal generals' 10,000-entry
+        # listings, their results trees, and the 2012 Seimas pair (1.1 MiB
+        # each). A checkout that lost them would still be green -- every
+        # test wanting one skips -- so the count has teeth.
+        registry = json.loads((REPO_ROOT / "scraper" / "elections.json").read_text(encoding="utf-8"))["elections"]
+        plans = [e["id"] for e in registry if (REPO_ROOT / "sitemaps" / f"{e['id']}.json").is_file()]
+        results = [e["id"] for e in registry if (REPO_ROOT / "sitemaps" / f"{e['id']}.results.json").is_file()]
+        self.assertGreaterEqual(len(plans), 44, "sitemap plans the rule tracks are absent from this checkout")
+        self.assertGreaterEqual(len(results), 27, "results files the rule tracks are absent from this checkout")
 
 
 class PortraitRuleTests(unittest.TestCase):

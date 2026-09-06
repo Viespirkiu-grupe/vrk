@@ -82,7 +82,8 @@ class CorpusValueHygieneTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        local_data.require(DATA_ROOT)
+        # The counts below are whole-corpus pins (issue #145).
+        local_data.require_corpus(complete=True)
         if CorpusValueHygieneTests.scan is not None:
             return
 

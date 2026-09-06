@@ -1,0 +1,59 @@
+{
+  "electionId": "2017-rugsejo-10-marijampoles-mero",
+  "sourceUrl": "https://www.vrk.lt/2017-09-10-nauji-marijampoles-sav-meru-rinkimai/kandidatai?srcUrl=/rinkimai/784/rnk1024/kandidatai/savKandidataiMerai.html",
+  "generatedAt": "2026-08-15T20:40:56+00:00",
+  "stats": {
+    "rows": 9,
+    "extracted": 8,
+    "skipped": 1,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Gediminas AKELAITIS",
+      "candidateId": "gediminas-akelaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasAnketa_rkndId-2399782.html"
+    },
+    {
+      "candidateName": "Karolis DVYLYS",
+      "candidateId": "karolis-dvylys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasAnketa_rkndId-2399785.html"
+    },
+    {
+      "candidateName": "Irena LUNSKIENĖ",
+      "candidateId": "irena-lunskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasAnketa_rkndId-2399781.html"
+    },
+    {
+      "candidateName": "Dobilas SINKEVIČIUS",
+      "candidateId": "dobilas-sinkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasAnketa_rkndId-2399805.html"
+    },
+    {
+      "candidateName": "Gintaras SKAMAROČIUS",
+      "candidateId": "gintaras-skamarocius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasAnketa_rkndId-2399778.html"
+    },
+    {
+      "candidateName": "Saulius SKINKYS",
+      "candidateId": "saulius-skinkys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasAnketa_rkndId-2399777.html"
+    },
+    {
+      "candidateName": "Kęstutis TRAŠKEVIČIUS",
+      "candidateId": "kestutis-traskevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasAnketa_rkndId-2399779.html"
+    },
+    {
+      "candidateName": "Algis ŽVALIAUSKAS",
+      "candidateId": "algis-zvaliauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/784/rnk1024/kandidatai/savKandidatasAnketa_rkndId-2399784.html"
+    }
+  ],
+  "skipped": [
+    {
+      "rowIndex": 1,
+      "reason": "no-cells"
+    }
+  ]
+}

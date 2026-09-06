@@ -1,0 +1,2180 @@
+{
+  "electionId": "2004-ep",
+  "generatedAt": "2026-08-23T08:24:09+00:00",
+  "sources": [
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_isrinkti_l_18_1.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_l_18.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1781.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1737.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1727.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1714.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1784.htm"
+  ],
+  "stats": {
+    "seats": 13,
+    "membersListed": 13,
+    "membersInSitemap": 13,
+    "membersNotInSitemap": 0,
+    "substitutions": 1,
+    "elected": 14,
+    "mandatesDeclared": 13,
+    "listMandateMismatches": 0,
+    "rankingPages": 12,
+    "candidatesRanked": 241,
+    "rankedNotInSitemap": 0,
+    "sitemapNotRanked": 0,
+    "boldNotMembers": 0,
+    "membersNotBold": 0,
+    "listPositionMismatches": 0
+  },
+  "elected": {
+    "260815": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_isrinkti_l_18_1.htm",
+      "party": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+      "listNumber": 9
+    },
+    "260801": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_isrinkti_l_18_1.htm",
+      "party": "Darbo partija",
+      "listNumber": 11
+    },
+    "260800": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_isrinkti_l_18_1.htm",
+      "party": "Darbo partija",
+      "listNumber": 11
+    },
+    "260799": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_isrinkti_l_18_1.htm",
+      "party": "Darbo partija",
+      "listNumber": 11
+    },
+    "260802": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_isrinkti_l_18_1.htm",
+      "party": "Darbo partija",
+      "listNumber": 11
+    },
+    "260952": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_isrinkti_l_18_1.htm",
+      "party": "Liberalų ir centro sąjunga",
+      "listNumber": 3
+    },
+    "260798": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_isrinkti_l_18_1.htm",
+      "party": "Darbo partija",
+      "listNumber": 11
+    },
+    "260811": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_isrinkti_l_18_1.htm",
+      "party": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+      "listNumber": 9
+    },
+    "260848": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_isrinkti_l_18_1.htm",
+      "party": "Lietuvos socialdemokratų partija",
+      "listNumber": 2
+    },
+    "260895": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_isrinkti_l_18_1.htm",
+      "party": "Liberalų demokratų partija",
+      "listNumber": 12
+    },
+    "260978": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_isrinkti_l_18_1.htm",
+      "party": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+      "listNumber": 1,
+      "mandateTerminated": {
+        "decision": {
+          "label": "VRK 2004 m. birželio 21 d. sprendimu Nr. 180",
+          "url": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=235799&Condition2="
+        },
+        "statementUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/img/1727765_atsi_1.gif",
+        "replacedBy": "260979",
+        "note": "*** - remiantis Kazimiros Danutės PRUNSKIENĖS pareiškimu, VRK 2004 m. birželio 21 d. sprendimu Nr. 180 jos kaip Europos Parlamento narės įgaliojimai pripažinti nutrūkusiais. VRK 2004 m. birželio 21 d. sprendimu Nr. 181 Europos Parlamento nariu, išrinktu pagal Valstiečių ir Naujosios demokratijos partijų sąjungos sąrašą, pripažintas Gintaras DIDŽIOKAS."
+      }
+    },
+    "260852": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_isrinkti_l_18_1.htm",
+      "party": "Lietuvos socialdemokratų partija",
+      "listNumber": 2
+    },
+    "260953": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_isrinkti_l_18_1.htm",
+      "party": "Liberalų ir centro sąjunga",
+      "listNumber": 3
+    },
+    "260979": {
+      "seat": "daugiamandate",
+      "method": "vrk-decision-replacement",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_isrinkti_l_18_1.htm",
+      "party": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+      "listNumber": 1,
+      "replacementFor": "260978",
+      "decision": {
+        "label": "VRK 2004 m. birželio 21 d. sprendimu Nr. 181",
+        "url": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=235798&Condition2="
+      }
+    }
+  },
+  "details": {
+    "notInSitemap": [],
+    "substitutions": [
+      {
+        "terminated": "260978",
+        "terminatedName": "Kazimira Danutė PRUNSKIENĖ",
+        "replacement": "260979",
+        "replacementName": "Gintaras DIDŽIOKAS",
+        "terminatingDecision": {
+          "label": "VRK 2004 m. birželio 21 d. sprendimu Nr. 180",
+          "url": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=235799&Condition2="
+        },
+        "seatingDecision": {
+          "label": "VRK 2004 m. birželio 21 d. sprendimu Nr. 181",
+          "url": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=235798&Condition2="
+        },
+        "statementUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/img/1727765_atsi_1.gif",
+        "note": "*** - remiantis Kazimiros Danutės PRUNSKIENĖS pareiškimu, VRK 2004 m. birželio 21 d. sprendimu Nr. 180 jos kaip Europos Parlamento narės įgaliojimai pripažinti nutrūkusiais. VRK 2004 m. birželio 21 d. sprendimu Nr. 181 Europos Parlamento nariu, išrinktu pagal Valstiečių ir Naujosios demokratijos partijų sąjungos sąrašą, pripažintas Gintaras DIDŽIOKAS."
+      }
+    ],
+    "mandatesByList": [
+      {
+        "listNumber": 11,
+        "name": "Darbo partija",
+        "votes": 363996,
+        "mandates": 5
+      },
+      {
+        "listNumber": 2,
+        "name": "Lietuvos socialdemokratų partija",
+        "votes": 174124,
+        "mandates": 2
+      },
+      {
+        "listNumber": 9,
+        "name": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "votes": 151833,
+        "mandates": 2
+      },
+      {
+        "listNumber": 3,
+        "name": "Liberalų ir centro sąjunga",
+        "votes": 135601,
+        "mandates": 2
+      },
+      {
+        "listNumber": 1,
+        "name": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "votes": 89452,
+        "mandates": 1
+      },
+      {
+        "listNumber": 12,
+        "name": "Liberalų demokratų partija",
+        "votes": 82420,
+        "mandates": 1
+      },
+      {
+        "listNumber": 6,
+        "name": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "votes": 68937,
+        "mandates": 0
+      },
+      {
+        "listNumber": 5,
+        "name": "Naujoji sąjunga (socialliberalai)",
+        "votes": 58527,
+        "mandates": 0
+      },
+      {
+        "listNumber": 4,
+        "name": "Lietuvos krikščionys demokratai",
+        "votes": 33162,
+        "mandates": 0
+      },
+      {
+        "listNumber": 10,
+        "name": "Krikščionių konservatorių socialinė sąjunga",
+        "votes": 31061,
+        "mandates": 0
+      },
+      {
+        "listNumber": 7,
+        "name": "Tautos pažangos partija",
+        "votes": 14294,
+        "mandates": 0
+      },
+      {
+        "listNumber": 8,
+        "name": "Nacionalinė centro partija",
+        "votes": 3663,
+        "mandates": 0
+      }
+    ],
+    "listMandateMismatches": [],
+    "ranking": {
+      "260798": {
+        "rank": 1,
+        "listPosition": 1,
+        "preferenceVotes": 196413,
+        "ranked": true,
+        "listId": "1781",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1781.htm"
+      },
+      "260799": {
+        "rank": 2,
+        "listPosition": 2,
+        "preferenceVotes": 116891,
+        "ranked": true,
+        "listId": "1781",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1781.htm"
+      },
+      "260800": {
+        "rank": 3,
+        "listPosition": 3,
+        "preferenceVotes": 108898,
+        "ranked": true,
+        "listId": "1781",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1781.htm"
+      },
+      "260802": {
+        "rank": 4,
+        "listPosition": 5,
+        "preferenceVotes": 96592,
+        "ranked": true,
+        "listId": "1781",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1781.htm"
+      },
+      "260801": {
+        "rank": 5,
+        "listPosition": 4,
+        "preferenceVotes": 75808,
+        "ranked": true,
+        "listId": "1781",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1781.htm"
+      },
+      "260809": {
+        "rank": 6,
+        "listPosition": 12,
+        "preferenceVotes": 74962,
+        "ranked": true,
+        "listId": "1781",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1781.htm"
+      },
+      "260803": {
+        "rank": 7,
+        "listPosition": 6,
+        "preferenceVotes": 59902,
+        "ranked": true,
+        "listId": "1781",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1781.htm"
+      },
+      "260806": {
+        "rank": 8,
+        "listPosition": 9,
+        "preferenceVotes": 59161,
+        "ranked": true,
+        "listId": "1781",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1781.htm"
+      },
+      "260805": {
+        "rank": 9,
+        "listPosition": 8,
+        "preferenceVotes": 54866,
+        "ranked": true,
+        "listId": "1781",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1781.htm"
+      },
+      "260807": {
+        "rank": 10,
+        "listPosition": 10,
+        "preferenceVotes": 50838,
+        "ranked": true,
+        "listId": "1781",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1781.htm"
+      },
+      "260804": {
+        "rank": 11,
+        "listPosition": 7,
+        "preferenceVotes": 50717,
+        "ranked": true,
+        "listId": "1781",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1781.htm"
+      },
+      "260810": {
+        "rank": 12,
+        "listPosition": 13,
+        "preferenceVotes": 45225,
+        "ranked": true,
+        "listId": "1781",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1781.htm"
+      },
+      "260808": {
+        "rank": 13,
+        "listPosition": 11,
+        "preferenceVotes": 40405,
+        "ranked": true,
+        "listId": "1781",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1781.htm"
+      },
+      "260848": {
+        "rank": 1,
+        "listPosition": 1,
+        "preferenceVotes": 101882,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260852": {
+        "rank": 2,
+        "listPosition": 5,
+        "preferenceVotes": 84822,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260851": {
+        "rank": 3,
+        "listPosition": 4,
+        "preferenceVotes": 83453,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260849": {
+        "rank": 4,
+        "listPosition": 2,
+        "preferenceVotes": 78892,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260854": {
+        "rank": 5,
+        "listPosition": 7,
+        "preferenceVotes": 44118,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260850": {
+        "rank": 6,
+        "listPosition": 3,
+        "preferenceVotes": 39366,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260867": {
+        "rank": 7,
+        "listPosition": 20,
+        "preferenceVotes": 31447,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260870": {
+        "rank": 8,
+        "listPosition": 23,
+        "preferenceVotes": 26230,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260858": {
+        "rank": 9,
+        "listPosition": 11,
+        "preferenceVotes": 19194,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260853": {
+        "rank": 10,
+        "listPosition": 6,
+        "preferenceVotes": 13638,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260871": {
+        "rank": 11,
+        "listPosition": 24,
+        "preferenceVotes": 10833,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260856": {
+        "rank": 12,
+        "listPosition": 9,
+        "preferenceVotes": 10150,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260859": {
+        "rank": 13,
+        "listPosition": 12,
+        "preferenceVotes": 7490,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260857": {
+        "rank": 14,
+        "listPosition": 10,
+        "preferenceVotes": 7022,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260855": {
+        "rank": 15,
+        "listPosition": 8,
+        "preferenceVotes": 6485,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260861": {
+        "rank": 16,
+        "listPosition": 14,
+        "preferenceVotes": 6358,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260862": {
+        "rank": 17,
+        "listPosition": 15,
+        "preferenceVotes": 5712,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260864": {
+        "rank": 18,
+        "listPosition": 17,
+        "preferenceVotes": 5454,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260860": {
+        "rank": 19,
+        "listPosition": 13,
+        "preferenceVotes": 5086,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260873": {
+        "rank": 20,
+        "listPosition": 26,
+        "preferenceVotes": 4480,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260865": {
+        "rank": 21,
+        "listPosition": 18,
+        "preferenceVotes": 3779,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260872": {
+        "rank": 22,
+        "listPosition": 25,
+        "preferenceVotes": 3604,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260868": {
+        "rank": 23,
+        "listPosition": 21,
+        "preferenceVotes": 3473,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260869": {
+        "rank": 24,
+        "listPosition": 22,
+        "preferenceVotes": 2776,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260866": {
+        "rank": 25,
+        "listPosition": 19,
+        "preferenceVotes": 2547,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260863": {
+        "rank": 26,
+        "listPosition": 16,
+        "preferenceVotes": 2178,
+        "ranked": true,
+        "listId": "1698",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1698.htm"
+      },
+      "260811": {
+        "rank": 1,
+        "listPosition": 1,
+        "preferenceVotes": 100701,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260815": {
+        "rank": 2,
+        "listPosition": 5,
+        "preferenceVotes": 70284,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260812": {
+        "rank": 3,
+        "listPosition": 2,
+        "preferenceVotes": 62102,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260813": {
+        "rank": 4,
+        "listPosition": 3,
+        "preferenceVotes": 43324,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260817": {
+        "rank": 5,
+        "listPosition": 7,
+        "preferenceVotes": 37390,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260814": {
+        "rank": 6,
+        "listPosition": 4,
+        "preferenceVotes": 36800,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260820": {
+        "rank": 7,
+        "listPosition": 10,
+        "preferenceVotes": 24129,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260819": {
+        "rank": 8,
+        "listPosition": 9,
+        "preferenceVotes": 24061,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260818": {
+        "rank": 9,
+        "listPosition": 8,
+        "preferenceVotes": 23717,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260827": {
+        "rank": 10,
+        "listPosition": 17,
+        "preferenceVotes": 10853,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260833": {
+        "rank": 11,
+        "listPosition": 23,
+        "preferenceVotes": 10207,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260816": {
+        "rank": 12,
+        "listPosition": 6,
+        "preferenceVotes": 9855,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260834": {
+        "rank": 13,
+        "listPosition": 24,
+        "preferenceVotes": 9041,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260824": {
+        "rank": 14,
+        "listPosition": 14,
+        "preferenceVotes": 8426,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260830": {
+        "rank": 15,
+        "listPosition": 20,
+        "preferenceVotes": 7293,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260829": {
+        "rank": 16,
+        "listPosition": 19,
+        "preferenceVotes": 5780,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260831": {
+        "rank": 17,
+        "listPosition": 21,
+        "preferenceVotes": 5184,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260821": {
+        "rank": 18,
+        "listPosition": 11,
+        "preferenceVotes": 5137,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260823": {
+        "rank": 19,
+        "listPosition": 13,
+        "preferenceVotes": 4788,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260822": {
+        "rank": 20,
+        "listPosition": 12,
+        "preferenceVotes": 3884,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260825": {
+        "rank": 21,
+        "listPosition": 15,
+        "preferenceVotes": 3280,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260832": {
+        "rank": 22,
+        "listPosition": 22,
+        "preferenceVotes": 2402,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260826": {
+        "rank": 23,
+        "listPosition": 16,
+        "preferenceVotes": 2129,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260828": {
+        "rank": 24,
+        "listPosition": 18,
+        "preferenceVotes": 2125,
+        "ranked": true,
+        "listId": "1739",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1739.htm"
+      },
+      "260952": {
+        "rank": 1,
+        "listPosition": 1,
+        "preferenceVotes": 93796,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260953": {
+        "rank": 2,
+        "listPosition": 2,
+        "preferenceVotes": 61486,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260958": {
+        "rank": 3,
+        "listPosition": 7,
+        "preferenceVotes": 40905,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260954": {
+        "rank": 4,
+        "listPosition": 3,
+        "preferenceVotes": 33962,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260977": {
+        "rank": 5,
+        "listPosition": 26,
+        "preferenceVotes": 28930,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260955": {
+        "rank": 6,
+        "listPosition": 4,
+        "preferenceVotes": 27319,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260964": {
+        "rank": 7,
+        "listPosition": 13,
+        "preferenceVotes": 23168,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260962": {
+        "rank": 8,
+        "listPosition": 11,
+        "preferenceVotes": 20522,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260960": {
+        "rank": 9,
+        "listPosition": 9,
+        "preferenceVotes": 19263,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260972": {
+        "rank": 10,
+        "listPosition": 21,
+        "preferenceVotes": 13175,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260967": {
+        "rank": 11,
+        "listPosition": 16,
+        "preferenceVotes": 13125,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260957": {
+        "rank": 12,
+        "listPosition": 6,
+        "preferenceVotes": 11107,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260976": {
+        "rank": 13,
+        "listPosition": 25,
+        "preferenceVotes": 9118,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260971": {
+        "rank": 14,
+        "listPosition": 20,
+        "preferenceVotes": 8734,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260961": {
+        "rank": 15,
+        "listPosition": 10,
+        "preferenceVotes": 7970,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260975": {
+        "rank": 16,
+        "listPosition": 24,
+        "preferenceVotes": 7393,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260965": {
+        "rank": 17,
+        "listPosition": 14,
+        "preferenceVotes": 7236,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260963": {
+        "rank": 18,
+        "listPosition": 12,
+        "preferenceVotes": 5826,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260970": {
+        "rank": 19,
+        "listPosition": 19,
+        "preferenceVotes": 4947,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260968": {
+        "rank": 20,
+        "listPosition": 17,
+        "preferenceVotes": 4907,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260959": {
+        "rank": 21,
+        "listPosition": 8,
+        "preferenceVotes": 4815,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260969": {
+        "rank": 22,
+        "listPosition": 18,
+        "preferenceVotes": 3837,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260973": {
+        "rank": 23,
+        "listPosition": 22,
+        "preferenceVotes": 3491,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260974": {
+        "rank": 24,
+        "listPosition": 23,
+        "preferenceVotes": 3477,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260966": {
+        "rank": 25,
+        "listPosition": 15,
+        "preferenceVotes": 1964,
+        "ranked": true,
+        "listId": "1738",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1738.htm"
+      },
+      "260978": {
+        "rank": 1,
+        "listPosition": 1,
+        "preferenceVotes": 48852,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260979": {
+        "rank": 2,
+        "listPosition": 2,
+        "preferenceVotes": 26767,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260980": {
+        "rank": 3,
+        "listPosition": 3,
+        "preferenceVotes": 21084,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260983": {
+        "rank": 4,
+        "listPosition": 6,
+        "preferenceVotes": 20055,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260981": {
+        "rank": 5,
+        "listPosition": 4,
+        "preferenceVotes": 17577,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260982": {
+        "rank": 6,
+        "listPosition": 5,
+        "preferenceVotes": 16075,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260985": {
+        "rank": 7,
+        "listPosition": 8,
+        "preferenceVotes": 9304,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260984": {
+        "rank": 8,
+        "listPosition": 7,
+        "preferenceVotes": 8657,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260988": {
+        "rank": 9,
+        "listPosition": 11,
+        "preferenceVotes": 8108,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260989": {
+        "rank": 10,
+        "listPosition": 12,
+        "preferenceVotes": 6413,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260987": {
+        "rank": 11,
+        "listPosition": 10,
+        "preferenceVotes": 6324,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260999": {
+        "rank": 12,
+        "listPosition": 22,
+        "preferenceVotes": 5949,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "255561": {
+        "rank": 13,
+        "listPosition": 26,
+        "preferenceVotes": 5346,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260991": {
+        "rank": 14,
+        "listPosition": 14,
+        "preferenceVotes": 4879,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260994": {
+        "rank": 15,
+        "listPosition": 17,
+        "preferenceVotes": 4635,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260986": {
+        "rank": 16,
+        "listPosition": 9,
+        "preferenceVotes": 4292,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260990": {
+        "rank": 17,
+        "listPosition": 13,
+        "preferenceVotes": 4235,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260998": {
+        "rank": 18,
+        "listPosition": 21,
+        "preferenceVotes": 4079,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260996": {
+        "rank": 19,
+        "listPosition": 19,
+        "preferenceVotes": 3985,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260992": {
+        "rank": 20,
+        "listPosition": 15,
+        "preferenceVotes": 3587,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260997": {
+        "rank": 21,
+        "listPosition": 20,
+        "preferenceVotes": 3408,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260993": {
+        "rank": 22,
+        "listPosition": 16,
+        "preferenceVotes": 3169,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "261002": {
+        "rank": 23,
+        "listPosition": 25,
+        "preferenceVotes": 2853,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "261001": {
+        "rank": 24,
+        "listPosition": 24,
+        "preferenceVotes": 2641,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260995": {
+        "rank": 25,
+        "listPosition": 18,
+        "preferenceVotes": 2416,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "261000": {
+        "rank": 26,
+        "listPosition": 23,
+        "preferenceVotes": 1663,
+        "ranked": true,
+        "listId": "1730",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1730.htm"
+      },
+      "260895": {
+        "rank": 1,
+        "listPosition": 2,
+        "preferenceVotes": 54676,
+        "ranked": true,
+        "listId": "1737",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1737.htm"
+      },
+      "260894": {
+        "rank": 2,
+        "listPosition": 1,
+        "preferenceVotes": 48220,
+        "ranked": true,
+        "listId": "1737",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1737.htm"
+      },
+      "260899": {
+        "rank": 3,
+        "listPosition": 6,
+        "preferenceVotes": 43562,
+        "ranked": true,
+        "listId": "1737",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1737.htm"
+      },
+      "260896": {
+        "rank": 4,
+        "listPosition": 3,
+        "preferenceVotes": 37579,
+        "ranked": true,
+        "listId": "1737",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1737.htm"
+      },
+      "260903": {
+        "rank": 5,
+        "listPosition": 10,
+        "preferenceVotes": 16461,
+        "ranked": true,
+        "listId": "1737",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1737.htm"
+      },
+      "260900": {
+        "rank": 6,
+        "listPosition": 7,
+        "preferenceVotes": 15125,
+        "ranked": true,
+        "listId": "1737",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1737.htm"
+      },
+      "260897": {
+        "rank": 7,
+        "listPosition": 4,
+        "preferenceVotes": 12960,
+        "ranked": true,
+        "listId": "1737",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1737.htm"
+      },
+      "260904": {
+        "rank": 8,
+        "listPosition": 11,
+        "preferenceVotes": 8926,
+        "ranked": true,
+        "listId": "1737",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1737.htm"
+      },
+      "260898": {
+        "rank": 9,
+        "listPosition": 5,
+        "preferenceVotes": 8378,
+        "ranked": true,
+        "listId": "1737",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1737.htm"
+      },
+      "260901": {
+        "rank": 10,
+        "listPosition": 8,
+        "preferenceVotes": 7054,
+        "ranked": true,
+        "listId": "1737",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1737.htm"
+      },
+      "260902": {
+        "rank": 11,
+        "listPosition": 9,
+        "preferenceVotes": 7035,
+        "ranked": true,
+        "listId": "1737",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1737.htm"
+      },
+      "253164": {
+        "rank": 12,
+        "listPosition": 17,
+        "preferenceVotes": 5350,
+        "ranked": true,
+        "listId": "1737",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1737.htm"
+      },
+      "260907": {
+        "rank": 13,
+        "listPosition": 14,
+        "preferenceVotes": 5121,
+        "ranked": true,
+        "listId": "1737",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1737.htm"
+      },
+      "260905": {
+        "rank": 14,
+        "listPosition": 12,
+        "preferenceVotes": 4223,
+        "ranked": true,
+        "listId": "1737",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1737.htm"
+      },
+      "260911": {
+        "rank": 15,
+        "listPosition": 20,
+        "preferenceVotes": 4084,
+        "ranked": true,
+        "listId": "1737",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1737.htm"
+      },
+      "260910": {
+        "rank": 16,
+        "listPosition": 18,
+        "preferenceVotes": 3578,
+        "ranked": true,
+        "listId": "1737",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1737.htm"
+      },
+      "260909": {
+        "rank": 17,
+        "listPosition": 16,
+        "preferenceVotes": 3125,
+        "ranked": true,
+        "listId": "1737",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1737.htm"
+      },
+      "260906": {
+        "rank": 18,
+        "listPosition": 13,
+        "preferenceVotes": 1982,
+        "ranked": true,
+        "listId": "1737",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1737.htm"
+      },
+      "260908": {
+        "rank": 19,
+        "listPosition": 15,
+        "preferenceVotes": 1324,
+        "ranked": true,
+        "listId": "1737",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1737.htm"
+      },
+      "260835": {
+        "rank": 1,
+        "listPosition": 2,
+        "preferenceVotes": 28178,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "260836": {
+        "rank": 2,
+        "listPosition": 3,
+        "preferenceVotes": 19006,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "260691": {
+        "rank": 3,
+        "listPosition": 1,
+        "preferenceVotes": 17299,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "260838": {
+        "rank": 4,
+        "listPosition": 5,
+        "preferenceVotes": 15420,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "260837": {
+        "rank": 5,
+        "listPosition": 7,
+        "preferenceVotes": 14759,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "260839": {
+        "rank": 6,
+        "listPosition": 9,
+        "preferenceVotes": 12924,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "260692": {
+        "rank": 7,
+        "listPosition": 4,
+        "preferenceVotes": 12908,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "260844": {
+        "rank": 8,
+        "listPosition": 18,
+        "preferenceVotes": 7811,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "260693": {
+        "rank": 9,
+        "listPosition": 6,
+        "preferenceVotes": 7420,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "260703": {
+        "rank": 10,
+        "listPosition": 8,
+        "preferenceVotes": 7042,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "260841": {
+        "rank": 11,
+        "listPosition": 13,
+        "preferenceVotes": 4855,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "260846": {
+        "rank": 12,
+        "listPosition": 20,
+        "preferenceVotes": 4041,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "260847": {
+        "rank": 13,
+        "listPosition": 21,
+        "preferenceVotes": 3858,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "260843": {
+        "rank": 14,
+        "listPosition": 17,
+        "preferenceVotes": 3273,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "260840": {
+        "rank": 15,
+        "listPosition": 11,
+        "preferenceVotes": 3008,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "257828": {
+        "rank": 16,
+        "listPosition": 16,
+        "preferenceVotes": 2766,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "260704": {
+        "rank": 17,
+        "listPosition": 10,
+        "preferenceVotes": 2673,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "260705": {
+        "rank": 18,
+        "listPosition": 12,
+        "preferenceVotes": 2569,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "260706": {
+        "rank": 19,
+        "listPosition": 14,
+        "preferenceVotes": 2429,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "260842": {
+        "rank": 20,
+        "listPosition": 15,
+        "preferenceVotes": 1768,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "260845": {
+        "rank": 21,
+        "listPosition": 19,
+        "preferenceVotes": 1079,
+        "ranked": true,
+        "listId": "1785",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1785.htm"
+      },
+      "260929": {
+        "rank": 1,
+        "listPosition": 1,
+        "preferenceVotes": 29828,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260930": {
+        "rank": 2,
+        "listPosition": 2,
+        "preferenceVotes": 20156,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260931": {
+        "rank": 3,
+        "listPosition": 3,
+        "preferenceVotes": 17661,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260934": {
+        "rank": 4,
+        "listPosition": 6,
+        "preferenceVotes": 15873,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260936": {
+        "rank": 5,
+        "listPosition": 8,
+        "preferenceVotes": 13931,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260932": {
+        "rank": 6,
+        "listPosition": 4,
+        "preferenceVotes": 11042,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260938": {
+        "rank": 7,
+        "listPosition": 10,
+        "preferenceVotes": 9701,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260946": {
+        "rank": 8,
+        "listPosition": 18,
+        "preferenceVotes": 9332,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260933": {
+        "rank": 9,
+        "listPosition": 5,
+        "preferenceVotes": 6779,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260941": {
+        "rank": 10,
+        "listPosition": 13,
+        "preferenceVotes": 6255,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260937": {
+        "rank": 11,
+        "listPosition": 9,
+        "preferenceVotes": 4585,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260950": {
+        "rank": 12,
+        "listPosition": 22,
+        "preferenceVotes": 3562,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260940": {
+        "rank": 13,
+        "listPosition": 12,
+        "preferenceVotes": 3469,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260939": {
+        "rank": 14,
+        "listPosition": 11,
+        "preferenceVotes": 3149,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260942": {
+        "rank": 15,
+        "listPosition": 14,
+        "preferenceVotes": 3069,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260945": {
+        "rank": 16,
+        "listPosition": 17,
+        "preferenceVotes": 3051,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260935": {
+        "rank": 17,
+        "listPosition": 7,
+        "preferenceVotes": 2916,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260951": {
+        "rank": 18,
+        "listPosition": 23,
+        "preferenceVotes": 2875,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260943": {
+        "rank": 19,
+        "listPosition": 15,
+        "preferenceVotes": 2541,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260944": {
+        "rank": 20,
+        "listPosition": 16,
+        "preferenceVotes": 2269,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260948": {
+        "rank": 21,
+        "listPosition": 20,
+        "preferenceVotes": 1802,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260947": {
+        "rank": 22,
+        "listPosition": 19,
+        "preferenceVotes": 1671,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260949": {
+        "rank": 23,
+        "listPosition": 21,
+        "preferenceVotes": 1501,
+        "ranked": true,
+        "listId": "1734",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1734.htm"
+      },
+      "260879": {
+        "rank": 1,
+        "listPosition": 1,
+        "preferenceVotes": 13747,
+        "ranked": true,
+        "listId": "1727",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1727.htm"
+      },
+      "260880": {
+        "rank": 2,
+        "listPosition": 2,
+        "preferenceVotes": 10581,
+        "ranked": true,
+        "listId": "1727",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1727.htm"
+      },
+      "260885": {
+        "rank": 3,
+        "listPosition": 7,
+        "preferenceVotes": 6500,
+        "ranked": true,
+        "listId": "1727",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1727.htm"
+      },
+      "260884": {
+        "rank": 4,
+        "listPosition": 6,
+        "preferenceVotes": 6287,
+        "ranked": true,
+        "listId": "1727",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1727.htm"
+      },
+      "260883": {
+        "rank": 5,
+        "listPosition": 5,
+        "preferenceVotes": 5935,
+        "ranked": true,
+        "listId": "1727",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1727.htm"
+      },
+      "260882": {
+        "rank": 6,
+        "listPosition": 4,
+        "preferenceVotes": 5701,
+        "ranked": true,
+        "listId": "1727",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1727.htm"
+      },
+      "260881": {
+        "rank": 7,
+        "listPosition": 3,
+        "preferenceVotes": 5536,
+        "ranked": true,
+        "listId": "1727",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1727.htm"
+      },
+      "260888": {
+        "rank": 8,
+        "listPosition": 10,
+        "preferenceVotes": 3184,
+        "ranked": true,
+        "listId": "1727",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1727.htm"
+      },
+      "260886": {
+        "rank": 9,
+        "listPosition": 8,
+        "preferenceVotes": 2816,
+        "ranked": true,
+        "listId": "1727",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1727.htm"
+      },
+      "260889": {
+        "rank": 10,
+        "listPosition": 11,
+        "preferenceVotes": 2362,
+        "ranked": true,
+        "listId": "1727",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1727.htm"
+      },
+      "260893": {
+        "rank": 11,
+        "listPosition": 15,
+        "preferenceVotes": 2218,
+        "ranked": true,
+        "listId": "1727",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1727.htm"
+      },
+      "260891": {
+        "rank": 12,
+        "listPosition": 13,
+        "preferenceVotes": 1933,
+        "ranked": true,
+        "listId": "1727",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1727.htm"
+      },
+      "260890": {
+        "rank": 13,
+        "listPosition": 12,
+        "preferenceVotes": 1392,
+        "ranked": true,
+        "listId": "1727",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1727.htm"
+      },
+      "260892": {
+        "rank": 14,
+        "listPosition": 14,
+        "preferenceVotes": 1303,
+        "ranked": true,
+        "listId": "1727",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1727.htm"
+      },
+      "260887": {
+        "rank": 15,
+        "listPosition": 9,
+        "preferenceVotes": 1208,
+        "ranked": true,
+        "listId": "1727",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1727.htm"
+      },
+      "260644": {
+        "rank": 1,
+        "listPosition": 1,
+        "preferenceVotes": 16369,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260645": {
+        "rank": 2,
+        "listPosition": 2,
+        "preferenceVotes": 11732,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260646": {
+        "rank": 3,
+        "listPosition": 3,
+        "preferenceVotes": 9212,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260648": {
+        "rank": 4,
+        "listPosition": 5,
+        "preferenceVotes": 8649,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260647": {
+        "rank": 5,
+        "listPosition": 4,
+        "preferenceVotes": 5687,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260651": {
+        "rank": 6,
+        "listPosition": 8,
+        "preferenceVotes": 2979,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260653": {
+        "rank": 7,
+        "listPosition": 10,
+        "preferenceVotes": 2501,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260664": {
+        "rank": 8,
+        "listPosition": 20,
+        "preferenceVotes": 2117,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260652": {
+        "rank": 9,
+        "listPosition": 9,
+        "preferenceVotes": 1780,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260667": {
+        "rank": 10,
+        "listPosition": 24,
+        "preferenceVotes": 1709,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260650": {
+        "rank": 11,
+        "listPosition": 7,
+        "preferenceVotes": 1623,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260669": {
+        "rank": 12,
+        "listPosition": 26,
+        "preferenceVotes": 1589,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260649": {
+        "rank": 13,
+        "listPosition": 6,
+        "preferenceVotes": 1554,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260656": {
+        "rank": 14,
+        "listPosition": 13,
+        "preferenceVotes": 1538,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260665": {
+        "rank": 15,
+        "listPosition": 21,
+        "preferenceVotes": 1093,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260660": {
+        "rank": 16,
+        "listPosition": 16,
+        "preferenceVotes": 1077,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260654": {
+        "rank": 17,
+        "listPosition": 11,
+        "preferenceVotes": 1042,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "248493": {
+        "rank": 18,
+        "listPosition": 23,
+        "preferenceVotes": 1040,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260662": {
+        "rank": 19,
+        "listPosition": 18,
+        "preferenceVotes": 989,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260655": {
+        "rank": 20,
+        "listPosition": 12,
+        "preferenceVotes": 896,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260663": {
+        "rank": 21,
+        "listPosition": 19,
+        "preferenceVotes": 825,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260659": {
+        "rank": 22,
+        "listPosition": 15,
+        "preferenceVotes": 739,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260668": {
+        "rank": 23,
+        "listPosition": 25,
+        "preferenceVotes": 725,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260661": {
+        "rank": 24,
+        "listPosition": 17,
+        "preferenceVotes": 561,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260657": {
+        "rank": 25,
+        "listPosition": 14,
+        "preferenceVotes": 536,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260666": {
+        "rank": 26,
+        "listPosition": 22,
+        "preferenceVotes": 377,
+        "ranked": true,
+        "listId": "1783",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1783.htm"
+      },
+      "260915": {
+        "rank": 1,
+        "listPosition": 2,
+        "preferenceVotes": 7112,
+        "ranked": true,
+        "listId": "1714",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1714.htm"
+      },
+      "260914": {
+        "rank": 2,
+        "listPosition": 1,
+        "preferenceVotes": 6932,
+        "ranked": true,
+        "listId": "1714",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1714.htm"
+      },
+      "260918": {
+        "rank": 3,
+        "listPosition": 5,
+        "preferenceVotes": 6047,
+        "ranked": true,
+        "listId": "1714",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1714.htm"
+      },
+      "260916": {
+        "rank": 4,
+        "listPosition": 3,
+        "preferenceVotes": 4623,
+        "ranked": true,
+        "listId": "1714",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1714.htm"
+      },
+      "260917": {
+        "rank": 5,
+        "listPosition": 4,
+        "preferenceVotes": 4136,
+        "ranked": true,
+        "listId": "1714",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1714.htm"
+      },
+      "260920": {
+        "rank": 6,
+        "listPosition": 7,
+        "preferenceVotes": 2200,
+        "ranked": true,
+        "listId": "1714",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1714.htm"
+      },
+      "260921": {
+        "rank": 7,
+        "listPosition": 8,
+        "preferenceVotes": 2076,
+        "ranked": true,
+        "listId": "1714",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1714.htm"
+      },
+      "260925": {
+        "rank": 8,
+        "listPosition": 12,
+        "preferenceVotes": 1773,
+        "ranked": true,
+        "listId": "1714",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1714.htm"
+      },
+      "260923": {
+        "rank": 9,
+        "listPosition": 10,
+        "preferenceVotes": 1667,
+        "ranked": true,
+        "listId": "1714",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1714.htm"
+      },
+      "260922": {
+        "rank": 10,
+        "listPosition": 9,
+        "preferenceVotes": 1162,
+        "ranked": true,
+        "listId": "1714",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1714.htm"
+      },
+      "260919": {
+        "rank": 11,
+        "listPosition": 6,
+        "preferenceVotes": 1134,
+        "ranked": true,
+        "listId": "1714",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1714.htm"
+      },
+      "260927": {
+        "rank": 12,
+        "listPosition": 14,
+        "preferenceVotes": 1065,
+        "ranked": true,
+        "listId": "1714",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1714.htm"
+      },
+      "260924": {
+        "rank": 13,
+        "listPosition": 11,
+        "preferenceVotes": 1014,
+        "ranked": true,
+        "listId": "1714",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1714.htm"
+      },
+      "260926": {
+        "rank": 14,
+        "listPosition": 13,
+        "preferenceVotes": 925,
+        "ranked": true,
+        "listId": "1714",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1714.htm"
+      },
+      "261011": {
+        "rank": 1,
+        "listPosition": 9,
+        "preferenceVotes": 1687,
+        "ranked": true,
+        "listId": "1784",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1784.htm"
+      },
+      "261003": {
+        "rank": 2,
+        "listPosition": 1,
+        "preferenceVotes": 1473,
+        "ranked": true,
+        "listId": "1784",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1784.htm"
+      },
+      "261004": {
+        "rank": 3,
+        "listPosition": 2,
+        "preferenceVotes": 1347,
+        "ranked": true,
+        "listId": "1784",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1784.htm"
+      },
+      "261006": {
+        "rank": 4,
+        "listPosition": 4,
+        "preferenceVotes": 1150,
+        "ranked": true,
+        "listId": "1784",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1784.htm"
+      },
+      "261007": {
+        "rank": 5,
+        "listPosition": 5,
+        "preferenceVotes": 1126,
+        "ranked": true,
+        "listId": "1784",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1784.htm"
+      },
+      "261005": {
+        "rank": 6,
+        "listPosition": 3,
+        "preferenceVotes": 996,
+        "ranked": true,
+        "listId": "1784",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1784.htm"
+      },
+      "261009": {
+        "rank": 7,
+        "listPosition": 7,
+        "preferenceVotes": 712,
+        "ranked": true,
+        "listId": "1784",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1784.htm"
+      },
+      "261010": {
+        "rank": 8,
+        "listPosition": 8,
+        "preferenceVotes": 670,
+        "ranked": true,
+        "listId": "1784",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1784.htm"
+      },
+      "261008": {
+        "rank": 9,
+        "listPosition": 6,
+        "preferenceVotes": 406,
+        "ranked": true,
+        "listId": "1784",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/rezultatai/rez_pirm_l_1784.htm"
+      }
+    },
+    "rankedNotInSitemap": [],
+    "sitemapNotRanked": [],
+    "listPositionMismatches": []
+  }
+}

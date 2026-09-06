@@ -1,0 +1,3646 @@
+{
+  "electionId": "2004-ep",
+  "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/part_sar_l_18.htm",
+  "listUrls": [
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_part_l_1730.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_part_l_1698.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_part_l_1738.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_part_l_1727.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_part_l_1734.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_part_l_1785.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_part_l_1714.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_part_l_1784.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_part_l_1739.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_part_l_1783.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_part_l_1781.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_part_l_1737.htm"
+  ],
+  "generatedAt": "2026-08-22T22:13:40+00:00",
+  "stats": {
+    "rows": 241,
+    "extracted": 241,
+    "skipped": 0,
+    "duplicateCandidateIds": 0,
+    "lists": 12,
+    "declaredCandidates": 241,
+    "listCountMismatches": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Kazimira Danutė PRUNSKIENĖ",
+      "candidateId": "kazimira-danute-prunskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260978.htm",
+      "vrkCandidateId": "260978",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Gintaras DIDŽIOKAS",
+      "candidateId": "gintaras-didziokas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260979.htm",
+      "vrkCandidateId": "260979",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Viktoras RINKEVIČIUS",
+      "candidateId": "viktoras-rinkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260980.htm",
+      "vrkCandidateId": "260980",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Algirdas GAIŽUTIS",
+      "candidateId": "algirdas-gaizutis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260981.htm",
+      "vrkCandidateId": "260981",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Bronius MARKAUSKAS",
+      "candidateId": "bronius-markauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260982.htm",
+      "vrkCandidateId": "260982",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Laima MOGENIENĖ",
+      "candidateId": "laima-mogeniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260983.htm",
+      "vrkCandidateId": "260983",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Vytas NAVICKAS",
+      "candidateId": "vytas-navickas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260984.htm",
+      "vrkCandidateId": "260984",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Bronis ROPĖ",
+      "candidateId": "bronis-rope",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260985.htm",
+      "vrkCandidateId": "260985",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Kazys SIVICKIS",
+      "candidateId": "kazys-sivickis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260986.htm",
+      "vrkCandidateId": "260986",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Alfredas PEKELIŪNAS",
+      "candidateId": "alfredas-pekeliunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260987.htm",
+      "vrkCandidateId": "260987",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Gema UMBRASIENĖ",
+      "candidateId": "gema-umbrasiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260988.htm",
+      "vrkCandidateId": "260988",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Aldona STAPONKIENĖ",
+      "candidateId": "aldona-staponkiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260989.htm",
+      "vrkCandidateId": "260989",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 12
+      }
+    },
+    {
+      "candidateName": "Leonas APŠEGA",
+      "candidateId": "leonas-apsega",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260990.htm",
+      "vrkCandidateId": "260990",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Juozas BERTAŠIUS",
+      "candidateId": "juozas-bertasius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260991.htm",
+      "vrkCandidateId": "260991",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 14
+      }
+    },
+    {
+      "candidateName": "Vladislavas KAZAKEVIČIUS",
+      "candidateId": "vladislavas-kazakevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260992.htm",
+      "vrkCandidateId": "260992",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 15
+      }
+    },
+    {
+      "candidateName": "Vytas ŠIMONĖLIS",
+      "candidateId": "vytas-simonelis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260993.htm",
+      "vrkCandidateId": "260993",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 16
+      }
+    },
+    {
+      "candidateName": "Janina AKSTINAVIČIENĖ",
+      "candidateId": "janina-akstinaviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260994.htm",
+      "vrkCandidateId": "260994",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 17
+      }
+    },
+    {
+      "candidateName": "Bronislovas LIUTKUS",
+      "candidateId": "bronislovas-liutkus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260995.htm",
+      "vrkCandidateId": "260995",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 18
+      }
+    },
+    {
+      "candidateName": "Genovaitė KIMBRIENĖ",
+      "candidateId": "genovaite-kimbriene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260996.htm",
+      "vrkCandidateId": "260996",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 19
+      }
+    },
+    {
+      "candidateName": "Rimantas KUMPIS",
+      "candidateId": "rimantas-kumpis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260997.htm",
+      "vrkCandidateId": "260997",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 20
+      }
+    },
+    {
+      "candidateName": "Gintaras GRINIUS",
+      "candidateId": "gintaras-grinius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260998.htm",
+      "vrkCandidateId": "260998",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 21
+      }
+    },
+    {
+      "candidateName": "Palmyra PRAŠMANTIENĖ",
+      "candidateId": "palmyra-prasmantiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260999.htm",
+      "vrkCandidateId": "260999",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 22
+      }
+    },
+    {
+      "candidateName": "Albert OSOSOV",
+      "candidateId": "albert-ososov",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_261000.htm",
+      "vrkCandidateId": "261000",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 23
+      }
+    },
+    {
+      "candidateName": "Zenonas BUIVYDAS",
+      "candidateId": "zenonas-buivydas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_261001.htm",
+      "vrkCandidateId": "261001",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 24
+      }
+    },
+    {
+      "candidateName": "Virginijus ŠMIGELSKAS",
+      "candidateId": "virginijus-smigelskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_261002.htm",
+      "vrkCandidateId": "261002",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 25
+      }
+    },
+    {
+      "candidateName": "Algirdas JASELIŪNAS",
+      "candidateId": "algirdas-jaseliunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_255561.htm",
+      "vrkCandidateId": "255561",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Valstiečių ir Naujosios demokratijos partijų sąjunga",
+        "sarasoNumeris": 1,
+        "sarasoId": "1730",
+        "numerisSarase": 26
+      }
+    },
+    {
+      "candidateName": "Justas Vincas PALECKIS",
+      "candidateId": "justas-vincas-paleckis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260848.htm",
+      "vrkCandidateId": "260848",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Gediminas KIRKILAS",
+      "candidateId": "gediminas-kirkilas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260849.htm",
+      "vrkCandidateId": "260849",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Irena ŠIAULIENĖ",
+      "candidateId": "irena-siauliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260850.htm",
+      "vrkCandidateId": "260850",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Algimantas Jurgis ČEKUOLIS",
+      "candidateId": "algimantas-jurgis-cekuolis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260851.htm",
+      "vrkCandidateId": "260851",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Aloyzas SAKALAS",
+      "candidateId": "aloyzas-sakalas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260852.htm",
+      "vrkCandidateId": "260852",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Zigmantas BALČYTIS",
+      "candidateId": "zigmantas-balcytis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260853.htm",
+      "vrkCandidateId": "260853",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Birutė VĖSAITĖ",
+      "candidateId": "birute-vesaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260854.htm",
+      "vrkCandidateId": "260854",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Antanas VALYS",
+      "candidateId": "antanas-valys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260855.htm",
+      "vrkCandidateId": "260855",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Sigita BURBIENĖ",
+      "candidateId": "sigita-burbiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260856.htm",
+      "vrkCandidateId": "260856",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Kęstutis KRIŠČIŪNAS",
+      "candidateId": "kestutis-krisciunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260857.htm",
+      "vrkCandidateId": "260857",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Juozas BERNATONIS",
+      "candidateId": "juozas-bernatonis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260858.htm",
+      "vrkCandidateId": "260858",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Arūnas KUNDROTAS",
+      "candidateId": "arunas-kundrotas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260859.htm",
+      "vrkCandidateId": "260859",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 12
+      }
+    },
+    {
+      "candidateName": "Mindaugas BASTYS",
+      "candidateId": "mindaugas-bastys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260860.htm",
+      "vrkCandidateId": "260860",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Giedrė PURVANECKIENĖ",
+      "candidateId": "giedre-purvaneckiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260861.htm",
+      "vrkCandidateId": "260861",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 14
+      }
+    },
+    {
+      "candidateName": "Jūratė JUOZAITIENĖ",
+      "candidateId": "jurate-juozaitiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260862.htm",
+      "vrkCandidateId": "260862",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 15
+      }
+    },
+    {
+      "candidateName": "Artur PLOKŠTO",
+      "candidateId": "artur-ploksto",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260863.htm",
+      "vrkCandidateId": "260863",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 16
+      }
+    },
+    {
+      "candidateName": "Rimantas VAITKUS",
+      "candidateId": "rimantas-vaitkus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260864.htm",
+      "vrkCandidateId": "260864",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 17
+      }
+    },
+    {
+      "candidateName": "Evaldas GUSTAS",
+      "candidateId": "evaldas-gustas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260865.htm",
+      "vrkCandidateId": "260865",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 18
+      }
+    },
+    {
+      "candidateName": "Žana LEBEDEVA",
+      "candidateId": "zana-lebedeva",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260866.htm",
+      "vrkCandidateId": "260866",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 19
+      }
+    },
+    {
+      "candidateName": "Julius SABATAUSKAS",
+      "candidateId": "julius-sabatauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260867.htm",
+      "vrkCandidateId": "260867",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 20
+      }
+    },
+    {
+      "candidateName": "Antanas Zenonas KAMINSKAS",
+      "candidateId": "antanas-zenonas-kaminskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260868.htm",
+      "vrkCandidateId": "260868",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 21
+      }
+    },
+    {
+      "candidateName": "Orinta LEIPUTĖ",
+      "candidateId": "orinta-leipute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260869.htm",
+      "vrkCandidateId": "260869",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 22
+      }
+    },
+    {
+      "candidateName": "Justinas KAROSAS",
+      "candidateId": "justinas-karosas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260870.htm",
+      "vrkCandidateId": "260870",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 23
+      }
+    },
+    {
+      "candidateName": "Gediminas DALINKEVIČIUS",
+      "candidateId": "gediminas-dalinkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260871.htm",
+      "vrkCandidateId": "260871",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 24
+      }
+    },
+    {
+      "candidateName": "Vitalija KLIUKIENĖ",
+      "candidateId": "vitalija-kliukiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260872.htm",
+      "vrkCandidateId": "260872",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 25
+      }
+    },
+    {
+      "candidateName": "Danguolė BILKIENĖ",
+      "candidateId": "danguole-bilkiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260873.htm",
+      "vrkCandidateId": "260873",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 2,
+        "sarasoId": "1698",
+        "numerisSarase": 26
+      }
+    },
+    {
+      "candidateName": "Eugenijus GENTVILAS",
+      "candidateId": "eugenijus-gentvilas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260952.htm",
+      "vrkCandidateId": "260952",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Margarita STARKEVIČIŪTĖ",
+      "candidateId": "margarita-starkeviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260953.htm",
+      "vrkCandidateId": "260953",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Regimantas ČIUPAILA",
+      "candidateId": "regimantas-ciupaila",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260954.htm",
+      "vrkCandidateId": "260954",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Vidmantas ADOMONIS",
+      "candidateId": "vidmantas-adomonis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260955.htm",
+      "vrkCandidateId": "260955",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Vincas LAURUTIS",
+      "candidateId": "vincas-laurutis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260957.htm",
+      "vrkCandidateId": "260957",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Arminas LYDEKA",
+      "candidateId": "arminas-lydeka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260958.htm",
+      "vrkCandidateId": "260958",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Andrius ROMANOVSKIS",
+      "candidateId": "andrius-romanovskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260959.htm",
+      "vrkCandidateId": "260959",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Rita Diana DAPKUTĖ LUMBIENĖ",
+      "candidateId": "rita-diana-dapkute-lumbiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260960.htm",
+      "vrkCandidateId": "260960",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Juozas ŠARKUS",
+      "candidateId": "juozas-sarkus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260961.htm",
+      "vrkCandidateId": "260961",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Erikas TAMAŠAUSKAS",
+      "candidateId": "erikas-tamasauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260962.htm",
+      "vrkCandidateId": "260962",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Aidas VAIŠNORA",
+      "candidateId": "aidas-vaisnora",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260963.htm",
+      "vrkCandidateId": "260963",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 12
+      }
+    },
+    {
+      "candidateName": "Raimondas ŠUKYS",
+      "candidateId": "raimondas-sukys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260964.htm",
+      "vrkCandidateId": "260964",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Giedrė KVIESKIENĖ",
+      "candidateId": "giedre-kvieskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260965.htm",
+      "vrkCandidateId": "260965",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 14
+      }
+    },
+    {
+      "candidateName": "Sofija MATAREVIČ",
+      "candidateId": "sofija-matarevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260966.htm",
+      "vrkCandidateId": "260966",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 15
+      }
+    },
+    {
+      "candidateName": "Aidas Feliksas PALUBINSKAS",
+      "candidateId": "aidas-feliksas-palubinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260967.htm",
+      "vrkCandidateId": "260967",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 16
+      }
+    },
+    {
+      "candidateName": "Gediminas MATIEKUS",
+      "candidateId": "gediminas-matiekus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260968.htm",
+      "vrkCandidateId": "260968",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 17
+      }
+    },
+    {
+      "candidateName": "Evalda ŠIŠKAUSKIENĖ",
+      "candidateId": "evalda-siskauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260969.htm",
+      "vrkCandidateId": "260969",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 18
+      }
+    },
+    {
+      "candidateName": "Vidmantas VITKAUSKAS",
+      "candidateId": "vidmantas-vitkauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260970.htm",
+      "vrkCandidateId": "260970",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 19
+      }
+    },
+    {
+      "candidateName": "Saulius LAPĖNAS",
+      "candidateId": "saulius-lapenas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260971.htm",
+      "vrkCandidateId": "260971",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 20
+      }
+    },
+    {
+      "candidateName": "Vytautas ČEPAS",
+      "candidateId": "vytautas-cepas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260972.htm",
+      "vrkCandidateId": "260972",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 21
+      }
+    },
+    {
+      "candidateName": "Kęstutis SLAVINSKAS",
+      "candidateId": "kestutis-slavinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260973.htm",
+      "vrkCandidateId": "260973",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 22
+      }
+    },
+    {
+      "candidateName": "Stasė ČUPKOVIENĖ",
+      "candidateId": "stase-cupkoviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260974.htm",
+      "vrkCandidateId": "260974",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 23
+      }
+    },
+    {
+      "candidateName": "Artūras MELIANAS",
+      "candidateId": "arturas-melianas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260975.htm",
+      "vrkCandidateId": "260975",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 24
+      }
+    },
+    {
+      "candidateName": "Jonas KATINAS",
+      "candidateId": "jonas-katinas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260976.htm",
+      "vrkCandidateId": "260976",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 25
+      }
+    },
+    {
+      "candidateName": "Darius GUDELIS",
+      "candidateId": "darius-gudelis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260977.htm",
+      "vrkCandidateId": "260977",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 3,
+        "sarasoId": "1738",
+        "numerisSarase": 26
+      }
+    },
+    {
+      "candidateName": "Algirdas SAUDARGAS",
+      "candidateId": "algirdas-saudargas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260879.htm",
+      "vrkCandidateId": "260879",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 4,
+        "sarasoId": "1727",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Albertas ŠIMĖNAS",
+      "candidateId": "albertas-simenas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260880.htm",
+      "vrkCandidateId": "260880",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 4,
+        "sarasoId": "1727",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Ignas VĖGĖLĖ",
+      "candidateId": "ignas-vegele",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260881.htm",
+      "vrkCandidateId": "260881",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 4,
+        "sarasoId": "1727",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Algirdas ŠAKALYS",
+      "candidateId": "algirdas-sakalys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260882.htm",
+      "vrkCandidateId": "260882",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 4,
+        "sarasoId": "1727",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Asta SEDEREVIČIŪTĖ",
+      "candidateId": "asta-sedereviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260883.htm",
+      "vrkCandidateId": "260883",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 4,
+        "sarasoId": "1727",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Jonas ŠIMĖNAS",
+      "candidateId": "jonas-simenas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260884.htm",
+      "vrkCandidateId": "260884",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 4,
+        "sarasoId": "1727",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Kazimieras KUZMINSKAS",
+      "candidateId": "kazimieras-kuzminskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260885.htm",
+      "vrkCandidateId": "260885",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 4,
+        "sarasoId": "1727",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Algirdas KLIMAITIS",
+      "candidateId": "algirdas-klimaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260886.htm",
+      "vrkCandidateId": "260886",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 4,
+        "sarasoId": "1727",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Faustas MEIŽENIS",
+      "candidateId": "faustas-meizenis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260887.htm",
+      "vrkCandidateId": "260887",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 4,
+        "sarasoId": "1727",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Valdonė MAKSVYTYTĖ",
+      "candidateId": "valdone-maksvytyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260888.htm",
+      "vrkCandidateId": "260888",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 4,
+        "sarasoId": "1727",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Liudvikas ŽUKAUSKAS",
+      "candidateId": "liudvikas-zukauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260889.htm",
+      "vrkCandidateId": "260889",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 4,
+        "sarasoId": "1727",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Kęstutis SALICKAS",
+      "candidateId": "kestutis-salickas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260890.htm",
+      "vrkCandidateId": "260890",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 4,
+        "sarasoId": "1727",
+        "numerisSarase": 12
+      }
+    },
+    {
+      "candidateName": "Marius PETRAITIS",
+      "candidateId": "marius-petraitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260891.htm",
+      "vrkCandidateId": "260891",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 4,
+        "sarasoId": "1727",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Mindaugas LUOBIKIS",
+      "candidateId": "mindaugas-luobikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260892.htm",
+      "vrkCandidateId": "260892",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 4,
+        "sarasoId": "1727",
+        "numerisSarase": 14
+      }
+    },
+    {
+      "candidateName": "Aleksandras GRAŽELIS",
+      "candidateId": "aleksandras-grazelis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260893.htm",
+      "vrkCandidateId": "260893",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 4,
+        "sarasoId": "1727",
+        "numerisSarase": 15
+      }
+    },
+    {
+      "candidateName": "Antanas VALIONIS",
+      "candidateId": "antanas-valionis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260929.htm",
+      "vrkCandidateId": "260929",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Algirdas MONKEVIČIUS",
+      "candidateId": "algirdas-monkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260930.htm",
+      "vrkCandidateId": "260930",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Kęstutis KUZMICKAS",
+      "candidateId": "kestutis-kuzmickas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260931.htm",
+      "vrkCandidateId": "260931",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Eduardas ŠABLINSKAS",
+      "candidateId": "eduardas-sablinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260932.htm",
+      "vrkCandidateId": "260932",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Vaclov STANKEVIČ",
+      "candidateId": "vaclov-stankevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260933.htm",
+      "vrkCandidateId": "260933",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Vytautas KVIETKAUSKAS",
+      "candidateId": "vytautas-kvietkauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260934.htm",
+      "vrkCandidateId": "260934",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Vaidas PLIUSNIS",
+      "candidateId": "vaidas-pliusnis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260935.htm",
+      "vrkCandidateId": "260935",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Gediminas JAKAVONIS",
+      "candidateId": "gediminas-jakavonis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260936.htm",
+      "vrkCandidateId": "260936",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Alvydas RAMANAUSKAS",
+      "candidateId": "alvydas-ramanauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260937.htm",
+      "vrkCandidateId": "260937",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Dangutė MIKUTIENĖ",
+      "candidateId": "dangute-mikutiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260938.htm",
+      "vrkCandidateId": "260938",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Gintautas KNIUKŠTA",
+      "candidateId": "gintautas-kniuksta",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260939.htm",
+      "vrkCandidateId": "260939",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Gintautas ŠIVICKAS",
+      "candidateId": "gintautas-sivickas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260940.htm",
+      "vrkCandidateId": "260940",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 12
+      }
+    },
+    {
+      "candidateName": "Vaclovas KARBAUSKIS",
+      "candidateId": "vaclovas-karbauskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260941.htm",
+      "vrkCandidateId": "260941",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Vytautas VIGELIS",
+      "candidateId": "vytautas-vigelis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260942.htm",
+      "vrkCandidateId": "260942",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 14
+      }
+    },
+    {
+      "candidateName": "Raminta GECEVIČIENĖ",
+      "candidateId": "raminta-geceviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260943.htm",
+      "vrkCandidateId": "260943",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 15
+      }
+    },
+    {
+      "candidateName": "Liudvika TRASYKYTĖ",
+      "candidateId": "liudvika-trasykyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260944.htm",
+      "vrkCandidateId": "260944",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 16
+      }
+    },
+    {
+      "candidateName": "Algirdas BALČYTIS",
+      "candidateId": "algirdas-balcytis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260945.htm",
+      "vrkCandidateId": "260945",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 17
+      }
+    },
+    {
+      "candidateName": "Artūras ORLAUSKAS",
+      "candidateId": "arturas-orlauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260946.htm",
+      "vrkCandidateId": "260946",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 18
+      }
+    },
+    {
+      "candidateName": "Valentinas KALINAUSKAS",
+      "candidateId": "valentinas-kalinauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260947.htm",
+      "vrkCandidateId": "260947",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 19
+      }
+    },
+    {
+      "candidateName": "Anatolijus RIMKEVIČIUS",
+      "candidateId": "anatolijus-rimkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260948.htm",
+      "vrkCandidateId": "260948",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 20
+      }
+    },
+    {
+      "candidateName": "Arūnas KARLONAS",
+      "candidateId": "arunas-karlonas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260949.htm",
+      "vrkCandidateId": "260949",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 21
+      }
+    },
+    {
+      "candidateName": "Danutė POVELAUSKIENĖ",
+      "candidateId": "danute-povelauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260950.htm",
+      "vrkCandidateId": "260950",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 22
+      }
+    },
+    {
+      "candidateName": "Arvydas KLIMKEVIČIUS",
+      "candidateId": "arvydas-klimkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260951.htm",
+      "vrkCandidateId": "260951",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Naujoji sąjunga (socialliberalai)",
+        "sarasoNumeris": 5,
+        "sarasoId": "1734",
+        "numerisSarase": 23
+      }
+    },
+    {
+      "candidateName": "Sergej DMITRIJEV",
+      "candidateId": "sergej-dmitrijev",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260691.htm",
+      "vrkCandidateId": "260691",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Valdemar TOMAŠEVSKI",
+      "candidateId": "valdemar-tomasevski",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260835.htm",
+      "vrkCandidateId": "260835",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Tadeuš ANDŽEJEVSKI",
+      "candidateId": "tadeus-andzejevski",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260836.htm",
+      "vrkCandidateId": "260836",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Vladimir ORECHOV",
+      "candidateId": "vladimir-orechov",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260692.htm",
+      "vrkCandidateId": "260692",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Gabriel Jan MINCEVIČ",
+      "candidateId": "gabriel-jan-mincevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260838.htm",
+      "vrkCandidateId": "260838",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Tatjana VOJEIKA",
+      "candidateId": "tatjana-vojeika",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260693.htm",
+      "vrkCandidateId": "260693",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Michal MACKEVIČ",
+      "candidateId": "michal-mackevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260837.htm",
+      "vrkCandidateId": "260837",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Viktor BALAKIN",
+      "candidateId": "viktor-balakin",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260703.htm",
+      "vrkCandidateId": "260703",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Juzef KVETKOVSKIJ",
+      "candidateId": "juzef-kvetkovskij",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260839.htm",
+      "vrkCandidateId": "260839",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Marija JĖČIUVIENĖ",
+      "candidateId": "marija-jeciuviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260704.htm",
+      "vrkCandidateId": "260704",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Zbignev JEDINSKIJ",
+      "candidateId": "zbignev-jedinskij",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260840.htm",
+      "vrkCandidateId": "260840",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Nikolajus ŠALKOVSKIS",
+      "candidateId": "nikolajus-salkovskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260705.htm",
+      "vrkCandidateId": "260705",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 12
+      }
+    },
+    {
+      "candidateName": "Irena NARKEVIČ",
+      "candidateId": "irena-narkevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260841.htm",
+      "vrkCandidateId": "260841",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Nikolajus MANANIKOVAS",
+      "candidateId": "nikolajus-mananikovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260706.htm",
+      "vrkCandidateId": "260706",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 14
+      }
+    },
+    {
+      "candidateName": "Marian GRYDZIUŠKO",
+      "candidateId": "marian-grydziusko",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260842.htm",
+      "vrkCandidateId": "260842",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 15
+      }
+    },
+    {
+      "candidateName": "Pavel BELIK",
+      "candidateId": "pavel-belik",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_257828.htm",
+      "vrkCandidateId": "257828",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 16
+      }
+    },
+    {
+      "candidateName": "Eduard TRUSEVIČ",
+      "candidateId": "eduard-trusevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260843.htm",
+      "vrkCandidateId": "260843",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 17
+      }
+    },
+    {
+      "candidateName": "Tatjana MARKOVA",
+      "candidateId": "tatjana-markova",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260844.htm",
+      "vrkCandidateId": "260844",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 18
+      }
+    },
+    {
+      "candidateName": "Jurgita JALOVECKAITĖ",
+      "candidateId": "jurgita-jaloveckaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260845.htm",
+      "vrkCandidateId": "260845",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 19
+      }
+    },
+    {
+      "candidateName": "Vanda KUZMINA",
+      "candidateId": "vanda-kuzmina",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260846.htm",
+      "vrkCandidateId": "260846",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 20
+      }
+    },
+    {
+      "candidateName": "Edvard ZAKŠEVSKIJ",
+      "candidateId": "edvard-zaksevskij",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260847.htm",
+      "vrkCandidateId": "260847",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcijos ir Lietuvos rusų sąjungos koalicija „Kartu mes jėga!“",
+        "sarasoNumeris": 6,
+        "sarasoId": "1785",
+        "numerisSarase": 21
+      }
+    },
+    {
+      "candidateName": "Egidijus KLUMBYS",
+      "candidateId": "egidijus-klumbys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260914.htm",
+      "vrkCandidateId": "260914",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos pažangos partija",
+        "sarasoNumeris": 7,
+        "sarasoId": "1714",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Rolandas PAULAUSKAS",
+      "candidateId": "rolandas-paulauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260915.htm",
+      "vrkCandidateId": "260915",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos pažangos partija",
+        "sarasoNumeris": 7,
+        "sarasoId": "1714",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Kęstutis SKAMARAKAS",
+      "candidateId": "kestutis-skamarakas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260916.htm",
+      "vrkCandidateId": "260916",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos pažangos partija",
+        "sarasoNumeris": 7,
+        "sarasoId": "1714",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Kęstutis GRINIUS",
+      "candidateId": "kestutis-grinius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260917.htm",
+      "vrkCandidateId": "260917",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos pažangos partija",
+        "sarasoNumeris": 7,
+        "sarasoId": "1714",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Kazimieras UOKA",
+      "candidateId": "kazimieras-uoka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260918.htm",
+      "vrkCandidateId": "260918",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos pažangos partija",
+        "sarasoNumeris": 7,
+        "sarasoId": "1714",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Vytautas KOLESNIKOVAS",
+      "candidateId": "vytautas-kolesnikovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260919.htm",
+      "vrkCandidateId": "260919",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos pažangos partija",
+        "sarasoNumeris": 7,
+        "sarasoId": "1714",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Violeta ANANKIENĖ",
+      "candidateId": "violeta-anankiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260920.htm",
+      "vrkCandidateId": "260920",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos pažangos partija",
+        "sarasoNumeris": 7,
+        "sarasoId": "1714",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Kazimieras NAUSĖDA",
+      "candidateId": "kazimieras-nauseda",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260921.htm",
+      "vrkCandidateId": "260921",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos pažangos partija",
+        "sarasoNumeris": 7,
+        "sarasoId": "1714",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Albertas KOVIERA",
+      "candidateId": "albertas-koviera",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260922.htm",
+      "vrkCandidateId": "260922",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos pažangos partija",
+        "sarasoNumeris": 7,
+        "sarasoId": "1714",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Marius KUNDROTAS",
+      "candidateId": "marius-kundrotas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260923.htm",
+      "vrkCandidateId": "260923",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos pažangos partija",
+        "sarasoNumeris": 7,
+        "sarasoId": "1714",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Mindaugas ŠIMKŪNAS",
+      "candidateId": "mindaugas-simkunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260924.htm",
+      "vrkCandidateId": "260924",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos pažangos partija",
+        "sarasoNumeris": 7,
+        "sarasoId": "1714",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Nida VAITONIENĖ",
+      "candidateId": "nida-vaitoniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260925.htm",
+      "vrkCandidateId": "260925",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos pažangos partija",
+        "sarasoNumeris": 7,
+        "sarasoId": "1714",
+        "numerisSarase": 12
+      }
+    },
+    {
+      "candidateName": "Rimantas LENARTAVIČIUS",
+      "candidateId": "rimantas-lenartavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260926.htm",
+      "vrkCandidateId": "260926",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos pažangos partija",
+        "sarasoNumeris": 7,
+        "sarasoId": "1714",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Arvydas PĖŠINA",
+      "candidateId": "arvydas-pesina",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260927.htm",
+      "vrkCandidateId": "260927",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos pažangos partija",
+        "sarasoNumeris": 7,
+        "sarasoId": "1714",
+        "numerisSarase": 14
+      }
+    },
+    {
+      "candidateName": "Arūnas GRUMADAS",
+      "candidateId": "arunas-grumadas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_261003.htm",
+      "vrkCandidateId": "261003",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Nacionalinė centro partija",
+        "sarasoNumeris": 8,
+        "sarasoId": "1784",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Romualdas GRIGAS",
+      "candidateId": "romualdas-grigas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_261004.htm",
+      "vrkCandidateId": "261004",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Nacionalinė centro partija",
+        "sarasoNumeris": 8,
+        "sarasoId": "1784",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Ričardas GARUOLIS",
+      "candidateId": "ricardas-garuolis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_261005.htm",
+      "vrkCandidateId": "261005",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Nacionalinė centro partija",
+        "sarasoNumeris": 8,
+        "sarasoId": "1784",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Arūnas GUMULIAUSKAS",
+      "candidateId": "arunas-gumuliauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_261006.htm",
+      "vrkCandidateId": "261006",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Nacionalinė centro partija",
+        "sarasoNumeris": 8,
+        "sarasoId": "1784",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Mindaugas KONČIUS",
+      "candidateId": "mindaugas-koncius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_261007.htm",
+      "vrkCandidateId": "261007",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Nacionalinė centro partija",
+        "sarasoNumeris": 8,
+        "sarasoId": "1784",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Vytautas GRIŠČENKO",
+      "candidateId": "vytautas-griscenko",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_261008.htm",
+      "vrkCandidateId": "261008",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Nacionalinė centro partija",
+        "sarasoNumeris": 8,
+        "sarasoId": "1784",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Juozas KOREIVA",
+      "candidateId": "juozas-koreiva",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_261009.htm",
+      "vrkCandidateId": "261009",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Nacionalinė centro partija",
+        "sarasoNumeris": 8,
+        "sarasoId": "1784",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Rimantas MAKRICKAS",
+      "candidateId": "rimantas-makrickas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_261010.htm",
+      "vrkCandidateId": "261010",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Nacionalinė centro partija",
+        "sarasoNumeris": 8,
+        "sarasoId": "1784",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Romualdas OZOLAS",
+      "candidateId": "romualdas-ozolas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_261011.htm",
+      "vrkCandidateId": "261011",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Nacionalinė centro partija",
+        "sarasoNumeris": 8,
+        "sarasoId": "1784",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Vytautas LANDSBERGIS",
+      "candidateId": "vytautas-landsbergis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260811.htm",
+      "vrkCandidateId": "260811",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Audronius AŽUBALIS",
+      "candidateId": "audronius-azubalis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260812.htm",
+      "vrkCandidateId": "260812",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Algirdas Antanas AVIŽIENIS",
+      "candidateId": "algirdas-antanas-avizienis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260813.htm",
+      "vrkCandidateId": "260813",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Emanuelis ZINGERIS",
+      "candidateId": "emanuelis-zingeris",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260814.htm",
+      "vrkCandidateId": "260814",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Laima Liucija ANDRIKIENĖ",
+      "candidateId": "laima-liucija-andrikiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260815.htm",
+      "vrkCandidateId": "260815",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Petras MUSTEIKIS",
+      "candidateId": "petras-musteikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260816.htm",
+      "vrkCandidateId": "260816",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Kęstutis MASIULIS",
+      "candidateId": "kestutis-masiulis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260817.htm",
+      "vrkCandidateId": "260817",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Egidijus VAREIKIS",
+      "candidateId": "egidijus-vareikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260818.htm",
+      "vrkCandidateId": "260818",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Vilija ALEKNAITĖ ABRAMIKIENĖ",
+      "candidateId": "vilija-aleknaite-abramikiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260819.htm",
+      "vrkCandidateId": "260819",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Rimantas Jonas DAGYS",
+      "candidateId": "rimantas-jonas-dagys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260820.htm",
+      "vrkCandidateId": "260820",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Arimantas DUMČIUS",
+      "candidateId": "arimantas-dumcius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260821.htm",
+      "vrkCandidateId": "260821",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Saulius ŠEŠTAKAUSKAS",
+      "candidateId": "saulius-sestakauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260822.htm",
+      "vrkCandidateId": "260822",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 12
+      }
+    },
+    {
+      "candidateName": "Vida AUGUSTINIENĖ",
+      "candidateId": "vida-augustiniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260823.htm",
+      "vrkCandidateId": "260823",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Raimundas ALEKNA",
+      "candidateId": "raimundas-alekna",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260824.htm",
+      "vrkCandidateId": "260824",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 14
+      }
+    },
+    {
+      "candidateName": "Edmundas SIMANAITIS",
+      "candidateId": "edmundas-simanaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260825.htm",
+      "vrkCandidateId": "260825",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 15
+      }
+    },
+    {
+      "candidateName": "Aušrys MACIJAUSKAS",
+      "candidateId": "ausrys-macijauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260826.htm",
+      "vrkCandidateId": "260826",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 16
+      }
+    },
+    {
+      "candidateName": "Kornelijus PLATELIS",
+      "candidateId": "kornelijus-platelis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260827.htm",
+      "vrkCandidateId": "260827",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 17
+      }
+    },
+    {
+      "candidateName": "Gediminas DUBAUSKAS",
+      "candidateId": "gediminas-dubauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260828.htm",
+      "vrkCandidateId": "260828",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 18
+      }
+    },
+    {
+      "candidateName": "Vidmantas POVILIONIS",
+      "candidateId": "vidmantas-povilionis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260829.htm",
+      "vrkCandidateId": "260829",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 19
+      }
+    },
+    {
+      "candidateName": "Ramūnas GARBARAVIČIUS",
+      "candidateId": "ramunas-garbaravicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260830.htm",
+      "vrkCandidateId": "260830",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 20
+      }
+    },
+    {
+      "candidateName": "Julius DAUTARTAS",
+      "candidateId": "julius-dautartas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260831.htm",
+      "vrkCandidateId": "260831",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 21
+      }
+    },
+    {
+      "candidateName": "Ričardas MALKEVIČIUS",
+      "candidateId": "ricardas-malkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260832.htm",
+      "vrkCandidateId": "260832",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 22
+      }
+    },
+    {
+      "candidateName": "Vytautas Ričardas BAČKIS",
+      "candidateId": "vytautas-ricardas-backis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260833.htm",
+      "vrkCandidateId": "260833",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 23
+      }
+    },
+    {
+      "candidateName": "Artūras VAZBYS",
+      "candidateId": "arturas-vazbys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260834.htm",
+      "vrkCandidateId": "260834",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)",
+        "sarasoNumeris": 9,
+        "sarasoId": "1739",
+        "numerisSarase": 24
+      }
+    },
+    {
+      "candidateName": "Gediminas VAGNORIUS",
+      "candidateId": "gediminas-vagnorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260644.htm",
+      "vrkCandidateId": "260644",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Stasys ŠEDBARAS",
+      "candidateId": "stasys-sedbaras",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260645.htm",
+      "vrkCandidateId": "260645",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Gražina PALIOKIENĖ",
+      "candidateId": "grazina-paliokiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260646.htm",
+      "vrkCandidateId": "260646",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Eduardas PABARČIUS",
+      "candidateId": "eduardas-pabarcius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260647.htm",
+      "vrkCandidateId": "260647",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Viktoras GERULAITIS",
+      "candidateId": "viktoras-gerulaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260648.htm",
+      "vrkCandidateId": "260648",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Kęstutis LELEIVA",
+      "candidateId": "kestutis-leleiva",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260649.htm",
+      "vrkCandidateId": "260649",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Eugenijus ČERŠKUS",
+      "candidateId": "eugenijus-cerskus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260650.htm",
+      "vrkCandidateId": "260650",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Jonas ŽUKAS",
+      "candidateId": "jonas-zukas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260651.htm",
+      "vrkCandidateId": "260651",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Algina RAŽANSKIENĖ",
+      "candidateId": "algina-razanskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260652.htm",
+      "vrkCandidateId": "260652",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Augustas PRONCKUS",
+      "candidateId": "augustas-pronckus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260653.htm",
+      "vrkCandidateId": "260653",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Albinas PILIPAUSKAS",
+      "candidateId": "albinas-pilipauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260654.htm",
+      "vrkCandidateId": "260654",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Vilhelmas DŽIUGELIS",
+      "candidateId": "vilhelmas-dziugelis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260655.htm",
+      "vrkCandidateId": "260655",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 12
+      }
+    },
+    {
+      "candidateName": "Vitas KLIMAS",
+      "candidateId": "vitas-klimas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260656.htm",
+      "vrkCandidateId": "260656",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Savinijus KATAUSKAS",
+      "candidateId": "savinijus-katauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260657.htm",
+      "vrkCandidateId": "260657",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 14
+      }
+    },
+    {
+      "candidateName": "Romualdas VALANTINAS",
+      "candidateId": "romualdas-valantinas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260659.htm",
+      "vrkCandidateId": "260659",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 15
+      }
+    },
+    {
+      "candidateName": "Algis ŽVALIAUSKAS",
+      "candidateId": "algis-zvaliauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260660.htm",
+      "vrkCandidateId": "260660",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 16
+      }
+    },
+    {
+      "candidateName": "Rima SAPON",
+      "candidateId": "rima-sapon",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260661.htm",
+      "vrkCandidateId": "260661",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 17
+      }
+    },
+    {
+      "candidateName": "Tomas JOSAS",
+      "candidateId": "tomas-josas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260662.htm",
+      "vrkCandidateId": "260662",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 18
+      }
+    },
+    {
+      "candidateName": "Simas RAČKAUSKAS",
+      "candidateId": "simas-rackauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260663.htm",
+      "vrkCandidateId": "260663",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 19
+      }
+    },
+    {
+      "candidateName": "Danutė MILEIKIENĖ",
+      "candidateId": "danute-mileikiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260664.htm",
+      "vrkCandidateId": "260664",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 20
+      }
+    },
+    {
+      "candidateName": "Jonas Laimutis KUZMA",
+      "candidateId": "jonas-laimutis-kuzma",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260665.htm",
+      "vrkCandidateId": "260665",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 21
+      }
+    },
+    {
+      "candidateName": "Genius VYGANTAS",
+      "candidateId": "genius-vygantas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260666.htm",
+      "vrkCandidateId": "260666",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 22
+      }
+    },
+    {
+      "candidateName": "Artūras ARMONAS",
+      "candidateId": "arturas-armonas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_248493.htm",
+      "vrkCandidateId": "248493",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 23
+      }
+    },
+    {
+      "candidateName": "Genovaitė ŽIOBAKIENĖ",
+      "candidateId": "genovaite-ziobakiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260667.htm",
+      "vrkCandidateId": "260667",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 24
+      }
+    },
+    {
+      "candidateName": "Redžinaldas NARBUTAS",
+      "candidateId": "redzinaldas-narbutas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260668.htm",
+      "vrkCandidateId": "260668",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 25
+      }
+    },
+    {
+      "candidateName": "Jonas KVEDERAITIS",
+      "candidateId": "jonas-kvederaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260669.htm",
+      "vrkCandidateId": "260669",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "1783",
+        "numerisSarase": 26
+      }
+    },
+    {
+      "candidateName": "Ona JUKNEVIČIENĖ",
+      "candidateId": "ona-jukneviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260798.htm",
+      "vrkCandidateId": "260798",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 11,
+        "sarasoId": "1781",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Arūnas DEGUTIS",
+      "candidateId": "arunas-degutis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260799.htm",
+      "vrkCandidateId": "260799",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 11,
+        "sarasoId": "1781",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Danutė BUDREIKAITĖ",
+      "candidateId": "danute-budreikaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260800.htm",
+      "vrkCandidateId": "260800",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 11,
+        "sarasoId": "1781",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Šarūnas BIRUTIS",
+      "candidateId": "sarunas-birutis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260801.htm",
+      "vrkCandidateId": "260801",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 11,
+        "sarasoId": "1781",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Jolanta DIČKUTĖ",
+      "candidateId": "jolanta-dickute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260802.htm",
+      "vrkCandidateId": "260802",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 11,
+        "sarasoId": "1781",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Arturas JUŠKAUSKAS",
+      "candidateId": "arturas-juskauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260803.htm",
+      "vrkCandidateId": "260803",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 11,
+        "sarasoId": "1781",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Rima TARBŪNIENĖ",
+      "candidateId": "rima-tarbuniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260804.htm",
+      "vrkCandidateId": "260804",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 11,
+        "sarasoId": "1781",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Aldona PETRAUSKIENĖ",
+      "candidateId": "aldona-petrauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260805.htm",
+      "vrkCandidateId": "260805",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 11,
+        "sarasoId": "1781",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Mindaugas SUBAČIUS",
+      "candidateId": "mindaugas-subacius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260806.htm",
+      "vrkCandidateId": "260806",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 11,
+        "sarasoId": "1781",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Valentinas JARUŠEVIČIUS",
+      "candidateId": "valentinas-jarusevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260807.htm",
+      "vrkCandidateId": "260807",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 11,
+        "sarasoId": "1781",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Vladimiras BONDARENKA",
+      "candidateId": "vladimiras-bondarenka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260808.htm",
+      "vrkCandidateId": "260808",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 11,
+        "sarasoId": "1781",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Aidas GEDVILAS",
+      "candidateId": "aidas-gedvilas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260809.htm",
+      "vrkCandidateId": "260809",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 11,
+        "sarasoId": "1781",
+        "numerisSarase": 12
+      }
+    },
+    {
+      "candidateName": "Manfredas ŽYMANTAS",
+      "candidateId": "manfredas-zymantas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260810.htm",
+      "vrkCandidateId": "260810",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 11,
+        "sarasoId": "1781",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Eugenijus MALDEIKIS",
+      "candidateId": "eugenijus-maldeikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260894.htm",
+      "vrkCandidateId": "260894",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų demokratų partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "1737",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Rolandas PAVILIONIS",
+      "candidateId": "rolandas-pavilionis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260895.htm",
+      "vrkCandidateId": "260895",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų demokratų partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "1737",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Jonas LIONGINAS",
+      "candidateId": "jonas-lionginas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260896.htm",
+      "vrkCandidateId": "260896",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų demokratų partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "1737",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Eimundas SAVICKAS",
+      "candidateId": "eimundas-savickas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260897.htm",
+      "vrkCandidateId": "260897",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų demokratų partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "1737",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Aleksander POPLAVSKI",
+      "candidateId": "aleksander-poplavski",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260898.htm",
+      "vrkCandidateId": "260898",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų demokratų partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "1737",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Marija Aušrinė PAVILIONIENĖ",
+      "candidateId": "marija-ausrine-pavilioniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260899.htm",
+      "vrkCandidateId": "260899",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų demokratų partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "1737",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Dailis Alfonsas BARAKAUSKAS",
+      "candidateId": "dailis-alfonsas-barakauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260900.htm",
+      "vrkCandidateId": "260900",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų demokratų partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "1737",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Jonas ČIULEVIČIUS",
+      "candidateId": "jonas-ciulevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260901.htm",
+      "vrkCandidateId": "260901",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų demokratų partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "1737",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Pranas VILKAS",
+      "candidateId": "pranas-vilkas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260902.htm",
+      "vrkCandidateId": "260902",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų demokratų partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "1737",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Remigijus AČAS",
+      "candidateId": "remigijus-acas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260903.htm",
+      "vrkCandidateId": "260903",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų demokratų partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "1737",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Juozas IMBRASAS",
+      "candidateId": "juozas-imbrasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260904.htm",
+      "vrkCandidateId": "260904",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų demokratų partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "1737",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Rolandas JONIKAITIS",
+      "candidateId": "rolandas-jonikaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260905.htm",
+      "vrkCandidateId": "260905",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų demokratų partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "1737",
+        "numerisSarase": 12
+      }
+    },
+    {
+      "candidateName": "Vytautas VALEVIČIUS",
+      "candidateId": "vytautas-valevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260906.htm",
+      "vrkCandidateId": "260906",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų demokratų partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "1737",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Aušra RUČIENĖ",
+      "candidateId": "ausra-ruciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260907.htm",
+      "vrkCandidateId": "260907",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų demokratų partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "1737",
+        "numerisSarase": 14
+      }
+    },
+    {
+      "candidateName": "Kęstutis BERTEŠKA",
+      "candidateId": "kestutis-berteska",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260908.htm",
+      "vrkCandidateId": "260908",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų demokratų partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "1737",
+        "numerisSarase": 15
+      }
+    },
+    {
+      "candidateName": "Leta KALINAUSKAITĖ",
+      "candidateId": "leta-kalinauskaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260909.htm",
+      "vrkCandidateId": "260909",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų demokratų partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "1737",
+        "numerisSarase": 16
+      }
+    },
+    {
+      "candidateName": "Žygimantas ŽALNERAUSKAS",
+      "candidateId": "zygimantas-zalnerauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_253164.htm",
+      "vrkCandidateId": "253164",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų demokratų partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "1737",
+        "numerisSarase": 17
+      }
+    },
+    {
+      "candidateName": "Loreta KEKIENĖ",
+      "candidateId": "loreta-kekiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260910.htm",
+      "vrkCandidateId": "260910",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų demokratų partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "1737",
+        "numerisSarase": 18
+      }
+    },
+    {
+      "candidateName": "Vytautė CIKANAVIČIENĖ",
+      "candidateId": "vytaute-cikanaviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/euro/kandidatai/kand_anketa_l_260911.htm",
+      "vrkCandidateId": "260911",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų demokratų partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "1737",
+        "numerisSarase": 20
+      }
+    }
+  ],
+  "skipped": []
+}

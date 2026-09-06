@@ -1,0 +1,95 @@
+{
+  "electionId": "2005-lapkricio-20-seimo-kedainiai",
+  "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2005/seimas/kandidatai/vapg_sar_l_21.htm",
+  "districtsUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2005/seimas/kandidatai/vapg_sar_l_21.htm",
+  "partiesUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2005/seimas/kandidatai/part_sar_l_21.htm",
+  "districtUrls": [
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2005/seimas/kandidatai/apg_kand_l_1675.htm"
+  ],
+  "generatedAt": "2026-08-23T12:45:16+00:00",
+  "stats": {
+    "rows": 5,
+    "extracted": 5,
+    "duplicateCandidateIds": 0,
+    "districts": 1,
+    "partyNomineesDeclared": 5,
+    "selfNominated": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Tomas BAKUČIONIS",
+      "candidateId": "tomas-bakucionis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2005/seimas/kandidatai/kand_anketa_l_315625.htm",
+      "vrkCandidateId": "315625",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Kėdainių",
+        "apygardosNumeris": 43,
+        "apygardosId": "1675",
+        "iskele": "Lietuvos socialdemokratų sąjunga"
+      }
+    },
+    {
+      "candidateName": "Virginija BALTRAITIENĖ",
+      "candidateId": "virginija-baltraitiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2005/seimas/kandidatai/kand_anketa_l_315628.htm",
+      "vrkCandidateId": "315628",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Kėdainių",
+        "apygardosNumeris": 43,
+        "apygardosId": "1675",
+        "iskele": "Darbo partija"
+      }
+    },
+    {
+      "candidateName": "Steponas NAVAJAUSKAS",
+      "candidateId": "steponas-navajauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2005/seimas/kandidatai/kand_anketa_l_315627.htm",
+      "vrkCandidateId": "315627",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Kėdainių",
+        "apygardosNumeris": 43,
+        "apygardosId": "1675",
+        "iskele": "Liberalų ir centro sąjunga"
+      }
+    },
+    {
+      "candidateName": "Stasys ŠEDBARAS",
+      "candidateId": "stasys-sedbaras",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2005/seimas/kandidatai/kand_anketa_l_315626.htm",
+      "vrkCandidateId": "315626",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Kėdainių",
+        "apygardosNumeris": 43,
+        "apygardosId": "1675",
+        "iskele": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)"
+      }
+    },
+    {
+      "candidateName": "Vytautas VALAITIS",
+      "candidateId": "vytautas-valaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2005/seimas/kandidatai/kand_anketa_l_315629.htm",
+      "vrkCandidateId": "315629",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Kėdainių",
+        "apygardosNumeris": 43,
+        "apygardosId": "1675",
+        "iskele": "Liberalų demokratų partija"
+      }
+    }
+  ]
+}

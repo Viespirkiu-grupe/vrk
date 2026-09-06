@@ -1,0 +1,1524 @@
+{
+  "electionId": "2019-ep",
+  "sourceUrl": "https://www.vrk.lt/kandidatai-kandidatu-sarasai-2019-ep?srcUrl=/rinkimai/904/rnk1186/kandidatai/epKandidataiPilnasSarasas.html",
+  "generatedAt": "2026-08-18T10:16:00+00:00",
+  "stats": {
+    "rows": 302,
+    "extracted": 301,
+    "skipped": 1,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Daiva ADUTAVIČIENĖ",
+      "candidateId": "daiva-adutaviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415191.html"
+    },
+    {
+      "candidateName": "Vladislovas Česlovas AKSAMITAUSKAS",
+      "candidateId": "vladislovas-ceslovas-aksamitauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415548.html"
+    },
+    {
+      "candidateName": "Giedrius ALASEVIČIUS",
+      "candidateId": "giedrius-alasevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415168.html"
+    },
+    {
+      "candidateName": "Vilija ALEKNAITĖ ABRAMIKIENĖ",
+      "candidateId": "vilija-aleknaite-abramikiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415320.html"
+    },
+    {
+      "candidateName": "Vaida ALEKNAVIČIENĖ",
+      "candidateId": "vaida-aleknaviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415431.html"
+    },
+    {
+      "candidateName": "Karolis ALEKNAVIČIUS",
+      "candidateId": "karolis-aleknavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415600.html"
+    },
+    {
+      "candidateName": "Albinas ANČIUS",
+      "candidateId": "albinas-ancius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415189.html"
+    },
+    {
+      "candidateName": "Laima Liucija ANDRIKIENĖ",
+      "candidateId": "laima-liucija-andrikiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415314.html"
+    },
+    {
+      "candidateName": "Rimas ANDRIKIS",
+      "candidateId": "rimas-andrikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415065.html"
+    },
+    {
+      "candidateName": "Rūta ANDRIUŠKEVIČIENĖ",
+      "candidateId": "ruta-andriuskeviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415365.html"
+    },
+    {
+      "candidateName": "Alina ANDRONOVA",
+      "candidateId": "alina-andronova",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415167.html"
+    },
+    {
+      "candidateName": "Vaclovas ANDRULIS",
+      "candidateId": "vaclovas-andrulis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415430.html"
+    },
+    {
+      "candidateName": "Tadeuš ANDŽEJEVSKI",
+      "candidateId": "tadeus-andzejevski",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415259.html"
+    },
+    {
+      "candidateName": "Arvydas ANUŠAUSKAS",
+      "candidateId": "arvydas-anusauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415313.html"
+    },
+    {
+      "candidateName": "Petras AUŠTREVIČIUS",
+      "candidateId": "petras-austrevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415035.html"
+    },
+    {
+      "candidateName": "Audronius AŽUBALIS",
+      "candidateId": "audronius-azubalis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415312.html"
+    },
+    {
+      "candidateName": "Tatjana BABRAUSKIENĖ",
+      "candidateId": "tatjana-babrauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415400.html"
+    },
+    {
+      "candidateName": "Gintautas BABRAVIČIUS",
+      "candidateId": "gintautas-babravicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415577.html"
+    },
+    {
+      "candidateName": "Svetlana BABUJEVA",
+      "candidateId": "svetlana-babujeva",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415284.html"
+    },
+    {
+      "candidateName": "Andrius BAGDONAS",
+      "candidateId": "andrius-bagdonas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415043.html"
+    },
+    {
+      "candidateName": "Kęstutis BAGONAS",
+      "candidateId": "kestutis-bagonas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415588.html"
+    },
+    {
+      "candidateName": "Lina BAKANAITĖ",
+      "candidateId": "lina-bakanaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415073.html"
+    },
+    {
+      "candidateName": "Audronė BALNIONIENĖ",
+      "candidateId": "audrone-balnioniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415039.html"
+    },
+    {
+      "candidateName": "Rita BALTADUONYTĖ-LEONIENĖ",
+      "candidateId": "rita-baltaduonyte-leoniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415169.html"
+    },
+    {
+      "candidateName": "Robertas BALTRŪNAS",
+      "candidateId": "robertas-baltrunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415282.html"
+    },
+    {
+      "candidateName": "Paulė BALTRUŠAITYTĖ",
+      "candidateId": "paule-baltrusaityte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415594.html"
+    },
+    {
+      "candidateName": "Eva BANEL",
+      "candidateId": "eva-banel",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415209.html"
+    },
+    {
+      "candidateName": "Tomas BARANOVAS",
+      "candidateId": "tomas-baranovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415028.html"
+    },
+    {
+      "candidateName": "Kęstutis BARTKEVIČIUS",
+      "candidateId": "kestutis-bartkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415279.html"
+    },
+    {
+      "candidateName": "Mindaugas BASTAKIS",
+      "candidateId": "mindaugas-bastakis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415396.html"
+    },
+    {
+      "candidateName": "Vaidas BENDARAVIČIUS",
+      "candidateId": "vaidas-bendaravicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415277.html"
+    },
+    {
+      "candidateName": "Jolanta BENIULIENĖ",
+      "candidateId": "jolanta-beniuliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415570.html"
+    },
+    {
+      "candidateName": "Audronė BERESNEVIČIENĖ",
+      "candidateId": "audrone-beresneviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415285.html"
+    },
+    {
+      "candidateName": "Olegas BERIOZOVAS",
+      "candidateId": "olegas-beriozovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415587.html"
+    },
+    {
+      "candidateName": "Juozas BERNATONIS",
+      "candidateId": "juozas-bernatonis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415129.html"
+    },
+    {
+      "candidateName": "Danutė BLAŽYTĖ-BAUŽIENĖ",
+      "candidateId": "danute-blazyte-bauziene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415354.html"
+    },
+    {
+      "candidateName": "Vilija BLINKEVIČIŪTĖ",
+      "candidateId": "vilija-blinkeviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415434.html"
+    },
+    {
+      "candidateName": "Rasa BUDBERGYTĖ",
+      "candidateId": "rasa-budbergyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415435.html"
+    },
+    {
+      "candidateName": "Vytautas BUDNIKAS",
+      "candidateId": "vytautas-budnikas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415096.html"
+    },
+    {
+      "candidateName": "Ieva BUDRAITĖ",
+      "candidateId": "ieva-budraite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415192.html"
+    },
+    {
+      "candidateName": "Valentinas BUKAUSKAS",
+      "candidateId": "valentinas-bukauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415210.html"
+    },
+    {
+      "candidateName": "Algis ČAPLIKAS",
+      "candidateId": "algis-caplikas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415585.html"
+    },
+    {
+      "candidateName": "Rasa ČEPAITIENĖ",
+      "candidateId": "rasa-cepaitiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415091.html"
+    },
+    {
+      "candidateName": "Regimantas ČIUPAILA",
+      "candidateId": "regimantas-ciupaila",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415571.html"
+    },
+    {
+      "candidateName": "Viktorija ČMILYTĖ-NIELSEN",
+      "candidateId": "viktorija-cmilyte-nielsen",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415036.html"
+    },
+    {
+      "candidateName": "Rimantas Jonas DAGYS",
+      "candidateId": "rimantas-jonas-dagys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415321.html"
+    },
+    {
+      "candidateName": "Vytautas DANILEVIČIUS",
+      "candidateId": "vytautas-danilevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415025.html"
+    },
+    {
+      "candidateName": "Kęstutis DAUKŠYS",
+      "candidateId": "kestutis-dauksys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415130.html"
+    },
+    {
+      "candidateName": "Larisa DMITRIJEVA",
+      "candidateId": "larisa-dmitrijeva",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415208.html"
+    },
+    {
+      "candidateName": "Sigitas DOBILINSKAS",
+      "candidateId": "sigitas-dobilinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415427.html"
+    },
+    {
+      "candidateName": "Kęstutis DUBNIKAS",
+      "candidateId": "kestutis-dubnikas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415103.html"
+    },
+    {
+      "candidateName": "Arūnas DUDĖNAS",
+      "candidateId": "arunas-dudenas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415443.html"
+    },
+    {
+      "candidateName": "Eligijus DZEŽULSKIS-DUONYS",
+      "candidateId": "eligijus-dzezulskis-duonys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415094.html"
+    },
+    {
+      "candidateName": "Algirdas ENDRIUKAITIS",
+      "candidateId": "algirdas-endriukaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415095.html"
+    },
+    {
+      "candidateName": "Dainius GAIŽAUSKAS",
+      "candidateId": "dainius-gaizauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415390.html"
+    },
+    {
+      "candidateName": "Mindaugas GALIAUSKAS",
+      "candidateId": "mindaugas-galiauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415183.html"
+    },
+    {
+      "candidateName": "Žilvinas GALIMOVAS",
+      "candidateId": "zilvinas-galimovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415032.html"
+    },
+    {
+      "candidateName": "Nerijus GALVANAUSKAS",
+      "candidateId": "nerijus-galvanauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415031.html"
+    },
+    {
+      "candidateName": "Dalia GAURYTĖ",
+      "candidateId": "dalia-gauryte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415247.html"
+    },
+    {
+      "candidateName": "Aidas GEDVILAS",
+      "candidateId": "aidas-gedvilas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415194.html"
+    },
+    {
+      "candidateName": "Martynas GEDVILAS",
+      "candidateId": "martynas-gedvilas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415265.html"
+    },
+    {
+      "candidateName": "Jolanta GEDVILIENĖ",
+      "candidateId": "jolanta-gedviliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415136.html"
+    },
+    {
+      "candidateName": "Eugenijus GENTVILAS",
+      "candidateId": "eugenijus-gentvilas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415037.html"
+    },
+    {
+      "candidateName": "Neris GERMANAS",
+      "candidateId": "neris-germanas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415145.html"
+    },
+    {
+      "candidateName": "Vaida GIRAITYTĖ",
+      "candidateId": "vaida-giraityte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415203.html"
+    },
+    {
+      "candidateName": "Gintaras GIRŠTAUTAS",
+      "candidateId": "gintaras-girstautas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415572.html"
+    },
+    {
+      "candidateName": "Alma GOLCIENĖ",
+      "candidateId": "alma-golciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415137.html"
+    },
+    {
+      "candidateName": "Roman Alexis Christian GORECKI-MICKIEWICZ",
+      "candidateId": "roman-alexis-christian-gorecki-mickiewicz",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415582.html"
+    },
+    {
+      "candidateName": "Edmundas GREIMAS",
+      "candidateId": "edmundas-greimas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415187.html"
+    },
+    {
+      "candidateName": "Raminta GUDONYTĖ",
+      "candidateId": "raminta-gudonyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415199.html"
+    },
+    {
+      "candidateName": "Antanas GUOGA",
+      "candidateId": "antanas-guoga",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415349.html"
+    },
+    {
+      "candidateName": "Rolandas GURAUSKAS",
+      "candidateId": "rolandas-gurauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415270.html"
+    },
+    {
+      "candidateName": "Marius GURSKAS",
+      "candidateId": "marius-gurskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415044.html"
+    },
+    {
+      "candidateName": "Evaldas GUSTAS",
+      "candidateId": "evaldas-gustas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415131.html"
+    },
+    {
+      "candidateName": "Juozas IMBRASAS",
+      "candidateId": "juozas-imbrasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415281.html"
+    },
+    {
+      "candidateName": "Stasys JAKELIŪNAS",
+      "candidateId": "stasys-jakeliunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415391.html"
+    },
+    {
+      "candidateName": "Sandra JAKŠTIENĖ",
+      "candidateId": "sandra-jakstiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415202.html"
+    },
+    {
+      "candidateName": "Margarita JANKAUSKAITĖ",
+      "candidateId": "margarita-jankauskaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415428.html"
+    },
+    {
+      "candidateName": "Donatas JANKAUSKAS",
+      "candidateId": "donatas-jankauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415306.html"
+    },
+    {
+      "candidateName": "Romas JANKAUSKAS",
+      "candidateId": "romas-jankauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415068.html"
+    },
+    {
+      "candidateName": "Kęstutis JARAŠIŪNAS",
+      "candidateId": "kestutis-jarasiunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415098.html"
+    },
+    {
+      "candidateName": "Jonas JARUTIS",
+      "candidateId": "jonas-jarutis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415392.html"
+    },
+    {
+      "candidateName": "Zbignev JEDINSKIJ",
+      "candidateId": "zbignev-jedinskij",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415246.html"
+    },
+    {
+      "candidateName": "Antanas JODAUGA",
+      "candidateId": "antanas-jodauga",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415425.html"
+    },
+    {
+      "candidateName": "Austėja JONAITYTĖ",
+      "candidateId": "austeja-jonaityte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415184.html"
+    },
+    {
+      "candidateName": "Vytautas JUCIUS",
+      "candidateId": "vytautas-jucius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415267.html"
+    },
+    {
+      "candidateName": "Vigilijus JUKNA",
+      "candidateId": "vigilijus-jukna",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415212.html"
+    },
+    {
+      "candidateName": "Rasa JUKNEVIČIENĖ",
+      "candidateId": "rasa-jukneviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415311.html"
+    },
+    {
+      "candidateName": "Kęstutis JUKNIS",
+      "candidateId": "kestutis-juknis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415355.html"
+    },
+    {
+      "candidateName": "Daiva JUODELIENĖ",
+      "candidateId": "daiva-juodeliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415040.html"
+    },
+    {
+      "candidateName": "Andrius JURKUS",
+      "candidateId": "andrius-jurkus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415280.html"
+    },
+    {
+      "candidateName": "Albinas JUŠKEVIČIUS",
+      "candidateId": "albinas-juskevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415348.html"
+    },
+    {
+      "candidateName": "Ieva KAČINSKAITĖ-URBONIENĖ",
+      "candidateId": "ieva-kacinskaite-urboniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415196.html"
+    },
+    {
+      "candidateName": "Algis KALEINIKAS",
+      "candidateId": "algis-kaleinikas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415264.html"
+    },
+    {
+      "candidateName": "Vytautas KAMBLEVIČIUS",
+      "candidateId": "vytautas-kamblevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415278.html"
+    },
+    {
+      "candidateName": "Julija KAMINSKAITĖ",
+      "candidateId": "julija-kaminskaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415172.html"
+    },
+    {
+      "candidateName": "Asta KANČAUSKAITĖ",
+      "candidateId": "asta-kancauskaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415350.html"
+    },
+    {
+      "candidateName": "Marius KAPOČIUS",
+      "candidateId": "marius-kapocius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415029.html"
+    },
+    {
+      "candidateName": "Vidmantas KARABINAS",
+      "candidateId": "vidmantas-karabinas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415283.html"
+    },
+    {
+      "candidateName": "Audrys KARALIUS",
+      "candidateId": "audrys-karalius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415093.html"
+    },
+    {
+      "candidateName": "Jurga KARČIAUSKAITĖ-LAGO",
+      "candidateId": "jurga-karciauskaite-lago",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415086.html"
+    },
+    {
+      "candidateName": "Linas KARPAUSKAS",
+      "candidateId": "linas-karpauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415578.html"
+    },
+    {
+      "candidateName": "Vytautas KAŠĖTA",
+      "candidateId": "vytautas-kaseta",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415574.html"
+    },
+    {
+      "candidateName": "Vilius KAVALIAUSKAS",
+      "candidateId": "vilius-kavaliauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415546.html"
+    },
+    {
+      "candidateName": "Rimantas KEKYS",
+      "candidateId": "rimantas-kekys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415072.html"
+    },
+    {
+      "candidateName": "Loreta KĖVIŠIENĖ-SALTONIENĖ",
+      "candidateId": "loreta-kevisiene-saltoniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415353.html"
+    },
+    {
+      "candidateName": "Gediminas KIRKILAS",
+      "candidateId": "gediminas-kirkilas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415125.html"
+    },
+    {
+      "candidateName": "Vytis KISIELIUS",
+      "candidateId": "vytis-kisielius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415200.html"
+    },
+    {
+      "candidateName": "Robert KOMAROVSKI",
+      "candidateId": "robert-komarovski",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415255.html"
+    },
+    {
+      "candidateName": "Linas KONTRIMAS",
+      "candidateId": "linas-kontrimas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415386.html"
+    },
+    {
+      "candidateName": "Joana KORABLIOVIENĖ",
+      "candidateId": "joana-korablioviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415176.html"
+    },
+    {
+      "candidateName": "Alina KOVALEVSKAJA",
+      "candidateId": "alina-kovalevskaja",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415257.html"
+    },
+    {
+      "candidateName": "Ruslan KOVALIOV",
+      "candidateId": "ruslan-kovaliov",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415589.html"
+    },
+    {
+      "candidateName": "Genoveita KRASAUSKIENĖ",
+      "candidateId": "genoveita-krasauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415551.html"
+    },
+    {
+      "candidateName": "Linda KREIMERYTĖ",
+      "candidateId": "linda-kreimeryte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415185.html"
+    },
+    {
+      "candidateName": "Mindaugas KRENCIUS",
+      "candidateId": "mindaugas-krencius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415362.html"
+    },
+    {
+      "candidateName": "Virginija KRIAUČIŪNAITĖ",
+      "candidateId": "virginija-kriauciunaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415363.html"
+    },
+    {
+      "candidateName": "Vidmantas KRIKŠTAPONIS",
+      "candidateId": "vidmantas-krikstaponis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415197.html"
+    },
+    {
+      "candidateName": "Kristupas Augustas KRIVICKAS",
+      "candidateId": "kristupas-augustas-krivickas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415345.html"
+    },
+    {
+      "candidateName": "Raja KRUPENINA",
+      "candidateId": "raja-krupenina",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415201.html"
+    },
+    {
+      "candidateName": "Arneta KRUPNIK",
+      "candidateId": "arneta-krupnik",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415206.html"
+    },
+    {
+      "candidateName": "Jolanta KRUTKEVIČIENĖ",
+      "candidateId": "jolanta-krutkeviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415366.html"
+    },
+    {
+      "candidateName": "Asta KUBILIENĖ",
+      "candidateId": "asta-kubiliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415405.html"
+    },
+    {
+      "candidateName": "Andrius KUBILIUS",
+      "candidateId": "andrius-kubilius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415309.html"
+    },
+    {
+      "candidateName": "Darius KUDIRKA",
+      "candidateId": "darius-kudirka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415581.html"
+    },
+    {
+      "candidateName": "Andrej KUGMEROV",
+      "candidateId": "andrej-kugmerov",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415230.html"
+    },
+    {
+      "candidateName": "Mindaugas KUKLIERIUS",
+      "candidateId": "mindaugas-kuklierius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415602.html"
+    },
+    {
+      "candidateName": "Paulius KUNČINAS",
+      "candidateId": "paulius-kuncinas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415592.html"
+    },
+    {
+      "candidateName": "Marius KUNDROTAS",
+      "candidateId": "marius-kundrotas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415351.html"
+    },
+    {
+      "candidateName": "Andrius KUPČINSKAS",
+      "candidateId": "andrius-kupcinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415323.html"
+    },
+    {
+      "candidateName": "Remigijus LAPINSKAS",
+      "candidateId": "remigijus-lapinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415180.html"
+    },
+    {
+      "candidateName": "Faustas LATĖNAS",
+      "candidateId": "faustas-latenas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415088.html"
+    },
+    {
+      "candidateName": "Mečys LAURINKUS",
+      "candidateId": "mecys-laurinkus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415178.html"
+    },
+    {
+      "candidateName": "Inga LAURUŠONĖ",
+      "candidateId": "inga-laurusone",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415174.html"
+    },
+    {
+      "candidateName": "Orinta LEIPUTĖ",
+      "candidateId": "orinta-leipute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415438.html"
+    },
+    {
+      "candidateName": "Arminas LYDEKA",
+      "candidateId": "arminas-lydeka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415042.html"
+    },
+    {
+      "candidateName": "Antanas LUKOŠEVIČIUS",
+      "candidateId": "antanas-lukosevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415591.html"
+    },
+    {
+      "candidateName": "Valdas LUKOŠEVIČIUS",
+      "candidateId": "valdas-lukosevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415132.html"
+    },
+    {
+      "candidateName": "Paulius LUKŠEVIČIUS",
+      "candidateId": "paulius-luksevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415305.html"
+    },
+    {
+      "candidateName": "Vidmantas MACEVIČIUS",
+      "candidateId": "vidmantas-macevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415269.html"
+    },
+    {
+      "candidateName": "Antanas MAKAREVIČIUS",
+      "candidateId": "antanas-makarevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415207.html"
+    },
+    {
+      "candidateName": "Aušra MALDEIKIENĖ",
+      "candidateId": "ausra-maldeikiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415165.html"
+    },
+    {
+      "candidateName": "Aldona MARCINKEVIČIENĖ",
+      "candidateId": "aldona-marcinkeviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415104.html"
+    },
+    {
+      "candidateName": "Raimondas Šarūnas MARČIULIONIS",
+      "candidateId": "raimondas-sarunas-marciulionis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415385.html"
+    },
+    {
+      "candidateName": "Marius MARKUCKAS",
+      "candidateId": "marius-markuckas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415097.html"
+    },
+    {
+      "candidateName": "Kęstutis MASIULIS",
+      "candidateId": "kestutis-masiulis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415315.html"
+    },
+    {
+      "candidateName": "Laimutė MATKEVIČIENĖ",
+      "candidateId": "laimute-matkeviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415401.html"
+    },
+    {
+      "candidateName": "Algimantas MATULEVIČIUS",
+      "candidateId": "algimantas-matulevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415138.html"
+    },
+    {
+      "candidateName": "Jonas MATULEVIČIUS",
+      "candidateId": "jonas-matulevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415359.html"
+    },
+    {
+      "candidateName": "Gvidas MAZGELIS",
+      "candidateId": "gvidas-mazgelis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415186.html"
+    },
+    {
+      "candidateName": "Valentinas MAZURONIS",
+      "candidateId": "valentinas-mazuronis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415211.html"
+    },
+    {
+      "candidateName": "Jūratė MAŽEIKYTĖ",
+      "candidateId": "jurate-mazeikyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415181.html"
+    },
+    {
+      "candidateName": "Liudas MAŽYLIS",
+      "candidateId": "liudas-mazylis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415308.html"
+    },
+    {
+      "candidateName": "Sigitas MECELICA",
+      "candidateId": "sigitas-mecelica",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415188.html"
+    },
+    {
+      "candidateName": "Edita MERKEVIČIENĖ",
+      "candidateId": "edita-merkeviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415352.html"
+    },
+    {
+      "candidateName": "Darius MEŠKAITIS",
+      "candidateId": "darius-meskaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415596.html"
+    },
+    {
+      "candidateName": "Aleksandr MICHAILOV",
+      "candidateId": "aleksandr-michailov",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415228.html"
+    },
+    {
+      "candidateName": "Jurgis MIKAILA",
+      "candidateId": "jurgis-mikaila",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415554.html"
+    },
+    {
+      "candidateName": "Aurimas MIKNIAVIČIUS",
+      "candidateId": "aurimas-mikniavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415139.html"
+    },
+    {
+      "candidateName": "Rūta MILIŪTĖ",
+      "candidateId": "ruta-miliute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415393.html"
+    },
+    {
+      "candidateName": "Eglė MIRONČIKIENĖ",
+      "candidateId": "egle-mironcikiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415092.html"
+    },
+    {
+      "candidateName": "Vitalijus MITROFANOVAS",
+      "candidateId": "vitalijus-mitrofanovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415441.html"
+    },
+    {
+      "candidateName": "Nerijus MOCKUS",
+      "candidateId": "nerijus-mockus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415273.html"
+    },
+    {
+      "candidateName": "Laima MOGENIENĖ",
+      "candidateId": "laima-mogeniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415387.html"
+    },
+    {
+      "candidateName": "Radvilė MORKŪNAITĖ-MIKULĖNIENĖ",
+      "candidateId": "radvile-morkunaite-mikuleniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415310.html"
+    },
+    {
+      "candidateName": "Rafael MUKSINOV",
+      "candidateId": "rafael-muksinov",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415263.html"
+    },
+    {
+      "candidateName": "Martynas NAGEVIČIUS",
+      "candidateId": "martynas-nagevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415038.html"
+    },
+    {
+      "candidateName": "Jaroslav NARKEVIČ",
+      "candidateId": "jaroslav-narkevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415253.html"
+    },
+    {
+      "candidateName": "Gintarė NARKEVIČIŪTĖ",
+      "candidateId": "gintare-narkeviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415326.html"
+    },
+    {
+      "candidateName": "Albert NARVOIŠ",
+      "candidateId": "albert-narvois",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415258.html"
+    },
+    {
+      "candidateName": "Andrius NAVICKAS",
+      "candidateId": "andrius-navickas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415324.html"
+    },
+    {
+      "candidateName": "Arvydas NEKROŠIUS",
+      "candidateId": "arvydas-nekrosius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415398.html"
+    },
+    {
+      "candidateName": "Vytautas NEKROŠIUS",
+      "candidateId": "vytautas-nekrosius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415177.html"
+    },
+    {
+      "candidateName": "Kęstutis NĖNIUS",
+      "candidateId": "kestutis-nenius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415573.html"
+    },
+    {
+      "candidateName": "Gitana NEVERIENĖ",
+      "candidateId": "gitana-neveriene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415593.html"
+    },
+    {
+      "candidateName": "Matas NIPARAVIČIUS",
+      "candidateId": "matas-niparavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415579.html"
+    },
+    {
+      "candidateName": "Laurynas OKOCKIS",
+      "candidateId": "laurynas-okockis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415179.html"
+    },
+    {
+      "candidateName": "Juozas OLEKAS",
+      "candidateId": "juozas-olekas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415436.html"
+    },
+    {
+      "candidateName": "Česlav OLŠEVSKI",
+      "candidateId": "ceslav-olsevski",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415245.html"
+    },
+    {
+      "candidateName": "Lina ORANTIENĖ",
+      "candidateId": "lina-orantiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415182.html"
+    },
+    {
+      "candidateName": "Romas PAKALNIS",
+      "candidateId": "romas-pakalnis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415090.html"
+    },
+    {
+      "candidateName": "Rolandas PAKSAS",
+      "candidateId": "rolandas-paksas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415074.html"
+    },
+    {
+      "candidateName": "Zdzislav PALEVIČ",
+      "candidateId": "zdzislav-palevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415250.html"
+    },
+    {
+      "candidateName": "Andrius PALIONIS",
+      "candidateId": "andrius-palionis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415133.html"
+    },
+    {
+      "candidateName": "Raimundas PALIUKAS",
+      "candidateId": "raimundas-paliukas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415556.html"
+    },
+    {
+      "candidateName": "Egidijus PAPEČKYS",
+      "candidateId": "egidijus-papeckys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415027.html"
+    },
+    {
+      "candidateName": "Marius PAREŠČIUS",
+      "candidateId": "marius-parescius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415598.html"
+    },
+    {
+      "candidateName": "Rimantas PAŠAKINSKAS",
+      "candidateId": "rimantas-pasakinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415276.html"
+    },
+    {
+      "candidateName": "Dainius Petras PAUKŠTĖ",
+      "candidateId": "dainius-petras-paukste",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415099.html"
+    },
+    {
+      "candidateName": "Artūras PAULAUSKAS",
+      "candidateId": "arturas-paulauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415544.html"
+    },
+    {
+      "candidateName": "Evelina PAULAVIČIENĖ",
+      "candidateId": "evelina-paulaviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415041.html"
+    },
+    {
+      "candidateName": "Saulius PEČELIŪNAS",
+      "candidateId": "saulius-peceliunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415325.html"
+    },
+    {
+      "candidateName": "Beata PETKEVIČ",
+      "candidateId": "beata-petkevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415256.html"
+    },
+    {
+      "candidateName": "Dovilas PETKUS",
+      "candidateId": "dovilas-petkus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415089.html"
+    },
+    {
+      "candidateName": "Modesta PETRAUSKAITĖ",
+      "candidateId": "modesta-petrauskaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415446.html"
+    },
+    {
+      "candidateName": "Rimantas PETUKAUSKAS",
+      "candidateId": "rimantas-petukauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415272.html"
+    },
+    {
+      "candidateName": "Saulius Vytas PIKŠRYS",
+      "candidateId": "saulius-vytas-piksrys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415190.html"
+    },
+    {
+      "candidateName": "Aistė PIKŠRYTĖ",
+      "candidateId": "aiste-piksryte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415170.html"
+    },
+    {
+      "candidateName": "Jonas PINSKUS",
+      "candidateId": "jonas-pinskus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415135.html"
+    },
+    {
+      "candidateName": "Vytautas Petras PLEČKAITIS",
+      "candidateId": "vytautas-petras-pleckaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415433.html"
+    },
+    {
+      "candidateName": "Ričiardas PLĖŠIKAITIS",
+      "candidateId": "riciardas-plesikaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415555.html"
+    },
+    {
+      "candidateName": "Žydrūnas PLYTNIKAS",
+      "candidateId": "zydrunas-plytnikas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415144.html"
+    },
+    {
+      "candidateName": "Virgilijus PODERYS",
+      "candidateId": "virgilijus-poderys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415395.html"
+    },
+    {
+      "candidateName": "Olga PODOLSKIENĖ",
+      "candidateId": "olga-podolskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415193.html"
+    },
+    {
+      "candidateName": "Raminta POPOVIENĖ",
+      "candidateId": "raminta-popoviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415440.html"
+    },
+    {
+      "candidateName": "Romualda POŠEVECKAJA",
+      "candidateId": "romualda-poseveckaja",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415261.html"
+    },
+    {
+      "candidateName": "Nina PUTEIKIENĖ",
+      "candidateId": "nina-puteikiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415347.html"
+    },
+    {
+      "candidateName": "Naglis PUTEIKIS",
+      "candidateId": "naglis-puteikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415358.html"
+    },
+    {
+      "candidateName": "Regina RADVILIENĖ",
+      "candidateId": "regina-radviliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415140.html"
+    },
+    {
+      "candidateName": "Vytautas RADŽVILAS",
+      "candidateId": "vytautas-radzvilas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415085.html"
+    },
+    {
+      "candidateName": "Algirdas RASLANAS",
+      "candidateId": "algirdas-raslanas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415444.html"
+    },
+    {
+      "candidateName": "Algimantas RAŠČIUS",
+      "candidateId": "algimantas-rascius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415067.html"
+    },
+    {
+      "candidateName": "Jurgis RAZMA",
+      "candidateId": "jurgis-razma",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415316.html"
+    },
+    {
+      "candidateName": "Almantas RAŽUKAS",
+      "candidateId": "almantas-razukas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415552.html"
+    },
+    {
+      "candidateName": "Marija REKST",
+      "candidateId": "marija-rekst",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415248.html"
+    },
+    {
+      "candidateName": "Gytenis RIMKEVIČIUS",
+      "candidateId": "gytenis-rimkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415543.html"
+    },
+    {
+      "candidateName": "Bronis ROPĖ",
+      "candidateId": "bronis-rope",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415402.html"
+    },
+    {
+      "candidateName": "Irina ROZOVA",
+      "candidateId": "irina-rozova",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415226.html"
+    },
+    {
+      "candidateName": "Konstantin RUBEKIN",
+      "candidateId": "konstantin-rubekin",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415173.html"
+    },
+    {
+      "candidateName": "Vaidas RUSYS",
+      "candidateId": "vaidas-rusys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415429.html"
+    },
+    {
+      "candidateName": "Justas RUŠKYS",
+      "candidateId": "justas-ruskys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415026.html"
+    },
+    {
+      "candidateName": "Julius SABATAUSKAS",
+      "candidateId": "julius-sabatauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415437.html"
+    },
+    {
+      "candidateName": "Adomas SABULIS",
+      "candidateId": "adomas-sabulis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415597.html"
+    },
+    {
+      "candidateName": "Justinas SARTAUSKAS",
+      "candidateId": "justinas-sartauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415432.html"
+    },
+    {
+      "candidateName": "Dobilas SINKEVIČIUS",
+      "candidateId": "dobilas-sinkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415069.html"
+    },
+    {
+      "candidateName": "Rimantas SINKEVIČIUS",
+      "candidateId": "rimantas-sinkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415134.html"
+    },
+    {
+      "candidateName": "Algirdas SYSAS",
+      "candidateId": "algirdas-sysas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415439.html"
+    },
+    {
+      "candidateName": "Gintarė SKAISTĖ",
+      "candidateId": "gintare-skaiste",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415322.html"
+    },
+    {
+      "candidateName": "Artūras SKARDŽIUS",
+      "candidateId": "arturas-skardzius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415128.html"
+    },
+    {
+      "candidateName": "Kęstutis SKREBYS",
+      "candidateId": "kestutis-skrebys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415357.html"
+    },
+    {
+      "candidateName": "Jolanta SOLNYŠKINIENĖ",
+      "candidateId": "jolanta-solnyskiniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415547.html"
+    },
+    {
+      "candidateName": "Lauras STACEVIČIUS",
+      "candidateId": "lauras-stacevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415404.html"
+    },
+    {
+      "candidateName": "Vidmantas STANIULIS",
+      "candidateId": "vidmantas-staniulis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415066.html"
+    },
+    {
+      "candidateName": "Kęstutis STANKEVIČIUS",
+      "candidateId": "kestutis-stankevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415033.html"
+    },
+    {
+      "candidateName": "Ignas STANKOVIČIUS",
+      "candidateId": "ignas-stankovicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415545.html"
+    },
+    {
+      "candidateName": "Kazys STARKEVIČIUS",
+      "candidateId": "kazys-starkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415319.html"
+    },
+    {
+      "candidateName": "Margarita STARKEVIČIŪTĖ",
+      "candidateId": "margarita-starkeviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415604.html"
+    },
+    {
+      "candidateName": "Karolis STASIUKĖNAS",
+      "candidateId": "karolis-stasiukenas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415030.html"
+    },
+    {
+      "candidateName": "Galina STAŠKEVIČIŪTĖ",
+      "candidateId": "galina-staskeviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415102.html"
+    },
+    {
+      "candidateName": "Birutė STATKEVIČIENĖ",
+      "candidateId": "birute-statkeviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415034.html"
+    },
+    {
+      "candidateName": "Arūnas STOŠKUS",
+      "candidateId": "arunas-stoskus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415550.html"
+    },
+    {
+      "candidateName": "Nerijus STRIKULYS",
+      "candidateId": "nerijus-strikulys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415595.html"
+    },
+    {
+      "candidateName": "Arūnas SVITOJUS",
+      "candidateId": "arunas-svitojus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415087.html"
+    },
+    {
+      "candidateName": "Eduardas ŠABLINSKAS",
+      "candidateId": "eduardas-sablinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415141.html"
+    },
+    {
+      "candidateName": "Dovilė ŠAKALIENĖ",
+      "candidateId": "dovile-sakaliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415445.html"
+    },
+    {
+      "candidateName": "Rimantė ŠALAŠEVIČIŪTĖ",
+      "candidateId": "rimante-salaseviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415142.html"
+    },
+    {
+      "candidateName": "Andrius ŠARĖJUS",
+      "candidateId": "andrius-sarejus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415262.html"
+    },
+    {
+      "candidateName": "Robertas ŠARKNICKAS",
+      "candidateId": "robertas-sarknickas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415394.html"
+    },
+    {
+      "candidateName": "Bernardas ŠATKOVSKIS",
+      "candidateId": "bernardas-satkovskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415549.html"
+    },
+    {
+      "candidateName": "Jolanta ŠČIGLINSKIENĖ",
+      "candidateId": "jolanta-sciglinskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415361.html"
+    },
+    {
+      "candidateName": "Stasys ŠEDBARAS",
+      "candidateId": "stasys-sedbaras",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415318.html"
+    },
+    {
+      "candidateName": "Laurynas ŠEDVYDIS",
+      "candidateId": "laurynas-sedvydis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415171.html"
+    },
+    {
+      "candidateName": "Andrius ŠEDŽIUS",
+      "candidateId": "andrius-sedzius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415126.html"
+    },
+    {
+      "candidateName": "Nina ŠESTERNIKOVA",
+      "candidateId": "nina-sesternikova",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415070.html"
+    },
+    {
+      "candidateName": "Irena ŠIAULIENĖ",
+      "candidateId": "irena-siauliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415143.html"
+    },
+    {
+      "candidateName": "Žilvinas ŠILGALIS",
+      "candidateId": "zilvinas-silgalis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415586.html"
+    },
+    {
+      "candidateName": "Jūratė ŠIVICKIENĖ",
+      "candidateId": "jurate-sivickiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415071.html"
+    },
+    {
+      "candidateName": "Natalja ŠLIACHTIČ",
+      "candidateId": "natalja-sliachtic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415590.html"
+    },
+    {
+      "candidateName": "Jolanta ŠMIDTIENĖ",
+      "candidateId": "jolanta-smidtiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415397.html"
+    },
+    {
+      "candidateName": "Virginijus ŠMIGELSKAS",
+      "candidateId": "virginijus-smigelskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415346.html"
+    },
+    {
+      "candidateName": "Laisvūnas ŠOPAUSKAS",
+      "candidateId": "laisvunas-sopauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415105.html"
+    },
+    {
+      "candidateName": "Karolina ŠTELMOKAITĖ",
+      "candidateId": "karolina-stelmokaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415388.html"
+    },
+    {
+      "candidateName": "Dalia ŠTRAUPAITĖ",
+      "candidateId": "dalia-straupaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415583.html"
+    },
+    {
+      "candidateName": "Lina ŠUKYTĖ-KORSAKĖ",
+      "candidateId": "lina-sukyte-korsake",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415274.html"
+    },
+    {
+      "candidateName": "Tamara ŠUKLINA",
+      "candidateId": "tamara-suklina",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415227.html"
+    },
+    {
+      "candidateName": "Rita TAMAŠUNIENĖ",
+      "candidateId": "rita-tamasuniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415251.html"
+    },
+    {
+      "candidateName": "Marija TAMKEVIČIŪTĖ",
+      "candidateId": "marija-tamkeviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415175.html"
+    },
+    {
+      "candidateName": "Daiva TAMOŠAITYTĖ",
+      "candidateId": "daiva-tamosaityte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415101.html"
+    },
+    {
+      "candidateName": "Edita TAMOŠIŪNAITĖ",
+      "candidateId": "edita-tamosiunaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415254.html"
+    },
+    {
+      "candidateName": "Vytautas TARAILĖ",
+      "candidateId": "vytautas-taraile",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415576.html"
+    },
+    {
+      "candidateName": "Valdemar TOMAŠEVSKI",
+      "candidateId": "valdemar-tomasevski",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415249.html"
+    },
+    {
+      "candidateName": "Tomas TOMILINAS",
+      "candidateId": "tomas-tomilinas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415389.html"
+    },
+    {
+      "candidateName": "Neringa TRINSKIENĖ",
+      "candidateId": "neringa-trinskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415406.html"
+    },
+    {
+      "candidateName": "Darius ULICKAS",
+      "candidateId": "darius-ulickas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415214.html"
+    },
+    {
+      "candidateName": "Vilma URBUTĖ",
+      "candidateId": "vilma-urbute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415601.html"
+    },
+    {
+      "candidateName": "Sergej URSUL",
+      "candidateId": "sergej-ursul",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415205.html"
+    },
+    {
+      "candidateName": "Viktor USPASKICH",
+      "candidateId": "viktor-uspaskich",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415195.html"
+    },
+    {
+      "candidateName": "Jolita VAICKIENĖ",
+      "candidateId": "jolita-vaickiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415266.html"
+    },
+    {
+      "candidateName": "Stasys VAINAUSKAS",
+      "candidateId": "stasys-vainauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415275.html"
+    },
+    {
+      "candidateName": "Justas VAIŠNORAS",
+      "candidateId": "justas-vaisnoras",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415127.html"
+    },
+    {
+      "candidateName": "Antanas VALIONIS",
+      "candidateId": "antanas-valionis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415426.html"
+    },
+    {
+      "candidateName": "Egidijus VAREIKIS",
+      "candidateId": "egidijus-vareikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415399.html"
+    },
+    {
+      "candidateName": "Dainius VARNAS",
+      "candidateId": "dainius-varnas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415584.html"
+    },
+    {
+      "candidateName": "Irena VASILIAUSKIENĖ",
+      "candidateId": "irena-vasiliauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415100.html"
+    },
+    {
+      "candidateName": "Marijus VELIČKA",
+      "candidateId": "marijus-velicka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415204.html"
+    },
+    {
+      "candidateName": "Birutė VĖSAITĖ",
+      "candidateId": "birute-vesaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415442.html"
+    },
+    {
+      "candidateName": "Alfonsas VILDŽIŪNAS",
+      "candidateId": "alfonsas-vildziunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415360.html"
+    },
+    {
+      "candidateName": "Jonas VILIONIS",
+      "candidateId": "jonas-vilionis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415403.html"
+    },
+    {
+      "candidateName": "Andrius VYŠNIAUSKAS",
+      "candidateId": "andrius-vysniauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415307.html"
+    },
+    {
+      "candidateName": "Justina VITKAUSKAITĖ BERNARD",
+      "candidateId": "justina-vitkauskaite-bernard",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415213.html"
+    },
+    {
+      "candidateName": "Vladimir VLASOV",
+      "candidateId": "vladimir-vlasov",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415229.html"
+    },
+    {
+      "candidateName": "Rima ZABLACKIENĖ",
+      "candidateId": "rima-zablackiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415198.html"
+    },
+    {
+      "candidateName": "Ramunė Vilija ZABULIENĖ",
+      "candidateId": "ramune-vilija-zabuliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415603.html"
+    },
+    {
+      "candidateName": "Emanuelis ZINGERIS",
+      "candidateId": "emanuelis-zingeris",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415317.html"
+    },
+    {
+      "candidateName": "Artūras ZUOKAS",
+      "candidateId": "arturas-zuokas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415580.html"
+    },
+    {
+      "candidateName": "Rimvydas ŽAGUNIS",
+      "candidateId": "rimvydas-zagunis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415553.html"
+    },
+    {
+      "candidateName": "Anastasija Marija ŽAKAITĖ",
+      "candidateId": "anastasija-marija-zakaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415356.html"
+    },
+    {
+      "candidateName": "Remigijus ŽEMAITAITIS",
+      "candidateId": "remigijus-zemaitaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415271.html"
+    },
+    {
+      "candidateName": "Rasa ŽEMAITĖ",
+      "candidateId": "rasa-zemaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415166.html"
+    },
+    {
+      "candidateName": "Valentina ŽIGIENĖ",
+      "candidateId": "valentina-zigiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415364.html"
+    },
+    {
+      "candidateName": "Albinas ŽYMANČIUS",
+      "candidateId": "albinas-zymancius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/904/rnk1186/kandidatai/epKandidatasAnketa_rkndId-2415268.html"
+    }
+  ],
+  "skipped": [
+    {
+      "rowIndex": 1,
+      "reason": "no-cells"
+    }
+  ]
+}

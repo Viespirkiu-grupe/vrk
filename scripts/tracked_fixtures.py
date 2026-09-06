@@ -13,11 +13,19 @@ What git carries is the subset this module selects, and the rule is one number:
 
 A *unit* is a candidate directory with all of its files together, a listing
 subdirectory (`lists/`, `districts/`, `municipalities/`, ...), one election's
-`samples/results/<election-id>/` tree, or a single top-level listing file
-(`list.html`, `page.html`, `lists-index.html`, ...). Units rather than files,
-because a candidate whose `anketa.html` was tracked and whose `biografija.html`
-was not would not fail -- it would quietly parse to a candidate with no
-biography, and the test asserting on that biography would blame the parser.
+`samples/results/<election-id>/` tree, a single top-level listing file
+(`list.html`, `page.html`, `lists-index.html`, ...), or -- since issue #145 --
+one file of `sitemaps/`, the crawl plans and results files the parse and
+results tests read. Units rather than files, because a candidate whose
+`anketa.html` was tracked and whose `biografija.html` was not would not fail
+-- it would quietly parse to a candidate with no biography, and the test
+asserting on that biography would blame the parser.
+
+The sitemaps came in because a CI run skipped 142 tests for want of them
+alone, while 76 of the 90 files together are under 10 MiB: every Seimas,
+presidential, EP and mayoral election's plan and results file. The 14 that
+stay local are the municipal generals' 10,000-entry listings and their
+results trees, whose tests are the `lists/` walks that skip anyway.
 
 Only the extensions the parsers open are eligible: `.html`, `.htm`, `.json`,
 `.doc` -- and a candidate's retained portrait, `portrait.<ext>` beside the
@@ -79,9 +87,11 @@ def _unit_size(paths: list[Path]) -> int:
     return sum(path.stat().st_size for path in paths)
 
 
-def _units(samples_root: Path) -> list[list[Path]]:
-    """Every candidate group, listing subtree, results tree and listing file."""
+def _units(repo_root: Path) -> list[list[Path]]:
+    """Every candidate group, listing subtree, results tree, listing file and
+    sitemap file."""
     units: list[list[Path]] = []
+    samples_root = repo_root / "samples"
 
     html_root = samples_root / "html"
     if html_root.is_dir():
@@ -101,23 +111,33 @@ def _units(samples_root: Path) -> list[list[Path]]:
             if election.is_dir():
                 units.append(_unit_files(election))
 
+    sitemaps_root = repo_root / "sitemaps"
+    if sitemaps_root.is_dir():
+        for path in sorted(sitemaps_root.iterdir()):
+            if path.is_file() and path.suffix.lower() == ".json":
+                units.append([path])
+
     return units
 
 
 def selected_paths(repo_root: Path = REPO_ROOT) -> list[str]:
     """The repo-relative fixture paths the rule tracks, in git's order."""
-    samples_root = repo_root / "samples"
     selected: list[str] = []
-    for unit in _units(samples_root):
+    for unit in _units(repo_root):
         if unit and _unit_size(unit) <= UNIT_LIMIT_BYTES:
             selected.extend(path.relative_to(repo_root).as_posix() for path in unit)
     return sorted(selected)
 
 
+#: The gitignored trees the rule selects from; `--sync` force-adds past the
+#: ignore rules.
+TRACKED_ROOTS = ("samples", "sitemaps")
+
+
 def tracked_paths(repo_root: Path = REPO_ROOT) -> list[str]:
-    """What git currently carries under `samples/`."""
+    """What git currently carries under the tracked roots."""
     listing = subprocess.run(
-        ["git", "ls-files", "-z", "--", "samples"],
+        ["git", "ls-files", "-z", "--", *TRACKED_ROOTS],
         cwd=repo_root,
         capture_output=True,
         check=True,
@@ -162,6 +182,15 @@ def main(argv: list[str] | None = None) -> int:
     to_drop = sorted(set(tracked) - set(selected))
 
     if args.sync:
+        # A worktree reaches the local trees through per-entry symlinks into
+        # the main checkout; git would store the link, not the file, so a
+        # selected symlink is replaced by a copy of its target first.
+        for relative in to_add:
+            path = REPO_ROOT / relative
+            if path.is_symlink():
+                content = path.resolve().read_bytes()
+                path.unlink()
+                path.write_bytes(content)
         if to_add:
             _git(REPO_ROOT, "add", "-f", paths=to_add)
         if to_drop:

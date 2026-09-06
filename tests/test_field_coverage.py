@@ -328,7 +328,7 @@ class UnmappedFillTests(unittest.TestCase):
         # 30 cells of issue #131 are mapped, and the two stray-record cells
         # the map excludes on purpose (anketa.pomegiai on 2002-gruodzio-22,
         # anketa.kita-apie-save on 2000-kovo-19) sit under the floor.
-        local_data.require(DATA_ROOT)
+        local_data.require_corpus()
         paths = script.concept_paths(CONCEPT_MAP)
         election_ids = sorted(child.name for child in DATA_ROOT.iterdir() if child.is_dir() and any(child.glob("*.json")))
         self.assertEqual(script.unmapped_fills(DATA_ROOT, paths, election_ids, sample=300), [])

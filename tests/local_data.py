@@ -18,13 +18,25 @@ than by cloning it, and `.gitignore` keeps them out of git:
 A test that reads one of them used to fail on a machine that had never scraped
 anything: 990 failures and 194 errors on a fresh clone, all of them
 `FileNotFoundError` (issue #83). They skip now, naming the command that would
-produce what they wanted. Three ways in:
+produce what they wanted. Four ways in:
 
 * the root `conftest.py` turns a `FileNotFoundError` raised under one of these
-  roots into a skip, which covers every test that simply opens a fixture;
+  roots into a skip, which covers every test that simply opens a fixture --
+  but only when the *unit* the path belongs to is absent (`unit_of`): the
+  candidate directory under `samples/html/<election>/`, the election's
+  `samples/results/` tree, the retained candidate under `samples-full/`, the
+  sitemap file, the election directory under `data/`. A path missing inside a
+  unit that is here is a parser building the wrong path, and stays a failure.
+  Issue #145 measured the alternative: any `OSError` under the four roots
+  became a skip, and a one-character parser bug ("anketa.htm") turned 18
+  passing tests into 18 skips with the suite exiting 0.
 * `require(path)` is for the tests that would otherwise fail an assertion
   instead of raising -- a glob over a missing directory yields nothing, and
   `0 != 600` does not say what is wrong;
+* `require_corpus()` is for the tests that read `data/` as a whole: it skips
+  unless an election's records are actually there (a `data/` holding only a
+  coverage report is not a corpus), and with `complete=True` unless every
+  registered election is, which is what a pin on the whole corpus assumes;
 * `Fixture(load, ...)` is for a class that parses several fixtures of which a
   clone carries only some. Parsed in `setUp`, one absent fixture skips every
   test in the class; declared as a lazily loaded attribute, only the tests
@@ -33,6 +45,7 @@ produce what they wanted. Three ways in:
 
 from __future__ import annotations
 
+import json
 import os
 import unittest
 from collections.abc import Callable
@@ -40,6 +53,7 @@ from pathlib import Path
 from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+REGISTRY_PATH = REPO_ROOT / "scraper" / "elections.json"
 
 #: The directories `.gitignore` keeps out of git, in the order a path is matched.
 LOCAL_DATA_ROOTS = ("samples", "samples-full", "sitemaps", "data")
@@ -72,18 +86,52 @@ def _remedy(parts: tuple[str, ...]) -> str:
     return f"retained HTML is never tracked; it comes from a full scrape of {parts[1] if len(parts) > 1 else 'an election'}"
 
 
-def describe(path: Path | str) -> str | None:
-    """Why `path` is absent, or None when it is not local-only data at all."""
+def unit_of(relative: Path) -> Path:
+    """The local-data unit a repo-relative path belongs to -- what a scrape
+    produces whole, and what a clone either has or lacks whole:
+
+        samples/html/<election>/<unit>/…   -> samples/html/<election>/<unit>
+        samples/results/<election>/…       -> samples/results/<election>
+        samples-full/<election>/<cand>/…   -> samples-full/<election>/<cand>
+        sitemaps/<file>                    -> sitemaps/<file>
+        data/<election>/…                  -> data/<election>
+
+    The same granularity `scripts/tracked_fixtures.py` tracks at, so a
+    tracked unit is complete or absent, never half here. Anything shorter
+    than its unit (the election directory itself, say) is its own unit.
+    """
+    parts = relative.parts
+    root = parts[0] if parts else ""
+    if root == "samples" and len(parts) >= 2:
+        if parts[1] == "html":
+            return Path(*parts[:4]) if len(parts) >= 4 else relative
+        if parts[1] == "results":
+            return Path(*parts[:3]) if len(parts) >= 3 else relative
+        return relative
+    if root == "samples-full":
+        return Path(*parts[:3]) if len(parts) >= 3 else relative
+    if root in ("sitemaps", "data"):
+        return Path(*parts[:2]) if len(parts) >= 2 else relative
+    return relative
+
+
+def describe(path: Path | str, repo_root: Path = REPO_ROOT) -> str | None:
+    """Why `path` is absent, or None when its absence is not a clone's --
+    because it is not local-only data at all, or because the unit it belongs
+    to *is* in this checkout and the path was built wrongly."""
     # `abspath`, not `resolve`: a checkout may reach these trees through a
     # symlink, and following it would land outside the repository.
     try:
-        relative = Path(os.path.abspath(path)).relative_to(REPO_ROOT)
+        relative = Path(os.path.abspath(path)).relative_to(repo_root)
     except ValueError:
         return None
     parts = relative.parts
     if not parts or parts[0] not in LOCAL_DATA_ROOTS:
         return None
-    return f"{relative.as_posix()} is not in this checkout: {_remedy(parts)}"
+    unit = unit_of(relative)
+    if (repo_root / unit).exists():
+        return None
+    return f"{unit.as_posix()} is not in this checkout: {_remedy(parts)}"
 
 
 def page_names(directory: Path) -> set[str]:
@@ -108,6 +156,46 @@ def require(*paths: Path) -> None:
     for path in paths:
         if not path.exists():
             raise unittest.SkipTest(describe(path) or f"{path} is missing")
+
+
+def corpus_elections(repo_root: Path = REPO_ROOT) -> set[str]:
+    """The elections whose records are under data/ -- a directory with at
+    least one record file, not merely a directory."""
+    data_root = repo_root / "data"
+    if not data_root.is_dir():
+        return set()
+    return {
+        child.name
+        for child in data_root.iterdir()
+        if child.is_dir() and any(path.name != "anomalies.jsonl" for path in child.glob("*.json"))
+    }
+
+
+def require_corpus(*, complete: bool = False, repo_root: Path = REPO_ROOT) -> None:
+    """Skip the calling test unless `data/` holds a corpus to read.
+
+    `data/` existing is not the corpus existing: `scripts/field_coverage.py`
+    used to create it for its report on a pristine clone, after which every
+    whole-corpus test ran against nothing and failed (issue #145). With
+    `complete=True` every registered election has to be present -- the
+    assumption behind a pin on the whole corpus's record count, which one
+    election copied in turned into `113073 != 9`.
+    """
+    present = corpus_elections(repo_root)
+    if not present:
+        raise unittest.SkipTest(
+            "data/ holds no election records: the corpus is scraped, not cloned"
+            " (docs/CLI_REFERENCE.md)"
+        )
+    if complete:
+        registry = json.loads((repo_root / "scraper" / "elections.json").read_text(encoding="utf-8"))["elections"]
+        missing = sorted(entry["id"] for entry in registry if entry["id"] not in present)
+        if missing:
+            shown = ", ".join(missing[:4]) + (", …" if len(missing) > 4 else "")
+            raise unittest.SkipTest(
+                f"data/ holds {len(present)} of {len(registry)} registered elections; this"
+                f" whole-corpus pin needs all of them (missing: {shown})"
+            )
 
 
 class Fixture:

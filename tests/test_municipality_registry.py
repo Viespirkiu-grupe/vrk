@@ -150,7 +150,7 @@ class CorpusTests(unittest.TestCase):
     """Every municipality string in the corpus resolves. Skips without data/."""
 
     def test_every_record_with_a_municipality_joins(self):
-        local_data.require(DATA_ROOT)
+        local_data.require_corpus(complete=True)
         kind_of = {e["id"]: e["kind"] for e in json.loads(REGISTRY.read_text(encoding="utf-8"))["elections"]}
         unresolved: dict[str, set[str]] = {}
         seen_ids: set[str] = set()

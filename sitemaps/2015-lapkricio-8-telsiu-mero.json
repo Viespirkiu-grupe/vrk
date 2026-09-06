@@ -1,0 +1,49 @@
+{
+  "electionId": "2015-lapkricio-8-telsiu-mero",
+  "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Apygardos/Apygarda7935/KandidataiApygardos7935.html",
+  "generatedAt": "2026-08-19T21:26:34+00:00",
+  "stats": {
+    "rows": 7,
+    "extracted": 7,
+    "skipped": 0,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Algirdas Bacevičius",
+      "candidateId": "algirdas-bacevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88318/Kandidato88318Anketa.html"
+    },
+    {
+      "candidateName": "Petras Kuizinas",
+      "candidateId": "petras-kuizinas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88319/Kandidato88319Anketa.html"
+    },
+    {
+      "candidateName": "Almantas Lukavičius",
+      "candidateId": "almantas-lukavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88324/Kandidato88324Anketa.html"
+    },
+    {
+      "candidateName": "Deivydas Rubežius",
+      "candidateId": "deivydas-rubezius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88322/Kandidato88322Anketa.html"
+    },
+    {
+      "candidateName": "Jolanta Rupeikienė",
+      "candidateId": "jolanta-rupeikiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88321/Kandidato88321Anketa.html"
+    },
+    {
+      "candidateName": "Mantas Serva",
+      "candidateId": "mantas-serva",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88323/Kandidato88323Anketa.html"
+    },
+    {
+      "candidateName": "Saulius Urbonas",
+      "candidateId": "saulius-urbonas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/469_lt/Kandidatai/Kandidatas88320/Kandidato88320Anketa.html"
+    }
+  ],
+  "skipped": []
+}

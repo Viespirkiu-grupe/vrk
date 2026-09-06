@@ -1,0 +1,103 @@
+{
+  "electionId": "2025-kovo-16-meru",
+  "sourceUrl": "https://www.vrk.lt/kandidatai-i-merus-2025?srcUrl=/rinkimai/1586/rnk1906/kandidatai/savKandidataiMerai.html",
+  "generatedAt": "2026-08-15T20:04:53+00:00",
+  "stats": {
+    "rows": 15,
+    "extracted": 14,
+    "skipped": 1,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Povilas BEIŠYS",
+      "candidateId": "povilas-beisys",
+      "candidateNote": "išbrauktas - Seimo nutarimu",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437787.html"
+    },
+    {
+      "candidateName": "Jolita PELECKIENĖ",
+      "candidateId": "jolita-peleckiene",
+      "candidateNote": "išbraukta - Seimo nutarimu",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437789.html"
+    },
+    {
+      "candidateName": "Renata SORAKIENĖ",
+      "candidateId": "renata-sorakiene",
+      "candidateNote": "išbraukta - Seimo nutarimu",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437794.html"
+    },
+    {
+      "candidateName": "Romanas STEPONAVIČIUS",
+      "candidateId": "romanas-steponavicius",
+      "candidateNote": "išbrauktas - Seimo nutarimu",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437795.html"
+    },
+    {
+      "candidateName": "Gediminas ČEPULIS",
+      "candidateId": "gediminas-cepulis",
+      "candidateNote": "",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437791.html"
+    },
+    {
+      "candidateName": "Liudas JONAITIS",
+      "candidateId": "liudas-jonaitis",
+      "candidateNote": "",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437788.html"
+    },
+    {
+      "candidateName": "Saulius KUŽMARSKIS",
+      "candidateId": "saulius-kuzmarskis",
+      "candidateNote": "",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437797.html"
+    },
+    {
+      "candidateName": "Benjaminas RIMDŽIUS",
+      "candidateId": "benjaminas-rimdzius",
+      "candidateNote": "",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437793.html"
+    },
+    {
+      "candidateName": "Solveiga DAGĖ",
+      "candidateId": "solveiga-dage",
+      "candidateNote": "",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437796.html"
+    },
+    {
+      "candidateName": "Ignas GAIŽIŪNAS",
+      "candidateId": "ignas-gaiziunas",
+      "candidateNote": "",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437792.html"
+    },
+    {
+      "candidateName": "Algimantas KOLPERTAS",
+      "candidateId": "algimantas-kolpertas",
+      "candidateNote": "",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437790.html"
+    },
+    {
+      "candidateName": "Julius LIMANTAS",
+      "candidateId": "julius-limantas",
+      "candidateNote": "",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437798.html"
+    },
+    {
+      "candidateName": "Loreta MASILIŪNIENĖ",
+      "candidateId": "loreta-masiliuniene",
+      "candidateNote": "",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437785.html"
+    },
+    {
+      "candidateName": "Saulius RAZIŪNAS",
+      "candidateId": "saulius-raziunas",
+      "candidateNote": "",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1586/rnk1906/kandidatai/KandidatasAnketa_rkndId-2437786.html"
+    }
+  ],
+  "skipped": [
+    {
+      "rowIndex": 1,
+      "reason": "no-cells"
+    }
+  ]
+}

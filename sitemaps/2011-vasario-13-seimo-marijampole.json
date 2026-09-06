@@ -1,0 +1,153 @@
+{
+  "electionId": "2011-vasario-13-seimo-marijampole",
+  "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/index.html",
+  "districtUrls": [
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Apygardos/Apygarda7192/KandidataiApygardos7192.html"
+  ],
+  "generatedAt": "2026-08-22T08:03:22+00:00",
+  "stats": {
+    "rows": 9,
+    "extracted": 9,
+    "skipped": 0,
+    "duplicateCandidateIds": 0,
+    "districts": 1
+  },
+  "entries": [
+    {
+      "candidateName": "Gediminas AKELAITIS",
+      "candidateId": "gediminas-akelaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26527/Kandidato26527Anketa.html",
+      "vrkCandidateId": "26527",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Marijampolės",
+        "apygardosNumeris": 29,
+        "apygardosId": "7192",
+        "iskele": "Lietuvos socialdemokratų sąjunga"
+      }
+    },
+    {
+      "candidateName": "Vaida GIRAITYTĖ",
+      "candidateId": "vaida-giraityte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26529/Kandidato26529Anketa.html",
+      "vrkCandidateId": "26529",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Marijampolės",
+        "apygardosNumeris": 29,
+        "apygardosId": "7192",
+        "iskele": "Darbo partija"
+      }
+    },
+    {
+      "candidateName": "Rolandas JONIKAITIS",
+      "candidateId": "rolandas-jonikaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26314/Kandidato26314Anketa.html",
+      "vrkCandidateId": "26314",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Marijampolės",
+        "apygardosNumeris": 29,
+        "apygardosId": "7192",
+        "iskele": "Partija Tvarka ir teisingumas"
+      }
+    },
+    {
+      "candidateName": "Ramūnas MAŽĖTIS",
+      "candidateId": "ramunas-mazetis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26313/Kandidato26313Anketa.html",
+      "vrkCandidateId": "26313",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Marijampolės",
+        "apygardosNumeris": 29,
+        "apygardosId": "7192",
+        "iskele": "Naujoji sąjunga (socialliberalai)"
+      }
+    },
+    {
+      "candidateName": "Albinas MITRULEVIČIUS",
+      "candidateId": "albinas-mitrulevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26312/Kandidato26312Anketa.html",
+      "vrkCandidateId": "26312",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Marijampolės",
+        "apygardosNumeris": 29,
+        "apygardosId": "7192",
+        "iskele": "Lietuvos socialdemokratų partija"
+      }
+    },
+    {
+      "candidateName": "Valdas PILECKAS",
+      "candidateId": "valdas-pileckas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26490/Kandidato26490Anketa.html",
+      "vrkCandidateId": "26490",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Marijampolės",
+        "apygardosNumeris": 29,
+        "apygardosId": "7192",
+        "iskele": "Tėvynės sąjunga - Lietuvos krikščionys demokratai"
+      }
+    },
+    {
+      "candidateName": "Nora RIBOKIENĖ",
+      "candidateId": "nora-ribokiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26315/Kandidato26315Anketa.html",
+      "vrkCandidateId": "26315",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Marijampolės",
+        "apygardosNumeris": 29,
+        "apygardosId": "7192",
+        "iskele": "Liberalų ir centro sąjunga"
+      }
+    },
+    {
+      "candidateName": "Paulius ULECKAS",
+      "candidateId": "paulius-uleckas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26316/Kandidato26316Anketa.html",
+      "vrkCandidateId": "26316",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Marijampolės",
+        "apygardosNumeris": 29,
+        "apygardosId": "7192",
+        "iskele": "Lietuvos Respublikos liberalų sąjūdis"
+      }
+    },
+    {
+      "candidateName": "Algis ŽVALIAUSKAS",
+      "candidateId": "algis-zvaliauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/410_lt/Kandidatai/Kandidatas26535/Kandidato26535Anketa.html",
+      "vrkCandidateId": "26535",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Marijampolės",
+        "apygardosNumeris": 29,
+        "apygardosId": "7192",
+        "iskele": "Krikščionių partija"
+      }
+    }
+  ],
+  "skipped": []
+}

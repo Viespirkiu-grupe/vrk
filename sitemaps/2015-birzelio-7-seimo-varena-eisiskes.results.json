@@ -1,0 +1,174 @@
+{
+  "electionId": "2015-birzelio-7-seimo-varena-eisiskes",
+  "generatedAt": "2026-08-31T21:11:32+00:00",
+  "sources": [
+    "https://www.vrk.lt/statiniai/puslapiai/2015_2_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7930aktyvumasdesc2turas.html"
+  ],
+  "stats": {
+    "constituencies": 1,
+    "winnersResolved": 1,
+    "unresolved": 0,
+    "decidedInRoundTwo": 1,
+    "byRunoffPlurality": 0,
+    "candidatesWithVotes": 8,
+    "voteRowsUnresolved": 0
+  },
+  "elected": {
+    "87929": {
+      "seat": "vienmandate",
+      "method": "verdict",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_2_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7930aktyvumasdesc2turas.html",
+      "round": 2,
+      "constituency": "70. Varėnos - Eišiškių"
+    }
+  },
+  "details": {
+    "unresolved": [],
+    "constituencies": [
+      {
+        "constituencyLabel": "70. Varėnos - Eišiškių",
+        "constituencyNumber": 70,
+        "resultDistrictId": "7925",
+        "field": [
+          "Andžej Andruškevič",
+          "Vidas Mikalauskas",
+          "Juozas Baublys",
+          "Vidmantas Bižokas",
+          "Gitana Markovičienė",
+          "Virginijus Varanavičius",
+          "Marius Juškevičius",
+          "Miroslavas Monkevičius"
+        ],
+        "winnerName": "Vidas Mikalauskas",
+        "round": 2,
+        "method": "verdict",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_2_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7930aktyvumasdesc2turas.html"
+      }
+    ],
+    "votes": {
+      "87926": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 2951,
+            "pastu": 812,
+            "isViso": 3763,
+            "procentai": 34.62,
+            "vieta": 1,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_2_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7925aktyvumasdesc1turas.html"
+          },
+          {
+            "turas": 2,
+            "balsadezese": 3872,
+            "pastu": 1273,
+            "isViso": 5145,
+            "procentai": 48.57,
+            "vieta": 2,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_2_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7930aktyvumasdesc2turas.html"
+          }
+        ]
+      },
+      "87929": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 1865,
+            "pastu": 847,
+            "isViso": 2712,
+            "procentai": 24.95,
+            "vieta": 2,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_2_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7925aktyvumasdesc1turas.html"
+          },
+          {
+            "turas": 2,
+            "balsadezese": 3752,
+            "pastu": 1697,
+            "isViso": 5449,
+            "procentai": 51.43,
+            "vieta": 1,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_2_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7930aktyvumasdesc2turas.html"
+          }
+        ]
+      },
+      "87928": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 1811,
+            "pastu": 753,
+            "isViso": 2564,
+            "procentai": 23.59,
+            "vieta": 3,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_2_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7925aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "88166": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 426,
+            "pastu": 156,
+            "isViso": 582,
+            "procentai": 5.35,
+            "vieta": 4,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_2_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7925aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "87561": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 357,
+            "pastu": 155,
+            "isViso": 512,
+            "procentai": 4.71,
+            "vieta": 5,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_2_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7925aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "88017": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 248,
+            "pastu": 66,
+            "isViso": 314,
+            "procentai": 2.89,
+            "vieta": 6,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_2_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7925aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "87971": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 158,
+            "pastu": 77,
+            "isViso": 235,
+            "procentai": 2.16,
+            "vieta": 7,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_2_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7925aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "87927": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 144,
+            "pastu": 44,
+            "isViso": 188,
+            "procentai": 1.73,
+            "vieta": 8,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_2_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7925aktyvumasdesc1turas.html"
+          }
+        ]
+      }
+    },
+    "voteRowsUnresolved": []
+  }
+}

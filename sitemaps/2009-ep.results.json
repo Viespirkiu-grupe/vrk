@@ -1,0 +1,89 @@
+{
+  "electionId": "2009-ep",
+  "generatedAt": "2026-08-21T22:16:13+00:00",
+  "sources": [
+    "https://www.vrk.lt/statiniai/puslapiai/2009_ep_rinkimai/output_lt/rezultatai/index.html"
+  ],
+  "stats": {
+    "membersListed": 12,
+    "membersInSitemap": 12,
+    "membersNotInSitemap": 0
+  },
+  "elected": {
+    "25371": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2009_ep_rinkimai/output_lt/rezultatai/index.html",
+      "party": "Tėvynės sąjunga - Lietuvos krikščionys demokratai"
+    },
+    "25097": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2009_ep_rinkimai/output_lt/rezultatai/index.html",
+      "party": "Lietuvos socialdemokratų partija"
+    },
+    "25094": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2009_ep_rinkimai/output_lt/rezultatai/index.html",
+      "party": "Lietuvos socialdemokratų partija"
+    },
+    "25250": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2009_ep_rinkimai/output_lt/rezultatai/index.html",
+      "party": "Lietuvos Respublikos liberalų sąjūdis"
+    },
+    "25072": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2009_ep_rinkimai/output_lt/rezultatai/index.html",
+      "party": "Partija Tvarka ir teisingumas"
+    },
+    "25370": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2009_ep_rinkimai/output_lt/rezultatai/index.html",
+      "party": "Tėvynės sąjunga - Lietuvos krikščionys demokratai"
+    },
+    "25373": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2009_ep_rinkimai/output_lt/rezultatai/index.html",
+      "party": "Tėvynės sąjunga - Lietuvos krikščionys demokratai"
+    },
+    "25071": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2009_ep_rinkimai/output_lt/rezultatai/index.html",
+      "party": "Partija Tvarka ir teisingumas"
+    },
+    "25095": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2009_ep_rinkimai/output_lt/rezultatai/index.html",
+      "party": "Lietuvos socialdemokratų partija"
+    },
+    "25372": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2009_ep_rinkimai/output_lt/rezultatai/index.html",
+      "party": "Tėvynės sąjunga - Lietuvos krikščionys demokratai"
+    },
+    "25297": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2009_ep_rinkimai/output_lt/rezultatai/index.html",
+      "party": "Lietuvos lenkų rinkimų akcija"
+    },
+    "25574": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2009_ep_rinkimai/output_lt/rezultatai/index.html",
+      "party": "Darbo partija"
+    }
+  },
+  "details": {
+    "notInSitemap": []
+  }
+}

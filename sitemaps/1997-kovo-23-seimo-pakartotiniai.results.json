@@ -1,0 +1,423 @@
+{
+  "electionId": "1997-kovo-23-seimo-pakartotiniai",
+  "generatedAt": "2026-08-27T19:53:23+00:00",
+  "sources": [
+    "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp201.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp202.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp203.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp204.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgpl.htm-204+2.htm"
+  ],
+  "stats": {
+    "pages": 5,
+    "constituencies": 4,
+    "candidates": 23,
+    "candidatesWithVotes": 23,
+    "candidatesWithoutVotes": 0,
+    "unresolvedRows": 0,
+    "elected": 2,
+    "electedNotInSitemap": 0,
+    "unresolvedWinners": 0,
+    "constituenciesNotHeld": 2,
+    "roundMismatches": 0,
+    "mojibakePages": 4
+  },
+  "elected": {
+    "39779": {
+      "seat": "vienmandate",
+      "method": "constituency-verdict",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp202.htm",
+      "round": 1,
+      "constituency": "Vilniaus Šalčininkų",
+      "constituencyNumber": 56
+    },
+    "39429": {
+      "seat": "vienmandate",
+      "method": "constituency-verdict",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgpl.htm-204+2.htm",
+      "round": 2,
+      "constituency": "Trakų",
+      "constituencyNumber": 58
+    }
+  },
+  "details": {
+    "constituencies": [
+      {
+        "constituencyName": "Naujosios Vilnios",
+        "constituencyNumber": 10,
+        "round": 1,
+        "held": false,
+        "runoffRequired": false,
+        "winnerName": null,
+        "winnerVrkCandidateId": null,
+        "turnout": {
+          "registeredVoters": 39701,
+          "voters": 12416,
+          "turnoutPercent": 31.27,
+          "invalidBallots": 723,
+          "validBallots": 10816
+        },
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp201.htm",
+        "mojibakeRepaired": true,
+        "declaredRound": null,
+        "roundMismatch": false
+      },
+      {
+        "constituencyName": "Vilniaus Šalčininkų",
+        "constituencyNumber": 56,
+        "round": 1,
+        "held": true,
+        "runoffRequired": false,
+        "winnerName": "Jan Senkevič",
+        "winnerVrkCandidateId": "39779",
+        "turnout": {
+          "registeredVoters": 39219,
+          "voters": 18509,
+          "turnoutPercent": 47.19,
+          "invalidBallots": 1067,
+          "validBallots": 13184
+        },
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp202.htm",
+        "mojibakeRepaired": true,
+        "declaredRound": null,
+        "roundMismatch": false
+      },
+      {
+        "constituencyName": "Vilniaus Trakų",
+        "constituencyNumber": 57,
+        "round": 1,
+        "held": false,
+        "runoffRequired": false,
+        "winnerName": null,
+        "winnerVrkCandidateId": null,
+        "turnout": {
+          "registeredVoters": 37376,
+          "voters": 13605,
+          "turnoutPercent": 36.4,
+          "invalidBallots": 435,
+          "validBallots": 11797
+        },
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp203.htm",
+        "mojibakeRepaired": true,
+        "declaredRound": null,
+        "roundMismatch": false
+      },
+      {
+        "constituencyName": "Trakų",
+        "constituencyNumber": 58,
+        "round": 1,
+        "held": true,
+        "runoffRequired": true,
+        "winnerName": null,
+        "winnerVrkCandidateId": null,
+        "turnout": {
+          "registeredVoters": 35830,
+          "voters": 15000,
+          "turnoutPercent": 41.86,
+          "invalidBallots": 639,
+          "validBallots": 12937
+        },
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp204.htm",
+        "mojibakeRepaired": true,
+        "declaredRound": null,
+        "roundMismatch": false
+      },
+      {
+        "constituencyName": "Trakų",
+        "constituencyNumber": 58,
+        "round": 2,
+        "held": null,
+        "runoffRequired": false,
+        "winnerName": "Danutė Aleksiūnienė",
+        "winnerVrkCandidateId": "39429",
+        "turnout": {
+          "registeredVoters": 35857,
+          "voters": 12933,
+          "turnoutPercent": 36.07,
+          "invalidBallots": 451,
+          "validBallots": 14230
+        },
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgpl.htm-204+2.htm",
+        "mojibakeRepaired": false,
+        "declaredRound": 2,
+        "roundMismatch": false
+      }
+    ],
+    "constituencyVotes": {
+      "40439": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 10,
+          "balsai-apygardoje": 5167,
+          "balsai-pastu": 776,
+          "balsai": 5943,
+          "vieta": 1,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp201.htm"
+        }
+      ],
+      "39780": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 10,
+          "balsai-apygardoje": 2042,
+          "balsai-pastu": 37,
+          "balsai": 2079,
+          "vieta": 2,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp201.htm"
+        }
+      ],
+      "40425": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 10,
+          "balsai-apygardoje": 1147,
+          "balsai-pastu": 22,
+          "balsai": 1169,
+          "vieta": 3,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp201.htm"
+        }
+      ],
+      "41052": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 10,
+          "balsai-apygardoje": 1014,
+          "balsai-pastu": 16,
+          "balsai": 1030,
+          "vieta": 4,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp201.htm"
+        }
+      ],
+      "39256": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 10,
+          "balsai-apygardoje": 1006,
+          "balsai-pastu": 15,
+          "balsai": 1021,
+          "vieta": 5,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp201.htm"
+        }
+      ],
+      "40108": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 10,
+          "balsai-apygardoje": 440,
+          "balsai-pastu": 11,
+          "balsai": 451,
+          "vieta": 6,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp201.htm"
+        }
+      ],
+      "39779": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 56,
+          "balsai-apygardoje": 11481,
+          "balsai-pastu": 4044,
+          "balsai": 15525,
+          "vieta": 1,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp202.htm"
+        }
+      ],
+      "40435": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 56,
+          "balsai-apygardoje": 1703,
+          "balsai-pastu": 214,
+          "balsai": 1917,
+          "vieta": 2,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp202.htm"
+        }
+      ],
+      "39684": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 57,
+          "balsai-apygardoje": 6797,
+          "balsai-pastu": 910,
+          "balsai": 7707,
+          "vieta": 1,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp203.htm"
+        }
+      ],
+      "39589": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 57,
+          "balsai-apygardoje": 2101,
+          "balsai-pastu": 131,
+          "balsai": 2232,
+          "vieta": 2,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp203.htm"
+        }
+      ],
+      "40437": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 57,
+          "balsai-apygardoje": 1574,
+          "balsai-pastu": 213,
+          "balsai": 1787,
+          "vieta": 3,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp203.htm"
+        }
+      ],
+      "40433": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 57,
+          "balsai-apygardoje": 766,
+          "balsai-pastu": 61,
+          "balsai": 827,
+          "vieta": 4,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp203.htm"
+        }
+      ],
+      "40423": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 57,
+          "balsai-apygardoje": 392,
+          "balsai-pastu": 48,
+          "balsai": 440,
+          "vieta": 5,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp203.htm"
+        }
+      ],
+      "40104": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 57,
+          "balsai-apygardoje": 167,
+          "balsai-pastu": 10,
+          "balsai": 177,
+          "vieta": 6,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp203.htm"
+        }
+      ],
+      "39429": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 58,
+          "balsai-apygardoje": 3482,
+          "balsai-pastu": 592,
+          "balsai": 4074,
+          "vieta": 1,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp204.htm"
+        },
+        {
+          "turas": 2,
+          "apygardos-numeris": 58,
+          "balsai-apygardoje": 6029,
+          "balsai-pastu": 1193,
+          "balsai": 7222,
+          "vieta": 1,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgpl.htm-204+2.htm"
+        }
+      ],
+      "39781": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 58,
+          "balsai-apygardoje": 2682,
+          "balsai-pastu": 313,
+          "balsai": 2995,
+          "vieta": 2,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp204.htm"
+        },
+        {
+          "turas": 2,
+          "apygardos-numeris": 58,
+          "balsai-apygardoje": 4705,
+          "balsai-pastu": 555,
+          "balsai": 5260,
+          "vieta": 2,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgpl.htm-204+2.htm"
+        }
+      ],
+      "42339": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 58,
+          "balsai-apygardoje": 1773,
+          "balsai-pastu": 231,
+          "balsai": 2004,
+          "vieta": 3,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp204.htm"
+        }
+      ],
+      "39587": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 58,
+          "balsai-apygardoje": 1747,
+          "balsai-pastu": 107,
+          "balsai": 1854,
+          "vieta": 4,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp204.htm"
+        }
+      ],
+      "41050": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 58,
+          "balsai-apygardoje": 1493,
+          "balsai-pastu": 59,
+          "balsai": 1552,
+          "vieta": 5,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp204.htm"
+        }
+      ],
+      "40431": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 58,
+          "balsai-apygardoje": 770,
+          "balsai-pastu": 68,
+          "balsai": 838,
+          "vieta": 6,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp204.htm"
+        }
+      ],
+      "42383": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 58,
+          "balsai-apygardoje": 595,
+          "balsai-pastu": 41,
+          "balsai": 636,
+          "vieta": 7,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp204.htm"
+        }
+      ],
+      "39254": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 58,
+          "balsai-apygardoje": 244,
+          "balsai-pastu": 6,
+          "balsai": 250,
+          "vieta": 8,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp204.htm"
+        }
+      ],
+      "40421": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 58,
+          "balsai-apygardoje": 151,
+          "balsai-pastu": 7,
+          "balsai": 158,
+          "vieta": 9,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgp204.htm"
+        }
+      ]
+    },
+    "unresolvedRows": [],
+    "unresolvedWinners": [],
+    "candidatesWithoutVotes": []
+  }
+}

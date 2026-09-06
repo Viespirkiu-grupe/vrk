@@ -1,0 +1,141 @@
+{
+  "electionId": "2004-prezidento",
+  "generatedAt": "2026-08-23T22:33:26+00:00",
+  "sources": [
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/rezultatai/rez_l_19_1.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/rezultatai/rez_l_19_2.htm"
+  ],
+  "stats": {
+    "rounds": 2,
+    "candidatesRound1": 5,
+    "candidatesRound2": 2,
+    "candidatesInSitemap": 5,
+    "notInSitemap": 0,
+    "boldRound1MatchesRound2": true,
+    "voteSumMismatches": 0,
+    "winnerName": "Valdas ADAMKUS",
+    "winnersResolved": 1,
+    "unresolved": 0
+  },
+  "elected": {
+    "250279": {
+      "seat": "prezidentas",
+      "method": "verdict",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/rezultatai/rez_l_19_2.htm",
+      "round": 2
+    }
+  },
+  "details": {
+    "rounds": [
+      {
+        "round": 1,
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/rezultatai/rez_l_19_1.htm",
+        "summary": {
+          "apylinkes": 2038,
+          "rinkeju-skaicius": 2655309,
+          "dalyvavo": 1285067,
+          "negaliojantys-biuleteniai": 39707,
+          "galiojantys-biuleteniai": 1245360
+        },
+        "candidates": [
+          {
+            "vrkRegistrationId": "1759632",
+            "name": "Valdas ADAMKUS",
+            "bold": true,
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/rezultatai/rez_kand_l_1759632_1_1.htm",
+            "balsai-apylinkese": 329404,
+            "balsai-pastu": 58433,
+            "balsai": 387837,
+            "procentai-nuo-galiojanciu": 31.14,
+            "procentai-nuo-dalyvavusiu": 30.18
+          },
+          {
+            "vrkRegistrationId": "1727765",
+            "name": "Kazimira Danutė PRUNSKIENĖ",
+            "bold": true,
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/rezultatai/rez_kand_l_1727765_1_1.htm",
+            "balsai-apylinkese": 238485,
+            "balsai-pastu": 26196,
+            "balsai": 264681,
+            "procentai-nuo-galiojanciu": 21.25,
+            "procentai-nuo-dalyvavusiu": 20.6
+          },
+          {
+            "vrkRegistrationId": "1735240",
+            "name": "Petras AUŠTREVIČIUS",
+            "bold": false,
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/rezultatai/rez_kand_l_1735240_1_1.htm",
+            "balsai-apylinkese": 205484,
+            "balsai-pastu": 34929,
+            "balsai": 240413,
+            "procentai-nuo-galiojanciu": 19.3,
+            "procentai-nuo-dalyvavusiu": 18.71
+          },
+          {
+            "vrkRegistrationId": "1815137",
+            "name": "Vilija BLINKEVIČIŪTĖ",
+            "bold": false,
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/rezultatai/rez_kand_l_1815137_1_1.htm",
+            "balsai-apylinkese": 174152,
+            "balsai-pastu": 30667,
+            "balsai": 204819,
+            "procentai-nuo-galiojanciu": 16.45,
+            "procentai-nuo-dalyvavusiu": 15.94
+          },
+          {
+            "vrkRegistrationId": "1727763",
+            "name": "Česlovas JURŠĖNAS",
+            "bold": false,
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/rezultatai/rez_kand_l_1727763_1_1.htm",
+            "balsai-apylinkese": 126485,
+            "balsai-pastu": 21125,
+            "balsai": 147610,
+            "procentai-nuo-galiojanciu": 11.85,
+            "procentai-nuo-dalyvavusiu": 11.49
+          }
+        ],
+        "winnerVrkCandidateId": null,
+        "winnerName": null
+      },
+      {
+        "round": 2,
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/rezultatai/rez_l_19_2.htm",
+        "summary": {
+          "apylinkes": 2038,
+          "rinkeju-skaicius": 2659211,
+          "dalyvavo": 1395103,
+          "negaliojantys-biuleteniai": 20188,
+          "galiojantys-biuleteniai": 1374915
+        },
+        "candidates": [
+          {
+            "vrkRegistrationId": "1759632",
+            "name": "Valdas ADAMKUS",
+            "bold": false,
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/rezultatai/rez_kand_l_1759632_2_1.htm",
+            "balsai-apylinkese": 593066,
+            "balsai-pastu": 130825,
+            "balsai": 723891,
+            "procentai-nuo-galiojanciu": 52.65,
+            "procentai-nuo-dalyvavusiu": 51.89
+          },
+          {
+            "vrkRegistrationId": "1727765",
+            "name": "Kazimira Danutė PRUNSKIENĖ",
+            "bold": false,
+            "candidatePageUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2004/prezidentas/rezultatai/rez_kand_l_1727765_2_1.htm",
+            "balsai-apylinkese": 558561,
+            "balsai-pastu": 92463,
+            "balsai": 651024,
+            "procentai-nuo-galiojanciu": 47.35,
+            "procentai-nuo-dalyvavusiu": 46.66
+          }
+        ],
+        "winnerVrkCandidateId": "250279",
+        "winnerName": "Valdas ADAMKUS"
+      }
+    ],
+    "notInSitemap": [],
+    "voteSumMismatches": []
+  }
+}

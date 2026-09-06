@@ -1,0 +1,413 @@
+{
+  "electionId": "2003-birzelio-15-seimo-nauji",
+  "generatedAt": "2026-09-05T23:49:28+00:00",
+  "sources": [
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_sar_l_17_1_1.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1476_1.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1477_1.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1478_1.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1479_1.htm"
+  ],
+  "stats": {
+    "seats": 4,
+    "constituencies": 4,
+    "constituenciesNotHeld": 4,
+    "indexNotHeldNote": true,
+    "candidates": 27,
+    "candidatesWithVotes": 27,
+    "candidatesWithoutVotes": 0,
+    "rowsNotInSitemap": 0,
+    "voteTotalMismatches": 0,
+    "elected": 0
+  },
+  "elected": {},
+  "nobodyElected": true,
+  "details": {
+    "constituencies": [
+      {
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1476_1.htm",
+        "round": 1,
+        "constituencyName": "Senamiesčio",
+        "constituencyNumber": 2,
+        "held": false,
+        "summary": {
+          "rinkeju-skaicius": 37523,
+          "dalyvavo": 3476,
+          "aktyvumas-procentais": 9.26,
+          "negaliojantys-biuleteniai": 107,
+          "galiojantys-biuleteniai": 3369
+        }
+      },
+      {
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1477_1.htm",
+        "round": 1,
+        "constituencyName": "Antakalnio",
+        "constituencyNumber": 3,
+        "held": false,
+        "summary": {
+          "rinkeju-skaicius": 38415,
+          "dalyvavo": 7748,
+          "aktyvumas-procentais": 20.17,
+          "negaliojantys-biuleteniai": 137,
+          "galiojantys-biuleteniai": 7611
+        }
+      },
+      {
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1478_1.htm",
+        "round": 1,
+        "constituencyName": "Šeškinės",
+        "constituencyNumber": 6,
+        "held": false,
+        "summary": {
+          "rinkeju-skaicius": 37148,
+          "dalyvavo": 4633,
+          "aktyvumas-procentais": 12.47,
+          "negaliojantys-biuleteniai": 114,
+          "galiojantys-biuleteniai": 4519
+        }
+      },
+      {
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1479_1.htm",
+        "round": 1,
+        "constituencyName": "Nevėžio",
+        "constituencyNumber": 26,
+        "held": false,
+        "summary": {
+          "rinkeju-skaicius": 37273,
+          "dalyvavo": 4956,
+          "aktyvumas-procentais": 13.3,
+          "negaliojantys-biuleteniai": 83,
+          "galiojantys-biuleteniai": 4873
+        }
+      }
+    ],
+    "constituencyVotes": {
+      "241265": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 2,
+          "balsai-apylinkese": 1019,
+          "balsai-pastu": 197,
+          "balsai": 1216,
+          "procentai-nuo-galiojanciu": 36.09,
+          "vieta": 1,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1476_1.htm"
+        }
+      ],
+      "241246": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 2,
+          "balsai-apylinkese": 619,
+          "balsai-pastu": 84,
+          "balsai": 703,
+          "procentai-nuo-galiojanciu": 20.87,
+          "vieta": 2,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1476_1.htm"
+        }
+      ],
+      "241235": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 2,
+          "balsai-apylinkese": 356,
+          "balsai-pastu": 69,
+          "balsai": 425,
+          "procentai-nuo-galiojanciu": 12.62,
+          "vieta": 3,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1476_1.htm"
+        }
+      ],
+      "241223": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 2,
+          "balsai-apylinkese": 304,
+          "balsai-pastu": 33,
+          "balsai": 337,
+          "procentai-nuo-galiojanciu": 10.0,
+          "vieta": 4,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1476_1.htm"
+        }
+      ],
+      "241258": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 2,
+          "balsai-apylinkese": 275,
+          "balsai-pastu": 11,
+          "balsai": 286,
+          "procentai-nuo-galiojanciu": 8.49,
+          "vieta": 5,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1476_1.htm"
+        }
+      ],
+      "241241": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 2,
+          "balsai-apylinkese": 225,
+          "balsai-pastu": 24,
+          "balsai": 249,
+          "procentai-nuo-galiojanciu": 7.39,
+          "vieta": 6,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1476_1.htm"
+        }
+      ],
+      "241228": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 2,
+          "balsai-apylinkese": 134,
+          "balsai-pastu": 19,
+          "balsai": 153,
+          "procentai-nuo-galiojanciu": 4.54,
+          "vieta": 7,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1476_1.htm"
+        }
+      ],
+      "241248": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 3,
+          "balsai-apylinkese": 3852,
+          "balsai-pastu": 679,
+          "balsai": 4531,
+          "procentai-nuo-galiojanciu": 59.53,
+          "vieta": 1,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1477_1.htm"
+        }
+      ],
+      "241234": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 3,
+          "balsai-apylinkese": 1462,
+          "balsai-pastu": 266,
+          "balsai": 1728,
+          "procentai-nuo-galiojanciu": 22.7,
+          "vieta": 2,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1477_1.htm"
+        }
+      ],
+      "241242": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 3,
+          "balsai-apylinkese": 433,
+          "balsai-pastu": 49,
+          "balsai": 482,
+          "procentai-nuo-galiojanciu": 6.33,
+          "vieta": 3,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1477_1.htm"
+        }
+      ],
+      "241243": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 3,
+          "balsai-apylinkese": 304,
+          "balsai-pastu": 44,
+          "balsai": 348,
+          "procentai-nuo-galiojanciu": 4.57,
+          "vieta": 4,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1477_1.htm"
+        }
+      ],
+      "241259": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 3,
+          "balsai-apylinkese": 194,
+          "balsai-pastu": 24,
+          "balsai": 218,
+          "procentai-nuo-galiojanciu": 2.86,
+          "vieta": 5,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1477_1.htm"
+        }
+      ],
+      "241233": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 3,
+          "balsai-apylinkese": 133,
+          "balsai-pastu": 26,
+          "balsai": 159,
+          "procentai-nuo-galiojanciu": 2.09,
+          "vieta": 6,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1477_1.htm"
+        }
+      ],
+      "241227": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 3,
+          "balsai-apylinkese": 111,
+          "balsai-pastu": 34,
+          "balsai": 145,
+          "procentai-nuo-galiojanciu": 1.91,
+          "vieta": 7,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1477_1.htm"
+        }
+      ],
+      "241262": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 6,
+          "balsai-apylinkese": 1226,
+          "balsai-pastu": 156,
+          "balsai": 1382,
+          "procentai-nuo-galiojanciu": 30.58,
+          "vieta": 1,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1478_1.htm"
+        }
+      ],
+      "241226": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 6,
+          "balsai-apylinkese": 859,
+          "balsai-pastu": 40,
+          "balsai": 899,
+          "procentai-nuo-galiojanciu": 19.89,
+          "vieta": 2,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1478_1.htm"
+        }
+      ],
+      "241250": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 6,
+          "balsai-apylinkese": 602,
+          "balsai-pastu": 78,
+          "balsai": 680,
+          "procentai-nuo-galiojanciu": 15.05,
+          "vieta": 3,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1478_1.htm"
+        }
+      ],
+      "241230": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 6,
+          "balsai-apylinkese": 429,
+          "balsai-pastu": 65,
+          "balsai": 494,
+          "procentai-nuo-galiojanciu": 10.93,
+          "vieta": 4,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1478_1.htm"
+        }
+      ],
+      "241244": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 6,
+          "balsai-apylinkese": 338,
+          "balsai-pastu": 34,
+          "balsai": 372,
+          "procentai-nuo-galiojanciu": 8.23,
+          "vieta": 5,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1478_1.htm"
+        }
+      ],
+      "241245": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 6,
+          "balsai-apylinkese": 273,
+          "balsai-pastu": 22,
+          "balsai": 295,
+          "procentai-nuo-galiojanciu": 6.53,
+          "vieta": 6,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1478_1.htm"
+        }
+      ],
+      "241260": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 6,
+          "balsai-apylinkese": 181,
+          "balsai-pastu": 18,
+          "balsai": 199,
+          "procentai-nuo-galiojanciu": 4.4,
+          "vieta": 7,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1478_1.htm"
+        }
+      ],
+      "241225": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 6,
+          "balsai-apylinkese": 186,
+          "balsai-pastu": 12,
+          "balsai": 198,
+          "procentai-nuo-galiojanciu": 4.38,
+          "vieta": 8,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1478_1.htm"
+        }
+      ],
+      "241264": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 26,
+          "balsai-apylinkese": 1940,
+          "balsai-pastu": 314,
+          "balsai": 2254,
+          "procentai-nuo-galiojanciu": 46.25,
+          "vieta": 1,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1479_1.htm"
+        }
+      ],
+      "239960": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 26,
+          "balsai-apylinkese": 756,
+          "balsai-pastu": 105,
+          "balsai": 861,
+          "procentai-nuo-galiojanciu": 17.67,
+          "vieta": 2,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1479_1.htm"
+        }
+      ],
+      "241249": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 26,
+          "balsai-apylinkese": 716,
+          "balsai-pastu": 79,
+          "balsai": 795,
+          "procentai-nuo-galiojanciu": 16.31,
+          "vieta": 3,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1479_1.htm"
+        }
+      ],
+      "241263": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 26,
+          "balsai-apylinkese": 552,
+          "balsai-pastu": 130,
+          "balsai": 682,
+          "procentai-nuo-galiojanciu": 14.0,
+          "vieta": 4,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1479_1.htm"
+        }
+      ],
+      "241240": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 26,
+          "balsai-apylinkese": 229,
+          "balsai-pastu": 52,
+          "balsai": 281,
+          "procentai-nuo-galiojanciu": 5.77,
+          "vieta": 5,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2003/seimas/rezultatai/rez_v_apg_l_1479_1.htm"
+        }
+      ]
+    },
+    "rowsNotInSitemap": [],
+    "candidatesWithoutVotes": []
+  }
+}

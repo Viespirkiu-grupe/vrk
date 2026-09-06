@@ -511,6 +511,16 @@ def main() -> int:
     if unknown:
         parser.error("no concept maps this election: " + ", ".join(unknown))
     election_ids = [eid for eid in (args.election_id or all_ids) if (data_root / eid).is_dir()]
+    if not election_ids:
+        # Nothing to measure. Writing the (empty) report would create data/
+        # on a clone, after which every whole-corpus test read an existing
+        # data/ as a corpus and failed against nothing (issue #145).
+        print(
+            f"No election under {data_root}: the corpus is scraped, not cloned"
+            " (docs/CLI_REFERENCE.md). Nothing measured, nothing written.",
+            file=sys.stderr,
+        )
+        return 2
 
     baseline_path = repo_root / BASELINE
     baseline = read_baseline(baseline_path)

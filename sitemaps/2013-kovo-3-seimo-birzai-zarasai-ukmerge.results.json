@@ -1,0 +1,654 @@
+{
+  "electionId": "2013-kovo-3-seimo-birzai-zarasai-ukmerge",
+  "generatedAt": "2026-08-31T21:10:29+00:00",
+  "sources": [
+    "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7441aktyvumasdesc2turas.html",
+    "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7439aktyvumasdesc2turas.html",
+    "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7440aktyvumasdesc2turas.html"
+  ],
+  "stats": {
+    "constituencies": 3,
+    "winnersResolved": 3,
+    "unresolved": 0,
+    "decidedInRoundTwo": 3,
+    "byRunoffPlurality": 0,
+    "candidatesWithVotes": 37,
+    "voteRowsUnresolved": 0
+  },
+  "elected": {
+    "70542": {
+      "seat": "vienmandate",
+      "method": "verdict",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7441aktyvumasdesc2turas.html",
+      "round": 2,
+      "constituency": "48. Biržų - Kupiškio"
+    },
+    "70539": {
+      "seat": "vienmandate",
+      "method": "verdict",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7439aktyvumasdesc2turas.html",
+      "round": 2,
+      "constituency": "52. Zarasų - Visagino"
+    },
+    "70544": {
+      "seat": "vienmandate",
+      "method": "verdict",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7440aktyvumasdesc2turas.html",
+      "round": 2,
+      "constituency": "61. Ukmergės"
+    }
+  },
+  "details": {
+    "unresolved": [],
+    "constituencies": [
+      {
+        "constituencyLabel": "48. Biržų - Kupiškio",
+        "constituencyNumber": 48,
+        "resultDistrictId": "7433",
+        "field": [
+          "Aleksandras ZELTINIS",
+          "Ritas VAIGINAS",
+          "Nijolė ŠATIENĖ",
+          "Vytautas GALVONAS",
+          "Dalius BITAITIS",
+          "Kęstutis SLAVINSKAS",
+          "Valdemaras VALKIŪNAS",
+          "Žydrūnas SAVICKAS",
+          "Dangirdas MIKŠYS",
+          "Sigitas MARTINAVIČIUS",
+          "Algirdas KIZNIS"
+        ],
+        "winnerName": "Aleksandras ZELTINIS",
+        "round": 2,
+        "method": "verdict",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7441aktyvumasdesc2turas.html"
+      },
+      {
+        "constituencyLabel": "52. Zarasų - Visagino",
+        "constituencyNumber": 52,
+        "resultDistrictId": "7434",
+        "field": [
+          "Algimantas DUMBRAVA",
+          "Nikolajus GUSEVAS",
+          "Rimvydas PODOLSKIS",
+          "Kristina BRAZAUSKIENĖ",
+          "Gintaris PETRĖNAS",
+          "Juozas STANĖNAS",
+          "Aušra LAMANAUSKIENĖ",
+          "Rimantas KUMPIS",
+          "Sergejus KOTOVAS",
+          "Genrich SARBAJ",
+          "Aurelija GURSKIENĖ",
+          "Rolandas URNIEŽIUS"
+        ],
+        "winnerName": "Algimantas DUMBRAVA",
+        "round": 2,
+        "method": "verdict",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7439aktyvumasdesc2turas.html"
+      },
+      {
+        "constituencyLabel": "61. Ukmergės",
+        "constituencyNumber": 61,
+        "resultDistrictId": "7435",
+        "field": [
+          "Kazys GRYBAUSKAS",
+          "Janina GALIAUSKIENĖ",
+          "Rolandas JANICKAS",
+          "Mindaugas KLUONIS",
+          "Dailis Alfonsas BARAKAUSKAS",
+          "Danutė UŽKURĖLYTĖ",
+          "Ligitas KERNAGIS",
+          "Vytautas ŠUSTAUSKAS",
+          "Julius KAZĖNAS",
+          "Artūras MELIANAS",
+          "Gintaras SONGAILA",
+          "Julius GIRDVAINIS",
+          "Daiva KRIKŠTAPONIENĖ",
+          "Juozas MURAUSKAS"
+        ],
+        "winnerName": "Kazys GRYBAUSKAS",
+        "round": 2,
+        "method": "verdict",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7440aktyvumasdesc2turas.html"
+      }
+    ],
+    "votes": {
+      "70542": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 2772,
+            "pastu": 1068,
+            "isViso": 3840,
+            "procentai": 31.65,
+            "vieta": 1,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7433aktyvumasdesc1turas.html"
+          },
+          {
+            "turas": 2,
+            "balsadezese": 3811,
+            "pastu": 1787,
+            "isViso": 5598,
+            "procentai": 58.43,
+            "vieta": 1,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7441aktyvumasdesc2turas.html"
+          }
+        ]
+      },
+      "70552": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 1596,
+            "pastu": 455,
+            "isViso": 2051,
+            "procentai": 16.91,
+            "vieta": 2,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7433aktyvumasdesc1turas.html"
+          },
+          {
+            "turas": 2,
+            "balsadezese": 2769,
+            "pastu": 1214,
+            "isViso": 3983,
+            "procentai": 41.57,
+            "vieta": 2,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7441aktyvumasdesc2turas.html"
+          }
+        ]
+      },
+      "70559": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 1549,
+            "pastu": 500,
+            "isViso": 2049,
+            "procentai": 16.89,
+            "vieta": 3,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7433aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70538": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 859,
+            "pastu": 266,
+            "isViso": 1125,
+            "procentai": 9.27,
+            "vieta": 4,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7433aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70545": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 764,
+            "pastu": 317,
+            "isViso": 1081,
+            "procentai": 8.91,
+            "vieta": 5,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7433aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70549": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 554,
+            "pastu": 165,
+            "isViso": 719,
+            "procentai": 5.93,
+            "vieta": 6,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7433aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70548": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 441,
+            "pastu": 183,
+            "isViso": 624,
+            "procentai": 5.14,
+            "vieta": 7,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7433aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70556": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 224,
+            "pastu": 108,
+            "isViso": 332,
+            "procentai": 2.74,
+            "vieta": 8,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7433aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70573": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 155,
+            "pastu": 35,
+            "isViso": 190,
+            "procentai": 1.57,
+            "vieta": 9,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7433aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70570": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 59,
+            "pastu": 26,
+            "isViso": 85,
+            "procentai": 0.7,
+            "vieta": 10,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7433aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70566": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 27,
+            "pastu": 9,
+            "isViso": 36,
+            "procentai": 0.3,
+            "vieta": 11,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7433aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70539": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 4999,
+            "pastu": 982,
+            "isViso": 5981,
+            "procentai": 52.35,
+            "vieta": 1,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7434aktyvumasdesc1turas.html"
+          },
+          {
+            "turas": 2,
+            "balsadezese": 5481,
+            "pastu": 1443,
+            "isViso": 6924,
+            "procentai": 69.96,
+            "vieta": 1,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7439aktyvumasdesc2turas.html"
+          }
+        ]
+      },
+      "70543": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 1883,
+            "pastu": 506,
+            "isViso": 2389,
+            "procentai": 20.91,
+            "vieta": 2,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7434aktyvumasdesc1turas.html"
+          },
+          {
+            "turas": 2,
+            "balsadezese": 2278,
+            "pastu": 695,
+            "isViso": 2973,
+            "procentai": 30.04,
+            "vieta": 2,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7439aktyvumasdesc2turas.html"
+          }
+        ]
+      },
+      "70574": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 737,
+            "pastu": 218,
+            "isViso": 955,
+            "procentai": 8.36,
+            "vieta": 3,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7434aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70541": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 443,
+            "pastu": 117,
+            "isViso": 560,
+            "procentai": 4.9,
+            "vieta": 4,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7434aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70560": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 246,
+            "pastu": 101,
+            "isViso": 347,
+            "procentai": 3.04,
+            "vieta": 5,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7434aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70546": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 198,
+            "pastu": 99,
+            "isViso": 297,
+            "procentai": 2.6,
+            "vieta": 6,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7434aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70550": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 171,
+            "pastu": 77,
+            "isViso": 248,
+            "procentai": 2.17,
+            "vieta": 7,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7434aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70554": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 186,
+            "pastu": 36,
+            "isViso": 222,
+            "procentai": 1.94,
+            "vieta": 8,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7434aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70567": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 110,
+            "pastu": 39,
+            "isViso": 149,
+            "procentai": 1.3,
+            "vieta": 9,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7434aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70569": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 101,
+            "pastu": 14,
+            "isViso": 115,
+            "procentai": 1.01,
+            "vieta": 10,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7434aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70571": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 63,
+            "pastu": 34,
+            "isViso": 97,
+            "procentai": 0.85,
+            "vieta": 11,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7434aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70557": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 41,
+            "pastu": 23,
+            "isViso": 64,
+            "procentai": 0.56,
+            "vieta": 12,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7434aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70544": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 1855,
+            "pastu": 425,
+            "isViso": 2280,
+            "procentai": 20.81,
+            "vieta": 1,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7435aktyvumasdesc1turas.html"
+          },
+          {
+            "turas": 2,
+            "balsadezese": 4302,
+            "pastu": 1304,
+            "isViso": 5606,
+            "procentai": 62.4,
+            "vieta": 1,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7440aktyvumasdesc2turas.html"
+          }
+        ]
+      },
+      "70547": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 1346,
+            "pastu": 580,
+            "isViso": 1926,
+            "procentai": 17.58,
+            "vieta": 2,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7435aktyvumasdesc1turas.html"
+          },
+          {
+            "turas": 2,
+            "balsadezese": 2268,
+            "pastu": 1110,
+            "isViso": 3378,
+            "procentai": 37.6,
+            "vieta": 2,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7440aktyvumasdesc2turas.html"
+          }
+        ]
+      },
+      "70553": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 1437,
+            "pastu": 340,
+            "isViso": 1777,
+            "procentai": 16.22,
+            "vieta": 3,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7435aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70576": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 1342,
+            "pastu": 266,
+            "isViso": 1608,
+            "procentai": 14.68,
+            "vieta": 4,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7435aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70540": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 619,
+            "pastu": 305,
+            "isViso": 924,
+            "procentai": 8.43,
+            "vieta": 5,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7435aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70561": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 466,
+            "pastu": 120,
+            "isViso": 586,
+            "procentai": 5.35,
+            "vieta": 6,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7435aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70558": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 397,
+            "pastu": 123,
+            "isViso": 520,
+            "procentai": 4.75,
+            "vieta": 7,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7435aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70555": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 277,
+            "pastu": 124,
+            "isViso": 401,
+            "procentai": 3.66,
+            "vieta": 8,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7435aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70575": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 190,
+            "pastu": 58,
+            "isViso": 248,
+            "procentai": 2.26,
+            "vieta": 9,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7435aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70568": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 163,
+            "pastu": 39,
+            "isViso": 202,
+            "procentai": 1.84,
+            "vieta": 10,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7435aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70565": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 166,
+            "pastu": 26,
+            "isViso": 192,
+            "procentai": 1.75,
+            "vieta": 11,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7435aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70572": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 110,
+            "pastu": 38,
+            "isViso": 148,
+            "procentai": 1.35,
+            "vieta": 12,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7435aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70551": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 81,
+            "pastu": 49,
+            "isViso": 130,
+            "procentai": 1.19,
+            "vieta": 13,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7435aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "70564": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 9,
+            "pastu": 4,
+            "isViso": 13,
+            "procentai": 0.12,
+            "vieta": 14,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2013_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7435aktyvumasdesc1turas.html"
+          }
+        ]
+      }
+    },
+    "voteRowsUnresolved": []
+  }
+}

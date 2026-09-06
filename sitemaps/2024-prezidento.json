@@ -1,0 +1,54 @@
+{
+  "electionId": "2024-prezidento",
+  "sourceUrl": "https://www.vrk.lt/kandidatai-i-respublikos-prezidentus-2024-pr?srcUrl=/rinkimai/1504/rnk1786/kandidatai/preKandidatai.html",
+  "generatedAt": "2026-07-11T18:45:42+00:00",
+  "stats": {
+    "rows": 8,
+    "extracted": 8,
+    "skipped": 0,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Giedrimas JEGLINSKAS",
+      "candidateId": "giedrimas-jeglinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1504/rnk1786/kandidatai/KandidatasAnketa_rkndId-2435328.html"
+    },
+    {
+      "candidateName": "Andrius MAZURONIS",
+      "candidateId": "andrius-mazuronis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1504/rnk1786/kandidatai/KandidatasAnketa_rkndId-2435329.html"
+    },
+    {
+      "candidateName": "Gitanas NAUSĖDA",
+      "candidateId": "gitanas-nauseda",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1504/rnk1786/kandidatai/KandidatasAnketa_rkndId-2435326.html"
+    },
+    {
+      "candidateName": "Ingrida ŠIMONYTĖ",
+      "candidateId": "ingrida-simonyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1504/rnk1786/kandidatai/KandidatasAnketa_rkndId-2435331.html"
+    },
+    {
+      "candidateName": "Eduardas VAITKUS",
+      "candidateId": "eduardas-vaitkus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1504/rnk1786/kandidatai/KandidatasAnketa_rkndId-2435325.html"
+    },
+    {
+      "candidateName": "Ignas VĖGĖLĖ",
+      "candidateId": "ignas-vegele",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1504/rnk1786/kandidatai/KandidatasAnketa_rkndId-2435334.html"
+    },
+    {
+      "candidateName": "Dainius ŽALIMAS",
+      "candidateId": "dainius-zalimas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1504/rnk1786/kandidatai/KandidatasAnketa_rkndId-2435333.html"
+    },
+    {
+      "candidateName": "Remigijus ŽEMAITAITIS",
+      "candidateId": "remigijus-zemaitaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1504/rnk1786/kandidatai/KandidatasAnketa_rkndId-2435327.html"
+    }
+  ],
+  "skipped": []
+}

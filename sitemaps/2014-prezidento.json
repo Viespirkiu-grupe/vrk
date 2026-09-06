@@ -1,0 +1,49 @@
+{
+  "electionId": "2014-prezidento",
+  "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/index.html",
+  "generatedAt": "2026-08-21T12:20:03+00:00",
+  "stats": {
+    "rows": 7,
+    "extracted": 7,
+    "skipped": 0,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Zigmantas BALČYTIS",
+      "candidateId": "zigmantas-balcytis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70874/Kandidato70874Anketa.html"
+    },
+    {
+      "candidateName": "Dalia GRYBAUSKAITĖ",
+      "candidateId": "dalia-grybauskaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70873/Kandidato70873Anketa.html"
+    },
+    {
+      "candidateName": "Artūras PAULAUSKAS",
+      "candidateId": "arturas-paulauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70875/Kandidato70875Anketa.html"
+    },
+    {
+      "candidateName": "Naglis PUTEIKIS",
+      "candidateId": "naglis-puteikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70872/Kandidato70872Anketa.html"
+    },
+    {
+      "candidateName": "Bronis ROPĖ",
+      "candidateId": "bronis-rope",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70855/Kandidato70855Anketa.html"
+    },
+    {
+      "candidateName": "Valdemar TOMAŠEVSKI",
+      "candidateId": "valdemar-tomasevski",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70870/Kandidato70870Anketa.html"
+    },
+    {
+      "candidateName": "Artūras ZUOKAS",
+      "candidateId": "arturas-zuokas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/424_lt/Kandidatai/Kandidatas70871/Kandidato70871Anketa.html"
+    }
+  ],
+  "skipped": []
+}

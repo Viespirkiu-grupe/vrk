@@ -1,0 +1,69 @@
+{
+  "electionId": "2017-balandzio-23-seimo-anyksciai-panevezys",
+  "sourceUrl": "https://www.vrk.lt/2017-04-23-nauji-rinkimai-i-seima/kandidatai?srcUrl=/rinkimai/748/rnk984/kandidatai/lrsKandidataiPilnasSarasas.html",
+  "generatedAt": "2026-08-16T08:44:44+00:00",
+  "stats": {
+    "rows": 11,
+    "extracted": 11,
+    "skipped": 0,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Egidijus BALTUŠIS",
+      "candidateId": "egidijus-baltusis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasAnketa_rkndId-1200002.html"
+    },
+    {
+      "candidateName": "Antanas BAURA",
+      "candidateId": "antanas-baura",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasAnketa_rkndId-1106688.html"
+    },
+    {
+      "candidateName": "Romualdas GĖGŽNAS",
+      "candidateId": "romualdas-gegznas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasAnketa_rkndId-1200000.html"
+    },
+    {
+      "candidateName": "Auksė KONTRIMIENĖ",
+      "candidateId": "aukse-kontrimiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasAnketa_rkndId-1106674.html"
+    },
+    {
+      "candidateName": "Kristupas Augustas KRIVICKAS",
+      "candidateId": "kristupas-augustas-krivickas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasAnketa_rkndId-1106670.html"
+    },
+    {
+      "candidateName": "Lukas PAKELTIS",
+      "candidateId": "lukas-pakeltis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasAnketa_rkndId-1106684.html"
+    },
+    {
+      "candidateName": "Mindaugas PAULIUKAS",
+      "candidateId": "mindaugas-pauliukas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasAnketa_rkndId-1106750.html"
+    },
+    {
+      "candidateName": "Ričardas SARGŪNAS",
+      "candidateId": "ricardas-sargunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasAnketa_rkndId-1106668.html"
+    },
+    {
+      "candidateName": "Valentinas STUNDYS",
+      "candidateId": "valentinas-stundys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasAnketa_rkndId-1106666.html"
+    },
+    {
+      "candidateName": "Valentinas ŠAPALAS",
+      "candidateId": "valentinas-sapalas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasAnketa_rkndId-1106694.html"
+    },
+    {
+      "candidateName": "Edita TAMOŠIŪNAITĖ",
+      "candidateId": "edita-tamosiunaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk984/kandidatai/lrsKandidatasAnketa_rkndId-1106664.html"
+    }
+  ],
+  "skipped": []
+}

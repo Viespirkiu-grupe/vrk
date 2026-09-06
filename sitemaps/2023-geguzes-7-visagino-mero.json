@@ -1,0 +1,29 @@
+{
+  "electionId": "2023-geguzes-7-visagino-mero",
+  "sourceUrl": "https://www.vrk.lt/kandidatai-kandidatu-sarasai/kandidatai-2023-sav-pak?srcUrl=/rinkimai/1344/rnk1664/kandidatai/savKandidataiMerai.html",
+  "generatedAt": "2026-08-19T17:19:09+00:00",
+  "stats": {
+    "rows": 3,
+    "extracted": 2,
+    "skipped": 1,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Erlandas GALAGUZ",
+      "candidateId": "erlandas-galaguz",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1344/rnk1664/kandidatai/savKandidatasAnketa_2023_rkndId-2435245.html"
+    },
+    {
+      "candidateName": "Dalia ŠTRAUPAITĖ",
+      "candidateId": "dalia-straupaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1344/rnk1664/kandidatai/savKandidatasAnketa_2023_rkndId-2435246.html"
+    }
+  ],
+  "skipped": [
+    {
+      "rowIndex": 1,
+      "reason": "no-cells"
+    }
+  ]
+}

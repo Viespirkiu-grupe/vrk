@@ -1,0 +1,59 @@
+{
+  "electionId": "2015-birzelio-7-seimo-varena-eisiskes",
+  "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Apygardos/Apygarda7925/KandidataiApygardos7925.html",
+  "generatedAt": "2026-08-19T21:25:59+00:00",
+  "stats": {
+    "rows": 9,
+    "extracted": 8,
+    "skipped": 1,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Andžej ANDRUŠKEVIČ",
+      "candidateId": "andzej-andruskevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87926/Kandidato87926Anketa.html"
+    },
+    {
+      "candidateName": "Juozas BAUBLYS",
+      "candidateId": "juozas-baublys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87928/Kandidato87928Anketa.html"
+    },
+    {
+      "candidateName": "Vidmantas BIŽOKAS",
+      "candidateId": "vidmantas-bizokas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas88166/Kandidato88166Anketa.html"
+    },
+    {
+      "candidateName": "Marius JUŠKEVIČIUS",
+      "candidateId": "marius-juskevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87971/Kandidato87971Anketa.html"
+    },
+    {
+      "candidateName": "Gitana MARKOVIČIENĖ",
+      "candidateId": "gitana-markoviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87561/Kandidato87561Anketa.html"
+    },
+    {
+      "candidateName": "Vidas MIKALAUSKAS",
+      "candidateId": "vidas-mikalauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87929/Kandidato87929Anketa.html"
+    },
+    {
+      "candidateName": "Miroslavas MONKEVIČIUS",
+      "candidateId": "miroslavas-monkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas87927/Kandidato87927Anketa.html"
+    },
+    {
+      "candidateName": "Virginijus VARANAVIČIUS",
+      "candidateId": "virginijus-varanavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/459_lt/Kandidatai/Kandidatas88017/Kandidato88017Anketa.html"
+    }
+  ],
+  "skipped": [
+    {
+      "rowIndex": 1,
+      "reason": "no-cells"
+    }
+  ]
+}

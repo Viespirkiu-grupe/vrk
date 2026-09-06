@@ -1,0 +1,451 @@
+{
+  "electionId": "2002-prezidento",
+  "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+  "generatedAt": "2026-08-24T11:07:15+00:00",
+  "stats": {
+    "rows": 17,
+    "extracted": 17,
+    "skipped": 0,
+    "duplicate_candidate_ids": 0,
+    "withSveikata": 4,
+    "withWebsite": 9
+  },
+  "entries": [
+    {
+      "candidateName": "Valdas Adamkus",
+      "candidateId": "valdas-adamkus",
+      "vrkCandidateId": "168296",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "vrkRegistrationId": "948562",
+      "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948562.htm",
+      "registration": "2002 m spalio 29 dienos VRK sprendimu Nr. 91 registruotas kandidatu į Respublikos Prezidentus.",
+      "registeredDate": "2002-10-29",
+      "decision": "VRK sprendimu Nr. 91",
+      "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=189543",
+      "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Adamkaus_biografija.htm",
+      "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Adamkaus_programa.doc",
+      "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Adamkus_pareiskimas.jpg",
+      "anketosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Adamkus_anketa1.jpg",
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Adamkus_anketa2.jpg"
+      ],
+      "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Adamkus_deklaracija.jpg",
+      "deklaracijaLabel": "Šeimos turto pajamų deklaracija",
+      "sveikatosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Adamkus_sveikata.jpg"
+      ],
+      "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Adamkus_nuotrauka.jpg",
+      "websiteUrls": [
+        "http://www.adamkus.lt/lt.php"
+      ]
+    },
+    {
+      "candidateName": "Eugenijus Gentvilas",
+      "candidateId": "eugenijus-gentvilas",
+      "vrkCandidateId": "168283",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "vrkRegistrationId": "948550",
+      "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948550.htm",
+      "registration": "2002 m spalio 29 dienos VRK sprendimu Nr. 92 registruotas kandidatu į Respublikos Prezidentus.",
+      "registeredDate": "2002-10-29",
+      "decision": "VRK sprendimu Nr. 92",
+      "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=189545",
+      "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Gentvilo_biografija.htm",
+      "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Gentvilo_programa_v2.doc",
+      "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Gentvilas_pareiskimas.jpg",
+      "anketosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Gentvilas_anketa1.jpg",
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Gentvilas_anketa2.jpg"
+      ],
+      "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Gentvilas_deklaracija.jpg",
+      "deklaracijaLabel": "Gyventojo turto pajamų deklaracija",
+      "sveikatosSkenaiUrls": [],
+      "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Gentvilas_nuotrauka.jpg",
+      "websiteUrls": [
+        "http://www.gentvilas.lt/"
+      ]
+    },
+    {
+      "candidateName": "Algimantas Matulevičius",
+      "candidateId": "algimantas-matulevicius",
+      "vrkCandidateId": "168289",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "vrkRegistrationId": "948556",
+      "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948556.htm",
+      "registration": "2002 m spalio 29 dienos VRK sprendimu Nr. 94 registruotas kandidatu į Respublikos Prezidentus.",
+      "registeredDate": "2002-10-29",
+      "decision": "VRK sprendimu Nr. 94",
+      "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=189547",
+      "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/AMatuleviciaus_biografija.htm",
+      "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/AMatuleviciaus_programa.doc",
+      "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Alg_Matulevicius_pareiskimas.jpg",
+      "anketosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Alg_Matulevicius_anketa1.jpg",
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Alg_Matulevicius_anketa2.jpg"
+      ],
+      "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Alg_Matulevicius_deklaracija.jpg",
+      "deklaracijaLabel": "Šeimos turto pajamų deklaracija",
+      "sveikatosSkenaiUrls": [],
+      "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Alg_Matulevicius_nuotrauka.jpg",
+      "websiteUrls": [
+        "http://www.matulevicius.lt"
+      ]
+    },
+    {
+      "candidateName": "Vytenis Povilas Andriukaitis",
+      "candidateId": "vytenis-povilas-andriukaitis",
+      "vrkCandidateId": "168282",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "vrkRegistrationId": "948549",
+      "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948549.htm",
+      "registration": "2002 m spalio 29 dienos VRK sprendimu Nr. 96 registruotas kandidatu į Respublikos Prezidentus.",
+      "registeredDate": "2002-10-29",
+      "decision": "VRK sprendimu Nr. 96",
+      "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=189550",
+      "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Andriukaicio_biografija.htm",
+      "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Andriukaicio_programa.doc",
+      "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Andriukaitis_pareiskimas.jpg",
+      "anketosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Andriukaitis_anketa1.jpg",
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Andriukaitis_anketa2.jpg"
+      ],
+      "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Andriukaitis_deklaracija.jpg",
+      "deklaracijaLabel": "Šeimos turto pajamų deklaracija",
+      "sveikatosSkenaiUrls": [],
+      "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Andriukaitis_nuotrauka.jpg",
+      "websiteUrls": [
+        "http://www.lsdp.lt/"
+      ]
+    },
+    {
+      "candidateName": "Artūras Paulauskas",
+      "candidateId": "arturas-paulauskas",
+      "vrkCandidateId": "168299",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "vrkRegistrationId": "948565",
+      "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948565.htm",
+      "registration": "2002 m spalio 31 dienos VRK sprendimu Nr. 101 registruotas kandidatu į Respublikos Prezidentus.",
+      "registeredDate": "2002-10-31",
+      "decision": "VRK sprendimu Nr. 101",
+      "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=190909",
+      "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Paulausko_biografija.htm",
+      "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Paulausko_programa_v2.doc",
+      "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paulauskas_pareiskimas.jpg",
+      "anketosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paulauskas_anketa1.jpg",
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paulauskas_anketa2.jpg"
+      ],
+      "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paulauskas_deklaracija.jpg",
+      "deklaracijaLabel": "Šeimos turto pajamų deklaracija",
+      "sveikatosSkenaiUrls": [],
+      "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paulauskas_nuotrauka.jpg",
+      "websiteUrls": [
+        "http://www.paulauskas.lt"
+      ]
+    },
+    {
+      "candidateName": "Vytautas Bernatonis",
+      "candidateId": "vytautas-bernatonis",
+      "vrkCandidateId": "168291",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "vrkRegistrationId": "948558",
+      "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948558.htm",
+      "registration": "2002 m lapkričio 5 dienos VRK sprendimu Nr. 107 registruotas kandidatu į Respublikos Prezidentus.",
+      "registeredDate": "2002-11-05",
+      "decision": "VRK sprendimu Nr. 107",
+      "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=192565",
+      "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Bernatonio_biografija.htm",
+      "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Bernatonio_programa.doc",
+      "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Bernatonis_pareiskimas.jpg",
+      "anketosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Bernatonis_anketa1.jpg",
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Bernatonis_anketa2.jpg"
+      ],
+      "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Bernatonis_deklaracija.jpg",
+      "deklaracijaLabel": "Gyventojo turto pajamų deklaracija",
+      "sveikatosSkenaiUrls": [],
+      "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Bernatonis_nuotrauka.jpg",
+      "websiteUrls": []
+    },
+    {
+      "candidateName": "Kazys Bobelis",
+      "candidateId": "kazys-bobelis",
+      "vrkCandidateId": "168293",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "vrkRegistrationId": "948559",
+      "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948559.htm",
+      "registration": "2002 m lapkričio 8 dienos VRK sprendimu Nr. 113 registruotas kandidatu į Respublikos Prezidentus.",
+      "registeredDate": "2002-11-08",
+      "decision": "VRK sprendimu Nr. 113",
+      "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=192825",
+      "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Bobelio_biografija.htm",
+      "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Bobelio_programa.doc",
+      "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Bobelis_pareiskimas.jpg",
+      "anketosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Bobelis_anketa1.jpg",
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Bobelis_anketa2.jpg"
+      ],
+      "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Bobelis_deklaracija.jpg",
+      "deklaracijaLabel": "Šeimos turto pajamų deklaracija",
+      "sveikatosSkenaiUrls": [],
+      "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Bobelis_nuotrauka.jpg",
+      "websiteUrls": []
+    },
+    {
+      "candidateName": "Kęstutis Glaveckas",
+      "candidateId": "kestutis-glaveckas",
+      "vrkCandidateId": "168290",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "vrkRegistrationId": "948557",
+      "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948557.htm",
+      "registration": "2002 m lapkričio 8 dienos VRK sprendimu Nr. 115 registruotas kandidatu į Respublikos Prezidentus.",
+      "registeredDate": "2002-11-08",
+      "decision": "VRK sprendimu Nr. 115",
+      "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=192827",
+      "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Glavecko_biografija.htm",
+      "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Glavecko_programa.doc",
+      "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Glaveckas_pareiskimas.jpg",
+      "anketosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Glaveckas_anketa1.jpg",
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Glaveckas_anketa2.jpg"
+      ],
+      "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Glaveckas_deklaracija.jpg",
+      "deklaracijaLabel": "Gyventojo turto pajamų deklaracija",
+      "sveikatosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Glaveckas_sveikata.jpg"
+      ],
+      "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Glaveckas_nuotrauka.jpg",
+      "websiteUrls": []
+    },
+    {
+      "candidateName": "Vytautas Šerėnas",
+      "candidateId": "vytautas-serenas",
+      "vrkCandidateId": "168286",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "vrkRegistrationId": "948553",
+      "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948553.htm",
+      "registration": "2002 m lapkričio 8 dienos VRK sprendimu Nr. 117 registruotas kandidatu į Respublikos Prezidentus.",
+      "registeredDate": "2002-11-08",
+      "decision": "VRK sprendimu Nr. 117",
+      "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=192829",
+      "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Sereno_biografija.htm",
+      "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Sereno_programa.doc",
+      "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Serenas_pareiskimas.jpg",
+      "anketosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Serenas_anketa1.jpg",
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Serenas_anketa2.jpg"
+      ],
+      "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Serenas_deklaracija.jpg",
+      "deklaracijaLabel": "Šeimos turto pajamų deklaracija",
+      "sveikatosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Serenas_sveikata1.jpg",
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Serenas_sveikata2.jpg"
+      ],
+      "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/serenas_nuotrauka.jpg",
+      "websiteUrls": [
+        "http://www.lnk.lt/prezidentas"
+      ]
+    },
+    {
+      "candidateName": "Rolandas Paksas",
+      "candidateId": "rolandas-paksas",
+      "vrkCandidateId": "168284",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "vrkRegistrationId": "948551",
+      "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948551.htm",
+      "registration": "2002 m lapkričio 12 dienos VRK sprendimu Nr. 130 registruotas kandidatu į Respublikos Prezidentus.",
+      "registeredDate": "2002-11-12",
+      "decision": "VRK sprendimu Nr. 130",
+      "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=193116",
+      "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Pakso_biografija.htm",
+      "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Pakso_programa.doc",
+      "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paksas_pareiskimas.jpg",
+      "anketosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paksas_anketa1.jpg",
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paksas_anketa2.jpg"
+      ],
+      "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paksas_deklaracija.jpg",
+      "deklaracijaLabel": "Šeimos turto pajamų deklaracija",
+      "sveikatosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paksas_sveikata.jpg"
+      ],
+      "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Paksas_nuotrauka.jpg",
+      "websiteUrls": []
+    },
+    {
+      "candidateName": "Vytautas Šustauskas",
+      "candidateId": "vytautas-sustauskas",
+      "vrkCandidateId": "168287",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "vrkRegistrationId": "948554",
+      "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948554.htm",
+      "registration": "2002 m lapkričio 12 dienos VRK sprendimu Nr. 132 registruotas kandidatu į Respublikos Prezidentus.",
+      "registeredDate": "2002-11-12",
+      "decision": "VRK sprendimu Nr. 132",
+      "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=193126",
+      "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Sustausko_biografija.htm",
+      "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Sustausko_programa.doc",
+      "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Sustauskas_pareiskimas.jpg",
+      "anketosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Sustauskas_anketa1.jpg",
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Sustauskas_anketa2.jpg"
+      ],
+      "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Sustauskas_deklaracija.jpg",
+      "deklaracijaLabel": "Gyventojo turto pajamų deklaracija",
+      "sveikatosSkenaiUrls": [],
+      "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Sustauskas_nuotrauka.jpg",
+      "websiteUrls": []
+    },
+    {
+      "candidateName": "Rimantas Jonas Dagys",
+      "candidateId": "rimantas-jonas-dagys",
+      "vrkCandidateId": "168294",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "vrkRegistrationId": "948560",
+      "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948560.htm",
+      "registration": "2002 m lapkričio 12 dienos VRK sprendimu Nr. 134 registruotas kandidatu į Respublikos Prezidentus.",
+      "registeredDate": "2002-11-12",
+      "decision": "VRK sprendimu Nr. 134",
+      "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=193130",
+      "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Dagio_biografija.htm",
+      "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Dagio_programa.doc",
+      "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Dagys_pareiskimas.jpg",
+      "anketosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Dagys_anketa.jpg",
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Dagys_anketa2.jpg"
+      ],
+      "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Dagys_deklaracija.jpg",
+      "deklaracijaLabel": "Šeimos turto pajamų deklaracija",
+      "sveikatosSkenaiUrls": [],
+      "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Dagys_nuotrauka.jpg",
+      "websiteUrls": []
+    },
+    {
+      "candidateName": "Vytautas Antanas Matulevičius",
+      "candidateId": "vytautas-antanas-matulevicius",
+      "vrkCandidateId": "168288",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "vrkRegistrationId": "948555",
+      "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948555.htm",
+      "registration": "2002 m lapkričio 12 dienos VRK sprendimu Nr. 136 registruotas kandidatu į Respublikos Prezidentus.",
+      "registeredDate": "2002-11-12",
+      "decision": "VRK sprendimu Nr. 136",
+      "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=193138",
+      "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/VMatuleviciaus_biografija.htm",
+      "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/VMatuleviciaus_programa.doc",
+      "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Matulevicius_pareiskimas.jpg",
+      "anketosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Matulevicius_anketa1.jpg",
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Matulevicius_anketa2.jpg"
+      ],
+      "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Matulevicius_deklaracija.jpg",
+      "deklaracijaLabel": "Šeimos turto pajamų deklaracija",
+      "sveikatosSkenaiUrls": [],
+      "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/VA_Matulevicius_nuotrauka.jpg",
+      "websiteUrls": [
+        "http://www.krantas.uni.cc",
+        "http://www.geocities.com/krantasvyt"
+      ]
+    },
+    {
+      "candidateName": "Kazimira Danutė Prunskienė",
+      "candidateId": "kazimira-danute-prunskiene",
+      "vrkCandidateId": "168295",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "vrkRegistrationId": "948561",
+      "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948561.htm",
+      "registration": "2002 m lapkričio 14 dienos VRK sprendimu Nr. 151 registruota kandidate į Respublikos Prezidentus.",
+      "registeredDate": "2002-11-14",
+      "decision": "VRK sprendimu Nr. 151",
+      "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=193412",
+      "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Prunskienes_biografija.htm",
+      "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Prunskienes_programa.doc",
+      "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Prunskiene_pareiskimas.jpg",
+      "anketosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Prunskiene_anketa.jpg",
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Prunskiene_anketa2.jpg"
+      ],
+      "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Prunskiene_deklaracija.jpg",
+      "deklaracijaLabel": "Gyventojo turto pajamų deklaracija",
+      "sveikatosSkenaiUrls": [],
+      "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Prunskiene_nuotrauka.jpg",
+      "websiteUrls": [
+        "http://www.prunskiene.lt"
+      ]
+    },
+    {
+      "candidateName": "Juozas Edvardas Petraitis",
+      "candidateId": "juozas-edvardas-petraitis",
+      "vrkCandidateId": "168297",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "vrkRegistrationId": "948563",
+      "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948563.htm",
+      "registration": "2002 m lapkričio 17 dienos VRK sprendimu Nr. 167 registruotas kandidatu į Respublikos Prezidentus.",
+      "registeredDate": "2002-11-17",
+      "decision": "VRK sprendimu Nr. 167",
+      "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=193470",
+      "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Petraicio_biografija.htm",
+      "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Petraicio_programa.doc",
+      "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Petraitis_pareiskimas.jpg",
+      "anketosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Petraitis_anketa1.jpg",
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Petraitis_anketa2.jpg"
+      ],
+      "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Petraitis_deklaracija.jpg",
+      "deklaracijaLabel": "Šeimos turto pajamų deklaracija",
+      "sveikatosSkenaiUrls": [],
+      "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Petraitis_nuotrauka.jpg",
+      "websiteUrls": [
+        "http://www.petraitis.lt"
+      ]
+    },
+    {
+      "candidateName": "Algirdas Pilvelis",
+      "candidateId": "algirdas-pilvelis",
+      "vrkCandidateId": "168285",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "vrkRegistrationId": "948552",
+      "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948552.htm",
+      "registration": "2002 m lapkričio 17 dienos VRK sprendimu Nr. 169 registruotas kandidatu į Respublikos Prezidentus.",
+      "registeredDate": "2002-11-17",
+      "decision": "VRK sprendimu Nr. 169",
+      "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=193465",
+      "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Pilvelio_biografija.htm",
+      "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Pilvelio_programa.doc",
+      "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Pilvelis_pareiskimas.jpg",
+      "anketosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Pilvelis_anketa1.jpg",
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Pilvelis_anketa2.jpg"
+      ],
+      "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Pilvelis_deklaracija.jpg",
+      "deklaracijaLabel": "Gyventojo turto pajamų deklaracija",
+      "sveikatosSkenaiUrls": [],
+      "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Pilvelis_nuotrauka.jpg",
+      "websiteUrls": []
+    },
+    {
+      "candidateName": "Julius Veselka",
+      "candidateId": "julius-veselka",
+      "vrkCandidateId": "168298",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/kandidatai.htm",
+      "vrkRegistrationId": "948564",
+      "patiketiniaiUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/patiketiniai/kandidato_patiketiniai.jsp-ri_id=14&asm_rduom_id=948564.htm",
+      "registration": "2002 m lapkričio 17 dienos VRK sprendimu Nr. 171 registruotas kandidatu į Respublikos Prezidentus.",
+      "registeredDate": "2002-11-17",
+      "decision": "VRK sprendimu Nr. 171",
+      "decisionUrl": "http://www3.lrs.lt/cgi-bin/preps2?Condition1=193459",
+      "biografijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Biografijos/Veselkos_biografija.htm",
+      "programaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Programos/Veselkos_programa.doc",
+      "pareiskimasUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Veselka_pareiskimas.jpg",
+      "anketosSkenaiUrls": [
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Veselka_anketa1.jpg",
+        "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Veselka_anketa2.jpg"
+      ],
+      "deklaracijaUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Veselka_deklaracija.jpg",
+      "deklaracijaLabel": "Šeimos turto pajamų deklaracija",
+      "sveikatosSkenaiUrls": [],
+      "photoUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2002/Prezidentas/docs/Veselka_nuotrauka.jpg",
+      "websiteUrls": []
+    }
+  ]
+}

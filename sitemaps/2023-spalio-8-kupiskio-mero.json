@@ -1,0 +1,44 @@
+{
+  "electionId": "2023-spalio-8-kupiskio-mero",
+  "sourceUrl": "https://www.vrk.lt/kandidatai-kandidatu-sarasai-2023-kupi?srcUrl=/rinkimai/1426/rnk1746/kandidatai/savKandidataiMerai.html",
+  "generatedAt": "2026-08-15T17:47:59+00:00",
+  "stats": {
+    "rows": 6,
+    "extracted": 5,
+    "skipped": 1,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Žilvinas AUKŠTIKALNIS",
+      "candidateId": "zilvinas-aukstikalnis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1426/rnk1746/kandidatai/savKandidatasAnketa_2023_rkndId-2435289.html"
+    },
+    {
+      "candidateName": "Eglė BLAŽEVIČIENĖ",
+      "candidateId": "egle-blazeviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1426/rnk1746/kandidatai/savKandidatasAnketa_2023_rkndId-2435287.html"
+    },
+    {
+      "candidateName": "Edmundas JONUTIS",
+      "candidateId": "edmundas-jonutis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1426/rnk1746/kandidatai/savKandidatasAnketa_2023_rkndId-2435286.html"
+    },
+    {
+      "candidateName": "Vytautas MOCKUS",
+      "candidateId": "vytautas-mockus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1426/rnk1746/kandidatai/savKandidatasAnketa_2023_rkndId-2435288.html"
+    },
+    {
+      "candidateName": "Algirdas RASLANAS",
+      "candidateId": "algirdas-raslanas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1426/rnk1746/kandidatai/savKandidatasAnketa_2023_rkndId-2435285.html"
+    }
+  ],
+  "skipped": [
+    {
+      "rowIndex": 1,
+      "reason": "no-cells"
+    }
+  ]
+}
