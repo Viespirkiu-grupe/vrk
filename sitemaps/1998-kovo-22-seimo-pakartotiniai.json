@@ -1,0 +1,111 @@
+{
+  "electionId": "1998-kovo-22-seimo-pakartotiniai",
+  "sourceDescription": "Naujosios Vilnios (10) and Vilniaus Trakų (57) constituencies, named as one election on https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/index.html",
+  "generatedAt": "2026-08-26T22:13:18+00:00",
+  "stats": {
+    "constituencies": 2,
+    "candidates": 11,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Antanaitis Audrys",
+      "candidateId": "antanaitis-audrys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64298.htm",
+      "constituencyName": "Naujosios Vilnios",
+      "constituencyNumber": 10,
+      "nominator": "Lietuvos krikščionių demokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-187.htm"
+    },
+    {
+      "candidateName": "Filipovič Tadeuš",
+      "candidateId": "filipovic-tadeus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-63860.htm",
+      "constituencyName": "Naujosios Vilnios",
+      "constituencyNumber": 10,
+      "nominator": "Lietuvos lenkų rinkimų akcija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-185.htm"
+    },
+    {
+      "candidateName": "Jocius Kazimieras Jonas",
+      "candidateId": "jocius-kazimieras-jonas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64296.htm",
+      "constituencyName": "Naujosios Vilnios",
+      "constituencyNumber": 10,
+      "nominator": "Lietuvos socialinio teisingumo sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-202.htm"
+    },
+    {
+      "candidateName": "Paulauskas Artūras",
+      "candidateId": "paulauskas-arturas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64297.htm",
+      "constituencyName": "Naujosios Vilnios",
+      "constituencyNumber": 10,
+      "nominator": "Išsikėlė pats",
+      "nominatorUrl": ""
+    },
+    {
+      "candidateName": "Petniūnas Vytautas",
+      "candidateId": "petniunas-vytautas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64299.htm",
+      "constituencyName": "Naujosios Vilnios",
+      "constituencyNumber": 10,
+      "nominator": "Lietuvos socialdemokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-198.htm"
+    },
+    {
+      "candidateName": "Bologovienė Regina",
+      "candidateId": "bologoviene-regina",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64300.htm",
+      "constituencyName": "Vilniaus Trakų",
+      "constituencyNumber": 57,
+      "nominator": "Lietuvos socialdemokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-198.htm"
+    },
+    {
+      "candidateName": "Maldaikienė Birutė",
+      "candidateId": "maldaikiene-birute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64304.htm",
+      "constituencyName": "Vilniaus Trakų",
+      "constituencyNumber": 57,
+      "nominator": "Išsikėlė pati",
+      "nominatorUrl": ""
+    },
+    {
+      "candidateName": "Mickevičius Antanas",
+      "candidateId": "mickevicius-antanas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64303.htm",
+      "constituencyName": "Vilniaus Trakų",
+      "constituencyNumber": 57,
+      "nominator": "Išsikėlė pats",
+      "nominatorUrl": ""
+    },
+    {
+      "candidateName": "Suboč Danutė",
+      "candidateId": "suboc-danute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64302.htm",
+      "constituencyName": "Vilniaus Trakų",
+      "constituencyNumber": 57,
+      "nominator": "Išsikėlė pati",
+      "nominatorUrl": ""
+    },
+    {
+      "candidateName": "Subotinas Jurijus",
+      "candidateId": "subotinas-jurijus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64301.htm",
+      "constituencyName": "Vilniaus Trakų",
+      "constituencyNumber": 57,
+      "nominator": "Išsikėlė pats",
+      "nominatorUrl": ""
+    },
+    {
+      "candidateName": "Tomaševski Valdemar",
+      "candidateId": "tomasevski-valdemar",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-63861.htm",
+      "constituencyName": "Vilniaus Trakų",
+      "constituencyNumber": 57,
+      "nominator": "Lietuvos lenkų rinkimų akcija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-185.htm"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "electionId": "2018-rugsejo-16-seimo-zanavykai",
+  "sourceUrl": "https://www.vrk.lt/2018-09-16lrs-nauji-rinkimai-i-seima/kandidatai?srcUrl=/rinkimai/826/rnk1064/kandidatai/lrsKandidataiPilnasSarasas.html",
+  "generatedAt": "2026-08-16T21:07:40+00:00",
+  "stats": {
+    "rows": 6,
+    "extracted": 6,
+    "skipped": 0,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Mindaugas BASTYS",
+      "candidateId": "mindaugas-bastys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/826/rnk1064/kandidatai/lrsKandidatasAnketa_rkndId-2399845.html"
+    },
+    {
+      "candidateName": "Irena HAASE",
+      "candidateId": "irena-haase",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/826/rnk1064/kandidatai/lrsKandidatasAnketa_rkndId-2399846.html"
+    },
+    {
+      "candidateName": "Vigilijus JUKNA",
+      "candidateId": "vigilijus-jukna",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/826/rnk1064/kandidatai/lrsKandidatasAnketa_rkndId-2399851.html"
+    },
+    {
+      "candidateName": "Giedrius SURPLYS",
+      "candidateId": "giedrius-surplys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/826/rnk1064/kandidatai/lrsKandidatasAnketa_rkndId-2399847.html"
+    },
+    {
+      "candidateName": "Mindaugas TARNAUSKAS",
+      "candidateId": "mindaugas-tarnauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/826/rnk1064/kandidatai/lrsKandidatasAnketa_rkndId-2399850.html"
+    },
+    {
+      "candidateName": "Paulius VISOCKAS",
+      "candidateId": "paulius-visockas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/826/rnk1064/kandidatai/lrsKandidatasAnketa_rkndId-2399848.html"
+    }
+  ],
+  "skipped": []
+}

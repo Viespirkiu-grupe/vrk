@@ -6,6 +6,8 @@ from unittest import mock
 
 from bs4 import BeautifulSoup
 
+import requests
+
 from scraper.elections.seimo_dzukijos_2007.anketa_parser import (
     DEFAULT_RESULTS_PATH,
     parse_anketa_sample,
@@ -113,7 +115,11 @@ class SeimoDzukijos2007ResultsTests(unittest.TestCase):
         def fake_fetch(url: str) -> str:
             calls.append(url)
             if "/rezultatai_vienmand_apygardose2/" in url:
-                raise RuntimeError("404")
+                # The folder the 2007 tree does not have: VRK answers 404,
+                # and only a 404 reads as "absent" since issue #134.
+                missing = requests.Response()
+                missing.status_code = 404
+                raise requests.HTTPError("404", response=missing)
             return index
 
         with tempfile.TemporaryDirectory() as tmp, mock.patch("scraper.shared.election_results.fetch_text", side_effect=fake_fetch):

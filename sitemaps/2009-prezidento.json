@@ -1,0 +1,49 @@
+{
+  "electionId": "2009-prezidento",
+  "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/index.html",
+  "generatedAt": "2026-08-21T21:27:09+00:00",
+  "stats": {
+    "rows": 7,
+    "extracted": 7,
+    "skipped": 0,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Algirdas BUTKEVIČIUS",
+      "candidateId": "algirdas-butkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24890/Kandidato24890Anketa.html"
+    },
+    {
+      "candidateName": "Loreta GRAUŽINIENĖ",
+      "candidateId": "loreta-grauziniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24901/Kandidato24901Anketa.html"
+    },
+    {
+      "candidateName": "Dalia GRYBAUSKAITĖ",
+      "candidateId": "dalia-grybauskaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24900/Kandidato24900Anketa.html"
+    },
+    {
+      "candidateName": "Česlovas JEZERSKAS",
+      "candidateId": "ceslovas-jezerskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24941/Kandidato24941Anketa.html"
+    },
+    {
+      "candidateName": "Valentinas MAZURONIS",
+      "candidateId": "valentinas-mazuronis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24897/Kandidato24897Anketa.html"
+    },
+    {
+      "candidateName": "Kazimira Danutė PRUNSKIENĖ",
+      "candidateId": "kazimira-danute-prunskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24930/Kandidato24930Anketa.html"
+    },
+    {
+      "candidateName": "Valdemar TOMAŠEVSKI",
+      "candidateId": "valdemar-tomasevski",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/403_lt/Kandidatai/Kandidatas24931/Kandidato24931Anketa.html"
+    }
+  ],
+  "skipped": []
+}

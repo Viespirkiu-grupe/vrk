@@ -1,0 +1,59 @@
+{
+  "electionId": "2023-rugsejo-3-seimo-raseiniai-kedainiai",
+  "sourceUrl": "https://www.vrk.lt/kandidatai-kandidatu-sarasai-pirm-seim-42?srcUrl=/rinkimai/1384/rnk1704/kandidatai/SeiKandidataiPilnasSarasas.html",
+  "generatedAt": "2026-08-15T18:45:51+00:00",
+  "stats": {
+    "rows": 9,
+    "extracted": 8,
+    "skipped": 1,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Sandra BARZDIENĖ",
+      "candidateId": "sandra-barzdiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasAnketa_rkndId-2435271.html"
+    },
+    {
+      "candidateName": "Andrius BAUTRONIS",
+      "candidateId": "andrius-bautronis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasAnketa_rkndId-2435268.html"
+    },
+    {
+      "candidateName": "Edvinas DEMIDAVIČIUS",
+      "candidateId": "edvinas-demidavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasAnketa_rkndId-2435270.html"
+    },
+    {
+      "candidateName": "Algirdas GRICIUS",
+      "candidateId": "algirdas-gricius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasAnketa_rkndId-2435266.html"
+    },
+    {
+      "candidateName": "Matas SKAMARAKAS",
+      "candidateId": "matas-skamarakas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasAnketa_rkndId-2435265.html"
+    },
+    {
+      "candidateName": "Meida ŠABŪNIENĖ",
+      "candidateId": "meida-sabuniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasAnketa_rkndId-2435269.html"
+    },
+    {
+      "candidateName": "Antanas TAUTKUS",
+      "candidateId": "antanas-tautkus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasAnketa_rkndId-2435267.html"
+    },
+    {
+      "candidateName": "Darius ULICKAS",
+      "candidateId": "darius-ulickas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1384/rnk1704/kandidatai/KandidatasAnketa_rkndId-2435273.html"
+    }
+  ],
+  "skipped": [
+    {
+      "rowIndex": 1,
+      "reason": "no-cells"
+    }
+  ]
+}

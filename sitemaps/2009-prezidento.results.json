@@ -1,0 +1,20 @@
+{
+  "electionId": "2009-prezidento",
+  "generatedAt": "2026-08-21T21:29:49+00:00",
+  "sources": [
+    "https://www.vrk.lt/statiniai/puslapiai/2009_prezidento_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmand_apygardose1turas.html"
+  ],
+  "stats": {
+    "winnerName": "Dalia GRYBAUSKAITĖ",
+    "winnersResolved": 1,
+    "unresolved": 0
+  },
+  "elected": {
+    "24900": {
+      "seat": "prezidentas",
+      "method": "verdict",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2009_prezidento_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmand_apygardose1turas.html",
+      "round": 1
+    }
+  }
+}

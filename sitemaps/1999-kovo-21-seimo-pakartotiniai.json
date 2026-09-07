@@ -1,0 +1,210 @@
+{
+  "electionId": "1999-kovo-21-seimo-pakartotiniai",
+  "sourceDescription": "Naujosios Vilnios (10), Nevėžio (26) and Vilniaus Trakų (57) constituencies, named as one election on https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/index.html",
+  "generatedAt": "2026-08-27T07:37:30+00:00",
+  "stats": {
+    "constituencies": 3,
+    "candidates": 22,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Antanaitis Audrys",
+      "candidateId": "antanaitis-audrys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65116.htm",
+      "constituencyName": "Naujosios Vilnios",
+      "constituencyNumber": 10,
+      "nominator": "Lietuvos krikščionių demokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-393.htm"
+    },
+    {
+      "candidateName": "Balcevič Zbignev",
+      "candidateId": "balcevic-zbignev",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65099.htm",
+      "constituencyName": "Naujosios Vilnios",
+      "constituencyNumber": 10,
+      "nominator": "Lietuvos lenkų rinkimų akcija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-398.htm"
+    },
+    {
+      "candidateName": "Melianas Artūras",
+      "candidateId": "melianas-arturas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65106.htm",
+      "constituencyName": "Naujosios Vilnios",
+      "constituencyNumber": 10,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-400.htm"
+    },
+    {
+      "candidateName": "Petkevičius Juozapas",
+      "candidateId": "petkevicius-juozapas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65086.htm",
+      "constituencyName": "Naujosios Vilnios",
+      "constituencyNumber": 10,
+      "nominator": "Lietuvos demokratinė darbo partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-392.htm"
+    },
+    {
+      "candidateName": "Šablinskas Eduardas",
+      "candidateId": "sablinskas-eduardas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65088.htm",
+      "constituencyName": "Naujosios Vilnios",
+      "constituencyNumber": 10,
+      "nominator": "Naujoji sąjunga (socialliberalai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-404.htm"
+    },
+    {
+      "candidateName": "Šarkus Juozas",
+      "candidateId": "sarkus-juozas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65111.htm",
+      "constituencyName": "Naujosios Vilnios",
+      "constituencyNumber": 10,
+      "nominator": "Lietuvos centro sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-391.htm"
+    },
+    {
+      "candidateName": "Zacharevič Miroslav",
+      "candidateId": "zacharevic-miroslav",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65114.htm",
+      "constituencyName": "Naujosios Vilnios",
+      "constituencyNumber": 10,
+      "nominator": "Lietuvos socialdemokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-394.htm"
+    },
+    {
+      "candidateName": "Brazienė Valerija",
+      "candidateId": "braziene-valerija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65110.htm",
+      "constituencyName": "Nevėžio",
+      "constituencyNumber": 26,
+      "nominator": "Naujoji demokratija/ Moterų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-402.htm"
+    },
+    {
+      "candidateName": "Daukas Virginijus",
+      "candidateId": "daukas-virginijus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65107.htm",
+      "constituencyName": "Nevėžio",
+      "constituencyNumber": 26,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-400.htm"
+    },
+    {
+      "candidateName": "Davydovas Sergiejus",
+      "candidateId": "davydovas-sergiejus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65087.htm",
+      "constituencyName": "Nevėžio",
+      "constituencyNumber": 26,
+      "nominator": "Lietuvos demokratinė darbo partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-392.htm"
+    },
+    {
+      "candidateName": "Liepa Rimantas",
+      "candidateId": "liepa-rimantas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65104.htm",
+      "constituencyName": "Nevėžio",
+      "constituencyNumber": 26,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-396.htm"
+    },
+    {
+      "candidateName": "Malūkas Edmundas Zenonas",
+      "candidateId": "malukas-edmundas-zenonas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65097.htm",
+      "constituencyName": "Nevėžio",
+      "constituencyNumber": 26,
+      "nominator": "Naujoji sąjunga (socialliberalai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-404.htm"
+    },
+    {
+      "candidateName": "Satkevičius Vitalijus",
+      "candidateId": "satkevicius-vitalijus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65117.htm",
+      "constituencyName": "Nevėžio",
+      "constituencyNumber": 26,
+      "nominator": "Lietuvos krikščionių demokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-393.htm"
+    },
+    {
+      "candidateName": "Sėdžius Laimutis",
+      "candidateId": "sedzius-laimutis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65112.htm",
+      "constituencyName": "Nevėžio",
+      "constituencyNumber": 26,
+      "nominator": "Lietuvos centro sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-391.htm"
+    },
+    {
+      "candidateName": "Terleckas Antanas",
+      "candidateId": "terleckas-antanas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65085.htm",
+      "constituencyName": "Nevėžio",
+      "constituencyNumber": 26,
+      "nominator": "Lietuvos laisvės lyga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-403.htm"
+    },
+    {
+      "candidateName": "Garbovskaja Marija",
+      "candidateId": "garbovskaja-marija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65098.htm",
+      "constituencyName": "Vilniaus Trakų",
+      "constituencyNumber": 57,
+      "nominator": "Naujoji sąjunga (socialliberalai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-404.htm"
+    },
+    {
+      "candidateName": "Ivanovienė Bronislava",
+      "candidateId": "ivanoviene-bronislava",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65113.htm",
+      "constituencyName": "Vilniaus Trakų",
+      "constituencyNumber": 57,
+      "nominator": "Lietuvos centro sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-391.htm"
+    },
+    {
+      "candidateName": "Jankovski Henrik",
+      "candidateId": "jankovski-henrik",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65100.htm",
+      "constituencyName": "Vilniaus Trakų",
+      "constituencyNumber": 57,
+      "nominator": "Lietuvos lenkų rinkimų akcija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-398.htm"
+    },
+    {
+      "candidateName": "Komičienė Vida",
+      "candidateId": "komiciene-vida",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65109.htm",
+      "constituencyName": "Vilniaus Trakų",
+      "constituencyNumber": 57,
+      "nominator": "Naujoji demokratija/ Moterų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-402.htm"
+    },
+    {
+      "candidateName": "Pilikauskas Stasys",
+      "candidateId": "pilikauskas-stasys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65118.htm",
+      "constituencyName": "Vilniaus Trakų",
+      "constituencyNumber": 57,
+      "nominator": "Lietuvos krikščionių demokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-393.htm"
+    },
+    {
+      "candidateName": "Purvaneckienė Giedrė",
+      "candidateId": "purvaneckiene-giedre",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65115.htm",
+      "constituencyName": "Vilniaus Trakų",
+      "constituencyNumber": 57,
+      "nominator": "Lietuvos socialdemokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-394.htm"
+    },
+    {
+      "candidateName": "Tryk Zdislav",
+      "candidateId": "tryk-zdislav",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/kandvl.htm-65108.htm",
+      "constituencyName": "Vilniaus Trakų",
+      "constituencyNumber": 57,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/partr2l.htm-400.htm"
+    }
+  ]
+}

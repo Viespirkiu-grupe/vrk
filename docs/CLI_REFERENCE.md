@@ -158,9 +158,10 @@ Options:
   `CampaignRootFetchFailed`, ...) are written there as JSONL. Without it they
   are named on stdout and dropped, which is why the corpus holds 8,949 anomaly
   events and not one of them says `stage: "fetch"` (issue #85). No default,
-  because `data/<election-id>/anomalies.jsonl` belongs to the parse command,
-  which writes it whole; `scripts/run_election_batches.sh` passes a
-  per-candidate path and appends.
+  because this command writes the file it is given whole — the portrait
+  backfill's fetch events for the same candidate are not its to replace — so
+  a default of `data/<election-id>/anomalies.jsonl` would truncate that file;
+  `scripts/run_election_batches.sh` passes a per-candidate path and appends.
 
 Output:
 
@@ -173,6 +174,18 @@ Fetch VRK's results pages for an election whose candidate pages mark no
 winner — every static-page family from 1996 to 2015 — and write
 `sitemaps/<election-id>.results.json`, the map of VRK candidate id → seat
 that `parse-anketa-samples` then joins into `kandidatavimas.isrinktas`.
+
+Exit status: 1, and no file written, when a results page could not be fetched
+or the build resolved no winner without the pages saying that nobody was
+elected. A page family the tree genuinely does not publish (VRK answers 404 —
+a round-two folder, a first-round members list) is still read as absent; any
+other failure propagates, because a build that swallowed it used to write a
+well-formed file with an empty `elected` map, and every candidate parsed
+against that file became `isrinktas: false` (issue #134). The four elections in
+which nobody was elected — the 1998 and 1999 Seimas by-elections and the 2003
+new elections, every constituency `neįvyko` — carry `"nobodyElected": true`,
+and an empty map without that key is treated by the parse stage as no results
+at all (`isrinktas` stays `null`).
 Pages are cached under `samples/results/<election-id>/` so a re-run is
 offline. The command prints the reconciliation stats; read them before
 trusting the file (`unresolved`, `*NotInSitemap`, `seatCountMismatches`
@@ -203,7 +216,12 @@ Options:
 - `--candidate-id <id>`: Optional, repeatable. If omitted, parse all sampled candidates.
 - `--samples-root <path>`: Defaults to `samples/html/2016-seimo`.
 - `--output-root <path>`: Defaults to `data/2016-seimo`.
-- `--anomalies-path <path>`: Optional. Defaults to `<output-root>/anomalies.jsonl`.
+- `--anomalies-path <path>`: Optional. Defaults to `<output-root>/anomalies.jsonl`
+  — the election's own file, which the batch runner appends to and
+  `scripts/backfill_url_portraits.py` writes its fetch events into. The run
+  replaces only its own `parse`-stage events for the candidates it parsed and
+  keeps every other line (issue #139: until then the file was written whole,
+  so the one-candidate form above emptied it — 8,636 events to 2).
 
 The campaign tab paths recorded inside each candidate's `index.json` are
 re-anchored onto the samples root in use, so with an explicit `--samples-root`
@@ -213,7 +231,8 @@ or read emits a `CampaignTabSampleMissing` anomaly.
 Output:
 
 - Writes one JSON file per parsed candidate in output root.
-- Writes anomalies JSONL summary file.
+- Merges this run's anomaly events into the anomalies JSONL file (see
+  `--anomalies-path`).
 - Prints parsed row counts and anomaly summary.
 
 ### `anomalies-report`
@@ -238,9 +257,12 @@ Options:
 - `--update-baseline`: Rewrite the baseline from this run. Refused when the run
   is narrowed to some elections or one severity.
 
-Exit status: 1 when the run holds an event type the baseline does not name, or
-more of one than it records; 0 otherwise. Fewer events than the baseline is
-progress — printed, not failed. See `docs/ANOMALY_DETECTION.md`.
+Exit status: 1 when the run holds an event type the baseline does not name,
+more of one than it records, or an election whose total fell to less than half
+of the baseline's — the signature of a wiped `anomalies.jsonl`, which a parser
+fix that large must own by updating the baseline in the same commit; 0
+otherwise. Fewer events than the baseline is otherwise progress — printed, not
+failed. See `docs/ANOMALY_DETECTION.md`.
 
 ## European Parliament (`2019-ep`) Workflow
 

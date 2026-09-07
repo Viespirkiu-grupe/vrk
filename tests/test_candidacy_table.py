@@ -150,6 +150,45 @@ class ModernRecord(unittest.TestCase):
         self.assertEqual(self.row["campaign_status"], "savarankiskas")
 
 
+class MunicipalityJoin(unittest.TestCase):
+    def test_the_column_is_the_official_name_and_the_id_joins(self):
+        # Issue #137: the eras' wordings shipped as different municipalities.
+        older = {"electionId": "2015-kovo-1-savivaldybiu", "candidateId": "x", "candidateName": "X Y",
+                 "kandidatavimas": {"savivaldybe": "Kauno miesto savivaldybė", "roles": ["tarybos-narys"], "isrinktas": False},
+                 "normalized": {}}
+        newer = {"electionId": "2019-kovo-3-savivaldybiu-tarybu", "candidateId": "x", "candidateName": "X Y",
+                 "kandidatavimas": {"savivaldybe": {"id": "19972", "number": 15, "name": "Kauno miesto"}, "roles": ["tarybos-narys"], "isrinktas": False},
+                 "normalized": {}}
+        rows = [
+            table.project_record(older, _election("2015-kovo-1-savivaldybiu", "2015-03-01", "savivaldybiu"), PATHS),
+            table.project_record(newer, _election("2019-kovo-3-savivaldybiu-tarybu", "2019-03-03", "savivaldybiu"), PATHS),
+        ]
+        self.assertEqual({row["municipality"] for row in rows}, {"Kauno miesto savivaldybė"})
+        self.assertEqual({row["municipality_id"] for row in rows}, {"kauno-miesto"})
+
+    def test_a_dual_candidacy_projects_both_outcomes(self):
+        # Issue #140: role='meras' AND elected=1 returned 410 rows for 2019.
+        record = {"electionId": "2019-kovo-3-savivaldybiu-tarybu", "candidateId": "x", "candidateName": "X Y",
+                  "kandidatavimas": {"savivaldybe": {"id": "1", "number": 13, "name": "Kaišiadorių rajono"},
+                                     "roles": ["tarybos-narys", "meras"],
+                                     "tarybosNarys": {"partyList": {"id": "2", "number": 4, "name": "LSDP"}, "listPosition": 1, "elected": True},
+                                     "meras": {"round": "I", "elected": False}, "isrinktas": True},
+                  "normalized": {}}
+        row = table.project_record(record, _election("2019-kovo-3-savivaldybiu-tarybu", "2019-03-03", "savivaldybiu"), PATHS)
+        self.assertEqual(row["role"], "meras")
+        self.assertIs(row["elected"], True)
+        self.assertIs(row["elected_council"], True)
+        self.assertIs(row["elected_mayor"], False)
+        seimas = table.project_record(MODERN_RECORD, _election("2016-seimo", "2016-10-09", "seimo"), PATHS)
+        self.assertIsNone(seimas["elected_council"])
+        self.assertIsNone(seimas["elected_mayor"])
+
+    def test_a_seimas_row_has_no_municipality(self):
+        row = table.project_record(MODERN_RECORD, _election("2016-seimo", "2016-10-09", "seimo"), PATHS)
+        self.assertIsNone(row["municipality"])
+        self.assertIsNone(row["municipality_id"])
+
+
 class LitasConversion(unittest.TestCase):
     def test_litas_era_divides_at_the_changeover_rate(self):
         record = {

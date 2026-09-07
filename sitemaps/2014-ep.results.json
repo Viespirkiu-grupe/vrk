@@ -1,0 +1,83 @@
+{
+  "electionId": "2014-ep",
+  "generatedAt": "2026-08-21T14:15:00+00:00",
+  "sources": [
+    "https://www.vrk.lt/statiniai/puslapiai/2014_ep_rinkimai/output_lt/rezultatai/rezultatai.html"
+  ],
+  "stats": {
+    "membersListed": 11,
+    "membersInSitemap": 11,
+    "membersNotInSitemap": 0
+  },
+  "elected": {
+    "70600": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2014_ep_rinkimai/output_lt/rezultatai/rezultatai.html",
+      "party": "Lietuvos Respublikos liberalų sąjūdis"
+    },
+    "70635": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2014_ep_rinkimai/output_lt/rezultatai/rezultatai.html",
+      "party": "Lietuvos socialdemokratų partija"
+    },
+    "70636": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2014_ep_rinkimai/output_lt/rezultatai/rezultatai.html",
+      "party": "Lietuvos socialdemokratų partija"
+    },
+    "70599": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2014_ep_rinkimai/output_lt/rezultatai/rezultatai.html",
+      "party": "Lietuvos Respublikos liberalų sąjūdis"
+    },
+    "70767": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2014_ep_rinkimai/output_lt/rezultatai/rezultatai.html",
+      "party": "Lietuvos valstiečių ir žaliųjų sąjunga"
+    },
+    "70744": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2014_ep_rinkimai/output_lt/rezultatai/rezultatai.html",
+      "party": "Tėvynės sąjunga - Lietuvos krikščionys demokratai"
+    },
+    "70678": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2014_ep_rinkimai/output_lt/rezultatai/rezultatai.html",
+      "party": "Partija Tvarka ir teisingumas"
+    },
+    "70676": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2014_ep_rinkimai/output_lt/rezultatai/rezultatai.html",
+      "party": "Partija Tvarka ir teisingumas"
+    },
+    "70742": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2014_ep_rinkimai/output_lt/rezultatai/rezultatai.html",
+      "party": "Tėvynės sąjunga - Lietuvos krikščionys demokratai"
+    },
+    "70789": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2014_ep_rinkimai/output_lt/rezultatai/rezultatai.html",
+      "party": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“"
+    },
+    "70828": {
+      "seat": "daugiamandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2014_ep_rinkimai/output_lt/rezultatai/rezultatai.html",
+      "party": "Darbo partija"
+    }
+  },
+  "details": {
+    "notInSitemap": []
+  }
+}

@@ -1,0 +1,219 @@
+{
+  "electionId": "1997-kovo-23-seimo-pakartotiniai",
+  "sourceDescription": "Naujosios Vilnios (10), Vilniaus-Šalčininkų (56), Vilniaus-Trakų (57), Trakų (58) constituencies, named on https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/index.html#1997",
+  "generatedAt": "2026-08-20T22:25:29+00:00",
+  "stats": {
+    "constituencies": 4,
+    "candidates": 23,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Lazinko Vytautas Aleksas",
+      "candidateId": "lazinko-vytautas-aleksas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-40108.htm",
+      "constituencyName": "Naujosios Vilnios",
+      "constituencyNumber": 10,
+      "nominator": "Lietuvos liaudies partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-101.htm"
+    },
+    {
+      "candidateName": "Maciejkianiec Ryšard",
+      "candidateId": "maciejkianiec-rysard",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-39780.htm",
+      "constituencyName": "Naujosios Vilnios",
+      "constituencyNumber": 10,
+      "nominator": "Lietuvos lenkų rinkimų akcija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-97.htm"
+    },
+    {
+      "candidateName": "Melianas Artūras",
+      "candidateId": "melianas-arturas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-39256.htm",
+      "constituencyName": "Naujosios Vilnios",
+      "constituencyNumber": 10,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-102.htm"
+    },
+    {
+      "candidateName": "Musteikis Petras",
+      "candidateId": "musteikis-petras",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-40425.htm",
+      "constituencyName": "Naujosios Vilnios",
+      "constituencyNumber": 10,
+      "nominator": "Lietuvos politinių kalinių ir tremtinių sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-103.htm"
+    },
+    {
+      "candidateName": "Strižėnas Jurijus",
+      "candidateId": "strizenas-jurijus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-41052.htm",
+      "constituencyName": "Naujosios Vilnios",
+      "constituencyNumber": 10,
+      "nominator": "Krikščionių demokratų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-111.htm"
+    },
+    {
+      "candidateName": "Vaškovič Mečislav",
+      "candidateId": "vaskovic-mecislav",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-40439.htm",
+      "constituencyName": "Naujosios Vilnios",
+      "constituencyNumber": 10,
+      "nominator": "Lietuvos piliečių aljansas",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-98.htm"
+    },
+    {
+      "candidateName": "Reičiūnas Algimantas",
+      "candidateId": "reiciunas-algimantas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-40435.htm",
+      "constituencyName": "Vilniaus Šalčininkų",
+      "constituencyNumber": 56,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-102.htm"
+    },
+    {
+      "candidateName": "Senkevič Jan",
+      "candidateId": "senkevic-jan",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-39779.htm",
+      "constituencyName": "Vilniaus Šalčininkų",
+      "constituencyNumber": 56,
+      "nominator": "Lietuvos lenkų rinkimų akcija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-97.htm"
+    },
+    {
+      "candidateName": "Bušma Bronislavas",
+      "candidateId": "busma-bronislavas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-39589.htm",
+      "constituencyName": "Vilniaus Trakų",
+      "constituencyNumber": 57,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-104.htm"
+    },
+    {
+      "candidateName": "Juchnevičius Vladas",
+      "candidateId": "juchnevicius-vladas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-40104.htm",
+      "constituencyName": "Vilniaus Trakų",
+      "constituencyNumber": 57,
+      "nominator": "Lietuvos liaudies partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-101.htm"
+    },
+    {
+      "candidateName": "Kolosauskas Feliksas",
+      "candidateId": "kolosauskas-feliksas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-40433.htm",
+      "constituencyName": "Vilniaus Trakų",
+      "constituencyNumber": 57,
+      "nominator": "Lietuvos demokratinė darbo partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-109.htm"
+    },
+    {
+      "candidateName": "Remeika Rimantas",
+      "candidateId": "remeika-rimantas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-40437.htm",
+      "constituencyName": "Vilniaus Trakų",
+      "constituencyNumber": 57,
+      "nominator": "Lietuvos centro sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-105.htm"
+    },
+    {
+      "candidateName": "Tomaševski Valdemar",
+      "candidateId": "tomasevski-valdemar",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-39684.htm",
+      "constituencyName": "Vilniaus Trakų",
+      "constituencyNumber": 57,
+      "nominator": "Lietuvos lenkų rinkimų akcija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-97.htm"
+    },
+    {
+      "candidateName": "Vertelkienė Vanda",
+      "candidateId": "vertelkiene-vanda",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-40423.htm",
+      "constituencyName": "Vilniaus Trakų",
+      "constituencyNumber": 57,
+      "nominator": "Lietuvos politinių kalinių ir tremtinių sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-103.htm"
+    },
+    {
+      "candidateName": "Aleksiūnienė Danutė",
+      "candidateId": "aleksiuniene-danute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-39429.htm",
+      "constituencyName": "Trakų",
+      "constituencyNumber": 58,
+      "nominator": "Lietuvos centro sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-105.htm"
+    },
+    {
+      "candidateName": "Baskas Antanas",
+      "candidateId": "baskas-antanas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-42383.htm",
+      "constituencyName": "Trakų",
+      "constituencyNumber": 58,
+      "nominator": "Išsikėlė pats",
+      "nominatorUrl": ""
+    },
+    {
+      "candidateName": "Bologovienė Regina",
+      "candidateId": "bologoviene-regina",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-42339.htm",
+      "constituencyName": "Trakų",
+      "constituencyNumber": 58,
+      "nominator": "Išsikėlė pati",
+      "nominatorUrl": ""
+    },
+    {
+      "candidateName": "Čereška Vytautas",
+      "candidateId": "cereska-vytautas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-40421.htm",
+      "constituencyName": "Trakų",
+      "constituencyNumber": 58,
+      "nominator": "Lietuvos politinių kalinių ir tremtinių sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-103.htm"
+    },
+    {
+      "candidateName": "Čobotas Medardas",
+      "candidateId": "cobotas-medardas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-39587.htm",
+      "constituencyName": "Trakų",
+      "constituencyNumber": 58,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-104.htm"
+    },
+    {
+      "candidateName": "Jankovski Henrik",
+      "candidateId": "jankovski-henrik",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-39781.htm",
+      "constituencyName": "Trakų",
+      "constituencyNumber": 58,
+      "nominator": "Lietuvos lenkų rinkimų akcija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-97.htm"
+    },
+    {
+      "candidateName": "Matulevičius Algimantas",
+      "candidateId": "matulevicius-algimantas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-41050.htm",
+      "constituencyName": "Trakų",
+      "constituencyNumber": 58,
+      "nominator": "Krikščionių demokratų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-111.htm"
+    },
+    {
+      "candidateName": "Merkevičius Juozas",
+      "candidateId": "merkevicius-juozas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-39254.htm",
+      "constituencyName": "Trakų",
+      "constituencyNumber": 58,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-102.htm"
+    },
+    {
+      "candidateName": "Pilikauskas Stasys",
+      "candidateId": "pilikauskas-stasys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-40431.htm",
+      "constituencyName": "Trakų",
+      "constituencyNumber": 58,
+      "nominator": "Lietuvos krikščionių demokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-99.htm"
+    }
+  ]
+}

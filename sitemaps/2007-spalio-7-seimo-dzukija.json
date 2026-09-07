@@ -1,0 +1,169 @@
+{
+  "electionId": "2007-spalio-7-seimo-dzukija",
+  "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Apygardos/Apygarda6838/KandidataiApygardos6838.html",
+  "generatedAt": "2026-08-22T08:52:03+00:00",
+  "stats": {
+    "rows": 11,
+    "extracted": 10,
+    "skipped": 1,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Ona BALEVIČIŪTĖ",
+      "candidateId": "ona-baleviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19313/Kandidato19313Anketa.html",
+      "vrkCandidateId": "19313",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Dzūkijos",
+        "apygardosNumeris": 69,
+        "apygardosId": "6838",
+        "iskele": "Lietuvos socialdemokratų partija"
+      }
+    },
+    {
+      "candidateName": "Kęstutis ČILINSKAS",
+      "candidateId": "kestutis-cilinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19310/Kandidato19310Anketa.html",
+      "vrkCandidateId": "19310",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Dzūkijos",
+        "apygardosNumeris": 69,
+        "apygardosId": "6838",
+        "iskele": "Tėvynės sąjunga (konservatoriai, politiniai kaliniai ir tremtiniai, krikščioniškieji demokratai)"
+      }
+    },
+    {
+      "candidateName": "Gediminas JEGELEVIČIUS",
+      "candidateId": "gediminas-jegelevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19307/Kandidato19307Anketa.html",
+      "vrkCandidateId": "19307",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Dzūkijos",
+        "apygardosNumeris": 69,
+        "apygardosId": "6838",
+        "iskele": "Liberalų ir centro sąjunga"
+      }
+    },
+    {
+      "candidateName": "Vytautas Jurgis KADŽYS",
+      "candidateId": "vytautas-jurgis-kadzys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19311/Kandidato19311Anketa.html",
+      "vrkCandidateId": "19311",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Dzūkijos",
+        "apygardosNumeris": 69,
+        "apygardosId": "6838",
+        "iskele": "Pensininkų partija"
+      }
+    },
+    {
+      "candidateName": "Ramutė ORENIENĖ",
+      "candidateId": "ramute-oreniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19315/Kandidato19315Anketa.html",
+      "vrkCandidateId": "19315",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Dzūkijos",
+        "apygardosNumeris": 69,
+        "apygardosId": "6838",
+        "iskele": "Lietuvos Respublikos liberalų sąjūdis"
+      }
+    },
+    {
+      "candidateName": "Monika RAŽANAUSKIENĖ",
+      "candidateId": "monika-razanauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19314/Kandidato19314Anketa.html",
+      "vrkCandidateId": "19314",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Dzūkijos",
+        "apygardosNumeris": 69,
+        "apygardosId": "6838",
+        "iskele": "Lietuvos valstiečių liaudininkų sąjunga"
+      }
+    },
+    {
+      "candidateName": "Antanas TERLECKAS",
+      "candidateId": "antanas-terleckas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19309/Kandidato19309Anketa.html",
+      "vrkCandidateId": "19309",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Dzūkijos",
+        "apygardosNumeris": 69,
+        "apygardosId": "6838",
+        "iskele": "Partija Tvarka ir teisingumas (liberalai demokratai)"
+      }
+    },
+    {
+      "candidateName": "Aurimas TRUNCĖ",
+      "candidateId": "aurimas-trunce",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19296/Kandidato19296Anketa.html",
+      "vrkCandidateId": "19296",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Dzūkijos",
+        "apygardosNumeris": 69,
+        "apygardosId": "6838",
+        "iskele": "Naujoji sąjunga (socialliberalai)"
+      }
+    },
+    {
+      "candidateName": "Viktor USPASKICH",
+      "candidateId": "viktor-uspaskich",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19297/Kandidato19297Anketa.html",
+      "vrkCandidateId": "19297",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Dzūkijos",
+        "apygardosNumeris": 69,
+        "apygardosId": "6838",
+        "iskele": "Darbo partija"
+      }
+    },
+    {
+      "candidateName": "Zenonas ŽVIKAS",
+      "candidateId": "zenonas-zvikas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/396/Kandidatai/Kandidatas19312/Kandidato19312Anketa.html",
+      "vrkCandidateId": "19312",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Dzūkijos",
+        "apygardosNumeris": 69,
+        "apygardosId": "6838",
+        "iskele": "Lietuvos socialdemokratų sąjunga"
+      }
+    }
+  ],
+  "skipped": [
+    {
+      "rowIndex": 1,
+      "reason": "no-cells"
+    }
+  ]
+}

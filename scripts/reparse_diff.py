@@ -75,7 +75,7 @@ from scraper.cli import (  # noqa: E402
     PARSABLE_ELECTION_IDS,
     _parse_anketa_samples_for_election,
 )
-from scraper.shared.anomalies import write_jsonl  # noqa: E402
+from scraper.shared.anomalies import merge_run, read_jsonl, write_jsonl  # noqa: E402
 
 ANOMALIES_NAME = "anomalies.jsonl"
 PHOTOS_DIR = "photos"
@@ -316,20 +316,17 @@ def write_anomalies(path: Path, anomalies: list[dict[str, Any]]) -> bool:
     so the file's mtime keeps meaning "when this election last changed".
     """
     fresh = sorted(_comparable_event(event) for event in anomalies)
-    kept: list[dict[str, Any]] = []
-    if path.exists():
-        stored_events = [
-            json.loads(line)
-            for line in path.read_text(encoding="utf-8").splitlines()
-            if line.strip()
-        ]
-        kept = [event for event in stored_events if event.get("stage") != "parse"]
+    stored_events = read_jsonl(path)
+    if stored_events:
         stored = sorted(
             _comparable_event(event) for event in stored_events if event.get("stage") == "parse"
         )
         if stored == fresh:
             return False
-    write_jsonl(path, kept + anomalies)
+    # The whole election was re-parsed, so the run owns every parse-stage
+    # event; the ownership rule itself lives in scraper/shared/anomalies.py,
+    # where the parse command applies it per candidate (issue #139).
+    write_jsonl(path, merge_run(stored_events, anomalies, stage="parse", candidate_ids=None))
     return True
 
 

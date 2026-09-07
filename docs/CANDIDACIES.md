@@ -18,9 +18,9 @@ Reads `data/`, `docs/concept-map.json` and the registries; writes to
 
 | file | contents |
 |---|---|
-| `candidacies.csv.gz` | 113,073 rows × 52 columns, ~12 MB gzipped |
+| `candidacies.csv.gz` | 113,073 rows × 55 columns, ~12 MB gzipped |
 | `campaigns.csv.gz` | one row per campaign-finance participant (4,729) |
-| `vrk.sqlite` | the same two as tables, plus `elections`, `persons`, `parties`, `party_predecessors`, with indexes |
+| `vrk.sqlite` | the same two as tables, plus `elections`, `persons`, `parties`, `party_predecessors`, `municipalities`, with indexes |
 
 Nothing here overwrites `normalized`: the projector only reads, and every
 value it emits is derivable again from the record files. The one hand-curated
@@ -49,13 +49,31 @@ sqlite3 dist/vrk.sqlite "SELECT election_id, AVG(education_higher)
 `kandidatavimas` shapes). `role` — `seimo-narys` | `tarybos-narys` | `meras`
 | `prezidentas` | `ep-narys`; a 2019/2023 council-and-mayor dual candidacy
 takes `meras` and keeps its council list fields. `constituency` (Seimas
-single-mandate), `municipality`, `list_name`, `list_position`,
-`post_election_position`. `party_id` / `party_name_raw` / `nomination_kind`
-are the canonical nominator join (`scraper/parties.json`, issue #82).
-`elected` is 1/0, empty only where no results exist: the five 2000
-municipalities whose results tree VRK does not publish (the 1997 municipal
-pair was the larger gap until issue #92 joined its elected pages) — 99.3 %
-filled overall.
+single-mandate), `municipality` / `municipality_id`, `list_name`,
+`list_position`, `post_election_position`. `party_id` / `party_name_raw` /
+`nomination_kind` are the canonical nominator join (`scraper/parties.json`,
+issue #82), and `municipality_id` the canonical municipality join
+(`scraper/municipalities.json`, issue #137): `municipality` is the body's
+official name — `Vilniaus miesto savivaldybė` whether the era's card said
+`Vilniaus miesto` (1997/2000/2002/2019/2023) or `Vilniaus miesto savivaldybė`
+(2007/2011/2015) — so the 60 municipalities are 60 values, not 127; the two
+1997 Marijampolė bodies the 2000 reform merged keep ids of their own
+(`marijampoles-miesto`, `marijampoles-rajono`, `until: 2000` in the
+`municipalities` table). The published wording stays in the record file.
+`elected` is 1/0 for **any office on this ballot**, empty only where no
+results exist: the five 2000 municipalities whose results tree VRK does not
+publish (the 1997 municipal pair was the larger gap until issue #92 joined its
+elected pages) — 99.3 % filled overall. A council-and-mayor dual candidacy
+(1,212 rows in 2015/2019/2023) is two offices with two outcomes, so
+`elected_council` and `elected_mayor` carry each office's own: 1/0 where the
+office was on the ballot and the result is known, empty otherwise. Read the
+mayoralty off `elected_mayor`, never off `role = 'meras' AND elected = 1` —
+that query returned 410 rows for 2019 and 433 for 2023, in a country with 60
+mayors, because 448 of them won a council seat and lost the mayoral race
+(issue #140). The per-office outcome comes from the 2019/2023 records' own
+flags and, on the 2015 ballots, from the seat VRK's results named
+(`isrinktasKaip`); 2015 has 57 elected mayors rather than 60 because three
+mayoral races were annulled and re-run in June.
 
 **Education** (issue #88; `scraper/shared/education.py`).
 `education_status` types the absence — the difference between a candidate
@@ -179,6 +197,9 @@ python scripts/build_distribution.py 2019-prezidento    # subset, no gate
 shortName, records` — where `parent` is the general election whose term a
 by-election, repeat or re-vote fills, NULL for a general election, so
 `COALESCE(parent, id)` groups candidacies by term (issue #122).
+`municipalities(municipality_id, name, kind, until)` is the municipality
+registry as a table (issue #137): the 60 bodies of the 2000 reform plus the two
+it dissolved, `kind` ∈ `miesto` | `rajono` | `savivaldybe`.
 `party_predecessors(party_id, predecessor_id)` is the nominator registry's
 lineage (issue #123): one row per organisation a party, coalition or
 committee continues — the merged parties behind `ts-lkd`, the committee and

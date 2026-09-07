@@ -243,6 +243,10 @@ def build_results(
         stats,
         [index["sourceUrl"], *(page["sourceUrl"] for page in pages)],
         details,
+        # The index page's note and every district page agree that no
+        # constituency's election was held; only then is an empty map a
+        # result rather than a failure (issue #134).
+        nobody_elected=bool(index["notHeldNote"]) and stats["constituenciesNotHeld"] == len(pages) > 0,
     )
     return output_path, stats
 

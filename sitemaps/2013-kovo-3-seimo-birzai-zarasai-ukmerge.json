@@ -1,0 +1,575 @@
+{
+  "electionId": "2013-kovo-3-seimo-birzai-zarasai-ukmerge",
+  "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/index.html",
+  "districtUrls": [
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Apygardos/Apygarda7433/KandidataiApygardos7433.html",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Apygardos/Apygarda7434/KandidataiApygardos7434.html",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Apygardos/Apygarda7435/KandidataiApygardos7435.html"
+  ],
+  "generatedAt": "2026-08-21T12:25:55+00:00",
+  "stats": {
+    "rows": 37,
+    "extracted": 37,
+    "skipped": 0,
+    "duplicateCandidateIds": 0,
+    "districts": 3
+  },
+  "entries": [
+    {
+      "candidateName": "Dalius BITAITIS",
+      "candidateId": "dalius-bitaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70545/Kandidato70545Anketa.html",
+      "vrkCandidateId": "70545",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Biržų - Kupiškio",
+        "apygardosNumeris": 48,
+        "apygardosId": "7433",
+        "iskele": "Tėvynės sąjunga - Lietuvos krikščionys demokratai"
+      }
+    },
+    {
+      "candidateName": "Vytautas GALVONAS",
+      "candidateId": "vytautas-galvonas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70538/Kandidato70538Anketa.html",
+      "vrkCandidateId": "70538",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Biržų - Kupiškio",
+        "apygardosNumeris": 48,
+        "apygardosId": "7433",
+        "iskele": "Partija Tvarka ir teisingumas"
+      }
+    },
+    {
+      "candidateName": "Algirdas KIZNIS",
+      "candidateId": "algirdas-kiznis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70566/Kandidato70566Anketa.html",
+      "vrkCandidateId": "70566",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Biržų - Kupiškio",
+        "apygardosNumeris": 48,
+        "apygardosId": "7433",
+        "iskele": "Liberalų ir centro sąjunga"
+      }
+    },
+    {
+      "candidateName": "Sigitas MARTINAVIČIUS",
+      "candidateId": "sigitas-martinavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70570/Kandidato70570Anketa.html",
+      "vrkCandidateId": "70570",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Biržų - Kupiškio",
+        "apygardosNumeris": 48,
+        "apygardosId": "7433",
+        "iskele": "„Drąsos kelias“ politinė partija"
+      }
+    },
+    {
+      "candidateName": "Dangirdas MIKŠYS",
+      "candidateId": "dangirdas-miksys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70573/Kandidato70573Anketa.html",
+      "vrkCandidateId": "70573",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Biržų - Kupiškio",
+        "apygardosNumeris": 48,
+        "apygardosId": "7433",
+        "iskele": "Tautinė partija Lietuvos kelias"
+      }
+    },
+    {
+      "candidateName": "Žydrūnas SAVICKAS",
+      "candidateId": "zydrunas-savickas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70556/Kandidato70556Anketa.html",
+      "vrkCandidateId": "70556",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Biržų - Kupiškio",
+        "apygardosNumeris": 48,
+        "apygardosId": "7433",
+        "iskele": "Politinė partija „Sąjunga Taip“"
+      }
+    },
+    {
+      "candidateName": "Kęstutis SLAVINSKAS",
+      "candidateId": "kestutis-slavinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70549/Kandidato70549Anketa.html",
+      "vrkCandidateId": "70549",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Biržų - Kupiškio",
+        "apygardosNumeris": 48,
+        "apygardosId": "7433",
+        "iskele": "Lietuvos Respublikos liberalų sąjūdis"
+      }
+    },
+    {
+      "candidateName": "Nijolė ŠATIENĖ",
+      "candidateId": "nijole-satiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70559/Kandidato70559Anketa.html",
+      "vrkCandidateId": "70559",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Biržų - Kupiškio",
+        "apygardosNumeris": 48,
+        "apygardosId": "7433",
+        "iskele": "Lietuvos valstiečių ir žaliųjų sąjunga"
+      }
+    },
+    {
+      "candidateName": "Ritas VAIGINAS",
+      "candidateId": "ritas-vaiginas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70552/Kandidato70552Anketa.html",
+      "vrkCandidateId": "70552",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Biržų - Kupiškio",
+        "apygardosNumeris": 48,
+        "apygardosId": "7433",
+        "iskele": "Darbo partija"
+      }
+    },
+    {
+      "candidateName": "Valdemaras VALKIŪNAS",
+      "candidateId": "valdemaras-valkiunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70548/Kandidato70548Anketa.html",
+      "vrkCandidateId": "70548",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Biržų - Kupiškio",
+        "apygardosNumeris": 48,
+        "apygardosId": "7433",
+        "iskele": "Respublikonų partija"
+      }
+    },
+    {
+      "candidateName": "Aleksandras ZELTINIS",
+      "candidateId": "aleksandras-zeltinis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70542/Kandidato70542Anketa.html",
+      "vrkCandidateId": "70542",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Biržų - Kupiškio",
+        "apygardosNumeris": 48,
+        "apygardosId": "7433",
+        "iskele": "Lietuvos socialdemokratų partija"
+      }
+    },
+    {
+      "candidateName": "Kristina BRAZAUSKIENĖ",
+      "candidateId": "kristina-brazauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70541/Kandidato70541Anketa.html",
+      "vrkCandidateId": "70541",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Zarasų - Visagino",
+        "apygardosNumeris": 52,
+        "apygardosId": "7434",
+        "iskele": "Demokratinė darbo ir vienybės partija"
+      }
+    },
+    {
+      "candidateName": "Algimantas DUMBRAVA",
+      "candidateId": "algimantas-dumbrava",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70539/Kandidato70539Anketa.html",
+      "vrkCandidateId": "70539",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Zarasų - Visagino",
+        "apygardosNumeris": 52,
+        "apygardosId": "7434",
+        "iskele": "Partija Tvarka ir teisingumas"
+      }
+    },
+    {
+      "candidateName": "Aurelija GURSKIENĖ",
+      "candidateId": "aurelija-gurskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70571/Kandidato70571Anketa.html",
+      "vrkCandidateId": "70571",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Zarasų - Visagino",
+        "apygardosNumeris": 52,
+        "apygardosId": "7434",
+        "iskele": "„Drąsos kelias“ politinė partija"
+      }
+    },
+    {
+      "candidateName": "Nikolajus GUSEVAS",
+      "candidateId": "nikolajus-gusevas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70543/Kandidato70543Anketa.html",
+      "vrkCandidateId": "70543",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Zarasų - Visagino",
+        "apygardosNumeris": 52,
+        "apygardosId": "7434",
+        "iskele": "Lietuvos socialdemokratų partija"
+      }
+    },
+    {
+      "candidateName": "Sergejus KOTOVAS",
+      "candidateId": "sergejus-kotovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70567/Kandidato70567Anketa.html",
+      "vrkCandidateId": "70567",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Zarasų - Visagino",
+        "apygardosNumeris": 52,
+        "apygardosId": "7434",
+        "iskele": "Liberalų ir centro sąjunga"
+      }
+    },
+    {
+      "candidateName": "Rimantas KUMPIS",
+      "candidateId": "rimantas-kumpis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70554/Kandidato70554Anketa.html",
+      "vrkCandidateId": "70554",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Zarasų - Visagino",
+        "apygardosNumeris": 52,
+        "apygardosId": "7434",
+        "iskele": "Lietuvos liaudies partija"
+      }
+    },
+    {
+      "candidateName": "Aušra LAMANAUSKIENĖ",
+      "candidateId": "ausra-lamanauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70550/Kandidato70550Anketa.html",
+      "vrkCandidateId": "70550",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Zarasų - Visagino",
+        "apygardosNumeris": 52,
+        "apygardosId": "7434",
+        "iskele": "Lietuvos Respublikos liberalų sąjūdis"
+      }
+    },
+    {
+      "candidateName": "Gintaris PETRĖNAS",
+      "candidateId": "gintaris-petrenas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70560/Kandidato70560Anketa.html",
+      "vrkCandidateId": "70560",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Zarasų - Visagino",
+        "apygardosNumeris": 52,
+        "apygardosId": "7434",
+        "iskele": "Lietuvos valstiečių ir žaliųjų sąjunga"
+      }
+    },
+    {
+      "candidateName": "Rimvydas PODOLSKIS",
+      "candidateId": "rimvydas-podolskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70574/Kandidato70574Anketa.html",
+      "vrkCandidateId": "70574",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Zarasų - Visagino",
+        "apygardosNumeris": 52,
+        "apygardosId": "7434",
+        "iskele": "Išsikėlė pats"
+      }
+    },
+    {
+      "candidateName": "Genrich SARBAJ",
+      "candidateId": "genrich-sarbaj",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70569/Kandidato70569Anketa.html",
+      "vrkCandidateId": "70569",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Zarasų - Visagino",
+        "apygardosNumeris": 52,
+        "apygardosId": "7434",
+        "iskele": "Socialistinis liaudies Frontas"
+      }
+    },
+    {
+      "candidateName": "Juozas STANĖNAS",
+      "candidateId": "juozas-stanenas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70546/Kandidato70546Anketa.html",
+      "vrkCandidateId": "70546",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Zarasų - Visagino",
+        "apygardosNumeris": 52,
+        "apygardosId": "7434",
+        "iskele": "Tėvynės sąjunga - Lietuvos krikščionys demokratai"
+      }
+    },
+    {
+      "candidateName": "Rolandas URNIEŽIUS",
+      "candidateId": "rolandas-urniezius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70557/Kandidato70557Anketa.html",
+      "vrkCandidateId": "70557",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Zarasų - Visagino",
+        "apygardosNumeris": 52,
+        "apygardosId": "7434",
+        "iskele": "Politinė partija „Sąjunga Taip“"
+      }
+    },
+    {
+      "candidateName": "Dailis Alfonsas BARAKAUSKAS",
+      "candidateId": "dailis-alfonsas-barakauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70540/Kandidato70540Anketa.html",
+      "vrkCandidateId": "70540",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Ukmergės",
+        "apygardosNumeris": 61,
+        "apygardosId": "7435",
+        "iskele": "Partija Tvarka ir teisingumas"
+      }
+    },
+    {
+      "candidateName": "Janina GALIAUSKIENĖ",
+      "candidateId": "janina-galiauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70547/Kandidato70547Anketa.html",
+      "vrkCandidateId": "70547",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Ukmergės",
+        "apygardosNumeris": 61,
+        "apygardosId": "7435",
+        "iskele": "Tėvynės sąjunga - Lietuvos krikščionys demokratai"
+      }
+    },
+    {
+      "candidateName": "Julius GIRDVAINIS",
+      "candidateId": "julius-girdvainis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70572/Kandidato70572Anketa.html",
+      "vrkCandidateId": "70572",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Ukmergės",
+        "apygardosNumeris": 61,
+        "apygardosId": "7435",
+        "iskele": "„Drąsos kelias“ politinė partija"
+      }
+    },
+    {
+      "candidateName": "Kazys GRYBAUSKAS",
+      "candidateId": "kazys-grybauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70544/Kandidato70544Anketa.html",
+      "vrkCandidateId": "70544",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Ukmergės",
+        "apygardosNumeris": 61,
+        "apygardosId": "7435",
+        "iskele": "Lietuvos socialdemokratų partija"
+      }
+    },
+    {
+      "candidateName": "Rolandas JANICKAS",
+      "candidateId": "rolandas-janickas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70553/Kandidato70553Anketa.html",
+      "vrkCandidateId": "70553",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Ukmergės",
+        "apygardosNumeris": 61,
+        "apygardosId": "7435",
+        "iskele": "Darbo partija"
+      }
+    },
+    {
+      "candidateName": "Julius KAZĖNAS",
+      "candidateId": "julius-kazenas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70575/Kandidato70575Anketa.html",
+      "vrkCandidateId": "70575",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Ukmergės",
+        "apygardosNumeris": 61,
+        "apygardosId": "7435",
+        "iskele": "Išsikėlė pats"
+      }
+    },
+    {
+      "candidateName": "Ligitas KERNAGIS",
+      "candidateId": "ligitas-kernagis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70558/Kandidato70558Anketa.html",
+      "vrkCandidateId": "70558",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Ukmergės",
+        "apygardosNumeris": 61,
+        "apygardosId": "7435",
+        "iskele": "Politinė partija „Sąjunga Taip“"
+      }
+    },
+    {
+      "candidateName": "Mindaugas KLUONIS",
+      "candidateId": "mindaugas-kluonis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70576/Kandidato70576Anketa.html",
+      "vrkCandidateId": "70576",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Ukmergės",
+        "apygardosNumeris": 61,
+        "apygardosId": "7435",
+        "iskele": "Išsikėlė pats"
+      }
+    },
+    {
+      "candidateName": "Daiva KRIKŠTAPONIENĖ",
+      "candidateId": "daiva-krikstaponiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70551/Kandidato70551Anketa.html",
+      "vrkCandidateId": "70551",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Ukmergės",
+        "apygardosNumeris": 61,
+        "apygardosId": "7435",
+        "iskele": "Lietuvos Respublikos liberalų sąjūdis"
+      }
+    },
+    {
+      "candidateName": "Artūras MELIANAS",
+      "candidateId": "arturas-melianas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70568/Kandidato70568Anketa.html",
+      "vrkCandidateId": "70568",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Ukmergės",
+        "apygardosNumeris": 61,
+        "apygardosId": "7435",
+        "iskele": "Liberalų ir centro sąjunga"
+      }
+    },
+    {
+      "candidateName": "Juozas MURAUSKAS",
+      "candidateId": "juozas-murauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70564/Kandidato70564Anketa.html",
+      "vrkCandidateId": "70564",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Ukmergės",
+        "apygardosNumeris": 61,
+        "apygardosId": "7435",
+        "iskele": "Emigrantų partija"
+      }
+    },
+    {
+      "candidateName": "Gintaras SONGAILA",
+      "candidateId": "gintaras-songaila",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70565/Kandidato70565Anketa.html",
+      "vrkCandidateId": "70565",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Ukmergės",
+        "apygardosNumeris": 61,
+        "apygardosId": "7435",
+        "iskele": "Tautininkų sąjunga"
+      }
+    },
+    {
+      "candidateName": "Vytautas ŠUSTAUSKAS",
+      "candidateId": "vytautas-sustauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70555/Kandidato70555Anketa.html",
+      "vrkCandidateId": "70555",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Ukmergės",
+        "apygardosNumeris": 61,
+        "apygardosId": "7435",
+        "iskele": "Kovotojų už Lietuvą sąjunga"
+      }
+    },
+    {
+      "candidateName": "Danutė UŽKURĖLYTĖ",
+      "candidateId": "danute-uzkurelyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/421_lt/Kandidatai/Kandidatas70561/Kandidato70561Anketa.html",
+      "vrkCandidateId": "70561",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Ukmergės",
+        "apygardosNumeris": 61,
+        "apygardosId": "7435",
+        "iskele": "Lietuvos valstiečių ir žaliųjų sąjunga"
+      }
+    }
+  ],
+  "skipped": []
+}

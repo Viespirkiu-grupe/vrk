@@ -1,0 +1,1114 @@
+{
+  "electionId": "1997-birzelio-29-svenciniu-tarybos-pakartotiniai",
+  "sourceDescription": "Švenčionių rajono (47) municipality repeat, phase 5",
+  "generatedAt": "2026-08-20T22:25:54+00:00",
+  "stats": {
+    "municipalities": 1,
+    "partyLists": 9,
+    "missingPartyListSamples": 0,
+    "candidates": 110,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Laužadis Šarūnas",
+      "candidateId": "lauzadis-sarunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43572.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 1,
+      "nominator": "Lietuvių tautininkų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+22.htm"
+    },
+    {
+      "candidateName": "Jakštas Juozas",
+      "candidateId": "jakstas-juozas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43573.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 2,
+      "nominator": "Lietuvių tautininkų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+22.htm"
+    },
+    {
+      "candidateName": "Pivoriūnas Kęstutis",
+      "candidateId": "pivoriunas-kestutis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43574.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 3,
+      "nominator": "Lietuvių tautininkų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+22.htm"
+    },
+    {
+      "candidateName": "Sapronavičius Tadas",
+      "candidateId": "sapronavicius-tadas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43575.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 4,
+      "nominator": "Lietuvių tautininkų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+22.htm"
+    },
+    {
+      "candidateName": "Striužas Valdas",
+      "candidateId": "striuzas-valdas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43576.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 5,
+      "nominator": "Lietuvių tautininkų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+22.htm"
+    },
+    {
+      "candidateName": "Babušis Algis Stepanas",
+      "candidateId": "babusis-algis-stepanas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43577.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 6,
+      "nominator": "Lietuvių tautininkų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+22.htm"
+    },
+    {
+      "candidateName": "Davidonis Audrius",
+      "candidateId": "davidonis-audrius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43578.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 7,
+      "nominator": "Lietuvių tautininkų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+22.htm"
+    },
+    {
+      "candidateName": "Rastenis Vytautas",
+      "candidateId": "rastenis-vytautas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43498.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 1,
+      "nominator": "Lietuvos valstiečių partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+25.htm"
+    },
+    {
+      "candidateName": "Sukov Nikolaj",
+      "candidateId": "sukov-nikolaj",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43499.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 2,
+      "nominator": "Lietuvos valstiečių partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+25.htm"
+    },
+    {
+      "candidateName": "Stankūnas Rimantas",
+      "candidateId": "stankunas-rimantas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43500.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 3,
+      "nominator": "Lietuvos valstiečių partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+25.htm"
+    },
+    {
+      "candidateName": "Martinkėnas Vidmantas",
+      "candidateId": "martinkenas-vidmantas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43501.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 4,
+      "nominator": "Lietuvos valstiečių partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+25.htm"
+    },
+    {
+      "candidateName": "Jurkovlianecas Tadeušas",
+      "candidateId": "jurkovlianecas-tadeusas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43502.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 5,
+      "nominator": "Lietuvos valstiečių partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+25.htm"
+    },
+    {
+      "candidateName": "Medart Jacevič",
+      "candidateId": "medart-jacevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43503.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 6,
+      "nominator": "Lietuvos valstiečių partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+25.htm"
+    },
+    {
+      "candidateName": "Pošiūnas Alfonsas",
+      "candidateId": "posiunas-alfonsas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43504.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 7,
+      "nominator": "Lietuvos valstiečių partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+25.htm"
+    },
+    {
+      "candidateName": "Jurkevič Ana",
+      "candidateId": "jurkevic-ana",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43565.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 1,
+      "nominator": "Lietuvos lenkų rinkimų akcija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+34.htm"
+    },
+    {
+      "candidateName": "Jedinskij Zbignev",
+      "candidateId": "jedinskij-zbignev",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43566.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 2,
+      "nominator": "Lietuvos lenkų rinkimų akcija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+34.htm"
+    },
+    {
+      "candidateName": "Belanova Janina",
+      "candidateId": "belanova-janina",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43567.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 3,
+      "nominator": "Lietuvos lenkų rinkimų akcija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+34.htm"
+    },
+    {
+      "candidateName": "Dubicki Vėslav",
+      "candidateId": "dubicki-veslav",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43568.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 4,
+      "nominator": "Lietuvos lenkų rinkimų akcija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+34.htm"
+    },
+    {
+      "candidateName": "Tunevič Lucija",
+      "candidateId": "tunevic-lucija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43569.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 5,
+      "nominator": "Lietuvos lenkų rinkimų akcija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+34.htm"
+    },
+    {
+      "candidateName": "Jedinskij Vladislav",
+      "candidateId": "jedinskij-vladislav",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43570.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 6,
+      "nominator": "Lietuvos lenkų rinkimų akcija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+34.htm"
+    },
+    {
+      "candidateName": "Žukovska Henryka",
+      "candidateId": "zukovska-henryka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43571.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 7,
+      "nominator": "Lietuvos lenkų rinkimų akcija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+34.htm"
+    },
+    {
+      "candidateName": "Daugirdienė Marija",
+      "candidateId": "daugirdiene-marija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43520.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 1,
+      "nominator": "Naujoji demokratija/ Moterų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+1.htm"
+    },
+    {
+      "candidateName": "Prunskus Vaidotas",
+      "candidateId": "prunskus-vaidotas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43521.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 2,
+      "nominator": "Naujoji demokratija/ Moterų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+1.htm"
+    },
+    {
+      "candidateName": "Kulda Janina",
+      "candidateId": "kulda-janina",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43522.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 3,
+      "nominator": "Naujoji demokratija/ Moterų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+1.htm"
+    },
+    {
+      "candidateName": "Riaukienė Regina",
+      "candidateId": "riaukiene-regina",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43523.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 4,
+      "nominator": "Naujoji demokratija/ Moterų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+1.htm"
+    },
+    {
+      "candidateName": "Valatka Ramūnas",
+      "candidateId": "valatka-ramunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43524.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 5,
+      "nominator": "Naujoji demokratija/ Moterų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+1.htm"
+    },
+    {
+      "candidateName": "Brazienė Vida Emilė",
+      "candidateId": "braziene-vida-emile",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43525.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 6,
+      "nominator": "Naujoji demokratija/ Moterų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+1.htm"
+    },
+    {
+      "candidateName": "Bučelienė Veronika",
+      "candidateId": "buceliene-veronika",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43526.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 7,
+      "nominator": "Naujoji demokratija/ Moterų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+1.htm"
+    },
+    {
+      "candidateName": "Deveikienė Aldona",
+      "candidateId": "deveikiene-aldona",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43527.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 8,
+      "nominator": "Naujoji demokratija/ Moterų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+1.htm"
+    },
+    {
+      "candidateName": "Driomina Česlava",
+      "candidateId": "driomina-ceslava",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43528.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 9,
+      "nominator": "Naujoji demokratija/ Moterų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+1.htm"
+    },
+    {
+      "candidateName": "Perveneckienė Edita",
+      "candidateId": "perveneckiene-edita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43529.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 10,
+      "nominator": "Naujoji demokratija/ Moterų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+1.htm"
+    },
+    {
+      "candidateName": "Novickij Česlav",
+      "candidateId": "novickij-ceslav",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43530.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 11,
+      "nominator": "Naujoji demokratija/ Moterų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+1.htm"
+    },
+    {
+      "candidateName": "Umbražiūnienė Giedra",
+      "candidateId": "umbraziuniene-giedra",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43531.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 12,
+      "nominator": "Naujoji demokratija/ Moterų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+1.htm"
+    },
+    {
+      "candidateName": "Maldauskienė Irena",
+      "candidateId": "maldauskiene-irena",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43532.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 13,
+      "nominator": "Naujoji demokratija/ Moterų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+1.htm"
+    },
+    {
+      "candidateName": "Gailiušienė Regina",
+      "candidateId": "gailiusiene-regina",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43533.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 14,
+      "nominator": "Naujoji demokratija/ Moterų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+1.htm"
+    },
+    {
+      "candidateName": "Šivickienė Irena",
+      "candidateId": "sivickiene-irena",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43534.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 15,
+      "nominator": "Naujoji demokratija/ Moterų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+1.htm"
+    },
+    {
+      "candidateName": "Čenkus Vytautas",
+      "candidateId": "cenkus-vytautas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43535.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 1,
+      "nominator": "Lietuvos krikščionių demokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+5.htm"
+    },
+    {
+      "candidateName": "Dubauskienė Joleta Veronika",
+      "candidateId": "dubauskiene-joleta-veronika",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43536.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 2,
+      "nominator": "Lietuvos krikščionių demokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+5.htm"
+    },
+    {
+      "candidateName": "Pirštelis Arūnas",
+      "candidateId": "pirstelis-arunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43537.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 3,
+      "nominator": "Lietuvos krikščionių demokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+5.htm"
+    },
+    {
+      "candidateName": "Lapėnienė Viktorija",
+      "candidateId": "lapeniene-viktorija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43538.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 4,
+      "nominator": "Lietuvos krikščionių demokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+5.htm"
+    },
+    {
+      "candidateName": "Macijauskas Juozapas",
+      "candidateId": "macijauskas-juozapas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43539.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 5,
+      "nominator": "Lietuvos krikščionių demokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+5.htm"
+    },
+    {
+      "candidateName": "Gegienė Irena",
+      "candidateId": "gegiene-irena",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43540.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 6,
+      "nominator": "Lietuvos krikščionių demokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+5.htm"
+    },
+    {
+      "candidateName": "Semėnas Vidas",
+      "candidateId": "semenas-vidas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43541.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 7,
+      "nominator": "Lietuvos krikščionių demokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+5.htm"
+    },
+    {
+      "candidateName": "Kirdeika Ričardas",
+      "candidateId": "kirdeika-ricardas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43542.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 8,
+      "nominator": "Lietuvos krikščionių demokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+5.htm"
+    },
+    {
+      "candidateName": "Juršėnas Česlovas",
+      "candidateId": "jursenas-ceslovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43511.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 1,
+      "nominator": "Lietuvos demokratinė darbo partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+4.htm"
+    },
+    {
+      "candidateName": "Trusovas Genadijus",
+      "candidateId": "trusovas-genadijus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43512.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 2,
+      "nominator": "Lietuvos demokratinė darbo partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+4.htm"
+    },
+    {
+      "candidateName": "Kliukaitė Elena",
+      "candidateId": "kliukaite-elena",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43513.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 3,
+      "nominator": "Lietuvos demokratinė darbo partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+4.htm"
+    },
+    {
+      "candidateName": "Maminskas Algimantas Mykolas",
+      "candidateId": "maminskas-algimantas-mykolas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43514.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 4,
+      "nominator": "Lietuvos demokratinė darbo partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+4.htm"
+    },
+    {
+      "candidateName": "Rastenis Antanas",
+      "candidateId": "rastenis-antanas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43515.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 5,
+      "nominator": "Lietuvos demokratinė darbo partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+4.htm"
+    },
+    {
+      "candidateName": "Grigienė Alfreda",
+      "candidateId": "grigiene-alfreda",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43516.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 6,
+      "nominator": "Lietuvos demokratinė darbo partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+4.htm"
+    },
+    {
+      "candidateName": "Kliševičienė Stasė",
+      "candidateId": "kliseviciene-stase",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43517.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 7,
+      "nominator": "Lietuvos demokratinė darbo partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+4.htm"
+    },
+    {
+      "candidateName": "Kasinskas Jonas",
+      "candidateId": "kasinskas-jonas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43518.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 8,
+      "nominator": "Lietuvos demokratinė darbo partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+4.htm"
+    },
+    {
+      "candidateName": "Kliukas Bronislovas Valerijus",
+      "candidateId": "kliukas-bronislovas-valerijus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43519.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 9,
+      "nominator": "Lietuvos demokratinė darbo partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+4.htm"
+    },
+    {
+      "candidateName": "Klipčius Rimas",
+      "candidateId": "klipcius-rimas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43469.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 1,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Vigelis Vytautas",
+      "candidateId": "vigelis-vytautas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43470.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 2,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Karvelis Pranas",
+      "candidateId": "karvelis-pranas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43471.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 3,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Čeponis Rimantas",
+      "candidateId": "ceponis-rimantas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43472.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 4,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Semaško Jurij",
+      "candidateId": "semasko-jurij",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43473.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 5,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Laurinčiukas Darius",
+      "candidateId": "laurinciukas-darius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43474.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 6,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Rokickis Mečislovas",
+      "candidateId": "rokickis-mecislovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43475.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 7,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Vaitkevičius Vytautas",
+      "candidateId": "vaitkevicius-vytautas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43476.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 8,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Vainickas Kazys",
+      "candidateId": "vainickas-kazys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43477.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 9,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Sansevičienė Teresa",
+      "candidateId": "sanseviciene-teresa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43478.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 10,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Papinigis Vaclovas",
+      "candidateId": "papinigis-vaclovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43479.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 11,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Borovskis Vitoldas",
+      "candidateId": "borovskis-vitoldas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43480.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 12,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Velička Petras",
+      "candidateId": "velicka-petras",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43481.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 13,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Uziala Juzefas",
+      "candidateId": "uziala-juzefas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43482.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 14,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Meškela Česlavas",
+      "candidateId": "meskela-ceslavas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43483.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 15,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Verikas Juozas",
+      "candidateId": "verikas-juozas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43484.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 16,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Bulka Vytautas",
+      "candidateId": "bulka-vytautas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43485.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 17,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Jurkevičius Algirdas",
+      "candidateId": "jurkevicius-algirdas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43486.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 18,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Bliūdžius Alvydas",
+      "candidateId": "bliudzius-alvydas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43487.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 19,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Beperščius Kazimiras",
+      "candidateId": "beperscius-kazimiras",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43488.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 20,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Mikelionis Valdas",
+      "candidateId": "mikelionis-valdas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43489.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 21,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Menkovas Vasilijus",
+      "candidateId": "menkovas-vasilijus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43490.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 22,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Politienė Irena",
+      "candidateId": "politiene-irena",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43491.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 23,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Čuvalov Vitold",
+      "candidateId": "cuvalov-vitold",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43492.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 24,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Usov Fiodor",
+      "candidateId": "usov-fiodor",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43493.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 25,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Podvoiskij Stanislav",
+      "candidateId": "podvoiskij-stanislav",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43494.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 26,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Borovskij Aleksandr",
+      "candidateId": "borovskij-aleksandr",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43495.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 27,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Stasiulevičius Šarūnas",
+      "candidateId": "stasiulevicius-sarunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43496.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 28,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Zenkevičius Zenonas",
+      "candidateId": "zenkevicius-zenonas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43497.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 29,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+28.htm"
+    },
+    {
+      "candidateName": "Burakienė Jelena",
+      "candidateId": "burakiene-jelena",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43505.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 1,
+      "nominator": "Lietuvos socialdemokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+8.htm"
+    },
+    {
+      "candidateName": "Achranovič Agrikina",
+      "candidateId": "achranovic-agrikina",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43506.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 2,
+      "nominator": "Lietuvos socialdemokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+8.htm"
+    },
+    {
+      "candidateName": "Jurkėnienė Regina",
+      "candidateId": "jurkeniene-regina",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43507.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 3,
+      "nominator": "Lietuvos socialdemokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+8.htm"
+    },
+    {
+      "candidateName": "Kaminskas Alvidas",
+      "candidateId": "kaminskas-alvidas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43508.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 4,
+      "nominator": "Lietuvos socialdemokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+8.htm"
+    },
+    {
+      "candidateName": "Jankauskienė Irena",
+      "candidateId": "jankauskiene-irena",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43509.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 5,
+      "nominator": "Lietuvos socialdemokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+8.htm"
+    },
+    {
+      "candidateName": "Višimirskij Sergej",
+      "candidateId": "visimirskij-sergej",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43510.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 6,
+      "nominator": "Lietuvos socialdemokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+8.htm"
+    },
+    {
+      "candidateName": "Štaras Kęstutis",
+      "candidateId": "staras-kestutis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43543.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 1,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Brazauskienė Audra",
+      "candidateId": "brazauskiene-audra",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43544.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 2,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Navickas Valierius",
+      "candidateId": "navickas-valierius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43545.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 3,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Karvelis Petras",
+      "candidateId": "karvelis-petras",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43546.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 4,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Markauskienė Laima",
+      "candidateId": "markauskiene-laima",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43547.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 5,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Kazimierėnaitė Jūratė",
+      "candidateId": "kazimierenaite-jurate",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43548.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 6,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Ankėnas Romualdas",
+      "candidateId": "ankenas-romualdas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43549.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 7,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Kindurys Vidmantas",
+      "candidateId": "kindurys-vidmantas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43550.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 8,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Bagdonas Juozas",
+      "candidateId": "bagdonas-juozas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43551.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 9,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Karaliūnas Vladas",
+      "candidateId": "karaliunas-vladas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43552.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 10,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Vainorienė Nijolė",
+      "candidateId": "vainoriene-nijole",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43553.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 11,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Zenkevičienė Viktorija",
+      "candidateId": "zenkeviciene-viktorija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43554.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 12,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Čepulienė Danutė",
+      "candidateId": "cepuliene-danute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43555.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 13,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Gadliauskas Romualdas",
+      "candidateId": "gadliauskas-romualdas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43556.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 14,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Slabadienė Gražina",
+      "candidateId": "slabadiene-grazina",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43557.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 15,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Petrauskienė Genovaitė",
+      "candidateId": "petrauskiene-genovaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43558.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 16,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Cesliak Leokadija",
+      "candidateId": "cesliak-leokadija",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43559.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 17,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Šerėnas Algimantas Antanas",
+      "candidateId": "serenas-algimantas-antanas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43560.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 18,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Guobys Juozas",
+      "candidateId": "guobys-juozas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43561.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 19,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Iljina Larisa",
+      "candidateId": "iljina-larisa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43562.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 20,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Kliševičienė Rita",
+      "candidateId": "kliseviciene-rita",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43563.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 21,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    },
+    {
+      "candidateName": "Jasiulionienė Daiva",
+      "candidateId": "jasiulioniene-daiva",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/kandvl.htm-43564.htm",
+      "municipalityName": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "listNumber": 22,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/pkal.htm-264+3.htm"
+    }
+  ]
+}

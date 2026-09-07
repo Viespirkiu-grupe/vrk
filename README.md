@@ -43,11 +43,14 @@ pip install -r requirements-dev.txt
 pytest
 ```
 
-`samples/` carries a fixture subset — every unit at most 1 MiB, at least one
-candidate per election — so about 1,400 tests run on a machine that has never
-scraped anything. The rest skip, each naming the command that would produce
-what it wanted; `docs/FIXTURE_SAMPLES.md` explains the rule and
-`.github/workflows/tests.yml` runs the suite on every push and pull request.
+`samples/` and `sitemaps/` carry a fixture subset — every unit at most 1 MiB,
+at least one candidate per election, every sitemap but the municipal
+generals' — so about 1,680 tests run on a machine that has never scraped
+anything. The rest skip, each naming the command that would produce what it
+wanted, and only when the whole unit it needs is absent: a path missing inside
+a fixture that is present is a failure, not a skip (issue #145).
+`docs/FIXTURE_SAMPLES.md` explains the rule and `.github/workflows/tests.yml`
+runs the suite on every push and pull request.
 
 Where to start:
 

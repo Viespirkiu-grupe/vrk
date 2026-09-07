@@ -413,11 +413,33 @@ class GroupingTests(unittest.TestCase):
         }
         index = self._build([("2019-kovo-3-savivaldybiu-tarybu", "a-b", record)])
         entry = index["people"][0]["e"][0]
-        self.assertEqual(index["municipalities"], ["Šiaulių rajono"])
+        # The facet lists the registry's official name, whatever the era's
+        # card said (issue #137).
+        self.assertEqual(index["municipalities"], ["Šiaulių rajono savivaldybė"])
+        self.assertEqual(index["unresolvedMunicipalities"], [])
         self.assertEqual(entry["sv"], 0)
-        self.assertEqual(entry["r"], "m")
+        self.assertEqual(entry["r"], "tm")
         self.assertEqual(entry["wp"], "AB Žeimena, inspektorė")
         self.assertEqual(entry["ed"], 10)
+
+    def test_two_wordings_of_one_municipality_are_one_facet_row(self):
+        # 'Vilniaus miesto' (2019) and 'Vilniaus miesto savivaldybė' (2015)
+        # were two adjacent rows in the select, each showing half the
+        # history (issue #137).
+        older = _record("A B", "1970-01-01")
+        older["kandidatavimas"] = {"savivaldybe": "Vilniaus miesto savivaldybė", "roles": ["tarybos-narys"], "isrinktas": False}
+        newer = _record("A B", "1970-01-01")
+        newer["kandidatavimas"] = {"savivaldybe": {"id": "1", "number": 1, "name": "Vilniaus miesto"}, "roles": ["tarybos-narys"], "isrinktas": False}
+        index = self._build([("2015-kovo-1-savivaldybiu", "a-b", older), ("2019-kovo-3-savivaldybiu-tarybu", "a-b", newer)])
+        self.assertEqual(index["municipalities"], ["Vilniaus miesto savivaldybė"])
+        self.assertEqual([e["sv"] for e in index["people"][0]["e"]], [0, 0])
+
+    def test_a_wording_the_registry_lacks_is_reported_not_hidden(self):
+        record = _record("A B", "1970-01-01")
+        record["kandidatavimas"] = {"savivaldybe": "Naujoji savivaldybė", "roles": ["tarybos-narys"], "isrinktas": False}
+        index = self._build([("2019-kovo-3-savivaldybiu-tarybu", "a-b", record)])
+        self.assertEqual(index["municipalities"], ["Naujoji savivaldybė"])
+        self.assertEqual(index["unresolvedMunicipalities"], ["Naujoji savivaldybė"])
 
     def test_the_mayor_flag_is_only_carried_on_two_office_ballots(self):
         # On a mero-kind election the kind alone decides the office, so the
@@ -425,6 +447,38 @@ class GroupingTests(unittest.TestCase):
         record = _record("A B", "1970-01-01")
         index = self._build([("2021-spalio-10-meru", "a-b", record)])
         self.assertNotIn("r", index["people"][0]["e"][0])
+
+    def test_a_dual_candidacy_carries_both_offices_and_both_outcomes(self):
+        # Issue #140: one code and one flag showed 448 council winners who
+        # lost the mayoralty as elected mayors.
+        record = _record("A B", "1970-01-01")
+        record["kandidatavimas"] = {
+            "savivaldybe": {"id": "1", "number": 13, "name": "Kaišiadorių rajono"},
+            "roles": ["tarybos-narys", "meras"],
+            "tarybosNarys": {"partyList": {"id": "2", "number": 4, "name": "LSDP"}, "listPosition": 1, "elected": True},
+            "meras": {"round": "I", "elected": False},
+            "isrinktas": True,
+        }
+        entry = self._build([("2019-kovo-3-savivaldybiu-tarybu", "a-b", record)])["people"][0]["e"][0]
+        self.assertEqual(entry["r"], "tm")
+        self.assertIs(entry["w"], True)
+        self.assertIs(entry["wt"], True)
+        self.assertIs(entry["wm"], False)
+
+    def test_a_mayor_only_run_carries_the_code_and_no_split_outcome(self):
+        record = _record("A B", "1970-01-01")
+        record["kandidatavimas"] = {"savivaldybe": "Kauno miesto", "roles": ["meras"], "tarybosNarys": None, "meras": {"elected": False}, "isrinktas": False}
+        entry = self._build([("2019-kovo-3-savivaldybiu-tarybu", "a-b", record)])["people"][0]["e"][0]
+        self.assertEqual(entry["r"], "m")
+        self.assertNotIn("wt", entry)
+        self.assertNotIn("wm", entry)
+
+    def test_a_council_only_run_carries_neither(self):
+        record = _record("A B", "1970-01-01")
+        record["kandidatavimas"] = {"savivaldybe": "Kauno miesto", "roles": ["tarybos-narys"], "tarybosNarys": {"elected": True}, "isrinktas": True}
+        entry = self._build([("2019-kovo-3-savivaldybiu-tarybu", "a-b", record)])["people"][0]["e"][0]
+        self.assertNotIn("r", entry)
+        self.assertNotIn("wt", entry)
 
     def test_the_education_ladder_rides_with_lithuanian_labels(self):
         # The slugs are ASCII-folded, so de-slugging in the page would lose

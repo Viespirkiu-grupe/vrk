@@ -1,0 +1,367 @@
+{
+  "electionId": "1997-birzelio-29-svenciniu-tarybos-pakartotiniai",
+  "generatedAt": "2026-08-31T21:24:04+00:00",
+  "sources": [
+    "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rapgpl.htm-264.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm"
+  ],
+  "stats": {
+    "municipalities": 1,
+    "invalidatedMunicipalities": 0,
+    "candidates": 110,
+    "elected": 25,
+    "electedNotInSitemap": 0,
+    "memberMismatches": 0,
+    "seatCountMismatches": 0,
+    "candidatesNotElected": 85,
+    "seats": {
+      "tarybos-narys": 25
+    }
+  },
+  "elected": {
+    "43469": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "listPosition": 1
+    },
+    "43470": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "listPosition": 2
+    },
+    "43471": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "listPosition": 3
+    },
+    "43472": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "listPosition": 4
+    },
+    "43473": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "listPosition": 5
+    },
+    "43474": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "listPosition": 6
+    },
+    "43475": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "listPosition": 7
+    },
+    "43476": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "listPosition": 8
+    },
+    "43477": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "listPosition": 9
+    },
+    "43478": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "listPosition": 10
+    },
+    "43565": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Lietuvos lenkų rinkimų akcija",
+      "listPosition": 1
+    },
+    "43566": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Lietuvos lenkų rinkimų akcija",
+      "listPosition": 2
+    },
+    "43567": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Lietuvos lenkų rinkimų akcija",
+      "listPosition": 3
+    },
+    "43520": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Naujoji demokratija/ Moterų partija",
+      "listPosition": 1
+    },
+    "43521": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Naujoji demokratija/ Moterų partija",
+      "listPosition": 2
+    },
+    "43522": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Naujoji demokratija/ Moterų partija",
+      "listPosition": 3
+    },
+    "43511": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Lietuvos demokratinė darbo partija",
+      "listPosition": 1
+    },
+    "43512": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Lietuvos demokratinė darbo partija",
+      "listPosition": 2
+    },
+    "43513": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Lietuvos demokratinė darbo partija",
+      "listPosition": 3
+    },
+    "43543": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "listPosition": 1
+    },
+    "43544": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "listPosition": 2
+    },
+    "43545": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "listPosition": 3
+    },
+    "43535": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Lietuvos krikščionių demokratų partija",
+      "listPosition": 1
+    },
+    "43536": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Lietuvos krikščionių demokratų partija",
+      "listPosition": 2
+    },
+    "43498": {
+      "seat": "tarybos-narys",
+      "method": "elected-page",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm",
+      "municipality": "Švenčionių rajono",
+      "municipalityNumber": 47,
+      "nominator": "Lietuvos valstiečių partija",
+      "listPosition": 1
+    }
+  },
+  "details": {
+    "perMunicipality": [
+      {
+        "municipalityName": "Švenčionių rajono",
+        "municipalityNumber": 47,
+        "invalidated": false,
+        "members": 25,
+        "mandatesSum": 25,
+        "totalMandates": 25,
+        "turnout": {
+          "registeredVoters": 26446,
+          "voters": 12885,
+          "turnoutPercent": 48.72,
+          "invalidBallots": 331,
+          "validBallots": 12554
+        },
+        "resultsUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rapgpl.htm-264.htm",
+        "electedUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rikl.htm-264.htm"
+      }
+    ],
+    "invalidated": [],
+    "electedNotInSitemap": [],
+    "memberMismatches": [],
+    "seatCountMismatches": [],
+    "listResults": {
+      "47": [
+        {
+          "listNumber": 7,
+          "name": "Lietuvos liberalų sąjunga",
+          "partyId": "28",
+          "votesBallotBox": 3755,
+          "votesPostal": 1058,
+          "votes": 4813,
+          "mandates": 10,
+          "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rapgpl.htm-264.htm"
+        },
+        {
+          "listNumber": 3,
+          "name": "Lietuvos lenkų rinkimų akcija",
+          "partyId": "34",
+          "votesBallotBox": 1114,
+          "votesPostal": 155,
+          "votes": 1269,
+          "mandates": 3,
+          "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rapgpl.htm-264.htm"
+        },
+        {
+          "listNumber": 4,
+          "name": "Naujoji demokratija/ Moterų partija",
+          "partyId": "1",
+          "votesBallotBox": 1268,
+          "votesPostal": 137,
+          "votes": 1405,
+          "mandates": 3,
+          "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rapgpl.htm-264.htm"
+        },
+        {
+          "listNumber": 6,
+          "name": "Lietuvos demokratinė darbo partija",
+          "partyId": "4",
+          "votesBallotBox": 1362,
+          "votesPostal": 142,
+          "votes": 1504,
+          "mandates": 3,
+          "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rapgpl.htm-264.htm"
+        },
+        {
+          "listNumber": 9,
+          "name": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+          "partyId": "3",
+          "votesBallotBox": 1511,
+          "votesPostal": 159,
+          "votes": 1670,
+          "mandates": 3,
+          "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rapgpl.htm-264.htm"
+        },
+        {
+          "listNumber": 5,
+          "name": "Lietuvos krikščionių demokratų partija",
+          "partyId": "5",
+          "votesBallotBox": 615,
+          "votesPostal": 170,
+          "votes": 785,
+          "mandates": 2,
+          "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rapgpl.htm-264.htm"
+        },
+        {
+          "listNumber": 2,
+          "name": "Lietuvos valstiečių partija",
+          "partyId": "25",
+          "votesBallotBox": 477,
+          "votesPostal": 60,
+          "votes": 537,
+          "mandates": 1,
+          "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rapgpl.htm-264.htm"
+        },
+        {
+          "listNumber": 1,
+          "name": "Lietuvių tautininkų sąjunga",
+          "partyId": "22",
+          "votesBallotBox": 235,
+          "votesPostal": 63,
+          "votes": 298,
+          "mandates": null,
+          "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rapgpl.htm-264.htm"
+        },
+        {
+          "listNumber": 8,
+          "name": "Lietuvos socialdemokratų partija",
+          "partyId": "8",
+          "votesBallotBox": 251,
+          "votesPostal": 22,
+          "votes": 273,
+          "mandates": null,
+          "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19970323/rapgpl.htm-264.htm"
+        }
+      ]
+    }
+  }
+}

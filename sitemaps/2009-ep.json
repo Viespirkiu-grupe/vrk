@@ -1,0 +1,3964 @@
+{
+  "electionId": "2009-ep",
+  "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/KandidatuSarasai/index.html",
+  "listUrls": [
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/KandidatuSarasai/RinkimuOrganizacija3612.html",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/KandidatuSarasai/RinkimuOrganizacija3553.html",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/KandidatuSarasai/RinkimuOrganizacija3574.html",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/KandidatuSarasai/RinkimuOrganizacija3583.html",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/KandidatuSarasai/RinkimuOrganizacija3616.html",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/KandidatuSarasai/RinkimuOrganizacija3611.html",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/KandidatuSarasai/RinkimuOrganizacija3572.html",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/KandidatuSarasai/RinkimuOrganizacija3585.html",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/KandidatuSarasai/RinkimuOrganizacija3573.html",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/KandidatuSarasai/RinkimuOrganizacija3567.html",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/KandidatuSarasai/RinkimuOrganizacija3565.html",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/KandidatuSarasai/RinkimuOrganizacija3566.html",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/KandidatuSarasai/RinkimuOrganizacija3570.html",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/KandidatuSarasai/RinkimuOrganizacija3560.html",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/KandidatuSarasai/RinkimuOrganizacija3557.html"
+  ],
+  "generatedAt": "2026-08-21T22:15:35+00:00",
+  "stats": {
+    "rows": 262,
+    "extracted": 262,
+    "skipped": 0,
+    "duplicateCandidateIds": 0,
+    "lists": 15,
+    "declaredCandidates": 262,
+    "listCountMismatches": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Saulius STOMA",
+      "candidateId": "saulius-stoma",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25518/Kandidato25518Anketa.html",
+      "vrkCandidateId": "25518",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos prisikėlimo partija",
+        "sarasoNumeris": 1,
+        "sarasoId": "3612",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Daiva TAMOŠIŪNAITĖ-BUDRĖ",
+      "candidateId": "daiva-tamosiunaite-budre",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25519/Kandidato25519Anketa.html",
+      "vrkCandidateId": "25519",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos prisikėlimo partija",
+        "sarasoNumeris": 1,
+        "sarasoId": "3612",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Nina Barbora EVANS",
+      "candidateId": "nina-barbora-evans",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25520/Kandidato25520Anketa.html",
+      "vrkCandidateId": "25520",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos prisikėlimo partija",
+        "sarasoNumeris": 1,
+        "sarasoId": "3612",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Laimontas DINIUS",
+      "candidateId": "laimontas-dinius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25521/Kandidato25521Anketa.html",
+      "vrkCandidateId": "25521",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos prisikėlimo partija",
+        "sarasoNumeris": 1,
+        "sarasoId": "3612",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Rokas ŽILINSKAS",
+      "candidateId": "rokas-zilinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25522/Kandidato25522Anketa.html",
+      "vrkCandidateId": "25522",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos prisikėlimo partija",
+        "sarasoNumeris": 1,
+        "sarasoId": "3612",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Mečislovas SUBELIS",
+      "candidateId": "mecislovas-subelis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25523/Kandidato25523Anketa.html",
+      "vrkCandidateId": "25523",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos prisikėlimo partija",
+        "sarasoNumeris": 1,
+        "sarasoId": "3612",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Donalda MEIŽELYTĖ SVILIENĖ",
+      "candidateId": "donalda-meizelyte-sviliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25524/Kandidato25524Anketa.html",
+      "vrkCandidateId": "25524",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos prisikėlimo partija",
+        "sarasoNumeris": 1,
+        "sarasoId": "3612",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Ligitas KERNAGIS",
+      "candidateId": "ligitas-kernagis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25525/Kandidato25525Anketa.html",
+      "vrkCandidateId": "25525",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos prisikėlimo partija",
+        "sarasoNumeris": 1,
+        "sarasoId": "3612",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Kęstutis RUPULEVIČIUS",
+      "candidateId": "kestutis-rupulevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25526/Kandidato25526Anketa.html",
+      "vrkCandidateId": "25526",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos prisikėlimo partija",
+        "sarasoNumeris": 1,
+        "sarasoId": "3612",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Donatas BUKELIS",
+      "candidateId": "donatas-bukelis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25527/Kandidato25527Anketa.html",
+      "vrkCandidateId": "25527",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautos prisikėlimo partija",
+        "sarasoNumeris": 1,
+        "sarasoId": "3612",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Algirdas PALECKIS",
+      "candidateId": "algirdas-paleckis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25502/Kandidato25502Anketa.html",
+      "vrkCandidateId": "25502",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "\"FRONTO\" PARTIJA",
+        "sarasoNumeris": 2,
+        "sarasoId": "3553",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Bronislovas KUČINSKAS",
+      "candidateId": "bronislovas-kucinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25503/Kandidato25503Anketa.html",
+      "vrkCandidateId": "25503",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "\"FRONTO\" PARTIJA",
+        "sarasoNumeris": 2,
+        "sarasoId": "3553",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Antanas ČEBATARIŪNAS",
+      "candidateId": "antanas-cebatariunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25504/Kandidato25504Anketa.html",
+      "vrkCandidateId": "25504",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "\"FRONTO\" PARTIJA",
+        "sarasoNumeris": 2,
+        "sarasoId": "3553",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Natalja BARIŠAUSKIENĖ",
+      "candidateId": "natalja-barisauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25505/Kandidato25505Anketa.html",
+      "vrkCandidateId": "25505",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "\"FRONTO\" PARTIJA",
+        "sarasoNumeris": 2,
+        "sarasoId": "3553",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Gediminas KIAUNĖ",
+      "candidateId": "gediminas-kiaune",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25506/Kandidato25506Anketa.html",
+      "vrkCandidateId": "25506",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "\"FRONTO\" PARTIJA",
+        "sarasoNumeris": 2,
+        "sarasoId": "3553",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Sergej KOZLOVSKIJ",
+      "candidateId": "sergej-kozlovskij",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25507/Kandidato25507Anketa.html",
+      "vrkCandidateId": "25507",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "\"FRONTO\" PARTIJA",
+        "sarasoNumeris": 2,
+        "sarasoId": "3553",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Domantas MARKAUSKAS",
+      "candidateId": "domantas-markauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25508/Kandidato25508Anketa.html",
+      "vrkCandidateId": "25508",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "\"FRONTO\" PARTIJA",
+        "sarasoNumeris": 2,
+        "sarasoId": "3553",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Deividas BEREZAUSKAS",
+      "candidateId": "deividas-berezauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25510/Kandidato25510Anketa.html",
+      "vrkCandidateId": "25510",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "\"FRONTO\" PARTIJA",
+        "sarasoNumeris": 2,
+        "sarasoId": "3553",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Laima PAULIUKIENĖ",
+      "candidateId": "laima-pauliukiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25511/Kandidato25511Anketa.html",
+      "vrkCandidateId": "25511",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "\"FRONTO\" PARTIJA",
+        "sarasoNumeris": 2,
+        "sarasoId": "3553",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Svetlana ŠIPUROVA",
+      "candidateId": "svetlana-sipurova",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25512/Kandidato25512Anketa.html",
+      "vrkCandidateId": "25512",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "\"FRONTO\" PARTIJA",
+        "sarasoNumeris": 2,
+        "sarasoId": "3553",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Edikas JAGELAVIČIUS",
+      "candidateId": "edikas-jagelavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25515/Kandidato25515Anketa.html",
+      "vrkCandidateId": "25515",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "\"FRONTO\" PARTIJA",
+        "sarasoNumeris": 2,
+        "sarasoId": "3553",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Rolandas PAKSAS",
+      "candidateId": "rolandas-paksas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25071/Kandidato25071Anketa.html",
+      "vrkCandidateId": "25071",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Juozas IMBRASAS",
+      "candidateId": "juozas-imbrasas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25072/Kandidato25072Anketa.html",
+      "vrkCandidateId": "25072",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Remigijus AČAS",
+      "candidateId": "remigijus-acas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25073/Kandidato25073Anketa.html",
+      "vrkCandidateId": "25073",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Petras GRAŽULIS",
+      "candidateId": "petras-grazulis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25074/Kandidato25074Anketa.html",
+      "vrkCandidateId": "25074",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Egidijus KLUMBYS",
+      "candidateId": "egidijus-klumbys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25075/Kandidato25075Anketa.html",
+      "vrkCandidateId": "25075",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Rimas Antanas RUČYS",
+      "candidateId": "rimas-antanas-rucys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25076/Kandidato25076Anketa.html",
+      "vrkCandidateId": "25076",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Kęstas KOMSKIS",
+      "candidateId": "kestas-komskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25077/Kandidato25077Anketa.html",
+      "vrkCandidateId": "25077",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Vytautas GALVONAS",
+      "candidateId": "vytautas-galvonas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25078/Kandidato25078Anketa.html",
+      "vrkCandidateId": "25078",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Andrius MAZURONIS",
+      "candidateId": "andrius-mazuronis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25079/Kandidato25079Anketa.html",
+      "vrkCandidateId": "25079",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Dailis Alfonsas BARAKAUSKAS",
+      "candidateId": "dailis-alfonsas-barakauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25080/Kandidato25080Anketa.html",
+      "vrkCandidateId": "25080",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Egidijus VILIMAS",
+      "candidateId": "egidijus-vilimas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25081/Kandidato25081Anketa.html",
+      "vrkCandidateId": "25081",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Donatas KAUBRYS",
+      "candidateId": "donatas-kaubrys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25082/Kandidato25082Anketa.html",
+      "vrkCandidateId": "25082",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 12
+      }
+    },
+    {
+      "candidateName": "Daiva MATONIENĖ",
+      "candidateId": "daiva-matoniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25083/Kandidato25083Anketa.html",
+      "vrkCandidateId": "25083",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Vytautas KAMBLEVIČIUS",
+      "candidateId": "vytautas-kamblevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25084/Kandidato25084Anketa.html",
+      "vrkCandidateId": "25084",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 14
+      }
+    },
+    {
+      "candidateName": "Jonas JUODKA",
+      "candidateId": "jonas-juodka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25085/Kandidato25085Anketa.html",
+      "vrkCandidateId": "25085",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 15
+      }
+    },
+    {
+      "candidateName": "Remigijus ŽEMAITAITIS",
+      "candidateId": "remigijus-zemaitaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25086/Kandidato25086Anketa.html",
+      "vrkCandidateId": "25086",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 16
+      }
+    },
+    {
+      "candidateName": "Stanislovas TOMAS",
+      "candidateId": "stanislovas-tomas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25087/Kandidato25087Anketa.html",
+      "vrkCandidateId": "25087",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 17
+      }
+    },
+    {
+      "candidateName": "Algirdas GUDAITIS",
+      "candidateId": "algirdas-gudaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25088/Kandidato25088Anketa.html",
+      "vrkCandidateId": "25088",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 18
+      }
+    },
+    {
+      "candidateName": "Sigitas KANCEVYČIUS",
+      "candidateId": "sigitas-kancevycius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25070/Kandidato25070Anketa.html",
+      "vrkCandidateId": "25070",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 19
+      }
+    },
+    {
+      "candidateName": "Romas JANKAUSKAS",
+      "candidateId": "romas-jankauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25089/Kandidato25089Anketa.html",
+      "vrkCandidateId": "25089",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 20
+      }
+    },
+    {
+      "candidateName": "Artūras RAZBADAUSKAS",
+      "candidateId": "arturas-razbadauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25090/Kandidato25090Anketa.html",
+      "vrkCandidateId": "25090",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 21
+      }
+    },
+    {
+      "candidateName": "Algirdas VILIMAS",
+      "candidateId": "algirdas-vilimas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25091/Kandidato25091Anketa.html",
+      "vrkCandidateId": "25091",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 22
+      }
+    },
+    {
+      "candidateName": "Leta KALINAUSKAITĖ",
+      "candidateId": "leta-kalinauskaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25092/Kandidato25092Anketa.html",
+      "vrkCandidateId": "25092",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 23
+      }
+    },
+    {
+      "candidateName": "Raimonda KAROSAITĖ",
+      "candidateId": "raimonda-karosaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25093/Kandidato25093Anketa.html",
+      "vrkCandidateId": "25093",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Partija Tvarka ir teisingumas",
+        "sarasoNumeris": 3,
+        "sarasoId": "3574",
+        "numerisSarase": 24
+      }
+    },
+    {
+      "candidateName": "Vilija BLINKEVIČIŪTĖ",
+      "candidateId": "vilija-blinkeviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25094/Kandidato25094Anketa.html",
+      "vrkCandidateId": "25094",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Justas Vincas PALECKIS",
+      "candidateId": "justas-vincas-paleckis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25095/Kandidato25095Anketa.html",
+      "vrkCandidateId": "25095",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Birutė VĖSAITĖ",
+      "candidateId": "birute-vesaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25096/Kandidato25096Anketa.html",
+      "vrkCandidateId": "25096",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Zigmantas BALČYTIS",
+      "candidateId": "zigmantas-balcytis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25097/Kandidato25097Anketa.html",
+      "vrkCandidateId": "25097",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Gediminas KIRKILAS",
+      "candidateId": "gediminas-kirkilas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25098/Kandidato25098Anketa.html",
+      "vrkCandidateId": "25098",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Juozas OLEKAS",
+      "candidateId": "juozas-olekas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25099/Kandidato25099Anketa.html",
+      "vrkCandidateId": "25099",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Aloyzas SAKALAS",
+      "candidateId": "aloyzas-sakalas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25100/Kandidato25100Anketa.html",
+      "vrkCandidateId": "25100",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Vytenis Povilas ANDRIUKAITIS",
+      "candidateId": "vytenis-povilas-andriukaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25101/Kandidato25101Anketa.html",
+      "vrkCandidateId": "25101",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Irena ŠIAULIENĖ",
+      "candidateId": "irena-siauliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25102/Kandidato25102Anketa.html",
+      "vrkCandidateId": "25102",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Juras POŽELA",
+      "candidateId": "juras-pozela",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25103/Kandidato25103Anketa.html",
+      "vrkCandidateId": "25103",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Marija Aušrinė PAVILIONIENĖ",
+      "candidateId": "marija-ausrine-pavilioniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25104/Kandidato25104Anketa.html",
+      "vrkCandidateId": "25104",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Rimantas VAITKUS",
+      "candidateId": "rimantas-vaitkus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25105/Kandidato25105Anketa.html",
+      "vrkCandidateId": "25105",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 12
+      }
+    },
+    {
+      "candidateName": "Julius SABATAUSKAS",
+      "candidateId": "julius-sabatauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25106/Kandidato25106Anketa.html",
+      "vrkCandidateId": "25106",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Justinas KAROSAS",
+      "candidateId": "justinas-karosas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25107/Kandidato25107Anketa.html",
+      "vrkCandidateId": "25107",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 14
+      }
+    },
+    {
+      "candidateName": "Sigita BURBIENĖ",
+      "candidateId": "sigita-burbiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25108/Kandidato25108Anketa.html",
+      "vrkCandidateId": "25108",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 15
+      }
+    },
+    {
+      "candidateName": "Algirdas SYSAS",
+      "candidateId": "algirdas-sysas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25109/Kandidato25109Anketa.html",
+      "vrkCandidateId": "25109",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 16
+      }
+    },
+    {
+      "candidateName": "Vitalija KLIUKIENĖ",
+      "candidateId": "vitalija-kliukiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25110/Kandidato25110Anketa.html",
+      "vrkCandidateId": "25110",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 17
+      }
+    },
+    {
+      "candidateName": "Giedrė PURVANECKIENĖ",
+      "candidateId": "giedre-purvaneckiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25111/Kandidato25111Anketa.html",
+      "vrkCandidateId": "25111",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 18
+      }
+    },
+    {
+      "candidateName": "Justas PANKAUSKAS",
+      "candidateId": "justas-pankauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25112/Kandidato25112Anketa.html",
+      "vrkCandidateId": "25112",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 19
+      }
+    },
+    {
+      "candidateName": "Rimantas ŠADŽIUS",
+      "candidateId": "rimantas-sadzius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25113/Kandidato25113Anketa.html",
+      "vrkCandidateId": "25113",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 20
+      }
+    },
+    {
+      "candidateName": "Ona BALEVIČIŪTĖ",
+      "candidateId": "ona-baleviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25114/Kandidato25114Anketa.html",
+      "vrkCandidateId": "25114",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 21
+      }
+    },
+    {
+      "candidateName": "Antanas VALYS",
+      "candidateId": "antanas-valys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25115/Kandidato25115Anketa.html",
+      "vrkCandidateId": "25115",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 22
+      }
+    },
+    {
+      "candidateName": "Antanas Zenonas KAMINSKAS",
+      "candidateId": "antanas-zenonas-kaminskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25116/Kandidato25116Anketa.html",
+      "vrkCandidateId": "25116",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 23
+      }
+    },
+    {
+      "candidateName": "Alvydas ŠEDŽIUS",
+      "candidateId": "alvydas-sedzius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25117/Kandidato25117Anketa.html",
+      "vrkCandidateId": "25117",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos socialdemokratų partija",
+        "sarasoNumeris": 4,
+        "sarasoId": "3583",
+        "numerisSarase": 24
+      }
+    },
+    {
+      "candidateName": "Egidijus SKARBALIUS",
+      "candidateId": "egidijus-skarbalius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25237/Kandidato25237Anketa.html",
+      "vrkCandidateId": "25237",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Žemaičių partija",
+        "sarasoNumeris": 5,
+        "sarasoId": "3616",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Stasys GVAŽIAUSKAS",
+      "candidateId": "stasys-gvaziauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25239/Kandidato25239Anketa.html",
+      "vrkCandidateId": "25239",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Žemaičių partija",
+        "sarasoNumeris": 5,
+        "sarasoId": "3616",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Daiva ARLAUSKIENĖ",
+      "candidateId": "daiva-arlauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25240/Kandidato25240Anketa.html",
+      "vrkCandidateId": "25240",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Žemaičių partija",
+        "sarasoNumeris": 5,
+        "sarasoId": "3616",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Kęstutis GRINAVECKAS",
+      "candidateId": "kestutis-grinaveckas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25241/Kandidato25241Anketa.html",
+      "vrkCandidateId": "25241",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Žemaičių partija",
+        "sarasoNumeris": 5,
+        "sarasoId": "3616",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Janina ŠLIOGERĖ",
+      "candidateId": "janina-sliogere",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25242/Kandidato25242Anketa.html",
+      "vrkCandidateId": "25242",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Žemaičių partija",
+        "sarasoNumeris": 5,
+        "sarasoId": "3616",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Karolis ŠIAUDKULIS",
+      "candidateId": "karolis-siaudkulis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25243/Kandidato25243Anketa.html",
+      "vrkCandidateId": "25243",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Žemaičių partija",
+        "sarasoNumeris": 5,
+        "sarasoId": "3616",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Valerija STATAUSKIENĖ",
+      "candidateId": "valerija-statauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25244/Kandidato25244Anketa.html",
+      "vrkCandidateId": "25244",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Žemaičių partija",
+        "sarasoNumeris": 5,
+        "sarasoId": "3616",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Arvydas NORVYDAS",
+      "candidateId": "arvydas-norvydas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25238/Kandidato25238Anketa.html",
+      "vrkCandidateId": "25238",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Žemaičių partija",
+        "sarasoNumeris": 5,
+        "sarasoId": "3616",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Ona JUKNEVIČIENĖ",
+      "candidateId": "ona-jukneviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25346/Kandidato25346Anketa.html",
+      "vrkCandidateId": "25346",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos centro partija",
+        "sarasoNumeris": 6,
+        "sarasoId": "3611",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Arūnas GRUMADAS",
+      "candidateId": "arunas-grumadas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25347/Kandidato25347Anketa.html",
+      "vrkCandidateId": "25347",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos centro partija",
+        "sarasoNumeris": 6,
+        "sarasoId": "3611",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Arūnas GUMULIAUSKAS",
+      "candidateId": "arunas-gumuliauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25348/Kandidato25348Anketa.html",
+      "vrkCandidateId": "25348",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos centro partija",
+        "sarasoNumeris": 6,
+        "sarasoId": "3611",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Saulius LAPIENIS",
+      "candidateId": "saulius-lapienis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25349/Kandidato25349Anketa.html",
+      "vrkCandidateId": "25349",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos centro partija",
+        "sarasoNumeris": 6,
+        "sarasoId": "3611",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Ulijana PETRAITIENĖ",
+      "candidateId": "ulijana-petraitiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25350/Kandidato25350Anketa.html",
+      "vrkCandidateId": "25350",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos centro partija",
+        "sarasoNumeris": 6,
+        "sarasoId": "3611",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Nijolė UINSKIENĖ",
+      "candidateId": "nijole-uinskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25488/Kandidato25488Anketa.html",
+      "vrkCandidateId": "25488",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos centro partija",
+        "sarasoNumeris": 6,
+        "sarasoId": "3611",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Mindaugas KONČIUS",
+      "candidateId": "mindaugas-koncius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25351/Kandidato25351Anketa.html",
+      "vrkCandidateId": "25351",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos centro partija",
+        "sarasoNumeris": 6,
+        "sarasoId": "3611",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Asta Antanina TAMULEVIČIENĖ",
+      "candidateId": "asta-antanina-tamuleviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25352/Kandidato25352Anketa.html",
+      "vrkCandidateId": "25352",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos centro partija",
+        "sarasoNumeris": 6,
+        "sarasoId": "3611",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Albinas STANKUS",
+      "candidateId": "albinas-stankus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25353/Kandidato25353Anketa.html",
+      "vrkCandidateId": "25353",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos centro partija",
+        "sarasoNumeris": 6,
+        "sarasoId": "3611",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Vytautas GRIŠČENKO",
+      "candidateId": "vytautas-griscenko",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25354/Kandidato25354Anketa.html",
+      "vrkCandidateId": "25354",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos centro partija",
+        "sarasoNumeris": 6,
+        "sarasoId": "3611",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Rimantas MAKRICKAS",
+      "candidateId": "rimantas-makrickas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25355/Kandidato25355Anketa.html",
+      "vrkCandidateId": "25355",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos centro partija",
+        "sarasoNumeris": 6,
+        "sarasoId": "3611",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Jolanta KRUTKEVIČIENĖ",
+      "candidateId": "jolanta-krutkeviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25356/Kandidato25356Anketa.html",
+      "vrkCandidateId": "25356",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos centro partija",
+        "sarasoNumeris": 6,
+        "sarasoId": "3611",
+        "numerisSarase": 12
+      }
+    },
+    {
+      "candidateName": "Verginija MASILIAUSKIENĖ",
+      "candidateId": "verginija-masiliauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas26037/Kandidato26037Anketa.html",
+      "vrkCandidateId": "26037",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos centro partija",
+        "sarasoNumeris": 6,
+        "sarasoId": "3611",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Rytis VAIČAITIS",
+      "candidateId": "rytis-vaicaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25358/Kandidato25358Anketa.html",
+      "vrkCandidateId": "25358",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos centro partija",
+        "sarasoNumeris": 6,
+        "sarasoId": "3611",
+        "numerisSarase": 14
+      }
+    },
+    {
+      "candidateName": "Egidijus ALBREKTAS",
+      "candidateId": "egidijus-albrektas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25359/Kandidato25359Anketa.html",
+      "vrkCandidateId": "25359",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos centro partija",
+        "sarasoNumeris": 6,
+        "sarasoId": "3611",
+        "numerisSarase": 15
+      }
+    },
+    {
+      "candidateName": "Rolandas RAGALIAUSKAS",
+      "candidateId": "rolandas-ragaliauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25360/Kandidato25360Anketa.html",
+      "vrkCandidateId": "25360",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos centro partija",
+        "sarasoNumeris": 6,
+        "sarasoId": "3611",
+        "numerisSarase": 16
+      }
+    },
+    {
+      "candidateName": "Sigutė EŽERSKIENĖ",
+      "candidateId": "sigute-ezerskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25361/Kandidato25361Anketa.html",
+      "vrkCandidateId": "25361",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos centro partija",
+        "sarasoNumeris": 6,
+        "sarasoId": "3611",
+        "numerisSarase": 17
+      }
+    },
+    {
+      "candidateName": "Danutė POCIENĖ",
+      "candidateId": "danute-pociene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25362/Kandidato25362Anketa.html",
+      "vrkCandidateId": "25362",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos centro partija",
+        "sarasoNumeris": 6,
+        "sarasoId": "3611",
+        "numerisSarase": 18
+      }
+    },
+    {
+      "candidateName": "Gintas JONAUSKAS",
+      "candidateId": "gintas-jonauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25363/Kandidato25363Anketa.html",
+      "vrkCandidateId": "25363",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos centro partija",
+        "sarasoNumeris": 6,
+        "sarasoId": "3611",
+        "numerisSarase": 19
+      }
+    },
+    {
+      "candidateName": "Leonidas DONSKIS",
+      "candidateId": "leonidas-donskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25250/Kandidato25250Anketa.html",
+      "vrkCandidateId": "25250",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Dainius PŪRAS",
+      "candidateId": "dainius-puras",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25251/Kandidato25251Anketa.html",
+      "vrkCandidateId": "25251",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Vytautas GRUBLIAUSKAS",
+      "candidateId": "vytautas-grubliauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25252/Kandidato25252Anketa.html",
+      "vrkCandidateId": "25252",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Artūras ŠULCAS",
+      "candidateId": "arturas-sulcas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25253/Kandidato25253Anketa.html",
+      "vrkCandidateId": "25253",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Diana OBELIENIENĖ",
+      "candidateId": "diana-obelieniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25254/Kandidato25254Anketa.html",
+      "vrkCandidateId": "25254",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Gintaras ŠILEIKIS",
+      "candidateId": "gintaras-sileikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25255/Kandidato25255Anketa.html",
+      "vrkCandidateId": "25255",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Dalia TEIŠERSKYTĖ",
+      "candidateId": "dalia-teiserskyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25256/Kandidato25256Anketa.html",
+      "vrkCandidateId": "25256",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Aidas Feliksas PALUBINSKAS",
+      "candidateId": "aidas-feliksas-palubinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25257/Kandidato25257Anketa.html",
+      "vrkCandidateId": "25257",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Jurgita CHOROMANSKYTĖ",
+      "candidateId": "jurgita-choromanskyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25258/Kandidato25258Anketa.html",
+      "vrkCandidateId": "25258",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Vidmantas MARTIKONIS",
+      "candidateId": "vidmantas-martikonis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25259/Kandidato25259Anketa.html",
+      "vrkCandidateId": "25259",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Tomas KARPAVIČIUS",
+      "candidateId": "tomas-karpavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25260/Kandidato25260Anketa.html",
+      "vrkCandidateId": "25260",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Gediminas NAVAITIS",
+      "candidateId": "gediminas-navaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25261/Kandidato25261Anketa.html",
+      "vrkCandidateId": "25261",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 12
+      }
+    },
+    {
+      "candidateName": "Indrė GRUODIENĖ",
+      "candidateId": "indre-gruodiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25262/Kandidato25262Anketa.html",
+      "vrkCandidateId": "25262",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Alvydas STRIČKA",
+      "candidateId": "alvydas-stricka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25263/Kandidato25263Anketa.html",
+      "vrkCandidateId": "25263",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 14
+      }
+    },
+    {
+      "candidateName": "Diana STANKAITIENĖ",
+      "candidateId": "diana-stankaitiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25264/Kandidato25264Anketa.html",
+      "vrkCandidateId": "25264",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 15
+      }
+    },
+    {
+      "candidateName": "Linas STANKUS",
+      "candidateId": "linas-stankus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25265/Kandidato25265Anketa.html",
+      "vrkCandidateId": "25265",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 16
+      }
+    },
+    {
+      "candidateName": "Dalius DIRSĖ",
+      "candidateId": "dalius-dirse",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25266/Kandidato25266Anketa.html",
+      "vrkCandidateId": "25266",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 17
+      }
+    },
+    {
+      "candidateName": "Vytautas DANILEVIČIUS",
+      "candidateId": "vytautas-danilevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25267/Kandidato25267Anketa.html",
+      "vrkCandidateId": "25267",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 18
+      }
+    },
+    {
+      "candidateName": "Daiva ŠEŠKAUSKAITĖ",
+      "candidateId": "daiva-seskauskaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25268/Kandidato25268Anketa.html",
+      "vrkCandidateId": "25268",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 19
+      }
+    },
+    {
+      "candidateName": "Žygimantas GUOBYS",
+      "candidateId": "zygimantas-guobys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25269/Kandidato25269Anketa.html",
+      "vrkCandidateId": "25269",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 20
+      }
+    },
+    {
+      "candidateName": "Česlovas NEVIERA",
+      "candidateId": "ceslovas-neviera",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25270/Kandidato25270Anketa.html",
+      "vrkCandidateId": "25270",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 21
+      }
+    },
+    {
+      "candidateName": "Renata ŽINDUL",
+      "candidateId": "renata-zindul",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25271/Kandidato25271Anketa.html",
+      "vrkCandidateId": "25271",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 22
+      }
+    },
+    {
+      "candidateName": "Karolis URBONAVIČIUS",
+      "candidateId": "karolis-urbonavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25272/Kandidato25272Anketa.html",
+      "vrkCandidateId": "25272",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 23
+      }
+    },
+    {
+      "candidateName": "Danutė KRIŠČIŪNIENĖ",
+      "candidateId": "danute-krisciuniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25273/Kandidato25273Anketa.html",
+      "vrkCandidateId": "25273",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos Respublikos liberalų sąjūdis",
+        "sarasoNumeris": 7,
+        "sarasoId": "3572",
+        "numerisSarase": 24
+      }
+    },
+    {
+      "candidateName": "Valdemar TOMAŠEVSKI",
+      "candidateId": "valdemar-tomasevski",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25297/Kandidato25297Anketa.html",
+      "vrkCandidateId": "25297",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Irina ROZOVA",
+      "candidateId": "irina-rozova",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25298/Kandidato25298Anketa.html",
+      "vrkCandidateId": "25298",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Gabriel Jan MINCEVIČ",
+      "candidateId": "gabriel-jan-mincevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25299/Kandidato25299Anketa.html",
+      "vrkCandidateId": "25299",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Olga GORŠKOVA",
+      "candidateId": "olga-gorskova",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25300/Kandidato25300Anketa.html",
+      "vrkCandidateId": "25300",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Tadeuš ANDŽEJEVSKI",
+      "candidateId": "tadeus-andzejevski",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25301/Kandidato25301Anketa.html",
+      "vrkCandidateId": "25301",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Tamara LOCHANKINA",
+      "candidateId": "tamara-lochankina",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25302/Kandidato25302Anketa.html",
+      "vrkCandidateId": "25302",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Juzef KVETKOVSKIJ",
+      "candidateId": "juzef-kvetkovskij",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25303/Kandidato25303Anketa.html",
+      "vrkCandidateId": "25303",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Oleg DAVIDIUK",
+      "candidateId": "oleg-davidiuk",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25304/Kandidato25304Anketa.html",
+      "vrkCandidateId": "25304",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Leonard TALMONT",
+      "candidateId": "leonard-talmont",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25305/Kandidato25305Anketa.html",
+      "vrkCandidateId": "25305",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Viačeslav KARMANOV",
+      "candidateId": "viaceslav-karmanov",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25306/Kandidato25306Anketa.html",
+      "vrkCandidateId": "25306",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Zbignev JEDINSKIJ",
+      "candidateId": "zbignev-jedinskij",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25307/Kandidato25307Anketa.html",
+      "vrkCandidateId": "25307",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Andrejus JERŠOVAS",
+      "candidateId": "andrejus-jersovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25308/Kandidato25308Anketa.html",
+      "vrkCandidateId": "25308",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 12
+      }
+    },
+    {
+      "candidateName": "Rimantas MAČIULAITIS",
+      "candidateId": "rimantas-maciulaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25309/Kandidato25309Anketa.html",
+      "vrkCandidateId": "25309",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Marija PUČ",
+      "candidateId": "marija-puc",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25310/Kandidato25310Anketa.html",
+      "vrkCandidateId": "25310",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 14
+      }
+    },
+    {
+      "candidateName": "Vaigutis STANČIKAS",
+      "candidateId": "vaigutis-stancikas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25311/Kandidato25311Anketa.html",
+      "vrkCandidateId": "25311",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 15
+      }
+    },
+    {
+      "candidateName": "Zdzislav PALEVIČ",
+      "candidateId": "zdzislav-palevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25312/Kandidato25312Anketa.html",
+      "vrkCandidateId": "25312",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 16
+      }
+    },
+    {
+      "candidateName": "Vladimir VLASOV",
+      "candidateId": "vladimir-vlasov",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25313/Kandidato25313Anketa.html",
+      "vrkCandidateId": "25313",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 17
+      }
+    },
+    {
+      "candidateName": "Beata MALIUŠICKAJA",
+      "candidateId": "beata-maliusickaja",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25314/Kandidato25314Anketa.html",
+      "vrkCandidateId": "25314",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 18
+      }
+    },
+    {
+      "candidateName": "Jaroslav KAMINSKI",
+      "candidateId": "jaroslav-kaminski",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25316/Kandidato25316Anketa.html",
+      "vrkCandidateId": "25316",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 19
+      }
+    },
+    {
+      "candidateName": "Renata CYTACKA",
+      "candidateId": "renata-cytacka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25315/Kandidato25315Anketa.html",
+      "vrkCandidateId": "25315",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 20
+      }
+    },
+    {
+      "candidateName": "Gžegož SAKSON",
+      "candidateId": "gzegoz-sakson",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25317/Kandidato25317Anketa.html",
+      "vrkCandidateId": "25317",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 21
+      }
+    },
+    {
+      "candidateName": "Jurgita NAUSĖDIENĖ",
+      "candidateId": "jurgita-nausediene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25318/Kandidato25318Anketa.html",
+      "vrkCandidateId": "25318",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 22
+      }
+    },
+    {
+      "candidateName": "Renata SOBESKA",
+      "candidateId": "renata-sobeska",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25319/Kandidato25319Anketa.html",
+      "vrkCandidateId": "25319",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 23
+      }
+    },
+    {
+      "candidateName": "Marija REKST",
+      "candidateId": "marija-rekst",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25320/Kandidato25320Anketa.html",
+      "vrkCandidateId": "25320",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos lenkų rinkimų akcija",
+        "sarasoNumeris": 8,
+        "sarasoId": "3585",
+        "numerisSarase": 24
+      }
+    },
+    {
+      "candidateName": "Eugenijus MALDEIKIS",
+      "candidateId": "eugenijus-maldeikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25555/Kandidato25555Anketa.html",
+      "vrkCandidateId": "25555",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Pilietinės demokratijos partija",
+        "sarasoNumeris": 9,
+        "sarasoId": "3573",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Algimantas MATULEVIČIUS",
+      "candidateId": "algimantas-matulevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25556/Kandidato25556Anketa.html",
+      "vrkCandidateId": "25556",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Pilietinės demokratijos partija",
+        "sarasoNumeris": 9,
+        "sarasoId": "3573",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Margarita STARKEVIČIŪTĖ",
+      "candidateId": "margarita-starkeviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25557/Kandidato25557Anketa.html",
+      "vrkCandidateId": "25557",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Pilietinės demokratijos partija",
+        "sarasoNumeris": 9,
+        "sarasoId": "3573",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Vilma ATKOČIŪNIENĖ",
+      "candidateId": "vilma-atkociuniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25558/Kandidato25558Anketa.html",
+      "vrkCandidateId": "25558",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Pilietinės demokratijos partija",
+        "sarasoNumeris": 9,
+        "sarasoId": "3573",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Aušra MALDEIKIENĖ",
+      "candidateId": "ausra-maldeikiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25561/Kandidato25561Anketa.html",
+      "vrkCandidateId": "25561",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Pilietinės demokratijos partija",
+        "sarasoNumeris": 9,
+        "sarasoId": "3573",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Stanislavas ČERNECKAS",
+      "candidateId": "stanislavas-cerneckas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25562/Kandidato25562Anketa.html",
+      "vrkCandidateId": "25562",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Pilietinės demokratijos partija",
+        "sarasoNumeris": 9,
+        "sarasoId": "3573",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Česlovas BANEVIČIUS",
+      "candidateId": "ceslovas-banevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25563/Kandidato25563Anketa.html",
+      "vrkCandidateId": "25563",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Pilietinės demokratijos partija",
+        "sarasoNumeris": 9,
+        "sarasoId": "3573",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Antanas DAMULIS",
+      "candidateId": "antanas-damulis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25564/Kandidato25564Anketa.html",
+      "vrkCandidateId": "25564",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Pilietinės demokratijos partija",
+        "sarasoNumeris": 9,
+        "sarasoId": "3573",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Gediminas VAGNORIUS",
+      "candidateId": "gediminas-vagnorius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25492/Kandidato25492Anketa.html",
+      "vrkCandidateId": "25492",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "3567",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Danutė BUDREIKAITĖ",
+      "candidateId": "danute-budreikaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25493/Kandidato25493Anketa.html",
+      "vrkCandidateId": "25493",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "3567",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Tomas JOSAS",
+      "candidateId": "tomas-josas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25494/Kandidato25494Anketa.html",
+      "vrkCandidateId": "25494",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "3567",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Algis ŽVALIAUSKAS",
+      "candidateId": "algis-zvaliauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25495/Kandidato25495Anketa.html",
+      "vrkCandidateId": "25495",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "3567",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Jurgis STAŠEVIČIUS",
+      "candidateId": "jurgis-stasevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25496/Kandidato25496Anketa.html",
+      "vrkCandidateId": "25496",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "3567",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Karolis RUGYS",
+      "candidateId": "karolis-rugys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25497/Kandidato25497Anketa.html",
+      "vrkCandidateId": "25497",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "3567",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Mindaugas LUOBIKIS",
+      "candidateId": "mindaugas-luobikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25498/Kandidato25498Anketa.html",
+      "vrkCandidateId": "25498",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "3567",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Tomas DAMBRAUSKAS",
+      "candidateId": "tomas-dambrauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25499/Kandidato25499Anketa.html",
+      "vrkCandidateId": "25499",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "3567",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Deimantė GUDELIENĖ",
+      "candidateId": "deimante-gudeliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25500/Kandidato25500Anketa.html",
+      "vrkCandidateId": "25500",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "3567",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Albinas PILIPAUSKAS",
+      "candidateId": "albinas-pilipauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25501/Kandidato25501Anketa.html",
+      "vrkCandidateId": "25501",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Krikščionių konservatorių socialinė sąjunga",
+        "sarasoNumeris": 10,
+        "sarasoId": "3567",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Vytautas LANDSBERGIS",
+      "candidateId": "vytautas-landsbergis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25370/Kandidato25370Anketa.html",
+      "vrkCandidateId": "25370",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Laima Liucija ANDRIKIENĖ",
+      "candidateId": "laima-liucija-andrikiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25371/Kandidato25371Anketa.html",
+      "vrkCandidateId": "25371",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Algirdas SAUDARGAS",
+      "candidateId": "algirdas-saudargas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25372/Kandidato25372Anketa.html",
+      "vrkCandidateId": "25372",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Radvilė MORKŪNAITĖ",
+      "candidateId": "radvile-morkunaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25373/Kandidato25373Anketa.html",
+      "vrkCandidateId": "25373",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Emanuelis ZINGERIS",
+      "candidateId": "emanuelis-zingeris",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25374/Kandidato25374Anketa.html",
+      "vrkCandidateId": "25374",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Raimondas KUODIS",
+      "candidateId": "raimondas-kuodis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25375/Kandidato25375Anketa.html",
+      "vrkCandidateId": "25375",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Algirdas ŠAKALYS",
+      "candidateId": "algirdas-sakalys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25376/Kandidato25376Anketa.html",
+      "vrkCandidateId": "25376",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Dainius ŽALIMAS",
+      "candidateId": "dainius-zalimas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25377/Kandidato25377Anketa.html",
+      "vrkCandidateId": "25377",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Egidijus VAREIKIS",
+      "candidateId": "egidijus-vareikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25378/Kandidato25378Anketa.html",
+      "vrkCandidateId": "25378",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Algimantas BIRBILAS",
+      "candidateId": "algimantas-birbilas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25379/Kandidato25379Anketa.html",
+      "vrkCandidateId": "25379",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Arvydas ANUŠAUSKAS",
+      "candidateId": "arvydas-anusauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25380/Kandidato25380Anketa.html",
+      "vrkCandidateId": "25380",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Žilvinas LELEIVA",
+      "candidateId": "zilvinas-leleiva",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25381/Kandidato25381Anketa.html",
+      "vrkCandidateId": "25381",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 12
+      }
+    },
+    {
+      "candidateName": "Raimundas ALEKNA",
+      "candidateId": "raimundas-alekna",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25382/Kandidato25382Anketa.html",
+      "vrkCandidateId": "25382",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Naglis PUTEIKIS",
+      "candidateId": "naglis-puteikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25384/Kandidato25384Anketa.html",
+      "vrkCandidateId": "25384",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 14
+      }
+    },
+    {
+      "candidateName": "Andrius TUČKUS",
+      "candidateId": "andrius-tuckus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25385/Kandidato25385Anketa.html",
+      "vrkCandidateId": "25385",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 15
+      }
+    },
+    {
+      "candidateName": "Aušrys MACIJAUSKAS",
+      "candidateId": "ausrys-macijauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25386/Kandidato25386Anketa.html",
+      "vrkCandidateId": "25386",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 16
+      }
+    },
+    {
+      "candidateName": "Ričardas GARUOLIS",
+      "candidateId": "ricardas-garuolis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25387/Kandidato25387Anketa.html",
+      "vrkCandidateId": "25387",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 17
+      }
+    },
+    {
+      "candidateName": "Petras MUSTEIKIS",
+      "candidateId": "petras-musteikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25388/Kandidato25388Anketa.html",
+      "vrkCandidateId": "25388",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 18
+      }
+    },
+    {
+      "candidateName": "Rūta RUTKELYTĖ",
+      "candidateId": "ruta-rutkelyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25389/Kandidato25389Anketa.html",
+      "vrkCandidateId": "25389",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 19
+      }
+    },
+    {
+      "candidateName": "Liudas MAŽYLIS",
+      "candidateId": "liudas-mazylis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25391/Kandidato25391Anketa.html",
+      "vrkCandidateId": "25391",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 20
+      }
+    },
+    {
+      "candidateName": "Audrius SKAISTYS",
+      "candidateId": "audrius-skaistys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25392/Kandidato25392Anketa.html",
+      "vrkCandidateId": "25392",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 21
+      }
+    },
+    {
+      "candidateName": "Nerijus ČAPAS",
+      "candidateId": "nerijus-capas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25393/Kandidato25393Anketa.html",
+      "vrkCandidateId": "25393",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 22
+      }
+    },
+    {
+      "candidateName": "Vesta RATKEVIČIŪTĖ",
+      "candidateId": "vesta-ratkeviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25394/Kandidato25394Anketa.html",
+      "vrkCandidateId": "25394",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 23
+      }
+    },
+    {
+      "candidateName": "Dainius VARNAS",
+      "candidateId": "dainius-varnas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25395/Kandidato25395Anketa.html",
+      "vrkCandidateId": "25395",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "sarasoNumeris": 11,
+        "sarasoId": "3565",
+        "numerisSarase": 24
+      }
+    },
+    {
+      "candidateName": "Viktor USPASKICH",
+      "candidateId": "viktor-uspaskich",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25574/Kandidato25574Anketa.html",
+      "vrkCandidateId": "25574",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Šarūnas BIRUTIS",
+      "candidateId": "sarunas-birutis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25575/Kandidato25575Anketa.html",
+      "vrkCandidateId": "25575",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Kęstutis DAUKŠYS",
+      "candidateId": "kestutis-dauksys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25576/Kandidato25576Anketa.html",
+      "vrkCandidateId": "25576",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Vydas GEDVILAS",
+      "candidateId": "vydas-gedvilas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25577/Kandidato25577Anketa.html",
+      "vrkCandidateId": "25577",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Justina VITKAUSKAITĖ",
+      "candidateId": "justina-vitkauskaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25578/Kandidato25578Anketa.html",
+      "vrkCandidateId": "25578",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Valentinas BUKAUSKAS",
+      "candidateId": "valentinas-bukauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25579/Kandidato25579Anketa.html",
+      "vrkCandidateId": "25579",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Jonas PINSKUS",
+      "candidateId": "jonas-pinskus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25580/Kandidato25580Anketa.html",
+      "vrkCandidateId": "25580",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Manfredas ŽYMANTAS",
+      "candidateId": "manfredas-zymantas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25581/Kandidato25581Anketa.html",
+      "vrkCandidateId": "25581",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Etela KARPICKIENĖ",
+      "candidateId": "etela-karpickiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25582/Kandidato25582Anketa.html",
+      "vrkCandidateId": "25582",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Saulius GIRDAUSKAS",
+      "candidateId": "saulius-girdauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25583/Kandidato25583Anketa.html",
+      "vrkCandidateId": "25583",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Jadvyga ZINKEVIČIŪTĖ",
+      "candidateId": "jadvyga-zinkeviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25584/Kandidato25584Anketa.html",
+      "vrkCandidateId": "25584",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Vaida GIRAITYTĖ",
+      "candidateId": "vaida-giraityte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25585/Kandidato25585Anketa.html",
+      "vrkCandidateId": "25585",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 12
+      }
+    },
+    {
+      "candidateName": "Vadimas BORISOVAS",
+      "candidateId": "vadimas-borisovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25586/Kandidato25586Anketa.html",
+      "vrkCandidateId": "25586",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Ričardas SARGŪNAS",
+      "candidateId": "ricardas-sargunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25587/Kandidato25587Anketa.html",
+      "vrkCandidateId": "25587",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 14
+      }
+    },
+    {
+      "candidateName": "Vilma STASKEVIČIENĖ",
+      "candidateId": "vilma-staskeviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25588/Kandidato25588Anketa.html",
+      "vrkCandidateId": "25588",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 15
+      }
+    },
+    {
+      "candidateName": "Vida JAKIŪNAITĖ",
+      "candidateId": "vida-jakiunaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25589/Kandidato25589Anketa.html",
+      "vrkCandidateId": "25589",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 16
+      }
+    },
+    {
+      "candidateName": "Odeta ŽERLAUSKIENĖ",
+      "candidateId": "odeta-zerlauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25590/Kandidato25590Anketa.html",
+      "vrkCandidateId": "25590",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 17
+      }
+    },
+    {
+      "candidateName": "Algimanta PABEDINSKIENĖ",
+      "candidateId": "algimanta-pabedinskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25591/Kandidato25591Anketa.html",
+      "vrkCandidateId": "25591",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 18
+      }
+    },
+    {
+      "candidateName": "Alfonsas PETRAUSKAS",
+      "candidateId": "alfonsas-petrauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25592/Kandidato25592Anketa.html",
+      "vrkCandidateId": "25592",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 19
+      }
+    },
+    {
+      "candidateName": "Grinvydas BUTRIMAS",
+      "candidateId": "grinvydas-butrimas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25593/Kandidato25593Anketa.html",
+      "vrkCandidateId": "25593",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 20
+      }
+    },
+    {
+      "candidateName": "Galina KUZMIENĖ",
+      "candidateId": "galina-kuzmiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25594/Kandidato25594Anketa.html",
+      "vrkCandidateId": "25594",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Darbo partija",
+        "sarasoNumeris": 12,
+        "sarasoId": "3566",
+        "numerisSarase": 21
+      }
+    },
+    {
+      "candidateName": "Jonas VIESULAS",
+      "candidateId": "jonas-viesulas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25565/Kandidato25565Anketa.html",
+      "vrkCandidateId": "25565",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautinė partija LIETUVOS KELIAS",
+        "sarasoNumeris": 13,
+        "sarasoId": "3570",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Algimantas BUDA",
+      "candidateId": "algimantas-buda",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25566/Kandidato25566Anketa.html",
+      "vrkCandidateId": "25566",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautinė partija LIETUVOS KELIAS",
+        "sarasoNumeris": 13,
+        "sarasoId": "3570",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Lilijana ASTRA",
+      "candidateId": "lilijana-astra",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25567/Kandidato25567Anketa.html",
+      "vrkCandidateId": "25567",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautinė partija LIETUVOS KELIAS",
+        "sarasoNumeris": 13,
+        "sarasoId": "3570",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Gediminas AKELAITIS",
+      "candidateId": "gediminas-akelaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25568/Kandidato25568Anketa.html",
+      "vrkCandidateId": "25568",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautinė partija LIETUVOS KELIAS",
+        "sarasoNumeris": 13,
+        "sarasoId": "3570",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Stanislovas GUŠČIUS",
+      "candidateId": "stanislovas-guscius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25569/Kandidato25569Anketa.html",
+      "vrkCandidateId": "25569",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautinė partija LIETUVOS KELIAS",
+        "sarasoNumeris": 13,
+        "sarasoId": "3570",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Ramunė ŠVEDAITĖ",
+      "candidateId": "ramune-svedaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25570/Kandidato25570Anketa.html",
+      "vrkCandidateId": "25570",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautinė partija LIETUVOS KELIAS",
+        "sarasoNumeris": 13,
+        "sarasoId": "3570",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Rimvydas BUROKAS",
+      "candidateId": "rimvydas-burokas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25571/Kandidato25571Anketa.html",
+      "vrkCandidateId": "25571",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautinė partija LIETUVOS KELIAS",
+        "sarasoNumeris": 13,
+        "sarasoId": "3570",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Jūratė TARNAUSKAITĖ",
+      "candidateId": "jurate-tarnauskaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25572/Kandidato25572Anketa.html",
+      "vrkCandidateId": "25572",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautinė partija LIETUVOS KELIAS",
+        "sarasoNumeris": 13,
+        "sarasoId": "3570",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Algirdas TALUTIS",
+      "candidateId": "algirdas-talutis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25573/Kandidato25573Anketa.html",
+      "vrkCandidateId": "25573",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Tautinė partija LIETUVOS KELIAS",
+        "sarasoNumeris": 13,
+        "sarasoId": "3570",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Artūras ZUOKAS",
+      "candidateId": "arturas-zuokas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25414/Kandidato25414Anketa.html",
+      "vrkCandidateId": "25414",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Arminas LYDEKA",
+      "candidateId": "arminas-lydeka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25415/Kandidato25415Anketa.html",
+      "vrkCandidateId": "25415",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Regimantas ČIUPAILA",
+      "candidateId": "regimantas-ciupaila",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25421/Kandidato25421Anketa.html",
+      "vrkCandidateId": "25421",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Benas Renatas BALTUSIS",
+      "candidateId": "benas-renatas-baltusis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25422/Kandidato25422Anketa.html",
+      "vrkCandidateId": "25422",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Klemensas RIMŠELIS",
+      "candidateId": "klemensas-rimselis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25423/Kandidato25423Anketa.html",
+      "vrkCandidateId": "25423",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Dalia ŠTRAUPAITĖ",
+      "candidateId": "dalia-straupaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25424/Kandidato25424Anketa.html",
+      "vrkCandidateId": "25424",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Jonas ČEKUOLIS",
+      "candidateId": "jonas-cekuolis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25425/Kandidato25425Anketa.html",
+      "vrkCandidateId": "25425",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Jonas JUČAS",
+      "candidateId": "jonas-jucas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25426/Kandidato25426Anketa.html",
+      "vrkCandidateId": "25426",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Irena RIČKUVIENĖ",
+      "candidateId": "irena-rickuviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25427/Kandidato25427Anketa.html",
+      "vrkCandidateId": "25427",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Saulius BUDINAS",
+      "candidateId": "saulius-budinas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25428/Kandidato25428Anketa.html",
+      "vrkCandidateId": "25428",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Saulius LAPĖNAS",
+      "candidateId": "saulius-lapenas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25429/Kandidato25429Anketa.html",
+      "vrkCandidateId": "25429",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Vitas MAČIULIS",
+      "candidateId": "vitas-maciulis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25430/Kandidato25430Anketa.html",
+      "vrkCandidateId": "25430",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 12
+      }
+    },
+    {
+      "candidateName": "Gintaras SODEIKA",
+      "candidateId": "gintaras-sodeika",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25431/Kandidato25431Anketa.html",
+      "vrkCandidateId": "25431",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Žilvinas ŠILGALIS",
+      "candidateId": "zilvinas-silgalis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25432/Kandidato25432Anketa.html",
+      "vrkCandidateId": "25432",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 14
+      }
+    },
+    {
+      "candidateName": "Saulius PAUKŠTYS",
+      "candidateId": "saulius-paukstys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25433/Kandidato25433Anketa.html",
+      "vrkCandidateId": "25433",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 15
+      }
+    },
+    {
+      "candidateName": "Kazys PAULIKAS",
+      "candidateId": "kazys-paulikas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25434/Kandidato25434Anketa.html",
+      "vrkCandidateId": "25434",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 16
+      }
+    },
+    {
+      "candidateName": "Miroslavas MONKEVIČIUS",
+      "candidateId": "miroslavas-monkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25435/Kandidato25435Anketa.html",
+      "vrkCandidateId": "25435",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 17
+      }
+    },
+    {
+      "candidateName": "Artūras LAKTIONKINAS",
+      "candidateId": "arturas-laktionkinas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25436/Kandidato25436Anketa.html",
+      "vrkCandidateId": "25436",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 18
+      }
+    },
+    {
+      "candidateName": "Jonas LIESYS",
+      "candidateId": "jonas-liesys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25437/Kandidato25437Anketa.html",
+      "vrkCandidateId": "25437",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 19
+      }
+    },
+    {
+      "candidateName": "Artūras MELIANAS",
+      "candidateId": "arturas-melianas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25438/Kandidato25438Anketa.html",
+      "vrkCandidateId": "25438",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 20
+      }
+    },
+    {
+      "candidateName": "Vytautas BOGUŠIS",
+      "candidateId": "vytautas-bogusis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25439/Kandidato25439Anketa.html",
+      "vrkCandidateId": "25439",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 21
+      }
+    },
+    {
+      "candidateName": "Raimundas PALAITIS",
+      "candidateId": "raimundas-palaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25440/Kandidato25440Anketa.html",
+      "vrkCandidateId": "25440",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 22
+      }
+    },
+    {
+      "candidateName": "Algis ČAPLIKAS",
+      "candidateId": "algis-caplikas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25441/Kandidato25441Anketa.html",
+      "vrkCandidateId": "25441",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 23
+      }
+    },
+    {
+      "candidateName": "Raimondas ŠUKYS",
+      "candidateId": "raimondas-sukys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25442/Kandidato25442Anketa.html",
+      "vrkCandidateId": "25442",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Liberalų ir centro sąjunga",
+        "sarasoNumeris": 14,
+        "sarasoId": "3560",
+        "numerisSarase": 24
+      }
+    },
+    {
+      "candidateName": "Gintaras DIDŽIOKAS",
+      "candidateId": "gintaras-didziokas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25528/Kandidato25528Anketa.html",
+      "vrkCandidateId": "25528",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 1
+      }
+    },
+    {
+      "candidateName": "Bronis ROPĖ",
+      "candidateId": "bronis-rope",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25529/Kandidato25529Anketa.html",
+      "vrkCandidateId": "25529",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 2
+      }
+    },
+    {
+      "candidateName": "Juozas BERTAŠIUS",
+      "candidateId": "juozas-bertasius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25530/Kandidato25530Anketa.html",
+      "vrkCandidateId": "25530",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 3
+      }
+    },
+    {
+      "candidateName": "Vidmantas KANOPA",
+      "candidateId": "vidmantas-kanopa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25531/Kandidato25531Anketa.html",
+      "vrkCandidateId": "25531",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 4
+      }
+    },
+    {
+      "candidateName": "Jonas JARUTIS",
+      "candidateId": "jonas-jarutis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25532/Kandidato25532Anketa.html",
+      "vrkCandidateId": "25532",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 5
+      }
+    },
+    {
+      "candidateName": "Aldona STAPONKIENĖ",
+      "candidateId": "aldona-staponkiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25533/Kandidato25533Anketa.html",
+      "vrkCandidateId": "25533",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 6
+      }
+    },
+    {
+      "candidateName": "Virginija APANAVIČIENĖ",
+      "candidateId": "virginija-apanaviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25534/Kandidato25534Anketa.html",
+      "vrkCandidateId": "25534",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 7
+      }
+    },
+    {
+      "candidateName": "Zenonas BUIVYDAS",
+      "candidateId": "zenonas-buivydas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25535/Kandidato25535Anketa.html",
+      "vrkCandidateId": "25535",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 8
+      }
+    },
+    {
+      "candidateName": "Jonas POVILAITIS",
+      "candidateId": "jonas-povilaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25536/Kandidato25536Anketa.html",
+      "vrkCandidateId": "25536",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 9
+      }
+    },
+    {
+      "candidateName": "Arūnas GRUBLIAUSKIS",
+      "candidateId": "arunas-grubliauskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25537/Kandidato25537Anketa.html",
+      "vrkCandidateId": "25537",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 10
+      }
+    },
+    {
+      "candidateName": "Bronislovas LIUTKUS",
+      "candidateId": "bronislovas-liutkus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25538/Kandidato25538Anketa.html",
+      "vrkCandidateId": "25538",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 11
+      }
+    },
+    {
+      "candidateName": "Rimantė MISIŪNIENĖ",
+      "candidateId": "rimante-misiuniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25539/Kandidato25539Anketa.html",
+      "vrkCandidateId": "25539",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 12
+      }
+    },
+    {
+      "candidateName": "Vaidotas BUTKEVIČIUS",
+      "candidateId": "vaidotas-butkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25543/Kandidato25543Anketa.html",
+      "vrkCandidateId": "25543",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 13
+      }
+    },
+    {
+      "candidateName": "Eugenijus JASIULIS",
+      "candidateId": "eugenijus-jasiulis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25544/Kandidato25544Anketa.html",
+      "vrkCandidateId": "25544",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 14
+      }
+    },
+    {
+      "candidateName": "Mindaugas GRITĖNAS",
+      "candidateId": "mindaugas-gritenas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25545/Kandidato25545Anketa.html",
+      "vrkCandidateId": "25545",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 15
+      }
+    },
+    {
+      "candidateName": "Virgilijus POZINGIS",
+      "candidateId": "virgilijus-pozingis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25546/Kandidato25546Anketa.html",
+      "vrkCandidateId": "25546",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 16
+      }
+    },
+    {
+      "candidateName": "Danguolė TAUTVYDIENĖ",
+      "candidateId": "danguole-tautvydiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25547/Kandidato25547Anketa.html",
+      "vrkCandidateId": "25547",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 17
+      }
+    },
+    {
+      "candidateName": "Algirdas LEKAVECKAS",
+      "candidateId": "algirdas-lekaveckas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25548/Kandidato25548Anketa.html",
+      "vrkCandidateId": "25548",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 18
+      }
+    },
+    {
+      "candidateName": "Vidmantas PALIULIS",
+      "candidateId": "vidmantas-paliulis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25549/Kandidato25549Anketa.html",
+      "vrkCandidateId": "25549",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 19
+      }
+    },
+    {
+      "candidateName": "Apolinaras STONKUS",
+      "candidateId": "apolinaras-stonkus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25550/Kandidato25550Anketa.html",
+      "vrkCandidateId": "25550",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 20
+      }
+    },
+    {
+      "candidateName": "Gintaris PETRĖNAS",
+      "candidateId": "gintaris-petrenas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25551/Kandidato25551Anketa.html",
+      "vrkCandidateId": "25551",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 21
+      }
+    },
+    {
+      "candidateName": "Bernardas ŠATKOVSKIS",
+      "candidateId": "bernardas-satkovskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/404_lt/Kandidatai/Kandidatas25552/Kandidato25552Anketa.html",
+      "vrkCandidateId": "25552",
+      "roles": [
+        "daugiamandate"
+      ],
+      "daugiamandateCandidacy": {
+        "sarasas": "Lietuvos valstiečių liaudininkų sąjunga",
+        "sarasoNumeris": 15,
+        "sarasoId": "3557",
+        "numerisSarase": 22
+      }
+    }
+  ],
+  "skipped": []
+}

@@ -628,6 +628,71 @@ class TriStateElectedTests(unittest.TestCase):
         self.assertIn("rezultatų duomenų nėra", SOURCE)
 
 
+class DualOfficeTests(unittest.TestCase):
+    """A council-and-mayor candidacy is two offices with two outcomes (issue
+    #140). The page used to read one code, "m", and one flag, "w", so the
+    228 + 220 council winners of 2019/2023 who lost the mayoralty matched
+    "Meras" + "tik išrinkti" and were absent from "Tarybos narys"."""
+
+    DUAL = {"id": "2019", "r": "tm", "w": True, "wm": False, "wt": True}
+    MAYOR_ONLY = {"id": "2019", "r": "m", "w": False}
+    COUNCIL = {"id": "2019", "w": True}
+    SEIMAS = {"id": "2016-seimo", "w": True}
+
+    def _run(self, expression):
+        helpers = "\n".join(
+            re.search(rf"^function {name}\(.*?^}}", SOURCE, re.S | re.M).group(0)
+            for name in ("rolesOf", "electedAs", "roleLabel", "electedLabel", "candidacyMatches")
+        )
+        consts = "\n".join(
+            re.search(pattern, SOURCE, re.S | re.M).group(0)
+            for pattern in (r"^const ROLE_LABELS = new Map\(\[.*?^\]\);", r"^const ROLE_BY_KIND = .*?;$")
+        )
+        script = (
+            'const ELECTIONS = new Map([["2019", {kind: "savivaldybiu"}], ["2016-seimo", {kind: "seimo"}]]);\n'
+            "function inElection() { return true; }\nfunction inParty() { return true; }\n"
+            f"{consts}\n{helpers}\n"
+            f"const DUAL = {json.dumps(self.DUAL)}, MAYOR_ONLY = {json.dumps(self.MAYOR_ONLY)}, "
+            f"COUNCIL = {json.dumps(self.COUNCIL)}, SEIMAS = {json.dumps(self.SEIMAS)};\n"
+            f"console.log(JSON.stringify({expression}));"
+        )
+        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        return json.loads(out.stdout)
+
+    @unittest.skipUnless(NODE, "node not installed")
+    def test_the_roles_are_read_off_the_code_and_the_kind(self):
+        self.assertEqual(self._run("[rolesOf(DUAL), rolesOf(MAYOR_ONLY), rolesOf(COUNCIL), rolesOf(SEIMAS)]"),
+                         [["t", "m"], ["m"], ["t"], ["s"]])
+
+    @unittest.skipUnless(NODE, "node not installed")
+    def test_a_dual_candidacy_matches_both_office_filters(self):
+        f = lambda role, won="": f'{{election: "", party: "", municipality: "", role: "{role}", won: "{won}", any: true}}'
+        self.assertEqual(self._run(f"[candidacyMatches(DUAL, {f('t')}), candidacyMatches(DUAL, {f('m')}), candidacyMatches(MAYOR_ONLY, {f('t')})]"),
+                         [True, True, False])
+
+    @unittest.skipUnless(NODE, "node not installed")
+    def test_the_outcome_follows_the_office_chosen(self):
+        f = lambda role, won: f'{{election: "", party: "", municipality: "", role: "{role}", won: "{won}", any: true}}'
+        self.assertEqual(
+            self._run(
+                f"[candidacyMatches(DUAL, {f('m', 'won')}), candidacyMatches(DUAL, {f('m', 'lost')}),"
+                f" candidacyMatches(DUAL, {f('t', 'won')}), candidacyMatches(DUAL, {f('', 'won')})]"
+            ),
+            [False, True, True, True],
+        )
+
+    @unittest.skipUnless(NODE, "node not installed")
+    def test_the_labels_name_both_offices_and_the_one_won(self):
+        self.assertEqual(self._run("[roleLabel(DUAL), electedLabel(DUAL), roleLabel(SEIMAS), electedLabel(MAYOR_ONLY)]"),
+                         ["Tarybos narys / Meras", "Tarybos narys", "Seimo narys", ""])
+
+    def test_the_csv_exports_the_office_won(self):
+        self.assertIn('"isrinktas", "isrinktas_kaip"', SOURCE)
+        self.assertIn("electedLabel(e),", SOURCE)
+
+
 class PhotoShapeTests(unittest.TestCase):
     """25,332 records carry their portrait as VRK's own URL — the only shape
     29% of persons have — and the page used to refuse it, show a photo for
@@ -670,7 +735,8 @@ class ArchiveComparisonRowTests(unittest.TestCase):
         }
     }
 
-    def _cells(self, record):
+    def _cells(self, record, election=None):
+        election = election or self.ELECTION
         concept_map = json.loads(
             (REPO_ROOT / "docs" / "concept-map.json").read_text(encoding="utf-8")
         )
@@ -706,7 +772,7 @@ class ArchiveComparisonRowTests(unittest.TestCase):
             f"const r = {json.dumps(self.RECORD if record is None else record)};\n"
             "const out = {};\n"
             "for (const row of CONCEPT_ROWS) {\n"
-            f"  const {{ value }} = resolveRow(row, r, {json.dumps(self.ELECTION)});\n"
+            f"  const {{ value }} = resolveRow(row, r, {json.dumps(election)});\n"
             "  const c = row.format ? row.format(value, r) : compactValue(value);\n"
             "  out[rowLabel(row)] = c == null ? null : c;\n"
             "}\n"
@@ -736,6 +802,37 @@ class ArchiveComparisonRowTests(unittest.TestCase):
             }],
         }
         self.assertEqual(self._cells(record)["Išsilavinimas"], "Aukštasis")
+
+    @unittest.skipUnless(NODE, "node not installed")
+    def test_the_entry_array_eras_render_their_education(self):
+        # The 43 elections mapped through `….issilavinimas.irasai` handed the
+        # cell an array and rendered an em dash for every one of their
+        # 69,726 educated candidacies (issue #131): the 2020-era biography
+        # shape and the 2016-era anketa shape, through the real map.
+        entry = {"issilavinimas": "Aukštasis universitetinis",
+                 "mokymo-istaigos-pavadinimas": "Vilniaus universitetas",
+                 "specialybe": "teisė", "baigimo-metai": "1996"}
+        biography = {"normalized": {"biografija": {"issilavinimas": {"aprasas": None, "irasai": [entry]}}}}
+        self.assertEqual(
+            self._cells(biography, "2020-seimo")["Išsilavinimas"],
+            "Aukštasis universitetinis — Vilniaus universitetas, teisė (1996)",
+        )
+        anketa = {"normalized": {"anketa": {"issilavinimas": {"aprasas": None, "irasai": [entry]}}}}
+        self.assertEqual(
+            self._cells(anketa, "2016-seimo")["Išsilavinimas"],
+            "Aukštasis universitetinis — Vilniaus universitetas, teisė (1996)",
+        )
+
+    @unittest.skipUnless(NODE, "node not installed")
+    def test_the_municipality_row_reads_the_2019_dict_and_the_mayoral_card(self):
+        # 27,523 candidacies carried kandidatavimas.savivaldybe or the
+        # mayoral card's savivaldybe and rendered "this election never
+        # published this field" (issue #131).
+        record = {"normalized": {}, "kandidatavimas": {"savivaldybe": {"id": "19972", "number": 15, "name": "Kauno miesto"}}}
+        self.assertEqual(self._cells(record, "2019-kovo-3-savivaldybiu-tarybu")["Savivaldybė"], "Kauno miesto")
+        self.assertEqual(self._cells(record, "2023-kovo-5-savivaldybiu-tarybu-ir-meru")["Savivaldybė"], "Kauno miesto")
+        mayoral = {"normalized": {"profilis": {"kita": {"savivaldybe": {"pavadinimas": "Savivaldybė", "reiksme": "Jonavos rajono (10)", "nuorodos": []}}}}}
+        self.assertEqual(self._cells(mayoral, "2017-balandzio-23-meru")["Savivaldybė"], "Jonavos rajono (10)")
 
     @unittest.skipUnless(NODE, "node not installed")
     def test_a_label_the_card_omits_still_reads_as_nothing(self):

@@ -1,0 +1,54 @@
+{
+  "electionId": "2021-balandzio-11-radviliskio-mero",
+  "sourceUrl": "https://www.vrk.lt/kandidatai-i-savivaldybes-tarybos-narius-merus-2021-radviliskio-mero?srcUrl=/rinkimai/1144/rnk1464/kandidatai/savKandidataiMerai.html",
+  "generatedAt": "2026-08-15T21:34:07+00:00",
+  "stats": {
+    "rows": 8,
+    "extracted": 7,
+    "skipped": 1,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Jurgis BAUBLYS",
+      "candidateId": "jurgis-baublys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasAnketa_rkndId-2420388.html"
+    },
+    {
+      "candidateName": "Aurimas GAIDŽIŪNAS",
+      "candidateId": "aurimas-gaidziunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasAnketa_rkndId-2420392.html"
+    },
+    {
+      "candidateName": "Gediminas LIPNEVIČIUS",
+      "candidateId": "gediminas-lipnevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasAnketa_rkndId-2420386.html"
+    },
+    {
+      "candidateName": "Jolanta MARGAITIENĖ",
+      "candidateId": "jolanta-margaitiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasAnketa_rkndId-2420391.html"
+    },
+    {
+      "candidateName": "Kazimieras RAČKAUSKIS",
+      "candidateId": "kazimieras-rackauskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasAnketa_rkndId-2420394.html"
+    },
+    {
+      "candidateName": "Mantas REUTAS",
+      "candidateId": "mantas-reutas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasAnketa_rkndId-2420387.html"
+    },
+    {
+      "candidateName": "Vytautas SIMELIS",
+      "candidateId": "vytautas-simelis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1144/rnk1464/kandidatai/savKandidatasAnketa_rkndId-2420390.html"
+    }
+  ],
+  "skipped": [
+    {
+      "rowIndex": 1,
+      "reason": "no-cells"
+    }
+  ]
+}

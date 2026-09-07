@@ -1,0 +1,4940 @@
+{
+  "electionId": "2015-birzelio-7-pakartotiniai-sirvintos-trakai",
+  "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Apygardos/Apygarda7921/KandidataiApygardos7921.html",
+  "districtUrls": [
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Apygardos/Apygarda7921/KandidataiApygardos7921.html",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Apygardos/Apygarda7911/KandidataiApygardos7911.html"
+  ],
+  "generatedAt": "2026-08-19T21:48:23+00:00",
+  "stats": {
+    "rows": 334,
+    "extracted": 327,
+    "skipped": 0,
+    "duplicateCandidateIds": 1,
+    "partyLists": 9,
+    "mayoralCandidates": 15,
+    "councilCandidates": 319,
+    "dualCandidates": 7,
+    "markerJoinMismatch": 1
+  },
+  "entries": [
+    {
+      "candidateName": "Elena Davidavičienė",
+      "candidateId": "elena-davidaviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87566/Kandidato87566Anketa.html",
+      "vrkCandidateId": "87566",
+      "municipality": "Širvintų rajono savivaldybė",
+      "roles": [
+        "meras"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Lietuvos valstiečių ir žaliųjų sąjunga"
+      }
+    },
+    {
+      "candidateName": "Andrius Jozonis",
+      "candidateId": "andrius-jozonis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87564/Kandidato87564Anketa.html",
+      "vrkCandidateId": "87564",
+      "municipality": "Širvintų rajono savivaldybė",
+      "roles": [
+        "meras"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Lietuvos socialdemokratų partija"
+      }
+    },
+    {
+      "candidateName": "Živilė Pinskuvienė",
+      "candidateId": "zivile-pinskuviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87565/Kandidato87565Anketa.html",
+      "vrkCandidateId": "87565",
+      "municipality": "Širvintų rajono savivaldybė",
+      "roles": [
+        "meras"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Darbo partija"
+      }
+    },
+    {
+      "candidateName": "Jonas Purvaneckas",
+      "candidateId": "jonas-purvaneckas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87563/Kandidato87563Anketa.html",
+      "vrkCandidateId": "87563",
+      "municipality": "Širvintų rajono savivaldybė",
+      "roles": [
+        "meras"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Lietuvos laisvės sąjunga (liberalai)"
+      }
+    },
+    {
+      "candidateName": "Audrius Skaistys",
+      "candidateId": "audrius-skaistys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87652/Kandidato87652Anketa.html",
+      "vrkCandidateId": "87652",
+      "municipality": "Širvintų rajono savivaldybė",
+      "roles": [
+        "meras"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Tėvynės sąjunga - Lietuvos krikščionys demokratai"
+      }
+    },
+    {
+      "candidateName": "Rita Tamašunienė",
+      "candidateId": "rita-tamasuniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87562/Kandidato87562Anketa.html",
+      "vrkCandidateId": "87562",
+      "municipality": "Širvintų rajono savivaldybė",
+      "roles": [
+        "meras"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Lietuvos lenkų rinkimų akcija, Politinė partija Rusų aljansas"
+      }
+    },
+    {
+      "candidateName": "Darius Valkauskas",
+      "candidateId": "darius-valkauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87567/Kandidato87567Anketa.html",
+      "vrkCandidateId": "87567",
+      "municipality": "Širvintų rajono savivaldybė",
+      "roles": [
+        "meras"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Lietuvos Respublikos liberalų sąjūdis"
+      }
+    },
+    {
+      "candidateName": "Vladyslav Kravčun",
+      "candidateId": "vladyslav-kravcun",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87627/Kandidato87627Anketa.html",
+      "vrkCandidateId": "87627",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "meras",
+        "tarybos-narys"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Lietuvos valstiečių ir žaliųjų sąjunga"
+      },
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 1
+      }
+    },
+    {
+      "candidateName": "Dangutė Mikutienė",
+      "candidateId": "dangute-mikutiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87583/Kandidato87583Anketa.html",
+      "vrkCandidateId": "87583",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "meras",
+        "tarybos-narys"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Darbo partija, Lietuvos žaliųjų partija"
+      },
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 1
+      }
+    },
+    {
+      "candidateName": "Marija Puč",
+      "candidateId": "marija-puc",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87693/Kandidato87693Anketa.html",
+      "vrkCandidateId": "87693",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "meras"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Lietuvos lenkų rinkimų akcija, Politinė partija Rusų aljansas"
+      }
+    },
+    {
+      "candidateName": "Nijolė Romaškienė",
+      "candidateId": "nijole-romaskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87653/Kandidato87653Anketa.html",
+      "vrkCandidateId": "87653",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "meras",
+        "tarybos-narys"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Tėvynės sąjunga - Lietuvos krikščionys demokratai"
+      },
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 1
+      }
+    },
+    {
+      "candidateName": "Edita Rudelienė",
+      "candidateId": "edita-rudeliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87759/Kandidato87759Anketa.html",
+      "vrkCandidateId": "87759",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "meras",
+        "tarybos-narys"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Lietuvos Respublikos liberalų sąjūdis"
+      },
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 1
+      }
+    },
+    {
+      "candidateName": "Vydūnas Sadauskas",
+      "candidateId": "vydunas-sadauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87858/Kandidato87858Anketa.html",
+      "vrkCandidateId": "87858",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "meras",
+        "tarybos-narys"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Lietuvos laisvės sąjunga (liberalai)"
+      },
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 1
+      }
+    },
+    {
+      "candidateName": "Audronė Virganavičiūtė",
+      "candidateId": "audrone-virganaviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87719/Kandidato87719Anketa.html",
+      "vrkCandidateId": "87719",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "meras",
+        "tarybos-narys"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Partija Tvarka ir teisingumas"
+      },
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 1
+      }
+    },
+    {
+      "candidateName": "Vytautas Zalieckas",
+      "candidateId": "vytautas-zalieckas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87809/Kandidato87809Anketa.html",
+      "vrkCandidateId": "87809",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "meras",
+        "tarybos-narys"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Lietuvos socialdemokratų partija"
+      },
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 1
+      }
+    },
+    {
+      "candidateName": "Kęstutis Vilkauskas",
+      "candidateId": "kestutis-vilkauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87811/Kandidato87811Anketa.html",
+      "vrkCandidateId": "87811",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 2
+      }
+    },
+    {
+      "candidateName": "Asta Kandratavičienė",
+      "candidateId": "asta-kandrataviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87812/Kandidato87812Anketa.html",
+      "vrkCandidateId": "87812",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 3
+      }
+    },
+    {
+      "candidateName": "Jadvyga Dzencevičienė",
+      "candidateId": "jadvyga-dzenceviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87813/Kandidato87813Anketa.html",
+      "vrkCandidateId": "87813",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 4
+      }
+    },
+    {
+      "candidateName": "Šarūnas Ūsas",
+      "candidateId": "sarunas-usas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87814/Kandidato87814Anketa.html",
+      "vrkCandidateId": "87814",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 5
+      }
+    },
+    {
+      "candidateName": "Zenonas Matonis",
+      "candidateId": "zenonas-matonis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87815/Kandidato87815Anketa.html",
+      "vrkCandidateId": "87815",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 6
+      }
+    },
+    {
+      "candidateName": "Adelė Gedminienė",
+      "candidateId": "adele-gedminiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87816/Kandidato87816Anketa.html",
+      "vrkCandidateId": "87816",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 7
+      }
+    },
+    {
+      "candidateName": "Irena Kalkienė",
+      "candidateId": "irena-kalkiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87817/Kandidato87817Anketa.html",
+      "vrkCandidateId": "87817",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 8
+      }
+    },
+    {
+      "candidateName": "Mantas Jonelis",
+      "candidateId": "mantas-jonelis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87818/Kandidato87818Anketa.html",
+      "vrkCandidateId": "87818",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 9
+      }
+    },
+    {
+      "candidateName": "Violeta Ignatovič",
+      "candidateId": "violeta-ignatovic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87819/Kandidato87819Anketa.html",
+      "vrkCandidateId": "87819",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 10
+      }
+    },
+    {
+      "candidateName": "Albinas Zaleckas",
+      "candidateId": "albinas-zaleckas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87820/Kandidato87820Anketa.html",
+      "vrkCandidateId": "87820",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 11
+      }
+    },
+    {
+      "candidateName": "Vilija Babarskienė",
+      "candidateId": "vilija-babarskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87821/Kandidato87821Anketa.html",
+      "vrkCandidateId": "87821",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 12
+      }
+    },
+    {
+      "candidateName": "Vytautas Karnila",
+      "candidateId": "vytautas-karnila",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87822/Kandidato87822Anketa.html",
+      "vrkCandidateId": "87822",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 13
+      }
+    },
+    {
+      "candidateName": "Saulius Tumas",
+      "candidateId": "saulius-tumas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87823/Kandidato87823Anketa.html",
+      "vrkCandidateId": "87823",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 14
+      }
+    },
+    {
+      "candidateName": "Jolanta Veličkienė",
+      "candidateId": "jolanta-velickiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87824/Kandidato87824Anketa.html",
+      "vrkCandidateId": "87824",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 15
+      }
+    },
+    {
+      "candidateName": "Jonas Kazlauskas",
+      "candidateId": "jonas-kazlauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87825/Kandidato87825Anketa.html",
+      "vrkCandidateId": "87825",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 16
+      }
+    },
+    {
+      "candidateName": "Ana Gornova",
+      "candidateId": "ana-gornova",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87826/Kandidato87826Anketa.html",
+      "vrkCandidateId": "87826",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 17
+      }
+    },
+    {
+      "candidateName": "Sergiejus Stankevičius",
+      "candidateId": "sergiejus-stankevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87827/Kandidato87827Anketa.html",
+      "vrkCandidateId": "87827",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 18
+      }
+    },
+    {
+      "candidateName": "Vaitiekus Naruševičius",
+      "candidateId": "vaitiekus-narusevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87828/Kandidato87828Anketa.html",
+      "vrkCandidateId": "87828",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 19
+      }
+    },
+    {
+      "candidateName": "Vaicekas Daunaravičius",
+      "candidateId": "vaicekas-daunaravicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87829/Kandidato87829Anketa.html",
+      "vrkCandidateId": "87829",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 20
+      }
+    },
+    {
+      "candidateName": "Juozas Norinkevičius",
+      "candidateId": "juozas-norinkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87830/Kandidato87830Anketa.html",
+      "vrkCandidateId": "87830",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 21
+      }
+    },
+    {
+      "candidateName": "Irena Stankevičienė",
+      "candidateId": "irena-stankeviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87831/Kandidato87831Anketa.html",
+      "vrkCandidateId": "87831",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 22
+      }
+    },
+    {
+      "candidateName": "Jolanta Abucevičienė",
+      "candidateId": "jolanta-abuceviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87832/Kandidato87832Anketa.html",
+      "vrkCandidateId": "87832",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 23
+      }
+    },
+    {
+      "candidateName": "Romualdas Sabaliauskas",
+      "candidateId": "romualdas-sabaliauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87833/Kandidato87833Anketa.html",
+      "vrkCandidateId": "87833",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 24
+      }
+    },
+    {
+      "candidateName": "Virginija Semenkovienė",
+      "candidateId": "virginija-semenkoviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87834/Kandidato87834Anketa.html",
+      "vrkCandidateId": "87834",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 25
+      }
+    },
+    {
+      "candidateName": "Rima Kaliukevičiūtė",
+      "candidateId": "rima-kaliukeviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87835/Kandidato87835Anketa.html",
+      "vrkCandidateId": "87835",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 26
+      }
+    },
+    {
+      "candidateName": "Stanislava Doškuvienė",
+      "candidateId": "stanislava-doskuviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87836/Kandidato87836Anketa.html",
+      "vrkCandidateId": "87836",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 27
+      }
+    },
+    {
+      "candidateName": "Kęstutis Sakalauskas",
+      "candidateId": "kestutis-sakalauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87837/Kandidato87837Anketa.html",
+      "vrkCandidateId": "87837",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 28
+      }
+    },
+    {
+      "candidateName": "Jelena Seliavienė",
+      "candidateId": "jelena-seliaviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87838/Kandidato87838Anketa.html",
+      "vrkCandidateId": "87838",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 29
+      }
+    },
+    {
+      "candidateName": "Loreta Gliaudelienė",
+      "candidateId": "loreta-gliaudeliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87839/Kandidato87839Anketa.html",
+      "vrkCandidateId": "87839",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 30
+      }
+    },
+    {
+      "candidateName": "Vytas Okunevičius",
+      "candidateId": "vytas-okunevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87840/Kandidato87840Anketa.html",
+      "vrkCandidateId": "87840",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 31
+      }
+    },
+    {
+      "candidateName": "Andrius Banaitis",
+      "candidateId": "andrius-banaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87841/Kandidato87841Anketa.html",
+      "vrkCandidateId": "87841",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 32
+      }
+    },
+    {
+      "candidateName": "Levan Sepashvili",
+      "candidateId": "levan-sepashvili",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87842/Kandidato87842Anketa.html",
+      "vrkCandidateId": "87842",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 33
+      }
+    },
+    {
+      "candidateName": "Algimantas Paliutis",
+      "candidateId": "algimantas-paliutis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87843/Kandidato87843Anketa.html",
+      "vrkCandidateId": "87843",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 34
+      }
+    },
+    {
+      "candidateName": "Robertas Šiuška",
+      "candidateId": "robertas-siuska",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87845/Kandidato87845Anketa.html",
+      "vrkCandidateId": "87845",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 36
+      }
+    },
+    {
+      "candidateName": "Loreta Stankevič",
+      "candidateId": "loreta-stankevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87847/Kandidato87847Anketa.html",
+      "vrkCandidateId": "87847",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 38
+      }
+    },
+    {
+      "candidateName": "Virgilijus Giedrys",
+      "candidateId": "virgilijus-giedrys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87848/Kandidato87848Anketa.html",
+      "vrkCandidateId": "87848",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 39
+      }
+    },
+    {
+      "candidateName": "Eglė Jasiukevičienė",
+      "candidateId": "egle-jasiukeviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87849/Kandidato87849Anketa.html",
+      "vrkCandidateId": "87849",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 40
+      }
+    },
+    {
+      "candidateName": "Maratas Baiševas",
+      "candidateId": "maratas-baisevas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87850/Kandidato87850Anketa.html",
+      "vrkCandidateId": "87850",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 41
+      }
+    },
+    {
+      "candidateName": "Viktoras Boicovas",
+      "candidateId": "viktoras-boicovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87851/Kandidato87851Anketa.html",
+      "vrkCandidateId": "87851",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 42
+      }
+    },
+    {
+      "candidateName": "Gintaras Andriulionis",
+      "candidateId": "gintaras-andriulionis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87852/Kandidato87852Anketa.html",
+      "vrkCandidateId": "87852",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 43
+      }
+    },
+    {
+      "candidateName": "Artūras Vieta",
+      "candidateId": "arturas-vieta",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87853/Kandidato87853Anketa.html",
+      "vrkCandidateId": "87853",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 44
+      }
+    },
+    {
+      "candidateName": "Viktor Golovač",
+      "candidateId": "viktor-golovac",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87854/Kandidato87854Anketa.html",
+      "vrkCandidateId": "87854",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 45
+      }
+    },
+    {
+      "candidateName": "Edita Markėnienė",
+      "candidateId": "edita-markeniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87855/Kandidato87855Anketa.html",
+      "vrkCandidateId": "87855",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 46
+      }
+    },
+    {
+      "candidateName": "Romualdas Rudzys",
+      "candidateId": "romualdas-rudzys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87856/Kandidato87856Anketa.html",
+      "vrkCandidateId": "87856",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 47
+      }
+    },
+    {
+      "candidateName": "Jolanta Bielskienė",
+      "candidateId": "jolanta-bielskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87857/Kandidato87857Anketa.html",
+      "vrkCandidateId": "87857",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 48
+      }
+    },
+    {
+      "candidateName": "Kęstutis Blaževičius",
+      "candidateId": "kestutis-blazevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87655/Kandidato87655Anketa.html",
+      "vrkCandidateId": "87655",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 2
+      }
+    },
+    {
+      "candidateName": "Darius Bartkevičius",
+      "candidateId": "darius-bartkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87656/Kandidato87656Anketa.html",
+      "vrkCandidateId": "87656",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 3
+      }
+    },
+    {
+      "candidateName": "Indrė Jankūnaitė",
+      "candidateId": "indre-jankunaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87657/Kandidato87657Anketa.html",
+      "vrkCandidateId": "87657",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 4
+      }
+    },
+    {
+      "candidateName": "Jūratė Juknienė",
+      "candidateId": "jurate-jukniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87658/Kandidato87658Anketa.html",
+      "vrkCandidateId": "87658",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 5
+      }
+    },
+    {
+      "candidateName": "Virginijus Baranauskas",
+      "candidateId": "virginijus-baranauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87659/Kandidato87659Anketa.html",
+      "vrkCandidateId": "87659",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 6
+      }
+    },
+    {
+      "candidateName": "Vytautas Zabarauskas",
+      "candidateId": "vytautas-zabarauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87660/Kandidato87660Anketa.html",
+      "vrkCandidateId": "87660",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 7
+      }
+    },
+    {
+      "candidateName": "Nerijus Jakubauskas",
+      "candidateId": "nerijus-jakubauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87661/Kandidato87661Anketa.html",
+      "vrkCandidateId": "87661",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 8
+      }
+    },
+    {
+      "candidateName": "Aidas Kareiva",
+      "candidateId": "aidas-kareiva",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87662/Kandidato87662Anketa.html",
+      "vrkCandidateId": "87662",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 9
+      }
+    },
+    {
+      "candidateName": "Vidmantas Zagurskas",
+      "candidateId": "vidmantas-zagurskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87663/Kandidato87663Anketa.html",
+      "vrkCandidateId": "87663",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 10
+      }
+    },
+    {
+      "candidateName": "Ieva Skaistytė",
+      "candidateId": "ieva-skaistyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87664/Kandidato87664Anketa.html",
+      "vrkCandidateId": "87664",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 11
+      }
+    },
+    {
+      "candidateName": "Ramunė Simonaitytė",
+      "candidateId": "ramune-simonaityte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87665/Kandidato87665Anketa.html",
+      "vrkCandidateId": "87665",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 12
+      }
+    },
+    {
+      "candidateName": "Jonas Mikučionis",
+      "candidateId": "jonas-mikucionis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87666/Kandidato87666Anketa.html",
+      "vrkCandidateId": "87666",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 13
+      }
+    },
+    {
+      "candidateName": "Rasa Dikevičienė",
+      "candidateId": "rasa-dikeviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87667/Kandidato87667Anketa.html",
+      "vrkCandidateId": "87667",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 14
+      }
+    },
+    {
+      "candidateName": "Lina Lelekauskienė",
+      "candidateId": "lina-lelekauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87668/Kandidato87668Anketa.html",
+      "vrkCandidateId": "87668",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 15
+      }
+    },
+    {
+      "candidateName": "Nerijus Panasiukas",
+      "candidateId": "nerijus-panasiukas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87669/Kandidato87669Anketa.html",
+      "vrkCandidateId": "87669",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 16
+      }
+    },
+    {
+      "candidateName": "Jurgita Lapuchovienė",
+      "candidateId": "jurgita-lapuchoviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87670/Kandidato87670Anketa.html",
+      "vrkCandidateId": "87670",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 17
+      }
+    },
+    {
+      "candidateName": "Povilas Montvila",
+      "candidateId": "povilas-montvila",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87671/Kandidato87671Anketa.html",
+      "vrkCandidateId": "87671",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 18
+      }
+    },
+    {
+      "candidateName": "Giedrutė Stanišauskienė",
+      "candidateId": "giedrute-stanisauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87672/Kandidato87672Anketa.html",
+      "vrkCandidateId": "87672",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 19
+      }
+    },
+    {
+      "candidateName": "Rimutis Bingelis",
+      "candidateId": "rimutis-bingelis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87673/Kandidato87673Anketa.html",
+      "vrkCandidateId": "87673",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 20
+      }
+    },
+    {
+      "candidateName": "Erika Dubovikienė",
+      "candidateId": "erika-dubovikiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87674/Kandidato87674Anketa.html",
+      "vrkCandidateId": "87674",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 21
+      }
+    },
+    {
+      "candidateName": "Vydas Kasperavičius",
+      "candidateId": "vydas-kasperavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87675/Kandidato87675Anketa.html",
+      "vrkCandidateId": "87675",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 22
+      }
+    },
+    {
+      "candidateName": "Valerija Nedzveckienė",
+      "candidateId": "valerija-nedzveckiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87676/Kandidato87676Anketa.html",
+      "vrkCandidateId": "87676",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 23
+      }
+    },
+    {
+      "candidateName": "Nomeda Sindaravičienė",
+      "candidateId": "nomeda-sindaraviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87677/Kandidato87677Anketa.html",
+      "vrkCandidateId": "87677",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 24
+      }
+    },
+    {
+      "candidateName": "Kęstutis Gramba",
+      "candidateId": "kestutis-gramba",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87678/Kandidato87678Anketa.html",
+      "vrkCandidateId": "87678",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 25
+      }
+    },
+    {
+      "candidateName": "Haroldas Varnas",
+      "candidateId": "haroldas-varnas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87679/Kandidato87679Anketa.html",
+      "vrkCandidateId": "87679",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 26
+      }
+    },
+    {
+      "candidateName": "Gražina Kasperavičienė",
+      "candidateId": "grazina-kasperaviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87680/Kandidato87680Anketa.html",
+      "vrkCandidateId": "87680",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 27
+      }
+    },
+    {
+      "candidateName": "Virginija Kairienė",
+      "candidateId": "virginija-kairiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87681/Kandidato87681Anketa.html",
+      "vrkCandidateId": "87681",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 28
+      }
+    },
+    {
+      "candidateName": "Ramunė Karlonaitė-Turčinavičė",
+      "candidateId": "ramune-karlonaite-turcinavice",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87682/Kandidato87682Anketa.html",
+      "vrkCandidateId": "87682",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 29
+      }
+    },
+    {
+      "candidateName": "Edvardas Makšeckas",
+      "candidateId": "edvardas-makseckas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87683/Kandidato87683Anketa.html",
+      "vrkCandidateId": "87683",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 30
+      }
+    },
+    {
+      "candidateName": "Regina Steponavičienė",
+      "candidateId": "regina-steponaviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87684/Kandidato87684Anketa.html",
+      "vrkCandidateId": "87684",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 31
+      }
+    },
+    {
+      "candidateName": "Arneta Tomaševič",
+      "candidateId": "arneta-tomasevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87685/Kandidato87685Anketa.html",
+      "vrkCandidateId": "87685",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 32
+      }
+    },
+    {
+      "candidateName": "Jūratė Gribovskienė",
+      "candidateId": "jurate-gribovskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87686/Kandidato87686Anketa.html",
+      "vrkCandidateId": "87686",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 33
+      }
+    },
+    {
+      "candidateName": "Loreta Pakalnienė",
+      "candidateId": "loreta-pakalniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87687/Kandidato87687Anketa.html",
+      "vrkCandidateId": "87687",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 34
+      }
+    },
+    {
+      "candidateName": "Ričardas Regimantas Kancleris",
+      "candidateId": "ricardas-regimantas-kancleris",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87688/Kandidato87688Anketa.html",
+      "vrkCandidateId": "87688",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 35
+      }
+    },
+    {
+      "candidateName": "Vytautas Skirka",
+      "candidateId": "vytautas-skirka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87689/Kandidato87689Anketa.html",
+      "vrkCandidateId": "87689",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 36
+      }
+    },
+    {
+      "candidateName": "Ana Matijevskytė",
+      "candidateId": "ana-matijevskyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87690/Kandidato87690Anketa.html",
+      "vrkCandidateId": "87690",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 37
+      }
+    },
+    {
+      "candidateName": "Elena Jakubauskienė",
+      "candidateId": "elena-jakubauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87691/Kandidato87691Anketa.html",
+      "vrkCandidateId": "87691",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 38
+      }
+    },
+    {
+      "candidateName": "Karina Graževič-Rusinova",
+      "candidateId": "karina-grazevic-rusinova",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87692/Kandidato87692Anketa.html",
+      "vrkCandidateId": "87692",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 39
+      }
+    },
+    {
+      "candidateName": "Inesa Kurpiuvienė",
+      "candidateId": "inesa-kurpiuviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87860/Kandidato87860Anketa.html",
+      "vrkCandidateId": "87860",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 2
+      }
+    },
+    {
+      "candidateName": "Andrej Prokofjev",
+      "candidateId": "andrej-prokofjev",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87861/Kandidato87861Anketa.html",
+      "vrkCandidateId": "87861",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 3
+      }
+    },
+    {
+      "candidateName": "Povilas Monkevičius",
+      "candidateId": "povilas-monkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87862/Kandidato87862Anketa.html",
+      "vrkCandidateId": "87862",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 4
+      }
+    },
+    {
+      "candidateName": "Michail Černiavskij",
+      "candidateId": "michail-cerniavskij",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87863/Kandidato87863Anketa.html",
+      "vrkCandidateId": "87863",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 5
+      }
+    },
+    {
+      "candidateName": "Zofija Abeciūnienė",
+      "candidateId": "zofija-abeciuniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87864/Kandidato87864Anketa.html",
+      "vrkCandidateId": "87864",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 6
+      }
+    },
+    {
+      "candidateName": "Jonas Juodka",
+      "candidateId": "jonas-juodka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87865/Kandidato87865Anketa.html",
+      "vrkCandidateId": "87865",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 7
+      }
+    },
+    {
+      "candidateName": "Galina Smolskienė",
+      "candidateId": "galina-smolskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87866/Kandidato87866Anketa.html",
+      "vrkCandidateId": "87866",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 8
+      }
+    },
+    {
+      "candidateName": "Vincas Olechnovičius",
+      "candidateId": "vincas-olechnovicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87867/Kandidato87867Anketa.html",
+      "vrkCandidateId": "87867",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 9
+      }
+    },
+    {
+      "candidateName": "Vidmantas Gaidukas",
+      "candidateId": "vidmantas-gaidukas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87868/Kandidato87868Anketa.html",
+      "vrkCandidateId": "87868",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 10
+      }
+    },
+    {
+      "candidateName": "Tadas Karpičius",
+      "candidateId": "tadas-karpicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87869/Kandidato87869Anketa.html",
+      "vrkCandidateId": "87869",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 11
+      }
+    },
+    {
+      "candidateName": "Artūras Karčiauskas",
+      "candidateId": "arturas-karciauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87870/Kandidato87870Anketa.html",
+      "vrkCandidateId": "87870",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 12
+      }
+    },
+    {
+      "candidateName": "Vaidas Vaitkunskas",
+      "candidateId": "vaidas-vaitkunskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87871/Kandidato87871Anketa.html",
+      "vrkCandidateId": "87871",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 13
+      }
+    },
+    {
+      "candidateName": "Stasys Buškevičius",
+      "candidateId": "stasys-buskevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87872/Kandidato87872Anketa.html",
+      "vrkCandidateId": "87872",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 14
+      }
+    },
+    {
+      "candidateName": "Artūras Lebed",
+      "candidateId": "arturas-lebed",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87873/Kandidato87873Anketa.html",
+      "vrkCandidateId": "87873",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 15
+      }
+    },
+    {
+      "candidateName": "Mantas Orintas",
+      "candidateId": "mantas-orintas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87874/Kandidato87874Anketa.html",
+      "vrkCandidateId": "87874",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 16
+      }
+    },
+    {
+      "candidateName": "Tadas Giedrys",
+      "candidateId": "tadas-giedrys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87875/Kandidato87875Anketa.html",
+      "vrkCandidateId": "87875",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 17
+      }
+    },
+    {
+      "candidateName": "Giedrius Smolskas",
+      "candidateId": "giedrius-smolskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87876/Kandidato87876Anketa.html",
+      "vrkCandidateId": "87876",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 18
+      }
+    },
+    {
+      "candidateName": "Vaida Azulevičienė",
+      "candidateId": "vaida-azuleviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87877/Kandidato87877Anketa.html",
+      "vrkCandidateId": "87877",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 19
+      }
+    },
+    {
+      "candidateName": "Jevgenijus Lobanovas",
+      "candidateId": "jevgenijus-lobanovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87878/Kandidato87878Anketa.html",
+      "vrkCandidateId": "87878",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 20
+      }
+    },
+    {
+      "candidateName": "Eduard Jankovskij",
+      "candidateId": "eduard-jankovskij",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87879/Kandidato87879Anketa.html",
+      "vrkCandidateId": "87879",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 21
+      }
+    },
+    {
+      "candidateName": "Robert Mickevič",
+      "candidateId": "robert-mickevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87880/Kandidato87880Anketa.html",
+      "vrkCandidateId": "87880",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 22
+      }
+    },
+    {
+      "candidateName": "Kęstutis Albinas Petkūnas",
+      "candidateId": "kestutis-albinas-petkunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87881/Kandidato87881Anketa.html",
+      "vrkCandidateId": "87881",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 23
+      }
+    },
+    {
+      "candidateName": "Dagnė Zubrickaitė",
+      "candidateId": "dagne-zubrickaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87882/Kandidato87882Anketa.html",
+      "vrkCandidateId": "87882",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 24
+      }
+    },
+    {
+      "candidateName": "Neringa Perednienė",
+      "candidateId": "neringa-peredniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87883/Kandidato87883Anketa.html",
+      "vrkCandidateId": "87883",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 25
+      }
+    },
+    {
+      "candidateName": "Regina Jonikienė",
+      "candidateId": "regina-jonikiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87884/Kandidato87884Anketa.html",
+      "vrkCandidateId": "87884",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 26
+      }
+    },
+    {
+      "candidateName": "Lina Karpičienė",
+      "candidateId": "lina-karpiciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87885/Kandidato87885Anketa.html",
+      "vrkCandidateId": "87885",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 27
+      }
+    },
+    {
+      "candidateName": "Marek Pavlovski",
+      "candidateId": "marek-pavlovski",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87886/Kandidato87886Anketa.html",
+      "vrkCandidateId": "87886",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 28
+      }
+    },
+    {
+      "candidateName": "Jovita Lukaševič",
+      "candidateId": "jovita-lukasevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87887/Kandidato87887Anketa.html",
+      "vrkCandidateId": "87887",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 29
+      }
+    },
+    {
+      "candidateName": "Artūras Steško",
+      "candidateId": "arturas-stesko",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87888/Kandidato87888Anketa.html",
+      "vrkCandidateId": "87888",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 30
+      }
+    },
+    {
+      "candidateName": "Dovilė Karacėjienė",
+      "candidateId": "dovile-karacejiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87889/Kandidato87889Anketa.html",
+      "vrkCandidateId": "87889",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 31
+      }
+    },
+    {
+      "candidateName": "Mažena Andrejevskaja",
+      "candidateId": "mazena-andrejevskaja",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87890/Kandidato87890Anketa.html",
+      "vrkCandidateId": "87890",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 32
+      }
+    },
+    {
+      "candidateName": "Ilona Šarpak",
+      "candidateId": "ilona-sarpak",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87891/Kandidato87891Anketa.html",
+      "vrkCandidateId": "87891",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 33
+      }
+    },
+    {
+      "candidateName": "Jan Zaleskij",
+      "candidateId": "jan-zaleskij",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87892/Kandidato87892Anketa.html",
+      "vrkCandidateId": "87892",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 34
+      }
+    },
+    {
+      "candidateName": "Lauras Pranckevičius",
+      "candidateId": "lauras-pranckevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87893/Kandidato87893Anketa.html",
+      "vrkCandidateId": "87893",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 35
+      }
+    },
+    {
+      "candidateName": "Justinas Lipnickis",
+      "candidateId": "justinas-lipnickis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87894/Kandidato87894Anketa.html",
+      "vrkCandidateId": "87894",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 36
+      }
+    },
+    {
+      "candidateName": "Irina Rulevičienė",
+      "candidateId": "irina-ruleviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87895/Kandidato87895Anketa.html",
+      "vrkCandidateId": "87895",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 37
+      }
+    },
+    {
+      "candidateName": "Arvydas Narkevičius",
+      "candidateId": "arvydas-narkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87896/Kandidato87896Anketa.html",
+      "vrkCandidateId": "87896",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 38
+      }
+    },
+    {
+      "candidateName": "Kazys Aliukonis",
+      "candidateId": "kazys-aliukonis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87897/Kandidato87897Anketa.html",
+      "vrkCandidateId": "87897",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 39
+      }
+    },
+    {
+      "candidateName": "Rita Lakštauskienė",
+      "candidateId": "rita-lakstauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87898/Kandidato87898Anketa.html",
+      "vrkCandidateId": "87898",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 40
+      }
+    },
+    {
+      "candidateName": "Aleksandras Tamkunas",
+      "candidateId": "aleksandras-tamkunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87900/Kandidato87900Anketa.html",
+      "vrkCandidateId": "87900",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 42
+      }
+    },
+    {
+      "candidateName": "Eduard Vaitiulionis",
+      "candidateId": "eduard-vaitiulionis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87901/Kandidato87901Anketa.html",
+      "vrkCandidateId": "87901",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 43
+      }
+    },
+    {
+      "candidateName": "Nijolė Turčilienė",
+      "candidateId": "nijole-turciliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87902/Kandidato87902Anketa.html",
+      "vrkCandidateId": "87902",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 44
+      }
+    },
+    {
+      "candidateName": "Areta Babraitytė",
+      "candidateId": "areta-babraityte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87903/Kandidato87903Anketa.html",
+      "vrkCandidateId": "87903",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 45
+      }
+    },
+    {
+      "candidateName": "Edgar Meškevič",
+      "candidateId": "edgar-meskevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87904/Kandidato87904Anketa.html",
+      "vrkCandidateId": "87904",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 46
+      }
+    },
+    {
+      "candidateName": "Vytautas Laniauskas",
+      "candidateId": "vytautas-laniauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87905/Kandidato87905Anketa.html",
+      "vrkCandidateId": "87905",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 47
+      }
+    },
+    {
+      "candidateName": "Mantas Mačionis",
+      "candidateId": "mantas-macionis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87906/Kandidato87906Anketa.html",
+      "vrkCandidateId": "87906",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 48
+      }
+    },
+    {
+      "candidateName": "Snieguolė Cironkaitė",
+      "candidateId": "snieguole-cironkaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87907/Kandidato87907Anketa.html",
+      "vrkCandidateId": "87907",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 49
+      }
+    },
+    {
+      "candidateName": "Pavel Prokofjev",
+      "candidateId": "pavel-prokofjev",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87908/Kandidato87908Anketa.html",
+      "vrkCandidateId": "87908",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 50
+      }
+    },
+    {
+      "candidateName": "Kęstutis Mikulskas",
+      "candidateId": "kestutis-mikulskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87909/Kandidato87909Anketa.html",
+      "vrkCandidateId": "87909",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos žaliųjų partija",
+        "listNumber": 12,
+        "listPosition": 1
+      }
+    },
+    {
+      "candidateName": "Česlovas Auryla",
+      "candidateId": "ceslovas-auryla",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87910/Kandidato87910Anketa.html",
+      "vrkCandidateId": "87910",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos žaliųjų partija",
+        "listNumber": 12,
+        "listPosition": 2
+      }
+    },
+    {
+      "candidateName": "Kazys Vytautas Lauruševičius",
+      "candidateId": "kazys-vytautas-laurusevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87911/Kandidato87911Anketa.html",
+      "vrkCandidateId": "87911",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos žaliųjų partija",
+        "listNumber": 12,
+        "listPosition": 3
+      }
+    },
+    {
+      "candidateName": "Aneta Lysenko",
+      "candidateId": "aneta-lysenko",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87912/Kandidato87912Anketa.html",
+      "vrkCandidateId": "87912",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos žaliųjų partija",
+        "listNumber": 12,
+        "listPosition": 4
+      }
+    },
+    {
+      "candidateName": "Antanas Barišauskas",
+      "candidateId": "antanas-barisauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87913/Kandidato87913Anketa.html",
+      "vrkCandidateId": "87913",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos žaliųjų partija",
+        "listNumber": 12,
+        "listPosition": 5
+      }
+    },
+    {
+      "candidateName": "Lilija Solovjova",
+      "candidateId": "lilija-solovjova",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87914/Kandidato87914Anketa.html",
+      "vrkCandidateId": "87914",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos žaliųjų partija",
+        "listNumber": 12,
+        "listPosition": 6
+      }
+    },
+    {
+      "candidateName": "Auksė Komičienė",
+      "candidateId": "aukse-komiciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87915/Kandidato87915Anketa.html",
+      "vrkCandidateId": "87915",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos žaliųjų partija",
+        "listNumber": 12,
+        "listPosition": 7
+      }
+    },
+    {
+      "candidateName": "Aurimas Važnevičius",
+      "candidateId": "aurimas-vaznevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87916/Kandidato87916Anketa.html",
+      "vrkCandidateId": "87916",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos žaliųjų partija",
+        "listNumber": 12,
+        "listPosition": 8
+      }
+    },
+    {
+      "candidateName": "Marijona Zinkevičienė",
+      "candidateId": "marijona-zinkeviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87917/Kandidato87917Anketa.html",
+      "vrkCandidateId": "87917",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos žaliųjų partija",
+        "listNumber": 12,
+        "listPosition": 9
+      }
+    },
+    {
+      "candidateName": "Natalija Mikulskienė",
+      "candidateId": "natalija-mikulskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87918/Kandidato87918Anketa.html",
+      "vrkCandidateId": "87918",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos žaliųjų partija",
+        "listNumber": 12,
+        "listPosition": 10
+      }
+    },
+    {
+      "candidateName": "Audrius Jurkevičius",
+      "candidateId": "audrius-jurkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87919/Kandidato87919Anketa.html",
+      "vrkCandidateId": "87919",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos žaliųjų partija",
+        "listNumber": 12,
+        "listPosition": 11
+      }
+    },
+    {
+      "candidateName": "Dalia Zamarienė",
+      "candidateId": "dalia-zamariene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87920/Kandidato87920Anketa.html",
+      "vrkCandidateId": "87920",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos žaliųjų partija",
+        "listNumber": 12,
+        "listPosition": 12
+      }
+    },
+    {
+      "candidateName": "Ingrida Gecevičienė",
+      "candidateId": "ingrida-geceviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87921/Kandidato87921Anketa.html",
+      "vrkCandidateId": "87921",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos žaliųjų partija",
+        "listNumber": 12,
+        "listPosition": 13
+      }
+    },
+    {
+      "candidateName": "Andrejus Lysenko",
+      "candidateId": "andrejus-lysenko",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87922/Kandidato87922Anketa.html",
+      "vrkCandidateId": "87922",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos žaliųjų partija",
+        "listNumber": 12,
+        "listPosition": 14
+      }
+    },
+    {
+      "candidateName": "Dainora Mikulskaitė",
+      "candidateId": "dainora-mikulskaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87923/Kandidato87923Anketa.html",
+      "vrkCandidateId": "87923",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos žaliųjų partija",
+        "listNumber": 12,
+        "listPosition": 15
+      }
+    },
+    {
+      "candidateName": "Ieva Gecevičiūtė",
+      "candidateId": "ieva-geceviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87924/Kandidato87924Anketa.html",
+      "vrkCandidateId": "87924",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos žaliųjų partija",
+        "listNumber": 12,
+        "listPosition": 16
+      }
+    },
+    {
+      "candidateName": "Albertas Malašauskas",
+      "candidateId": "albertas-malasauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87629/Kandidato87629Anketa.html",
+      "vrkCandidateId": "87629",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 2
+      }
+    },
+    {
+      "candidateName": "Voitechas Vinskevičius",
+      "candidateId": "voitechas-vinskevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87630/Kandidato87630Anketa.html",
+      "vrkCandidateId": "87630",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 3
+      }
+    },
+    {
+      "candidateName": "Darius Marcinkevičius",
+      "candidateId": "darius-marcinkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87631/Kandidato87631Anketa.html",
+      "vrkCandidateId": "87631",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 4
+      }
+    },
+    {
+      "candidateName": "Tauras Kurdzikauskas",
+      "candidateId": "tauras-kurdzikauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87632/Kandidato87632Anketa.html",
+      "vrkCandidateId": "87632",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 5
+      }
+    },
+    {
+      "candidateName": "Vytautas Mikas Doškus",
+      "candidateId": "vytautas-mikas-doskus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87633/Kandidato87633Anketa.html",
+      "vrkCandidateId": "87633",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 6
+      }
+    },
+    {
+      "candidateName": "Stasys Rizgelis",
+      "candidateId": "stasys-rizgelis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87634/Kandidato87634Anketa.html",
+      "vrkCandidateId": "87634",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 7
+      }
+    },
+    {
+      "candidateName": "Kęstutis Abucevičius",
+      "candidateId": "kestutis-abucevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87635/Kandidato87635Anketa.html",
+      "vrkCandidateId": "87635",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 8
+      }
+    },
+    {
+      "candidateName": "Vladas Bugušinskas",
+      "candidateId": "vladas-bugusinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87636/Kandidato87636Anketa.html",
+      "vrkCandidateId": "87636",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 9
+      }
+    },
+    {
+      "candidateName": "Ryšard Dainovskij",
+      "candidateId": "rysard-dainovskij",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87637/Kandidato87637Anketa.html",
+      "vrkCandidateId": "87637",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 10
+      }
+    },
+    {
+      "candidateName": "Tomas Dabašauskas",
+      "candidateId": "tomas-dabasauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87638/Kandidato87638Anketa.html",
+      "vrkCandidateId": "87638",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 11
+      }
+    },
+    {
+      "candidateName": "Ramunė Suchockienė",
+      "candidateId": "ramune-suchockiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87639/Kandidato87639Anketa.html",
+      "vrkCandidateId": "87639",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 12
+      }
+    },
+    {
+      "candidateName": "Mečislav Kravčun",
+      "candidateId": "mecislav-kravcun",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87640/Kandidato87640Anketa.html",
+      "vrkCandidateId": "87640",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 13
+      }
+    },
+    {
+      "candidateName": "Rita Zajankauskienė",
+      "candidateId": "rita-zajankauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87641/Kandidato87641Anketa.html",
+      "vrkCandidateId": "87641",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 14
+      }
+    },
+    {
+      "candidateName": "Stasys Buja",
+      "candidateId": "stasys-buja",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87642/Kandidato87642Anketa.html",
+      "vrkCandidateId": "87642",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 15
+      }
+    },
+    {
+      "candidateName": "Saulius Aliukonis",
+      "candidateId": "saulius-aliukonis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87643/Kandidato87643Anketa.html",
+      "vrkCandidateId": "87643",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 16
+      }
+    },
+    {
+      "candidateName": "Irena Potocka",
+      "candidateId": "irena-potocka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87644/Kandidato87644Anketa.html",
+      "vrkCandidateId": "87644",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 17
+      }
+    },
+    {
+      "candidateName": "Jonas Kasperavičius",
+      "candidateId": "jonas-kasperavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87645/Kandidato87645Anketa.html",
+      "vrkCandidateId": "87645",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 18
+      }
+    },
+    {
+      "candidateName": "Laimonas Karpičius",
+      "candidateId": "laimonas-karpicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87646/Kandidato87646Anketa.html",
+      "vrkCandidateId": "87646",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 19
+      }
+    },
+    {
+      "candidateName": "Aldona Liudvinavičienė",
+      "candidateId": "aldona-liudvinaviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87647/Kandidato87647Anketa.html",
+      "vrkCandidateId": "87647",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 20
+      }
+    },
+    {
+      "candidateName": "Loreta Dainovskienė",
+      "candidateId": "loreta-dainovskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87648/Kandidato87648Anketa.html",
+      "vrkCandidateId": "87648",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 21
+      }
+    },
+    {
+      "candidateName": "Felicija Jančiauskienė",
+      "candidateId": "felicija-janciauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87649/Kandidato87649Anketa.html",
+      "vrkCandidateId": "87649",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 22
+      }
+    },
+    {
+      "candidateName": "Austra Modesta Zapolskienė",
+      "candidateId": "austra-modesta-zapolskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87650/Kandidato87650Anketa.html",
+      "vrkCandidateId": "87650",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 23
+      }
+    },
+    {
+      "candidateName": "Bronislovas Stanulionis",
+      "candidateId": "bronislovas-stanulionis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87651/Kandidato87651Anketa.html",
+      "vrkCandidateId": "87651",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 24
+      }
+    },
+    {
+      "candidateName": "Marija Puč",
+      "candidateId": "marija-puc-2",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87694/Kandidato87694Anketa.html",
+      "vrkCandidateId": "87694",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 1
+      }
+    },
+    {
+      "candidateName": "Teresa Solovjova",
+      "candidateId": "teresa-solovjova",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87695/Kandidato87695Anketa.html",
+      "vrkCandidateId": "87695",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 2
+      }
+    },
+    {
+      "candidateName": "Henrik Jankovski",
+      "candidateId": "henrik-jankovski",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87696/Kandidato87696Anketa.html",
+      "vrkCandidateId": "87696",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 3
+      }
+    },
+    {
+      "candidateName": "Alina Kovalevskaja",
+      "candidateId": "alina-kovalevskaja",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87697/Kandidato87697Anketa.html",
+      "vrkCandidateId": "87697",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 4
+      }
+    },
+    {
+      "candidateName": "Tadeuš Tučkovski",
+      "candidateId": "tadeus-tuckovski",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87698/Kandidato87698Anketa.html",
+      "vrkCandidateId": "87698",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 5
+      }
+    },
+    {
+      "candidateName": "Irena Narkevič",
+      "candidateId": "irena-narkevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87699/Kandidato87699Anketa.html",
+      "vrkCandidateId": "87699",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 6
+      }
+    },
+    {
+      "candidateName": "Valerijan Jusionis",
+      "candidateId": "valerijan-jusionis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87700/Kandidato87700Anketa.html",
+      "vrkCandidateId": "87700",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 7
+      }
+    },
+    {
+      "candidateName": "Česlav Puč",
+      "candidateId": "ceslav-puc",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87574/Kandidato87574Anketa.html",
+      "vrkCandidateId": "87574",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 8
+      }
+    },
+    {
+      "candidateName": "Marjan Špakovskij",
+      "candidateId": "marjan-spakovskij",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87701/Kandidato87701Anketa.html",
+      "vrkCandidateId": "87701",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 9
+      }
+    },
+    {
+      "candidateName": "Karolina Narkevič",
+      "candidateId": "karolina-narkevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87711/Kandidato87711Anketa.html",
+      "vrkCandidateId": "87711",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 10
+      }
+    },
+    {
+      "candidateName": "Leonard Tunevič",
+      "candidateId": "leonard-tunevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87702/Kandidato87702Anketa.html",
+      "vrkCandidateId": "87702",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 11
+      }
+    },
+    {
+      "candidateName": "Renata Joknienė",
+      "candidateId": "renata-jokniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87704/Kandidato87704Anketa.html",
+      "vrkCandidateId": "87704",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 12
+      }
+    },
+    {
+      "candidateName": "Vikentijus Rudis",
+      "candidateId": "vikentijus-rudis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87705/Kandidato87705Anketa.html",
+      "vrkCandidateId": "87705",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 13
+      }
+    },
+    {
+      "candidateName": "Dinara Karanevska",
+      "candidateId": "dinara-karanevska",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87706/Kandidato87706Anketa.html",
+      "vrkCandidateId": "87706",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 14
+      }
+    },
+    {
+      "candidateName": "Vigantas Leonavičius",
+      "candidateId": "vigantas-leonavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87707/Kandidato87707Anketa.html",
+      "vrkCandidateId": "87707",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 15
+      }
+    },
+    {
+      "candidateName": "Irena Rudzis",
+      "candidateId": "irena-rudzis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87708/Kandidato87708Anketa.html",
+      "vrkCandidateId": "87708",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 16
+      }
+    },
+    {
+      "candidateName": "Jolanta Gardžiulienė",
+      "candidateId": "jolanta-gardziuliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87709/Kandidato87709Anketa.html",
+      "vrkCandidateId": "87709",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 17
+      }
+    },
+    {
+      "candidateName": "Darius Žukovski",
+      "candidateId": "darius-zukovski",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87571/Kandidato87571Anketa.html",
+      "vrkCandidateId": "87571",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 18
+      }
+    },
+    {
+      "candidateName": "Vincenta Diugevič",
+      "candidateId": "vincenta-diugevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87710/Kandidato87710Anketa.html",
+      "vrkCandidateId": "87710",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 19
+      }
+    },
+    {
+      "candidateName": "Andželika Jacunskienė",
+      "candidateId": "andzelika-jacunskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87712/Kandidato87712Anketa.html",
+      "vrkCandidateId": "87712",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 20
+      }
+    },
+    {
+      "candidateName": "Eva Abucevič",
+      "candidateId": "eva-abucevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87570/Kandidato87570Anketa.html",
+      "vrkCandidateId": "87570",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 21
+      }
+    },
+    {
+      "candidateName": "Alina Narkevič",
+      "candidateId": "alina-narkevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87713/Kandidato87713Anketa.html",
+      "vrkCandidateId": "87713",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 22
+      }
+    },
+    {
+      "candidateName": "Aliona Prokop",
+      "candidateId": "aliona-prokop",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87568/Kandidato87568Anketa.html",
+      "vrkCandidateId": "87568",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 23
+      }
+    },
+    {
+      "candidateName": "Jovita Gilevič",
+      "candidateId": "jovita-gilevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87572/Kandidato87572Anketa.html",
+      "vrkCandidateId": "87572",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 24
+      }
+    },
+    {
+      "candidateName": "Violeta Kliucevič",
+      "candidateId": "violeta-kliucevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87576/Kandidato87576Anketa.html",
+      "vrkCandidateId": "87576",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 25
+      }
+    },
+    {
+      "candidateName": "Jaroslav Pavlovski",
+      "candidateId": "jaroslav-pavlovski",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87577/Kandidato87577Anketa.html",
+      "vrkCandidateId": "87577",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 26
+      }
+    },
+    {
+      "candidateName": "Francišek Žeromskij",
+      "candidateId": "francisek-zeromskij",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87703/Kandidato87703Anketa.html",
+      "vrkCandidateId": "87703",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 27
+      }
+    },
+    {
+      "candidateName": "Tadeušas Pavlovskis",
+      "candidateId": "tadeusas-pavlovskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87714/Kandidato87714Anketa.html",
+      "vrkCandidateId": "87714",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 28
+      }
+    },
+    {
+      "candidateName": "Marija Golubovska",
+      "candidateId": "marija-golubovska",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87715/Kandidato87715Anketa.html",
+      "vrkCandidateId": "87715",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 29
+      }
+    },
+    {
+      "candidateName": "Ana Ingelevič",
+      "candidateId": "ana-ingelevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87716/Kandidato87716Anketa.html",
+      "vrkCandidateId": "87716",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 30
+      }
+    },
+    {
+      "candidateName": "Ježi Tomaševski",
+      "candidateId": "jezi-tomasevski",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87717/Kandidato87717Anketa.html",
+      "vrkCandidateId": "87717",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas“",
+        "listNumber": 14,
+        "listPosition": 31
+      }
+    },
+    {
+      "candidateName": "Rolandas Paškonis",
+      "candidateId": "rolandas-paskonis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87585/Kandidato87585Anketa.html",
+      "vrkCandidateId": "87585",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 2
+      }
+    },
+    {
+      "candidateName": "Gelena Drungilienė",
+      "candidateId": "gelena-drungiliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87586/Kandidato87586Anketa.html",
+      "vrkCandidateId": "87586",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 3
+      }
+    },
+    {
+      "candidateName": "Algis Pledzevičius",
+      "candidateId": "algis-pledzevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87587/Kandidato87587Anketa.html",
+      "vrkCandidateId": "87587",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 4
+      }
+    },
+    {
+      "candidateName": "Virginija Vainauskaitė",
+      "candidateId": "virginija-vainauskaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87588/Kandidato87588Anketa.html",
+      "vrkCandidateId": "87588",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 5
+      }
+    },
+    {
+      "candidateName": "Audrius Mockus",
+      "candidateId": "audrius-mockus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87589/Kandidato87589Anketa.html",
+      "vrkCandidateId": "87589",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 6
+      }
+    },
+    {
+      "candidateName": "Svietlana Olševskienė",
+      "candidateId": "svietlana-olsevskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87590/Kandidato87590Anketa.html",
+      "vrkCandidateId": "87590",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 7
+      }
+    },
+    {
+      "candidateName": "Jolita Daunoravičienė",
+      "candidateId": "jolita-daunoraviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87591/Kandidato87591Anketa.html",
+      "vrkCandidateId": "87591",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 8
+      }
+    },
+    {
+      "candidateName": "Albertas Stanapėdis",
+      "candidateId": "albertas-stanapedis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87592/Kandidato87592Anketa.html",
+      "vrkCandidateId": "87592",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 9
+      }
+    },
+    {
+      "candidateName": "Aušrinė Lukošiūtė-Aleksandravičienė",
+      "candidateId": "ausrine-lukosiute-aleksandraviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87593/Kandidato87593Anketa.html",
+      "vrkCandidateId": "87593",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 10
+      }
+    },
+    {
+      "candidateName": "Vaidas Baublys",
+      "candidateId": "vaidas-baublys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87594/Kandidato87594Anketa.html",
+      "vrkCandidateId": "87594",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 11
+      }
+    },
+    {
+      "candidateName": "Marijan Daukševič",
+      "candidateId": "marijan-dauksevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87595/Kandidato87595Anketa.html",
+      "vrkCandidateId": "87595",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 12
+      }
+    },
+    {
+      "candidateName": "Irena Jocienė",
+      "candidateId": "irena-jociene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87596/Kandidato87596Anketa.html",
+      "vrkCandidateId": "87596",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 13
+      }
+    },
+    {
+      "candidateName": "Leonas Benetis",
+      "candidateId": "leonas-benetis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87597/Kandidato87597Anketa.html",
+      "vrkCandidateId": "87597",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 14
+      }
+    },
+    {
+      "candidateName": "Darius Petrikauskas",
+      "candidateId": "darius-petrikauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87598/Kandidato87598Anketa.html",
+      "vrkCandidateId": "87598",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 15
+      }
+    },
+    {
+      "candidateName": "Violeta Labanienė",
+      "candidateId": "violeta-labaniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87599/Kandidato87599Anketa.html",
+      "vrkCandidateId": "87599",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 16
+      }
+    },
+    {
+      "candidateName": "Mindaugas Kasparavičius",
+      "candidateId": "mindaugas-kasparavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87600/Kandidato87600Anketa.html",
+      "vrkCandidateId": "87600",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 17
+      }
+    },
+    {
+      "candidateName": "Martinas Malužinas",
+      "candidateId": "martinas-maluzinas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87601/Kandidato87601Anketa.html",
+      "vrkCandidateId": "87601",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 18
+      }
+    },
+    {
+      "candidateName": "Jonas Radišauskas",
+      "candidateId": "jonas-radisauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87602/Kandidato87602Anketa.html",
+      "vrkCandidateId": "87602",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 19
+      }
+    },
+    {
+      "candidateName": "Alina Novikova",
+      "candidateId": "alina-novikova",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87603/Kandidato87603Anketa.html",
+      "vrkCandidateId": "87603",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 20
+      }
+    },
+    {
+      "candidateName": "Miroslava Aziulevičienė",
+      "candidateId": "miroslava-aziuleviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87604/Kandidato87604Anketa.html",
+      "vrkCandidateId": "87604",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 21
+      }
+    },
+    {
+      "candidateName": "Dana Kacilauskienė",
+      "candidateId": "dana-kacilauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87605/Kandidato87605Anketa.html",
+      "vrkCandidateId": "87605",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 22
+      }
+    },
+    {
+      "candidateName": "Vilma Karalienė",
+      "candidateId": "vilma-karaliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87606/Kandidato87606Anketa.html",
+      "vrkCandidateId": "87606",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 23
+      }
+    },
+    {
+      "candidateName": "Edita Motuzienė",
+      "candidateId": "edita-motuziene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87607/Kandidato87607Anketa.html",
+      "vrkCandidateId": "87607",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 24
+      }
+    },
+    {
+      "candidateName": "Leonas Stacevičius",
+      "candidateId": "leonas-stacevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87608/Kandidato87608Anketa.html",
+      "vrkCandidateId": "87608",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 25
+      }
+    },
+    {
+      "candidateName": "Stanislava Bieliauskienė",
+      "candidateId": "stanislava-bieliauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87609/Kandidato87609Anketa.html",
+      "vrkCandidateId": "87609",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 26
+      }
+    },
+    {
+      "candidateName": "Kristina Jundaitė",
+      "candidateId": "kristina-jundaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87610/Kandidato87610Anketa.html",
+      "vrkCandidateId": "87610",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 27
+      }
+    },
+    {
+      "candidateName": "Tadas Ramanauskas",
+      "candidateId": "tadas-ramanauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87611/Kandidato87611Anketa.html",
+      "vrkCandidateId": "87611",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 28
+      }
+    },
+    {
+      "candidateName": "Tatjana Grigoravičienė",
+      "candidateId": "tatjana-grigoraviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87612/Kandidato87612Anketa.html",
+      "vrkCandidateId": "87612",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 29
+      }
+    },
+    {
+      "candidateName": "Lilija Jakubovskaja",
+      "candidateId": "lilija-jakubovskaja",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87613/Kandidato87613Anketa.html",
+      "vrkCandidateId": "87613",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 30
+      }
+    },
+    {
+      "candidateName": "Alesia Rurak",
+      "candidateId": "alesia-rurak",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87614/Kandidato87614Anketa.html",
+      "vrkCandidateId": "87614",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 31
+      }
+    },
+    {
+      "candidateName": "Violeta Vaitiulionienė",
+      "candidateId": "violeta-vaitiulioniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87615/Kandidato87615Anketa.html",
+      "vrkCandidateId": "87615",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 32
+      }
+    },
+    {
+      "candidateName": "Germantė Dombrovskytė",
+      "candidateId": "germante-dombrovskyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87616/Kandidato87616Anketa.html",
+      "vrkCandidateId": "87616",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 33
+      }
+    },
+    {
+      "candidateName": "Giedrius Karalius",
+      "candidateId": "giedrius-karalius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87617/Kandidato87617Anketa.html",
+      "vrkCandidateId": "87617",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 34
+      }
+    },
+    {
+      "candidateName": "Milda Audarienė",
+      "candidateId": "milda-audariene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87618/Kandidato87618Anketa.html",
+      "vrkCandidateId": "87618",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 35
+      }
+    },
+    {
+      "candidateName": "Rūta Bižokaitė",
+      "candidateId": "ruta-bizokaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87619/Kandidato87619Anketa.html",
+      "vrkCandidateId": "87619",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 36
+      }
+    },
+    {
+      "candidateName": "Simona Baranauskė",
+      "candidateId": "simona-baranauske",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87620/Kandidato87620Anketa.html",
+      "vrkCandidateId": "87620",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 37
+      }
+    },
+    {
+      "candidateName": "Saulius Pranckevičius",
+      "candidateId": "saulius-pranckevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87621/Kandidato87621Anketa.html",
+      "vrkCandidateId": "87621",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 38
+      }
+    },
+    {
+      "candidateName": "Ina Lavrukaitienė",
+      "candidateId": "ina-lavrukaitiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87622/Kandidato87622Anketa.html",
+      "vrkCandidateId": "87622",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 39
+      }
+    },
+    {
+      "candidateName": "Irena Sadeckienė",
+      "candidateId": "irena-sadeckiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87623/Kandidato87623Anketa.html",
+      "vrkCandidateId": "87623",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 40
+      }
+    },
+    {
+      "candidateName": "Vida Tomaševičienė",
+      "candidateId": "vida-tomaseviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87624/Kandidato87624Anketa.html",
+      "vrkCandidateId": "87624",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 41
+      }
+    },
+    {
+      "candidateName": "Vladas Kamarauskas",
+      "candidateId": "vladas-kamarauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87625/Kandidato87625Anketa.html",
+      "vrkCandidateId": "87625",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 42
+      }
+    },
+    {
+      "candidateName": "Vida Keršytė",
+      "candidateId": "vida-kersyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87626/Kandidato87626Anketa.html",
+      "vrkCandidateId": "87626",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 43
+      }
+    },
+    {
+      "candidateName": "Julija Meškauskienė",
+      "candidateId": "julija-meskauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87721/Kandidato87721Anketa.html",
+      "vrkCandidateId": "87721",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 2
+      }
+    },
+    {
+      "candidateName": "Algimantas Česonis",
+      "candidateId": "algimantas-cesonis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87722/Kandidato87722Anketa.html",
+      "vrkCandidateId": "87722",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 3
+      }
+    },
+    {
+      "candidateName": "Jolanta Jasiūnienė",
+      "candidateId": "jolanta-jasiuniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87723/Kandidato87723Anketa.html",
+      "vrkCandidateId": "87723",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 4
+      }
+    },
+    {
+      "candidateName": "Rimantas Velička",
+      "candidateId": "rimantas-velicka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87724/Kandidato87724Anketa.html",
+      "vrkCandidateId": "87724",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 5
+      }
+    },
+    {
+      "candidateName": "Kamilė Vilbrantaitė",
+      "candidateId": "kamile-vilbrantaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87725/Kandidato87725Anketa.html",
+      "vrkCandidateId": "87725",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 6
+      }
+    },
+    {
+      "candidateName": "Vaidotas Venzlauskas",
+      "candidateId": "vaidotas-venzlauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87726/Kandidato87726Anketa.html",
+      "vrkCandidateId": "87726",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 7
+      }
+    },
+    {
+      "candidateName": "Dovilė Jančiauskienė",
+      "candidateId": "dovile-janciauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87727/Kandidato87727Anketa.html",
+      "vrkCandidateId": "87727",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 8
+      }
+    },
+    {
+      "candidateName": "Aleksandr Vorobjov",
+      "candidateId": "aleksandr-vorobjov",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87728/Kandidato87728Anketa.html",
+      "vrkCandidateId": "87728",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 9
+      }
+    },
+    {
+      "candidateName": "Justas Šlaičiūnas",
+      "candidateId": "justas-slaiciunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87729/Kandidato87729Anketa.html",
+      "vrkCandidateId": "87729",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 10
+      }
+    },
+    {
+      "candidateName": "Jonas Juknevičius",
+      "candidateId": "jonas-juknevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87730/Kandidato87730Anketa.html",
+      "vrkCandidateId": "87730",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 11
+      }
+    },
+    {
+      "candidateName": "Eugenijus Asanavičius",
+      "candidateId": "eugenijus-asanavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87731/Kandidato87731Anketa.html",
+      "vrkCandidateId": "87731",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 12
+      }
+    },
+    {
+      "candidateName": "Kęstutis Radzevičius",
+      "candidateId": "kestutis-radzevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87732/Kandidato87732Anketa.html",
+      "vrkCandidateId": "87732",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 13
+      }
+    },
+    {
+      "candidateName": "Danutė Svežakovienė",
+      "candidateId": "danute-svezakoviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87733/Kandidato87733Anketa.html",
+      "vrkCandidateId": "87733",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 14
+      }
+    },
+    {
+      "candidateName": "Mantas Meškauskas",
+      "candidateId": "mantas-meskauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87734/Kandidato87734Anketa.html",
+      "vrkCandidateId": "87734",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 15
+      }
+    },
+    {
+      "candidateName": "Diana Koturenkienė",
+      "candidateId": "diana-koturenkiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87735/Kandidato87735Anketa.html",
+      "vrkCandidateId": "87735",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 16
+      }
+    },
+    {
+      "candidateName": "Kęstutis Makauskas",
+      "candidateId": "kestutis-makauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87736/Kandidato87736Anketa.html",
+      "vrkCandidateId": "87736",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 17
+      }
+    },
+    {
+      "candidateName": "Monika Veličkaitė",
+      "candidateId": "monika-velickaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87737/Kandidato87737Anketa.html",
+      "vrkCandidateId": "87737",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 18
+      }
+    },
+    {
+      "candidateName": "Andrius Dakinevičius",
+      "candidateId": "andrius-dakinevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87738/Kandidato87738Anketa.html",
+      "vrkCandidateId": "87738",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 19
+      }
+    },
+    {
+      "candidateName": "Danutė Strumilaitė",
+      "candidateId": "danute-strumilaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87740/Kandidato87740Anketa.html",
+      "vrkCandidateId": "87740",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 21
+      }
+    },
+    {
+      "candidateName": "Viktor Samakaljev",
+      "candidateId": "viktor-samakaljev",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87741/Kandidato87741Anketa.html",
+      "vrkCandidateId": "87741",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 22
+      }
+    },
+    {
+      "candidateName": "Svetlana Kožina",
+      "candidateId": "svetlana-kozina",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87742/Kandidato87742Anketa.html",
+      "vrkCandidateId": "87742",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 23
+      }
+    },
+    {
+      "candidateName": "Nijolė Lisevičienė",
+      "candidateId": "nijole-liseviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87761/Kandidato87761Anketa.html",
+      "vrkCandidateId": "87761",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 2
+      }
+    },
+    {
+      "candidateName": "Jonas Liesys",
+      "candidateId": "jonas-liesys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87762/Kandidato87762Anketa.html",
+      "vrkCandidateId": "87762",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 3
+      }
+    },
+    {
+      "candidateName": "Jonas Kietavičius",
+      "candidateId": "jonas-kietavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87763/Kandidato87763Anketa.html",
+      "vrkCandidateId": "87763",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 4
+      }
+    },
+    {
+      "candidateName": "Sergejus Vorobjovas",
+      "candidateId": "sergejus-vorobjovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87764/Kandidato87764Anketa.html",
+      "vrkCandidateId": "87764",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 5
+      }
+    },
+    {
+      "candidateName": "Darius Mechovskis",
+      "candidateId": "darius-mechovskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87765/Kandidato87765Anketa.html",
+      "vrkCandidateId": "87765",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 6
+      }
+    },
+    {
+      "candidateName": "Vygandas Lenkauskas",
+      "candidateId": "vygandas-lenkauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87766/Kandidato87766Anketa.html",
+      "vrkCandidateId": "87766",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 7
+      }
+    },
+    {
+      "candidateName": "Jelena Jočionienė",
+      "candidateId": "jelena-jocioniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87767/Kandidato87767Anketa.html",
+      "vrkCandidateId": "87767",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 8
+      }
+    },
+    {
+      "candidateName": "Vytas Rukšėnas",
+      "candidateId": "vytas-ruksenas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87768/Kandidato87768Anketa.html",
+      "vrkCandidateId": "87768",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 9
+      }
+    },
+    {
+      "candidateName": "Žydrūnas Lenkauskas",
+      "candidateId": "zydrunas-lenkauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87769/Kandidato87769Anketa.html",
+      "vrkCandidateId": "87769",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 10
+      }
+    },
+    {
+      "candidateName": "Česlovas Žukauskas",
+      "candidateId": "ceslovas-zukauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87770/Kandidato87770Anketa.html",
+      "vrkCandidateId": "87770",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 11
+      }
+    },
+    {
+      "candidateName": "Irena Bagdanavičienė",
+      "candidateId": "irena-bagdanaviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87771/Kandidato87771Anketa.html",
+      "vrkCandidateId": "87771",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 12
+      }
+    },
+    {
+      "candidateName": "Andrius Šatevičius",
+      "candidateId": "andrius-satevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87772/Kandidato87772Anketa.html",
+      "vrkCandidateId": "87772",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 13
+      }
+    },
+    {
+      "candidateName": "Jurgita Čirienė",
+      "candidateId": "jurgita-ciriene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87773/Kandidato87773Anketa.html",
+      "vrkCandidateId": "87773",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 14
+      }
+    },
+    {
+      "candidateName": "Marius Šokaitis",
+      "candidateId": "marius-sokaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87774/Kandidato87774Anketa.html",
+      "vrkCandidateId": "87774",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 15
+      }
+    },
+    {
+      "candidateName": "Antanas Česnulevičius",
+      "candidateId": "antanas-cesnulevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87775/Kandidato87775Anketa.html",
+      "vrkCandidateId": "87775",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 16
+      }
+    },
+    {
+      "candidateName": "Rasa Bliujūtė",
+      "candidateId": "rasa-bliujute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87776/Kandidato87776Anketa.html",
+      "vrkCandidateId": "87776",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 17
+      }
+    },
+    {
+      "candidateName": "Eitvydas Juškauskas",
+      "candidateId": "eitvydas-juskauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87777/Kandidato87777Anketa.html",
+      "vrkCandidateId": "87777",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 18
+      }
+    },
+    {
+      "candidateName": "Sigitas Radzevičius",
+      "candidateId": "sigitas-radzevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87778/Kandidato87778Anketa.html",
+      "vrkCandidateId": "87778",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 19
+      }
+    },
+    {
+      "candidateName": "Vytautas Lekevičius",
+      "candidateId": "vytautas-lekevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87779/Kandidato87779Anketa.html",
+      "vrkCandidateId": "87779",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 20
+      }
+    },
+    {
+      "candidateName": "Arkadij Goldin",
+      "candidateId": "arkadij-goldin",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87780/Kandidato87780Anketa.html",
+      "vrkCandidateId": "87780",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 21
+      }
+    },
+    {
+      "candidateName": "Aurelijus Šmigelskas",
+      "candidateId": "aurelijus-smigelskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87781/Kandidato87781Anketa.html",
+      "vrkCandidateId": "87781",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 22
+      }
+    },
+    {
+      "candidateName": "Jolanta Martyncevienė",
+      "candidateId": "jolanta-martynceviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87782/Kandidato87782Anketa.html",
+      "vrkCandidateId": "87782",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 23
+      }
+    },
+    {
+      "candidateName": "Vincas Kapočius",
+      "candidateId": "vincas-kapocius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87783/Kandidato87783Anketa.html",
+      "vrkCandidateId": "87783",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 24
+      }
+    },
+    {
+      "candidateName": "Zita Aniulienė",
+      "candidateId": "zita-aniuliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87784/Kandidato87784Anketa.html",
+      "vrkCandidateId": "87784",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 25
+      }
+    },
+    {
+      "candidateName": "Kęstutis Kasparavičius",
+      "candidateId": "kestutis-kasparavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87785/Kandidato87785Anketa.html",
+      "vrkCandidateId": "87785",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 26
+      }
+    },
+    {
+      "candidateName": "Rolandas Blažys",
+      "candidateId": "rolandas-blazys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87786/Kandidato87786Anketa.html",
+      "vrkCandidateId": "87786",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 27
+      }
+    },
+    {
+      "candidateName": "Darius Kvedaravičius",
+      "candidateId": "darius-kvedaravicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87787/Kandidato87787Anketa.html",
+      "vrkCandidateId": "87787",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 28
+      }
+    },
+    {
+      "candidateName": "Loreta Bologovaitė",
+      "candidateId": "loreta-bologovaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87788/Kandidato87788Anketa.html",
+      "vrkCandidateId": "87788",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 29
+      }
+    },
+    {
+      "candidateName": "Julius Pipiras",
+      "candidateId": "julius-pipiras",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87789/Kandidato87789Anketa.html",
+      "vrkCandidateId": "87789",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 30
+      }
+    },
+    {
+      "candidateName": "Renata Antonevič",
+      "candidateId": "renata-antonevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87790/Kandidato87790Anketa.html",
+      "vrkCandidateId": "87790",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 31
+      }
+    },
+    {
+      "candidateName": "Darius Debesys",
+      "candidateId": "darius-debesys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87791/Kandidato87791Anketa.html",
+      "vrkCandidateId": "87791",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 32
+      }
+    },
+    {
+      "candidateName": "Jolanta Misiūrienė",
+      "candidateId": "jolanta-misiuriene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87792/Kandidato87792Anketa.html",
+      "vrkCandidateId": "87792",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 33
+      }
+    },
+    {
+      "candidateName": "Daiva Gribauskienė",
+      "candidateId": "daiva-gribauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87793/Kandidato87793Anketa.html",
+      "vrkCandidateId": "87793",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 34
+      }
+    },
+    {
+      "candidateName": "Marytė Morkūnienė",
+      "candidateId": "maryte-morkuniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87794/Kandidato87794Anketa.html",
+      "vrkCandidateId": "87794",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 35
+      }
+    },
+    {
+      "candidateName": "Vytautas Žuromskas",
+      "candidateId": "vytautas-zuromskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87795/Kandidato87795Anketa.html",
+      "vrkCandidateId": "87795",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 36
+      }
+    },
+    {
+      "candidateName": "Algis Tubinis",
+      "candidateId": "algis-tubinis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87796/Kandidato87796Anketa.html",
+      "vrkCandidateId": "87796",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 37
+      }
+    },
+    {
+      "candidateName": "Audronė Dailidėnienė",
+      "candidateId": "audrone-dailideniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87797/Kandidato87797Anketa.html",
+      "vrkCandidateId": "87797",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 38
+      }
+    },
+    {
+      "candidateName": "Justina Darvid",
+      "candidateId": "justina-darvid",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87798/Kandidato87798Anketa.html",
+      "vrkCandidateId": "87798",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 39
+      }
+    },
+    {
+      "candidateName": "Silvija Masiukienė",
+      "candidateId": "silvija-masiukiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87799/Kandidato87799Anketa.html",
+      "vrkCandidateId": "87799",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 40
+      }
+    },
+    {
+      "candidateName": "Zita Norkienė",
+      "candidateId": "zita-norkiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87800/Kandidato87800Anketa.html",
+      "vrkCandidateId": "87800",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 41
+      }
+    },
+    {
+      "candidateName": "Regina Budrevičienė",
+      "candidateId": "regina-budreviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87801/Kandidato87801Anketa.html",
+      "vrkCandidateId": "87801",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 42
+      }
+    },
+    {
+      "candidateName": "Alius Bobina",
+      "candidateId": "alius-bobina",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87802/Kandidato87802Anketa.html",
+      "vrkCandidateId": "87802",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 43
+      }
+    },
+    {
+      "candidateName": "Julija Lukšienė",
+      "candidateId": "julija-luksiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87803/Kandidato87803Anketa.html",
+      "vrkCandidateId": "87803",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 44
+      }
+    },
+    {
+      "candidateName": "Karolina Danguolė Jarmalovič",
+      "candidateId": "karolina-danguole-jarmalovic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87804/Kandidato87804Anketa.html",
+      "vrkCandidateId": "87804",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 45
+      }
+    },
+    {
+      "candidateName": "Aurimas Boldoševas",
+      "candidateId": "aurimas-boldosevas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87805/Kandidato87805Anketa.html",
+      "vrkCandidateId": "87805",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 46
+      }
+    },
+    {
+      "candidateName": "Lina Muknickienė",
+      "candidateId": "lina-muknickiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87806/Kandidato87806Anketa.html",
+      "vrkCandidateId": "87806",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 47
+      }
+    },
+    {
+      "candidateName": "Vytautas Uldukis",
+      "candidateId": "vytautas-uldukis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87807/Kandidato87807Anketa.html",
+      "vrkCandidateId": "87807",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 48
+      }
+    },
+    {
+      "candidateName": "Justinas Bartusevičius",
+      "candidateId": "justinas-bartusevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/452_lt/Kandidatai/Kandidatas87808/Kandidato87808Anketa.html",
+      "vrkCandidateId": "87808",
+      "municipality": "Trakų rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 49
+      }
+    }
+  ],
+  "skipped": []
+}

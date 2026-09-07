@@ -65,6 +65,7 @@ from typing import Any
 import unicodedata
 from urllib.parse import urljoin
 
+import requests
 from bs4 import BeautifulSoup, Tag
 
 from scraper.shared.files import write_json
@@ -163,16 +164,65 @@ def page_path(results_dir: Path, url: str) -> Path:
     return results_dir / tail
 
 
+#: Beside a cached page tree, `<page>.404` records that VRK answered 404 for
+#: the page: the five 2000 municipalities whose results were never
+#: published, the round-two folder a tree does not have. Without it a 404
+#: was the one answer the cache could not hold, and an offline rebuild asked
+#: vrk.lt for it on every run (issue #145).
+NOT_FOUND_MARKER_SUFFIX = ".404"
+
+
+def _not_found(url: str) -> requests.HTTPError:
+    response = requests.Response()
+    response.status_code = 404
+    response.url = url
+    return requests.HTTPError(f"404 Client Error (cached): {url}", response=response)
+
+
 def fetch_page(results_dir: Path, url: str) -> str:
-    """Fetch a results page once; later calls read the saved copy."""
+    """Fetch a results page once; later calls read the saved copy -- or the
+    saved absence: a page VRK answered 404 for raises the same 404 from its
+    marker file without a request."""
     path = page_path(results_dir, url)
     if path.exists():
         return path.read_text(encoding="utf-8")
-    html = fetch_text(url)
+    marker = path.with_name(path.name + NOT_FOUND_MARKER_SUFFIX)
+    if marker.exists():
+        raise _not_found(url)
+    try:
+        html = fetch_text(url)
+    except requests.HTTPError as exc:
+        response = getattr(exc, "response", None)
+        if response is not None and response.status_code == 404:
+            marker.parent.mkdir(parents=True, exist_ok=True)
+            marker.write_text(url + "\n", encoding="utf-8")
+        raise
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(html, encoding="utf-8")
     time.sleep(FETCH_PAUSE_SECONDS)
     return html
+
+
+def fetch_optional_page(results_dir: Path, url: str) -> str | None:
+    """A page family the tree may not publish: the saved copy or the page,
+    None when VRK answers 404, and anything else propagates.
+
+    The optional families -- a round-two folder, a first-round members list,
+    a composition index, a list's preference page -- used to be fetched under
+    a catch-all handler that returned an empty result, so a dropped
+    connection, a 5xx or a timeout read exactly like "this tree does not
+    publish that page": the builder returned normally, wrote a well-formed
+    results file with an empty `elected` map, and every candidate parsed
+    against it became `isrinktas: false` (issue #134). Only a 404 means
+    absent.
+    """
+    try:
+        return fetch_page(results_dir, url)
+    except requests.HTTPError as exc:
+        response = getattr(exc, "response", None)
+        if response is not None and response.status_code == 404:
+            return None
+        raise
 
 
 def page_text(html: str) -> str:
@@ -249,17 +299,15 @@ def seimo_district_pages(results_dir: Path, tree: str, round_number: int) -> lis
     """The constituency pages of one round: url, constituency id, label."""
     folder = "rezultatai_vienmand_apygardose" + ("" if round_number == 1 else "2")
     index_url = f"{tree_root(tree)}/{folder}/rezultatai_vienmand_apygardose{round_number}turas.html"
-    try:
-        index_html = fetch_page(results_dir, index_url)
-    except Exception:
+    index_html = fetch_optional_page(results_dir, index_url)
+    if index_html is None:
         if round_number == 1:
             return []
         # The 2007 by-election tree keeps its round-two index and pages in
         # the round-one folder.
         index_url = f"{tree_root(tree)}/rezultatai_vienmand_apygardose/rezultatai_vienmand_apygardose{round_number}turas.html"
-        try:
-            index_html = fetch_page(results_dir, index_url)
-        except Exception:
+        index_html = fetch_optional_page(results_dir, index_url)
+        if index_html is None:
             return []
     pages: list[dict[str, Any]] = []
     for url, label, match in find_links(index_html, index_url, SEIMO_DISTRICT_PATTERN):
@@ -341,9 +389,8 @@ def first_round_elected_by_label(results_dir: Path, tree: str) -> dict[str, dict
     on its own page and no round-two page); the 2011 and 2013 trees do not,
     and a missing page is simply an empty map."""
     url = f"{tree_root(tree)}/{FIRST_ROUND_ELECTED_PAGE}"
-    try:
-        html = fetch_page(results_dir, url)
-    except Exception:
+    html = fetch_optional_page(results_dir, url)
+    if html is None:
         return {}
     by_label: dict[str, dict[str, Any]] = {}
     for member in parse_elected_members_page(html, url):
@@ -505,9 +552,8 @@ def collect_seimo_votes(
     preference_pages_missing: list[str] = []
     for list_id in list_ids:
         url = f"{tree_root(tree)}/rezultatai_daugiamand_apygardose/partijos_pirmumo_balsai{list_id}.html"
-        try:
-            html = fetch_page(results_dir, url)
-        except Exception:
+        html = fetch_optional_page(results_dir, url)
+        if html is None:
             preference_pages_missing.append(url)
             continue
         for row in parse_preference_page(html, url):
@@ -586,9 +632,8 @@ def municipal_index_pages(results_dir: Path, tree: str, round_number: int) -> li
         index_url = f"{tree_root(tree)}/rezultatai_daugiamand_apygardose/rezultatai_daugiamand_apygardose1turas.html"
     else:
         index_url = f"{tree_root(tree)}/rezultatai_vienmand_apygardose2/rezultatai_vienmand_apygardose2turas.html"
-    try:
-        index_html = fetch_page(results_dir, index_url)
-    except Exception:
+    index_html = fetch_optional_page(results_dir, index_url)
+    if index_html is None:
         return []
     pages: list[dict[str, Any]] = []
     for url, label, match in find_links(index_html, index_url, RESULT_DISTRICT_PATTERN):
@@ -755,12 +800,10 @@ def municipal_winners(
     composition_by_label: dict[str, str] = {}
     if composition_tree:
         index_url = f"{tree_root(composition_tree)}/savivaldybiu_tarybu_sudetis/savivaldybes.html"
-        try:
-            index_html = fetch_page(results_dir, index_url)
+        index_html = fetch_optional_page(results_dir, index_url)
+        if index_html is not None:
             for url, label, _ in find_links(index_html, index_url, COMPOSITION_PATTERN):
                 composition_by_label[label] = url
-        except Exception:
-            composition_by_label = {}
 
     municipalities: list[dict[str, Any]] = []
     for page in round_one:
@@ -862,6 +905,13 @@ def municipal_winners(
 # ---------------------------------------------------------------------------
 
 
+#: The results-file key a builder sets when it read the pages and found that
+#: nobody was elected -- every constituency `neįvyko`, as in the 1998-1999
+#: Seimas by-elections and the 2003 new elections. Without it an empty
+#: `elected` map is not a result at all (see `write_results`).
+NOBODY_ELECTED_KEY = "nobodyElected"
+
+
 def write_results(
     output_path: Path,
     election_id: str,
@@ -869,14 +919,36 @@ def write_results(
     stats: dict[str, Any],
     sources: list[str],
     details: dict[str, Any] | None = None,
+    *,
+    nobody_elected: bool = False,
 ) -> Path:
-    payload = {
+    """Write the results file the parse stage joins `isrinktas` from.
+
+    An empty `elected` map is refused unless the builder says, in so many
+    words, that nobody was elected. A file with an empty map turns every
+    candidate parsed against it into `isrinktas: false`, so a build that
+    found no winner because a page did not parse, or a fetch was swallowed,
+    must not leave one behind (issue #134): the four elections in which
+    nobody *was* elected carry `nobodyElected: true`, and
+    `load_results_lookup` treats an empty map without it as no results.
+    """
+    if not elected and not nobody_elected:
+        raise ValueError(
+            f"{election_id}: no winner resolved and the builder did not say nobody was"
+            " elected; refusing to write a results file that would mark every"
+            " candidate isrinktas: false"
+        )
+    if elected and nobody_elected:
+        raise ValueError(f"{election_id}: {len(elected)} winner(s) resolved, yet nobody_elected was set")
+    payload: dict[str, Any] = {
         "electionId": election_id,
         "generatedAt": utc_now_iso(),
         "sources": sources,
         "stats": stats,
         "elected": elected,
     }
+    if nobody_elected:
+        payload[NOBODY_ELECTED_KEY] = True
     if details:
         payload["details"] = details
     write_json(output_path, payload)
@@ -884,13 +956,27 @@ def write_results(
 
 
 def load_results_lookup(results_path: Path | None) -> dict[str, dict[str, Any]] | None:
-    """The elected map of a results file, or None when the file is absent —
-    the parse stage then leaves `isrinktas` unknown rather than false."""
+    """The elected map of a results file, or None when there are no results
+    to join -- the parse stage then leaves `isrinktas` unknown rather than
+    false.
+
+    "No results" is a file that is absent, and also a file whose `elected`
+    map is empty without the builder's `nobodyElected` statement: an empty
+    join used to read as "everyone lost", which is worse than no file at all
+    (issue #134). The four elections in which nobody was elected carry the
+    key, and their candidates stay a known `false`.
+    """
     if results_path is None or not results_path.exists():
         return None
     payload = json.loads(results_path.read_text(encoding="utf-8"))
-    elected = payload.get("elected") if isinstance(payload, dict) else None
-    return elected if isinstance(elected, dict) else None
+    if not isinstance(payload, dict):
+        return None
+    elected = payload.get("elected")
+    if not isinstance(elected, dict):
+        return None
+    if not elected and not payload.get(NOBODY_ELECTED_KEY):
+        return None
+    return elected
 
 
 def count_stats(elected: dict[str, dict[str, Any]]) -> dict[str, int]:
@@ -1431,11 +1517,10 @@ def build_municipal_mandates_results(
     index_html = fetch_page(results_dir, index_url)
     composition_index_url = f"{tree_root(tree)}/{MUNICIPAL_2007_COMPOSITION_INDEX_PAGE}"
     composition_by_id: dict[str, str] = {}
-    try:
-        for url, _, match in find_links(fetch_page(results_dir, composition_index_url), composition_index_url, COMPOSITION_PATTERN):
+    composition_index_html = fetch_optional_page(results_dir, composition_index_url)
+    if composition_index_html is not None:
+        for url, _, match in find_links(composition_index_html, composition_index_url, COMPOSITION_PATTERN):
             composition_by_id[match.group(1)] = url
-    except Exception:
-        composition_by_id = {}
 
     elected: dict[str, dict[str, Any]] = {}
     per_municipality: list[dict[str, Any]] = []

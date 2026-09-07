@@ -12,11 +12,12 @@ repository looked at how often a mapped field is filled, so nothing could.
 python scripts/field_coverage.py                    # measure, check, exit 1 on a finding
 python scripts/field_coverage.py 2020-seimo         # one election's cells
 python scripts/field_coverage.py --update-baseline  # after a deliberate change
+python scripts/field_coverage.py --unmapped         # also: a field the map denies an election that has it
 ```
 
 One pass over `data/` — about 30 seconds for 113,073 records — resolves every
 `docs/concept-map.json` path against every record of the elections that map it.
-That is 1,295 cells: 37 concepts across 55 elections.
+That is 1,362 cells across 55 elections.
 
 ## What it produces
 
@@ -48,6 +49,23 @@ than 90 % of the elections that map it, the message says so — that is the
 **Regression.** A fill rate more than `--max-drop` points (default 5) below the
 baseline. Re-parsing an election is allowed to change what it recovers; losing
 five points of a field without saying so is not.
+
+**Unmapped fill** (`--unmapped`, the third rule, opt-in). A concept's own path
+form that fills on at least one percent of the records of an election the map
+does *not* give the concept for. The dashboard renders an unmapped cell as
+"Šių rinkimų anketa šio lauko neskelbė" — this election never published this
+field — and issue #131 found 30 cells saying so over data the record on the
+same page carried: `savivaldybe` on 27,523 candidacies of the 2019/2023
+municipal generals and seven mayoral elections, `gautos-pajamos` and
+`sumoketas-pajamu-mokestis` on the eight 1996–1999 archive elections,
+`turtas-ir-vertybiniai-popieriai` on 2003. Opt-in because it resolves every
+form of every concept against every election, several times the work of the
+mapped cells; `tests/test_field_coverage.py` runs it on a 300-record sample of
+each election, which catches every systematic omission at a fraction of the
+cost. The one-percent floor is what keeps two deliberate exclusions out:
+`anketa.pomegiai` holds a value on 1 of 10,138 records of 2002-gruodzio-22 and
+`anketa.kita-apie-save` on 3 of 9,879 of 2000-kovo-19 — stray records on forms
+that do not ask the question, recorded as such in the map's `verified` note.
 
 ## Status words
 

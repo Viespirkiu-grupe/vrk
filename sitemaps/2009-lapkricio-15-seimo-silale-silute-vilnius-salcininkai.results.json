@@ -1,0 +1,319 @@
+{
+  "electionId": "2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai",
+  "generatedAt": "2026-08-31T21:10:19+00:00",
+  "sources": [
+    "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7128aktyvumasdesc2turas.html",
+    "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/isrinkti_seimo_nariai.html"
+  ],
+  "stats": {
+    "constituencies": 2,
+    "winnersResolved": 2,
+    "unresolved": 0,
+    "decidedInRoundTwo": 1,
+    "byRunoffPlurality": 1,
+    "candidatesWithVotes": 17,
+    "voteRowsUnresolved": 0
+  },
+  "elected": {
+    "26249": {
+      "seat": "vienmandate",
+      "method": "runoff-plurality",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7128aktyvumasdesc2turas.html",
+      "round": 2,
+      "constituency": "33. Šilalės - Šilutės"
+    },
+    "26261": {
+      "seat": "vienmandate",
+      "method": "first-round-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/isrinkti_seimo_nariai.html",
+      "round": 1,
+      "constituency": "56. Vilniaus - Šalčininkų"
+    }
+  },
+  "details": {
+    "unresolved": [],
+    "constituencies": [
+      {
+        "constituencyLabel": "33. Šilalės - Šilutės",
+        "constituencyNumber": 33,
+        "resultDistrictId": "7126",
+        "field": [
+          "Jonas GUDAUSKAS",
+          "Remigijus ŽEMAITAITIS",
+          "Osvaldas ŠARMAVIČIUS",
+          "Raimundas VAITIEKUS",
+          "Daiva VAITKEVIČIUTĖ-REKAŠIENĖ",
+          "Algimantas MATULEVIČIUS",
+          "Laima ZEMECKIENĖ",
+          "Jonas PURLYS",
+          "Darius KASPERAITIS"
+        ],
+        "winnerName": "Remigijus ŽEMAITAITIS",
+        "round": 2,
+        "method": "runoff-plurality",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7128aktyvumasdesc2turas.html"
+      },
+      {
+        "constituencyLabel": "56. Vilniaus - Šalčininkų",
+        "constituencyNumber": 56,
+        "resultDistrictId": "7125",
+        "field": [
+          "Leonard TALMONT",
+          "Alina GOREVAJA",
+          "Vidmantas ŽILIUS",
+          "Janina ŠIMKUVIENĖ",
+          "Darius SKUSEVIČIUS",
+          "Česlava STANUL",
+          "Lilijana ASTRA",
+          "Renatas SALADŽIUS"
+        ],
+        "winnerName": "Leonard TALMONT",
+        "round": 1,
+        "method": "first-round-list",
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/isrinkti_seimo_nariai.html"
+      }
+    ],
+    "votes": {
+      "26243": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 2883,
+            "pastu": 788,
+            "isViso": 3671,
+            "procentai": 29.43,
+            "vieta": 1,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7126aktyvumasdesc1turas.html"
+          },
+          {
+            "turas": 2,
+            "balsadezese": 4367,
+            "pastu": 1257,
+            "isViso": 5624,
+            "procentai": 42.3,
+            "vieta": 2,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7128aktyvumasdesc2turas.html"
+          }
+        ]
+      },
+      "26249": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 3133,
+            "pastu": 428,
+            "isViso": 3561,
+            "procentai": 28.55,
+            "vieta": 2,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7126aktyvumasdesc1turas.html"
+          },
+          {
+            "turas": 2,
+            "balsadezese": 6549,
+            "pastu": 1123,
+            "isViso": 7672,
+            "procentai": 57.7,
+            "vieta": 1,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose2/rezultatai_vienmanate_apygarda7128aktyvumasdesc2turas.html"
+          }
+        ]
+      },
+      "26237": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 1448,
+            "pastu": 249,
+            "isViso": 1697,
+            "procentai": 13.61,
+            "vieta": 3,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7126aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "26277": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 1034,
+            "pastu": 188,
+            "isViso": 1222,
+            "procentai": 9.8,
+            "vieta": 4,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7126aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "26254": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 641,
+            "pastu": 178,
+            "isViso": 819,
+            "procentai": 6.57,
+            "vieta": 5,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7126aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "26275": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 560,
+            "pastu": 182,
+            "isViso": 742,
+            "procentai": 5.95,
+            "vieta": 6,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7126aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "26283": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 421,
+            "pastu": 79,
+            "isViso": 500,
+            "procentai": 4.01,
+            "vieta": 7,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7126aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "26256": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 192,
+            "pastu": 37,
+            "isViso": 229,
+            "procentai": 1.84,
+            "vieta": 8,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7126aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "26284": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 19,
+            "pastu": 13,
+            "isViso": 32,
+            "procentai": 0.26,
+            "vieta": 9,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7126aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "26261": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 10622,
+            "pastu": 3398,
+            "isViso": 14020,
+            "procentai": 77.81,
+            "vieta": 1,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7125aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "26281": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 1112,
+            "pastu": 157,
+            "isViso": 1269,
+            "procentai": 7.04,
+            "vieta": 2,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7125aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "26244": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 817,
+            "pastu": 152,
+            "isViso": 969,
+            "procentai": 5.38,
+            "vieta": 3,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7125aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "26250": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 421,
+            "pastu": 132,
+            "isViso": 553,
+            "procentai": 3.07,
+            "vieta": 4,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7125aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "26238": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 393,
+            "pastu": 92,
+            "isViso": 485,
+            "procentai": 2.69,
+            "vieta": 5,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7125aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "26255": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 364,
+            "pastu": 99,
+            "isViso": 463,
+            "procentai": 2.57,
+            "vieta": 6,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7125aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "26285": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 90,
+            "pastu": 40,
+            "isViso": 130,
+            "procentai": 0.72,
+            "vieta": 7,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7125aktyvumasdesc1turas.html"
+          }
+        ]
+      },
+      "26257": {
+        "vienmandate": [
+          {
+            "turas": 1,
+            "balsadezese": 100,
+            "pastu": 29,
+            "isViso": 129,
+            "procentai": 0.72,
+            "vieta": 8,
+            "saltinis": "https://www.vrk.lt/statiniai/puslapiai/2009_seimo_rinkimai/output_lt/rezultatai_vienmand_apygardose/rezultatai_vienmanate_apygarda7125aktyvumasdesc1turas.html"
+          }
+        ]
+      }
+    },
+    "voteRowsUnresolved": []
+  }
+}

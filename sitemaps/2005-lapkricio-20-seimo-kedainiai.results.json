@@ -1,0 +1,34 @@
+{
+  "electionId": "2005-lapkricio-20-seimo-kedainiai",
+  "generatedAt": "2026-08-23T12:45:18+00:00",
+  "sources": [
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2005/seimas/rezultatai/rez_isrinkti_l_21_1.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2005/seimas/rezultatai/rezv_isrinkti_l_21_2_1.htm"
+  ],
+  "stats": {
+    "seats": 1,
+    "membersListed": 1,
+    "membersInSitemap": 1,
+    "membersNotInSitemap": 0,
+    "districtMismatches": 0,
+    "roundWinnersPageDiff": 0,
+    "decidedInRound": [
+      2
+    ]
+  },
+  "elected": {
+    "315628": {
+      "seat": "vienmandate",
+      "method": "members-list",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/2005/seimas/rezultatai/rez_isrinkti_l_21_1.htm",
+      "party": "Darbo partija",
+      "round": 2,
+      "districtId": "1675",
+      "districtNumber": 43,
+      "districtName": "Kėdainių"
+    }
+  },
+  "details": {
+    "notInSitemap": []
+  }
+}

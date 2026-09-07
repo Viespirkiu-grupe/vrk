@@ -1429,6 +1429,116 @@ elected	2024-ep	100.0	ok
 elected	2024-prezidento	100.0	ok	
 elected	2024-seimo	100.0	ok	
 elected	2025-kovo-16-meru	100.0	ok	
+elected_council	1996-spalio-20-seimo	0.0	upstream-absent	no council seat on this ballot
+elected_council	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	100.0	ok	
+elected_council	1997-gruodzio-21-seimo-pakartotiniai	0.0	upstream-absent	no council seat on this ballot
+elected_council	1997-kovo-23-savivaldybiu-tarybu	100.0	ok	
+elected_council	1997-kovo-23-seimo-pakartotiniai	0.0	upstream-absent	no council seat on this ballot
+elected_council	1998-kovo-22-seimo-pakartotiniai	0.0	upstream-absent	no council seat on this ballot
+elected_council	1998-lapkricio-15-seimo-pakartotiniai	0.0	upstream-absent	no council seat on this ballot
+elected_council	1999-kovo-21-seimo-pakartotiniai	0.0	upstream-absent	no council seat on this ballot
+elected_council	2000-kovo-19-savivaldybiu-tarybu	91.8	ok	
+elected_council	2000-seimo	0.0	upstream-absent	no council seat on this ballot
+elected_council	2002-gruodzio-22-savivaldybiu-tarybu	100.0	ok	
+elected_council	2002-prezidento	0.0	upstream-absent	no council seat on this ballot
+elected_council	2003-birzelio-15-seimo-nauji	0.0	upstream-absent	no council seat on this ballot
+elected_council	2004-ep	0.0	upstream-absent	no council seat on this ballot
+elected_council	2004-prezidento	0.0	upstream-absent	no council seat on this ballot
+elected_council	2004-seimo	0.0	upstream-absent	no council seat on this ballot
+elected_council	2005-lapkricio-20-seimo-kedainiai	0.0	upstream-absent	no council seat on this ballot
+elected_council	2007-spalio-7-seimo-dzukija	0.0	upstream-absent	no council seat on this ballot
+elected_council	2007-vasario-25-savivaldybiu	100.0	ok	
+elected_council	2008-seimo	0.0	upstream-absent	no council seat on this ballot
+elected_council	2009-ep	0.0	upstream-absent	no council seat on this ballot
+elected_council	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	0.0	upstream-absent	no council seat on this ballot
+elected_council	2009-prezidento	0.0	upstream-absent	no council seat on this ballot
+elected_council	2011-vasario-13-seimo-marijampole	0.0	upstream-absent	no council seat on this ballot
+elected_council	2011-vasario-27-savivaldybiu	100.0	ok	
+elected_council	2012-seimo	0.0	upstream-absent	no council seat on this ballot
+elected_council	2013-kovo-3-seimo-birzai-zarasai-ukmerge	0.0	upstream-absent	no council seat on this ballot
+elected_council	2014-ep	0.0	upstream-absent	no council seat on this ballot
+elected_council	2014-prezidento	0.0	upstream-absent	no council seat on this ballot
+elected_council	2015-birzelio-21-pakartotiniai-silutes	100.0	ok	
+elected_council	2015-birzelio-7-pakartotiniai-sirvintos-trakai	97.6	ok	
+elected_council	2015-birzelio-7-seimo-varena-eisiskes	0.0	upstream-absent	no council seat on this ballot
+elected_council	2015-kovo-1-savivaldybiu	99.9	ok	
+elected_council	2015-kovo-1-seimo-zirmunai	0.0	upstream-absent	no council seat on this ballot
+elected_council	2015-lapkricio-8-telsiu-mero	0.0	upstream-absent	no council seat on this ballot
+elected_council	2016-seimo	0.0	upstream-absent	no council seat on this ballot
+elected_council	2017-balandzio-23-meru	0.0	upstream-absent	no council seat on this ballot
+elected_council	2017-balandzio-23-seimo-anyksciai-panevezys	0.0	upstream-absent	no council seat on this ballot
+elected_council	2017-rugsejo-10-marijampoles-mero	0.0	upstream-absent	no council seat on this ballot
+elected_council	2018-rugsejo-16-seimo-zanavykai	0.0	upstream-absent	no council seat on this ballot
+elected_council	2019-ep	0.0	upstream-absent	no council seat on this ballot
+elected_council	2019-kovo-3-savivaldybiu-tarybu	99.8	ok	
+elected_council	2019-prezidento	0.0	upstream-absent	no council seat on this ballot
+elected_council	2019-rugsejo-8-seimo	0.0	upstream-absent	no council seat on this ballot
+elected_council	2020-seimo	0.0	upstream-absent	no council seat on this ballot
+elected_council	2021-balandzio-11-radviliskio-mero	0.0	upstream-absent	no council seat on this ballot
+elected_council	2021-spalio-10-meru	0.0	upstream-absent	no council seat on this ballot
+elected_council	2023-geguzes-7-visagino-mero	0.0	upstream-absent	no council seat on this ballot
+elected_council	2023-kovo-5-savivaldybiu-tarybu-ir-meru	99.8	ok	
+elected_council	2023-rugsejo-3-seimo-raseiniai-kedainiai	0.0	upstream-absent	no council seat on this ballot
+elected_council	2023-spalio-8-kupiskio-mero	0.0	upstream-absent	no council seat on this ballot
+elected_council	2024-ep	0.0	upstream-absent	no council seat on this ballot
+elected_council	2024-prezidento	0.0	upstream-absent	no council seat on this ballot
+elected_council	2024-seimo	0.0	upstream-absent	no council seat on this ballot
+elected_council	2025-kovo-16-meru	0.0	upstream-absent	no council seat on this ballot
+elected_mayor	1996-spalio-20-seimo	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	0.0	upstream-absent	no directly elected mayor before the 2015 municipal general; the council alone was on the ballot
+elected_mayor	1997-gruodzio-21-seimo-pakartotiniai	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	1997-kovo-23-savivaldybiu-tarybu	0.0	upstream-absent	no directly elected mayor before the 2015 municipal general; the council alone was on the ballot
+elected_mayor	1997-kovo-23-seimo-pakartotiniai	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	1998-kovo-22-seimo-pakartotiniai	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	1998-lapkricio-15-seimo-pakartotiniai	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	1999-kovo-21-seimo-pakartotiniai	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2000-kovo-19-savivaldybiu-tarybu	0.0	upstream-absent	no directly elected mayor before the 2015 municipal general; the council alone was on the ballot
+elected_mayor	2000-seimo	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2002-gruodzio-22-savivaldybiu-tarybu	0.0	upstream-absent	no directly elected mayor before the 2015 municipal general; the council alone was on the ballot
+elected_mayor	2002-prezidento	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2003-birzelio-15-seimo-nauji	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2004-ep	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2004-prezidento	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2004-seimo	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2005-lapkricio-20-seimo-kedainiai	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2007-spalio-7-seimo-dzukija	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2007-vasario-25-savivaldybiu	0.0	upstream-absent	no directly elected mayor before the 2015 municipal general; the council alone was on the ballot
+elected_mayor	2008-seimo	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2009-ep	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2009-prezidento	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2011-vasario-13-seimo-marijampole	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2011-vasario-27-savivaldybiu	0.0	upstream-absent	no directly elected mayor before the 2015 municipal general; the council alone was on the ballot
+elected_mayor	2012-seimo	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2013-kovo-3-seimo-birzai-zarasai-ukmerge	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2014-ep	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2014-prezidento	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2015-birzelio-21-pakartotiniai-silutes	2.2	ok	
+elected_mayor	2015-birzelio-7-pakartotiniai-sirvintos-trakai	4.6	ok	
+elected_mayor	2015-birzelio-7-seimo-varena-eisiskes	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2015-kovo-1-savivaldybiu	2.9	ok	
+elected_mayor	2015-kovo-1-seimo-zirmunai	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2015-lapkricio-8-telsiu-mero	100.0	ok	
+elected_mayor	2016-seimo	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2017-balandzio-23-meru	100.0	ok	
+elected_mayor	2017-balandzio-23-seimo-anyksciai-panevezys	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2017-rugsejo-10-marijampoles-mero	100.0	ok	
+elected_mayor	2018-rugsejo-16-seimo-zanavykai	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2019-ep	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2019-kovo-3-savivaldybiu-tarybu	3.0	ok	
+elected_mayor	2019-prezidento	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2019-rugsejo-8-seimo	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2020-seimo	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2021-balandzio-11-radviliskio-mero	100.0	ok	
+elected_mayor	2021-spalio-10-meru	100.0	ok	
+elected_mayor	2023-geguzes-7-visagino-mero	100.0	ok	
+elected_mayor	2023-kovo-5-savivaldybiu-tarybu-ir-meru	3.1	ok	
+elected_mayor	2023-rugsejo-3-seimo-raseiniai-kedainiai	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2023-spalio-8-kupiskio-mero	100.0	ok	
+elected_mayor	2024-ep	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2024-prezidento	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2024-seimo	0.0	upstream-absent	no mayoral seat on this ballot
+elected_mayor	2025-kovo-16-meru	100.0	ok	
 election_date	1996-spalio-20-seimo	100.0	ok	
 election_date	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	100.0	ok	
 election_date	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
@@ -2144,6 +2254,61 @@ municipality	2024-ep	0.0	upstream-absent	not a municipal or mayoral election
 municipality	2024-prezidento	0.0	upstream-absent	not a municipal or mayoral election
 municipality	2024-seimo	0.0	upstream-absent	not a municipal or mayoral election
 municipality	2025-kovo-16-meru	100.0	ok	
+municipality_id	1996-spalio-20-seimo	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	100.0	ok	
+municipality_id	1997-gruodzio-21-seimo-pakartotiniai	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	1997-kovo-23-savivaldybiu-tarybu	100.0	ok	
+municipality_id	1997-kovo-23-seimo-pakartotiniai	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	1998-kovo-22-seimo-pakartotiniai	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	1998-lapkricio-15-seimo-pakartotiniai	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	1999-kovo-21-seimo-pakartotiniai	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
+municipality_id	2000-seimo	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2002-gruodzio-22-savivaldybiu-tarybu	100.0	ok	
+municipality_id	2002-prezidento	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2003-birzelio-15-seimo-nauji	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2004-ep	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2004-prezidento	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2004-seimo	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2005-lapkricio-20-seimo-kedainiai	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2007-spalio-7-seimo-dzukija	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2007-vasario-25-savivaldybiu	100.0	ok	
+municipality_id	2008-seimo	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2009-ep	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2009-prezidento	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2011-vasario-13-seimo-marijampole	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2011-vasario-27-savivaldybiu	100.0	ok	
+municipality_id	2012-seimo	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2013-kovo-3-seimo-birzai-zarasai-ukmerge	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2014-ep	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2014-prezidento	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2015-birzelio-21-pakartotiniai-silutes	100.0	ok	
+municipality_id	2015-birzelio-7-pakartotiniai-sirvintos-trakai	100.0	ok	
+municipality_id	2015-birzelio-7-seimo-varena-eisiskes	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2015-kovo-1-savivaldybiu	100.0	ok	
+municipality_id	2015-kovo-1-seimo-zirmunai	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2015-lapkricio-8-telsiu-mero	100.0	ok	
+municipality_id	2016-seimo	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2017-balandzio-23-meru	100.0	ok	
+municipality_id	2017-balandzio-23-seimo-anyksciai-panevezys	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2017-rugsejo-10-marijampoles-mero	100.0	ok	
+municipality_id	2018-rugsejo-16-seimo-zanavykai	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2019-ep	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2019-kovo-3-savivaldybiu-tarybu	100.0	ok	
+municipality_id	2019-prezidento	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2019-rugsejo-8-seimo	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2020-seimo	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2021-balandzio-11-radviliskio-mero	100.0	ok	
+municipality_id	2021-spalio-10-meru	100.0	ok	
+municipality_id	2023-geguzes-7-visagino-mero	100.0	ok	
+municipality_id	2023-kovo-5-savivaldybiu-tarybu-ir-meru	100.0	ok	
+municipality_id	2023-rugsejo-3-seimo-raseiniai-kedainiai	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2023-spalio-8-kupiskio-mero	100.0	ok	
+municipality_id	2024-ep	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2024-prezidento	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2024-seimo	0.0	upstream-absent	not a municipal or mayoral election
+municipality_id	2025-kovo-16-meru	100.0	ok	
 nomination_kind	1996-spalio-20-seimo	100.0	ok	
 nomination_kind	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	100.0	ok	
 nomination_kind	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
@@ -2383,20 +2548,20 @@ post_election_position	2004-seimo	94.6	ok
 post_election_position	2005-lapkricio-20-seimo-kedainiai	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
 post_election_position	2007-spalio-7-seimo-dzukija	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
 post_election_position	2007-vasario-25-savivaldybiu	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
-post_election_position	2008-seimo	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
+post_election_position	2008-seimo	98.4	ok	
 post_election_position	2009-ep	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
 post_election_position	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
 post_election_position	2009-prezidento	0.0	upstream-absent	presidential candidates stand on no list
 post_election_position	2011-vasario-13-seimo-marijampole	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
-post_election_position	2011-vasario-27-savivaldybiu	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
-post_election_position	2012-seimo	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
+post_election_position	2011-vasario-27-savivaldybiu	99.1	ok	
+post_election_position	2012-seimo	96.9	ok	
 post_election_position	2013-kovo-3-seimo-birzai-zarasai-ukmerge	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
 post_election_position	2014-ep	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
 post_election_position	2014-prezidento	0.0	upstream-absent	presidential candidates stand on no list
-post_election_position	2015-birzelio-21-pakartotiniai-silutes	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
-post_election_position	2015-birzelio-7-pakartotiniai-sirvintos-trakai	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
+post_election_position	2015-birzelio-21-pakartotiniai-silutes	99.2	ok	
+post_election_position	2015-birzelio-7-pakartotiniai-sirvintos-trakai	97.6	ok	
 post_election_position	2015-birzelio-7-seimo-varena-eisiskes	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
-post_election_position	2015-kovo-1-savivaldybiu	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
+post_election_position	2015-kovo-1-savivaldybiu	99.8	ok	
 post_election_position	2015-kovo-1-seimo-zirmunai	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
 post_election_position	2015-lapkricio-8-telsiu-mero	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
 post_election_position	2016-seimo	98.0	ok	

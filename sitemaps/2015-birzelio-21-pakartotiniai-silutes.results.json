@@ -1,0 +1,2098 @@
+{
+  "electionId": "2015-birzelio-21-pakartotiniai-silutes",
+  "generatedAt": "2026-08-31T21:10:40+00:00",
+  "sources": [
+    "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos_rezultatai7923.html"
+  ],
+  "stats": {
+    "municipalities": 1,
+    "roundTwoPages": 1,
+    "mayorsResolved": 1,
+    "mayorsUnresolved": 0,
+    "mayorsDecidedInRoundTwo": 1,
+    "councilMembers": 24,
+    "councilNotInSitemap": 0,
+    "councilResolvedByNameAndList": 7,
+    "councilSelfNominated": 0,
+    "seatCountMismatches": 0,
+    "compositionPagesChecked": 1,
+    "compositionFullyContainsDerived": 1,
+    "derivedNotInComposition": 0,
+    "seats": {
+      "meras": 1,
+      "tarybos-narys": 24
+    },
+    "annulledWinners": 0,
+    "candidatesWithVotes": 366,
+    "voteRowsUnresolved": 0
+  },
+  "elected": {
+    "88167": {
+      "seat": "meras",
+      "method": "verdict",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_vienmand_apygardose2/apygardos_rezultatai7932.html",
+      "round": 2,
+      "municipality": "47. Šilutės rajono"
+    },
+    "88018": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Lietuvos socialdemokratų partija",
+      "rank": 1,
+      "resolvedBy": "name-and-list",
+      "vrkCandidateIdOnResultsPage": "88019"
+    },
+    "88022": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Lietuvos socialdemokratų partija",
+      "rank": 2
+    },
+    "88020": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Lietuvos socialdemokratų partija",
+      "rank": 3
+    },
+    "88024": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Lietuvos socialdemokratų partija",
+      "rank": 4
+    },
+    "88021": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Lietuvos socialdemokratų partija",
+      "rank": 5
+    },
+    "88028": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Lietuvos socialdemokratų partija",
+      "rank": 6
+    },
+    "88170": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Partija Tvarka ir teisingumas",
+      "rank": 2
+    },
+    "88172": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Partija Tvarka ir teisingumas",
+      "rank": 3
+    },
+    "88171": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Partija Tvarka ir teisingumas",
+      "rank": 4
+    },
+    "88169": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Partija Tvarka ir teisingumas",
+      "rank": 5
+    },
+    "88175": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Partija Tvarka ir teisingumas",
+      "rank": 6
+    },
+    "87972": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Lietuvos laisvės sąjunga (liberalai)",
+      "rank": 1,
+      "resolvedBy": "name-and-list",
+      "vrkCandidateIdOnResultsPage": "87973"
+    },
+    "87974": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Lietuvos laisvės sąjunga (liberalai)",
+      "rank": 2
+    },
+    "87976": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Lietuvos laisvės sąjunga (liberalai)",
+      "rank": 3
+    },
+    "88116": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+      "rank": 1,
+      "resolvedBy": "name-and-list",
+      "vrkCandidateIdOnResultsPage": "88117"
+    },
+    "88119": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+      "rank": 2
+    },
+    "88118": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+      "rank": 3
+    },
+    "88069": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Lietuvos Respublikos liberalų sąjūdis",
+      "rank": 1,
+      "resolvedBy": "name-and-list",
+      "vrkCandidateIdOnResultsPage": "88071"
+    },
+    "88070": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Lietuvos Respublikos liberalų sąjūdis",
+      "rank": 2
+    },
+    "88209": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Lietuvos valstiečių ir žaliųjų sąjunga",
+      "rank": 1,
+      "resolvedBy": "name-and-list",
+      "vrkCandidateIdOnResultsPage": "88210"
+    },
+    "88211": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Lietuvos valstiečių ir žaliųjų sąjunga",
+      "rank": 2
+    },
+    "88260": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+      "rank": 1,
+      "resolvedBy": "name-and-list",
+      "vrkCandidateIdOnResultsPage": "88261"
+    },
+    "88262": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+      "rank": 2
+    },
+    "87930": {
+      "seat": "tarybos-narys",
+      "method": "list-ranking",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html",
+      "municipality": "47. Šilutės rajono",
+      "listName": "Darbo partija",
+      "rank": 1,
+      "resolvedBy": "name-and-list",
+      "vrkCandidateIdOnResultsPage": "87932"
+    }
+  },
+  "details": {
+    "annulments": {},
+    "perMunicipality": [
+      {
+        "municipality": "47. Šilutės rajono",
+        "mayorResolved": true,
+        "mayorRound": 2,
+        "councilElected": 24,
+        "listMandatesTotal": 24,
+        "derivedTotal": 25,
+        "expectedTotal": 25,
+        "listsShort": [],
+        "compositionMandates": 25,
+        "compositionMembers": 27,
+        "derivedNotInComposition": 0
+      }
+    ],
+    "unresolvedMayors": [],
+    "councilNotInSitemap": [],
+    "seatCountMismatches": [],
+    "votes": {
+      "88018": {
+        "porinkiminisNumerisSarase": 1,
+        "pirmumoBalsai": 1161,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88022": {
+        "porinkiminisNumerisSarase": 2,
+        "pirmumoBalsai": 801,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88020": {
+        "porinkiminisNumerisSarase": 3,
+        "pirmumoBalsai": 693,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88024": {
+        "porinkiminisNumerisSarase": 4,
+        "pirmumoBalsai": 635,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88021": {
+        "porinkiminisNumerisSarase": 5,
+        "pirmumoBalsai": 616,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88028": {
+        "porinkiminisNumerisSarase": 6,
+        "pirmumoBalsai": 608,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88025": {
+        "porinkiminisNumerisSarase": 7,
+        "pirmumoBalsai": 535,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88027": {
+        "porinkiminisNumerisSarase": 8,
+        "pirmumoBalsai": 505,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88023": {
+        "porinkiminisNumerisSarase": 9,
+        "pirmumoBalsai": 495,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88026": {
+        "porinkiminisNumerisSarase": 10,
+        "pirmumoBalsai": 483,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88029": {
+        "porinkiminisNumerisSarase": 11,
+        "pirmumoBalsai": 445,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88031": {
+        "porinkiminisNumerisSarase": 12,
+        "pirmumoBalsai": 358,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88030": {
+        "porinkiminisNumerisSarase": 13,
+        "pirmumoBalsai": 321,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88032": {
+        "porinkiminisNumerisSarase": 14,
+        "pirmumoBalsai": 293,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88035": {
+        "porinkiminisNumerisSarase": 15,
+        "pirmumoBalsai": 186,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88038": {
+        "porinkiminisNumerisSarase": 16,
+        "pirmumoBalsai": 186,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88034": {
+        "porinkiminisNumerisSarase": 17,
+        "pirmumoBalsai": 159,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88040": {
+        "porinkiminisNumerisSarase": 18,
+        "pirmumoBalsai": 142,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88041": {
+        "porinkiminisNumerisSarase": 19,
+        "pirmumoBalsai": 142,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88037": {
+        "porinkiminisNumerisSarase": 20,
+        "pirmumoBalsai": 118,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88039": {
+        "porinkiminisNumerisSarase": 21,
+        "pirmumoBalsai": 113,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88033": {
+        "porinkiminisNumerisSarase": 22,
+        "pirmumoBalsai": 95,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88043": {
+        "porinkiminisNumerisSarase": 23,
+        "pirmumoBalsai": 90,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88045": {
+        "porinkiminisNumerisSarase": 24,
+        "pirmumoBalsai": 87,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88064": {
+        "porinkiminisNumerisSarase": 25,
+        "pirmumoBalsai": 84,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88042": {
+        "porinkiminisNumerisSarase": 26,
+        "pirmumoBalsai": 80,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88036": {
+        "porinkiminisNumerisSarase": 27,
+        "pirmumoBalsai": 77,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88054": {
+        "porinkiminisNumerisSarase": 28,
+        "pirmumoBalsai": 76,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88049": {
+        "porinkiminisNumerisSarase": 29,
+        "pirmumoBalsai": 73,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88065": {
+        "porinkiminisNumerisSarase": 30,
+        "pirmumoBalsai": 68,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88048": {
+        "porinkiminisNumerisSarase": 31,
+        "pirmumoBalsai": 65,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88047": {
+        "porinkiminisNumerisSarase": 32,
+        "pirmumoBalsai": 51,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88058": {
+        "porinkiminisNumerisSarase": 33,
+        "pirmumoBalsai": 51,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88068": {
+        "porinkiminisNumerisSarase": 34,
+        "pirmumoBalsai": 49,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88044": {
+        "porinkiminisNumerisSarase": 35,
+        "pirmumoBalsai": 48,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88046": {
+        "porinkiminisNumerisSarase": 36,
+        "pirmumoBalsai": 47,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88066": {
+        "porinkiminisNumerisSarase": 37,
+        "pirmumoBalsai": 47,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88067": {
+        "porinkiminisNumerisSarase": 38,
+        "pirmumoBalsai": 44,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88050": {
+        "porinkiminisNumerisSarase": 39,
+        "pirmumoBalsai": 38,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88056": {
+        "porinkiminisNumerisSarase": 40,
+        "pirmumoBalsai": 37,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88057": {
+        "porinkiminisNumerisSarase": 41,
+        "pirmumoBalsai": 35,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88061": {
+        "porinkiminisNumerisSarase": 42,
+        "pirmumoBalsai": 34,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88052": {
+        "porinkiminisNumerisSarase": 43,
+        "pirmumoBalsai": 31,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88059": {
+        "porinkiminisNumerisSarase": 44,
+        "pirmumoBalsai": 30,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88051": {
+        "porinkiminisNumerisSarase": 45,
+        "pirmumoBalsai": 28,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88062": {
+        "porinkiminisNumerisSarase": 46,
+        "pirmumoBalsai": 25,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88053": {
+        "porinkiminisNumerisSarase": 47,
+        "pirmumoBalsai": 20,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88055": {
+        "porinkiminisNumerisSarase": 48,
+        "pirmumoBalsai": 23,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88060": {
+        "porinkiminisNumerisSarase": 49,
+        "pirmumoBalsai": 14,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88063": {
+        "porinkiminisNumerisSarase": 50,
+        "pirmumoBalsai": 22,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9224_pirmumo_balsai.html"
+      },
+      "88167": {
+        "porinkiminisNumerisSarase": 1,
+        "pirmumoBalsai": 1354,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88170": {
+        "porinkiminisNumerisSarase": 2,
+        "pirmumoBalsai": 862,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88172": {
+        "porinkiminisNumerisSarase": 3,
+        "pirmumoBalsai": 714,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88171": {
+        "porinkiminisNumerisSarase": 4,
+        "pirmumoBalsai": 675,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88169": {
+        "porinkiminisNumerisSarase": 5,
+        "pirmumoBalsai": 581,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88175": {
+        "porinkiminisNumerisSarase": 6,
+        "pirmumoBalsai": 508,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88182": {
+        "porinkiminisNumerisSarase": 7,
+        "pirmumoBalsai": 279,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88183": {
+        "porinkiminisNumerisSarase": 8,
+        "pirmumoBalsai": 252,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88181": {
+        "porinkiminisNumerisSarase": 9,
+        "pirmumoBalsai": 234,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88179": {
+        "porinkiminisNumerisSarase": 10,
+        "pirmumoBalsai": 224,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88185": {
+        "porinkiminisNumerisSarase": 11,
+        "pirmumoBalsai": 207,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88178": {
+        "porinkiminisNumerisSarase": 12,
+        "pirmumoBalsai": 181,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88186": {
+        "porinkiminisNumerisSarase": 13,
+        "pirmumoBalsai": 175,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88177": {
+        "porinkiminisNumerisSarase": 14,
+        "pirmumoBalsai": 157,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88190": {
+        "porinkiminisNumerisSarase": 15,
+        "pirmumoBalsai": 153,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88187": {
+        "porinkiminisNumerisSarase": 16,
+        "pirmumoBalsai": 150,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88176": {
+        "porinkiminisNumerisSarase": 17,
+        "pirmumoBalsai": 148,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88184": {
+        "porinkiminisNumerisSarase": 18,
+        "pirmumoBalsai": 140,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88208": {
+        "porinkiminisNumerisSarase": 19,
+        "pirmumoBalsai": 132,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88180": {
+        "porinkiminisNumerisSarase": 20,
+        "pirmumoBalsai": 131,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88192": {
+        "porinkiminisNumerisSarase": 21,
+        "pirmumoBalsai": 125,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88194": {
+        "porinkiminisNumerisSarase": 22,
+        "pirmumoBalsai": 119,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88189": {
+        "porinkiminisNumerisSarase": 23,
+        "pirmumoBalsai": 113,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88203": {
+        "porinkiminisNumerisSarase": 24,
+        "pirmumoBalsai": 113,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88191": {
+        "porinkiminisNumerisSarase": 25,
+        "pirmumoBalsai": 111,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88197": {
+        "porinkiminisNumerisSarase": 26,
+        "pirmumoBalsai": 97,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88205": {
+        "porinkiminisNumerisSarase": 27,
+        "pirmumoBalsai": 93,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88196": {
+        "porinkiminisNumerisSarase": 28,
+        "pirmumoBalsai": 88,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88199": {
+        "porinkiminisNumerisSarase": 29,
+        "pirmumoBalsai": 87,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88204": {
+        "porinkiminisNumerisSarase": 30,
+        "pirmumoBalsai": 85,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88195": {
+        "porinkiminisNumerisSarase": 31,
+        "pirmumoBalsai": 84,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88200": {
+        "porinkiminisNumerisSarase": 32,
+        "pirmumoBalsai": 83,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88193": {
+        "porinkiminisNumerisSarase": 33,
+        "pirmumoBalsai": 67,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88188": {
+        "porinkiminisNumerisSarase": 34,
+        "pirmumoBalsai": 56,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88206": {
+        "porinkiminisNumerisSarase": 35,
+        "pirmumoBalsai": 52,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88207": {
+        "porinkiminisNumerisSarase": 36,
+        "pirmumoBalsai": 51,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88201": {
+        "porinkiminisNumerisSarase": 37,
+        "pirmumoBalsai": 36,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88202": {
+        "porinkiminisNumerisSarase": 38,
+        "pirmumoBalsai": 36,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88198": {
+        "porinkiminisNumerisSarase": null,
+        "pirmumoBalsai": 0,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88173": {
+        "porinkiminisNumerisSarase": null,
+        "pirmumoBalsai": 0,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "88174": {
+        "porinkiminisNumerisSarase": null,
+        "pirmumoBalsai": 0,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9459_pirmumo_balsai.html"
+      },
+      "87972": {
+        "porinkiminisNumerisSarase": 1,
+        "pirmumoBalsai": 815,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87974": {
+        "porinkiminisNumerisSarase": 2,
+        "pirmumoBalsai": 602,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87976": {
+        "porinkiminisNumerisSarase": 3,
+        "pirmumoBalsai": 482,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87975": {
+        "porinkiminisNumerisSarase": 4,
+        "pirmumoBalsai": 348,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87979": {
+        "porinkiminisNumerisSarase": 5,
+        "pirmumoBalsai": 336,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87978": {
+        "porinkiminisNumerisSarase": 6,
+        "pirmumoBalsai": 221,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "88016": {
+        "porinkiminisNumerisSarase": 7,
+        "pirmumoBalsai": 219,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87977": {
+        "porinkiminisNumerisSarase": 8,
+        "pirmumoBalsai": 209,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87986": {
+        "porinkiminisNumerisSarase": 9,
+        "pirmumoBalsai": 187,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87983": {
+        "porinkiminisNumerisSarase": 10,
+        "pirmumoBalsai": 172,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87993": {
+        "porinkiminisNumerisSarase": 11,
+        "pirmumoBalsai": 149,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87982": {
+        "porinkiminisNumerisSarase": 12,
+        "pirmumoBalsai": 129,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87989": {
+        "porinkiminisNumerisSarase": 13,
+        "pirmumoBalsai": 126,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87980": {
+        "porinkiminisNumerisSarase": 14,
+        "pirmumoBalsai": 123,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87987": {
+        "porinkiminisNumerisSarase": 15,
+        "pirmumoBalsai": 116,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87981": {
+        "porinkiminisNumerisSarase": 16,
+        "pirmumoBalsai": 114,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "88015": {
+        "porinkiminisNumerisSarase": 17,
+        "pirmumoBalsai": 105,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87992": {
+        "porinkiminisNumerisSarase": 18,
+        "pirmumoBalsai": 100,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87990": {
+        "porinkiminisNumerisSarase": 19,
+        "pirmumoBalsai": 94,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87996": {
+        "porinkiminisNumerisSarase": 20,
+        "pirmumoBalsai": 88,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87995": {
+        "porinkiminisNumerisSarase": 21,
+        "pirmumoBalsai": 70,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87984": {
+        "porinkiminisNumerisSarase": 22,
+        "pirmumoBalsai": 65,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87994": {
+        "porinkiminisNumerisSarase": 23,
+        "pirmumoBalsai": 64,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "88000": {
+        "porinkiminisNumerisSarase": 24,
+        "pirmumoBalsai": 62,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87985": {
+        "porinkiminisNumerisSarase": 25,
+        "pirmumoBalsai": 61,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87991": {
+        "porinkiminisNumerisSarase": 26,
+        "pirmumoBalsai": 60,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87988": {
+        "porinkiminisNumerisSarase": 27,
+        "pirmumoBalsai": 58,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87998": {
+        "porinkiminisNumerisSarase": 28,
+        "pirmumoBalsai": 54,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "88014": {
+        "porinkiminisNumerisSarase": 29,
+        "pirmumoBalsai": 51,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "88008": {
+        "porinkiminisNumerisSarase": 30,
+        "pirmumoBalsai": 41,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "88010": {
+        "porinkiminisNumerisSarase": 31,
+        "pirmumoBalsai": 41,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87999": {
+        "porinkiminisNumerisSarase": 32,
+        "pirmumoBalsai": 35,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "88003": {
+        "porinkiminisNumerisSarase": 33,
+        "pirmumoBalsai": 31,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "87997": {
+        "porinkiminisNumerisSarase": 34,
+        "pirmumoBalsai": 29,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "88002": {
+        "porinkiminisNumerisSarase": 35,
+        "pirmumoBalsai": 29,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "88009": {
+        "porinkiminisNumerisSarase": 36,
+        "pirmumoBalsai": 26,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "88001": {
+        "porinkiminisNumerisSarase": 37,
+        "pirmumoBalsai": 15,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "88004": {
+        "porinkiminisNumerisSarase": 38,
+        "pirmumoBalsai": 10,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "88005": {
+        "porinkiminisNumerisSarase": 39,
+        "pirmumoBalsai": 22,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "88006": {
+        "porinkiminisNumerisSarase": 40,
+        "pirmumoBalsai": 16,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "88007": {
+        "porinkiminisNumerisSarase": 41,
+        "pirmumoBalsai": 5,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "88012": {
+        "porinkiminisNumerisSarase": 42,
+        "pirmumoBalsai": 11,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "88013": {
+        "porinkiminisNumerisSarase": 43,
+        "pirmumoBalsai": 17,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9309_pirmumo_balsai.html"
+      },
+      "88116": {
+        "porinkiminisNumerisSarase": 1,
+        "pirmumoBalsai": 745,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88119": {
+        "porinkiminisNumerisSarase": 2,
+        "pirmumoBalsai": 464,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88118": {
+        "porinkiminisNumerisSarase": 3,
+        "pirmumoBalsai": 435,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88120": {
+        "porinkiminisNumerisSarase": 4,
+        "pirmumoBalsai": 381,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88124": {
+        "porinkiminisNumerisSarase": 5,
+        "pirmumoBalsai": 234,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88123": {
+        "porinkiminisNumerisSarase": 6,
+        "pirmumoBalsai": 233,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88121": {
+        "porinkiminisNumerisSarase": 7,
+        "pirmumoBalsai": 215,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88125": {
+        "porinkiminisNumerisSarase": 8,
+        "pirmumoBalsai": 190,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88122": {
+        "porinkiminisNumerisSarase": 9,
+        "pirmumoBalsai": 133,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88127": {
+        "porinkiminisNumerisSarase": 10,
+        "pirmumoBalsai": 117,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88130": {
+        "porinkiminisNumerisSarase": 11,
+        "pirmumoBalsai": 117,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88129": {
+        "porinkiminisNumerisSarase": 12,
+        "pirmumoBalsai": 105,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88138": {
+        "porinkiminisNumerisSarase": 13,
+        "pirmumoBalsai": 98,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88136": {
+        "porinkiminisNumerisSarase": 14,
+        "pirmumoBalsai": 97,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88126": {
+        "porinkiminisNumerisSarase": 15,
+        "pirmumoBalsai": 90,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88132": {
+        "porinkiminisNumerisSarase": 16,
+        "pirmumoBalsai": 80,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88134": {
+        "porinkiminisNumerisSarase": 17,
+        "pirmumoBalsai": 80,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88137": {
+        "porinkiminisNumerisSarase": 18,
+        "pirmumoBalsai": 76,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88128": {
+        "porinkiminisNumerisSarase": 19,
+        "pirmumoBalsai": 71,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88131": {
+        "porinkiminisNumerisSarase": 20,
+        "pirmumoBalsai": 69,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88133": {
+        "porinkiminisNumerisSarase": 21,
+        "pirmumoBalsai": 52,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88135": {
+        "porinkiminisNumerisSarase": 22,
+        "pirmumoBalsai": 43,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88165": {
+        "porinkiminisNumerisSarase": 23,
+        "pirmumoBalsai": 43,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88149": {
+        "porinkiminisNumerisSarase": 24,
+        "pirmumoBalsai": 40,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88150": {
+        "porinkiminisNumerisSarase": 25,
+        "pirmumoBalsai": 38,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88147": {
+        "porinkiminisNumerisSarase": 26,
+        "pirmumoBalsai": 35,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88161": {
+        "porinkiminisNumerisSarase": 27,
+        "pirmumoBalsai": 35,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88142": {
+        "porinkiminisNumerisSarase": 28,
+        "pirmumoBalsai": 34,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88152": {
+        "porinkiminisNumerisSarase": 29,
+        "pirmumoBalsai": 33,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88146": {
+        "porinkiminisNumerisSarase": 30,
+        "pirmumoBalsai": 32,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88140": {
+        "porinkiminisNumerisSarase": 31,
+        "pirmumoBalsai": 30,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88163": {
+        "porinkiminisNumerisSarase": 32,
+        "pirmumoBalsai": 30,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88139": {
+        "porinkiminisNumerisSarase": 33,
+        "pirmumoBalsai": 28,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88145": {
+        "porinkiminisNumerisSarase": 34,
+        "pirmumoBalsai": 28,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88141": {
+        "porinkiminisNumerisSarase": 35,
+        "pirmumoBalsai": 17,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88143": {
+        "porinkiminisNumerisSarase": 36,
+        "pirmumoBalsai": 19,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88144": {
+        "porinkiminisNumerisSarase": 37,
+        "pirmumoBalsai": 17,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88148": {
+        "porinkiminisNumerisSarase": 38,
+        "pirmumoBalsai": 13,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88151": {
+        "porinkiminisNumerisSarase": 39,
+        "pirmumoBalsai": 10,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88153": {
+        "porinkiminisNumerisSarase": 40,
+        "pirmumoBalsai": 16,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88154": {
+        "porinkiminisNumerisSarase": 41,
+        "pirmumoBalsai": 16,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88155": {
+        "porinkiminisNumerisSarase": 42,
+        "pirmumoBalsai": 24,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88156": {
+        "porinkiminisNumerisSarase": 43,
+        "pirmumoBalsai": 14,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88157": {
+        "porinkiminisNumerisSarase": 44,
+        "pirmumoBalsai": 24,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88158": {
+        "porinkiminisNumerisSarase": 45,
+        "pirmumoBalsai": 8,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88159": {
+        "porinkiminisNumerisSarase": 46,
+        "pirmumoBalsai": 13,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88160": {
+        "porinkiminisNumerisSarase": 47,
+        "pirmumoBalsai": 13,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88162": {
+        "porinkiminisNumerisSarase": 48,
+        "pirmumoBalsai": 19,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88164": {
+        "porinkiminisNumerisSarase": 49,
+        "pirmumoBalsai": 20,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9450_pirmumo_balsai.html"
+      },
+      "88069": {
+        "porinkiminisNumerisSarase": 1,
+        "pirmumoBalsai": 564,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88070": {
+        "porinkiminisNumerisSarase": 2,
+        "pirmumoBalsai": 514,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88072": {
+        "porinkiminisNumerisSarase": 3,
+        "pirmumoBalsai": 459,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88073": {
+        "porinkiminisNumerisSarase": 4,
+        "pirmumoBalsai": 358,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88074": {
+        "porinkiminisNumerisSarase": 5,
+        "pirmumoBalsai": 317,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88077": {
+        "porinkiminisNumerisSarase": 6,
+        "pirmumoBalsai": 217,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88076": {
+        "porinkiminisNumerisSarase": 7,
+        "pirmumoBalsai": 208,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88075": {
+        "porinkiminisNumerisSarase": 8,
+        "pirmumoBalsai": 178,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88085": {
+        "porinkiminisNumerisSarase": 9,
+        "pirmumoBalsai": 165,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88078": {
+        "porinkiminisNumerisSarase": 10,
+        "pirmumoBalsai": 164,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88079": {
+        "porinkiminisNumerisSarase": 11,
+        "pirmumoBalsai": 144,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88082": {
+        "porinkiminisNumerisSarase": 12,
+        "pirmumoBalsai": 132,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88083": {
+        "porinkiminisNumerisSarase": 13,
+        "pirmumoBalsai": 131,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88087": {
+        "porinkiminisNumerisSarase": 14,
+        "pirmumoBalsai": 82,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88080": {
+        "porinkiminisNumerisSarase": 15,
+        "pirmumoBalsai": 78,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88084": {
+        "porinkiminisNumerisSarase": 16,
+        "pirmumoBalsai": 72,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88081": {
+        "porinkiminisNumerisSarase": 17,
+        "pirmumoBalsai": 68,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88088": {
+        "porinkiminisNumerisSarase": 18,
+        "pirmumoBalsai": 53,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88115": {
+        "porinkiminisNumerisSarase": 19,
+        "pirmumoBalsai": 52,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88089": {
+        "porinkiminisNumerisSarase": 20,
+        "pirmumoBalsai": 51,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88091": {
+        "porinkiminisNumerisSarase": 21,
+        "pirmumoBalsai": 45,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88099": {
+        "porinkiminisNumerisSarase": 22,
+        "pirmumoBalsai": 45,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88101": {
+        "porinkiminisNumerisSarase": 23,
+        "pirmumoBalsai": 43,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88086": {
+        "porinkiminisNumerisSarase": 24,
+        "pirmumoBalsai": 42,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88094": {
+        "porinkiminisNumerisSarase": 25,
+        "pirmumoBalsai": 42,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88097": {
+        "porinkiminisNumerisSarase": 26,
+        "pirmumoBalsai": 42,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88100": {
+        "porinkiminisNumerisSarase": 27,
+        "pirmumoBalsai": 42,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88095": {
+        "porinkiminisNumerisSarase": 28,
+        "pirmumoBalsai": 40,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88092": {
+        "porinkiminisNumerisSarase": 29,
+        "pirmumoBalsai": 38,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88103": {
+        "porinkiminisNumerisSarase": 30,
+        "pirmumoBalsai": 38,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88114": {
+        "porinkiminisNumerisSarase": 31,
+        "pirmumoBalsai": 37,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88096": {
+        "porinkiminisNumerisSarase": 32,
+        "pirmumoBalsai": 35,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88113": {
+        "porinkiminisNumerisSarase": 33,
+        "pirmumoBalsai": 32,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88090": {
+        "porinkiminisNumerisSarase": 34,
+        "pirmumoBalsai": 30,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88107": {
+        "porinkiminisNumerisSarase": 35,
+        "pirmumoBalsai": 30,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88111": {
+        "porinkiminisNumerisSarase": 36,
+        "pirmumoBalsai": 30,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88104": {
+        "porinkiminisNumerisSarase": 37,
+        "pirmumoBalsai": 27,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88102": {
+        "porinkiminisNumerisSarase": 38,
+        "pirmumoBalsai": 25,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88093": {
+        "porinkiminisNumerisSarase": 39,
+        "pirmumoBalsai": 19,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88098": {
+        "porinkiminisNumerisSarase": 40,
+        "pirmumoBalsai": 19,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88106": {
+        "porinkiminisNumerisSarase": 41,
+        "pirmumoBalsai": 14,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88108": {
+        "porinkiminisNumerisSarase": 42,
+        "pirmumoBalsai": 8,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88109": {
+        "porinkiminisNumerisSarase": 43,
+        "pirmumoBalsai": 18,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88112": {
+        "porinkiminisNumerisSarase": 44,
+        "pirmumoBalsai": 24,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos8746_pirmumo_balsai.html"
+      },
+      "88209": {
+        "porinkiminisNumerisSarase": 1,
+        "pirmumoBalsai": 376,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88211": {
+        "porinkiminisNumerisSarase": 2,
+        "pirmumoBalsai": 279,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88212": {
+        "porinkiminisNumerisSarase": 3,
+        "pirmumoBalsai": 237,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88215": {
+        "porinkiminisNumerisSarase": 4,
+        "pirmumoBalsai": 236,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88218": {
+        "porinkiminisNumerisSarase": 5,
+        "pirmumoBalsai": 146,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88213": {
+        "porinkiminisNumerisSarase": 6,
+        "pirmumoBalsai": 144,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88214": {
+        "porinkiminisNumerisSarase": 7,
+        "pirmumoBalsai": 142,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88216": {
+        "porinkiminisNumerisSarase": 8,
+        "pirmumoBalsai": 114,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88259": {
+        "porinkiminisNumerisSarase": 9,
+        "pirmumoBalsai": 114,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88229": {
+        "porinkiminisNumerisSarase": 10,
+        "pirmumoBalsai": 89,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88220": {
+        "porinkiminisNumerisSarase": 11,
+        "pirmumoBalsai": 86,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88221": {
+        "porinkiminisNumerisSarase": 12,
+        "pirmumoBalsai": 80,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88222": {
+        "porinkiminisNumerisSarase": 13,
+        "pirmumoBalsai": 79,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88217": {
+        "porinkiminisNumerisSarase": 14,
+        "pirmumoBalsai": 67,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88219": {
+        "porinkiminisNumerisSarase": 15,
+        "pirmumoBalsai": 66,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88246": {
+        "porinkiminisNumerisSarase": 16,
+        "pirmumoBalsai": 60,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88226": {
+        "porinkiminisNumerisSarase": 17,
+        "pirmumoBalsai": 52,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88232": {
+        "porinkiminisNumerisSarase": 18,
+        "pirmumoBalsai": 49,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88237": {
+        "porinkiminisNumerisSarase": 19,
+        "pirmumoBalsai": 47,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88228": {
+        "porinkiminisNumerisSarase": 20,
+        "pirmumoBalsai": 46,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88225": {
+        "porinkiminisNumerisSarase": 21,
+        "pirmumoBalsai": 45,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88227": {
+        "porinkiminisNumerisSarase": 22,
+        "pirmumoBalsai": 45,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88233": {
+        "porinkiminisNumerisSarase": 23,
+        "pirmumoBalsai": 45,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88245": {
+        "porinkiminisNumerisSarase": 24,
+        "pirmumoBalsai": 44,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88238": {
+        "porinkiminisNumerisSarase": 25,
+        "pirmumoBalsai": 42,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88223": {
+        "porinkiminisNumerisSarase": 26,
+        "pirmumoBalsai": 39,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88234": {
+        "porinkiminisNumerisSarase": 27,
+        "pirmumoBalsai": 37,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88252": {
+        "porinkiminisNumerisSarase": 28,
+        "pirmumoBalsai": 37,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88224": {
+        "porinkiminisNumerisSarase": 29,
+        "pirmumoBalsai": 36,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88236": {
+        "porinkiminisNumerisSarase": 30,
+        "pirmumoBalsai": 34,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88235": {
+        "porinkiminisNumerisSarase": 31,
+        "pirmumoBalsai": 33,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88231": {
+        "porinkiminisNumerisSarase": 32,
+        "pirmumoBalsai": 31,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88230": {
+        "porinkiminisNumerisSarase": 33,
+        "pirmumoBalsai": 30,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88258": {
+        "porinkiminisNumerisSarase": 34,
+        "pirmumoBalsai": 27,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88242": {
+        "porinkiminisNumerisSarase": 35,
+        "pirmumoBalsai": 26,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88239": {
+        "porinkiminisNumerisSarase": 36,
+        "pirmumoBalsai": 24,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88240": {
+        "porinkiminisNumerisSarase": 37,
+        "pirmumoBalsai": 15,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88241": {
+        "porinkiminisNumerisSarase": 38,
+        "pirmumoBalsai": 10,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88243": {
+        "porinkiminisNumerisSarase": 39,
+        "pirmumoBalsai": 12,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88244": {
+        "porinkiminisNumerisSarase": 40,
+        "pirmumoBalsai": 16,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88247": {
+        "porinkiminisNumerisSarase": 41,
+        "pirmumoBalsai": 13,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88248": {
+        "porinkiminisNumerisSarase": 42,
+        "pirmumoBalsai": 19,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88249": {
+        "porinkiminisNumerisSarase": 43,
+        "pirmumoBalsai": 20,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88250": {
+        "porinkiminisNumerisSarase": 44,
+        "pirmumoBalsai": 23,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88251": {
+        "porinkiminisNumerisSarase": 45,
+        "pirmumoBalsai": 15,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88253": {
+        "porinkiminisNumerisSarase": 46,
+        "pirmumoBalsai": 7,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88254": {
+        "porinkiminisNumerisSarase": 47,
+        "pirmumoBalsai": 6,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88255": {
+        "porinkiminisNumerisSarase": 48,
+        "pirmumoBalsai": 18,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88256": {
+        "porinkiminisNumerisSarase": 49,
+        "pirmumoBalsai": 19,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88257": {
+        "porinkiminisNumerisSarase": 50,
+        "pirmumoBalsai": 15,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9319_pirmumo_balsai.html"
+      },
+      "88260": {
+        "porinkiminisNumerisSarase": 1,
+        "pirmumoBalsai": 442,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88262": {
+        "porinkiminisNumerisSarase": 2,
+        "pirmumoBalsai": 321,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88263": {
+        "porinkiminisNumerisSarase": 3,
+        "pirmumoBalsai": 270,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88270": {
+        "porinkiminisNumerisSarase": 4,
+        "pirmumoBalsai": 202,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88264": {
+        "porinkiminisNumerisSarase": 5,
+        "pirmumoBalsai": 174,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88265": {
+        "porinkiminisNumerisSarase": 6,
+        "pirmumoBalsai": 166,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88267": {
+        "porinkiminisNumerisSarase": 7,
+        "pirmumoBalsai": 113,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88274": {
+        "porinkiminisNumerisSarase": 8,
+        "pirmumoBalsai": 94,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88268": {
+        "porinkiminisNumerisSarase": 9,
+        "pirmumoBalsai": 93,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88273": {
+        "porinkiminisNumerisSarase": 10,
+        "pirmumoBalsai": 82,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88275": {
+        "porinkiminisNumerisSarase": 11,
+        "pirmumoBalsai": 73,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88276": {
+        "porinkiminisNumerisSarase": 12,
+        "pirmumoBalsai": 61,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88266": {
+        "porinkiminisNumerisSarase": 13,
+        "pirmumoBalsai": 57,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88283": {
+        "porinkiminisNumerisSarase": 14,
+        "pirmumoBalsai": 53,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88269": {
+        "porinkiminisNumerisSarase": 15,
+        "pirmumoBalsai": 44,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88271": {
+        "porinkiminisNumerisSarase": 16,
+        "pirmumoBalsai": 33,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88279": {
+        "porinkiminisNumerisSarase": 17,
+        "pirmumoBalsai": 33,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88310": {
+        "porinkiminisNumerisSarase": 18,
+        "pirmumoBalsai": 31,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88286": {
+        "porinkiminisNumerisSarase": 19,
+        "pirmumoBalsai": 30,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88281": {
+        "porinkiminisNumerisSarase": 20,
+        "pirmumoBalsai": 28,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88285": {
+        "porinkiminisNumerisSarase": 21,
+        "pirmumoBalsai": 28,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88280": {
+        "porinkiminisNumerisSarase": 22,
+        "pirmumoBalsai": 27,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88284": {
+        "porinkiminisNumerisSarase": 23,
+        "pirmumoBalsai": 26,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88277": {
+        "porinkiminisNumerisSarase": 24,
+        "pirmumoBalsai": 25,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88272": {
+        "porinkiminisNumerisSarase": 25,
+        "pirmumoBalsai": 24,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88278": {
+        "porinkiminisNumerisSarase": 26,
+        "pirmumoBalsai": 20,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88282": {
+        "porinkiminisNumerisSarase": 27,
+        "pirmumoBalsai": 12,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88287": {
+        "porinkiminisNumerisSarase": 28,
+        "pirmumoBalsai": 23,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88288": {
+        "porinkiminisNumerisSarase": 29,
+        "pirmumoBalsai": 4,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88289": {
+        "porinkiminisNumerisSarase": 30,
+        "pirmumoBalsai": 3,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88290": {
+        "porinkiminisNumerisSarase": 31,
+        "pirmumoBalsai": 14,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88291": {
+        "porinkiminisNumerisSarase": 32,
+        "pirmumoBalsai": 12,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88292": {
+        "porinkiminisNumerisSarase": 33,
+        "pirmumoBalsai": 15,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88293": {
+        "porinkiminisNumerisSarase": 34,
+        "pirmumoBalsai": 17,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88294": {
+        "porinkiminisNumerisSarase": 35,
+        "pirmumoBalsai": 11,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88295": {
+        "porinkiminisNumerisSarase": 36,
+        "pirmumoBalsai": 13,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88296": {
+        "porinkiminisNumerisSarase": 37,
+        "pirmumoBalsai": 13,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88297": {
+        "porinkiminisNumerisSarase": 38,
+        "pirmumoBalsai": 14,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88298": {
+        "porinkiminisNumerisSarase": 39,
+        "pirmumoBalsai": 9,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88299": {
+        "porinkiminisNumerisSarase": 40,
+        "pirmumoBalsai": 7,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88300": {
+        "porinkiminisNumerisSarase": 41,
+        "pirmumoBalsai": 10,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88301": {
+        "porinkiminisNumerisSarase": 42,
+        "pirmumoBalsai": 4,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88302": {
+        "porinkiminisNumerisSarase": 43,
+        "pirmumoBalsai": 6,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88303": {
+        "porinkiminisNumerisSarase": 44,
+        "pirmumoBalsai": 10,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88304": {
+        "porinkiminisNumerisSarase": 45,
+        "pirmumoBalsai": 22,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88305": {
+        "porinkiminisNumerisSarase": 46,
+        "pirmumoBalsai": 20,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88306": {
+        "porinkiminisNumerisSarase": 47,
+        "pirmumoBalsai": 24,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88307": {
+        "porinkiminisNumerisSarase": 48,
+        "pirmumoBalsai": 14,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88308": {
+        "porinkiminisNumerisSarase": 49,
+        "pirmumoBalsai": 14,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "88309": {
+        "porinkiminisNumerisSarase": 50,
+        "pirmumoBalsai": 24,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos10375_pirmumo_balsai.html"
+      },
+      "87930": {
+        "porinkiminisNumerisSarase": 1,
+        "pirmumoBalsai": 289,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87933": {
+        "porinkiminisNumerisSarase": 2,
+        "pirmumoBalsai": 268,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87931": {
+        "porinkiminisNumerisSarase": 3,
+        "pirmumoBalsai": 263,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87934": {
+        "porinkiminisNumerisSarase": 4,
+        "pirmumoBalsai": 204,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87935": {
+        "porinkiminisNumerisSarase": 5,
+        "pirmumoBalsai": 190,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87936": {
+        "porinkiminisNumerisSarase": 6,
+        "pirmumoBalsai": 139,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87940": {
+        "porinkiminisNumerisSarase": 7,
+        "pirmumoBalsai": 69,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87939": {
+        "porinkiminisNumerisSarase": 8,
+        "pirmumoBalsai": 62,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87937": {
+        "porinkiminisNumerisSarase": 9,
+        "pirmumoBalsai": 56,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87938": {
+        "porinkiminisNumerisSarase": 10,
+        "pirmumoBalsai": 56,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87941": {
+        "porinkiminisNumerisSarase": 11,
+        "pirmumoBalsai": 40,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87943": {
+        "porinkiminisNumerisSarase": 12,
+        "pirmumoBalsai": 33,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87951": {
+        "porinkiminisNumerisSarase": 13,
+        "pirmumoBalsai": 30,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87946": {
+        "porinkiminisNumerisSarase": 14,
+        "pirmumoBalsai": 28,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87955": {
+        "porinkiminisNumerisSarase": 15,
+        "pirmumoBalsai": 27,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87950": {
+        "porinkiminisNumerisSarase": 16,
+        "pirmumoBalsai": 26,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87945": {
+        "porinkiminisNumerisSarase": 17,
+        "pirmumoBalsai": 25,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87949": {
+        "porinkiminisNumerisSarase": 18,
+        "pirmumoBalsai": 25,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87942": {
+        "porinkiminisNumerisSarase": 19,
+        "pirmumoBalsai": 15,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87944": {
+        "porinkiminisNumerisSarase": 20,
+        "pirmumoBalsai": 24,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87948": {
+        "porinkiminisNumerisSarase": 21,
+        "pirmumoBalsai": 18,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87952": {
+        "porinkiminisNumerisSarase": 22,
+        "pirmumoBalsai": 15,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87953": {
+        "porinkiminisNumerisSarase": 23,
+        "pirmumoBalsai": 6,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87954": {
+        "porinkiminisNumerisSarase": 24,
+        "pirmumoBalsai": 20,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87956": {
+        "porinkiminisNumerisSarase": 25,
+        "pirmumoBalsai": 7,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87957": {
+        "porinkiminisNumerisSarase": 26,
+        "pirmumoBalsai": 20,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87958": {
+        "porinkiminisNumerisSarase": 27,
+        "pirmumoBalsai": 17,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87959": {
+        "porinkiminisNumerisSarase": 28,
+        "pirmumoBalsai": 23,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87960": {
+        "porinkiminisNumerisSarase": 29,
+        "pirmumoBalsai": 8,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87961": {
+        "porinkiminisNumerisSarase": 30,
+        "pirmumoBalsai": 19,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87962": {
+        "porinkiminisNumerisSarase": 31,
+        "pirmumoBalsai": 21,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87963": {
+        "porinkiminisNumerisSarase": 32,
+        "pirmumoBalsai": 16,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87964": {
+        "porinkiminisNumerisSarase": 33,
+        "pirmumoBalsai": 5,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87965": {
+        "porinkiminisNumerisSarase": 34,
+        "pirmumoBalsai": 0,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87966": {
+        "porinkiminisNumerisSarase": 35,
+        "pirmumoBalsai": 4,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87967": {
+        "porinkiminisNumerisSarase": 36,
+        "pirmumoBalsai": 15,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87968": {
+        "porinkiminisNumerisSarase": 37,
+        "pirmumoBalsai": 22,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87969": {
+        "porinkiminisNumerisSarase": 38,
+        "pirmumoBalsai": 9,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      },
+      "87970": {
+        "porinkiminisNumerisSarase": 39,
+        "pirmumoBalsai": 15,
+        "pirmumoBalsuSaltinis": "https://www.vrk.lt/statiniai/puslapiai/2015_3_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos7923_partijos9328_pirmumo_balsai.html"
+      }
+    },
+    "voteRowsUnresolved": []
+  }
+}

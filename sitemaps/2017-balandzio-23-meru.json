@@ -1,0 +1,74 @@
+{
+  "electionId": "2017-balandzio-23-meru",
+  "sourceUrl": "https://www.vrk.lt/2017-04-23-nauji-jonavos-ir-sakiu-raj-meru-rinkimai/kandidatai?srcUrl=/rinkimai/748/rnk948/kandidatai/savKandidataiMerai.html",
+  "generatedAt": "2026-08-15T20:22:57+00:00",
+  "stats": {
+    "rows": 12,
+    "extracted": 11,
+    "skipped": 1,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Alina BATULEVIČIENĖ",
+      "candidateId": "alina-batuleviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk948/kandidatai/savKandidatasAnketa_rkndId-1106678.html"
+    },
+    {
+      "candidateName": "Rimantas KISELIOVAS",
+      "candidateId": "rimantas-kiseliovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk948/kandidatai/savKandidatasAnketa_rkndId-1200003.html"
+    },
+    {
+      "candidateName": "Bronislovas LIUTKUS",
+      "candidateId": "bronislovas-liutkus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk948/kandidatai/savKandidatasAnketa_rkndId-1106696.html"
+    },
+    {
+      "candidateName": "Darius MOCKUS",
+      "candidateId": "darius-mockus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk948/kandidatai/savKandidatasAnketa_rkndId-1200005.html"
+    },
+    {
+      "candidateName": "Remigijus OSAUSKAS",
+      "candidateId": "remigijus-osauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk948/kandidatai/savKandidatasAnketa_rkndId-1200001.html"
+    },
+    {
+      "candidateName": "Eugenijus SABUTIS",
+      "candidateId": "eugenijus-sabutis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk948/kandidatai/savKandidatasAnketa_rkndId-1106692.html"
+    },
+    {
+      "candidateName": "Raminta BASTYTĖ",
+      "candidateId": "raminta-bastyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk948/kandidatai/savKandidatasAnketa_rkndId-1200004.html"
+    },
+    {
+      "candidateName": "Vidas CIKANA",
+      "candidateId": "vidas-cikana",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk948/kandidatai/savKandidatasAnketa_rkndId-1106682.html"
+    },
+    {
+      "candidateName": "Dinara GUDAITIENĖ",
+      "candidateId": "dinara-gudaitiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk948/kandidatai/savKandidatasAnketa_rkndId-1106690.html"
+    },
+    {
+      "candidateName": "Raimondas JANUŠEVIČIUS",
+      "candidateId": "raimondas-janusevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk948/kandidatai/savKandidatasAnketa_rkndId-1199999.html"
+    },
+    {
+      "candidateName": "Edgaras PILYPAITIS",
+      "candidateId": "edgaras-pilypaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/748/rnk948/kandidatai/savKandidatasAnketa_rkndId-1106680.html"
+    }
+  ],
+  "skipped": [
+    {
+      "rowIndex": 1,
+      "reason": "no-cells"
+    }
+  ]
+}

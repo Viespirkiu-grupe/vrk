@@ -1,0 +1,274 @@
+{
+  "electionId": "2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai",
+  "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/index.html",
+  "districtUrls": [
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Apygardos/Apygarda7126/KandidataiApygardos7126.html",
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Apygardos/Apygarda7125/KandidataiApygardos7125.html"
+  ],
+  "generatedAt": "2026-08-22T08:03:18+00:00",
+  "stats": {
+    "rows": 17,
+    "extracted": 17,
+    "skipped": 0,
+    "duplicateCandidateIds": 0,
+    "districts": 2
+  },
+  "entries": [
+    {
+      "candidateName": "Jonas GUDAUSKAS",
+      "candidateId": "jonas-gudauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26243/Kandidato26243Anketa.html",
+      "vrkCandidateId": "26243",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Šilalės - Šilutės",
+        "apygardosNumeris": 33,
+        "apygardosId": "7126",
+        "iskele": "Tėvynės sąjunga - Lietuvos krikščionys demokratai"
+      }
+    },
+    {
+      "candidateName": "Darius KASPERAITIS",
+      "candidateId": "darius-kasperaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26284/Kandidato26284Anketa.html",
+      "vrkCandidateId": "26284",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Šilalės - Šilutės",
+        "apygardosNumeris": 33,
+        "apygardosId": "7126",
+        "iskele": "Tautinė partija LIETUVOS KELIAS"
+      }
+    },
+    {
+      "candidateName": "Algimantas MATULEVIČIUS",
+      "candidateId": "algimantas-matulevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26275/Kandidato26275Anketa.html",
+      "vrkCandidateId": "26275",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Šilalės - Šilutės",
+        "apygardosNumeris": 33,
+        "apygardosId": "7126",
+        "iskele": "Pilietinės demokratijos partija"
+      }
+    },
+    {
+      "candidateName": "Jonas PURLYS",
+      "candidateId": "jonas-purlys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26256/Kandidato26256Anketa.html",
+      "vrkCandidateId": "26256",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Šilalės - Šilutės",
+        "apygardosNumeris": 33,
+        "apygardosId": "7126",
+        "iskele": "Lietuvos Respublikos liberalų sąjūdis"
+      }
+    },
+    {
+      "candidateName": "Osvaldas ŠARMAVIČIUS",
+      "candidateId": "osvaldas-sarmavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26237/Kandidato26237Anketa.html",
+      "vrkCandidateId": "26237",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Šilalės - Šilutės",
+        "apygardosNumeris": 33,
+        "apygardosId": "7126",
+        "iskele": "Lietuvos socialdemokratų partija"
+      }
+    },
+    {
+      "candidateName": "Raimundas VAITIEKUS",
+      "candidateId": "raimundas-vaitiekus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26277/Kandidato26277Anketa.html",
+      "vrkCandidateId": "26277",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Šilalės - Šilutės",
+        "apygardosNumeris": 33,
+        "apygardosId": "7126",
+        "iskele": "Liberalų ir centro sąjunga"
+      }
+    },
+    {
+      "candidateName": "Daiva VAITKEVIČIUTĖ-REKAŠIENĖ",
+      "candidateId": "daiva-vaitkeviciute-rekasiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26254/Kandidato26254Anketa.html",
+      "vrkCandidateId": "26254",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Šilalės - Šilutės",
+        "apygardosNumeris": 33,
+        "apygardosId": "7126",
+        "iskele": "Naujoji sąjunga (socialliberalai)"
+      }
+    },
+    {
+      "candidateName": "Laima ZEMECKIENĖ",
+      "candidateId": "laima-zemeckiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26283/Kandidato26283Anketa.html",
+      "vrkCandidateId": "26283",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Šilalės - Šilutės",
+        "apygardosNumeris": 33,
+        "apygardosId": "7126",
+        "iskele": "Darbo partija"
+      }
+    },
+    {
+      "candidateName": "Remigijus ŽEMAITAITIS",
+      "candidateId": "remigijus-zemaitaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26249/Kandidato26249Anketa.html",
+      "vrkCandidateId": "26249",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Šilalės - Šilutės",
+        "apygardosNumeris": 33,
+        "apygardosId": "7126",
+        "iskele": "Partija Tvarka ir teisingumas"
+      }
+    },
+    {
+      "candidateName": "Lilijana ASTRA",
+      "candidateId": "lilijana-astra",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26285/Kandidato26285Anketa.html",
+      "vrkCandidateId": "26285",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Vilniaus - Šalčininkų",
+        "apygardosNumeris": 56,
+        "apygardosId": "7125",
+        "iskele": "Tautinė partija LIETUVOS KELIAS"
+      }
+    },
+    {
+      "candidateName": "Alina GOREVAJA",
+      "candidateId": "alina-gorevaja",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26281/Kandidato26281Anketa.html",
+      "vrkCandidateId": "26281",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Vilniaus - Šalčininkų",
+        "apygardosNumeris": 56,
+        "apygardosId": "7125",
+        "iskele": "Darbo partija"
+      }
+    },
+    {
+      "candidateName": "Renatas SALADŽIUS",
+      "candidateId": "renatas-saladzius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26257/Kandidato26257Anketa.html",
+      "vrkCandidateId": "26257",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Vilniaus - Šalčininkų",
+        "apygardosNumeris": 56,
+        "apygardosId": "7125",
+        "iskele": "Lietuvos Respublikos liberalų sąjūdis"
+      }
+    },
+    {
+      "candidateName": "Darius SKUSEVIČIUS",
+      "candidateId": "darius-skusevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26238/Kandidato26238Anketa.html",
+      "vrkCandidateId": "26238",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Vilniaus - Šalčininkų",
+        "apygardosNumeris": 56,
+        "apygardosId": "7125",
+        "iskele": "Lietuvos socialdemokratų partija"
+      }
+    },
+    {
+      "candidateName": "Česlava STANUL",
+      "candidateId": "ceslava-stanul",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26255/Kandidato26255Anketa.html",
+      "vrkCandidateId": "26255",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Vilniaus - Šalčininkų",
+        "apygardosNumeris": 56,
+        "apygardosId": "7125",
+        "iskele": "Naujoji sąjunga (socialliberalai)"
+      }
+    },
+    {
+      "candidateName": "Janina ŠIMKUVIENĖ",
+      "candidateId": "janina-simkuviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26250/Kandidato26250Anketa.html",
+      "vrkCandidateId": "26250",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Vilniaus - Šalčininkų",
+        "apygardosNumeris": 56,
+        "apygardosId": "7125",
+        "iskele": "Partija Tvarka ir teisingumas"
+      }
+    },
+    {
+      "candidateName": "Leonard TALMONT",
+      "candidateId": "leonard-talmont",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26261/Kandidato26261Anketa.html",
+      "vrkCandidateId": "26261",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Vilniaus - Šalčininkų",
+        "apygardosNumeris": 56,
+        "apygardosId": "7125",
+        "iskele": "Lietuvos lenkų rinkimų akcija"
+      }
+    },
+    {
+      "candidateName": "Vidmantas ŽILIUS",
+      "candidateId": "vidmantas-zilius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/406_lt/Kandidatai/Kandidatas26244/Kandidato26244Anketa.html",
+      "vrkCandidateId": "26244",
+      "roles": [
+        "vienmandate"
+      ],
+      "vienmandateCandidacy": {
+        "apygarda": "Vilniaus - Šalčininkų",
+        "apygardosNumeris": 56,
+        "apygardosId": "7125",
+        "iskele": "Tėvynės sąjunga - Lietuvos krikščionys demokratai"
+      }
+    }
+  ],
+  "skipped": []
+}

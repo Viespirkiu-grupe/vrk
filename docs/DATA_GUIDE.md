@@ -163,7 +163,9 @@ see the traps below.
 record of every election — either joined in from VRK's results trees (the
 1996–2015 families, whose pages mark no winner and whose `pastaba` is
 always null; `isrinktasKaip` names the seat, `rezultatuSaltinis` the page,
-a `null` means no results file exists) or, on the 2016–2025 layouts,
+a `null` means no results file exists — or one whose `elected` map is empty
+without the builder's `nobodyElected: true`, which only the four elections
+where nobody was elected carry; issue #134) or, on the 2016–2025 layouts,
 derived from the profile's prose note (`profilis.pastaba` starting
 `Išrink`), which names the complete winner set in every one of those
 elections — see `docs/OUTPUT_SCHEMA.md`. Five traps:

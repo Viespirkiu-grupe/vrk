@@ -1,0 +1,55 @@
+{
+  "electionId": "2015-lapkricio-8-telsiu-mero",
+  "generatedAt": "2026-08-21T14:14:43+00:00",
+  "sources": [
+    "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_daugiamand_apygardose/apygardos_rezultatai7935.html"
+  ],
+  "stats": {
+    "municipalities": 1,
+    "roundTwoPages": 1,
+    "mayorsResolved": 1,
+    "mayorsUnresolved": 0,
+    "mayorsDecidedInRoundTwo": 1,
+    "councilMembers": 0,
+    "councilNotInSitemap": 0,
+    "councilResolvedByNameAndList": 0,
+    "seatCountMismatches": 0,
+    "compositionPagesChecked": 1,
+    "compositionFullyContainsDerived": 1,
+    "derivedNotInComposition": 0,
+    "seats": {
+      "meras": 1
+    },
+    "annulledWinners": 0
+  },
+  "elected": {
+    "88319": {
+      "seat": "meras",
+      "method": "verdict",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2015_4_savivaldybiu_tarybu_rinkimai/output_lt/rezultatai_vienmand_apygardose2/apygardos_rezultatai7937.html",
+      "round": 2,
+      "municipality": "51. Telšių rajono"
+    }
+  },
+  "details": {
+    "annulments": {},
+    "perMunicipality": [
+      {
+        "municipality": "51. Telšių rajono",
+        "mayorResolved": true,
+        "mayorRound": 2,
+        "councilElected": 0,
+        "listMandatesTotal": null,
+        "derivedTotal": 1,
+        "expectedTotal": null,
+        "listsShort": [],
+        "compositionMandates": 27,
+        "compositionMembers": 35,
+        "derivedNotInComposition": 0
+      }
+    ],
+    "unresolvedMayors": [],
+    "councilNotInSitemap": [],
+    "seatCountMismatches": []
+  }
+}

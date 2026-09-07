@@ -16,20 +16,24 @@ What git carries now is a subset, chosen by one rule:
 
 A *unit* is a candidate directory with all its files together, a listing
 subdirectory (`lists/`, `districts/`, `municipalities/`, ...), one election's
-`samples/results/<election-id>/` tree, or a single top-level listing file. Only
-what a parser opens counts — the extensions `.html`, `.htm`, `.json`, `.doc`,
+`samples/results/<election-id>/` tree, a single top-level listing file, or —
+since issue #145 — one file of `sitemaps/`, the crawl plans and results files
+the parse and results tests read. Only what a parser opens counts — the extensions `.html`, `.htm`, `.json`, `.doc`,
 and a candidate's retained portrait (`portrait.json` and the `portrait.<ext>`
 it names, which the record writer reads to externalize the photo; issue #118)
 — so the 2002 presidential declaration scans (`.jpg`, about 1 MB per
 candidate, recorded by path and never read) stay local.
 
-That is 6,230 files and 69 MiB — 852 of them, 25 MiB, the retained portraits
-of the URL-era fixture candidates — and it leaves every election with at
-least one candidate to parse; `tests/test_tracked_fixtures.py` asserts exactly that,
-along with git and the rule still agreeing. What a clone does *not* get is 48
-candidates, all of them 2018-2019 pages carrying the portrait as a base64 data
-URI, ten listing trees, nine `results/` trees and four `list.html` listings.
-`scripts/tracked_fixtures.py` is the rule in code:
+That is 6,306 files and 78 MiB — 852 of them, 25 MiB, the retained portraits
+of the URL-era fixture candidates, and 76 of them, 9.4 MiB, the sitemaps of
+every election that is not a municipal general — and it leaves every election
+with at least one candidate to parse; `tests/test_tracked_fixtures.py` asserts
+exactly that, along with git and the rule still agreeing. What a clone does
+*not* get is 48 candidates, all of them 2018-2019 pages carrying the portrait
+as a base64 data URI, ten listing trees, nine `results/` trees, four
+`list.html` listings, and the 14 sitemaps of the municipal generals (10,000
+entries each) with their results files. `scripts/tracked_fixtures.py` is the
+rule in code:
 
 ```bash
 python scripts/tracked_fixtures.py            # what the rule selects
@@ -37,16 +41,45 @@ python scripts/tracked_fixtures.py --check    # does git agree?
 python scripts/tracked_fixtures.py --sync     # make git agree
 ```
 
-`--sync` force-adds past the `samples/` ignore rule, which is why new fixtures
-need it: `git add` alone will not see them.
+`--sync` force-adds past the `samples/` and `sitemaps/` ignore rules, which is
+why new fixtures need it: `git add` alone will not see them. (In a worktree
+that reaches these trees through symlinks into the main checkout, `--sync`
+replaces a selected symlink with a copy first, since git would otherwise store
+the link. On the main checkout the first pull that brings tracked sitemaps in
+will refuse to overwrite the identical untracked files already there; remove
+those files and pull again — they come back from git, byte for byte.)
 
-A test that needs something outside the subset — or `sitemaps/`, or `data/`,
-or `samples-full/` — skips rather than fails, naming the command that would
-produce it. `tests/local_data.py` holds that machinery and the root
-`conftest.py` applies it. On a clone the suite is about 1,410 passed and 340
-skipped, and a further 174 subtests skip one untracked candidate at a time
-(`verbosity_subtests` in `pyproject.toml` makes the summary line count them);
-here, with everything scraped, 1,824 passed.
+A test that needs something outside the subset — or the large sitemaps, or
+`data/`, or `samples-full/` — skips rather than fails, naming the command that
+would produce it. `tests/local_data.py` holds that machinery and the root
+`conftest.py` applies it, and the rule is **per unit**: a `FileNotFoundError`
+under one of the local-data roots becomes a skip only when the unit the path
+belongs to — the candidate directory, the election's results tree, the
+retained candidate under `samples-full/`, the sitemap file, the election's
+`data/` directory — is absent from the checkout. A path missing *inside* a
+unit that is here is a parser building the wrong path, and stays a failure.
+Until issue #145 any `OSError` under those roots was a skip, which is exactly
+where every path a parser builds lives: a one-character bug in one parser
+(`anketa.html` → `anketa.htm`) turned 18 passing tests into 18 skips and the
+suite exited 0. Tests that read `data/` as a whole call
+`local_data.require_corpus()`, which skips unless an election's records are
+actually there (a `data/` holding only a coverage report is not a corpus —
+`field_coverage.py` no longer creates one), and with `complete=True` unless
+every registered election is, which is what a pin on the whole corpus's record
+count assumes. CI installs node explicitly (`actions/setup-node`) and the
+conftest refuses to start a `CI` session without it: 42 dashboard tests run
+their JavaScript under node and would otherwise skip in silence. And the
+suite never reaches the network: the conftest refuses `requests` for any host
+but the loopback the HTTP tests serve from, naming the URL. A results-rebuild
+test whose sitemap was tracked but whose page cache was not fetched 89 pages
+from vrk.lt on the laptop and passed, then met a 403 on the runner — it skips
+on the absent cache now, and any other test that would fetch fails locally
+first. `VRK_TESTS_ALLOW_NETWORK=1` lifts the refusal for a deliberate live run.
+
+On a clone the suite is about 1,685 passed and 408 skipped
+(from 1,484 / 516 before the sitemaps were tracked), 2,140
+subtests passed (`verbosity_subtests` in `pyproject.toml` makes the summary
+line count them); here, with everything scraped, 1,919 passed.
 
 A skip is a test that did not run, and a test that only ever runs on the
 scraping laptop can sit asserting a shape two refactors old while CI stays

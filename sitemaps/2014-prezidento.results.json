@@ -1,0 +1,20 @@
+{
+  "electionId": "2014-prezidento",
+  "generatedAt": "2026-08-21T14:15:00+00:00",
+  "sources": [
+    "https://www.vrk.lt/statiniai/puslapiai/2014_prezidento_rinkimai/output_lt/rinkimu_diena/rezultatai_isankstiniai2.html"
+  ],
+  "stats": {
+    "winnerName": "Dalia GRYBAUSKAITĖ",
+    "winnersResolved": 1,
+    "unresolved": 0
+  },
+  "elected": {
+    "70873": {
+      "seat": "prezidentas",
+      "method": "verdict",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/2014_prezidento_rinkimai/output_lt/rinkimu_diena/rezultatai_isankstiniai2.html",
+      "round": 2
+    }
+  }
+}

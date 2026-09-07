@@ -1,0 +1,5544 @@
+{
+  "electionId": "2015-birzelio-21-pakartotiniai-silutes",
+  "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Apygardos/Apygarda7923/KandidataiApygardos7923.html",
+  "districtUrls": [
+    "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Apygardos/Apygarda7923/KandidataiApygardos7923.html"
+  ],
+  "generatedAt": "2026-08-20T20:59:56+00:00",
+  "stats": {
+    "rows": 374,
+    "extracted": 366,
+    "skipped": 0,
+    "duplicateCandidateIds": 1,
+    "partyLists": 8,
+    "mayoralCandidates": 8,
+    "councilCandidates": 366,
+    "dualCandidates": 8,
+    "markerJoinMismatch": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Tomas Budrikis",
+      "candidateId": "tomas-budrikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87930/Kandidato87930Anketa.html",
+      "vrkCandidateId": "87930",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "meras",
+        "tarybos-narys"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Darbo partija"
+      },
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 2
+      }
+    },
+    {
+      "candidateName": "Arvydas Jakas",
+      "candidateId": "arvydas-jakas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87972/Kandidato87972Anketa.html",
+      "vrkCandidateId": "87972",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "meras",
+        "tarybos-narys"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Lietuvos laisvės sąjunga (liberalai)"
+      },
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 1
+      }
+    },
+    {
+      "candidateName": "Jonas Jatautas",
+      "candidateId": "jonas-jatautas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88069/Kandidato88069Anketa.html",
+      "vrkCandidateId": "88069",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "meras",
+        "tarybos-narys"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Lietuvos Respublikos liberalų sąjūdis"
+      },
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 2
+      }
+    },
+    {
+      "candidateName": "Vytautas Laurinaitis",
+      "candidateId": "vytautas-laurinaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88167/Kandidato88167Anketa.html",
+      "vrkCandidateId": "88167",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "meras",
+        "tarybos-narys"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Partija Tvarka ir teisingumas"
+      },
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 1
+      }
+    },
+    {
+      "candidateName": "Alfredas Stasys Nausėda",
+      "candidateId": "alfredas-stasys-nauseda",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88018/Kandidato88018Anketa.html",
+      "vrkCandidateId": "88018",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "meras",
+        "tarybos-narys"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Lietuvos socialdemokratų partija"
+      },
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 1
+      }
+    },
+    {
+      "candidateName": "Virgilijus Pozingis",
+      "candidateId": "virgilijus-pozingis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88209/Kandidato88209Anketa.html",
+      "vrkCandidateId": "88209",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "meras",
+        "tarybos-narys"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Lietuvos valstiečių ir žaliųjų sąjunga"
+      },
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 1
+      }
+    },
+    {
+      "candidateName": "Sandra Tamašauskienė",
+      "candidateId": "sandra-tamasauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88116/Kandidato88116Anketa.html",
+      "vrkCandidateId": "88116",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "meras",
+        "tarybos-narys"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Tėvynės sąjunga - Lietuvos krikščionys demokratai"
+      },
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 1
+      }
+    },
+    {
+      "candidateName": "Daiva Žebelienė",
+      "candidateId": "daiva-zebeliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88260/Kandidato88260Anketa.html",
+      "vrkCandidateId": "88260",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "meras",
+        "tarybos-narys"
+      ],
+      "mayoralCandidacy": {
+        "nominatedBy": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“"
+      },
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 1
+      }
+    },
+    {
+      "candidateName": "Sigitas Šeputis",
+      "candidateId": "sigitas-seputis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88020/Kandidato88020Anketa.html",
+      "vrkCandidateId": "88020",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 2
+      }
+    },
+    {
+      "candidateName": "Algis Bekeris",
+      "candidateId": "algis-bekeris",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88021/Kandidato88021Anketa.html",
+      "vrkCandidateId": "88021",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 3
+      }
+    },
+    {
+      "candidateName": "Algirdas Balčytis",
+      "candidateId": "algirdas-balcytis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88022/Kandidato88022Anketa.html",
+      "vrkCandidateId": "88022",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 4
+      }
+    },
+    {
+      "candidateName": "Alfonsas Vanagas",
+      "candidateId": "alfonsas-vanagas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88023/Kandidato88023Anketa.html",
+      "vrkCandidateId": "88023",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 5
+      }
+    },
+    {
+      "candidateName": "Arūnas Pupšys",
+      "candidateId": "arunas-pupsys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88024/Kandidato88024Anketa.html",
+      "vrkCandidateId": "88024",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 6
+      }
+    },
+    {
+      "candidateName": "Antanas Martinkus",
+      "candidateId": "antanas-martinkus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88025/Kandidato88025Anketa.html",
+      "vrkCandidateId": "88025",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 7
+      }
+    },
+    {
+      "candidateName": "Kostas Girčius",
+      "candidateId": "kostas-gircius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88026/Kandidato88026Anketa.html",
+      "vrkCandidateId": "88026",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 8
+      }
+    },
+    {
+      "candidateName": "Saulius Vytuvis",
+      "candidateId": "saulius-vytuvis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88027/Kandidato88027Anketa.html",
+      "vrkCandidateId": "88027",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 9
+      }
+    },
+    {
+      "candidateName": "Antanas Kubaitis",
+      "candidateId": "antanas-kubaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88028/Kandidato88028Anketa.html",
+      "vrkCandidateId": "88028",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 10
+      }
+    },
+    {
+      "candidateName": "Ligita Kužmarskienė",
+      "candidateId": "ligita-kuzmarskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88029/Kandidato88029Anketa.html",
+      "vrkCandidateId": "88029",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 11
+      }
+    },
+    {
+      "candidateName": "Asta Ulevičienė",
+      "candidateId": "asta-uleviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88030/Kandidato88030Anketa.html",
+      "vrkCandidateId": "88030",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 12
+      }
+    },
+    {
+      "candidateName": "Petras Balsys",
+      "candidateId": "petras-balsys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88031/Kandidato88031Anketa.html",
+      "vrkCandidateId": "88031",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 13
+      }
+    },
+    {
+      "candidateName": "Neringa Vytuvienė",
+      "candidateId": "neringa-vytuviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88032/Kandidato88032Anketa.html",
+      "vrkCandidateId": "88032",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 14
+      }
+    },
+    {
+      "candidateName": "Aldona Andžiulienė",
+      "candidateId": "aldona-andziuliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88033/Kandidato88033Anketa.html",
+      "vrkCandidateId": "88033",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 15
+      }
+    },
+    {
+      "candidateName": "Gražina Treigienė",
+      "candidateId": "grazina-treigiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88034/Kandidato88034Anketa.html",
+      "vrkCandidateId": "88034",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 16
+      }
+    },
+    {
+      "candidateName": "Petras Juraška",
+      "candidateId": "petras-juraska",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88035/Kandidato88035Anketa.html",
+      "vrkCandidateId": "88035",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 17
+      }
+    },
+    {
+      "candidateName": "Sigita Kasparavičienė",
+      "candidateId": "sigita-kasparaviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88036/Kandidato88036Anketa.html",
+      "vrkCandidateId": "88036",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 18
+      }
+    },
+    {
+      "candidateName": "Irena Macienė",
+      "candidateId": "irena-maciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88037/Kandidato88037Anketa.html",
+      "vrkCandidateId": "88037",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 19
+      }
+    },
+    {
+      "candidateName": "Valentinas Vanagas",
+      "candidateId": "valentinas-vanagas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88038/Kandidato88038Anketa.html",
+      "vrkCandidateId": "88038",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 20
+      }
+    },
+    {
+      "candidateName": "Virginijus Stasiulis",
+      "candidateId": "virginijus-stasiulis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88039/Kandidato88039Anketa.html",
+      "vrkCandidateId": "88039",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 21
+      }
+    },
+    {
+      "candidateName": "Vingaudas Krujelskis",
+      "candidateId": "vingaudas-krujelskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88040/Kandidato88040Anketa.html",
+      "vrkCandidateId": "88040",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 22
+      }
+    },
+    {
+      "candidateName": "Ovidijus Rabačiauskas",
+      "candidateId": "ovidijus-rabaciauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88041/Kandidato88041Anketa.html",
+      "vrkCandidateId": "88041",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 23
+      }
+    },
+    {
+      "candidateName": "Laima Žemgulienė",
+      "candidateId": "laima-zemguliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88042/Kandidato88042Anketa.html",
+      "vrkCandidateId": "88042",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 24
+      }
+    },
+    {
+      "candidateName": "Andrius Užpelkis",
+      "candidateId": "andrius-uzpelkis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88043/Kandidato88043Anketa.html",
+      "vrkCandidateId": "88043",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 25
+      }
+    },
+    {
+      "candidateName": "Regina Aldona Mauricienė",
+      "candidateId": "regina-aldona-mauriciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88044/Kandidato88044Anketa.html",
+      "vrkCandidateId": "88044",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 26
+      }
+    },
+    {
+      "candidateName": "Stasys Strakšys",
+      "candidateId": "stasys-straksys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88045/Kandidato88045Anketa.html",
+      "vrkCandidateId": "88045",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 27
+      }
+    },
+    {
+      "candidateName": "Gedas Karolis",
+      "candidateId": "gedas-karolis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88046/Kandidato88046Anketa.html",
+      "vrkCandidateId": "88046",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 28
+      }
+    },
+    {
+      "candidateName": "Zigmas Toleikis",
+      "candidateId": "zigmas-toleikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88047/Kandidato88047Anketa.html",
+      "vrkCandidateId": "88047",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 29
+      }
+    },
+    {
+      "candidateName": "Saulius Dobilinskas",
+      "candidateId": "saulius-dobilinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88048/Kandidato88048Anketa.html",
+      "vrkCandidateId": "88048",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 30
+      }
+    },
+    {
+      "candidateName": "Martynas Žemaitaitis",
+      "candidateId": "martynas-zemaitaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88049/Kandidato88049Anketa.html",
+      "vrkCandidateId": "88049",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 31
+      }
+    },
+    {
+      "candidateName": "Vygaudas Sudeikis",
+      "candidateId": "vygaudas-sudeikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88050/Kandidato88050Anketa.html",
+      "vrkCandidateId": "88050",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 32
+      }
+    },
+    {
+      "candidateName": "Regina Auškelienė",
+      "candidateId": "regina-auskeliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88051/Kandidato88051Anketa.html",
+      "vrkCandidateId": "88051",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 33
+      }
+    },
+    {
+      "candidateName": "Vilma Nevardauskienė",
+      "candidateId": "vilma-nevardauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88052/Kandidato88052Anketa.html",
+      "vrkCandidateId": "88052",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 34
+      }
+    },
+    {
+      "candidateName": "Gvidas Zdanavičius",
+      "candidateId": "gvidas-zdanavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88053/Kandidato88053Anketa.html",
+      "vrkCandidateId": "88053",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 35
+      }
+    },
+    {
+      "candidateName": "Saulius Šalna",
+      "candidateId": "saulius-salna",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88054/Kandidato88054Anketa.html",
+      "vrkCandidateId": "88054",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 36
+      }
+    },
+    {
+      "candidateName": "Reda Šertvytienė",
+      "candidateId": "reda-sertvytiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88055/Kandidato88055Anketa.html",
+      "vrkCandidateId": "88055",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 37
+      }
+    },
+    {
+      "candidateName": "Kęstutis Pilipavičius",
+      "candidateId": "kestutis-pilipavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88056/Kandidato88056Anketa.html",
+      "vrkCandidateId": "88056",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 38
+      }
+    },
+    {
+      "candidateName": "Feliksas Degutis",
+      "candidateId": "feliksas-degutis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88057/Kandidato88057Anketa.html",
+      "vrkCandidateId": "88057",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 39
+      }
+    },
+    {
+      "candidateName": "Kristina Regelskytė",
+      "candidateId": "kristina-regelskyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88058/Kandidato88058Anketa.html",
+      "vrkCandidateId": "88058",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 40
+      }
+    },
+    {
+      "candidateName": "Andrius Šašilkinas",
+      "candidateId": "andrius-sasilkinas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88059/Kandidato88059Anketa.html",
+      "vrkCandidateId": "88059",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 41
+      }
+    },
+    {
+      "candidateName": "Almantas Tutlys",
+      "candidateId": "almantas-tutlys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88060/Kandidato88060Anketa.html",
+      "vrkCandidateId": "88060",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 42
+      }
+    },
+    {
+      "candidateName": "Raimondas Andrijauskas",
+      "candidateId": "raimondas-andrijauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88061/Kandidato88061Anketa.html",
+      "vrkCandidateId": "88061",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 43
+      }
+    },
+    {
+      "candidateName": "Robertas Būdvytis",
+      "candidateId": "robertas-budvytis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88062/Kandidato88062Anketa.html",
+      "vrkCandidateId": "88062",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 44
+      }
+    },
+    {
+      "candidateName": "Irenėjus Petreikis",
+      "candidateId": "irenejus-petreikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88063/Kandidato88063Anketa.html",
+      "vrkCandidateId": "88063",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 45
+      }
+    },
+    {
+      "candidateName": "Evelina Balandė",
+      "candidateId": "evelina-balande",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88064/Kandidato88064Anketa.html",
+      "vrkCandidateId": "88064",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 46
+      }
+    },
+    {
+      "candidateName": "Kęstutis Gvildys",
+      "candidateId": "kestutis-gvildys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88065/Kandidato88065Anketa.html",
+      "vrkCandidateId": "88065",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 47
+      }
+    },
+    {
+      "candidateName": "Vida Lebedeva",
+      "candidateId": "vida-lebedeva",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88066/Kandidato88066Anketa.html",
+      "vrkCandidateId": "88066",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 48
+      }
+    },
+    {
+      "candidateName": "Arvydas Lukoševičius",
+      "candidateId": "arvydas-lukosevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88067/Kandidato88067Anketa.html",
+      "vrkCandidateId": "88067",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 49
+      }
+    },
+    {
+      "candidateName": "Aurimas Kankalis",
+      "candidateId": "aurimas-kankalis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88068/Kandidato88068Anketa.html",
+      "vrkCandidateId": "88068",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos socialdemokratų partija",
+        "listNumber": 2,
+        "listPosition": 50
+      }
+    },
+    {
+      "candidateName": "Arūnas Kurlianskas",
+      "candidateId": "arunas-kurlianskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88118/Kandidato88118Anketa.html",
+      "vrkCandidateId": "88118",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 2
+      }
+    },
+    {
+      "candidateName": "Zigmantas Jaunius",
+      "candidateId": "zigmantas-jaunius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88119/Kandidato88119Anketa.html",
+      "vrkCandidateId": "88119",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 3
+      }
+    },
+    {
+      "candidateName": "Albina Bumblauskienė",
+      "candidateId": "albina-bumblauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88120/Kandidato88120Anketa.html",
+      "vrkCandidateId": "88120",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 4
+      }
+    },
+    {
+      "candidateName": "Vytautas Stanslovas",
+      "candidateId": "vytautas-stanslovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88121/Kandidato88121Anketa.html",
+      "vrkCandidateId": "88121",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 5
+      }
+    },
+    {
+      "candidateName": "Ipolitas Vasiliauskis",
+      "candidateId": "ipolitas-vasiliauskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88122/Kandidato88122Anketa.html",
+      "vrkCandidateId": "88122",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 6
+      }
+    },
+    {
+      "candidateName": "Tomas Bartkus",
+      "candidateId": "tomas-bartkus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88123/Kandidato88123Anketa.html",
+      "vrkCandidateId": "88123",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 7
+      }
+    },
+    {
+      "candidateName": "Darius Lidžius",
+      "candidateId": "darius-lidzius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88124/Kandidato88124Anketa.html",
+      "vrkCandidateId": "88124",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 8
+      }
+    },
+    {
+      "candidateName": "Tomas Leščinskas",
+      "candidateId": "tomas-lescinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88125/Kandidato88125Anketa.html",
+      "vrkCandidateId": "88125",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 9
+      }
+    },
+    {
+      "candidateName": "Vilija Liatukienė",
+      "candidateId": "vilija-liatukiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88126/Kandidato88126Anketa.html",
+      "vrkCandidateId": "88126",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 10
+      }
+    },
+    {
+      "candidateName": "Leonas Galdikas",
+      "candidateId": "leonas-galdikas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88127/Kandidato88127Anketa.html",
+      "vrkCandidateId": "88127",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 11
+      }
+    },
+    {
+      "candidateName": "Regina Tamošauskienė",
+      "candidateId": "regina-tamosauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88128/Kandidato88128Anketa.html",
+      "vrkCandidateId": "88128",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 12
+      }
+    },
+    {
+      "candidateName": "Ona Jurjonienė",
+      "candidateId": "ona-jurjoniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88129/Kandidato88129Anketa.html",
+      "vrkCandidateId": "88129",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 13
+      }
+    },
+    {
+      "candidateName": "Stefa Baldauskienė",
+      "candidateId": "stefa-baldauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88130/Kandidato88130Anketa.html",
+      "vrkCandidateId": "88130",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 14
+      }
+    },
+    {
+      "candidateName": "Valdas Kniukšta",
+      "candidateId": "valdas-kniuksta",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88131/Kandidato88131Anketa.html",
+      "vrkCandidateId": "88131",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 15
+      }
+    },
+    {
+      "candidateName": "Gražina Starkutienė",
+      "candidateId": "grazina-starkutiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88132/Kandidato88132Anketa.html",
+      "vrkCandidateId": "88132",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 16
+      }
+    },
+    {
+      "candidateName": "Algimantas Romanauskas",
+      "candidateId": "algimantas-romanauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88133/Kandidato88133Anketa.html",
+      "vrkCandidateId": "88133",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 17
+      }
+    },
+    {
+      "candidateName": "Kęstutis Gabšys",
+      "candidateId": "kestutis-gabsys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88134/Kandidato88134Anketa.html",
+      "vrkCandidateId": "88134",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 18
+      }
+    },
+    {
+      "candidateName": "Saulius Budrys",
+      "candidateId": "saulius-budrys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88135/Kandidato88135Anketa.html",
+      "vrkCandidateId": "88135",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 19
+      }
+    },
+    {
+      "candidateName": "Virginijus Kasiliauskas",
+      "candidateId": "virginijus-kasiliauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88136/Kandidato88136Anketa.html",
+      "vrkCandidateId": "88136",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 20
+      }
+    },
+    {
+      "candidateName": "Asgerda Kasiliauskienė",
+      "candidateId": "asgerda-kasiliauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88137/Kandidato88137Anketa.html",
+      "vrkCandidateId": "88137",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 21
+      }
+    },
+    {
+      "candidateName": "Nijolė Brazienė",
+      "candidateId": "nijole-braziene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88138/Kandidato88138Anketa.html",
+      "vrkCandidateId": "88138",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 22
+      }
+    },
+    {
+      "candidateName": "Donatas Strukčinskas",
+      "candidateId": "donatas-strukcinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88139/Kandidato88139Anketa.html",
+      "vrkCandidateId": "88139",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 23
+      }
+    },
+    {
+      "candidateName": "Giedrė Anskaitienė",
+      "candidateId": "giedre-anskaitiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88140/Kandidato88140Anketa.html",
+      "vrkCandidateId": "88140",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 24
+      }
+    },
+    {
+      "candidateName": "Martynas Kurmis",
+      "candidateId": "martynas-kurmis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88141/Kandidato88141Anketa.html",
+      "vrkCandidateId": "88141",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 25
+      }
+    },
+    {
+      "candidateName": "Edvardas Judžentis",
+      "candidateId": "edvardas-judzentis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88142/Kandidato88142Anketa.html",
+      "vrkCandidateId": "88142",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 26
+      }
+    },
+    {
+      "candidateName": "Daiva Žemaitienė",
+      "candidateId": "daiva-zemaitiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88143/Kandidato88143Anketa.html",
+      "vrkCandidateId": "88143",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 27
+      }
+    },
+    {
+      "candidateName": "Petras Jucikas",
+      "candidateId": "petras-jucikas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88144/Kandidato88144Anketa.html",
+      "vrkCandidateId": "88144",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 28
+      }
+    },
+    {
+      "candidateName": "Leonas Anskaitis",
+      "candidateId": "leonas-anskaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88145/Kandidato88145Anketa.html",
+      "vrkCandidateId": "88145",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 29
+      }
+    },
+    {
+      "candidateName": "Aurelija Žymančienė",
+      "candidateId": "aurelija-zymanciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88146/Kandidato88146Anketa.html",
+      "vrkCandidateId": "88146",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 30
+      }
+    },
+    {
+      "candidateName": "Stepas Bairašauskas",
+      "candidateId": "stepas-bairasauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88147/Kandidato88147Anketa.html",
+      "vrkCandidateId": "88147",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 31
+      }
+    },
+    {
+      "candidateName": "Genovaitė Voitenko",
+      "candidateId": "genovaite-voitenko",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88148/Kandidato88148Anketa.html",
+      "vrkCandidateId": "88148",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 32
+      }
+    },
+    {
+      "candidateName": "Stasys Vaičiulis",
+      "candidateId": "stasys-vaiciulis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88149/Kandidato88149Anketa.html",
+      "vrkCandidateId": "88149",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 33
+      }
+    },
+    {
+      "candidateName": "Laima Bočkuvienė",
+      "candidateId": "laima-bockuviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88150/Kandidato88150Anketa.html",
+      "vrkCandidateId": "88150",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 34
+      }
+    },
+    {
+      "candidateName": "Rimvydas Kairys",
+      "candidateId": "rimvydas-kairys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88151/Kandidato88151Anketa.html",
+      "vrkCandidateId": "88151",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 35
+      }
+    },
+    {
+      "candidateName": "Žydrūnas Girulis",
+      "candidateId": "zydrunas-girulis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88152/Kandidato88152Anketa.html",
+      "vrkCandidateId": "88152",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 36
+      }
+    },
+    {
+      "candidateName": "Sonata Sabaitienė",
+      "candidateId": "sonata-sabaitiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88153/Kandidato88153Anketa.html",
+      "vrkCandidateId": "88153",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 37
+      }
+    },
+    {
+      "candidateName": "Ugnė Rusvaltaitė",
+      "candidateId": "ugne-rusvaltaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88154/Kandidato88154Anketa.html",
+      "vrkCandidateId": "88154",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 38
+      }
+    },
+    {
+      "candidateName": "Stasys Daugalas",
+      "candidateId": "stasys-daugalas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88155/Kandidato88155Anketa.html",
+      "vrkCandidateId": "88155",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 39
+      }
+    },
+    {
+      "candidateName": "Jurgis Balčiūnas",
+      "candidateId": "jurgis-balciunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88156/Kandidato88156Anketa.html",
+      "vrkCandidateId": "88156",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 40
+      }
+    },
+    {
+      "candidateName": "Audronė Stasiulienė",
+      "candidateId": "audrone-stasiuliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88157/Kandidato88157Anketa.html",
+      "vrkCandidateId": "88157",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 41
+      }
+    },
+    {
+      "candidateName": "Kazimieras Eidėnas",
+      "candidateId": "kazimieras-eidenas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88158/Kandidato88158Anketa.html",
+      "vrkCandidateId": "88158",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 42
+      }
+    },
+    {
+      "candidateName": "Algis Pilypas",
+      "candidateId": "algis-pilypas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88159/Kandidato88159Anketa.html",
+      "vrkCandidateId": "88159",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 43
+      }
+    },
+    {
+      "candidateName": "Vaida Konaverskienė",
+      "candidateId": "vaida-konaverskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88160/Kandidato88160Anketa.html",
+      "vrkCandidateId": "88160",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 44
+      }
+    },
+    {
+      "candidateName": "Remigijus Uktveris",
+      "candidateId": "remigijus-uktveris",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88161/Kandidato88161Anketa.html",
+      "vrkCandidateId": "88161",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 45
+      }
+    },
+    {
+      "candidateName": "Bronius Kaknevičius",
+      "candidateId": "bronius-kaknevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88162/Kandidato88162Anketa.html",
+      "vrkCandidateId": "88162",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 46
+      }
+    },
+    {
+      "candidateName": "Adomas Anskaitis",
+      "candidateId": "adomas-anskaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88163/Kandidato88163Anketa.html",
+      "vrkCandidateId": "88163",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 47
+      }
+    },
+    {
+      "candidateName": "Benediktas Andriekus",
+      "candidateId": "benediktas-andriekus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88164/Kandidato88164Anketa.html",
+      "vrkCandidateId": "88164",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 48
+      }
+    },
+    {
+      "candidateName": "Andželika Stanslovienė",
+      "candidateId": "andzelika-stansloviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88165/Kandidato88165Anketa.html",
+      "vrkCandidateId": "88165",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Tėvynės sąjunga - Lietuvos krikščionys demokratai",
+        "listNumber": 3,
+        "listPosition": 49
+      }
+    },
+    {
+      "candidateName": "Algirdas Gečas",
+      "candidateId": "algirdas-gecas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87974/Kandidato87974Anketa.html",
+      "vrkCandidateId": "87974",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 2
+      }
+    },
+    {
+      "candidateName": "Saulius Malinauskas",
+      "candidateId": "saulius-malinauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87975/Kandidato87975Anketa.html",
+      "vrkCandidateId": "87975",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 3
+      }
+    },
+    {
+      "candidateName": "Vidmantas Gečas",
+      "candidateId": "vidmantas-gecas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87976/Kandidato87976Anketa.html",
+      "vrkCandidateId": "87976",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 4
+      }
+    },
+    {
+      "candidateName": "Iveta Ambrulaitienė",
+      "candidateId": "iveta-ambrulaitiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87977/Kandidato87977Anketa.html",
+      "vrkCandidateId": "87977",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 5
+      }
+    },
+    {
+      "candidateName": "Rimvydas Lukošius",
+      "candidateId": "rimvydas-lukosius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87978/Kandidato87978Anketa.html",
+      "vrkCandidateId": "87978",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 6
+      }
+    },
+    {
+      "candidateName": "Kęstutis Vaičiūnas",
+      "candidateId": "kestutis-vaiciunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87979/Kandidato87979Anketa.html",
+      "vrkCandidateId": "87979",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 7
+      }
+    },
+    {
+      "candidateName": "Vilija Razmaitė-Baguckienė",
+      "candidateId": "vilija-razmaite-baguckiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87980/Kandidato87980Anketa.html",
+      "vrkCandidateId": "87980",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 8
+      }
+    },
+    {
+      "candidateName": "Lijana Šerpytienė",
+      "candidateId": "lijana-serpytiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87981/Kandidato87981Anketa.html",
+      "vrkCandidateId": "87981",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 9
+      }
+    },
+    {
+      "candidateName": "Egidijus Antanas Jovaiša",
+      "candidateId": "egidijus-antanas-jovaisa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87982/Kandidato87982Anketa.html",
+      "vrkCandidateId": "87982",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 10
+      }
+    },
+    {
+      "candidateName": "Lukas Pielikis",
+      "candidateId": "lukas-pielikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87983/Kandidato87983Anketa.html",
+      "vrkCandidateId": "87983",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 11
+      }
+    },
+    {
+      "candidateName": "Ričardas Čaikys",
+      "candidateId": "ricardas-caikys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87984/Kandidato87984Anketa.html",
+      "vrkCandidateId": "87984",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 12
+      }
+    },
+    {
+      "candidateName": "Ilona Lioransienė",
+      "candidateId": "ilona-lioransiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87985/Kandidato87985Anketa.html",
+      "vrkCandidateId": "87985",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 13
+      }
+    },
+    {
+      "candidateName": "Antanas Jonušas",
+      "candidateId": "antanas-jonusas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87986/Kandidato87986Anketa.html",
+      "vrkCandidateId": "87986",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 14
+      }
+    },
+    {
+      "candidateName": "Saulius Baltutis",
+      "candidateId": "saulius-baltutis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87987/Kandidato87987Anketa.html",
+      "vrkCandidateId": "87987",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 15
+      }
+    },
+    {
+      "candidateName": "Jonas Šakurskis",
+      "candidateId": "jonas-sakurskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87988/Kandidato87988Anketa.html",
+      "vrkCandidateId": "87988",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 16
+      }
+    },
+    {
+      "candidateName": "Nijolė Plaipienė",
+      "candidateId": "nijole-plaipiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87989/Kandidato87989Anketa.html",
+      "vrkCandidateId": "87989",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 17
+      }
+    },
+    {
+      "candidateName": "Agnė Puidokaitė",
+      "candidateId": "agne-puidokaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87990/Kandidato87990Anketa.html",
+      "vrkCandidateId": "87990",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 18
+      }
+    },
+    {
+      "candidateName": "Gediminas Pužas",
+      "candidateId": "gediminas-puzas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87991/Kandidato87991Anketa.html",
+      "vrkCandidateId": "87991",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 19
+      }
+    },
+    {
+      "candidateName": "Donatas Kakta",
+      "candidateId": "donatas-kakta",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87992/Kandidato87992Anketa.html",
+      "vrkCandidateId": "87992",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 20
+      }
+    },
+    {
+      "candidateName": "Egidijus Pašilis",
+      "candidateId": "egidijus-pasilis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87993/Kandidato87993Anketa.html",
+      "vrkCandidateId": "87993",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 21
+      }
+    },
+    {
+      "candidateName": "Lina Leikuvienė",
+      "candidateId": "lina-leikuviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87994/Kandidato87994Anketa.html",
+      "vrkCandidateId": "87994",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 22
+      }
+    },
+    {
+      "candidateName": "Rimutė Pilipavičienė",
+      "candidateId": "rimute-pilipaviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87995/Kandidato87995Anketa.html",
+      "vrkCandidateId": "87995",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 23
+      }
+    },
+    {
+      "candidateName": "Sandra Pociuvienė",
+      "candidateId": "sandra-pociuviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87996/Kandidato87996Anketa.html",
+      "vrkCandidateId": "87996",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 24
+      }
+    },
+    {
+      "candidateName": "Feliksas Budrikas",
+      "candidateId": "feliksas-budrikas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87997/Kandidato87997Anketa.html",
+      "vrkCandidateId": "87997",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 25
+      }
+    },
+    {
+      "candidateName": "Alfonsas Malinauskas",
+      "candidateId": "alfonsas-malinauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87998/Kandidato87998Anketa.html",
+      "vrkCandidateId": "87998",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 26
+      }
+    },
+    {
+      "candidateName": "Inga Šarakauskė",
+      "candidateId": "inga-sarakauske",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87999/Kandidato87999Anketa.html",
+      "vrkCandidateId": "87999",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 27
+      }
+    },
+    {
+      "candidateName": "Rimas Aleknas",
+      "candidateId": "rimas-aleknas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88000/Kandidato88000Anketa.html",
+      "vrkCandidateId": "88000",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 28
+      }
+    },
+    {
+      "candidateName": "Deimantė Valiukaitė",
+      "candidateId": "deimante-valiukaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88001/Kandidato88001Anketa.html",
+      "vrkCandidateId": "88001",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 29
+      }
+    },
+    {
+      "candidateName": "Zigmas Jokubaitis",
+      "candidateId": "zigmas-jokubaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88002/Kandidato88002Anketa.html",
+      "vrkCandidateId": "88002",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 30
+      }
+    },
+    {
+      "candidateName": "Vaidotas Kuzminskas",
+      "candidateId": "vaidotas-kuzminskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88003/Kandidato88003Anketa.html",
+      "vrkCandidateId": "88003",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 31
+      }
+    },
+    {
+      "candidateName": "Stefa Kuizinienė",
+      "candidateId": "stefa-kuiziniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88004/Kandidato88004Anketa.html",
+      "vrkCandidateId": "88004",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 32
+      }
+    },
+    {
+      "candidateName": "Petras Venckus",
+      "candidateId": "petras-venckus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88005/Kandidato88005Anketa.html",
+      "vrkCandidateId": "88005",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 33
+      }
+    },
+    {
+      "candidateName": "Aleksandras Golubovskis",
+      "candidateId": "aleksandras-golubovskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88006/Kandidato88006Anketa.html",
+      "vrkCandidateId": "88006",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 34
+      }
+    },
+    {
+      "candidateName": "Rimgaudas Stanislovas Kymantas",
+      "candidateId": "rimgaudas-stanislovas-kymantas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88007/Kandidato88007Anketa.html",
+      "vrkCandidateId": "88007",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 35
+      }
+    },
+    {
+      "candidateName": "Vaidas Dedurkevičius",
+      "candidateId": "vaidas-dedurkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88008/Kandidato88008Anketa.html",
+      "vrkCandidateId": "88008",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 36
+      }
+    },
+    {
+      "candidateName": "Renata Kaniauskienė",
+      "candidateId": "renata-kaniauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88009/Kandidato88009Anketa.html",
+      "vrkCandidateId": "88009",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 37
+      }
+    },
+    {
+      "candidateName": "Vaida Šimelionienė",
+      "candidateId": "vaida-simelioniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88010/Kandidato88010Anketa.html",
+      "vrkCandidateId": "88010",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 38
+      }
+    },
+    {
+      "candidateName": "Lina Norbutienė",
+      "candidateId": "lina-norbutiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88012/Kandidato88012Anketa.html",
+      "vrkCandidateId": "88012",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 39
+      }
+    },
+    {
+      "candidateName": "Nedas Bartušis",
+      "candidateId": "nedas-bartusis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88013/Kandidato88013Anketa.html",
+      "vrkCandidateId": "88013",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 40
+      }
+    },
+    {
+      "candidateName": "Edgaras Lukoševičius",
+      "candidateId": "edgaras-lukosevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88014/Kandidato88014Anketa.html",
+      "vrkCandidateId": "88014",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 41
+      }
+    },
+    {
+      "candidateName": "Agnė Valatkevičiūtė-Pašilienė",
+      "candidateId": "agne-valatkeviciute-pasiliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88015/Kandidato88015Anketa.html",
+      "vrkCandidateId": "88015",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 42
+      }
+    },
+    {
+      "candidateName": "Karolis Jakas",
+      "candidateId": "karolis-jakas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88016/Kandidato88016Anketa.html",
+      "vrkCandidateId": "88016",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos laisvės sąjunga (liberalai)",
+        "listNumber": 11,
+        "listPosition": 43
+      }
+    },
+    {
+      "candidateName": "Genovaitė Kimbrienė",
+      "candidateId": "genovaite-kimbriene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88211/Kandidato88211Anketa.html",
+      "vrkCandidateId": "88211",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 2
+      }
+    },
+    {
+      "candidateName": "Povilas Tunaitis",
+      "candidateId": "povilas-tunaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88212/Kandidato88212Anketa.html",
+      "vrkCandidateId": "88212",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 3
+      }
+    },
+    {
+      "candidateName": "Georgijus Čvanovas",
+      "candidateId": "georgijus-cvanovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88213/Kandidato88213Anketa.html",
+      "vrkCandidateId": "88213",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 4
+      }
+    },
+    {
+      "candidateName": "Jonas Jaunius",
+      "candidateId": "jonas-jaunius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88214/Kandidato88214Anketa.html",
+      "vrkCandidateId": "88214",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 5
+      }
+    },
+    {
+      "candidateName": "Lijana Jagintavičienė",
+      "candidateId": "lijana-jagintaviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88215/Kandidato88215Anketa.html",
+      "vrkCandidateId": "88215",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 6
+      }
+    },
+    {
+      "candidateName": "Algimantas Elijošius",
+      "candidateId": "algimantas-elijosius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88216/Kandidato88216Anketa.html",
+      "vrkCandidateId": "88216",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 7
+      }
+    },
+    {
+      "candidateName": "Romualdas Naujokas",
+      "candidateId": "romualdas-naujokas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88217/Kandidato88217Anketa.html",
+      "vrkCandidateId": "88217",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 8
+      }
+    },
+    {
+      "candidateName": "Edgaras Padimanskas",
+      "candidateId": "edgaras-padimanskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88218/Kandidato88218Anketa.html",
+      "vrkCandidateId": "88218",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 9
+      }
+    },
+    {
+      "candidateName": "Valentinas Dylertas",
+      "candidateId": "valentinas-dylertas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88219/Kandidato88219Anketa.html",
+      "vrkCandidateId": "88219",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 10
+      }
+    },
+    {
+      "candidateName": "Irena Krutikovienė",
+      "candidateId": "irena-krutikoviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88220/Kandidato88220Anketa.html",
+      "vrkCandidateId": "88220",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 11
+      }
+    },
+    {
+      "candidateName": "Lina Balčiauskienė",
+      "candidateId": "lina-balciauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88221/Kandidato88221Anketa.html",
+      "vrkCandidateId": "88221",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 12
+      }
+    },
+    {
+      "candidateName": "Elvyra Rimkuvienė",
+      "candidateId": "elvyra-rimkuviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88222/Kandidato88222Anketa.html",
+      "vrkCandidateId": "88222",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 13
+      }
+    },
+    {
+      "candidateName": "Arūnas Beržinis",
+      "candidateId": "arunas-berzinis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88223/Kandidato88223Anketa.html",
+      "vrkCandidateId": "88223",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 14
+      }
+    },
+    {
+      "candidateName": "Raimondas Šapalas",
+      "candidateId": "raimondas-sapalas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88224/Kandidato88224Anketa.html",
+      "vrkCandidateId": "88224",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 15
+      }
+    },
+    {
+      "candidateName": "Egidijus Vičkus",
+      "candidateId": "egidijus-vickus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88225/Kandidato88225Anketa.html",
+      "vrkCandidateId": "88225",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 16
+      }
+    },
+    {
+      "candidateName": "Dalia Minkevičienė",
+      "candidateId": "dalia-minkeviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88226/Kandidato88226Anketa.html",
+      "vrkCandidateId": "88226",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 17
+      }
+    },
+    {
+      "candidateName": "Sergejus Nikonovas",
+      "candidateId": "sergejus-nikonovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88227/Kandidato88227Anketa.html",
+      "vrkCandidateId": "88227",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 18
+      }
+    },
+    {
+      "candidateName": "Adma Baltutienė",
+      "candidateId": "adma-baltutiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88228/Kandidato88228Anketa.html",
+      "vrkCandidateId": "88228",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 19
+      }
+    },
+    {
+      "candidateName": "Antanas Griauslys",
+      "candidateId": "antanas-griauslys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88229/Kandidato88229Anketa.html",
+      "vrkCandidateId": "88229",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 20
+      }
+    },
+    {
+      "candidateName": "Andrius Limba",
+      "candidateId": "andrius-limba",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88230/Kandidato88230Anketa.html",
+      "vrkCandidateId": "88230",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 21
+      }
+    },
+    {
+      "candidateName": "Arūnas Mockus",
+      "candidateId": "arunas-mockus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88231/Kandidato88231Anketa.html",
+      "vrkCandidateId": "88231",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 22
+      }
+    },
+    {
+      "candidateName": "Jovita Macijauskienė",
+      "candidateId": "jovita-macijauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88232/Kandidato88232Anketa.html",
+      "vrkCandidateId": "88232",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 23
+      }
+    },
+    {
+      "candidateName": "Daiva Kuršelytė",
+      "candidateId": "daiva-kurselyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88233/Kandidato88233Anketa.html",
+      "vrkCandidateId": "88233",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 24
+      }
+    },
+    {
+      "candidateName": "Aldona Stirbienė",
+      "candidateId": "aldona-stirbiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88234/Kandidato88234Anketa.html",
+      "vrkCandidateId": "88234",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 25
+      }
+    },
+    {
+      "candidateName": "Brigita Vitkauskienė",
+      "candidateId": "brigita-vitkauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88235/Kandidato88235Anketa.html",
+      "vrkCandidateId": "88235",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 26
+      }
+    },
+    {
+      "candidateName": "Silvija Giržadienė",
+      "candidateId": "silvija-girzadiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88236/Kandidato88236Anketa.html",
+      "vrkCandidateId": "88236",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 27
+      }
+    },
+    {
+      "candidateName": "Giedrius Kirstukas",
+      "candidateId": "giedrius-kirstukas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88237/Kandidato88237Anketa.html",
+      "vrkCandidateId": "88237",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 28
+      }
+    },
+    {
+      "candidateName": "Apolinaras Stonys",
+      "candidateId": "apolinaras-stonys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88238/Kandidato88238Anketa.html",
+      "vrkCandidateId": "88238",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 29
+      }
+    },
+    {
+      "candidateName": "Liudmila Šidlauskienė",
+      "candidateId": "liudmila-sidlauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88239/Kandidato88239Anketa.html",
+      "vrkCandidateId": "88239",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 30
+      }
+    },
+    {
+      "candidateName": "Saulius Endrulis",
+      "candidateId": "saulius-endrulis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88240/Kandidato88240Anketa.html",
+      "vrkCandidateId": "88240",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 31
+      }
+    },
+    {
+      "candidateName": "Audronė Jociuvienė",
+      "candidateId": "audrone-jociuviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88241/Kandidato88241Anketa.html",
+      "vrkCandidateId": "88241",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 32
+      }
+    },
+    {
+      "candidateName": "Marius Stonys",
+      "candidateId": "marius-stonys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88242/Kandidato88242Anketa.html",
+      "vrkCandidateId": "88242",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 33
+      }
+    },
+    {
+      "candidateName": "Raimondas Kuzmarskis",
+      "candidateId": "raimondas-kuzmarskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88243/Kandidato88243Anketa.html",
+      "vrkCandidateId": "88243",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 34
+      }
+    },
+    {
+      "candidateName": "Giedrė Verygienė",
+      "candidateId": "giedre-verygiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88244/Kandidato88244Anketa.html",
+      "vrkCandidateId": "88244",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 35
+      }
+    },
+    {
+      "candidateName": "Algirdas Kelpša",
+      "candidateId": "algirdas-kelpsa",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88245/Kandidato88245Anketa.html",
+      "vrkCandidateId": "88245",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 36
+      }
+    },
+    {
+      "candidateName": "Regina Kulpienė-Jaunienė",
+      "candidateId": "regina-kulpiene-jauniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88246/Kandidato88246Anketa.html",
+      "vrkCandidateId": "88246",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 37
+      }
+    },
+    {
+      "candidateName": "Jūratė Burbienė",
+      "candidateId": "jurate-burbiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88247/Kandidato88247Anketa.html",
+      "vrkCandidateId": "88247",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 38
+      }
+    },
+    {
+      "candidateName": "Kęstutis Kleinauskas",
+      "candidateId": "kestutis-kleinauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88248/Kandidato88248Anketa.html",
+      "vrkCandidateId": "88248",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 39
+      }
+    },
+    {
+      "candidateName": "Stasys Mickevičius",
+      "candidateId": "stasys-mickevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88249/Kandidato88249Anketa.html",
+      "vrkCandidateId": "88249",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 40
+      }
+    },
+    {
+      "candidateName": "Elmutas Lengvinas",
+      "candidateId": "elmutas-lengvinas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88250/Kandidato88250Anketa.html",
+      "vrkCandidateId": "88250",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 41
+      }
+    },
+    {
+      "candidateName": "Vytautas Petrošius",
+      "candidateId": "vytautas-petrosius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88251/Kandidato88251Anketa.html",
+      "vrkCandidateId": "88251",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 42
+      }
+    },
+    {
+      "candidateName": "Jūratė Balčytienė",
+      "candidateId": "jurate-balcytiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88252/Kandidato88252Anketa.html",
+      "vrkCandidateId": "88252",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 43
+      }
+    },
+    {
+      "candidateName": "Vytautas Alminauskis",
+      "candidateId": "vytautas-alminauskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88253/Kandidato88253Anketa.html",
+      "vrkCandidateId": "88253",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 44
+      }
+    },
+    {
+      "candidateName": "Rimvydas Bartauskis",
+      "candidateId": "rimvydas-bartauskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88254/Kandidato88254Anketa.html",
+      "vrkCandidateId": "88254",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 45
+      }
+    },
+    {
+      "candidateName": "Alvidas Mileris",
+      "candidateId": "alvidas-mileris",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88255/Kandidato88255Anketa.html",
+      "vrkCandidateId": "88255",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 46
+      }
+    },
+    {
+      "candidateName": "Vitalijus Grigalis",
+      "candidateId": "vitalijus-grigalis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88256/Kandidato88256Anketa.html",
+      "vrkCandidateId": "88256",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 47
+      }
+    },
+    {
+      "candidateName": "Viktoras Gailius",
+      "candidateId": "viktoras-gailius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88257/Kandidato88257Anketa.html",
+      "vrkCandidateId": "88257",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 48
+      }
+    },
+    {
+      "candidateName": "Modestas Štulcas",
+      "candidateId": "modestas-stulcas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88258/Kandidato88258Anketa.html",
+      "vrkCandidateId": "88258",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 49
+      }
+    },
+    {
+      "candidateName": "Kazimieras Nausėda",
+      "candidateId": "kazimieras-nauseda",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88259/Kandidato88259Anketa.html",
+      "vrkCandidateId": "88259",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos valstiečių ir žaliųjų sąjunga",
+        "listNumber": 13,
+        "listPosition": 50
+      }
+    },
+    {
+      "candidateName": "Saulius Stankevičius",
+      "candidateId": "saulius-stankevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87931/Kandidato87931Anketa.html",
+      "vrkCandidateId": "87931",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 1
+      }
+    },
+    {
+      "candidateName": "Darijus Pundžius",
+      "candidateId": "darijus-pundzius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87933/Kandidato87933Anketa.html",
+      "vrkCandidateId": "87933",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 3
+      }
+    },
+    {
+      "candidateName": "Algimantas Čeponis",
+      "candidateId": "algimantas-ceponis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87934/Kandidato87934Anketa.html",
+      "vrkCandidateId": "87934",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 4
+      }
+    },
+    {
+      "candidateName": "Juozas Sauspreškis",
+      "candidateId": "juozas-sauspreskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87935/Kandidato87935Anketa.html",
+      "vrkCandidateId": "87935",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 5
+      }
+    },
+    {
+      "candidateName": "Vita Pociūtė",
+      "candidateId": "vita-pociute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87936/Kandidato87936Anketa.html",
+      "vrkCandidateId": "87936",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 6
+      }
+    },
+    {
+      "candidateName": "Rolandas Dirgėla",
+      "candidateId": "rolandas-dirgela",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87937/Kandidato87937Anketa.html",
+      "vrkCandidateId": "87937",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 7
+      }
+    },
+    {
+      "candidateName": "Lena Šaulienė",
+      "candidateId": "lena-sauliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87938/Kandidato87938Anketa.html",
+      "vrkCandidateId": "87938",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 8
+      }
+    },
+    {
+      "candidateName": "Ramūnas Kuzas",
+      "candidateId": "ramunas-kuzas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87939/Kandidato87939Anketa.html",
+      "vrkCandidateId": "87939",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 9
+      }
+    },
+    {
+      "candidateName": "Alina Overlingaitė",
+      "candidateId": "alina-overlingaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87940/Kandidato87940Anketa.html",
+      "vrkCandidateId": "87940",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 10
+      }
+    },
+    {
+      "candidateName": "Danutė Tirūnienė",
+      "candidateId": "danute-tiruniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87941/Kandidato87941Anketa.html",
+      "vrkCandidateId": "87941",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 11
+      }
+    },
+    {
+      "candidateName": "Andrej Ivanov",
+      "candidateId": "andrej-ivanov",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87942/Kandidato87942Anketa.html",
+      "vrkCandidateId": "87942",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 12
+      }
+    },
+    {
+      "candidateName": "Edita Rimkė",
+      "candidateId": "edita-rimke",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87943/Kandidato87943Anketa.html",
+      "vrkCandidateId": "87943",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 13
+      }
+    },
+    {
+      "candidateName": "Vilius Čičirka",
+      "candidateId": "vilius-cicirka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87944/Kandidato87944Anketa.html",
+      "vrkCandidateId": "87944",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 14
+      }
+    },
+    {
+      "candidateName": "Aurimas Bliutas",
+      "candidateId": "aurimas-bliutas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87945/Kandidato87945Anketa.html",
+      "vrkCandidateId": "87945",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 15
+      }
+    },
+    {
+      "candidateName": "Tadas Tverskis",
+      "candidateId": "tadas-tverskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87946/Kandidato87946Anketa.html",
+      "vrkCandidateId": "87946",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 16
+      }
+    },
+    {
+      "candidateName": "Artūras Rau",
+      "candidateId": "arturas-rau",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87948/Kandidato87948Anketa.html",
+      "vrkCandidateId": "87948",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 17
+      }
+    },
+    {
+      "candidateName": "Antanas Tubutis",
+      "candidateId": "antanas-tubutis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87949/Kandidato87949Anketa.html",
+      "vrkCandidateId": "87949",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 18
+      }
+    },
+    {
+      "candidateName": "Matas Šeperis",
+      "candidateId": "matas-seperis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87950/Kandidato87950Anketa.html",
+      "vrkCandidateId": "87950",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 19
+      }
+    },
+    {
+      "candidateName": "Gintarė Valenčiūtė",
+      "candidateId": "gintare-valenciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87951/Kandidato87951Anketa.html",
+      "vrkCandidateId": "87951",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 20
+      }
+    },
+    {
+      "candidateName": "Kęstutis Montvydas",
+      "candidateId": "kestutis-montvydas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87952/Kandidato87952Anketa.html",
+      "vrkCandidateId": "87952",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 21
+      }
+    },
+    {
+      "candidateName": "Juozas Strumskis",
+      "candidateId": "juozas-strumskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87953/Kandidato87953Anketa.html",
+      "vrkCandidateId": "87953",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 22
+      }
+    },
+    {
+      "candidateName": "Dalia Žąsytienė",
+      "candidateId": "dalia-zasytiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87954/Kandidato87954Anketa.html",
+      "vrkCandidateId": "87954",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 23
+      }
+    },
+    {
+      "candidateName": "Virmantas Budrikas",
+      "candidateId": "virmantas-budrikas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87955/Kandidato87955Anketa.html",
+      "vrkCandidateId": "87955",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 24
+      }
+    },
+    {
+      "candidateName": "Aurelija Andriuščenko",
+      "candidateId": "aurelija-andriuscenko",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87956/Kandidato87956Anketa.html",
+      "vrkCandidateId": "87956",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 25
+      }
+    },
+    {
+      "candidateName": "Rimantas Stankevičius",
+      "candidateId": "rimantas-stankevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87957/Kandidato87957Anketa.html",
+      "vrkCandidateId": "87957",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 26
+      }
+    },
+    {
+      "candidateName": "Nijolė Daugalienė",
+      "candidateId": "nijole-daugaliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87958/Kandidato87958Anketa.html",
+      "vrkCandidateId": "87958",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 27
+      }
+    },
+    {
+      "candidateName": "Greta Poškutė",
+      "candidateId": "greta-poskute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87959/Kandidato87959Anketa.html",
+      "vrkCandidateId": "87959",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 28
+      }
+    },
+    {
+      "candidateName": "Gita Cibauskaitė",
+      "candidateId": "gita-cibauskaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87960/Kandidato87960Anketa.html",
+      "vrkCandidateId": "87960",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 29
+      }
+    },
+    {
+      "candidateName": "Zigmas Stonys",
+      "candidateId": "zigmas-stonys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87961/Kandidato87961Anketa.html",
+      "vrkCandidateId": "87961",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 30
+      }
+    },
+    {
+      "candidateName": "Alvydas Daugalas",
+      "candidateId": "alvydas-daugalas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87962/Kandidato87962Anketa.html",
+      "vrkCandidateId": "87962",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 31
+      }
+    },
+    {
+      "candidateName": "Romualdas Stanislovas Šukys",
+      "candidateId": "romualdas-stanislovas-sukys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87963/Kandidato87963Anketa.html",
+      "vrkCandidateId": "87963",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 32
+      }
+    },
+    {
+      "candidateName": "Julius Malakauskas",
+      "candidateId": "julius-malakauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87964/Kandidato87964Anketa.html",
+      "vrkCandidateId": "87964",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 33
+      }
+    },
+    {
+      "candidateName": "Aldona Trečiokaitienė",
+      "candidateId": "aldona-treciokaitiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87965/Kandidato87965Anketa.html",
+      "vrkCandidateId": "87965",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 34
+      }
+    },
+    {
+      "candidateName": "Daiva Ivanova",
+      "candidateId": "daiva-ivanova",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87966/Kandidato87966Anketa.html",
+      "vrkCandidateId": "87966",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 35
+      }
+    },
+    {
+      "candidateName": "Tomas Grublys",
+      "candidateId": "tomas-grublys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87967/Kandidato87967Anketa.html",
+      "vrkCandidateId": "87967",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 36
+      }
+    },
+    {
+      "candidateName": "Vytas Varaška",
+      "candidateId": "vytas-varaska",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87968/Kandidato87968Anketa.html",
+      "vrkCandidateId": "87968",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 37
+      }
+    },
+    {
+      "candidateName": "Miranda Ambrozevičiūtė",
+      "candidateId": "miranda-ambrozeviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87969/Kandidato87969Anketa.html",
+      "vrkCandidateId": "87969",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 38
+      }
+    },
+    {
+      "candidateName": "Elena Marozienė",
+      "candidateId": "elena-maroziene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas87970/Kandidato87970Anketa.html",
+      "vrkCandidateId": "87970",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Darbo partija",
+        "listNumber": 20,
+        "listPosition": 39
+      }
+    },
+    {
+      "candidateName": "Vladas Kainovaitis",
+      "candidateId": "vladas-kainovaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88262/Kandidato88262Anketa.html",
+      "vrkCandidateId": "88262",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 2
+      }
+    },
+    {
+      "candidateName": "Edvardas Jurjonas",
+      "candidateId": "edvardas-jurjonas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88263/Kandidato88263Anketa.html",
+      "vrkCandidateId": "88263",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 3
+      }
+    },
+    {
+      "candidateName": "Kęstutis Andrijauskas",
+      "candidateId": "kestutis-andrijauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88264/Kandidato88264Anketa.html",
+      "vrkCandidateId": "88264",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 4
+      }
+    },
+    {
+      "candidateName": "Giedrius Griciūnas",
+      "candidateId": "giedrius-griciunas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88265/Kandidato88265Anketa.html",
+      "vrkCandidateId": "88265",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 5
+      }
+    },
+    {
+      "candidateName": "Algimantas Kvietkus",
+      "candidateId": "algimantas-kvietkus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88266/Kandidato88266Anketa.html",
+      "vrkCandidateId": "88266",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 6
+      }
+    },
+    {
+      "candidateName": "Adolfas Nausėda",
+      "candidateId": "adolfas-nauseda",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88267/Kandidato88267Anketa.html",
+      "vrkCandidateId": "88267",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 7
+      }
+    },
+    {
+      "candidateName": "Donatas Jaunius",
+      "candidateId": "donatas-jaunius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88268/Kandidato88268Anketa.html",
+      "vrkCandidateId": "88268",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 8
+      }
+    },
+    {
+      "candidateName": "Darius Vilius",
+      "candidateId": "darius-vilius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88269/Kandidato88269Anketa.html",
+      "vrkCandidateId": "88269",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 9
+      }
+    },
+    {
+      "candidateName": "Tomas Žebelys",
+      "candidateId": "tomas-zebelys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88270/Kandidato88270Anketa.html",
+      "vrkCandidateId": "88270",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 10
+      }
+    },
+    {
+      "candidateName": "Julius Lynikas",
+      "candidateId": "julius-lynikas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88271/Kandidato88271Anketa.html",
+      "vrkCandidateId": "88271",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 11
+      }
+    },
+    {
+      "candidateName": "Evaldas Kiltinavičius",
+      "candidateId": "evaldas-kiltinavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88272/Kandidato88272Anketa.html",
+      "vrkCandidateId": "88272",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 12
+      }
+    },
+    {
+      "candidateName": "Martynas Kainovaitis",
+      "candidateId": "martynas-kainovaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88273/Kandidato88273Anketa.html",
+      "vrkCandidateId": "88273",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 13
+      }
+    },
+    {
+      "candidateName": "Dangira Čiakienė",
+      "candidateId": "dangira-ciakiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88274/Kandidato88274Anketa.html",
+      "vrkCandidateId": "88274",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 14
+      }
+    },
+    {
+      "candidateName": "Virginija Vaitiekienė",
+      "candidateId": "virginija-vaitiekiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88275/Kandidato88275Anketa.html",
+      "vrkCandidateId": "88275",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 15
+      }
+    },
+    {
+      "candidateName": "Eglė Paulauskienė",
+      "candidateId": "egle-paulauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88276/Kandidato88276Anketa.html",
+      "vrkCandidateId": "88276",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 16
+      }
+    },
+    {
+      "candidateName": "Nijolė Stankienė",
+      "candidateId": "nijole-stankiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88277/Kandidato88277Anketa.html",
+      "vrkCandidateId": "88277",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 17
+      }
+    },
+    {
+      "candidateName": "Lina Venckė",
+      "candidateId": "lina-vencke",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88278/Kandidato88278Anketa.html",
+      "vrkCandidateId": "88278",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 18
+      }
+    },
+    {
+      "candidateName": "Žydrūnas Šikšnius",
+      "candidateId": "zydrunas-siksnius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88279/Kandidato88279Anketa.html",
+      "vrkCandidateId": "88279",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 19
+      }
+    },
+    {
+      "candidateName": "Vaidas Vedeikis",
+      "candidateId": "vaidas-vedeikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88280/Kandidato88280Anketa.html",
+      "vrkCandidateId": "88280",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 20
+      }
+    },
+    {
+      "candidateName": "Dana Butkienė",
+      "candidateId": "dana-butkiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88281/Kandidato88281Anketa.html",
+      "vrkCandidateId": "88281",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 21
+      }
+    },
+    {
+      "candidateName": "Julius Dargevičius",
+      "candidateId": "julius-dargevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88282/Kandidato88282Anketa.html",
+      "vrkCandidateId": "88282",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 22
+      }
+    },
+    {
+      "candidateName": "Algimantas Kliučinskas",
+      "candidateId": "algimantas-kliucinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88283/Kandidato88283Anketa.html",
+      "vrkCandidateId": "88283",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 23
+      }
+    },
+    {
+      "candidateName": "Laura Norvilienė",
+      "candidateId": "laura-norviliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88284/Kandidato88284Anketa.html",
+      "vrkCandidateId": "88284",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 24
+      }
+    },
+    {
+      "candidateName": "Simona Venckienė",
+      "candidateId": "simona-venckiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88285/Kandidato88285Anketa.html",
+      "vrkCandidateId": "88285",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 25
+      }
+    },
+    {
+      "candidateName": "Arūnas Kakta",
+      "candidateId": "arunas-kakta",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88286/Kandidato88286Anketa.html",
+      "vrkCandidateId": "88286",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 26
+      }
+    },
+    {
+      "candidateName": "Vytautas Raibys",
+      "candidateId": "vytautas-raibys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88287/Kandidato88287Anketa.html",
+      "vrkCandidateId": "88287",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 27
+      }
+    },
+    {
+      "candidateName": "Alvydas Braukyla",
+      "candidateId": "alvydas-braukyla",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88288/Kandidato88288Anketa.html",
+      "vrkCandidateId": "88288",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 28
+      }
+    },
+    {
+      "candidateName": "Sigitas Švenčionis",
+      "candidateId": "sigitas-svencionis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88289/Kandidato88289Anketa.html",
+      "vrkCandidateId": "88289",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 29
+      }
+    },
+    {
+      "candidateName": "Jonas Mažutis",
+      "candidateId": "jonas-mazutis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88290/Kandidato88290Anketa.html",
+      "vrkCandidateId": "88290",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 30
+      }
+    },
+    {
+      "candidateName": "Sonata Dauskartė",
+      "candidateId": "sonata-dauskarte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88291/Kandidato88291Anketa.html",
+      "vrkCandidateId": "88291",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 31
+      }
+    },
+    {
+      "candidateName": "Gediminas Dargis",
+      "candidateId": "gediminas-dargis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88292/Kandidato88292Anketa.html",
+      "vrkCandidateId": "88292",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 32
+      }
+    },
+    {
+      "candidateName": "Ričardas Vitkauskas",
+      "candidateId": "ricardas-vitkauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88293/Kandidato88293Anketa.html",
+      "vrkCandidateId": "88293",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 33
+      }
+    },
+    {
+      "candidateName": "Jonas Jokšas",
+      "candidateId": "jonas-joksas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88294/Kandidato88294Anketa.html",
+      "vrkCandidateId": "88294",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 34
+      }
+    },
+    {
+      "candidateName": "Gediminas Šimkus",
+      "candidateId": "gediminas-simkus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88295/Kandidato88295Anketa.html",
+      "vrkCandidateId": "88295",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 35
+      }
+    },
+    {
+      "candidateName": "Jonas Šakurskis",
+      "candidateId": "jonas-sakurskis-2",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88296/Kandidato88296Anketa.html",
+      "vrkCandidateId": "88296",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 36
+      }
+    },
+    {
+      "candidateName": "Povilas Barkauskas",
+      "candidateId": "povilas-barkauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88297/Kandidato88297Anketa.html",
+      "vrkCandidateId": "88297",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 37
+      }
+    },
+    {
+      "candidateName": "Andrius Mikalauskas",
+      "candidateId": "andrius-mikalauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88298/Kandidato88298Anketa.html",
+      "vrkCandidateId": "88298",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 38
+      }
+    },
+    {
+      "candidateName": "Andrius Nazarovas",
+      "candidateId": "andrius-nazarovas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88299/Kandidato88299Anketa.html",
+      "vrkCandidateId": "88299",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 39
+      }
+    },
+    {
+      "candidateName": "Dalia Čenkuvienė",
+      "candidateId": "dalia-cenkuviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88300/Kandidato88300Anketa.html",
+      "vrkCandidateId": "88300",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 40
+      }
+    },
+    {
+      "candidateName": "Virginija Jonaitienė",
+      "candidateId": "virginija-jonaitiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88301/Kandidato88301Anketa.html",
+      "vrkCandidateId": "88301",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 41
+      }
+    },
+    {
+      "candidateName": "Vidmantas Kesminas",
+      "candidateId": "vidmantas-kesminas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88302/Kandidato88302Anketa.html",
+      "vrkCandidateId": "88302",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 42
+      }
+    },
+    {
+      "candidateName": "Daiva Šatinskienė",
+      "candidateId": "daiva-satinskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88303/Kandidato88303Anketa.html",
+      "vrkCandidateId": "88303",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 43
+      }
+    },
+    {
+      "candidateName": "Edita Andrijauskaitė",
+      "candidateId": "edita-andrijauskaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88304/Kandidato88304Anketa.html",
+      "vrkCandidateId": "88304",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 44
+      }
+    },
+    {
+      "candidateName": "Algimanta Vilkytė",
+      "candidateId": "algimanta-vilkyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88305/Kandidato88305Anketa.html",
+      "vrkCandidateId": "88305",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 45
+      }
+    },
+    {
+      "candidateName": "Saulius Ivanauskas",
+      "candidateId": "saulius-ivanauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88306/Kandidato88306Anketa.html",
+      "vrkCandidateId": "88306",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 46
+      }
+    },
+    {
+      "candidateName": "Mindaugas Bernotas",
+      "candidateId": "mindaugas-bernotas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88307/Kandidato88307Anketa.html",
+      "vrkCandidateId": "88307",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 47
+      }
+    },
+    {
+      "candidateName": "Deividas Brazas",
+      "candidateId": "deividas-brazas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88308/Kandidato88308Anketa.html",
+      "vrkCandidateId": "88308",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 48
+      }
+    },
+    {
+      "candidateName": "Rita Urbonė",
+      "candidateId": "rita-urbone",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88309/Kandidato88309Anketa.html",
+      "vrkCandidateId": "88309",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 49
+      }
+    },
+    {
+      "candidateName": "Roberta Mažutienė",
+      "candidateId": "roberta-mazutiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88310/Kandidato88310Anketa.html",
+      "vrkCandidateId": "88310",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Visuomeninis rinkimų komitetas „Už žmonių valdžią“",
+        "listNumber": 23,
+        "listPosition": 50
+      }
+    },
+    {
+      "candidateName": "Vaidas Pavilonis",
+      "candidateId": "vaidas-pavilonis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88169/Kandidato88169Anketa.html",
+      "vrkCandidateId": "88169",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 2
+      }
+    },
+    {
+      "candidateName": "Steponas Kazlauskas",
+      "candidateId": "steponas-kazlauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88170/Kandidato88170Anketa.html",
+      "vrkCandidateId": "88170",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 3
+      }
+    },
+    {
+      "candidateName": "Vaidas Bendaravičius",
+      "candidateId": "vaidas-bendaravicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88171/Kandidato88171Anketa.html",
+      "vrkCandidateId": "88171",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 4
+      }
+    },
+    {
+      "candidateName": "Laimutė Uselienė",
+      "candidateId": "laimute-useliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88172/Kandidato88172Anketa.html",
+      "vrkCandidateId": "88172",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 5
+      }
+    },
+    {
+      "candidateName": "Gintaras Bružas",
+      "candidateId": "gintaras-bruzas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88173/Kandidato88173Anketa.html",
+      "vrkCandidateId": "88173",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 6
+      }
+    },
+    {
+      "candidateName": "Darius Soščeka",
+      "candidateId": "darius-sosceka",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88174/Kandidato88174Anketa.html",
+      "vrkCandidateId": "88174",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 7
+      }
+    },
+    {
+      "candidateName": "Ričardas Stonkus",
+      "candidateId": "ricardas-stonkus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88175/Kandidato88175Anketa.html",
+      "vrkCandidateId": "88175",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 8
+      }
+    },
+    {
+      "candidateName": "Vitalijus Laktionkinas",
+      "candidateId": "vitalijus-laktionkinas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88176/Kandidato88176Anketa.html",
+      "vrkCandidateId": "88176",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 9
+      }
+    },
+    {
+      "candidateName": "Irena Gusakova",
+      "candidateId": "irena-gusakova",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88177/Kandidato88177Anketa.html",
+      "vrkCandidateId": "88177",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 10
+      }
+    },
+    {
+      "candidateName": "Jonas Girskis",
+      "candidateId": "jonas-girskis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88178/Kandidato88178Anketa.html",
+      "vrkCandidateId": "88178",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 11
+      }
+    },
+    {
+      "candidateName": "Dalia Barkauskienė",
+      "candidateId": "dalia-barkauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88179/Kandidato88179Anketa.html",
+      "vrkCandidateId": "88179",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 12
+      }
+    },
+    {
+      "candidateName": "Birutė Žymančienė",
+      "candidateId": "birute-zymanciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88180/Kandidato88180Anketa.html",
+      "vrkCandidateId": "88180",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 13
+      }
+    },
+    {
+      "candidateName": "Arvydas Stonis",
+      "candidateId": "arvydas-stonis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88181/Kandidato88181Anketa.html",
+      "vrkCandidateId": "88181",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 14
+      }
+    },
+    {
+      "candidateName": "Audronė Čekanskienė",
+      "candidateId": "audrone-cekanskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88182/Kandidato88182Anketa.html",
+      "vrkCandidateId": "88182",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 15
+      }
+    },
+    {
+      "candidateName": "Andrius Jurkus",
+      "candidateId": "andrius-jurkus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88183/Kandidato88183Anketa.html",
+      "vrkCandidateId": "88183",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 16
+      }
+    },
+    {
+      "candidateName": "Vygantas Kamarauskas",
+      "candidateId": "vygantas-kamarauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88184/Kandidato88184Anketa.html",
+      "vrkCandidateId": "88184",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 17
+      }
+    },
+    {
+      "candidateName": "Juzefa Tamavičienė",
+      "candidateId": "juzefa-tamaviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88185/Kandidato88185Anketa.html",
+      "vrkCandidateId": "88185",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 18
+      }
+    },
+    {
+      "candidateName": "Birutė Pocevičienė",
+      "candidateId": "birute-poceviciene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88186/Kandidato88186Anketa.html",
+      "vrkCandidateId": "88186",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 19
+      }
+    },
+    {
+      "candidateName": "Inesa Murauskienė",
+      "candidateId": "inesa-murauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88187/Kandidato88187Anketa.html",
+      "vrkCandidateId": "88187",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 20
+      }
+    },
+    {
+      "candidateName": "Klemensas Stulga",
+      "candidateId": "klemensas-stulga",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88188/Kandidato88188Anketa.html",
+      "vrkCandidateId": "88188",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 21
+      }
+    },
+    {
+      "candidateName": "Violeta Giedraitienė",
+      "candidateId": "violeta-giedraitiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88189/Kandidato88189Anketa.html",
+      "vrkCandidateId": "88189",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 22
+      }
+    },
+    {
+      "candidateName": "Elena Venckienė",
+      "candidateId": "elena-venckiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88190/Kandidato88190Anketa.html",
+      "vrkCandidateId": "88190",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 23
+      }
+    },
+    {
+      "candidateName": "Vytautas Barkauskas",
+      "candidateId": "vytautas-barkauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88191/Kandidato88191Anketa.html",
+      "vrkCandidateId": "88191",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 24
+      }
+    },
+    {
+      "candidateName": "Jovita Stanionienė",
+      "candidateId": "jovita-stanioniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88192/Kandidato88192Anketa.html",
+      "vrkCandidateId": "88192",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 25
+      }
+    },
+    {
+      "candidateName": "Sigitas Žilius",
+      "candidateId": "sigitas-zilius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88193/Kandidato88193Anketa.html",
+      "vrkCandidateId": "88193",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 26
+      }
+    },
+    {
+      "candidateName": "Alina Urbonienė",
+      "candidateId": "alina-urboniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88194/Kandidato88194Anketa.html",
+      "vrkCandidateId": "88194",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 27
+      }
+    },
+    {
+      "candidateName": "Irena Budvytienė",
+      "candidateId": "irena-budvytiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88195/Kandidato88195Anketa.html",
+      "vrkCandidateId": "88195",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 28
+      }
+    },
+    {
+      "candidateName": "Ruslanas Gaidajus",
+      "candidateId": "ruslanas-gaidajus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88196/Kandidato88196Anketa.html",
+      "vrkCandidateId": "88196",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 29
+      }
+    },
+    {
+      "candidateName": "Reda Urbaitytė",
+      "candidateId": "reda-urbaityte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88197/Kandidato88197Anketa.html",
+      "vrkCandidateId": "88197",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 30
+      }
+    },
+    {
+      "candidateName": "Gintautas Vismantas",
+      "candidateId": "gintautas-vismantas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88198/Kandidato88198Anketa.html",
+      "vrkCandidateId": "88198",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 31
+      }
+    },
+    {
+      "candidateName": "Neringa Kuisytė",
+      "candidateId": "neringa-kuisyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88199/Kandidato88199Anketa.html",
+      "vrkCandidateId": "88199",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 32
+      }
+    },
+    {
+      "candidateName": "Marina Lodusova",
+      "candidateId": "marina-lodusova",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88200/Kandidato88200Anketa.html",
+      "vrkCandidateId": "88200",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 33
+      }
+    },
+    {
+      "candidateName": "Alvydas Žilis",
+      "candidateId": "alvydas-zilis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88201/Kandidato88201Anketa.html",
+      "vrkCandidateId": "88201",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 34
+      }
+    },
+    {
+      "candidateName": "Vaida Dienaitė-Šakinė",
+      "candidateId": "vaida-dienaite-sakine",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88202/Kandidato88202Anketa.html",
+      "vrkCandidateId": "88202",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 35
+      }
+    },
+    {
+      "candidateName": "Juozas Mačijauskas",
+      "candidateId": "juozas-macijauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88203/Kandidato88203Anketa.html",
+      "vrkCandidateId": "88203",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 36
+      }
+    },
+    {
+      "candidateName": "Loreta Mieliulytė",
+      "candidateId": "loreta-mieliulyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88204/Kandidato88204Anketa.html",
+      "vrkCandidateId": "88204",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 37
+      }
+    },
+    {
+      "candidateName": "Lina Stanišauskienė",
+      "candidateId": "lina-stanisauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88205/Kandidato88205Anketa.html",
+      "vrkCandidateId": "88205",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 38
+      }
+    },
+    {
+      "candidateName": "Indrė Lekavičiūtė",
+      "candidateId": "indre-lekaviciute",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88206/Kandidato88206Anketa.html",
+      "vrkCandidateId": "88206",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 39
+      }
+    },
+    {
+      "candidateName": "Nida Petrauskienė",
+      "candidateId": "nida-petrauskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88207/Kandidato88207Anketa.html",
+      "vrkCandidateId": "88207",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 40
+      }
+    },
+    {
+      "candidateName": "Virginija Saveljevienė",
+      "candidateId": "virginija-saveljeviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88208/Kandidato88208Anketa.html",
+      "vrkCandidateId": "88208",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Partija Tvarka ir teisingumas",
+        "listNumber": 25,
+        "listPosition": 41
+      }
+    },
+    {
+      "candidateName": "Raimundas Ambrozaitis",
+      "candidateId": "raimundas-ambrozaitis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88070/Kandidato88070Anketa.html",
+      "vrkCandidateId": "88070",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 1
+      }
+    },
+    {
+      "candidateName": "Audrius Endzinas",
+      "candidateId": "audrius-endzinas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88072/Kandidato88072Anketa.html",
+      "vrkCandidateId": "88072",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 3
+      }
+    },
+    {
+      "candidateName": "Raimondas Plikšnys",
+      "candidateId": "raimondas-pliksnys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88073/Kandidato88073Anketa.html",
+      "vrkCandidateId": "88073",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 4
+      }
+    },
+    {
+      "candidateName": "Jonas Purlys",
+      "candidateId": "jonas-purlys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88074/Kandidato88074Anketa.html",
+      "vrkCandidateId": "88074",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 5
+      }
+    },
+    {
+      "candidateName": "Edvardas Vitkauskas",
+      "candidateId": "edvardas-vitkauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88075/Kandidato88075Anketa.html",
+      "vrkCandidateId": "88075",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 6
+      }
+    },
+    {
+      "candidateName": "Daiva Plikšnienė",
+      "candidateId": "daiva-pliksniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88076/Kandidato88076Anketa.html",
+      "vrkCandidateId": "88076",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 7
+      }
+    },
+    {
+      "candidateName": "Arnoldas Milukas",
+      "candidateId": "arnoldas-milukas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88077/Kandidato88077Anketa.html",
+      "vrkCandidateId": "88077",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 8
+      }
+    },
+    {
+      "candidateName": "Gražvydas Raila",
+      "candidateId": "grazvydas-raila",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88078/Kandidato88078Anketa.html",
+      "vrkCandidateId": "88078",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 9
+      }
+    },
+    {
+      "candidateName": "Zigmas Sirtautas",
+      "candidateId": "zigmas-sirtautas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88079/Kandidato88079Anketa.html",
+      "vrkCandidateId": "88079",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 10
+      }
+    },
+    {
+      "candidateName": "Kristina Vitienė",
+      "candidateId": "kristina-vitiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88080/Kandidato88080Anketa.html",
+      "vrkCandidateId": "88080",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 11
+      }
+    },
+    {
+      "candidateName": "Romas Škadauskas",
+      "candidateId": "romas-skadauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88081/Kandidato88081Anketa.html",
+      "vrkCandidateId": "88081",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 12
+      }
+    },
+    {
+      "candidateName": "Teisutis Avižinis",
+      "candidateId": "teisutis-avizinis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88082/Kandidato88082Anketa.html",
+      "vrkCandidateId": "88082",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 13
+      }
+    },
+    {
+      "candidateName": "Saulius Zdanevičius",
+      "candidateId": "saulius-zdanevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88083/Kandidato88083Anketa.html",
+      "vrkCandidateId": "88083",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 14
+      }
+    },
+    {
+      "candidateName": "Vigilijus Šveikauskas",
+      "candidateId": "vigilijus-sveikauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88084/Kandidato88084Anketa.html",
+      "vrkCandidateId": "88084",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 15
+      }
+    },
+    {
+      "candidateName": "Dalia Drobnienė",
+      "candidateId": "dalia-drobniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88085/Kandidato88085Anketa.html",
+      "vrkCandidateId": "88085",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 16
+      }
+    },
+    {
+      "candidateName": "Valerija Daukantienė",
+      "candidateId": "valerija-daukantiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88086/Kandidato88086Anketa.html",
+      "vrkCandidateId": "88086",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 17
+      }
+    },
+    {
+      "candidateName": "Liutauras Indriuška",
+      "candidateId": "liutauras-indriuska",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88087/Kandidato88087Anketa.html",
+      "vrkCandidateId": "88087",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 18
+      }
+    },
+    {
+      "candidateName": "Sigutė Ambrozaitienė",
+      "candidateId": "sigute-ambrozaitiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88088/Kandidato88088Anketa.html",
+      "vrkCandidateId": "88088",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 19
+      }
+    },
+    {
+      "candidateName": "Eugenijus Judeikis",
+      "candidateId": "eugenijus-judeikis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88089/Kandidato88089Anketa.html",
+      "vrkCandidateId": "88089",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 20
+      }
+    },
+    {
+      "candidateName": "Česlovas Normantas",
+      "candidateId": "ceslovas-normantas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88090/Kandidato88090Anketa.html",
+      "vrkCandidateId": "88090",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 21
+      }
+    },
+    {
+      "candidateName": "Asta Maigienė",
+      "candidateId": "asta-maigiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88091/Kandidato88091Anketa.html",
+      "vrkCandidateId": "88091",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 22
+      }
+    },
+    {
+      "candidateName": "Jolita Švagždienė",
+      "candidateId": "jolita-svagzdiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88092/Kandidato88092Anketa.html",
+      "vrkCandidateId": "88092",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 23
+      }
+    },
+    {
+      "candidateName": "Laimutis Bučinskas",
+      "candidateId": "laimutis-bucinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88093/Kandidato88093Anketa.html",
+      "vrkCandidateId": "88093",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 24
+      }
+    },
+    {
+      "candidateName": "Dainoras Grigalius",
+      "candidateId": "dainoras-grigalius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88094/Kandidato88094Anketa.html",
+      "vrkCandidateId": "88094",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 25
+      }
+    },
+    {
+      "candidateName": "Vaida Grigalienė",
+      "candidateId": "vaida-grigaliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88095/Kandidato88095Anketa.html",
+      "vrkCandidateId": "88095",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 26
+      }
+    },
+    {
+      "candidateName": "Algimantas Dirsė",
+      "candidateId": "algimantas-dirse",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88096/Kandidato88096Anketa.html",
+      "vrkCandidateId": "88096",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 27
+      }
+    },
+    {
+      "candidateName": "Rimas Stončius",
+      "candidateId": "rimas-stoncius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88097/Kandidato88097Anketa.html",
+      "vrkCandidateId": "88097",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 28
+      }
+    },
+    {
+      "candidateName": "Gintaras Pužas",
+      "candidateId": "gintaras-puzas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88098/Kandidato88098Anketa.html",
+      "vrkCandidateId": "88098",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 29
+      }
+    },
+    {
+      "candidateName": "Robertas Tirevičius",
+      "candidateId": "robertas-tirevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88099/Kandidato88099Anketa.html",
+      "vrkCandidateId": "88099",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 30
+      }
+    },
+    {
+      "candidateName": "Saulius Bukantas",
+      "candidateId": "saulius-bukantas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88100/Kandidato88100Anketa.html",
+      "vrkCandidateId": "88100",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 31
+      }
+    },
+    {
+      "candidateName": "Juozas Pleikys",
+      "candidateId": "juozas-pleikys",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88101/Kandidato88101Anketa.html",
+      "vrkCandidateId": "88101",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 32
+      }
+    },
+    {
+      "candidateName": "Vaiva Kraftaitė",
+      "candidateId": "vaiva-kraftaite",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88102/Kandidato88102Anketa.html",
+      "vrkCandidateId": "88102",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 33
+      }
+    },
+    {
+      "candidateName": "Danutė Pielikienė",
+      "candidateId": "danute-pielikiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88103/Kandidato88103Anketa.html",
+      "vrkCandidateId": "88103",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 34
+      }
+    },
+    {
+      "candidateName": "Stasys Pužauskas",
+      "candidateId": "stasys-puzauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88104/Kandidato88104Anketa.html",
+      "vrkCandidateId": "88104",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 35
+      }
+    },
+    {
+      "candidateName": "Arūnas Vaičiukas",
+      "candidateId": "arunas-vaiciukas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88106/Kandidato88106Anketa.html",
+      "vrkCandidateId": "88106",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 36
+      }
+    },
+    {
+      "candidateName": "Rasa Jonelienė",
+      "candidateId": "rasa-joneliene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88107/Kandidato88107Anketa.html",
+      "vrkCandidateId": "88107",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 37
+      }
+    },
+    {
+      "candidateName": "Žibutė Sukackienė",
+      "candidateId": "zibute-sukackiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88108/Kandidato88108Anketa.html",
+      "vrkCandidateId": "88108",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 38
+      }
+    },
+    {
+      "candidateName": "Rasa Gailiuvienė",
+      "candidateId": "rasa-gailiuviene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88109/Kandidato88109Anketa.html",
+      "vrkCandidateId": "88109",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 39
+      }
+    },
+    {
+      "candidateName": "Lina Genienė",
+      "candidateId": "lina-geniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88111/Kandidato88111Anketa.html",
+      "vrkCandidateId": "88111",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 40
+      }
+    },
+    {
+      "candidateName": "Aida Ražinskienė",
+      "candidateId": "aida-razinskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88112/Kandidato88112Anketa.html",
+      "vrkCandidateId": "88112",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 41
+      }
+    },
+    {
+      "candidateName": "Andrius Ražinskas",
+      "candidateId": "andrius-razinskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88113/Kandidato88113Anketa.html",
+      "vrkCandidateId": "88113",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 42
+      }
+    },
+    {
+      "candidateName": "Vaclovas Ignotas",
+      "candidateId": "vaclovas-ignotas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88114/Kandidato88114Anketa.html",
+      "vrkCandidateId": "88114",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 43
+      }
+    },
+    {
+      "candidateName": "Jelena Strukčinskienė",
+      "candidateId": "jelena-strukcinskiene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/457_lt/Kandidatai/Kandidatas88115/Kandidato88115Anketa.html",
+      "vrkCandidateId": "88115",
+      "municipality": "Šilutės rajono savivaldybė",
+      "roles": [
+        "tarybos-narys"
+      ],
+      "councilCandidacy": {
+        "partyList": "Lietuvos Respublikos liberalų sąjūdis",
+        "listNumber": 26,
+        "listPosition": 44
+      }
+    }
+  ],
+  "skipped": []
+}

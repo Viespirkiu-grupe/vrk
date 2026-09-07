@@ -1,0 +1,143 @@
+{
+  "electionId": "1997-gruodzio-21-seimo-pakartotiniai",
+  "generatedAt": "2026-08-27T19:53:23+00:00",
+  "sources": [
+    "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgpl.htm-324+1.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgpl.htm-324+2.htm"
+  ],
+  "stats": {
+    "pages": 2,
+    "constituencies": 1,
+    "candidates": 4,
+    "candidatesWithVotes": 4,
+    "candidatesWithoutVotes": 0,
+    "unresolvedRows": 0,
+    "elected": 1,
+    "electedNotInSitemap": 0,
+    "unresolvedWinners": 0,
+    "constituenciesNotHeld": 0,
+    "roundMismatches": 0,
+    "mojibakePages": 0
+  },
+  "elected": {
+    "61675": {
+      "seat": "vienmandate",
+      "method": "constituency-verdict",
+      "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgpl.htm-324+2.htm",
+      "round": 2,
+      "constituency": "Aukštaitijos",
+      "constituencyNumber": 28
+    }
+  },
+  "details": {
+    "constituencies": [
+      {
+        "constituencyName": "Aukštaitijos",
+        "constituencyNumber": 28,
+        "round": 1,
+        "held": true,
+        "runoffRequired": true,
+        "winnerName": null,
+        "winnerVrkCandidateId": null,
+        "turnout": {
+          "registeredVoters": 39003,
+          "voters": 28742,
+          "turnoutPercent": 73.69,
+          "invalidBallots": 1177,
+          "validBallots": 27565
+        },
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgpl.htm-324+1.htm",
+        "mojibakeRepaired": false,
+        "declaredRound": 1,
+        "roundMismatch": false
+      },
+      {
+        "constituencyName": "Aukštaitijos",
+        "constituencyNumber": 28,
+        "round": 2,
+        "held": null,
+        "runoffRequired": false,
+        "winnerName": "Virmantas Velikonis",
+        "winnerVrkCandidateId": "61675",
+        "turnout": {
+          "registeredVoters": 39034,
+          "voters": 29674,
+          "turnoutPercent": 76.02,
+          "invalidBallots": 766,
+          "validBallots": 28908
+        },
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgpl.htm-324+2.htm",
+        "mojibakeRepaired": false,
+        "declaredRound": 2,
+        "roundMismatch": false
+      }
+    ],
+    "constituencyVotes": {
+      "61675": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 28,
+          "balsai-apygardoje": 11321,
+          "balsai-pastu": 485,
+          "balsai": 11806,
+          "vieta": 1,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgpl.htm-324+1.htm"
+        },
+        {
+          "turas": 2,
+          "apygardos-numeris": 28,
+          "balsai-apygardoje": 16117,
+          "balsai-pastu": 718,
+          "balsai": 16835,
+          "vieta": 1,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgpl.htm-324+2.htm"
+        }
+      ],
+      "61720": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 28,
+          "balsai-apygardoje": 6626,
+          "balsai-pastu": 338,
+          "balsai": 6964,
+          "vieta": 2,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgpl.htm-324+1.htm"
+        },
+        {
+          "turas": 2,
+          "apygardos-numeris": 28,
+          "balsai-apygardoje": 11358,
+          "balsai-pastu": 715,
+          "balsai": 12073,
+          "vieta": 2,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgpl.htm-324+2.htm"
+        }
+      ],
+      "61676": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 28,
+          "balsai-apygardoje": 4637,
+          "balsai-pastu": 107,
+          "balsai": 4744,
+          "vieta": 3,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgpl.htm-324+1.htm"
+        }
+      ],
+      "61677": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 28,
+          "balsai-apygardoje": 3864,
+          "balsai-pastu": 187,
+          "balsai": 4051,
+          "vieta": 4,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/rapgpl.htm-324+1.htm"
+        }
+      ]
+    },
+    "unresolvedRows": [],
+    "unresolvedWinners": [],
+    "candidatesWithoutVotes": []
+  }
+}

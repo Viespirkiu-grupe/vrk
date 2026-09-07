@@ -1,0 +1,111 @@
+{
+  "electionId": "1998-lapkricio-15-seimo-pakartotiniai",
+  "sourceDescription": "Nevėžio (26) constituency, named on https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/index.html",
+  "generatedAt": "2026-08-26T15:06:08+00:00",
+  "stats": {
+    "constituencies": 1,
+    "candidates": 11,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Baskas Antanas",
+      "candidateId": "baskas-antanas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64463.htm",
+      "constituencyName": "Nevėžio",
+      "constituencyNumber": 26,
+      "nominator": "Išsikėlė pats",
+      "nominatorUrl": ""
+    },
+    {
+      "candidateName": "Čiplytė Joana Viga",
+      "candidateId": "ciplyte-joana-viga",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64462.htm",
+      "constituencyName": "Nevėžio",
+      "constituencyNumber": 26,
+      "nominator": "Lietuvos socialdemokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-216.htm"
+    },
+    {
+      "candidateName": "Daukas Virginijus",
+      "candidateId": "daukas-virginijus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64455.htm",
+      "constituencyName": "Nevėžio",
+      "constituencyNumber": 26,
+      "nominator": "Lietuvos liberalų sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-223.htm"
+    },
+    {
+      "candidateName": "Davydovas Sergiejus",
+      "candidateId": "davydovas-sergiejus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64464.htm",
+      "constituencyName": "Nevėžio",
+      "constituencyNumber": 26,
+      "nominator": "Išsikėlė pats",
+      "nominatorUrl": ""
+    },
+    {
+      "candidateName": "Gudas Kęstutis",
+      "candidateId": "gudas-kestutis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64452.htm",
+      "constituencyName": "Nevėžio",
+      "constituencyNumber": 26,
+      "nominator": "Lietuvos centro sąjunga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-211.htm"
+    },
+    {
+      "candidateName": "Josas Tomas",
+      "candidateId": "josas-tomas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64456.htm",
+      "constituencyName": "Nevėžio",
+      "constituencyNumber": 26,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-210.htm"
+    },
+    {
+      "candidateName": "Kriščiūnas Edvardas",
+      "candidateId": "krisciunas-edvardas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64460.htm",
+      "constituencyName": "Nevėžio",
+      "constituencyNumber": 26,
+      "nominator": "Lietuvių nacionalinė partija - \"Jaunoji Lietuva\"",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-225.htm"
+    },
+    {
+      "candidateName": "Malūkas Edmundas Zenonas",
+      "candidateId": "malukas-edmundas-zenonas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64459.htm",
+      "constituencyName": "Nevėžio",
+      "constituencyNumber": 26,
+      "nominator": "Naujoji sąjunga (socialliberalai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-226.htm"
+    },
+    {
+      "candidateName": "Motuzas Algirdas",
+      "candidateId": "motuzas-algirdas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64465.htm",
+      "constituencyName": "Nevėžio",
+      "constituencyNumber": 26,
+      "nominator": "Išsikėlė pats",
+      "nominatorUrl": ""
+    },
+    {
+      "candidateName": "Satkevičius Vitalijus",
+      "candidateId": "satkevicius-vitalijus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64453.htm",
+      "constituencyName": "Nevėžio",
+      "constituencyNumber": 26,
+      "nominator": "Lietuvos krikščionių demokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-205.htm"
+    },
+    {
+      "candidateName": "Terleckas Antanas",
+      "candidateId": "terleckas-antanas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-64461.htm",
+      "constituencyName": "Nevėžio",
+      "constituencyNumber": 26,
+      "nominator": "Lietuvos laisvės lyga",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-224.htm"
+    }
+  ]
+}

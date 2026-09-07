@@ -24,11 +24,41 @@ The report prints counts per event type per election, worst severity first, and
 then diffs the run against `docs/anomaly-baseline.tsv`. An event type the
 baseline does not name, or more of one than it records, exits 1. Fewer is
 progress: it is printed and does not fail, so a parser fix need not touch the
-baseline in the same commit.
+baseline in the same commit — up to a point. An election whose total fell to
+less than half of what the baseline records exits 1 too, because that is what
+a wiped file looks like: issue #139 measured a one-candidate re-parse taking
+the 1997 municipal election from 8,636 events to 8, and the report printing
+`3 row(s) below the baseline` followed by `Nothing new against the baseline`.
+A parser fix that removes most of an election's events is a deliberate change
+and updates the baseline in the same commit (`--update-baseline`).
 
 The baseline keys on `(election, event type, severity)`. Reclassifying an event
 is a real change to what stops an unattended run, so it shows up as a resolved
 row and a new one rather than passing as "the same 8,597 events".
+
+## Who writes the file
+
+`data/<election-id>/anomalies.jsonl` has several writers, and one rule holds
+them together (`scraper/shared/anomalies.py`, issue #139): **a run owns the
+events of its own stage for the candidates it processed, replaces exactly
+those, and leaves every other line as it found it.**
+
+- `parse-anketa-samples` defaults to the election's file and applies the rule
+  per candidate: re-parsing one candidate replaces that candidate's `parse`
+  events and nothing else. Until issue #139 it opened the file with `"w"` and
+  wrote its own run alone, so the documented one-candidate form emptied the
+  file — including the `fetch`-stage `PortraitFetchFailed` rows that no
+  re-parse can regenerate.
+- `scripts/reparse_diff.py --apply` re-parses a whole election and applies the
+  same rule with every candidate owned: all `parse` events are regenerated,
+  every other stage's are kept.
+- `scripts/run_election_batches.sh` points both stages at a fresh per-candidate
+  file and appends it to the election's, which is the rule's append form.
+- `fetch-candidate-samples` has no default path and writes the file it is
+  given whole; the runner's per-candidate file is the only one it should be
+  pointed at.
+- `scripts/backfill_url_portraits.py` owns the `PortraitFetchFailed` rows and
+  replaces them by event type on every run.
 
 ## Event shape
 

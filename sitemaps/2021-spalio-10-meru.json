@@ -1,0 +1,89 @@
+{
+  "electionId": "2021-spalio-10-meru",
+  "sourceUrl": "https://www.vrk.lt/kandidatai-i-savivaldybes-tarybos-narius-merus-traku-2021-mero?srcUrl=/rinkimai/1184/rnk1506/kandidatai/savKandidataiMerai.html",
+  "generatedAt": "2026-08-15T21:10:57+00:00",
+  "stats": {
+    "rows": 15,
+    "extracted": 14,
+    "skipped": 1,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Stasys JOKUBAUSKAS",
+      "candidateId": "stasys-jokubauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasAnketa_rkndId-2420406.html"
+    },
+    {
+      "candidateName": "Jolita KORYZNIENĖ",
+      "candidateId": "jolita-koryzniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasAnketa_rkndId-2420425.html"
+    },
+    {
+      "candidateName": "Ildefonsas PETKEVIČIUS",
+      "candidateId": "ildefonsas-petkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasAnketa_rkndId-2420413.html"
+    },
+    {
+      "candidateName": "Juozas RIMKUS",
+      "candidateId": "juozas-rimkus",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasAnketa_rkndId-2420411.html"
+    },
+    {
+      "candidateName": "Algirdas SAKALAUSKAS",
+      "candidateId": "algirdas-sakalauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasAnketa_rkndId-2420430.html"
+    },
+    {
+      "candidateName": "Lina SAMULYTĖ",
+      "candidateId": "lina-samulyte",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasAnketa_rkndId-2420414.html"
+    },
+    {
+      "candidateName": "Egidijus ŪKSAS",
+      "candidateId": "egidijus-uksas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasAnketa_rkndId-2420409.html"
+    },
+    {
+      "candidateName": "Dalia VILIŪNIENĖ",
+      "candidateId": "dalia-viliuniene",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasAnketa_rkndId-2420427.html"
+    },
+    {
+      "candidateName": "Ramūnas AUŠROTAS",
+      "candidateId": "ramunas-ausrotas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasAnketa_rkndId-2420432.html"
+    },
+    {
+      "candidateName": "Adas JAKUBAUSKAS",
+      "candidateId": "adas-jakubauskas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasAnketa_rkndId-2420429.html"
+    },
+    {
+      "candidateName": "Jonas KIETAVIČIUS",
+      "candidateId": "jonas-kietavicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasAnketa_rkndId-2420407.html"
+    },
+    {
+      "candidateName": "Jaroslav NARKEVIČ",
+      "candidateId": "jaroslav-narkevic",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasAnketa_rkndId-2420410.html"
+    },
+    {
+      "candidateName": "Dainius NARKEVIČIUS",
+      "candidateId": "dainius-narkevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasAnketa_rkndId-2420408.html"
+    },
+    {
+      "candidateName": "Andrius ŠATEVIČIUS",
+      "candidateId": "andrius-satevicius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/1184/rnk1506/kandidatai/savKandidatasAnketa_rkndId-2420412.html"
+    }
+  ],
+  "skipped": [
+    {
+      "rowIndex": 1,
+      "reason": "no-cells"
+    }
+  ]
+}

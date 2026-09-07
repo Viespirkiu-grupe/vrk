@@ -1,0 +1,336 @@
+{
+  "electionId": "1999-kovo-21-seimo-pakartotiniai",
+  "generatedAt": "2026-09-05T23:49:27+00:00",
+  "sources": [
+    "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-394+1.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-397+1.htm",
+    "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-395+1.htm"
+  ],
+  "stats": {
+    "pages": 3,
+    "constituencies": 3,
+    "candidates": 22,
+    "candidatesWithVotes": 22,
+    "candidatesWithoutVotes": 0,
+    "unresolvedRows": 0,
+    "elected": 0,
+    "electedNotInSitemap": 0,
+    "unresolvedWinners": 0,
+    "constituenciesNotHeld": 3,
+    "roundMismatches": 0,
+    "mojibakePages": 0
+  },
+  "elected": {},
+  "nobodyElected": true,
+  "details": {
+    "constituencies": [
+      {
+        "constituencyName": "Naujosios Vilnios",
+        "constituencyNumber": 10,
+        "round": 1,
+        "held": false,
+        "runoffRequired": false,
+        "winnerName": null,
+        "winnerVrkCandidateId": null,
+        "turnout": {
+          "registeredVoters": 40215,
+          "voters": 7967,
+          "turnoutPercent": 19.81,
+          "invalidBallots": 267,
+          "validBallots": 7700
+        },
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-394+1.htm",
+        "mojibakeRepaired": false,
+        "declaredRound": 1,
+        "roundMismatch": false
+      },
+      {
+        "constituencyName": "Nevėžio",
+        "constituencyNumber": 26,
+        "round": 1,
+        "held": false,
+        "runoffRequired": false,
+        "winnerName": null,
+        "winnerVrkCandidateId": null,
+        "turnout": {
+          "registeredVoters": 38307,
+          "voters": 12997,
+          "turnoutPercent": 33.93,
+          "invalidBallots": 152,
+          "validBallots": 12845
+        },
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-397+1.htm",
+        "mojibakeRepaired": false,
+        "declaredRound": 1,
+        "roundMismatch": false
+      },
+      {
+        "constituencyName": "Vilniaus Trakų",
+        "constituencyNumber": 57,
+        "round": 1,
+        "held": false,
+        "runoffRequired": false,
+        "winnerName": null,
+        "winnerVrkCandidateId": null,
+        "turnout": {
+          "registeredVoters": 38887,
+          "voters": 7432,
+          "turnoutPercent": 19.11,
+          "invalidBallots": 324,
+          "validBallots": 7108
+        },
+        "sourceUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-395+1.htm",
+        "mojibakeRepaired": false,
+        "declaredRound": 1,
+        "roundMismatch": false
+      }
+    ],
+    "constituencyVotes": {
+      "65088": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 10,
+          "balsai-apygardoje": 2685,
+          "balsai-pastu": 50,
+          "balsai": 2735,
+          "vieta": 1,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-394+1.htm"
+        }
+      ],
+      "65099": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 10,
+          "balsai-apygardoje": 1665,
+          "balsai-pastu": 55,
+          "balsai": 1720,
+          "vieta": 2,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-394+1.htm"
+        }
+      ],
+      "65114": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 10,
+          "balsai-apygardoje": 1299,
+          "balsai-pastu": 17,
+          "balsai": 1316,
+          "vieta": 3,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-394+1.htm"
+        }
+      ],
+      "65086": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 10,
+          "balsai-apygardoje": 610,
+          "balsai-pastu": 12,
+          "balsai": 622,
+          "vieta": 4,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-394+1.htm"
+        }
+      ],
+      "65111": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 10,
+          "balsai-apygardoje": 518,
+          "balsai-pastu": 11,
+          "balsai": 529,
+          "vieta": 5,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-394+1.htm"
+        }
+      ],
+      "65106": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 10,
+          "balsai-apygardoje": 445,
+          "balsai-pastu": 6,
+          "balsai": 451,
+          "vieta": 6,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-394+1.htm"
+        }
+      ],
+      "65116": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 10,
+          "balsai-apygardoje": 318,
+          "balsai-pastu": 9,
+          "balsai": 327,
+          "vieta": 7,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-394+1.htm"
+        }
+      ],
+      "65085": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 26,
+          "balsai-apygardoje": 8272,
+          "balsai-pastu": 396,
+          "balsai": 8668,
+          "vieta": 1,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-397+1.htm"
+        }
+      ],
+      "65104": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 26,
+          "balsai-apygardoje": 1312,
+          "balsai-pastu": 101,
+          "balsai": 1413,
+          "vieta": 2,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-397+1.htm"
+        }
+      ],
+      "65117": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 26,
+          "balsai-apygardoje": 1121,
+          "balsai-pastu": 85,
+          "balsai": 1206,
+          "vieta": 3,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-397+1.htm"
+        }
+      ],
+      "65112": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 26,
+          "balsai-apygardoje": 501,
+          "balsai-pastu": 131,
+          "balsai": 632,
+          "vieta": 4,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-397+1.htm"
+        }
+      ],
+      "65087": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 26,
+          "balsai-apygardoje": 451,
+          "balsai-pastu": 24,
+          "balsai": 475,
+          "vieta": 5,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-397+1.htm"
+        }
+      ],
+      "65097": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 26,
+          "balsai-apygardoje": 212,
+          "balsai-pastu": 49,
+          "balsai": 261,
+          "vieta": 6,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-397+1.htm"
+        }
+      ],
+      "65110": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 26,
+          "balsai-apygardoje": 106,
+          "balsai-pastu": 21,
+          "balsai": 127,
+          "vieta": 7,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-397+1.htm"
+        }
+      ],
+      "65107": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 26,
+          "balsai-apygardoje": 60,
+          "balsai-pastu": 3,
+          "balsai": 63,
+          "vieta": 8,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-397+1.htm"
+        }
+      ],
+      "65100": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 57,
+          "balsai-apygardoje": 3805,
+          "balsai-pastu": 466,
+          "balsai": 4271,
+          "vieta": 1,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-395+1.htm"
+        }
+      ],
+      "65113": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 57,
+          "balsai-apygardoje": 656,
+          "balsai-pastu": 62,
+          "balsai": 718,
+          "vieta": 2,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-395+1.htm"
+        }
+      ],
+      "65115": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 57,
+          "balsai-apygardoje": 680,
+          "balsai-pastu": 38,
+          "balsai": 718,
+          "vieta": 3,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-395+1.htm"
+        }
+      ],
+      "65098": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 57,
+          "balsai-apygardoje": 524,
+          "balsai-pastu": 30,
+          "balsai": 554,
+          "vieta": 4,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-395+1.htm"
+        }
+      ],
+      "65109": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 57,
+          "balsai-apygardoje": 356,
+          "balsai-pastu": 35,
+          "balsai": 391,
+          "vieta": 5,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-395+1.htm"
+        }
+      ],
+      "65118": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 57,
+          "balsai-apygardoje": 347,
+          "balsai-pastu": 40,
+          "balsai": 387,
+          "vieta": 6,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-395+1.htm"
+        }
+      ],
+      "65108": [
+        {
+          "turas": 1,
+          "apygardos-numeris": 57,
+          "balsai-apygardoje": 63,
+          "balsai-pastu": 6,
+          "balsai": 69,
+          "vieta": 7,
+          "saltinis": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/19990321/rapgpl.htm-395+1.htm"
+        }
+      ]
+    },
+    "unresolvedRows": [],
+    "unresolvedWinners": [],
+    "candidatesWithoutVotes": []
+  }
+}

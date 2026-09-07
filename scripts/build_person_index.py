@@ -92,7 +92,7 @@ from scraper.shared.deklaracijos import (  # noqa: E402
 )
 from scraper.shared.education import LEVELS as EDUCATION_LEVELS  # noqa: E402
 from scraper.shared.education import issilavinimas  # noqa: E402
-from scraper.shared.kandidatura import ROLE_MAYOR, kandidatura  # noqa: E402
+from scraper.shared.kandidatura import ROLE_COUNCIL, ROLE_MAYOR, kandidatura  # noqa: E402
 from scraper.shared.parties import entry as party_entry  # noqa: E402
 from scraper.shared.parties import partija  # noqa: E402
 from scraper.shared.provenance import parser_commit, utc_now_iso  # noqa: E402
@@ -366,6 +366,13 @@ def apply_merges(
     return former, unmatched
 
 
+def _role_code(offices: list[str]) -> str | None:
+    """people.json's "r": the offices of a council-and-mayor ballot as a code
+    string ("m", "tm"), None for the council-only default."""
+    code = "".join("m" if office == ROLE_MAYOR else "t" for office in offices if office in (ROLE_COUNCIL, ROLE_MAYOR))
+    return None if code in ("", "t") else code
+
+
 def build_index(
     data_root: Path,
     registry: list[dict] | None = None,
@@ -385,6 +392,7 @@ def build_index(
     newest_parse = ""
     seen_elections: set[str] = set()
     municipalities: set[str] = set()
+    unresolved_municipalities: set[str] = set()
 
     for election_dir in sorted(p for p in data_root.iterdir() if p.is_dir()):
         election_id = election_dir.name
@@ -414,6 +422,12 @@ def build_index(
             candidacy = kandidatura(record, kind_of.get(election_id))
             if candidacy["savivaldybe"]:
                 municipalities.add(candidacy["savivaldybe"])
+                if candidacy["savivaldybe-id"] is None:
+                    # A wording scraper/municipalities.json does not claim
+                    # (issue #137): it still gets a facet row of its own, so
+                    # nothing is hidden, and the run reports it so the
+                    # registry gets the alias rather than the facet a twin.
+                    unresolved_municipalities.add(candidacy["savivaldybe-raw"])
             workplace = None
             for paths in workplace_paths:
                 mapped = paths.get(election_id)
@@ -441,9 +455,14 @@ def build_index(
                     "party": partija(record, election_id)["partija-id"],
                     "municipality": candidacy["savivaldybe"],
                     # The kind decides the office for every other election, so
-                    # the flag is only carried where the ballot had two.
-                    "mayor": candidacy["vaidmuo"] == ROLE_MAYOR
-                    and kind_of.get(election_id) == "savivaldybiu",
+                    # the offices are only carried where the ballot had two:
+                    # "m" a mayoral run alone, "tm" council and mayor, with the
+                    # per-office outcomes beside them (issue #140).
+                    "roles": _role_code(candidacy["vaidmenys"])
+                    if kind_of.get(election_id) == "savivaldybiu"
+                    else None,
+                    "electedCouncil": candidacy["isrinktas-tarybos-nariu"],
+                    "electedMayor": candidacy["isrinktas-meru"],
                     "workplace": workplace,
                     "educationRank": issilavinimas(record, election_id)["rangas"],
                 }
@@ -452,9 +471,11 @@ def build_index(
     order = {e["id"]: i for i, e in enumerate(registry)}
     former, unmatched_override_keys = apply_merges(grouped, overrides, order)
     pid_of: dict[str, str] = {}
-    # Municipality names are interned: the corpus writes ~100k of them over
-    # ~127 distinct values, so each candidacy carries an index into the
-    # top-level "municipalities" list instead of the string.
+    # Municipality names are interned: the corpus writes ~100k of them, so
+    # each candidacy carries an index into the top-level "municipalities"
+    # list instead of the string. The names are the registry's official ones
+    # (scraper/municipalities.json, issue #137): the 127 published wordings
+    # are 62 bodies, and the facet used to list all 127.
     municipality_list = sorted(municipalities)
     municipality_index = {name: i for i, name in enumerate(municipality_list)}
 
@@ -499,8 +520,12 @@ def build_index(
             # "ds" an income figure that is the 1990s form's employment row
             # rather than a declared total (the `deklaruotos-pajamos` concept).
             # "p" is the canonical nominator id, "sv" an index into the
-            # top-level municipalities list, "r": "m" a mayoral run on a
-            # council-and-mayor ballot (the kind decides every other office),
+            # top-level municipalities list, "r" the offices on a
+            # council-and-mayor ballot -- "m" a mayoral run alone, "tm" both,
+            # absent a council run (the kind decides every other office) --
+            # with "wt"/"wm", the council seat's and the mayoralty's own
+            # outcomes, beside "w" where a dual candidacy makes them differ
+            # (issue #140: 448 council winners who lost the mayoralty),
             # "wp" the workplace/position string the search box matches, and
             # "ed" the education rank in scraper/shared/education.py's
             # 13-tier ordinal (the top-level educationLevels list).
@@ -518,7 +543,14 @@ def build_index(
                         if r["municipality"]
                         else {}
                     ),
-                    **({"r": "m"} if r["mayor"] else {}),
+                    **({"r": r["roles"]} if r["roles"] else {}),
+                    **(
+                        {"wt": r["electedCouncil"], "wm": r["electedMayor"]}
+                        if r["roles"] == "tm"
+                        and isinstance(r["electedCouncil"], bool)
+                        and isinstance(r["electedMayor"], bool)
+                        else {}
+                    ),
                     **({"wp": r["workplace"]} if r["workplace"] else {}),
                     **({"ed": r["educationRank"]} if r["educationRank"] else {}),
                 }
@@ -572,6 +604,7 @@ def build_index(
         "elections": [e for e in registry if e["id"] in seen_elections],
         "unregisteredElections": sorted(seen_elections - set(order)),
         "unmatchedOverrideKeys": sorted(unmatched_override_keys),
+        "unresolvedMunicipalities": sorted(unresolved_municipalities),
         "parties": parties,
         "municipalities": municipality_list,
         # The 13-tier education ordinal, rank order ("ed" is a 1-based index
@@ -625,7 +658,7 @@ def main() -> int:
         f"{stats['candidaciesLost']} lost, "
         f"{stats['candidaciesWithoutResultsData']} without results data"
     )
-    print(f"municipalities:           {len(index['municipalities'])}")
+    print(f"municipalities:           {len(index['municipalities'])} (scraper/municipalities.json bodies)")
     generals = sum(1 for e in index["elections"] if "parent" not in e)
     print(
         f"elections:                {len(index['elections'])} of {len(load_registry())} registered "
@@ -642,6 +675,16 @@ def main() -> int:
         )
         for eid in unregistered:
             print(f"  {eid}", file=sys.stderr)
+        failed = True
+    unresolved = index["unresolvedMunicipalities"]
+    if unresolved:
+        print(
+            f"\n{len(unresolved)} municipality wording(s) no entry of scraper/municipalities.json claims —\n"
+            "each is a facet row of its own until the registry gets the alias:",
+            file=sys.stderr,
+        )
+        for form in unresolved:
+            print(f"  {form}", file=sys.stderr)
         failed = True
     stale = index["unmatchedOverrideKeys"]
     if stale:

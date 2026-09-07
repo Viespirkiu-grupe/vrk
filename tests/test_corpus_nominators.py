@@ -27,7 +27,7 @@ FORMS_TABLE = REPO_ROOT / "docs" / "nominator-forms.tsv"
 class CorpusNominatorTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        local_data.require(DATA_ROOT)
+        local_data.require_corpus()
         cls.mapped = nominator_paths()
         cls.forms: Counter[str] = Counter()
         cls.unresolved: dict[str, list[str]] = {}

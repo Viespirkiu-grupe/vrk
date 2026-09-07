@@ -1,0 +1,48 @@
+{
+  "electionId": "1997-gruodzio-21-seimo-pakartotiniai",
+  "sourceDescription": "Aukštaitijos (28) constituency, named on https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/index.html#1997",
+  "generatedAt": "2026-08-20T22:24:58+00:00",
+  "stats": {
+    "constituencies": 1,
+    "candidates": 4,
+    "duplicateCandidateIds": 0
+  },
+  "entries": [
+    {
+      "candidateName": "Babilius Vincas Kęstutis",
+      "candidateId": "babilius-vincas-kestutis",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-61677.htm",
+      "constituencyName": "Aukštaitijos",
+      "constituencyNumber": 28,
+      "nominator": "Tėvynės sąjunga (Lietuvos konservatoriai)",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-133.htm"
+    },
+    {
+      "candidateName": "Velikonis Virmantas",
+      "candidateId": "velikonis-virmantas",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-61675.htm",
+      "constituencyName": "Aukštaitijos",
+      "constituencyNumber": 28,
+      "nominator": "Išsikėlė pats",
+      "nominatorUrl": ""
+    },
+    {
+      "candidateName": "Veselka Julius",
+      "candidateId": "veselka-julius",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-61676.htm",
+      "constituencyName": "Aukštaitijos",
+      "constituencyNumber": 28,
+      "nominator": "Išsikėlė pats",
+      "nominatorUrl": ""
+    },
+    {
+      "candidateName": "Žekonienė Vanda",
+      "candidateId": "zekoniene-vanda",
+      "url": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/kandvl.htm-61720.htm",
+      "constituencyName": "Aukštaitijos",
+      "constituencyNumber": 28,
+      "nominator": "Lietuvos krikščionių demokratų partija",
+      "nominatorUrl": "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/seimpk/partr2l.htm-135.htm"
+    }
+  ]
+}
