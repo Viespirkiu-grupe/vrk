@@ -83,6 +83,21 @@ ENVELOPE = frozenset(
 )
 OPTIONAL_ENVELOPE = frozenset({"kandidatavimas", "candidateNote", "provenance"})
 
+#: The terms every release carries (issue #138): the code's licence, the
+#: compilation's licence, the attribution it requires and where the full
+#: terms live. DATA_TERMS.md is the human-readable statement of the same
+#: four facts and tests/test_data_terms.py holds the two together, so a
+#: release cannot ship saying one thing while the repository says another.
+CODE_LICENSE = "MIT"
+DATA_LICENSE = "CC-BY-4.0"
+DATA_LICENSE_NAME = "CC BY 4.0"
+SOURCE_URL = "https://www.vrk.lt"
+TERMS_URL = "https://github.com/Viespirkiu-grupe/vrk/blob/main/DATA_TERMS.md"
+ATTRIBUTION = (
+    "VRK election corpus by Viešpirkiai (https://github.com/Viespirkiu-grupe/vrk),"
+    " CC BY 4.0. Source: Lietuvos Respublikos vyriausioji rinkimų komisija (vrk.lt)."
+)
+
 #: What a release ships, beside MANIFEST.json (which checksums these four).
 RELEASE_ARTIFACTS = (
     "candidacies.csv.gz",
@@ -363,6 +378,14 @@ def write_manifest(
         "version": "corpus-" + built.strftime("%Y-%m-%d"),
         "builtAt": built.strftime("%Y-%m-%dT%H:%M:%SZ"),
         "parserCommit": parser_commit(),
+        # The terms travel with the assets (issue #138): a downloaded
+        # directory of gzips says what may be done with it and whom to
+        # write to, without the repository at hand.
+        "license": CODE_LICENSE,
+        "dataLicense": DATA_LICENSE,
+        "attribution": ATTRIBUTION,
+        "terms": TERMS_URL,
+        "source": SOURCE_URL,
         "counts": {
             "records": corpus_counts["records"],
             "elections": stats["elections"],
@@ -460,9 +483,25 @@ def build_distribution(
         print(
             f"\npublish:\n  gh release create {manifest['version']} {assets}"
             f" --title 'VRK corpus {manifest['version'].removeprefix('corpus-')}'"
-            " --notes '<what changed since the last corpus release>'"
+            " --notes-file <notes>"
         )
+        print("\nthe notes end with these lines (issue #138):\n")
+        print(release_notes_footer(manifest["version"]))
     return 0
+
+
+def release_notes_footer(version: str) -> str:
+    """The closing lines of every release's notes: source, licence, the
+    attribution a reuser owes, and the address for a removal request. The
+    same four facts sit in MANIFEST.json and DATA_TERMS.md."""
+    return (
+        f"Source: the public candidate pages of the Lithuanian Central Electoral"
+        f" Commission ({SOURCE_URL}). Code {CODE_LICENSE}-licensed; the corpus is"
+        f" published under {DATA_LICENSE_NAME}"
+        f" — reuse it with the attribution below, and see {TERMS_URL} for the"
+        f" terms and for how to ask that a person's record be removed or corrected.\n\n"
+        f"> {ATTRIBUTION} Release {version}."
+    )
 
 
 def main() -> int:

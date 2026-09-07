@@ -191,7 +191,7 @@ python scripts/build_distribution.py 2019-prezidento    # subset, no gate
 | `campaigns.csv.gz` | one row per campaign-finance participant |
 | `vrk.sqlite.gz` | the analysis database above, gzipped |
 | `vrk-corpus.sqlite.gz` | **everything**: the analysis tables plus `records`, `photos`, `anomalies` |
-| `MANIFEST.json` | per-election record counts, build date, parser commit, sha256 + bytes per asset |
+| `MANIFEST.json` | per-election record counts, build date, parser commit, sha256 + bytes per asset, and the terms (`license`, `dataLicense`, `attribution`, `terms`, `source` — [DATA_TERMS.md](../DATA_TERMS.md), issue #138) |
 
 `elections` is the registry as a table — `id, date, kind, parent, name,
 shortName, records` — where `parent` is the general election whose term a

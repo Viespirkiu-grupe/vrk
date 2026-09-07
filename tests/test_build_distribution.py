@@ -214,6 +214,17 @@ class DistributionBuild(unittest.TestCase):
         self.assertEqual(
             set(manifest["artifacts"]), set(dist_mod.RELEASE_ARTIFACTS)
         )
+
+    def test_manifest_carries_the_terms(self):
+        # Issue #138: the licence, the attribution and the terms URL ride
+        # with the assets, so a downloaded directory says what may be done
+        # with it without the repository at hand.
+        manifest = json.loads((self.dist / "MANIFEST.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["license"], dist_mod.CODE_LICENSE)
+        self.assertEqual(manifest["dataLicense"], dist_mod.DATA_LICENSE)
+        self.assertEqual(manifest["attribution"], dist_mod.ATTRIBUTION)
+        self.assertEqual(manifest["terms"], dist_mod.TERMS_URL)
+        self.assertEqual(manifest["source"], dist_mod.SOURCE_URL)
         for name, meta in manifest["artifacts"].items():
             path = self.dist / name
             self.assertEqual(meta["bytes"], path.stat().st_size, name)

@@ -16,7 +16,9 @@ raw and normalized JSON, portraits deduplicated by content hash, the anomaly
 logs), with a `MANIFEST.json` naming the parser commit, per-election counts
 and a checksum per asset. `python scripts/build_distribution.py` builds the
 assets (issue #94); [CANDIDACIES.md](CANDIDACIES.md#distribution) documents
-them.
+them. The corpus is published under CC BY 4.0 with a required attribution
+and a removal contact — [DATA_TERMS.md](../DATA_TERMS.md) (issue #138); the
+same terms sit in every `MANIFEST.json`.
 
 Regenerate any part of it with:
 
