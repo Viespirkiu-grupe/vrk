@@ -765,10 +765,13 @@ def measure_cells(rows: list[dict[str, Any]]) -> list[field_coverage.Cell]:
                 continue
             if field_coverage.is_filled(row.get(column)):
                 filled[(column, eid)] += 1
+    # Every row carries every column, so `key_present` is the row count: an
+    # empty cell is a value the projection could not derive, never a key the
+    # writer forgot.
     return sorted(
         (
             field_coverage.Cell(
-                column, eid, per_election[eid], filled[(column, eid)], filled[(column, eid)]
+                column, eid, per_election[eid], per_election[eid], filled[(column, eid)]
             )
             for eid in per_election
             for column in COLUMNS
@@ -831,15 +834,85 @@ def _known_zero_note(column: str, election: dict[str, Any]) -> str | None:
     return None
 
 
+#: Which concept of docs/concept-map.json a gated column projects, for the
+#: below-peers rule (issue #135): a column filled far under its peers is the
+#: same fact as its concept's cell in docs/coverage-baseline.tsv, classified
+#: there against the retained pages, so the candidacy baseline inherits that
+#: classification rather than asking a human twice. The declaration-wide
+#: columns (currency, measures, the derived totals) follow `gautos-pajamos`,
+#: which every declaration block carries.
+COLUMN_CONCEPTS = {
+    "birth_date": "gimimo-data",
+    "birth_place": "gimimo-vieta",
+    "education_level": "issilavinimas",
+    "education_level_rank": "issilavinimas",
+    "education_higher": "issilavinimas",
+    "education_unfinished": "issilavinimas",
+    "education_entries": "issilavinimas",
+    "assets_registered_eur": "privalomas-registruoti-turtas",
+    "securities_eur": "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
+    "cash_eur": "pinigines-lesos",
+    "loans_given_eur": "suteiktos-paskolos",
+    "loans_received_eur": "gautos-paskolos",
+    "income_eur": "gautos-pajamos",
+    "income_tax_eur": "sumoketas-pajamu-mokestis",
+    "income_gross_eur": "gautos-pajamos",
+    "income_measure": "gautos-pajamos",
+    "income_floor_only": "gautos-pajamos",
+    "tax_measure": "gautos-pajamos",
+    "assets_total_eur": "gautos-pajamos",
+    "assets_measure": "gautos-pajamos",
+    "declared_currency": "gautos-pajamos",
+    "currency_rate": "gautos-pajamos",
+    "declaration_year": "deklaracijos-metai",
+    "self_employment_income_eur": "individualios-veiklos-pajamos",
+    "self_employment_deductions_eur": "individualios-veiklos-atskaitymai",
+    "asset_sale_income_eur": "turto-pardavimo-pajamos",
+    "asset_acquisition_cost_eur": "turto-isigijimo-kaina",
+}
+
+
+def _known_low_note(
+    column: str,
+    election_id: str,
+    coverage_baseline: dict[tuple[str, str], field_coverage.Baseline],
+) -> field_coverage.Baseline | None:
+    """The classification a below-peers column cell inherits from its concept's
+    row in docs/coverage-baseline.tsv, or None when the concept's cell is not
+    itself classified low -- then the gate demands a human answer."""
+    concept = COLUMN_CONCEPTS.get(column)
+    if concept is None:
+        return None
+    prior = coverage_baseline.get((concept, election_id))
+    if prior is None or prior.status not in field_coverage.LOW_STATUSES:
+        return None
+    return field_coverage.Baseline(0.0, prior.status, f"as the {concept} concept: {prior.note}")
+
+
 def gate(
     cells: list[field_coverage.Cell],
     baseline_path: Path,
     registry_by_id: dict[str, dict[str, Any]],
     update: bool,
     max_drop: float,
+    *,
+    force: bool = False,
+    coverage_baseline_path: Path | None = None,
 ) -> int:
     baseline = field_coverage.read_baseline(baseline_path)
     if update:
+        # Auto-classify what the builder can explain structurally -- a zero
+        # with a `_known_zero_note`, a below-peers cell whose concept the
+        # coverage baseline already classifies -- and leave the rest
+        # `unexplained` for a human, which exits 1 (issue #135 made
+        # field_coverage's update do the same, and refuse over a standing
+        # finding on a row already checked in).
+        coverage = field_coverage.read_baseline(
+            coverage_baseline_path
+            if coverage_baseline_path is not None
+            else baseline_path.parent / field_coverage.BASELINE.name
+        )
+        medians = field_coverage.peer_medians(cells)
         enriched = dict(baseline)
         for cell in cells:
             key = (cell.concept, cell.election)
@@ -850,24 +923,26 @@ def gate(
                 note = _known_zero_note(cell.concept, registry_by_id[cell.election])
                 if note is not None:
                     enriched[key] = field_coverage.Baseline(0.0, "upstream-absent", note)
-        field_coverage.write_baseline(baseline_path, cells, enriched)
-        unexplained = [
-            cell
-            for cell in cells
-            if cell.records
-            and cell.non_null == 0
-            and (enriched.get((cell.concept, cell.election)) or field_coverage.Baseline(0.0, "", "")).status
-            not in field_coverage.ZERO_STATUSES
-        ]
-        print(f"Baseline rewritten: {baseline_path} ({len(cells)} cells)")
-        if unexplained:
-            print(f"{len(unexplained)} zero-fill cell(s) still unexplained:", file=sys.stderr)
-            for cell in unexplained[:40]:
-                print(f"    {cell.concept}\t{cell.election}", file=sys.stderr)
-            return 1
-        return 0
+            elif field_coverage.below_peers(cell, medians[key]) and (
+                prior is None or prior.status not in field_coverage.LOW_STATUSES
+            ):
+                inherited = _known_low_note(cell.concept, cell.election, coverage)
+                if inherited is not None:
+                    enriched[key] = inherited
+        # What the builder could not explain is what blocks the rewrite: a
+        # regression on a classified row, a zero or a low cell with no
+        # structural reason on a row already checked in.
+        return field_coverage.update_baseline(
+            baseline_path,
+            cells,
+            enriched,
+            field_coverage.check(cells, enriched, max_drop),
+            force=force,
+            max_drop=max_drop,
+        )
 
     findings = field_coverage.check(cells, baseline, max_drop)
+
     if not findings:
         print("Fill gate: no findings.")
         return 0
@@ -891,6 +966,11 @@ def main() -> int:
     parser.add_argument("--dist", type=Path, default=None, help="Output directory (default <repo-root>/dist).")
     parser.add_argument("--max-drop", type=float, default=5.0)
     parser.add_argument("--update-baseline", action="store_true")
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="With --update-baseline: rewrite even over a standing finding on a row already checked in.",
+    )
     args = parser.parse_args()
 
     repo_root = args.repo_root
@@ -937,7 +1017,15 @@ def main() -> int:
         return 0
     registry_by_id = {e["id"]: e for e in identity.load_registry(repo_root / "scraper" / "elections.json")}
     cells = measure_cells(rows)
-    return gate(cells, repo_root / BASELINE, registry_by_id, args.update_baseline, args.max_drop)
+    return gate(
+        cells,
+        repo_root / BASELINE,
+        registry_by_id,
+        args.update_baseline,
+        args.max_drop,
+        force=args.force,
+        coverage_baseline_path=repo_root / field_coverage.BASELINE,
+    )
 
 
 if __name__ == "__main__":

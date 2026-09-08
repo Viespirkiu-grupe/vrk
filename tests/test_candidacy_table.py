@@ -10,6 +10,7 @@ without a corpus present.
 from __future__ import annotations
 
 import importlib.util
+import json
 import unittest
 from pathlib import Path
 from unittest import mock
@@ -324,6 +325,34 @@ class KnownZeros(unittest.TestCase):
         self.assertIsNone(
             table._known_zero_note("income_eur", {"id": "2016-seimo", "kind": "seimo", "date": "2016-10-09"})
         )
+
+
+class KnownLows(unittest.TestCase):
+    """A column far below its peers inherits its concept's classification
+    from docs/coverage-baseline.tsv (issue #135), so the same fact -- the
+    2000 card prints no birthplace field -- is classified once."""
+
+    COVERAGE = {
+        ("gimimo-vieta", "2000-seimo"): table.field_coverage.Baseline(10.9, "partly-published", "no card field"),
+        ("gimimo-vieta", "2016-seimo"): table.field_coverage.Baseline(99.0, "ok", ""),
+    }
+
+    def test_a_classified_concept_cell_is_inherited_with_its_note(self):
+        inherited = table._known_low_note("birth_place", "2000-seimo", self.COVERAGE)
+        self.assertEqual(inherited.status, "partly-published")
+        self.assertEqual(inherited.note, "as the gimimo-vieta concept: no card field")
+
+    def test_an_ok_or_missing_concept_cell_leaves_the_column_unexplained(self):
+        self.assertIsNone(table._known_low_note("birth_place", "2016-seimo", self.COVERAGE))
+        self.assertIsNone(table._known_low_note("birth_place", "2020-seimo", self.COVERAGE))
+        self.assertIsNone(table._known_low_note("list_position", "2000-seimo", self.COVERAGE))
+
+    def test_every_projected_column_names_a_real_concept(self):
+        concepts = set(json.loads((REPO_ROOT / "docs" / "concept-map.json").read_text(encoding="utf-8"))["concepts"])
+        for column, concept in table.COLUMN_CONCEPTS.items():
+            with self.subTest(column):
+                self.assertIn(column, table.COLUMNS)
+                self.assertIn(concept, concepts)
 
 
 if __name__ == "__main__":
