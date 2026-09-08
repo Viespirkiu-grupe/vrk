@@ -113,8 +113,8 @@ assets_measure	1996-spalio-20-seimo	99.8	ok
 assets_measure	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	98.2	ok	
 assets_measure	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
 assets_measure	1997-kovo-23-savivaldybiu-tarybu	87.3	ok	
-assets_measure	1997-kovo-23-seimo-pakartotiniai	4.3	ok	
-assets_measure	1998-kovo-22-seimo-pakartotiniai	18.2	ok	
+assets_measure	1997-kovo-23-seimo-pakartotiniai	4.3	partly-published	as the gautos-pajamos concept: VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
+assets_measure	1998-kovo-22-seimo-pakartotiniai	18.2	partly-published	as the gautos-pajamos concept: VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
 assets_measure	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
 assets_measure	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
 assets_measure	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
@@ -223,8 +223,8 @@ assets_total_eur	1996-spalio-20-seimo	99.8	ok
 assets_total_eur	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	98.2	ok	
 assets_total_eur	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
 assets_total_eur	1997-kovo-23-savivaldybiu-tarybu	87.3	ok	
-assets_total_eur	1997-kovo-23-seimo-pakartotiniai	4.3	ok	
-assets_total_eur	1998-kovo-22-seimo-pakartotiniai	18.2	ok	
+assets_total_eur	1997-kovo-23-seimo-pakartotiniai	4.3	partly-published	as the gautos-pajamos concept: VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
+assets_total_eur	1998-kovo-22-seimo-pakartotiniai	18.2	partly-published	as the gautos-pajamos concept: VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
 assets_total_eur	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
 assets_total_eur	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
 assets_total_eur	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
@@ -280,8 +280,8 @@ birth_date	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok
 birth_date	1997-kovo-23-savivaldybiu-tarybu	100.0	ok	
 birth_date	1997-kovo-23-seimo-pakartotiniai	78.3	ok	
 birth_date	1998-kovo-22-seimo-pakartotiniai	81.8	ok	
-birth_date	1998-lapkricio-15-seimo-pakartotiniai	54.5	ok	
-birth_date	1999-kovo-21-seimo-pakartotiniai	68.2	ok	
+birth_date	1998-lapkricio-15-seimo-pakartotiniai	54.5	partly-published	as the gimimo-data concept: the archive card prints no birth date; one is recovered from the biography's opening sentence where it states it (6 of 11, anketa.gimimo-data-saltinis = biografijos-tekstas)
+birth_date	1999-kovo-21-seimo-pakartotiniai	68.2	partly-published	as the gimimo-data concept: the archive card prints no birth date; one is recovered from the biography's opening sentence where it states it (15 of 22, anketa.gimimo-data-saltinis = biografijos-tekstas)
 birth_date	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
 birth_date	2000-seimo	100.0	ok	
 birth_date	2002-gruodzio-22-savivaldybiu-tarybu	100.0	ok	
@@ -332,15 +332,15 @@ birth_date	2025-kovo-16-meru	100.0	ok
 birth_place	1996-spalio-20-seimo	95.2	ok	
 birth_place	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	76.4	ok	
 birth_place	1997-gruodzio-21-seimo-pakartotiniai	75.0	ok	
-birth_place	1997-kovo-23-savivaldybiu-tarybu	9.3	ok	
+birth_place	1997-kovo-23-savivaldybiu-tarybu	9.3	partly-answered	as the gimimo-vieta concept: the 1997 municipal card prints the Gimimo vieta field on every record and it is empty on 5694 of 6276 (rawData.personal.birthPlace is "")
 birth_place	1997-kovo-23-seimo-pakartotiniai	91.3	ok	
 birth_place	1998-kovo-22-seimo-pakartotiniai	81.8	ok	
-birth_place	1998-lapkricio-15-seimo-pakartotiniai	45.5	ok	
+birth_place	1998-lapkricio-15-seimo-pakartotiniai	45.5	partly-published	as the gimimo-vieta concept: the archive card carries a Gimimo vieta field on 5 of 11 candidates and the biography states none for the rest
 birth_place	1999-kovo-21-seimo-pakartotiniai	72.7	ok	
 birth_place	2000-kovo-19-savivaldybiu-tarybu	0.0	upstream-absent	the card prints no birth place
-birth_place	2000-seimo	10.9	ok	
+birth_place	2000-seimo	10.9	partly-published	as the gimimo-vieta concept: the 2000 card prints a Gimimo vieta line on 138 of 1271 candidates' pages (seimo_2000 reads the bold label); the key is written null on the rest
 birth_place	2002-gruodzio-22-savivaldybiu-tarybu	91.7	ok	
-birth_place	2002-prezidento	58.8	ok	
+birth_place	2002-prezidento	58.8	partly-published	as the gimimo-vieta concept: no card field; recovered from the biography where it states a birthplace (10 of 17, anketa.gimimo-vietos-saltinis = biografijos-tekstas)
 birth_place	2003-birzelio-15-seimo-nauji	100.0	ok	
 birth_place	2004-ep	99.2	ok	
 birth_place	2004-prezidento	0.0	upstream-absent	the five birthplace phrases are the prose helper's documented misses (concept map)
@@ -376,7 +376,7 @@ birth_place	2019-rugsejo-8-seimo	100.0	ok
 birth_place	2020-seimo	97.2	ok	
 birth_place	2021-balandzio-11-radviliskio-mero	100.0	ok	
 birth_place	2021-spalio-10-meru	85.7	ok	
-birth_place	2023-geguzes-7-visagino-mero	50.0	ok	
+birth_place	2023-geguzes-7-visagino-mero	50.0	partly-answered	as the gimimo-vieta concept: two candidates; one left the field blank
 birth_place	2023-kovo-5-savivaldybiu-tarybu-ir-meru	95.9	ok	
 birth_place	2023-rugsejo-3-seimo-raseiniai-kedainiai	100.0	ok	
 birth_place	2023-spalio-8-kupiskio-mero	100.0	ok	
@@ -668,23 +668,23 @@ constituency	1998-kovo-22-seimo-pakartotiniai	100.0	ok
 constituency	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
 constituency	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
 constituency	2000-kovo-19-savivaldybiu-tarybu	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
-constituency	2000-seimo	100.0	ok	
+constituency	2000-seimo	55.2	ok	
 constituency	2002-gruodzio-22-savivaldybiu-tarybu	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
 constituency	2002-prezidento	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
 constituency	2003-birzelio-15-seimo-nauji	100.0	ok	
 constituency	2004-ep	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
 constituency	2004-prezidento	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
-constituency	2004-seimo	100.0	ok	
+constituency	2004-seimo	48.1	ok	
 constituency	2005-lapkricio-20-seimo-kedainiai	100.0	ok	
 constituency	2007-spalio-7-seimo-dzukija	100.0	ok	
 constituency	2007-vasario-25-savivaldybiu	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
-constituency	2008-seimo	100.0	ok	
+constituency	2008-seimo	49.3	ok	
 constituency	2009-ep	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
 constituency	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	100.0	ok	
 constituency	2009-prezidento	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
 constituency	2011-vasario-13-seimo-marijampole	100.0	ok	
 constituency	2011-vasario-27-savivaldybiu	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
-constituency	2012-seimo	100.0	ok	
+constituency	2012-seimo	50.8	ok	
 constituency	2013-kovo-3-seimo-birzai-zarasai-ukmerge	100.0	ok	
 constituency	2014-ep	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
 constituency	2014-prezidento	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
@@ -714,6 +714,281 @@ constituency	2024-ep	0.0	upstream-absent	not a Seimas election; no single-mandat
 constituency	2024-prezidento	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
 constituency	2024-seimo	40.2	ok	
 constituency	2025-kovo-16-meru	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	1996-spalio-20-seimo	100.0	ok	
+constituency_number	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
+constituency_number	1997-kovo-23-savivaldybiu-tarybu	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	1997-kovo-23-seimo-pakartotiniai	100.0	ok	
+constituency_number	1998-kovo-22-seimo-pakartotiniai	100.0	ok	
+constituency_number	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
+constituency_number	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
+constituency_number	2000-kovo-19-savivaldybiu-tarybu	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2000-seimo	55.2	ok	
+constituency_number	2002-gruodzio-22-savivaldybiu-tarybu	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2002-prezidento	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2003-birzelio-15-seimo-nauji	100.0	ok	
+constituency_number	2004-ep	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2004-prezidento	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2004-seimo	48.1	ok	
+constituency_number	2005-lapkricio-20-seimo-kedainiai	100.0	ok	
+constituency_number	2007-spalio-7-seimo-dzukija	100.0	ok	
+constituency_number	2007-vasario-25-savivaldybiu	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2008-seimo	49.3	ok	
+constituency_number	2009-ep	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	100.0	ok	
+constituency_number	2009-prezidento	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2011-vasario-13-seimo-marijampole	100.0	ok	
+constituency_number	2011-vasario-27-savivaldybiu	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2012-seimo	50.8	ok	
+constituency_number	2013-kovo-3-seimo-birzai-zarasai-ukmerge	100.0	ok	
+constituency_number	2014-ep	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2014-prezidento	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2015-birzelio-21-pakartotiniai-silutes	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2015-birzelio-7-pakartotiniai-sirvintos-trakai	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2015-birzelio-7-seimo-varena-eisiskes	100.0	ok	
+constituency_number	2015-kovo-1-savivaldybiu	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2015-kovo-1-seimo-zirmunai	100.0	ok	
+constituency_number	2015-lapkricio-8-telsiu-mero	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2016-seimo	47.6	ok	
+constituency_number	2017-balandzio-23-meru	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2017-balandzio-23-seimo-anyksciai-panevezys	0.0	upstream-absent	the 2017-2019 by-election cards print the constituency's name without its number
+constituency_number	2017-rugsejo-10-marijampoles-mero	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2018-rugsejo-16-seimo-zanavykai	0.0	upstream-absent	the 2017-2019 by-election cards print the constituency's name without its number
+constituency_number	2019-ep	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2019-kovo-3-savivaldybiu-tarybu	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2019-prezidento	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2019-rugsejo-8-seimo	0.0	upstream-absent	the 2017-2019 by-election cards print the constituency's name without its number
+constituency_number	2020-seimo	43.2	ok	
+constituency_number	2021-balandzio-11-radviliskio-mero	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2021-spalio-10-meru	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2023-geguzes-7-visagino-mero	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2023-kovo-5-savivaldybiu-tarybu-ir-meru	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2023-rugsejo-3-seimo-raseiniai-kedainiai	100.0	ok	
+constituency_number	2023-spalio-8-kupiskio-mero	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2024-ep	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2024-prezidento	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_number	2024-seimo	40.2	ok	
+constituency_number	2025-kovo-16-meru	0.0	upstream-absent	not a Seimas election; no single-mandate constituency
+constituency_place	1996-spalio-20-seimo	100.0	ok	
+constituency_place	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
+constituency_place	1997-kovo-23-savivaldybiu-tarybu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	1997-kovo-23-seimo-pakartotiniai	100.0	ok	
+constituency_place	1998-kovo-22-seimo-pakartotiniai	100.0	ok	
+constituency_place	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
+constituency_place	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
+constituency_place	2000-kovo-19-savivaldybiu-tarybu	0.0	upstream-absent	no single-winner race on this ballot
+constituency_place	2000-seimo	55.2	ok	
+constituency_place	2002-gruodzio-22-savivaldybiu-tarybu	0.0	upstream-absent	no single-winner race on this ballot
+constituency_place	2002-prezidento	0.0	upstream-absent	the presidential results pages print votes and shares, never a place
+constituency_place	2003-birzelio-15-seimo-nauji	100.0	ok	
+constituency_place	2004-ep	0.0	upstream-absent	no single-winner race on this ballot
+constituency_place	2004-prezidento	0.0	upstream-absent	the presidential results pages print votes and shares, never a place
+constituency_place	2004-seimo	0.0	parser-gap	the constituency round pages of this tree row candidates under ids the candidate pages do not carry, and were not joined (OUTPUT_SCHEMA)
+constituency_place	2005-lapkricio-20-seimo-kedainiai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2007-spalio-7-seimo-dzukija	100.0	ok	
+constituency_place	2007-vasario-25-savivaldybiu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2008-seimo	49.3	ok	
+constituency_place	2009-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	100.0	ok	
+constituency_place	2009-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2011-vasario-13-seimo-marijampole	100.0	ok	
+constituency_place	2011-vasario-27-savivaldybiu	0.0	upstream-absent	no single-winner race on this ballot
+constituency_place	2012-seimo	50.8	ok	
+constituency_place	2013-kovo-3-seimo-birzai-zarasai-ukmerge	100.0	ok	
+constituency_place	2014-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2014-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2015-birzelio-21-pakartotiniai-silutes	0.0	upstream-absent	no single-winner race on this ballot
+constituency_place	2015-birzelio-7-pakartotiniai-sirvintos-trakai	0.0	upstream-absent	no single-winner race on this ballot
+constituency_place	2015-birzelio-7-seimo-varena-eisiskes	100.0	ok	
+constituency_place	2015-kovo-1-savivaldybiu	0.0	upstream-absent	no single-winner race on this ballot
+constituency_place	2015-kovo-1-seimo-zirmunai	100.0	ok	
+constituency_place	2015-lapkricio-8-telsiu-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2016-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2017-balandzio-23-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2017-balandzio-23-seimo-anyksciai-panevezys	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2017-rugsejo-10-marijampoles-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2018-rugsejo-16-seimo-zanavykai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2019-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2019-kovo-3-savivaldybiu-tarybu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2019-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2019-rugsejo-8-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2020-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2021-balandzio-11-radviliskio-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2021-spalio-10-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2023-geguzes-7-visagino-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2023-kovo-5-savivaldybiu-tarybu-ir-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2023-rugsejo-3-seimo-raseiniai-kedainiai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2023-spalio-8-kupiskio-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2024-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2024-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2024-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_place	2025-kovo-16-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	1996-spalio-20-seimo	100.0	ok	
+constituency_round	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
+constituency_round	1997-kovo-23-savivaldybiu-tarybu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	1997-kovo-23-seimo-pakartotiniai	100.0	ok	
+constituency_round	1998-kovo-22-seimo-pakartotiniai	100.0	ok	
+constituency_round	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
+constituency_round	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
+constituency_round	2000-kovo-19-savivaldybiu-tarybu	0.0	upstream-absent	no single-winner race on this ballot
+constituency_round	2000-seimo	55.2	ok	
+constituency_round	2002-gruodzio-22-savivaldybiu-tarybu	0.0	upstream-absent	no single-winner race on this ballot
+constituency_round	2002-prezidento	100.0	ok	
+constituency_round	2003-birzelio-15-seimo-nauji	100.0	ok	
+constituency_round	2004-ep	0.0	upstream-absent	no single-winner race on this ballot
+constituency_round	2004-prezidento	100.0	ok	
+constituency_round	2004-seimo	0.0	parser-gap	the constituency round pages of this tree row candidates under ids the candidate pages do not carry, and were not joined (OUTPUT_SCHEMA)
+constituency_round	2005-lapkricio-20-seimo-kedainiai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2007-spalio-7-seimo-dzukija	100.0	ok	
+constituency_round	2007-vasario-25-savivaldybiu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2008-seimo	49.3	ok	
+constituency_round	2009-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	100.0	ok	
+constituency_round	2009-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2011-vasario-13-seimo-marijampole	100.0	ok	
+constituency_round	2011-vasario-27-savivaldybiu	0.0	upstream-absent	no single-winner race on this ballot
+constituency_round	2012-seimo	50.8	ok	
+constituency_round	2013-kovo-3-seimo-birzai-zarasai-ukmerge	100.0	ok	
+constituency_round	2014-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2014-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2015-birzelio-21-pakartotiniai-silutes	0.0	upstream-absent	no single-winner race on this ballot
+constituency_round	2015-birzelio-7-pakartotiniai-sirvintos-trakai	0.0	upstream-absent	no single-winner race on this ballot
+constituency_round	2015-birzelio-7-seimo-varena-eisiskes	100.0	ok	
+constituency_round	2015-kovo-1-savivaldybiu	0.0	upstream-absent	no single-winner race on this ballot
+constituency_round	2015-kovo-1-seimo-zirmunai	100.0	ok	
+constituency_round	2015-lapkricio-8-telsiu-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2016-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2017-balandzio-23-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2017-balandzio-23-seimo-anyksciai-panevezys	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2017-rugsejo-10-marijampoles-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2018-rugsejo-16-seimo-zanavykai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2019-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2019-kovo-3-savivaldybiu-tarybu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2019-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2019-rugsejo-8-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2020-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2021-balandzio-11-radviliskio-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2021-spalio-10-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2023-geguzes-7-visagino-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2023-kovo-5-savivaldybiu-tarybu-ir-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2023-rugsejo-3-seimo-raseiniai-kedainiai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2023-spalio-8-kupiskio-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2024-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2024-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2024-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_round	2025-kovo-16-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	1996-spalio-20-seimo	100.0	ok	
+constituency_votes	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
+constituency_votes	1997-kovo-23-savivaldybiu-tarybu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	1997-kovo-23-seimo-pakartotiniai	100.0	ok	
+constituency_votes	1998-kovo-22-seimo-pakartotiniai	100.0	ok	
+constituency_votes	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
+constituency_votes	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
+constituency_votes	2000-kovo-19-savivaldybiu-tarybu	0.0	upstream-absent	no single-winner race on this ballot
+constituency_votes	2000-seimo	55.2	ok	
+constituency_votes	2002-gruodzio-22-savivaldybiu-tarybu	0.0	upstream-absent	no single-winner race on this ballot
+constituency_votes	2002-prezidento	100.0	ok	
+constituency_votes	2003-birzelio-15-seimo-nauji	100.0	ok	
+constituency_votes	2004-ep	0.0	upstream-absent	no single-winner race on this ballot
+constituency_votes	2004-prezidento	100.0	ok	
+constituency_votes	2004-seimo	0.0	parser-gap	the constituency round pages of this tree row candidates under ids the candidate pages do not carry, and were not joined (OUTPUT_SCHEMA)
+constituency_votes	2005-lapkricio-20-seimo-kedainiai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2007-spalio-7-seimo-dzukija	100.0	ok	
+constituency_votes	2007-vasario-25-savivaldybiu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2008-seimo	49.3	ok	
+constituency_votes	2009-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	100.0	ok	
+constituency_votes	2009-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2011-vasario-13-seimo-marijampole	100.0	ok	
+constituency_votes	2011-vasario-27-savivaldybiu	0.0	upstream-absent	no single-winner race on this ballot
+constituency_votes	2012-seimo	50.8	ok	
+constituency_votes	2013-kovo-3-seimo-birzai-zarasai-ukmerge	100.0	ok	
+constituency_votes	2014-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2014-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2015-birzelio-21-pakartotiniai-silutes	0.0	upstream-absent	no single-winner race on this ballot
+constituency_votes	2015-birzelio-7-pakartotiniai-sirvintos-trakai	0.0	upstream-absent	no single-winner race on this ballot
+constituency_votes	2015-birzelio-7-seimo-varena-eisiskes	100.0	ok	
+constituency_votes	2015-kovo-1-savivaldybiu	0.0	upstream-absent	no single-winner race on this ballot
+constituency_votes	2015-kovo-1-seimo-zirmunai	100.0	ok	
+constituency_votes	2015-lapkricio-8-telsiu-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2016-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2017-balandzio-23-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2017-balandzio-23-seimo-anyksciai-panevezys	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2017-rugsejo-10-marijampoles-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2018-rugsejo-16-seimo-zanavykai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2019-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2019-kovo-3-savivaldybiu-tarybu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2019-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2019-rugsejo-8-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2020-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2021-balandzio-11-radviliskio-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2021-spalio-10-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2023-geguzes-7-visagino-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2023-kovo-5-savivaldybiu-tarybu-ir-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2023-rugsejo-3-seimo-raseiniai-kedainiai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2023-spalio-8-kupiskio-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2024-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2024-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2024-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes	2025-kovo-16-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	1996-spalio-20-seimo	0.0	upstream-absent	the archive's round pages print votes and place, never a share
+constituency_votes_pct	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	1997-gruodzio-21-seimo-pakartotiniai	0.0	upstream-absent	the archive's round pages print votes and place, never a share
+constituency_votes_pct	1997-kovo-23-savivaldybiu-tarybu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	1997-kovo-23-seimo-pakartotiniai	0.0	upstream-absent	the archive's round pages print votes and place, never a share
+constituency_votes_pct	1998-kovo-22-seimo-pakartotiniai	0.0	upstream-absent	the archive's round pages print votes and place, never a share
+constituency_votes_pct	1998-lapkricio-15-seimo-pakartotiniai	0.0	upstream-absent	the archive's round pages print votes and place, never a share
+constituency_votes_pct	1999-kovo-21-seimo-pakartotiniai	0.0	upstream-absent	the archive's round pages print votes and place, never a share
+constituency_votes_pct	2000-kovo-19-savivaldybiu-tarybu	0.0	upstream-absent	no single-winner race on this ballot
+constituency_votes_pct	2000-seimo	55.2	ok	
+constituency_votes_pct	2002-gruodzio-22-savivaldybiu-tarybu	0.0	upstream-absent	no single-winner race on this ballot
+constituency_votes_pct	2002-prezidento	100.0	ok	
+constituency_votes_pct	2003-birzelio-15-seimo-nauji	100.0	ok	
+constituency_votes_pct	2004-ep	0.0	upstream-absent	no single-winner race on this ballot
+constituency_votes_pct	2004-prezidento	100.0	ok	
+constituency_votes_pct	2004-seimo	0.0	parser-gap	the constituency round pages of this tree row candidates under ids the candidate pages do not carry, and were not joined (OUTPUT_SCHEMA)
+constituency_votes_pct	2005-lapkricio-20-seimo-kedainiai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2007-spalio-7-seimo-dzukija	100.0	ok	
+constituency_votes_pct	2007-vasario-25-savivaldybiu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2008-seimo	49.3	ok	
+constituency_votes_pct	2009-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	100.0	ok	
+constituency_votes_pct	2009-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2011-vasario-13-seimo-marijampole	100.0	ok	
+constituency_votes_pct	2011-vasario-27-savivaldybiu	0.0	upstream-absent	no single-winner race on this ballot
+constituency_votes_pct	2012-seimo	50.8	ok	
+constituency_votes_pct	2013-kovo-3-seimo-birzai-zarasai-ukmerge	100.0	ok	
+constituency_votes_pct	2014-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2014-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2015-birzelio-21-pakartotiniai-silutes	0.0	upstream-absent	no single-winner race on this ballot
+constituency_votes_pct	2015-birzelio-7-pakartotiniai-sirvintos-trakai	0.0	upstream-absent	no single-winner race on this ballot
+constituency_votes_pct	2015-birzelio-7-seimo-varena-eisiskes	100.0	ok	
+constituency_votes_pct	2015-kovo-1-savivaldybiu	0.0	upstream-absent	no single-winner race on this ballot
+constituency_votes_pct	2015-kovo-1-seimo-zirmunai	100.0	ok	
+constituency_votes_pct	2015-lapkricio-8-telsiu-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2016-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2017-balandzio-23-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2017-balandzio-23-seimo-anyksciai-panevezys	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2017-rugsejo-10-marijampoles-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2018-rugsejo-16-seimo-zanavykai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2019-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2019-kovo-3-savivaldybiu-tarybu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2019-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2019-rugsejo-8-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2020-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2021-balandzio-11-radviliskio-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2021-spalio-10-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2023-geguzes-7-visagino-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2023-kovo-5-savivaldybiu-tarybu-ir-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2023-rugsejo-3-seimo-raseiniai-kedainiai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2023-spalio-8-kupiskio-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2024-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2024-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2024-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+constituency_votes_pct	2025-kovo-16-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
 conviction_status	1996-spalio-20-seimo	100.0	ok	
 conviction_status	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	100.0	ok	
 conviction_status	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
@@ -773,8 +1048,8 @@ currency_rate	1996-spalio-20-seimo	100.0	ok
 currency_rate	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	98.2	ok	
 currency_rate	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
 currency_rate	1997-kovo-23-savivaldybiu-tarybu	87.3	ok	
-currency_rate	1997-kovo-23-seimo-pakartotiniai	4.3	ok	
-currency_rate	1998-kovo-22-seimo-pakartotiniai	18.2	ok	
+currency_rate	1997-kovo-23-seimo-pakartotiniai	4.3	partly-published	as the gautos-pajamos concept: VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
+currency_rate	1998-kovo-22-seimo-pakartotiniai	18.2	partly-published	as the gautos-pajamos concept: VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
 currency_rate	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
 currency_rate	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
 currency_rate	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
@@ -938,8 +1213,8 @@ declared_currency	1996-spalio-20-seimo	100.0	ok
 declared_currency	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	98.2	ok	
 declared_currency	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
 declared_currency	1997-kovo-23-savivaldybiu-tarybu	87.3	ok	
-declared_currency	1997-kovo-23-seimo-pakartotiniai	4.3	ok	
-declared_currency	1998-kovo-22-seimo-pakartotiniai	18.2	ok	
+declared_currency	1997-kovo-23-seimo-pakartotiniai	4.3	partly-published	as the gautos-pajamos concept: VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
+declared_currency	1998-kovo-22-seimo-pakartotiniai	18.2	partly-published	as the gautos-pajamos concept: VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
 declared_currency	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
 declared_currency	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
 declared_currency	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
@@ -1044,9 +1319,9 @@ education_degree	2024-ep	100.0	ok
 education_degree	2024-prezidento	100.0	ok	
 education_degree	2024-seimo	100.0	ok	
 education_degree	2025-kovo-16-meru	100.0	ok	
-education_entries	1996-spalio-20-seimo	38.3	ok	
+education_entries	1996-spalio-20-seimo	38.3	partly-published	as the issilavinimas concept: the archive card prints an education level for 337 of 879 candidates; the parser writes null where none was published (concept-map note)
 education_entries	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	84.5	ok	
-education_entries	1997-gruodzio-21-seimo-pakartotiniai	25.0	ok	
+education_entries	1997-gruodzio-21-seimo-pakartotiniai	25.0	partly-published	as the issilavinimas concept: the archive card prints an education level for 1 of 4 candidates; the parser writes null where none was published (concept-map note)
 education_entries	1997-kovo-23-savivaldybiu-tarybu	81.2	ok	
 education_entries	1997-kovo-23-seimo-pakartotiniai	82.6	ok	
 education_entries	1998-kovo-22-seimo-pakartotiniai	72.7	ok	
@@ -1085,7 +1360,7 @@ education_entries	2017-balandzio-23-seimo-anyksciai-panevezys	90.9	ok
 education_entries	2017-rugsejo-10-marijampoles-mero	87.5	ok	
 education_entries	2018-rugsejo-16-seimo-zanavykai	83.3	ok	
 education_entries	2019-ep	81.1	ok	
-education_entries	2019-kovo-3-savivaldybiu-tarybu	62.9	ok	
+education_entries	2019-kovo-3-savivaldybiu-tarybu	62.9	partly-answered	as the issilavinimas concept: the question is on every 2019 card (the label is in rawData on every sampled record); 5072 candidates left it blank
 education_entries	2019-prezidento	88.9	ok	
 education_entries	2019-rugsejo-8-seimo	92.6	ok	
 education_entries	2020-seimo	93.9	ok	
@@ -1099,9 +1374,9 @@ education_entries	2024-ep	100.0	ok
 education_entries	2024-prezidento	100.0	ok	
 education_entries	2024-seimo	100.0	ok	
 education_entries	2025-kovo-16-meru	100.0	ok	
-education_higher	1996-spalio-20-seimo	38.3	ok	
+education_higher	1996-spalio-20-seimo	38.3	partly-published	as the issilavinimas concept: the archive card prints an education level for 337 of 879 candidates; the parser writes null where none was published (concept-map note)
 education_higher	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	84.5	ok	
-education_higher	1997-gruodzio-21-seimo-pakartotiniai	25.0	ok	
+education_higher	1997-gruodzio-21-seimo-pakartotiniai	25.0	partly-published	as the issilavinimas concept: the archive card prints an education level for 1 of 4 candidates; the parser writes null where none was published (concept-map note)
 education_higher	1997-kovo-23-savivaldybiu-tarybu	81.2	ok	
 education_higher	1997-kovo-23-seimo-pakartotiniai	82.6	ok	
 education_higher	1998-kovo-22-seimo-pakartotiniai	72.7	ok	
@@ -1140,7 +1415,7 @@ education_higher	2017-balandzio-23-seimo-anyksciai-panevezys	90.9	ok
 education_higher	2017-rugsejo-10-marijampoles-mero	87.5	ok	
 education_higher	2018-rugsejo-16-seimo-zanavykai	83.3	ok	
 education_higher	2019-ep	81.1	ok	
-education_higher	2019-kovo-3-savivaldybiu-tarybu	62.7	ok	
+education_higher	2019-kovo-3-savivaldybiu-tarybu	62.7	partly-answered	as the issilavinimas concept: the question is on every 2019 card (the label is in rawData on every sampled record); 5072 candidates left it blank
 education_higher	2019-prezidento	88.9	ok	
 education_higher	2019-rugsejo-8-seimo	92.6	ok	
 education_higher	2020-seimo	93.8	ok	
@@ -1154,9 +1429,9 @@ education_higher	2024-ep	99.4	ok
 education_higher	2024-prezidento	100.0	ok	
 education_higher	2024-seimo	99.9	ok	
 education_higher	2025-kovo-16-meru	100.0	ok	
-education_level	1996-spalio-20-seimo	38.3	ok	
+education_level	1996-spalio-20-seimo	38.3	partly-published	as the issilavinimas concept: the archive card prints an education level for 337 of 879 candidates; the parser writes null where none was published (concept-map note)
 education_level	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	84.5	ok	
-education_level	1997-gruodzio-21-seimo-pakartotiniai	25.0	ok	
+education_level	1997-gruodzio-21-seimo-pakartotiniai	25.0	partly-published	as the issilavinimas concept: the archive card prints an education level for 1 of 4 candidates; the parser writes null where none was published (concept-map note)
 education_level	1997-kovo-23-savivaldybiu-tarybu	81.2	ok	
 education_level	1997-kovo-23-seimo-pakartotiniai	82.6	ok	
 education_level	1998-kovo-22-seimo-pakartotiniai	72.7	ok	
@@ -1195,7 +1470,7 @@ education_level	2017-balandzio-23-seimo-anyksciai-panevezys	90.9	ok
 education_level	2017-rugsejo-10-marijampoles-mero	87.5	ok	
 education_level	2018-rugsejo-16-seimo-zanavykai	83.3	ok	
 education_level	2019-ep	81.1	ok	
-education_level	2019-kovo-3-savivaldybiu-tarybu	62.7	ok	
+education_level	2019-kovo-3-savivaldybiu-tarybu	62.7	partly-answered	as the issilavinimas concept: the question is on every 2019 card (the label is in rawData on every sampled record); 5072 candidates left it blank
 education_level	2019-prezidento	88.9	ok	
 education_level	2019-rugsejo-8-seimo	92.6	ok	
 education_level	2020-seimo	93.8	ok	
@@ -1209,9 +1484,9 @@ education_level	2024-ep	99.4	ok
 education_level	2024-prezidento	100.0	ok	
 education_level	2024-seimo	99.9	ok	
 education_level	2025-kovo-16-meru	100.0	ok	
-education_level_rank	1996-spalio-20-seimo	38.3	ok	
+education_level_rank	1996-spalio-20-seimo	38.3	partly-published	as the issilavinimas concept: the archive card prints an education level for 337 of 879 candidates; the parser writes null where none was published (concept-map note)
 education_level_rank	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	84.5	ok	
-education_level_rank	1997-gruodzio-21-seimo-pakartotiniai	25.0	ok	
+education_level_rank	1997-gruodzio-21-seimo-pakartotiniai	25.0	partly-published	as the issilavinimas concept: the archive card prints an education level for 1 of 4 candidates; the parser writes null where none was published (concept-map note)
 education_level_rank	1997-kovo-23-savivaldybiu-tarybu	81.2	ok	
 education_level_rank	1997-kovo-23-seimo-pakartotiniai	82.6	ok	
 education_level_rank	1998-kovo-22-seimo-pakartotiniai	72.7	ok	
@@ -1250,7 +1525,7 @@ education_level_rank	2017-balandzio-23-seimo-anyksciai-panevezys	90.9	ok
 education_level_rank	2017-rugsejo-10-marijampoles-mero	87.5	ok	
 education_level_rank	2018-rugsejo-16-seimo-zanavykai	83.3	ok	
 education_level_rank	2019-ep	81.1	ok	
-education_level_rank	2019-kovo-3-savivaldybiu-tarybu	62.7	ok	
+education_level_rank	2019-kovo-3-savivaldybiu-tarybu	62.7	partly-answered	as the issilavinimas concept: the question is on every 2019 card (the label is in rawData on every sampled record); 5072 candidates left it blank
 education_level_rank	2019-prezidento	88.9	ok	
 education_level_rank	2019-rugsejo-8-seimo	92.6	ok	
 education_level_rank	2020-seimo	93.8	ok	
@@ -1319,9 +1594,9 @@ education_status	2024-ep	100.0	ok
 education_status	2024-prezidento	100.0	ok	
 education_status	2024-seimo	100.0	ok	
 education_status	2025-kovo-16-meru	100.0	ok	
-education_unfinished	1996-spalio-20-seimo	38.3	ok	
+education_unfinished	1996-spalio-20-seimo	38.3	partly-published	as the issilavinimas concept: the archive card prints an education level for 337 of 879 candidates; the parser writes null where none was published (concept-map note)
 education_unfinished	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	84.5	ok	
-education_unfinished	1997-gruodzio-21-seimo-pakartotiniai	25.0	ok	
+education_unfinished	1997-gruodzio-21-seimo-pakartotiniai	25.0	partly-published	as the issilavinimas concept: the archive card prints an education level for 1 of 4 candidates; the parser writes null where none was published (concept-map note)
 education_unfinished	1997-kovo-23-savivaldybiu-tarybu	81.2	ok	
 education_unfinished	1997-kovo-23-seimo-pakartotiniai	82.6	ok	
 education_unfinished	1998-kovo-22-seimo-pakartotiniai	72.7	ok	
@@ -1360,7 +1635,7 @@ education_unfinished	2017-balandzio-23-seimo-anyksciai-panevezys	90.9	ok
 education_unfinished	2017-rugsejo-10-marijampoles-mero	87.5	ok	
 education_unfinished	2018-rugsejo-16-seimo-zanavykai	83.3	ok	
 education_unfinished	2019-ep	81.1	ok	
-education_unfinished	2019-kovo-3-savivaldybiu-tarybu	62.7	ok	
+education_unfinished	2019-kovo-3-savivaldybiu-tarybu	62.7	partly-answered	as the issilavinimas concept: the question is on every 2019 card (the label is in rawData on every sampled record); 5072 candidates left it blank
 education_unfinished	2019-prezidento	88.9	ok	
 education_unfinished	2019-rugsejo-8-seimo	92.6	ok	
 education_unfinished	2020-seimo	93.8	ok	
@@ -1708,8 +1983,8 @@ income_eur	1996-spalio-20-seimo	99.8	ok
 income_eur	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	98.2	ok	
 income_eur	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
 income_eur	1997-kovo-23-savivaldybiu-tarybu	87.3	ok	
-income_eur	1997-kovo-23-seimo-pakartotiniai	4.3	ok	
-income_eur	1998-kovo-22-seimo-pakartotiniai	18.2	ok	
+income_eur	1997-kovo-23-seimo-pakartotiniai	4.3	partly-published	as the gautos-pajamos concept: VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
+income_eur	1998-kovo-22-seimo-pakartotiniai	18.2	partly-published	as the gautos-pajamos concept: VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
 income_eur	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
 income_eur	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
 income_eur	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
@@ -1763,8 +2038,8 @@ income_floor_only	1996-spalio-20-seimo	100.0	ok
 income_floor_only	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	98.2	ok	
 income_floor_only	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
 income_floor_only	1997-kovo-23-savivaldybiu-tarybu	87.3	ok	
-income_floor_only	1997-kovo-23-seimo-pakartotiniai	4.3	ok	
-income_floor_only	1998-kovo-22-seimo-pakartotiniai	18.2	ok	
+income_floor_only	1997-kovo-23-seimo-pakartotiniai	4.3	partly-published	as the gautos-pajamos concept: VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
+income_floor_only	1998-kovo-22-seimo-pakartotiniai	18.2	partly-published	as the gautos-pajamos concept: VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
 income_floor_only	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
 income_floor_only	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
 income_floor_only	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
@@ -1818,8 +2093,8 @@ income_gross_eur	1996-spalio-20-seimo	99.4	ok
 income_gross_eur	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	98.2	ok	
 income_gross_eur	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
 income_gross_eur	1997-kovo-23-savivaldybiu-tarybu	86.6	ok	
-income_gross_eur	1997-kovo-23-seimo-pakartotiniai	4.3	ok	
-income_gross_eur	1998-kovo-22-seimo-pakartotiniai	18.2	ok	
+income_gross_eur	1997-kovo-23-seimo-pakartotiniai	4.3	partly-published	as the gautos-pajamos concept: VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
+income_gross_eur	1998-kovo-22-seimo-pakartotiniai	18.2	partly-published	as the gautos-pajamos concept: VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
 income_gross_eur	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
 income_gross_eur	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
 income_gross_eur	2000-kovo-19-savivaldybiu-tarybu	99.3	ok	
@@ -1873,8 +2148,8 @@ income_measure	1996-spalio-20-seimo	100.0	ok
 income_measure	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	98.2	ok	
 income_measure	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
 income_measure	1997-kovo-23-savivaldybiu-tarybu	87.3	ok	
-income_measure	1997-kovo-23-seimo-pakartotiniai	4.3	ok	
-income_measure	1998-kovo-22-seimo-pakartotiniai	18.2	ok	
+income_measure	1997-kovo-23-seimo-pakartotiniai	4.3	partly-published	as the gautos-pajamos concept: VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
+income_measure	1998-kovo-22-seimo-pakartotiniai	18.2	partly-published	as the gautos-pajamos concept: VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
 income_measure	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
 income_measure	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
 income_measure	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
@@ -1928,8 +2203,8 @@ income_tax_eur	1996-spalio-20-seimo	99.4	ok
 income_tax_eur	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	98.2	ok	
 income_tax_eur	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
 income_tax_eur	1997-kovo-23-savivaldybiu-tarybu	86.6	ok	
-income_tax_eur	1997-kovo-23-seimo-pakartotiniai	4.3	ok	
-income_tax_eur	1998-kovo-22-seimo-pakartotiniai	18.2	ok	
+income_tax_eur	1997-kovo-23-seimo-pakartotiniai	4.3	partly-published	as the sumoketas-pajamu-mokestis concept: VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
+income_tax_eur	1998-kovo-22-seimo-pakartotiniai	18.2	partly-published	as the sumoketas-pajamu-mokestis concept: VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
 income_tax_eur	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
 income_tax_eur	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
 income_tax_eur	2000-kovo-19-savivaldybiu-tarybu	99.3	ok	
@@ -1979,6 +2254,61 @@ income_tax_eur	2024-ep	100.0	ok
 income_tax_eur	2024-prezidento	100.0	ok	
 income_tax_eur	2024-seimo	100.0	ok	
 income_tax_eur	2025-kovo-16-meru	100.0	ok	
+list_movement	1996-spalio-20-seimo	75.3	ok	
+list_movement	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
+list_movement	1997-gruodzio-21-seimo-pakartotiniai	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
+list_movement	1997-kovo-23-savivaldybiu-tarybu	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
+list_movement	1997-kovo-23-seimo-pakartotiniai	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
+list_movement	1998-kovo-22-seimo-pakartotiniai	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
+list_movement	1998-lapkricio-15-seimo-pakartotiniai	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
+list_movement	1999-kovo-21-seimo-pakartotiniai	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
+list_movement	2000-kovo-19-savivaldybiu-tarybu	91.8	ok	
+list_movement	2000-seimo	90.6	ok	
+list_movement	2002-gruodzio-22-savivaldybiu-tarybu	100.0	ok	
+list_movement	2002-prezidento	0.0	upstream-absent	presidential candidates stand on no list
+list_movement	2003-birzelio-15-seimo-nauji	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
+list_movement	2004-ep	100.0	ok	
+list_movement	2004-prezidento	0.0	upstream-absent	presidential candidates stand on no list
+list_movement	2004-seimo	94.6	ok	
+list_movement	2005-lapkricio-20-seimo-kedainiai	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
+list_movement	2007-spalio-7-seimo-dzukija	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
+list_movement	2007-vasario-25-savivaldybiu	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
+list_movement	2008-seimo	98.4	ok	
+list_movement	2009-ep	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
+list_movement	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
+list_movement	2009-prezidento	0.0	upstream-absent	presidential candidates stand on no list
+list_movement	2011-vasario-13-seimo-marijampole	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
+list_movement	2011-vasario-27-savivaldybiu	99.1	ok	
+list_movement	2012-seimo	96.9	ok	
+list_movement	2013-kovo-3-seimo-birzai-zarasai-ukmerge	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
+list_movement	2014-ep	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
+list_movement	2014-prezidento	0.0	upstream-absent	presidential candidates stand on no list
+list_movement	2015-birzelio-21-pakartotiniai-silutes	99.2	ok	
+list_movement	2015-birzelio-7-pakartotiniai-sirvintos-trakai	97.6	ok	
+list_movement	2015-birzelio-7-seimo-varena-eisiskes	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
+list_movement	2015-kovo-1-savivaldybiu	99.8	ok	
+list_movement	2015-kovo-1-seimo-zirmunai	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
+list_movement	2015-lapkricio-8-telsiu-mero	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
+list_movement	2016-seimo	98.0	ok	
+list_movement	2017-balandzio-23-meru	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
+list_movement	2017-balandzio-23-seimo-anyksciai-panevezys	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
+list_movement	2017-rugsejo-10-marijampoles-mero	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
+list_movement	2018-rugsejo-16-seimo-zanavykai	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
+list_movement	2019-ep	100.0	ok	
+list_movement	2019-kovo-3-savivaldybiu-tarybu	99.8	ok	
+list_movement	2019-prezidento	0.0	upstream-absent	presidential candidates stand on no list
+list_movement	2019-rugsejo-8-seimo	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
+list_movement	2020-seimo	98.3	ok	
+list_movement	2021-balandzio-11-radviliskio-mero	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
+list_movement	2021-spalio-10-meru	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
+list_movement	2023-geguzes-7-visagino-mero	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
+list_movement	2023-kovo-5-savivaldybiu-tarybu-ir-meru	99.8	ok	
+list_movement	2023-rugsejo-3-seimo-raseiniai-kedainiai	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
+list_movement	2023-spalio-8-kupiskio-mero	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
+list_movement	2024-ep	100.0	ok	
+list_movement	2024-prezidento	0.0	upstream-absent	presidential candidates stand on no list
+list_movement	2024-seimo	98.9	ok	
+list_movement	2025-kovo-16-meru	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
 list_name	1996-spalio-20-seimo	87.3	ok	
 list_name	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	100.0	ok	
 list_name	1997-gruodzio-21-seimo-pakartotiniai	0.0	upstream-absent	a single-mandate Seimas by-election; no party list on the ballot
@@ -2089,6 +2419,61 @@ list_position	2024-ep	100.0	ok
 list_position	2024-prezidento	0.0	upstream-absent	presidential candidates stand on no list
 list_position	2024-seimo	98.9	ok	
 list_position	2025-kovo-16-meru	0.0	upstream-absent	the mayoral card prints its Sąrašas row empty (verified upstream)
+list_votes	1996-spalio-20-seimo	0.0	parser-gap	the list's own total is on the results pages and was not joined; only the 2000 and 2002 municipal trees carry it beside the candidate's preference votes
+list_votes	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	1997-gruodzio-21-seimo-pakartotiniai	0.0	upstream-absent	no list on the ballot
+list_votes	1997-kovo-23-savivaldybiu-tarybu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	1997-kovo-23-seimo-pakartotiniai	0.0	upstream-absent	no list on the ballot
+list_votes	1998-kovo-22-seimo-pakartotiniai	0.0	upstream-absent	no list on the ballot
+list_votes	1998-lapkricio-15-seimo-pakartotiniai	0.0	upstream-absent	no list on the ballot
+list_votes	1999-kovo-21-seimo-pakartotiniai	0.0	upstream-absent	no list on the ballot
+list_votes	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
+list_votes	2000-seimo	0.0	parser-gap	the list's own total is on the results pages and was not joined; only the 2000 and 2002 municipal trees carry it beside the candidate's preference votes
+list_votes	2002-gruodzio-22-savivaldybiu-tarybu	100.0	ok	
+list_votes	2002-prezidento	0.0	upstream-absent	no list on the ballot
+list_votes	2003-birzelio-15-seimo-nauji	0.0	upstream-absent	no list on the ballot
+list_votes	2004-ep	0.0	parser-gap	the list's own total is on the results pages and was not joined; only the 2000 and 2002 municipal trees carry it beside the candidate's preference votes
+list_votes	2004-prezidento	0.0	upstream-absent	no list on the ballot
+list_votes	2004-seimo	0.0	parser-gap	the list's own total is on the results pages and was not joined; only the 2000 and 2002 municipal trees carry it beside the candidate's preference votes
+list_votes	2005-lapkricio-20-seimo-kedainiai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2007-spalio-7-seimo-dzukija	0.0	upstream-absent	no list on the ballot
+list_votes	2007-vasario-25-savivaldybiu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2008-seimo	0.0	parser-gap	the list's own total is on the results pages and was not joined; only the 2000 and 2002 municipal trees carry it beside the candidate's preference votes
+list_votes	2009-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	0.0	upstream-absent	no list on the ballot
+list_votes	2009-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2011-vasario-13-seimo-marijampole	0.0	upstream-absent	no list on the ballot
+list_votes	2011-vasario-27-savivaldybiu	0.0	parser-gap	the list's own total is on the results pages and was not joined; only the 2000 and 2002 municipal trees carry it beside the candidate's preference votes
+list_votes	2012-seimo	0.0	parser-gap	the list's own total is on the results pages and was not joined; only the 2000 and 2002 municipal trees carry it beside the candidate's preference votes
+list_votes	2013-kovo-3-seimo-birzai-zarasai-ukmerge	0.0	upstream-absent	no list on the ballot
+list_votes	2014-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2014-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2015-birzelio-21-pakartotiniai-silutes	0.0	parser-gap	the list's own total is on the results pages and was not joined; only the 2000 and 2002 municipal trees carry it beside the candidate's preference votes
+list_votes	2015-birzelio-7-pakartotiniai-sirvintos-trakai	0.0	parser-gap	the list's own total is on the results pages and was not joined; only the 2000 and 2002 municipal trees carry it beside the candidate's preference votes
+list_votes	2015-birzelio-7-seimo-varena-eisiskes	0.0	upstream-absent	no list on the ballot
+list_votes	2015-kovo-1-savivaldybiu	0.0	parser-gap	the list's own total is on the results pages and was not joined; only the 2000 and 2002 municipal trees carry it beside the candidate's preference votes
+list_votes	2015-kovo-1-seimo-zirmunai	0.0	upstream-absent	no list on the ballot
+list_votes	2015-lapkricio-8-telsiu-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2016-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2017-balandzio-23-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2017-balandzio-23-seimo-anyksciai-panevezys	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2017-rugsejo-10-marijampoles-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2018-rugsejo-16-seimo-zanavykai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2019-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2019-kovo-3-savivaldybiu-tarybu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2019-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2019-rugsejo-8-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2020-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2021-balandzio-11-radviliskio-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2021-spalio-10-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2023-geguzes-7-visagino-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2023-kovo-5-savivaldybiu-tarybu-ir-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2023-rugsejo-3-seimo-raseiniai-kedainiai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2023-spalio-8-kupiskio-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2024-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2024-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2024-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+list_votes	2025-kovo-16-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
 loans_given_eur	1996-spalio-20-seimo	0.0	upstream-absent	the 1996-2000 form folds these into its combined rows
 loans_given_eur	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	0.0	upstream-absent	the 1996-2000 form folds these into its combined rows
 loans_given_eur	1997-gruodzio-21-seimo-pakartotiniai	0.0	upstream-absent	the 1996-2000 form folds these into its combined rows
@@ -2101,11 +2486,11 @@ loans_given_eur	2000-kovo-19-savivaldybiu-tarybu	0.0	upstream-absent	the 1996-20
 loans_given_eur	2000-seimo	0.0	upstream-absent	the 1996-2000 form folds these into its combined rows
 loans_given_eur	2002-gruodzio-22-savivaldybiu-tarybu	92.9	ok	
 loans_given_eur	2002-prezidento	0.0	upstream-absent	declarations published only as archive scans (declaration_status: archyvo-skenai)
-loans_given_eur	2003-birzelio-15-seimo-nauji	14.8	ok	
-loans_given_eur	2004-ep	8.3	ok	
+loans_given_eur	2003-birzelio-15-seimo-nauji	14.8	partly-answered	as the suteiktos-paskolos concept: the 2003 form prints the loans-given row with no value on 23 of 27 candidates; the key is on every record
+loans_given_eur	2004-ep	8.3	partly-answered	as the suteiktos-paskolos concept: the 2004-era declaration prints „-“ in this row for a candidate who declared none; the placeholder normalizes to null, so the rate is the share who declared a figure (20 of 241)
 loans_given_eur	2004-prezidento	80.0	ok	
-loans_given_eur	2004-seimo	35.6	ok	
-loans_given_eur	2005-lapkricio-20-seimo-kedainiai	20.0	ok	
+loans_given_eur	2004-seimo	35.6	partly-answered	as the suteiktos-paskolos concept: the 2004-era declaration prints „-“ in this row for a candidate who declared none; the placeholder normalizes to null, so the rate is the share who declared a figure (445 of 1251)
+loans_given_eur	2005-lapkricio-20-seimo-kedainiai	20.0	partly-answered	as the suteiktos-paskolos concept: the 2004-era declaration prints „-“ in this row for a candidate who declared none; the placeholder normalizes to null, so the rate is the share who declared a figure (1 of 5)
 loans_given_eur	2007-spalio-7-seimo-dzukija	100.0	ok	
 loans_given_eur	2007-vasario-25-savivaldybiu	99.4	ok	
 loans_given_eur	2008-seimo	100.0	ok	
@@ -2157,10 +2542,10 @@ loans_received_eur	2000-seimo	0.0	upstream-absent	the 1996-2000 form folds these
 loans_received_eur	2002-gruodzio-22-savivaldybiu-tarybu	93.0	ok	
 loans_received_eur	2002-prezidento	0.0	upstream-absent	declarations published only as archive scans (declaration_status: archyvo-skenai)
 loans_received_eur	2003-birzelio-15-seimo-nauji	0.0	upstream-absent	the row is printed and holds „-“ on all 27 records
-loans_received_eur	2004-ep	18.3	ok	
+loans_received_eur	2004-ep	18.3	partly-answered	as the gautos-paskolos concept: the 2004-era declaration prints „-“ in this row for a candidate who declared none; the placeholder normalizes to null, so the rate is the share who declared a figure (44 of 241)
 loans_received_eur	2004-prezidento	80.0	ok	
-loans_received_eur	2004-seimo	41.5	ok	
-loans_received_eur	2005-lapkricio-20-seimo-kedainiai	40.0	ok	
+loans_received_eur	2004-seimo	41.5	partly-answered	as the gautos-paskolos concept: the 2004-era declaration prints „-“ in this row for a candidate who declared none; the placeholder normalizes to null, so the rate is the share who declared a figure (519 of 1251)
+loans_received_eur	2005-lapkricio-20-seimo-kedainiai	40.0	partly-answered	as the gautos-paskolos concept: the 2004-era declaration prints „-“ in this row for a candidate who declared none; the placeholder normalizes to null, so the rate is the share who declared a figure (2 of 5)
 loans_received_eur	2007-spalio-7-seimo-dzukija	100.0	ok	
 loans_received_eur	2007-vasario-25-savivaldybiu	99.4	ok	
 loans_received_eur	2008-seimo	100.0	ok	
@@ -2584,6 +2969,116 @@ post_election_position	2024-ep	100.0	ok
 post_election_position	2024-prezidento	0.0	upstream-absent	presidential candidates stand on no list
 post_election_position	2024-seimo	98.9	ok	
 post_election_position	2025-kovo-16-meru	0.0	upstream-absent	VRK publishes no post-election list ranking for this election
+preference_votes	1996-spalio-20-seimo	75.3	ok	
+preference_votes	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	1997-gruodzio-21-seimo-pakartotiniai	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes	1997-kovo-23-savivaldybiu-tarybu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	1997-kovo-23-seimo-pakartotiniai	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes	1998-kovo-22-seimo-pakartotiniai	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes	1998-lapkricio-15-seimo-pakartotiniai	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes	1999-kovo-21-seimo-pakartotiniai	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes	2000-kovo-19-savivaldybiu-tarybu	91.8	ok	
+preference_votes	2000-seimo	90.6	ok	
+preference_votes	2002-gruodzio-22-savivaldybiu-tarybu	99.8	ok	
+preference_votes	2002-prezidento	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes	2003-birzelio-15-seimo-nauji	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes	2004-ep	100.0	ok	
+preference_votes	2004-prezidento	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes	2004-seimo	84.3	ok	
+preference_votes	2005-lapkricio-20-seimo-kedainiai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2007-spalio-7-seimo-dzukija	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes	2007-vasario-25-savivaldybiu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2008-seimo	98.4	ok	
+preference_votes	2009-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes	2009-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2011-vasario-13-seimo-marijampole	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes	2011-vasario-27-savivaldybiu	99.1	ok	
+preference_votes	2012-seimo	97.1	ok	
+preference_votes	2013-kovo-3-seimo-birzai-zarasai-ukmerge	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes	2014-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2014-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2015-birzelio-21-pakartotiniai-silutes	100.0	ok	
+preference_votes	2015-birzelio-7-pakartotiniai-sirvintos-trakai	97.6	ok	
+preference_votes	2015-birzelio-7-seimo-varena-eisiskes	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes	2015-kovo-1-savivaldybiu	99.9	ok	
+preference_votes	2015-kovo-1-seimo-zirmunai	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes	2015-lapkricio-8-telsiu-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2016-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2017-balandzio-23-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2017-balandzio-23-seimo-anyksciai-panevezys	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2017-rugsejo-10-marijampoles-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2018-rugsejo-16-seimo-zanavykai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2019-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2019-kovo-3-savivaldybiu-tarybu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2019-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2019-rugsejo-8-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2020-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2021-balandzio-11-radviliskio-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2021-spalio-10-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2023-geguzes-7-visagino-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2023-kovo-5-savivaldybiu-tarybu-ir-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2023-rugsejo-3-seimo-raseiniai-kedainiai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2023-spalio-8-kupiskio-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2024-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2024-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2024-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes	2025-kovo-16-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	1996-spalio-20-seimo	75.3	ok	
+preference_votes_measure	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	1997-gruodzio-21-seimo-pakartotiniai	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes_measure	1997-kovo-23-savivaldybiu-tarybu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	1997-kovo-23-seimo-pakartotiniai	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes_measure	1998-kovo-22-seimo-pakartotiniai	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes_measure	1998-lapkricio-15-seimo-pakartotiniai	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes_measure	1999-kovo-21-seimo-pakartotiniai	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes_measure	2000-kovo-19-savivaldybiu-tarybu	91.8	ok	
+preference_votes_measure	2000-seimo	90.6	ok	
+preference_votes_measure	2002-gruodzio-22-savivaldybiu-tarybu	99.8	ok	
+preference_votes_measure	2002-prezidento	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes_measure	2003-birzelio-15-seimo-nauji	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes_measure	2004-ep	100.0	ok	
+preference_votes_measure	2004-prezidento	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes_measure	2004-seimo	84.3	ok	
+preference_votes_measure	2005-lapkricio-20-seimo-kedainiai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2007-spalio-7-seimo-dzukija	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes_measure	2007-vasario-25-savivaldybiu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2008-seimo	98.4	ok	
+preference_votes_measure	2009-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes_measure	2009-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2011-vasario-13-seimo-marijampole	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes_measure	2011-vasario-27-savivaldybiu	99.1	ok	
+preference_votes_measure	2012-seimo	97.1	ok	
+preference_votes_measure	2013-kovo-3-seimo-birzai-zarasai-ukmerge	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes_measure	2014-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2014-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2015-birzelio-21-pakartotiniai-silutes	100.0	ok	
+preference_votes_measure	2015-birzelio-7-pakartotiniai-sirvintos-trakai	97.6	ok	
+preference_votes_measure	2015-birzelio-7-seimo-varena-eisiskes	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes_measure	2015-kovo-1-savivaldybiu	99.9	ok	
+preference_votes_measure	2015-kovo-1-seimo-zirmunai	0.0	upstream-absent	no list on the ballot, so no preference votes
+preference_votes_measure	2015-lapkricio-8-telsiu-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2016-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2017-balandzio-23-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2017-balandzio-23-seimo-anyksciai-panevezys	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2017-rugsejo-10-marijampoles-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2018-rugsejo-16-seimo-zanavykai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2019-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2019-kovo-3-savivaldybiu-tarybu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2019-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2019-rugsejo-8-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2020-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2021-balandzio-11-radviliskio-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2021-spalio-10-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2023-geguzes-7-visagino-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2023-kovo-5-savivaldybiu-tarybu-ir-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2023-rugsejo-3-seimo-raseiniai-kedainiai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2023-spalio-8-kupiskio-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2024-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2024-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2024-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+preference_votes_measure	2025-kovo-16-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
 role	1996-spalio-20-seimo	100.0	ok	
 role	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	100.0	ok	
 role	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
@@ -2652,10 +3147,10 @@ securities_eur	2000-seimo	0.0	upstream-absent	the 1996-2000 form folds these int
 securities_eur	2002-gruodzio-22-savivaldybiu-tarybu	0.0	upstream-absent	the 2002 form prints property and securities as one combined row (assets_total_eur, measure turtas-plius-vp)
 securities_eur	2002-prezidento	0.0	upstream-absent	declarations published only as archive scans (declaration_status: archyvo-skenai)
 securities_eur	2003-birzelio-15-seimo-nauji	0.0	upstream-absent	the row is printed and holds „-“ on all 27 records
-securities_eur	2004-ep	41.1	ok	
+securities_eur	2004-ep	41.1	partly-answered	as the vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai concept: the 2004-era declaration prints „-“ in this row for a candidate who declared none; the placeholder normalizes to null, so the rate is the share who declared a figure (99 of 241)
 securities_eur	2004-prezidento	80.0	ok	
-securities_eur	2004-seimo	54.4	ok	
-securities_eur	2005-lapkricio-20-seimo-kedainiai	40.0	ok	
+securities_eur	2004-seimo	54.4	partly-answered	as the vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai concept: the 2004-era declaration prints „-“ in this row for a candidate who declared none; the placeholder normalizes to null, so the rate is the share who declared a figure (681 of 1251)
+securities_eur	2005-lapkricio-20-seimo-kedainiai	40.0	partly-answered	as the vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai concept: the 2004-era declaration prints „-“ in this row for a candidate who declared none; the placeholder normalizes to null, so the rate is the share who declared a figure (2 of 5)
 securities_eur	2007-spalio-7-seimo-dzukija	100.0	ok	
 securities_eur	2007-vasario-25-savivaldybiu	99.4	ok	
 securities_eur	2008-seimo	100.0	ok	
@@ -2863,8 +3358,8 @@ tax_measure	1996-spalio-20-seimo	100.0	ok
 tax_measure	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	98.2	ok	
 tax_measure	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
 tax_measure	1997-kovo-23-savivaldybiu-tarybu	87.3	ok	
-tax_measure	1997-kovo-23-seimo-pakartotiniai	4.3	ok	
-tax_measure	1998-kovo-22-seimo-pakartotiniai	18.2	ok	
+tax_measure	1997-kovo-23-seimo-pakartotiniai	4.3	partly-published	as the gautos-pajamos concept: VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
+tax_measure	1998-kovo-22-seimo-pakartotiniai	18.2	partly-published	as the gautos-pajamos concept: VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
 tax_measure	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
 tax_measure	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
 tax_measure	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
@@ -2914,3 +3409,58 @@ tax_measure	2024-ep	100.0	ok
 tax_measure	2024-prezidento	100.0	ok	
 tax_measure	2024-seimo	100.0	ok	
 tax_measure	2025-kovo-16-meru	100.0	ok	
+votes_source	1996-spalio-20-seimo	100.0	ok	
+votes_source	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
+votes_source	1997-kovo-23-savivaldybiu-tarybu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	1997-kovo-23-seimo-pakartotiniai	100.0	ok	
+votes_source	1998-kovo-22-seimo-pakartotiniai	100.0	ok	
+votes_source	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
+votes_source	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
+votes_source	2000-kovo-19-savivaldybiu-tarybu	91.8	ok	
+votes_source	2000-seimo	100.0	ok	
+votes_source	2002-gruodzio-22-savivaldybiu-tarybu	100.0	ok	
+votes_source	2002-prezidento	100.0	ok	
+votes_source	2003-birzelio-15-seimo-nauji	100.0	ok	
+votes_source	2004-ep	100.0	ok	
+votes_source	2004-prezidento	100.0	ok	
+votes_source	2004-seimo	94.6	ok	
+votes_source	2005-lapkricio-20-seimo-kedainiai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2007-spalio-7-seimo-dzukija	100.0	ok	
+votes_source	2007-vasario-25-savivaldybiu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2008-seimo	100.0	ok	
+votes_source	2009-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	100.0	ok	
+votes_source	2009-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2011-vasario-13-seimo-marijampole	100.0	ok	
+votes_source	2011-vasario-27-savivaldybiu	99.1	ok	
+votes_source	2012-seimo	100.0	ok	
+votes_source	2013-kovo-3-seimo-birzai-zarasai-ukmerge	100.0	ok	
+votes_source	2014-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2014-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2015-birzelio-21-pakartotiniai-silutes	100.0	ok	
+votes_source	2015-birzelio-7-pakartotiniai-sirvintos-trakai	97.6	ok	
+votes_source	2015-birzelio-7-seimo-varena-eisiskes	100.0	ok	
+votes_source	2015-kovo-1-savivaldybiu	99.9	ok	
+votes_source	2015-kovo-1-seimo-zirmunai	100.0	ok	
+votes_source	2015-lapkricio-8-telsiu-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2016-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2017-balandzio-23-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2017-balandzio-23-seimo-anyksciai-panevezys	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2017-rugsejo-10-marijampoles-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2018-rugsejo-16-seimo-zanavykai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2019-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2019-kovo-3-savivaldybiu-tarybu	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2019-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2019-rugsejo-8-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2020-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2021-balandzio-11-radviliskio-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2021-spalio-10-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2023-geguzes-7-visagino-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2023-kovo-5-savivaldybiu-tarybu-ir-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2023-rugsejo-3-seimo-raseiniai-kedainiai	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2023-spalio-8-kupiskio-mero	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2024-ep	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2024-prezidento	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2024-seimo	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)
+votes_source	2025-kovo-16-meru	0.0	parser-gap	no vote figures are joined for this election: VRK publishes its results on pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)

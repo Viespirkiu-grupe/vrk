@@ -335,17 +335,34 @@ recorded as a `PortraitFetchFailed` anomaly and on the record's `photoMeta`.
 
 ## 7. Before you open the PR
 
-Three commands, and the first two produce numbers that go in the PR body. A
+Four commands, and the first two produce numbers that go in the PR body. A
 reviewer cannot see a field that silently stopped arriving; these can.
 
 ```bash
-python scripts/field_coverage.py --update-baseline   # then paste your election's rows
+python scripts/field_coverage.py                     # the gate, before the baseline moves
+python scripts/field_coverage.py --update-baseline   # then classify what it lists, and paste your rows
 python scripts/nominator_report.py --update          # forms table + registry unmatched
 python scripts/party_lineage_report.py               # nominator lineage vs the rebuilt index
 python -m scraper anomalies-report <election-id>
 python scripts/backfill_url_portraits.py --dry-run <election-id>   # 0 to fetch, or step 6 was skipped
 python scripts/reparse_diff.py
+python scripts/field_coverage.py                     # last: no findings
 ```
+
+**Run the gate plain first** (issue #135). With your election under `data/`
+and mapped in `docs/concept-map.json`, the plain run applies two rules that
+exist for exactly this moment: it names every concept the closest
+already-mapped election of your election's kind maps and yours does not (map
+it, or add a `not-mapped` row to `docs/coverage-baseline.tsv` saying why the
+form dropped the question), and it fails if your election is under `data/`
+and mapped nowhere. Only then `--update-baseline`: it adds your rows, refuses
+if anything already checked in has regressed, and exits 1 listing the cells
+it wrote `unexplained` — a concept at 0 %, or one far below the same
+concept's other elections — each with the facts you need. Classify each by
+editing the status word in its row (`upstream-absent`, `parser-gap`,
+`empty-is-the-answer` for a zero; `partly-published`, `partly-answered` for a
+low cell) and writing the note; do not re-run to make the list go away. The
+plain run at the end of the list is the proof: it exits 0.
 
 **Paste your election's per-concept fill rates into the PR body.** They are the
 rows for your id in `data/coverage.tsv`:
@@ -356,9 +373,9 @@ awk -F'\t' '$2 == "<election-id>"' data/coverage.tsv
 
 Every cell you mapped in `docs/concept-map.json` gets a line, and every line is
 a claim: *this concept is filled on this share of this election's records*. A
-concept at 0 % has to be classified in `docs/coverage-baseline.tsv` — with a
-note saying why — before the run passes at all, and a rate far below the same
-concept's other elections is a question for the reviewer even when it does. See
+concept at 0 %, or one more than 25 points below the same concept's other
+elections, has to be classified in `docs/coverage-baseline.tsv` — with a note
+saying why — before the run passes at all. See
 [FIELD_COVERAGE.md](FIELD_COVERAGE.md).
 
 This step is here because `2020-seimo` shipped with candidate income `null` on

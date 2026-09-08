@@ -140,12 +140,22 @@ COLUMNS = (
     "list_name",
     "list_position",
     "post_election_position",
+    "list_movement",
     "party_id",
     "party_name_raw",
     "nomination_kind",
     "elected",
     "elected_council",
     "elected_mayor",
+    "preference_votes",
+    "preference_votes_measure",
+    "list_votes",
+    "constituency_number",
+    "constituency_votes",
+    "constituency_round",
+    "constituency_place",
+    "constituency_votes_pct",
+    "votes_source",
     "education_status",
     "education_level",
     "education_level_rank",
@@ -186,6 +196,73 @@ COLUMNS = (
 #: ~1.4 % of the corpus (the declarers); its recovery is pinned by the
 #: `teistumas` tests and the conviction_status column instead.
 UNGATED_COLUMNS = frozenset({"quality_flags", "conviction_details"})
+
+#: The 26 elections whose records carry a vote or rating figure (issue
+#: #133, measured 2026-09-08): the 2000-2004 static sites print them on the
+#: candidate's own pages, the 2007-2015 trees were joined by issue #99, the
+#: 1996-1999 archive family carries them in its candidacy list. Every other
+#: election publishes its results on pages the corpus does not read, so its
+#: vote columns are a parser gap, not an upstream absence.
+VOTES_JOINED = frozenset(
+    {
+        "1996-spalio-20-seimo",
+        "1997-kovo-23-seimo-pakartotiniai",
+        "1997-gruodzio-21-seimo-pakartotiniai",
+        "1998-kovo-22-seimo-pakartotiniai",
+        "1998-lapkricio-15-seimo-pakartotiniai",
+        "1999-kovo-21-seimo-pakartotiniai",
+        "2000-kovo-19-savivaldybiu-tarybu",
+        "2000-seimo",
+        "2002-gruodzio-22-savivaldybiu-tarybu",
+        "2002-prezidento",
+        "2003-birzelio-15-seimo-nauji",
+        "2004-ep",
+        "2004-prezidento",
+        "2004-seimo",
+        "2007-spalio-7-seimo-dzukija",
+        "2008-seimo",
+        "2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai",
+        "2011-vasario-13-seimo-marijampole",
+        "2011-vasario-27-savivaldybiu",
+        "2012-seimo",
+        "2013-kovo-3-seimo-birzai-zarasai-ukmerge",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai",
+        "2015-birzelio-21-pakartotiniai-silutes",
+        "2015-birzelio-7-seimo-varena-eisiskes",
+        "2015-kovo-1-savivaldybiu",
+        "2015-kovo-1-seimo-zirmunai",
+    }
+)
+
+#: Of those, the two whose results tree carries the list's own total beside
+#: the candidate's preference votes.
+LIST_VOTES_JOINED = frozenset({"2000-kovo-19-savivaldybiu-tarybu", "2002-gruodzio-22-savivaldybiu-tarybu"})
+
+#: A general whose constituency round-one pages were not joined (the 2004
+#: tree rows candidates under ids the candidate pages do not carry --
+#: OUTPUT_SCHEMA); the preference votes are.
+CONSTITUENCY_VOTES_NOT_JOINED = frozenset({"2004-seimo"})
+
+#: The Seimas by-elections whose 2016-era cards name the constituency
+#: without its number ("Anykščių-Panevėžio", "Zanavykų", "Žirmūnų").
+CONSTITUENCY_NUMBER_NOT_PRINTED = frozenset(
+    {
+        "2017-balandzio-23-seimo-anyksciai-panevezys",
+        "2018-rugsejo-16-seimo-zanavykai",
+        "2019-rugsejo-8-seimo",
+    }
+)
+
+VOTE_COLUMNS = (
+    "preference_votes",
+    "preference_votes_measure",
+    "list_votes",
+    "constituency_votes",
+    "constituency_round",
+    "constituency_place",
+    "constituency_votes_pct",
+    "votes_source",
+)
 
 #: The eight Seimas *generals* — every other seimo-kind election is a
 #: single-mandate by-election with no party list on the ballot.
@@ -399,7 +476,11 @@ def project_record(
 
     candidacy = kandidatura(record, election["kind"])
     row["role"] = candidacy["vaidmuo"]
+    # One name per district across the four label eras, the number beside
+    # it (scraper/shared/apygardos.py, issue #133); the label as published
+    # stays in the record file.
     row["constituency"] = candidacy["apygarda"]
+    row["constituency_number"] = candidacy["apygardos-numeris"]
     # The official name and the registry id (scraper/municipalities.json,
     # issue #137): the eras' own wordings -- "Vilniaus miesto" on five
     # elections, "Vilniaus miesto savivaldybė" on three -- used to ship as
@@ -409,12 +490,30 @@ def project_record(
     row["list_name"] = candidacy["sarasas"]
     row["list_position"] = candidacy["numeris-sarase"]
     row["post_election_position"] = candidacy["porinkiminis-numeris"]
+    # Positive = the preference votes moved the candidate up the list. For
+    # the 2016-2025 elections, which publish no vote counts, this pair is
+    # the only preference signal there is (issue #133).
+    if row["list_position"] is not None and row["post_election_position"] is not None:
+        row["list_movement"] = row["list_position"] - row["post_election_position"]
     # `elected` is any office on the ballot; the two per-office columns are
     # what a council-and-mayor candidacy needs (issue #140: 448 council
     # winners who lost the mayoralty shipped as role=meras, elected=1).
     row["elected"] = candidacy["isrinktas"]
     row["elected_council"] = candidacy["isrinktas-tarybos-nariu"]
     row["elected_mayor"] = candidacy["isrinktas-meru"]
+
+    # The electoral result (issue #133): the candidate's preference votes on
+    # the list, the list's own total where the tree carries it, and the
+    # single-winner race's last round contested -- a Seimas constituency, or
+    # the country for a presidential candidate.
+    row["preference_votes"] = candidacy["pirmumo-balsai"]
+    row["preference_votes_measure"] = candidacy["pirmumo-balsu-matas"]
+    row["list_votes"] = candidacy["sarasas-balsai"]
+    row["constituency_votes"] = candidacy["apygardos-balsai"]
+    row["constituency_round"] = candidacy["apygardos-turas"]
+    row["constituency_place"] = candidacy["apygardos-vieta"]
+    row["constituency_votes_pct"] = candidacy["apygardos-procentai"]
+    row["votes_source"] = candidacy["balsu-saltinis"]
 
     party = partija(record, election_id)
     row["party_id"] = party["partija-id"]
@@ -634,9 +733,9 @@ def write_csv_gz(path: Path, columns: tuple[str, ...], rows: list[dict[str, Any]
 
 
 def _sqlite_type(column: str) -> str:
-    if column.endswith(("_eur", "_rate")):
+    if column.endswith(("_eur", "_rate", "_pct")):
         return "REAL"
-    if column.endswith(("_rank", "_position", "_year")) or column in {
+    if column.endswith(("_rank", "_position", "_year", "_votes", "_round", "_place", "_number", "_movement")) or column in {
         "elected",
         "elected_council",
         "elected_mayor",
@@ -765,10 +864,13 @@ def measure_cells(rows: list[dict[str, Any]]) -> list[field_coverage.Cell]:
                 continue
             if field_coverage.is_filled(row.get(column)):
                 filled[(column, eid)] += 1
+    # Every row carries every column, so `key_present` is the row count: an
+    # empty cell is a value the projection could not derive, never a key the
+    # writer forgot.
     return sorted(
         (
             field_coverage.Cell(
-                column, eid, per_election[eid], filled[(column, eid)], filled[(column, eid)]
+                column, eid, per_election[eid], per_election[eid], filled[(column, eid)]
             )
             for eid in per_election
             for column in COLUMNS
@@ -781,12 +883,34 @@ def measure_cells(rows: list[dict[str, Any]]) -> list[field_coverage.Cell]:
 #: Why a cell is legitimately empty, applied when --update-baseline meets a
 #: new zero: (column, predicate over the registry entry, note). Anything not
 #: covered here stays `unexplained` and the gate demands a human answer.
-def _known_zero_note(column: str, election: dict[str, Any]) -> str | None:
+#: Every rule is an upstream absence except the vote columns' parser gaps,
+#: which say so (issue #133: the results exist on vrk.lt and are not read).
+def _known_zero_note(column: str, election: dict[str, Any]) -> field_coverage.Baseline | None:
     eid, kind, date = election["id"], election["kind"], election["date"]
     campaign_era = date >= "2007-10"  # campaign-finance pages exist from the 2007 Dzūkija by-election on
     seimas_by_election = kind == "seimo" and eid not in SEIMAS_GENERALS
+    no_list = kind in {"prezidento", "mero"} or seimas_by_election
+    single_winner_race = kind in {"seimo", "prezidento"}
+    if column == "list_movement":
+        # Empty exactly where the post-election ranking is.
+        return _known_zero_note("post_election_position", election)
+    if column in VOTE_COLUMNS and eid not in VOTES_JOINED:
+        return field_coverage.Baseline(
+            0.0,
+            "parser-gap",
+            "no vote figures are joined for this election: VRK publishes its results on"
+            " pages the corpus does not read (issue #133; VOTES_JOINED lists the 26 that carry them)",
+        )
     rules: list[tuple[bool, str]] = [
-        (column == "constituency" and kind != "seimo", "not a Seimas election; no single-mandate constituency"),
+        (column in {"preference_votes", "preference_votes_measure"} and no_list, "no list on the ballot, so no preference votes"),
+        (column == "list_votes" and no_list, "no list on the ballot"),
+        (column == "list_votes" and eid not in LIST_VOTES_JOINED, "PARSER-GAP: the list's own total is on the results pages and was not joined; only the 2000 and 2002 municipal trees carry it beside the candidate's preference votes"),
+        (column in {"constituency_votes", "constituency_round", "constituency_place", "constituency_votes_pct"} and not single_winner_race, "no single-winner race on this ballot"),
+        (column in {"constituency_votes", "constituency_round", "constituency_place", "constituency_votes_pct"} and eid in CONSTITUENCY_VOTES_NOT_JOINED, "PARSER-GAP: the constituency round pages of this tree row candidates under ids the candidate pages do not carry, and were not joined (OUTPUT_SCHEMA)"),
+        (column == "constituency_votes_pct" and date < "2000", "the archive's round pages print votes and place, never a share"),
+        (column == "constituency_place" and kind == "prezidento", "the presidential results pages print votes and shares, never a place"),
+        (column == "constituency_number" and eid in CONSTITUENCY_NUMBER_NOT_PRINTED, "the 2017-2019 by-election cards print the constituency's name without its number"),
+        (column in {"constituency", "constituency_number"} and kind != "seimo", "not a Seimas election; no single-mandate constituency"),
         (column in {"municipality", "municipality_id"} and kind not in {"savivaldybiu", "mero"}, "not a municipal or mayoral election"),
         (column == "elected_council" and kind != "savivaldybiu", "no council seat on this ballot"),
         (column == "elected_mayor" and kind not in {"savivaldybiu", "mero"}, "no mayoral seat on this ballot"),
@@ -827,8 +951,83 @@ def _known_zero_note(column: str, election: dict[str, Any]) -> str | None:
     ]
     for matches, note in rules:
         if matches:
-            return note
+            if note.startswith("PARSER-GAP: "):
+                return field_coverage.Baseline(0.0, "parser-gap", note.removeprefix("PARSER-GAP: "))
+            return field_coverage.Baseline(0.0, "upstream-absent", note)
     return None
+
+
+#: Which concept of docs/concept-map.json a gated column projects, for the
+#: below-peers rule (issue #135): a column filled far under its peers is the
+#: same fact as its concept's cell in docs/coverage-baseline.tsv, classified
+#: there against the retained pages, so the candidacy baseline inherits that
+#: classification rather than asking a human twice. The declaration-wide
+#: columns (currency, measures, the derived totals) follow `gautos-pajamos`,
+#: which every declaration block carries.
+COLUMN_CONCEPTS = {
+    "birth_date": "gimimo-data",
+    "birth_place": "gimimo-vieta",
+    "education_level": "issilavinimas",
+    "education_level_rank": "issilavinimas",
+    "education_higher": "issilavinimas",
+    "education_unfinished": "issilavinimas",
+    "education_entries": "issilavinimas",
+    "assets_registered_eur": "privalomas-registruoti-turtas",
+    "securities_eur": "vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai",
+    "cash_eur": "pinigines-lesos",
+    "loans_given_eur": "suteiktos-paskolos",
+    "loans_received_eur": "gautos-paskolos",
+    "income_eur": "gautos-pajamos",
+    "income_tax_eur": "sumoketas-pajamu-mokestis",
+    "income_gross_eur": "gautos-pajamos",
+    "income_measure": "gautos-pajamos",
+    "income_floor_only": "gautos-pajamos",
+    "tax_measure": "gautos-pajamos",
+    "assets_total_eur": "gautos-pajamos",
+    "assets_measure": "gautos-pajamos",
+    "declared_currency": "gautos-pajamos",
+    "currency_rate": "gautos-pajamos",
+    "declaration_year": "deklaracijos-metai",
+    "self_employment_income_eur": "individualios-veiklos-pajamos",
+    "self_employment_deductions_eur": "individualios-veiklos-atskaitymai",
+    "asset_sale_income_eur": "turto-pardavimo-pajamos",
+    "asset_acquisition_cost_eur": "turto-isigijimo-kaina",
+    "preference_votes": "pirmumo-balsai",
+    "preference_votes_measure": "pirmumo-balsai",
+    "list_votes": "sarasas-balsai",
+    "constituency_votes": "apygardos-balsai",
+    "constituency_round": "apygardos-balsai",
+    "constituency_place": "apygardos-balsai",
+    "constituency_votes_pct": "apygardos-balsai",
+}
+
+
+def _known_low_note(
+    column: str,
+    election_id: str,
+    coverage_baseline: dict[tuple[str, str], field_coverage.Baseline],
+) -> field_coverage.Baseline | None:
+    """The classification a below-peers column cell inherits from its concept's
+    row in docs/coverage-baseline.tsv, or a structural reason of the table's
+    own, or None -- then the gate demands a human answer."""
+    # A Seimas general's constituency columns: on the candidates who stood in
+    # one, and empty for those who stood on the list alone (issue #133 stopped
+    # the 2000-2012 cards' "Daugiamandatė" row shipping as a district). The
+    # by-elections, every candidate a constituency one, set the peer median.
+    if column in {"constituency", "constituency_number"} and election_id in SEIMAS_GENERALS:
+        return field_coverage.Baseline(
+            0.0,
+            "partly-published",
+            "the constituency is on the candidates who stood in one; the rest of a"
+            " general's field stood on the list alone (the cards' Daugiamandatė row is not a district)",
+        )
+    concept = COLUMN_CONCEPTS.get(column)
+    if concept is None:
+        return None
+    prior = coverage_baseline.get((concept, election_id))
+    if prior is None or prior.status not in field_coverage.LOW_STATUSES:
+        return None
+    return field_coverage.Baseline(0.0, prior.status, f"as the {concept} concept: {prior.note}")
 
 
 def gate(
@@ -837,9 +1036,24 @@ def gate(
     registry_by_id: dict[str, dict[str, Any]],
     update: bool,
     max_drop: float,
+    *,
+    force: bool = False,
+    coverage_baseline_path: Path | None = None,
 ) -> int:
     baseline = field_coverage.read_baseline(baseline_path)
     if update:
+        # Auto-classify what the builder can explain structurally -- a zero
+        # with a `_known_zero_note`, a below-peers cell whose concept the
+        # coverage baseline already classifies -- and leave the rest
+        # `unexplained` for a human, which exits 1 (issue #135 made
+        # field_coverage's update do the same, and refuse over a standing
+        # finding on a row already checked in).
+        coverage = field_coverage.read_baseline(
+            coverage_baseline_path
+            if coverage_baseline_path is not None
+            else baseline_path.parent / field_coverage.BASELINE.name
+        )
+        medians = field_coverage.peer_medians(cells)
         enriched = dict(baseline)
         for cell in cells:
             key = (cell.concept, cell.election)
@@ -847,27 +1061,29 @@ def gate(
             if cell.records and cell.non_null == 0 and (
                 prior is None or prior.status not in field_coverage.ZERO_STATUSES
             ):
-                note = _known_zero_note(cell.concept, registry_by_id[cell.election])
-                if note is not None:
-                    enriched[key] = field_coverage.Baseline(0.0, "upstream-absent", note)
-        field_coverage.write_baseline(baseline_path, cells, enriched)
-        unexplained = [
-            cell
-            for cell in cells
-            if cell.records
-            and cell.non_null == 0
-            and (enriched.get((cell.concept, cell.election)) or field_coverage.Baseline(0.0, "", "")).status
-            not in field_coverage.ZERO_STATUSES
-        ]
-        print(f"Baseline rewritten: {baseline_path} ({len(cells)} cells)")
-        if unexplained:
-            print(f"{len(unexplained)} zero-fill cell(s) still unexplained:", file=sys.stderr)
-            for cell in unexplained[:40]:
-                print(f"    {cell.concept}\t{cell.election}", file=sys.stderr)
-            return 1
-        return 0
+                known = _known_zero_note(cell.concept, registry_by_id[cell.election])
+                if known is not None:
+                    enriched[key] = known
+            elif field_coverage.below_peers(cell, medians[key]) and (
+                prior is None or prior.status not in field_coverage.LOW_STATUSES
+            ):
+                inherited = _known_low_note(cell.concept, cell.election, coverage)
+                if inherited is not None:
+                    enriched[key] = inherited
+        # What the builder could not explain is what blocks the rewrite: a
+        # regression on a classified row, a zero or a low cell with no
+        # structural reason on a row already checked in.
+        return field_coverage.update_baseline(
+            baseline_path,
+            cells,
+            enriched,
+            field_coverage.check(cells, enriched, max_drop),
+            force=force,
+            max_drop=max_drop,
+        )
 
     findings = field_coverage.check(cells, baseline, max_drop)
+
     if not findings:
         print("Fill gate: no findings.")
         return 0
@@ -891,6 +1107,11 @@ def main() -> int:
     parser.add_argument("--dist", type=Path, default=None, help="Output directory (default <repo-root>/dist).")
     parser.add_argument("--max-drop", type=float, default=5.0)
     parser.add_argument("--update-baseline", action="store_true")
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="With --update-baseline: rewrite even over a standing finding on a row already checked in.",
+    )
     args = parser.parse_args()
 
     repo_root = args.repo_root
@@ -937,7 +1158,15 @@ def main() -> int:
         return 0
     registry_by_id = {e["id"]: e for e in identity.load_registry(repo_root / "scraper" / "elections.json")}
     cells = measure_cells(rows)
-    return gate(cells, repo_root / BASELINE, registry_by_id, args.update_baseline, args.max_drop)
+    return gate(
+        cells,
+        repo_root / BASELINE,
+        registry_by_id,
+        args.update_baseline,
+        args.max_drop,
+        force=args.force,
+        coverage_baseline_path=repo_root / field_coverage.BASELINE,
+    )
 
 
 if __name__ == "__main__":

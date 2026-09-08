@@ -79,7 +79,7 @@ key stops matching, so the file cannot rot silently.
 The left pane is search plus facets, all answered from `people.json` alone:
 free text over names, canonical party names and each candidacy's
 workplace/position string; selects for election, nominating party/committee,
-municipality, office and outcome. The election select lists terms, newest
+municipality, single-mandate constituency, office and outcome. The election select lists terms, newest
 first: a general election is one row, or a group holding itself and its
 seat-fills, and picking the general — `2016 Seimas (visa kadencija)` —
 includes the 2017–2019 by-elections of that same Seimas, which an exact-id
@@ -181,6 +181,25 @@ the slugs are ASCII-folded and would de-slug without their diacritics. All
 of it comes from the shared resolvers, not rules of the builder's own:
 `kandidatura()` for office/municipality/elected, `issilavinimas()` for the
 rank, `field_coverage.concept_value()` for the workplace.
+
+**Votes and the constituency** (issue #133). Each candidacy carries `"v"`,
+the preference votes on the list (57,809 candidacies; the 1996 rating
+system's positive votes count as such), `"cv"`, the votes of the
+single-winner race's last round contested (a Seimas constituency, or the
+country for a presidential candidate), and `"ap"`, an index into the
+top-level `constituencies` list — the district's one name across the four
+label eras (`scraper/shared/apygardos.py`; 315 raw labels, 136 names; a name,
+not a boundary — Kėdainių in 2000 and in 2020 are one row). The page offers
+the constituency as a facet and a CSV column (`apygarda`), prints the
+showing on each election card ("4 321 pirmumo balsų · 6 999 balsų
+apygardoje"), exports `pirmumo_balsai` and `balsai_apygardoje`, adds three
+comparison rows (*Pirmumo balsai*, *Balsai apygardoje* — every round, read
+off the record the way `kandidatura()` reads it — and *Sąrašo balsai*), and
+gives **Rinkimų suvestinė** a *Balsai* section: coverage, total and median,
+and the ten candidacies with the most preference votes or race votes. An
+election whose records carry no votes says so in that section rather than
+showing an empty table: VRK publishes its results on pages the corpus does
+not read.
 
 **Photos.** The corpus stores portraits as externalized sidecars
 (`photos/<candidateId>.<ext>`, 27,493 records — the 2,199 the pages embedded

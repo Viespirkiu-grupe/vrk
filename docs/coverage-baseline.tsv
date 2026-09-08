@@ -1,4 +1,22 @@
 concept	election	pct	status	note
+apygardos-balsai	1996-spalio-20-seimo	100.0	ok	
+apygardos-balsai	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
+apygardos-balsai	1997-kovo-23-seimo-pakartotiniai	100.0	ok	
+apygardos-balsai	1998-kovo-22-seimo-pakartotiniai	100.0	ok	
+apygardos-balsai	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
+apygardos-balsai	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
+apygardos-balsai	2000-seimo	55.2	partly-published	the constituency block is on the 702 candidates who stood in a constituency; the other 569 of 1271 stood on the list alone and had no single-winner race
+apygardos-balsai	2002-prezidento	100.0	ok	
+apygardos-balsai	2003-birzelio-15-seimo-nauji	100.0	ok	
+apygardos-balsai	2004-prezidento	100.0	ok	
+apygardos-balsai	2007-spalio-7-seimo-dzukija	100.0	ok	
+apygardos-balsai	2008-seimo	49.3	partly-published	the constituency block is on the 790 candidates who stood in a constituency; the other 813 of 1603 stood on the list alone and had no single-winner race
+apygardos-balsai	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	100.0	ok	
+apygardos-balsai	2011-vasario-13-seimo-marijampole	100.0	ok	
+apygardos-balsai	2012-seimo	50.8	partly-published	the constituency block is on the 978 candidates who stood in a constituency; the other 949 of 1927 stood on the list alone and had no single-winner race
+apygardos-balsai	2013-kovo-3-seimo-birzai-zarasai-ukmerge	100.0	ok	
+apygardos-balsai	2015-birzelio-7-seimo-varena-eisiskes	100.0	ok	
+apygardos-balsai	2015-kovo-1-seimo-zirmunai	100.0	ok	
 ar-buvote-pripazintas-kaltu	2000-kovo-19-savivaldybiu-tarybu	99.3	ok	
 ar-buvote-pripazintas-kaltu	2000-seimo	99.7	ok	
 ar-buvote-pripazintas-kaltu	2002-gruodzio-22-savivaldybiu-tarybu	100.0	ok	
@@ -175,8 +193,8 @@ deklaraciju-valiuta	1996-spalio-20-seimo	100.0	ok
 deklaraciju-valiuta	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	98.2	ok	
 deklaraciju-valiuta	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
 deklaraciju-valiuta	1997-kovo-23-savivaldybiu-tarybu	87.3	ok	
-deklaraciju-valiuta	1997-kovo-23-seimo-pakartotiniai	4.3	ok	
-deklaraciju-valiuta	1998-kovo-22-seimo-pakartotiniai	18.2	ok	
+deklaraciju-valiuta	1997-kovo-23-seimo-pakartotiniai	4.3	partly-published	VRK's 1997-1999 archive tree holds a declaration extract for 1 of the 23 candidates; the other pages are absent upstream (rawData.declaration is null)
+deklaraciju-valiuta	1998-kovo-22-seimo-pakartotiniai	18.2	partly-published	VRK's 1997-1999 archive tree holds a declaration extract for 2 of the 11 candidates; the other pages are absent upstream (rawData.declaration is null)
 deklaraciju-valiuta	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
 deklaraciju-valiuta	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
 deklaraciju-valiuta	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
@@ -219,9 +237,9 @@ einamos-pareigos	2025-kovo-16-meru	100.0	ok
 gautos-pajamos	1996-spalio-20-seimo	98.7	ok	
 gautos-pajamos	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	97.3	ok	
 gautos-pajamos	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
-gautos-pajamos	1997-kovo-23-savivaldybiu-tarybu	16.2	ok	
-gautos-pajamos	1997-kovo-23-seimo-pakartotiniai	4.3	ok	
-gautos-pajamos	1998-kovo-22-seimo-pakartotiniai	18.2	ok	
+gautos-pajamos	1997-kovo-23-savivaldybiu-tarybu	16.2	partly-published	the 1997 form prints rows 1 and 20 of its income section and row 20 renders 0 against a non-zero row 1 on most pages, so the parser refuses it and the deklaruotos-pajamos concept substitutes the employment row; only the trustworthy totals count here
+gautos-pajamos	1997-kovo-23-seimo-pakartotiniai	4.3	partly-published	VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
+gautos-pajamos	1998-kovo-22-seimo-pakartotiniai	18.2	partly-published	VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
 gautos-pajamos	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
 gautos-pajamos	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
 gautos-pajamos	2000-kovo-19-savivaldybiu-tarybu	98.5	ok	
@@ -274,18 +292,18 @@ gautos-pajamos-darbo-santykiu	1996-spalio-20-seimo	99.8	ok
 gautos-pajamos-darbo-santykiu	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	98.2	ok	
 gautos-pajamos-darbo-santykiu	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
 gautos-pajamos-darbo-santykiu	1997-kovo-23-savivaldybiu-tarybu	87.3	ok	
-gautos-pajamos-darbo-santykiu	1997-kovo-23-seimo-pakartotiniai	4.3	ok	
-gautos-pajamos-darbo-santykiu	1998-kovo-22-seimo-pakartotiniai	18.2	ok	
+gautos-pajamos-darbo-santykiu	1997-kovo-23-seimo-pakartotiniai	4.3	partly-published	VRK's 1997-1999 archive tree holds a declaration extract for 1 of the 23 candidates; the other pages are absent upstream (rawData.declaration is null)
+gautos-pajamos-darbo-santykiu	1998-kovo-22-seimo-pakartotiniai	18.2	partly-published	VRK's 1997-1999 archive tree holds a declaration extract for 2 of the 11 candidates; the other pages are absent upstream (rawData.declaration is null)
 gautos-pajamos-darbo-santykiu	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
 gautos-pajamos-darbo-santykiu	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
 gautos-pajamos-darbo-santykiu	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
 gautos-pajamos-darbo-santykiu	2000-seimo	100.0	ok	
 gautos-paskolos	2002-gruodzio-22-savivaldybiu-tarybu	93.0	ok	
 gautos-paskolos	2003-birzelio-15-seimo-nauji	0.0	empty-is-the-answer	The row is printed on every page and holds „-“ on all 27: no candidate of this by-election declared an outstanding loan. 2004-seimo, the same site a year later, fills it on 41.5%.
-gautos-paskolos	2004-ep	18.3	ok	
+gautos-paskolos	2004-ep	18.3	partly-answered	the 2004-era declaration prints „-“ in this row for a candidate who declared none; the placeholder normalizes to null, so the rate is the share who declared a figure (44 of 241)
 gautos-paskolos	2004-prezidento	80.0	ok	
-gautos-paskolos	2004-seimo	41.5	ok	
-gautos-paskolos	2005-lapkricio-20-seimo-kedainiai	40.0	ok	
+gautos-paskolos	2004-seimo	41.5	partly-answered	the 2004-era declaration prints „-“ in this row for a candidate who declared none; the placeholder normalizes to null, so the rate is the share who declared a figure (519 of 1251)
+gautos-paskolos	2005-lapkricio-20-seimo-kedainiai	40.0	partly-answered	the 2004-era declaration prints „-“ in this row for a candidate who declared none; the placeholder normalizes to null, so the rate is the share who declared a figure (2 of 5)
 gautos-paskolos	2007-spalio-7-seimo-dzukija	100.0	ok	
 gautos-paskolos	2007-vasario-25-savivaldybiu	99.4	ok	
 gautos-paskolos	2008-seimo	100.0	ok	
@@ -330,8 +348,8 @@ gimimo-data	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok
 gimimo-data	1997-kovo-23-savivaldybiu-tarybu	100.0	ok	
 gimimo-data	1997-kovo-23-seimo-pakartotiniai	78.3	ok	
 gimimo-data	1998-kovo-22-seimo-pakartotiniai	81.8	ok	
-gimimo-data	1998-lapkricio-15-seimo-pakartotiniai	54.5	ok	
-gimimo-data	1999-kovo-21-seimo-pakartotiniai	68.2	ok	
+gimimo-data	1998-lapkricio-15-seimo-pakartotiniai	54.5	partly-published	the archive card prints no birth date; one is recovered from the biography's opening sentence where it states it (6 of 11, anketa.gimimo-data-saltinis = biografijos-tekstas)
+gimimo-data	1999-kovo-21-seimo-pakartotiniai	68.2	partly-published	the archive card prints no birth date; one is recovered from the biography's opening sentence where it states it (15 of 22, anketa.gimimo-data-saltinis = biografijos-tekstas)
 gimimo-data	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
 gimimo-data	2000-seimo	100.0	ok	
 gimimo-data	2002-gruodzio-22-savivaldybiu-tarybu	100.0	ok	
@@ -382,15 +400,15 @@ gimimo-data	2025-kovo-16-meru	100.0	ok
 gimimo-vieta	1996-spalio-20-seimo	95.2	ok	
 gimimo-vieta	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	76.4	ok	
 gimimo-vieta	1997-gruodzio-21-seimo-pakartotiniai	75.0	ok	
-gimimo-vieta	1997-kovo-23-savivaldybiu-tarybu	9.3	ok	
+gimimo-vieta	1997-kovo-23-savivaldybiu-tarybu	9.3	partly-answered	the 1997 municipal card prints the Gimimo vieta field on every record and it is empty on 5694 of 6276 (rawData.personal.birthPlace is "")
 gimimo-vieta	1997-kovo-23-seimo-pakartotiniai	91.3	ok	
 gimimo-vieta	1998-kovo-22-seimo-pakartotiniai	81.8	ok	
-gimimo-vieta	1998-lapkricio-15-seimo-pakartotiniai	45.5	ok	
+gimimo-vieta	1998-lapkricio-15-seimo-pakartotiniai	45.5	partly-published	the archive card carries a Gimimo vieta field on 5 of 11 candidates and the biography states none for the rest
 gimimo-vieta	1999-kovo-21-seimo-pakartotiniai	72.7	ok	
 gimimo-vieta	2000-kovo-19-savivaldybiu-tarybu	0.0	upstream-absent	The 2000 municipal card prints Gimimo data and Gyvenamoji vieta and no birthplace: 0 of its 9,881 retained pages carry „Gimimo vieta“, against 138 of the 1,271 2000-seimo cards. The concept map maps it anyway; that is the error this row records.
-gimimo-vieta	2000-seimo	10.9	ok	
+gimimo-vieta	2000-seimo	10.9	partly-published	the 2000 card prints a Gimimo vieta line on 138 of 1271 candidates' pages (seimo_2000 reads the bold label); the key is written null on the rest
 gimimo-vieta	2002-gruodzio-22-savivaldybiu-tarybu	91.7	ok	
-gimimo-vieta	2002-prezidento	58.8	ok	
+gimimo-vieta	2002-prezidento	58.8	partly-published	no card field; recovered from the biography where it states a birthplace (10 of 17, anketa.gimimo-vietos-saltinis = biografijos-tekstas)
 gimimo-vieta	2003-birzelio-15-seimo-nauji	100.0	ok	
 gimimo-vieta	2004-ep	99.2	ok	
 gimimo-vieta	2004-seimo	99.2	ok	
@@ -425,7 +443,7 @@ gimimo-vieta	2019-rugsejo-8-seimo	100.0	ok
 gimimo-vieta	2020-seimo	97.2	ok	
 gimimo-vieta	2021-balandzio-11-radviliskio-mero	100.0	ok	
 gimimo-vieta	2021-spalio-10-meru	85.7	ok	
-gimimo-vieta	2023-geguzes-7-visagino-mero	50.0	ok	
+gimimo-vieta	2023-geguzes-7-visagino-mero	50.0	partly-answered	two candidates; one left the field blank
 gimimo-vieta	2023-kovo-5-savivaldybiu-tarybu-ir-meru	95.9	ok	
 gimimo-vieta	2023-rugsejo-3-seimo-raseiniai-kedainiai	100.0	ok	
 gimimo-vieta	2023-spalio-8-kupiskio-mero	100.0	ok	
@@ -515,9 +533,9 @@ iskele	2024-ep	100.0	ok
 iskele	2024-prezidento	100.0	ok	
 iskele	2024-seimo	100.0	ok	
 iskele	2025-kovo-16-meru	100.0	ok	
-issilavinimas	1996-spalio-20-seimo	38.3	ok	
+issilavinimas	1996-spalio-20-seimo	38.3	partly-published	the archive card prints an education level for 337 of 879 candidates; the parser writes null where none was published (concept-map note)
 issilavinimas	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	84.5	ok	
-issilavinimas	1997-gruodzio-21-seimo-pakartotiniai	25.0	ok	
+issilavinimas	1997-gruodzio-21-seimo-pakartotiniai	25.0	partly-published	the archive card prints an education level for 1 of 4 candidates; the parser writes null where none was published (concept-map note)
 issilavinimas	1997-kovo-23-savivaldybiu-tarybu	81.2	ok	
 issilavinimas	1997-kovo-23-seimo-pakartotiniai	82.6	ok	
 issilavinimas	1998-kovo-22-seimo-pakartotiniai	72.7	ok	
@@ -554,7 +572,7 @@ issilavinimas	2017-balandzio-23-seimo-anyksciai-panevezys	90.9	ok
 issilavinimas	2017-rugsejo-10-marijampoles-mero	87.5	ok	
 issilavinimas	2018-rugsejo-16-seimo-zanavykai	83.3	ok	
 issilavinimas	2019-ep	81.1	ok	
-issilavinimas	2019-kovo-3-savivaldybiu-tarybu	62.9	ok	
+issilavinimas	2019-kovo-3-savivaldybiu-tarybu	62.9	partly-answered	the question is on every 2019 card (the label is in rawData on every sampled record); 5072 candidates left it blank
 issilavinimas	2019-prezidento	88.9	ok	
 issilavinimas	2019-rugsejo-8-seimo	92.6	ok	
 issilavinimas	2020-seimo	93.9	ok	
@@ -572,8 +590,8 @@ kalendoriniais-metais-isigytas-turtas	1996-spalio-20-seimo	99.8	ok
 kalendoriniais-metais-isigytas-turtas	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	98.2	ok	
 kalendoriniais-metais-isigytas-turtas	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
 kalendoriniais-metais-isigytas-turtas	1997-kovo-23-savivaldybiu-tarybu	87.3	ok	
-kalendoriniais-metais-isigytas-turtas	1997-kovo-23-seimo-pakartotiniai	4.3	ok	
-kalendoriniais-metais-isigytas-turtas	1998-kovo-22-seimo-pakartotiniai	18.2	ok	
+kalendoriniais-metais-isigytas-turtas	1997-kovo-23-seimo-pakartotiniai	4.3	partly-published	VRK's 1997-1999 archive tree holds a declaration extract for 1 of the 23 candidates; the other pages are absent upstream (rawData.declaration is null)
+kalendoriniais-metais-isigytas-turtas	1998-kovo-22-seimo-pakartotiniai	18.2	partly-published	VRK's 1997-1999 archive tree holds a declaration extract for 2 of the 11 candidates; the other pages are absent upstream (rawData.declaration is null)
 kalendoriniais-metais-isigytas-turtas	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
 kalendoriniais-metais-isigytas-turtas	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
 kalendoriniais-metais-isigytas-turtas	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
@@ -737,6 +755,18 @@ pinigines-lesos	2024-ep	100.0	ok
 pinigines-lesos	2024-prezidento	100.0	ok	
 pinigines-lesos	2024-seimo	100.0	ok	
 pinigines-lesos	2025-kovo-16-meru	100.0	ok	
+pirmumo-balsai	1996-spalio-20-seimo	75.3	ok	
+pirmumo-balsai	2000-kovo-19-savivaldybiu-tarybu	91.8	ok	
+pirmumo-balsai	2000-seimo	90.6	ok	
+pirmumo-balsai	2002-gruodzio-22-savivaldybiu-tarybu	99.8	ok	
+pirmumo-balsai	2004-ep	100.0	ok	
+pirmumo-balsai	2004-seimo	84.3	ok	
+pirmumo-balsai	2008-seimo	98.4	ok	
+pirmumo-balsai	2011-vasario-27-savivaldybiu	99.1	ok	
+pirmumo-balsai	2012-seimo	97.1	ok	
+pirmumo-balsai	2015-birzelio-21-pakartotiniai-silutes	100.0	ok	
+pirmumo-balsai	2015-birzelio-7-pakartotiniai-sirvintos-trakai	97.6	ok	
+pirmumo-balsai	2015-kovo-1-savivaldybiu	99.9	ok	
 pomegiai	2000-seimo	74.9	ok	
 pomegiai	2003-birzelio-15-seimo-nauji	85.2	ok	
 pomegiai	2004-ep	80.9	ok	
@@ -840,6 +870,8 @@ privalomas-registruoti-turtas	2024-ep	100.0	ok
 privalomas-registruoti-turtas	2024-prezidento	100.0	ok	
 privalomas-registruoti-turtas	2024-seimo	100.0	ok	
 privalomas-registruoti-turtas	2025-kovo-16-meru	100.0	ok	
+sarasas-balsai	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
+sarasas-balsai	2002-gruodzio-22-savivaldybiu-tarybu	100.0	ok	
 savivaldybe	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	100.0	ok	
 savivaldybe	1997-kovo-23-savivaldybiu-tarybu	100.0	ok	
 savivaldybe	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
@@ -915,9 +947,9 @@ seimine-padetis	2025-kovo-16-meru	100.0	ok
 sumoketas-pajamu-mokestis	1996-spalio-20-seimo	98.7	ok	
 sumoketas-pajamu-mokestis	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	98.2	ok	
 sumoketas-pajamu-mokestis	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
-sumoketas-pajamu-mokestis	1997-kovo-23-savivaldybiu-tarybu	21.4	ok	
-sumoketas-pajamu-mokestis	1997-kovo-23-seimo-pakartotiniai	4.3	ok	
-sumoketas-pajamu-mokestis	1998-kovo-22-seimo-pakartotiniai	18.2	ok	
+sumoketas-pajamu-mokestis	1997-kovo-23-savivaldybiu-tarybu	21.4	partly-published	the 1997 form prints rows 1 and 20 of its income section and row 20 renders 0 against a non-zero row 1 on most pages, so the parser refuses it and the deklaruotos-pajamos concept substitutes the employment row; only the trustworthy totals count here
+sumoketas-pajamu-mokestis	1997-kovo-23-seimo-pakartotiniai	4.3	partly-published	VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
+sumoketas-pajamu-mokestis	1998-kovo-22-seimo-pakartotiniai	18.2	partly-published	VRK's 1997-1999 archive tree holds a declaration extract for {n} of the {r} candidates; the other pages are absent upstream (rawData.declaration is null)
 sumoketas-pajamu-mokestis	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
 sumoketas-pajamu-mokestis	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
 sumoketas-pajamu-mokestis	2000-kovo-19-savivaldybiu-tarybu	98.5	ok	
@@ -967,11 +999,11 @@ sumoketas-pajamu-mokestis	2024-prezidento	100.0	ok
 sumoketas-pajamu-mokestis	2024-seimo	100.0	ok	
 sumoketas-pajamu-mokestis	2025-kovo-16-meru	100.0	ok	
 suteiktos-paskolos	2002-gruodzio-22-savivaldybiu-tarybu	92.9	ok	
-suteiktos-paskolos	2003-birzelio-15-seimo-nauji	14.8	ok	
-suteiktos-paskolos	2004-ep	8.3	ok	
+suteiktos-paskolos	2003-birzelio-15-seimo-nauji	14.8	partly-answered	the 2003 form prints the loans-given row with no value on 23 of 27 candidates; the key is on every record
+suteiktos-paskolos	2004-ep	8.3	partly-answered	the 2004-era declaration prints „-“ in this row for a candidate who declared none; the placeholder normalizes to null, so the rate is the share who declared a figure (20 of 241)
 suteiktos-paskolos	2004-prezidento	80.0	ok	
-suteiktos-paskolos	2004-seimo	35.6	ok	
-suteiktos-paskolos	2005-lapkricio-20-seimo-kedainiai	20.0	ok	
+suteiktos-paskolos	2004-seimo	35.6	partly-answered	the 2004-era declaration prints „-“ in this row for a candidate who declared none; the placeholder normalizes to null, so the rate is the share who declared a figure (445 of 1251)
+suteiktos-paskolos	2005-lapkricio-20-seimo-kedainiai	20.0	partly-answered	the 2004-era declaration prints „-“ in this row for a candidate who declared none; the placeholder normalizes to null, so the rate is the share who declared a figure (1 of 5)
 suteiktos-paskolos	2007-spalio-7-seimo-dzukija	100.0	ok	
 suteiktos-paskolos	2007-vasario-25-savivaldybiu	99.4	ok	
 suteiktos-paskolos	2008-seimo	100.0	ok	
@@ -1053,12 +1085,12 @@ sutuoktinio-vardas-pavarde	2019-kovo-3-savivaldybiu-tarybu	47.6	ok
 sutuoktinio-vardas-pavarde	2019-prezidento	88.9	ok	
 sutuoktinio-vardas-pavarde	2019-rugsejo-8-seimo	63.0	ok	
 sutuoktinio-vardas-pavarde	2020-seimo	52.8	ok	
-tautybe	1996-spalio-20-seimo	47.9	ok	
+tautybe	1996-spalio-20-seimo	47.9	partly-published	the card field sits inside a malformed HTML comment and is recovered by regex where present: 421 of 879 (OUTPUT_SCHEMA, the 1996-1998 archive)
 tautybe	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	85.5	ok	
 tautybe	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
 tautybe	1997-kovo-23-savivaldybiu-tarybu	97.7	ok	
 tautybe	1997-kovo-23-seimo-pakartotiniai	100.0	ok	
-tautybe	1998-kovo-22-seimo-pakartotiniai	45.5	ok	
+tautybe	1998-kovo-22-seimo-pakartotiniai	45.5	partly-published	the card field sits inside a malformed HTML comment and is recovered by regex where present: 5 of 11 (OUTPUT_SCHEMA, the 1996-1998 archive)
 tautybe	1998-lapkricio-15-seimo-pakartotiniai	90.9	ok	
 tautybe	1999-kovo-21-seimo-pakartotiniai	90.9	ok	
 tautybe	2002-gruodzio-22-savivaldybiu-tarybu	91.4	ok	
@@ -1096,7 +1128,7 @@ tautybe	2019-rugsejo-8-seimo	100.0	ok
 tautybe	2020-seimo	97.4	ok	
 tautybe	2021-balandzio-11-radviliskio-mero	100.0	ok	
 tautybe	2021-spalio-10-meru	100.0	ok	
-tautybe	2023-geguzes-7-visagino-mero	50.0	ok	
+tautybe	2023-geguzes-7-visagino-mero	50.0	partly-answered	two candidates; one left the field blank
 tautybe	2023-kovo-5-savivaldybiu-tarybu-ir-meru	96.6	ok	
 tautybe	2023-rugsejo-3-seimo-raseiniai-kedainiai	100.0	ok	
 tautybe	2023-spalio-8-kupiskio-mero	100.0	ok	
@@ -1121,8 +1153,8 @@ turtas-ir-pinigines-lesos	1996-spalio-20-seimo	99.8	ok
 turtas-ir-pinigines-lesos	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	98.2	ok	
 turtas-ir-pinigines-lesos	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
 turtas-ir-pinigines-lesos	1997-kovo-23-savivaldybiu-tarybu	87.3	ok	
-turtas-ir-pinigines-lesos	1997-kovo-23-seimo-pakartotiniai	4.3	ok	
-turtas-ir-pinigines-lesos	1998-kovo-22-seimo-pakartotiniai	18.2	ok	
+turtas-ir-pinigines-lesos	1997-kovo-23-seimo-pakartotiniai	4.3	partly-published	VRK's 1997-1999 archive tree holds a declaration extract for 1 of the 23 candidates; the other pages are absent upstream (rawData.declaration is null)
+turtas-ir-pinigines-lesos	1998-kovo-22-seimo-pakartotiniai	18.2	partly-published	VRK's 1997-1999 archive tree holds a declaration extract for 2 of the 11 candidates; the other pages are absent upstream (rawData.declaration is null)
 turtas-ir-pinigines-lesos	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
 turtas-ir-pinigines-lesos	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
 turtas-ir-pinigines-lesos	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
@@ -1131,8 +1163,8 @@ turtas-ir-pinigines-lesos-metu-pradzioje	1996-spalio-20-seimo	99.8	ok
 turtas-ir-pinigines-lesos-metu-pradzioje	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	98.2	ok	
 turtas-ir-pinigines-lesos-metu-pradzioje	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
 turtas-ir-pinigines-lesos-metu-pradzioje	1997-kovo-23-savivaldybiu-tarybu	87.3	ok	
-turtas-ir-pinigines-lesos-metu-pradzioje	1997-kovo-23-seimo-pakartotiniai	4.3	ok	
-turtas-ir-pinigines-lesos-metu-pradzioje	1998-kovo-22-seimo-pakartotiniai	18.2	ok	
+turtas-ir-pinigines-lesos-metu-pradzioje	1997-kovo-23-seimo-pakartotiniai	4.3	partly-published	VRK's 1997-1999 archive tree holds a declaration extract for 1 of the 23 candidates; the other pages are absent upstream (rawData.declaration is null)
+turtas-ir-pinigines-lesos-metu-pradzioje	1998-kovo-22-seimo-pakartotiniai	18.2	partly-published	VRK's 1997-1999 archive tree holds a declaration extract for 2 of the 11 candidates; the other pages are absent upstream (rawData.declaration is null)
 turtas-ir-pinigines-lesos-metu-pradzioje	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
 turtas-ir-pinigines-lesos-metu-pradzioje	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
 turtas-ir-pinigines-lesos-metu-pradzioje	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
@@ -1176,7 +1208,7 @@ uzsienio-kalbos	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	80.0	ok
 uzsienio-kalbos	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
 uzsienio-kalbos	1997-kovo-23-savivaldybiu-tarybu	69.6	ok	
 uzsienio-kalbos	1997-kovo-23-seimo-pakartotiniai	78.3	ok	
-uzsienio-kalbos	1998-kovo-22-seimo-pakartotiniai	63.6	ok	
+uzsienio-kalbos	1998-kovo-22-seimo-pakartotiniai	63.6	partly-published	the archive card carries the field on 7 of 11 candidates
 uzsienio-kalbos	1998-lapkricio-15-seimo-pakartotiniai	90.9	ok	
 uzsienio-kalbos	1999-kovo-21-seimo-pakartotiniai	95.5	ok	
 uzsienio-kalbos	2000-kovo-19-savivaldybiu-tarybu	78.8	ok	
@@ -1203,14 +1235,14 @@ uzsienio-kalbos	2015-birzelio-7-pakartotiniai-sirvintos-trakai	75.5	ok
 uzsienio-kalbos	2015-birzelio-7-seimo-varena-eisiskes	87.5	ok	
 uzsienio-kalbos	2015-kovo-1-savivaldybiu	81.6	ok	
 uzsienio-kalbos	2015-kovo-1-seimo-zirmunai	100.0	ok	
-uzsienio-kalbos	2015-lapkricio-8-telsiu-mero	57.1	ok	
+uzsienio-kalbos	2015-lapkricio-8-telsiu-mero	57.1	partly-answered	seven candidates; 3 left the optional question blank
 uzsienio-kalbos	2016-seimo	82.0	ok	
 uzsienio-kalbos	2017-balandzio-23-meru	100.0	ok	
 uzsienio-kalbos	2017-balandzio-23-seimo-anyksciai-panevezys	90.9	ok	
 uzsienio-kalbos	2017-rugsejo-10-marijampoles-mero	87.5	ok	
-uzsienio-kalbos	2018-rugsejo-16-seimo-zanavykai	50.0	ok	
+uzsienio-kalbos	2018-rugsejo-16-seimo-zanavykai	50.0	partly-answered	six candidates; 3 left the optional question blank
 uzsienio-kalbos	2019-ep	84.1	ok	
-uzsienio-kalbos	2019-kovo-3-savivaldybiu-tarybu	64.4	ok	
+uzsienio-kalbos	2019-kovo-3-savivaldybiu-tarybu	64.4	partly-answered	the question is on every 2019 card; 4866 candidates left it blank
 uzsienio-kalbos	2019-prezidento	88.9	ok	
 uzsienio-kalbos	2019-rugsejo-8-seimo	88.9	ok	
 uzsienio-kalbos	2020-seimo	90.6	ok	
@@ -1267,10 +1299,10 @@ vaiku-vardai-pavardes	2019-kovo-3-savivaldybiu-tarybu	56.1	ok
 vaiku-vardai-pavardes	2019-prezidento	88.9	ok	
 vaiku-vardai-pavardes	2019-rugsejo-8-seimo	81.5	ok	
 vaiku-vardai-pavardes	2020-seimo	74.7	ok	
-vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai	2004-ep	41.1	ok	
+vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai	2004-ep	41.1	partly-answered	the 2004-era declaration prints „-“ in this row for a candidate who declared none; the placeholder normalizes to null, so the rate is the share who declared a figure (99 of 241)
 vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai	2004-prezidento	80.0	ok	
-vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai	2004-seimo	54.4	ok	
-vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai	2005-lapkricio-20-seimo-kedainiai	40.0	ok	
+vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai	2004-seimo	54.4	partly-answered	the 2004-era declaration prints „-“ in this row for a candidate who declared none; the placeholder normalizes to null, so the rate is the share who declared a figure (681 of 1251)
+vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai	2005-lapkricio-20-seimo-kedainiai	40.0	partly-answered	the 2004-era declaration prints „-“ in this row for a candidate who declared none; the placeholder normalizes to null, so the rate is the share who declared a figure (2 of 5)
 vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai	2007-spalio-7-seimo-dzukija	100.0	ok	
 vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai	2007-vasario-25-savivaldybiu	99.4	ok	
 vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai	2008-seimo	100.0	ok	

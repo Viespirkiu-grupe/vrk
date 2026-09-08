@@ -10,6 +10,7 @@ without a corpus present.
 from __future__ import annotations
 
 import importlib.util
+import json
 import unittest
 from pathlib import Path
 from unittest import mock
@@ -116,8 +117,14 @@ class ModernRecord(unittest.TestCase):
         self.assertEqual(row["birth_place"], "Vilnius")
         self.assertEqual(row["role"], "seimo-narys")
         self.assertEqual(row["constituency"], "Žirmūnų")
+        self.assertIsNone(row["constituency_number"])
         self.assertEqual(row["list_name"], "Sąrašas A")
         self.assertEqual(row["list_position"], 7)
+        # The 2016 record publishes no votes; the ranking pair is its only
+        # preference signal (issue #133).
+        self.assertIsNone(row["preference_votes"])
+        self.assertIsNone(row["votes_source"])
+        self.assertIsNone(row["list_movement"])
         self.assertIs(row["elected"], True)
 
     def test_euro_era_money(self):
@@ -313,17 +320,76 @@ class CsvEncoding(unittest.TestCase):
 
 class KnownZeros(unittest.TestCase):
     def test_structural_reasons_resolve(self):
-        note = table._known_zero_note(
+        known = table._known_zero_note(
             "constituency", {"id": "2019-kovo-3-savivaldybiu-tarybu", "kind": "savivaldybiu", "date": "2019-03-03"}
         )
-        self.assertIn("Seimas", note)
-        note = table._known_zero_note(
+        self.assertEqual(known.status, "upstream-absent")
+        self.assertIn("Seimas", known.note)
+        known = table._known_zero_note(
             "list_name", {"id": "2013-kovo-3-seimo-birzai-zarasai-ukmerge", "kind": "seimo", "date": "2013-03-03"}
         )
-        self.assertIn("by-election", note)
+        self.assertIn("by-election", known.note)
         self.assertIsNone(
             table._known_zero_note("income_eur", {"id": "2016-seimo", "kind": "seimo", "date": "2016-10-09"})
         )
+
+    def test_the_vote_columns_say_parser_gap_where_the_results_exist_and_are_not_read(self):
+        # Issue #133: the 2016-2025 results are on vrk.lt; the corpus does
+        # not read them. That is not an upstream absence and must not be
+        # filed as one.
+        seimas_2020 = {"id": "2020-seimo", "kind": "seimo", "date": "2020-10-11"}
+        for column in table.VOTE_COLUMNS:
+            with self.subTest(column):
+                known = table._known_zero_note(column, seimas_2020)
+                self.assertEqual(known.status, "parser-gap")
+                self.assertIn("VOTES_JOINED", known.note)
+        # A joined election: what is structurally absent stays upstream-absent.
+        by_election = {"id": "2015-kovo-1-seimo-zirmunai", "kind": "seimo", "date": "2015-03-01"}
+        self.assertEqual(table._known_zero_note("preference_votes", by_election).status, "upstream-absent")
+        self.assertIsNone(table._known_zero_note("constituency_votes", by_election))
+        # The 2004 tree: preference votes joined, constituency rounds not.
+        seimas_2004 = {"id": "2004-seimo", "kind": "seimo", "date": "2004-10-10"}
+        self.assertIsNone(table._known_zero_note("preference_votes", seimas_2004))
+        self.assertEqual(table._known_zero_note("constituency_votes", seimas_2004).status, "parser-gap")
+        # The list movement is empty exactly where the ranking is.
+        self.assertEqual(
+            table._known_zero_note("list_movement", by_election).note,
+            table._known_zero_note("post_election_position", by_election).note,
+        )
+
+
+class KnownLows(unittest.TestCase):
+    """A column far below its peers inherits its concept's classification
+    from docs/coverage-baseline.tsv (issue #135), so the same fact -- the
+    2000 card prints no birthplace field -- is classified once."""
+
+    COVERAGE = {
+        ("gimimo-vieta", "2000-seimo"): table.field_coverage.Baseline(10.9, "partly-published", "no card field"),
+        ("gimimo-vieta", "2016-seimo"): table.field_coverage.Baseline(99.0, "ok", ""),
+    }
+
+    def test_a_classified_concept_cell_is_inherited_with_its_note(self):
+        inherited = table._known_low_note("birth_place", "2000-seimo", self.COVERAGE)
+        self.assertEqual(inherited.status, "partly-published")
+        self.assertEqual(inherited.note, "as the gimimo-vieta concept: no card field")
+
+    def test_a_generals_constituency_column_has_a_structural_reason(self):
+        inherited = table._known_low_note("constituency", "2008-seimo", {})
+        self.assertEqual(inherited.status, "partly-published")
+        self.assertIn("Daugiamandatė", inherited.note)
+        self.assertIsNone(table._known_low_note("constituency", "2015-kovo-1-seimo-zirmunai", {}))
+
+    def test_an_ok_or_missing_concept_cell_leaves_the_column_unexplained(self):
+        self.assertIsNone(table._known_low_note("birth_place", "2016-seimo", self.COVERAGE))
+        self.assertIsNone(table._known_low_note("birth_place", "2020-seimo", self.COVERAGE))
+        self.assertIsNone(table._known_low_note("list_position", "2000-seimo", self.COVERAGE))
+
+    def test_every_projected_column_names_a_real_concept(self):
+        concepts = set(json.loads((REPO_ROOT / "docs" / "concept-map.json").read_text(encoding="utf-8"))["concepts"])
+        for column, concept in table.COLUMN_CONCEPTS.items():
+            with self.subTest(column):
+                self.assertIn(column, table.COLUMNS)
+                self.assertIn(concept, concepts)
 
 
 if __name__ == "__main__":

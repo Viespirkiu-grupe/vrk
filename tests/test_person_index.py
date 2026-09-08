@@ -422,6 +422,39 @@ class GroupingTests(unittest.TestCase):
         self.assertEqual(entry["wp"], "AB Žeimena, inspektorė")
         self.assertEqual(entry["ed"], 10)
 
+    def test_the_votes_and_the_constituency_ride_into_the_index(self):
+        # Issue #133: 29.5 million preference votes on 59,275 candidacies
+        # reached no consumer; the constituency was dropped on the way to
+        # people.json.
+        record = _record("A B", "1970-01-01")
+        record["kandidatavimas"] = {
+            "roles": ["daugiamandate", "vienmandate"],
+            "vienmandate": {"apygarda": "Akmenės Joniškio", "apygardosNumeris": 39},
+            "daugiamandate": {"sarasas": "LSDP", "numerisSarase": 9},
+            "isrinktas": False,
+            "pirmumoBalsai": 4321,
+            "vienmandatesBalsai": {"isViso": 321, "procentai": 1.67, "vieta": 7},
+            "vienmandatesBalsai2": {"isViso": 6999, "procentai": 55.5, "vieta": 1},
+        }
+        index = self._build([("2000-seimo", "a-b", record)])
+        entry = index["people"][0]["e"][0]
+        self.assertEqual(entry["v"], 4321)
+        self.assertEqual(entry["cv"], 6999)
+        self.assertEqual(index["constituencies"], ["Akmenės–Joniškio"])
+        self.assertEqual(entry["ap"], 0)
+        self.assertEqual(index["stats"]["candidaciesWithVotes"], 1)
+
+    def test_a_2016_candidacy_carries_the_constituency_and_no_votes(self):
+        record = _record("A B", "1970-01-01")
+        record["normalized"]["profilis"] = {"kita": {"vienmandate-apygarda": {"pavadinimas": "x", "reiksme": "Dzūkijos (Nr. 69)", "nuorodos": []}}}
+        index = self._build([("2016-seimo", "a-b", record)])
+        entry = index["people"][0]["e"][0]
+        self.assertEqual(index["constituencies"], ["Dzūkijos"])
+        self.assertEqual(entry["ap"], 0)
+        self.assertNotIn("v", entry)
+        self.assertNotIn("cv", entry)
+        self.assertEqual(index["stats"]["candidaciesWithVotes"], 0)
+
     def test_two_wordings_of_one_municipality_are_one_facet_row(self):
         # 'Vilniaus miesto' (2019) and 'Vilniaus miesto savivaldybė' (2015)
         # were two adjacent rows in the select, each showing half the

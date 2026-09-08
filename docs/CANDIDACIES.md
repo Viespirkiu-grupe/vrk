@@ -18,7 +18,7 @@ Reads `data/`, `docs/concept-map.json` and the registries; writes to
 
 | file | contents |
 |---|---|
-| `candidacies.csv.gz` | 113,073 rows × 55 columns, ~12 MB gzipped |
+| `candidacies.csv.gz` | 113,073 rows × 65 columns, ~12 MB gzipped |
 | `campaigns.csv.gz` | one row per campaign-finance participant (4,729) |
 | `vrk.sqlite` | the same two as tables, plus `elections`, `persons`, `parties`, `party_predecessors`, `municipalities`, with indexes |
 
@@ -60,6 +60,18 @@ official name — `Vilniaus miesto savivaldybė` whether the era's card said
 1997 Marijampolė bodies the 2000 reform merged keep ids of their own
 (`marijampoles-miesto`, `marijampoles-rajono`, `until: 2000` in the
 `municipalities` table). The published wording stays in the record file.
+`constituency` is the district's one name across the four label eras
+(`scraper/shared/apygardos.py`, issue #133: "Akmenės Joniškio", "Akmenės -
+Joniškio", "Aukštaitijos (Nr. 28)" and "33. Aukštaitijos" used to be four
+values; 315 labels are 136 names) and `constituency_number` its number in
+that election — the number moves with the 2016 redistricting, so the pair
+(election, number) is the boundary and the name is for reading; the
+2000–2012 cards' "Daugiamandatė" row, which 2,980 list-only candidates
+shipped as their constituency, is empty now. `list_movement` is
+`list_position − post_election_position`, positive when the preference
+votes moved the candidate up; for the 2016–2025 elections, which publish no
+vote counts the records carry, it is the only preference signal (90,809 rows
+have both positions).
 `elected` is 1/0 for **any office on this ballot**, empty only where no
 results exist: the five 2000 municipalities whose results tree VRK does not
 publish (the 1997 municipal pair was the larger gap until issue #92 joined its
@@ -74,6 +86,24 @@ mayors, because 448 of them won a council seat and lost the mayoral race
 flags and, on the 2015 ballots, from the seat VRK's results named
 (`isrinktasKaip`); 2015 has 57 elected mayors rather than 60 because three
 mayoral races were annulled and re-run in June.
+
+**Electoral result** (issue #133; `scraper/shared/kandidatura.py`). The
+26 elections whose records carry a vote figure — the 2000–2004 static sites
+on the candidate's own pages, the 2007–2015 trees joined by issue #99, the
+1996–1999 archive family's candidacy list — project it as `preference_votes`
+(the candidate's votes on the list; `preference_votes_measure` is
+`pirmumo-balsai`, or `teigiami-balsai` on 1996-spalio-20-seimo, whose
+rating system counted positive and negative votes and ranked by points),
+`list_votes` (the **list's** total, kept apart by name; only the 2000 and
+2002 municipal trees carry it), and the single-winner race's last round
+contested — `constituency_votes`, `constituency_round` (1 or 2),
+`constituency_place`, `constituency_votes_pct` (of valid ballots) — which
+for a presidential candidate is the whole country. `votes_source` names the
+VRK page the figures came from. 57,809 rows carry preference votes (30.9
+million of them), 3,562 a race round, 424 of them runoffs. Every other election's vote columns
+are empty and their baseline rows say `parser-gap`: VRK publishes those
+results on pages the corpus does not read, which is not the same as their
+not existing.
 
 **Education** (issue #88; `scraper/shared/education.py`).
 `education_status` types the absence — the difference between a candidate
@@ -156,11 +186,11 @@ flattened entries and free-text explanation as JSON where declared.
 ## The fill gate
 
 `docs/candidacy-baseline.tsv` checks in the per-column, per-election fill
-rate of every gated column (2,750 cells). A plain build fails when a rate
+rate of every gated column (3,465 cells). A plain build fails when a rate
 falls more than `--max-drop` points below the baseline, or when a cell no
 record fills appears without a classified reason — the shape of the
 2020-income defect ([FIELD_COVERAGE.md](FIELD_COVERAGE.md)), which this
-table would otherwise inherit silently. The 519 zero cells that are real all
+table would otherwise inherit silently. The 1,021 zero cells that are real all
 carry a status and a note ("a single-mandate Seimas by-election; no party
 list on the ballot"); `--update-baseline` auto-classifies only the zeros the
 builder can structurally explain and refuses the rest.
@@ -181,8 +211,9 @@ get it — `data/` is gitignored and the alternative was a ~27-hour scrape.
 `scripts/build_distribution.py` builds what a release ships:
 
 ```bash
-python scripts/build_distribution.py                    # full corpus + fill gate
+python scripts/build_distribution.py                    # full corpus + fill gate, public profile
 python scripts/build_distribution.py 2019-prezidento    # subset, no gate
+python scripts/build_distribution.py --profile full     # the archive verbatim
 ```
 
 | release asset | contents |
@@ -190,8 +221,8 @@ python scripts/build_distribution.py 2019-prezidento    # subset, no gate
 | `candidacies.csv.gz` | the flat table above |
 | `campaigns.csv.gz` | one row per campaign-finance participant |
 | `vrk.sqlite.gz` | the analysis database above, gzipped |
-| `vrk-corpus.sqlite.gz` | **everything**: the analysis tables plus `records`, `photos`, `anomalies` |
-| `MANIFEST.json` | per-election record counts, build date, parser commit, sha256 + bytes per asset |
+| `vrk-corpus.sqlite.gz` | **everything**: the analysis tables plus `records`, `photos`, `anomalies` — under the public profile, less the third-party contacts and the portraits' metadata (below) |
+| `MANIFEST.json` | per-election record counts, build date, parser commit, sha256 + bytes per asset, and the terms (`license`, `dataLicense`, `attribution`, `terms`, `source` — [DATA_TERMS.md](../DATA_TERMS.md), issue #138) |
 
 `elections` is the registry as a table — `id, date, kind, parent, name,
 shortName, records` — where `parent` is the general election whose term a
@@ -222,6 +253,19 @@ since the 2026-08-29 re-parse; one reappearing means an election regressed).
 The candidacy-table pass and the records pass must agree on the record
 count.
 
+**The release is a profile of the archive** (issue #142). `--profile
+public`, the default, removes from every record the campaign treasurer's
+and auditor's phone and e-mail — both layers, eight paths listed in
+[PERSONAL_DATA.md](PERSONAL_DATA.md#what-the-public-release-drops) and held
+in `scripts/pii_inventory.py`'s `PUBLIC_PROFILE_DROPS` — and the campaign's
+own contact line where it repeats one of those values; none of them reaches
+this table, the coverage gate or the dashboard's comparison rows. It also
+passes every portrait through `scraper/shared/image_metadata.py`, so the
+`photos` table holds the picture without its Exif (GPS, camera serial,
+`Artist`), XMP, IPTC and comment blocks. `--profile full` ships the archive
+verbatim. `MANIFEST.json` records `profile`, the `redaction` paths and the
+number of values removed, and `counts.photosStripped`.
+
 In `vrk-corpus.sqlite` the three extra tables are:
 
 - `records(election_id, candidate_id, candidate_name, record_file,
@@ -230,10 +274,16 @@ In `vrk-corpus.sqlite` the three extra tables are:
   `(election_id, candidate_id)`. `raw_json` / `norm_json` are the record's
   `rawData` / `normalized`, compact-serialized (the files are
   pretty-printed; 34.5 % of `data/` was whitespace). The original record
-  reassembles losslessly from the row — `reconstruct_record` in the script
-  is the contract and a test pins the round trip.
-- `photos(sha256, mime, bytes, data)` — every sidecar portrait, stored once
-  by content hash; `records.photo_sha256` is the join. The pre-2016 and
+  reassembles from the row — `reconstruct_record` in the script is the
+  contract and a test pins the round trip: lossless under `--profile full`,
+  and under the public profile the record less the values the profile
+  removes (the keys are absent, not nulled).
+- `photos(sha256, mime, bytes, stripped, stripped_sha256, data)` — every
+  sidecar portrait, stored once by content hash; `records.photo_sha256` is
+  the join and `sha256` is always the archive's hash, whatever the profile
+  did to the bytes: under the public profile `data` is the picture with its
+  metadata segments removed, `stripped` says whether anything was, and
+  `stripped_sha256` hashes what is stored. The pre-2016 and
   2020+ eras link their portraits rather than embedding them, and those are
   archived the same way since issue #118 (`scripts/backfill_url_portraits.py`);
   a record still carrying an `http(s)://` reference is one whose portrait

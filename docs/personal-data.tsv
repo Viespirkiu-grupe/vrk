@@ -1,0 +1,1170 @@
+path	records	elections	subject	sensitivity	public	note
+candidateId	113073	55	none	technical	ship	
+candidateName	113073	55	candidate	identifying	ship	
+candidateNote	27476	3	candidate	public-record	ship	the elected note VRK prints under the name
+electionId	113073	55	none	technical	ship	
+kandidatavimas.apygardosId	10138	1	none	technical	ship	
+kandidatavimas.daugiamandate	362	10	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.daugiamandate.koalicijosPartija	682	4	candidate	political	ship	who nominated the candidate and on which list
+kandidatavimas.daugiamandate.numerisPartijosSarase	417	2	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.daugiamandate.numerisSarase	6513	7	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.daugiamandate.sarasas	6513	7	candidate	political	ship	who nominated the candidate and on which list
+kandidatavimas.daugiamandate.sarasoId	6513	7	none	technical	ship	
+kandidatavimas.daugiamandate.sarasoNumeris	6513	7	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.isrinktas	105737	47	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.isrinktasKaip	8718	44	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.mandatasNutrauktas.decision.label	1	1	none	technical	ship	
+kandidatavimas.mandatasNutrauktas.decision.url	1	1	none	technical	ship	
+kandidatavimas.mandatasNutrauktas.note	1	1	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.mandatasNutrauktas.replacedBy	1	1	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.mandatasNutrauktas.statementUrl	1	1	none	technical	ship	
+kandidatavimas.meras	71823	7	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.meras.elected	843	2	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.meras.nominatedBy	1300	5	candidate	political	ship	who nominated the candidate and on which list
+kandidatavimas.meras.round	843	2	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.pakeiteNari	1	1	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.partinisReitingas	1151	1	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.pirmumoBalsai	57304	11	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.pirmumoBalsuSaltinis	57304	11	none	technical	ship	
+kandidatavimas.porinkiminisNumerisSarase	57293	11	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.reitingoBalai	4600	3	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.rezultataiNeskelbiami.nariuPuslapis	806	1	none	technical	ship	
+kandidatavimas.rezultataiNeskelbiami.priezastis	806	1	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.rezultataiPanaikinti	48	1	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.rezultatuSaltinis	8255	26	none	technical	ship	
+kandidatavimas.rezultatuTuras	146	16	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.roles[]	100015	22	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.savarankiskasKampanijosDalyvis.nuoroda	459	2	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.savarankiskasKampanijosDalyvis.sprendimas	459	2	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.savivaldybe	65678	7	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.savivaldybe.id	27462	2	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.savivaldybe.name	27462	2	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.savivaldybe.number	27462	2	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.savivaldybesId	9879	1	none	technical	ship	
+kandidatavimas.savivaldybesNumeris	20017	2	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.tarybosNarys	88	4	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.tarybosNarys.elected	27404	2	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.tarybosNarys.koalicijosPartija	1028	2	candidate	political	ship	who nominated the candidate and on which list
+kandidatavimas.tarybosNarys.koalicijosPartijos[]	1028	2	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.tarybosNarys.listKind	49836	4	candidate	political	ship	who nominated the candidate and on which list
+kandidatavimas.tarybosNarys.listNumber	65648	7	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.tarybosNarys.listPosition	93052	9	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.tarybosNarys.numerisPartijosSarase	546	1	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.tarybosNarys.partyList	65648	7	candidate	political	ship	who nominated the candidate and on which list
+kandidatavimas.tarybosNarys.partyList.id	27404	2	candidate	political	ship	who nominated the candidate and on which list
+kandidatavimas.tarybosNarys.partyList.name	27404	2	candidate	political	ship	who nominated the candidate and on which list
+kandidatavimas.tarybosNarys.partyList.number	27404	2	candidate	political	ship	who nominated the candidate and on which list
+kandidatavimas.tarybosNarys.postElectionPosition	27404	2	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.tarybosNarys.sarasoBalsai	20017	2	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.tarybosNarys.sarasoId	9879	1	none	technical	ship	
+kandidatavimas.tarybosNarys.sarasoMandatai	20017	2	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.tarybosNarys.sarasoRezultatuSaltinis	20017	2	none	technical	ship	
+kandidatavimas.tarybosNarys.selfNominated	29819	2	candidate	political	ship	who nominated the candidate and on which list
+kandidatavimas.tarybosNarys.vrkSprendimas	9879	1	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.tarybosNarysNuo	1560	1	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.tarybosSudetiesSaltinis	1560	1	none	technical	ship	
+kandidatavimas.turai[].apygardos-numeris	27	1	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.turai[].balsai	49	3	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.turai[].balsai-apylinkese	49	3	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.turai[].balsai-pastu	49	3	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.turai[].procentai-nuo-dalyvavusiu	22	2	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.turai[].procentai-nuo-galiojanciu	49	3	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.turai[].saltinis	49	3	none	technical	ship	
+kandidatavimas.turai[].turas	49	3	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.turai[].vieta	27	1	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.vienmandate	3698	7	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.vienmandate.apygarda	3177	10	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.vienmandate.apygardosId	3177	10	none	technical	ship	
+kandidatavimas.vienmandate.apygardosNumeris	3177	10	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.vienmandate.iskele	3177	10	candidate	political	ship	who nominated the candidate and on which list
+kandidatavimas.vienmandate.kitiIskelejai[]	5	2	candidate	political	ship	who nominated the candidate and on which list
+kandidatavimas.vienmandatesBalsai.balsadezese	2563	9	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.vienmandatesBalsai.isViso	2563	9	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.vienmandatesBalsai.pastu	2563	9	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.vienmandatesBalsai.procentai	2563	9	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.vienmandatesBalsai.saltinis	2563	9	none	technical	ship	
+kandidatavimas.vienmandatesBalsai.vieta	2563	9	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.vienmandatesBalsai2.balsadezese	286	8	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.vienmandatesBalsai2.isViso	286	8	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.vienmandatesBalsai2.pastu	286	8	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.vienmandatesBalsai2.procentai	286	8	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.vienmandatesBalsai2.saltinis	286	8	none	technical	ship	
+kandidatavimas.vienmandatesBalsai2.vieta	286	8	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+kandidatavimas.vrkCandidateId	100078	29	none	technical	ship	
+kandidatavimas.vrkRegistrationId	22	2	none	technical	ship	
+kandidatavimas.vrkSprendimas.label	1	1	none	technical	ship	
+kandidatavimas.vrkSprendimas.url	1	1	none	technical	ship	
+normalized.anketa.adresas	105715	45	candidate	contact	ship	the residence as published: a municipality or locality on all but four of 89,949 values (issue #142)
+normalized.anketa.anksciau-isrinktas	6386	2	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.anketa.anksciau-isrinktas.aprasas	88387	39	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.anketa.anksciau-isrinktas.irasai[]	72201	33	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.anketa.anksciau-isrinktas.irasai[].institucijos-pavadinimas-pareigos	16186	39	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.anketa.anksciau-isrinktas.irasai[].laikotarpis	16186	39	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.anketa.einamos-pareigos	17667	11	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.anketa.gimimo-data	95177	44	candidate	identifying	ship	
+normalized.anketa.gimimo-data-saltinis	743	8	none	technical	ship	where a recovered value came from
+normalized.anketa.gimimo-metai	913	8	candidate	identifying	ship	
+normalized.anketa.gimimo-vieta	95335	43	candidate	identifying	ship	
+normalized.anketa.gimimo-vietos-saltinis	28	6	none	technical	ship	where a recovered value came from
+normalized.anketa.gyvenamoji-vieta	6386	2	candidate	contact	ship	the residence as published: a municipality or locality on all but four of 89,949 values (issue #142)
+normalized.anketa.issilavinimas	1194	2	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.anketa.issilavinimas.aprasas	93636	42	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.anketa.issilavinimas.irasai[]	32132	26	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.anketa.issilavinimas.irasai[].baigimo-metai	61504	40	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.anketa.issilavinimas.irasai[].issilavinimas	60278	39	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.anketa.issilavinimas.irasai[].mokyklos-istaigos-pavadinimas	265	2	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.anketa.issilavinimas.irasai[].mokymo-istaigos-pavadinimas	61239	38	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.anketa.issilavinimas.irasai[].specialybe	61504	40	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.anketa.kita-apie-save	82848	34	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.anketa.kontaktai.el-pastas	1775	3	candidate	contact	ship	the candidate's own contact line (2019-2021 forms; `Neskelbiamas` on most)
+normalized.anketa.kontaktai.socialiniu-tinklu-paskyros	1775	3	candidate	contact	ship	the candidate's own contact line (2019-2021 forms; `Neskelbiamas` on most)
+normalized.anketa.kontaktai.telefonas	1775	3	candidate	contact	ship	the candidate's own contact line (2019-2021 forms; `Neskelbiamas` on most)
+normalized.anketa.mandato-netekimo-detales	15892	8	candidate	criminal	ship	the detail behind a mandate lost for a breach
+normalized.anketa.mokslo-laipsnis	69318	32	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.anketa.narystes-politinese-organizacijose.irasai[]	14081	7	candidate	political	ship	
+normalized.anketa.narystes-politinese-organizacijose.irasai[].iki	1811	4	candidate	political	ship	
+normalized.anketa.narystes-politinese-organizacijose.irasai[].nuo	1811	4	candidate	political	ship	
+normalized.anketa.narystes-politinese-organizacijose.irasai[].politine-organizacija	1811	4	candidate	political	ship	
+normalized.anketa.narystes-politinese-organizacijose.tekstas	15586	7	candidate	political	ship	
+normalized.anketa.pagrindine-darboviete	94500	42	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.anketa.pareiskimai.ar-atimta-balsavimo-teise-kitoje-valstybeje	718	3	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.ar-atliekate-karo-ar-statutine-tarnyba	9	1	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.ar-atliekate-karo-tarnyba	89814	36	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.ar-bendradarbiavote-su-ssrs-tarnybomis	15913	10	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.ar-bendradarbiavote-su-uzsienio-tarnybomis	20295	23	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.ar-buvote-pripazintas-kaltu	105692	42	candidate	criminal	ship	
+normalized.anketa.pareiskimai.ar-buvote-pripazintas-kaltu-del-politinio-persekiojimo	31634	13	candidate	criminal	ship	
+normalized.anketa.pareiskimai.ar-buvote-pripazintas-kaltu-del-sunkaus-nusikaltimo	6875	13	candidate	criminal	ship	
+normalized.anketa.pareiskimai.ar-buvote-pripazintas-kaltu-uzsienyje	33093	17	candidate	criminal	ship	
+normalized.anketa.pareiskimai.ar-buvote-pripazintas-kaltu-uzsienyje-del-politinio-persekiojimo	1459	4	candidate	criminal	ship	
+normalized.anketa.pareiskimai.ar-eina-nesuderinamas-pareigas	75266	19	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.ar-esate-ar-buvote-kitos-valstybes-pilietis	1756	3	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.ar-esate-pilietis-pagal-kilme	24	3	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.ar-galite-buti-renkamas-seimo-nariu	7	1	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.ar-gyvenate-lietuvoje-trejus-metus	24	3	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.ar-kitos-es-valstybes-pilietis	319	1	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.ar-kitos-valstybes-institucijos-narys	75266	19	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.ar-nebaigta-teismo-paskirta-bausme	105696	43	candidate	criminal	ship	
+normalized.anketa.pareiskimai.ar-neteko-mandato-uz-pazeidimus	15892	8	candidate	criminal	ship	
+normalized.anketa.pareiskimai.ar-pasyvioji-rinkimu-teise-neapribota	13419	1	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.ar-rinkimu-teise-apribota-kitoje-es-valstybeje	319	1	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.ar-savanoriskos-karo-tarnybos-karys	1754	1	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.ar-susijes-priesaika-uzsienio-valstybei	11169	23	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.ar-turejote-kitos-valstybes-pilietybe	9	1	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.ar-turite-kitos-valstybes-pilietybe	89802	35	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.ar-veika-dekriminalizuota	33093	17	candidate	criminal	ship	
+normalized.anketa.pareiskimai.kitos-valstybes-pilietybe-valstybe	11868	5	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.priesaikos-uzsienio-valstybei-atsisakymas	11150	2	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.sutikimas-tikrinti-pilietybes-duomenis	9	1	candidate	eligibility	ship	
+normalized.anketa.pareiskimai.teisiniai-argumentai	73804	24	candidate	criminal	ship	
+normalized.anketa.pareiskimai.uzsienio-priesaikos-atsisakymas	9	1	candidate	eligibility	ship	
+normalized.anketa.pedagoginis-vardas	84385	39	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.anketa.politine-organizacija	66760	31	candidate	political	ship	
+normalized.anketa.pomegiai	78169	33	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.anketa.seimine-padetis	95231	42	candidate	family	ship	
+normalized.anketa.seimos-nariai	13419	1	family	identifying	ship	family members by name and relation; 9,581 records declare members under 18
+normalized.anketa.seimos-nariai[]	4242	4	family	identifying	ship	family members by name and relation; 9,581 records declare members under 18
+normalized.anketa.seimos-nariai[].name	5320	8	family	identifying	ship	family members by name and relation; 9,581 records declare members under 18
+normalized.anketa.seimos-nariai[].relation	5320	8	family	identifying	ship	family members by name and relation; 9,581 records declare members under 18
+normalized.anketa.seimos-nariai[].rysys	8730	2	family	identifying	ship	family members by name and relation; 9,581 records declare members under 18
+normalized.anketa.seimos-nariai[].vardas	8730	2	family	identifying	ship	family members by name and relation; 9,581 records declare members under 18
+normalized.anketa.sutuoktinio-vardas-pavarde	95113	42	family	identifying	ship	a spouse's or the children's names, published on the 1996-2020 questionnaires
+normalized.anketa.tautybe	83767	40	candidate	ethnic	ship	
+normalized.anketa.teistumo-detales.irasai[]	32150	17	candidate	criminal	ship	
+normalized.anketa.teistumo-detales.irasai[].nuosprendzio-data	943	12	candidate	criminal	ship	
+normalized.anketa.teistumo-detales.irasai[].nuosprendzio-institucija	943	12	candidate	criminal	ship	
+normalized.anketa.teistumo-detales.irasai[].nuosprendzio-valstybe	943	12	candidate	criminal	ship	
+normalized.anketa.teistumo-detales.irasai[].nusikalstama-veika	333	7	candidate	criminal	ship	
+normalized.anketa.teistumo-detales.irasai[].nusikalstamos-veikos[]	30	1	candidate	criminal	ship	
+normalized.anketa.teistumo-detales.irasai[].nusikalstamos-veikos[].kaltes-forma	580	5	candidate	criminal	ship	
+normalized.anketa.teistumo-detales.irasai[].nusikalstamos-veikos[].kesinimosi-objektas-baudziamojo-kodekso-skyriaus-ir-straipsnio-pavadinimas	580	5	candidate	criminal	ship	
+normalized.anketa.teistumo-detales.irasai[].nusikalstamos-veikos[].nusikalstamos-veikos-rusis-nusikaltimas-ar-baudziamasis-isakymas	580	5	candidate	criminal	ship	
+normalized.anketa.teistumo-detales.irasai[].nusikalstamos-veikos[].sunkumas	580	5	candidate	criminal	ship	
+normalized.anketa.teistumo-detales.irasai[].nusikalstamos-veikos[].teistumo-isnykimo-ar-panaikinimo-data	580	5	candidate	criminal	ship	
+normalized.anketa.uzsienio-kalbos[]	95204	42	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.anketa.vaiku-vardai-pavardes	95157	42	family	identifying	ship	a spouse's or the children's names, published on the 1996-2020 questionnaires
+normalized.anketa.visuomenine-veikla	94566	41	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.biografija	597	2	none	technical	ship	an empty section: the key exists and holds nothing on this record
+normalized.biografija.darbo-patirtis.irasai[]	3888	4	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.biografija.darbo-patirtis.irasai[].darbo-pabaiga	13778	11	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.biografija.darbo-patirtis.irasai[].darbo-pradzia	13778	11	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.biografija.darbo-patirtis.irasai[].darboviete	13778	11	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.biografija.darbo-patirtis.irasai[].pareigos	13778	11	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.biografija.gimimo-data	17666	11	candidate	identifying	ship	
+normalized.biografija.gimimo-vieta	17666	11	candidate	identifying	ship	
+normalized.biografija.issilavinimas.irasai[]	2363	2	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.biografija.issilavinimas.irasai[].baigimo-metai	15303	11	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.biografija.issilavinimas.irasai[].issilavinimas	15303	11	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.biografija.issilavinimas.irasai[].mokymo-istaigos-pavadinimas	15303	11	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.biografija.issilavinimas.irasai[].specialybe	15303	11	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.biografija.kita-apie-save	1753	1	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.biografija.mokslo-laipsnis	17666	11	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.biografija.pedagoginis-vardas	17666	11	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.biografija.pomegiai	17666	11	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.biografija.seimine-padetis	17666	11	candidate	family	ship	
+normalized.biografija.sutuoktinio-vardas-pavarde	1753	1	family	identifying	ship	a spouse's or the children's names, published on the 1996-2020 questionnaires
+normalized.biografija.tautybe	15585	7	candidate	ethnic	ship	
+normalized.biografija.tekstas	23200	38	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.biografija.uzsienio-kalbos[]	17666	11	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.biografija.vaiku-vardai-pavardes	1753	1	family	identifying	ship	a spouse's or the children's names, published on the 1996-2020 questionnaires
+normalized.biografija.visuomenine-veikla	17666	11	candidate	biographical	ship	education, work, activity, languages, hobbies, free text
+normalized.gyvenamoji-vieta	950	6	candidate	contact	ship	the residence as published: a municipality or locality on all but four of 89,949 values (issue #142)
+normalized.kandidatavimas.iskele	6386	2	candidate	political	ship	who nominated the candidate and on which list
+normalized.kandidatavimas.iskele-nuoroda	6386	2	none	technical	ship	
+normalized.kandidatavimas.isrinktas	6386	2	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas.isrinktas-kaip	1484	2	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas.numeris-sarase	6386	2	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas.rezultatai-negalioja.pastaba	104	1	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas.rezultatai-negalioja.saltinis	104	1	none	technical	ship	
+normalized.kandidatavimas.rezultatu-saltinis	1484	2	none	technical	ship	
+normalized.kandidatavimas.savivaldybe	6386	2	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas.savivaldybes-numeris	6386	2	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas.savivaldybes-nuoroda	6386	2	none	technical	ship	
+normalized.kandidatavimas[].apygarda	950	6	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas[].apygardos-numeris	950	6	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas[].apygardos-nuoroda	950	6	none	technical	ship	
+normalized.kandidatavimas[].iskele	950	6	candidate	political	ship	who nominated the candidate and on which list
+normalized.kandidatavimas[].iskele-nuoroda	950	6	none	technical	ship	
+normalized.kandidatavimas[].isrinktas	950	6	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas[].isrinktas-kaip	123	3	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas[].neigiami-balsai	662	1	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas[].numeris-sarase	950	6	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas[].porinkiminis-numeris-sarase	662	1	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas[].reitingo-balai	662	1	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas[].reitingo-saltinis	662	1	none	technical	ship	
+normalized.kandidatavimas[].rezultatu-saltinis	123	3	none	technical	ship	
+normalized.kandidatavimas[].rezultatu-turas	70	3	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas[].teigiami-balsai	662	1	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas[].turai[].apygardos-numeris	950	6	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas[].turai[].balsai	950	6	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas[].turai[].balsai-apygardoje	950	6	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas[].turai[].balsai-pastu	950	6	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas[].turai[].saltinis	950	6	none	technical	ship	
+normalized.kandidatavimas[].turai[].turas	950	6	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kandidatavimas[].turai[].vieta	950	6	candidate	public-record	ship	the candidacy: office, constituency, list position, votes, outcome
+normalized.kita.nuorodos[]	67871	35	candidate	biographical	ship	
+normalized.kita.tekstai[]	67871	35	candidate	biographical	ship	
+normalized.patiketiniai[]	10	2	third-party	identifying	ship	the candidate's trustees (patikėtiniai), by name
+normalized.patiketiniai[].numeris	6	1	third-party	identifying	ship	the candidate's trustees (patikėtiniai), by name
+normalized.patiketiniai[].vardas-pavarde	6	1	third-party	identifying	ship	the candidate's trustees (patikėtiniai), by name
+normalized.politines-kampanijos-dalyvio-duomenys[].atstovauja.nuoroda	993	10	candidate	political	ship	the party or list the represented participant runs under
+normalized.politines-kampanijos-dalyvio-duomenys[].atstovauja.pavadinimas	993	10	candidate	political	ship	the party or list the represented participant runs under
+normalized.politines-kampanijos-dalyvio-duomenys[].auditorius	1325	23	candidate	public-record	ship	the campaign registration: status, dates, decision numbers
+normalized.politines-kampanijos-dalyvio-duomenys[].auditorius.ataskaitos[].date	15467	10	none	public-record	ship	the audit reports filed
+normalized.politines-kampanijos-dalyvio-duomenys[].auditorius.ataskaitos[].rowNumber	15467	10	none	public-record	ship	the audit reports filed
+normalized.politines-kampanijos-dalyvio-duomenys[].auditorius.ataskaitos[].status	15467	10	none	public-record	ship	the audit reports filed
+normalized.politines-kampanijos-dalyvio-duomenys[].auditorius.ataskaitos[].type	15467	10	none	public-record	ship	the audit reports filed
+normalized.politines-kampanijos-dalyvio-duomenys[].auditorius.ataskaitos[].urls[]	15467	10	none	public-record	ship	the audit reports filed
+normalized.politines-kampanijos-dalyvio-duomenys[].auditorius.el-pastas	18874	32	third-party	contact	drop	the treasurer's / auditor's phone and e-mail; DROPPED by the public profile
+normalized.politines-kampanijos-dalyvio-duomenys[].auditorius.imones-kodas	18874	32	third-party	organisation	ship	
+normalized.politines-kampanijos-dalyvio-duomenys[].auditorius.imones-pavadinimas	18874	32	third-party	organisation	ship	
+normalized.politines-kampanijos-dalyvio-duomenys[].auditorius.telefonas	18874	32	third-party	contact	drop	the treasurer's / auditor's phone and e-mail; DROPPED by the public profile
+normalized.politines-kampanijos-dalyvio-duomenys[].auditorius.vardas-pavarde	18874	32	third-party	identifying	ship	the treasurer / auditor by name (790 people)
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija	2364	20	candidate	public-record	ship	the campaign registration: status, dates, decision numbers
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.aukotoju-sarasas.records[].amountLt	278	4	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.aukotoju-sarasas.records[].date	278	4	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.aukotoju-sarasas.records[].donor	278	4	third-party	identifying	ship	a donor's name and municipality, as VRK publishes them (the law requires disclosure above the small-donation threshold)
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.aukotoju-sarasas.records[].municipality	278	4	third-party	identifying	ship	a donor's name and municipality, as VRK publishes them (the law requires disclosure above the small-donation threshold)
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.aukotoju-sarasas.records[].notes	1	1	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.aukotoju-sarasas.records[].rowNumber	278	4	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.aukotoju-sarasas.suvestine[].amountEur	278	4	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.aukotoju-sarasas.suvestine[].amountLt	278	4	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.aukotoju-sarasas.suvestine[].label	278	4	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.aukotoju-sarasas.suvestine[].note	278	4	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.aukotoju-sarasas.title	278	4	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.message	639	6	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.records[].amount	1486	17	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.records[].amountEur	13851	6	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.records[].amountLt	15033	7	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.records[].date	16918	28	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.records[].donor	16918	28	third-party	identifying	ship	a donor's name and municipality, as VRK publishes them (the law requires disclosure above the small-donation threshold)
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.records[].incomeSourceCode	1486	17	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.records[].municipality	16918	28	third-party	identifying	ship	a donor's name and municipality, as VRK publishes them (the law requires disclosure above the small-donation threshold)
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.records[].notes	16918	28	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.records[].rowNumber	16918	28	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.status	639	6	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.suvestine[].amountEur	15432	11	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.suvestine[].amountLt	15432	11	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.suvestine[].label	15432	11	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.suvestine[].note	15432	11	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.title	17557	28	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.totals.fiziniu-asmenu	1486	17	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.totals.fiziniu-asmenu-mazos-aukos	1486	17	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.totals.is-ju-pinigines-aukos-is-viso	1486	17	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.totals.is-ju-savanoriski-darbai-is-viso	521	5	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.totals.is-viso	1486	17	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.totals.juridiniu-asmenu-aukos	1486	17	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.totals.kandidato-nuosavos-lesos	1486	17	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.totals.nepinigines-aukos-is-viso	1486	17	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.totals.politines-partijos-gauti-valstybes-biudzeto-asignavimai-panaudoti-politinei-kampanijai-finansuoti	1486	17	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.gautos-ir-priimtos-aukos.totals.politines-partijos-lesos	1486	17	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtinos-aukos.records[].amountEur	12563	5	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtinos-aukos.records[].amountLt	13208	6	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtinos-aukos.records[].date	13389	9	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtinos-aukos.records[].donor	13389	9	third-party	identifying	ship	a donor's name and municipality, as VRK publishes them (the law requires disclosure above the small-donation threshold)
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtinos-aukos.records[].municipality	13389	9	third-party	identifying	ship	a donor's name and municipality, as VRK publishes them (the law requires disclosure above the small-donation threshold)
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtinos-aukos.records[].notes	13389	9	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtinos-aukos.records[].rowNumber	13389	9	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtinos-aukos.suvestine[].amountEur	13389	9	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtinos-aukos.suvestine[].amountLt	13389	9	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtinos-aukos.suvestine[].label	13389	9	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtinos-aukos.suvestine[].note	13389	9	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtinos-aukos.title	13389	9	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtos-aukos.records[].amount	433	13	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtos-aukos.records[].date	433	13	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtos-aukos.records[].donor	433	13	third-party	identifying	ship	a donor's name and municipality, as VRK publishes them (the law requires disclosure above the small-donation threshold)
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtos-aukos.records[].incomeSourceCode	433	13	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtos-aukos.records[].municipality	433	13	third-party	identifying	ship	a donor's name and municipality, as VRK publishes them (the law requires disclosure above the small-donation threshold)
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtos-aukos.records[].notes	433	13	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtos-aukos.records[].rowNumber	433	13	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtos-aukos.title	433	13	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtos-aukos.totals.fiziniu-asmenu	433	13	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtos-aukos.totals.is-ju-grazinta-aukotojui-is-viso	433	13	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtos-aukos.totals.is-viso	433	13	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtos-aukos.totals.juridiniu-asmenu	433	13	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.nepriimtos-aukos.totals.pervesta-i-valstybes-biudzeta-is-viso	433	13	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.vrk-sprendimais-pripazintos-ir-papildytos-dalyvio-politines-kampanijos-pajamos.records[].amount	95	8	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.vrk-sprendimais-pripazintos-ir-papildytos-dalyvio-politines-kampanijos-pajamos.records[].date	95	8	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.vrk-sprendimais-pripazintos-ir-papildytos-dalyvio-politines-kampanijos-pajamos.records[].donor	95	8	third-party	identifying	ship	a donor's name and municipality, as VRK publishes them (the law requires disclosure above the small-donation threshold)
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.vrk-sprendimais-pripazintos-ir-papildytos-dalyvio-politines-kampanijos-pajamos.records[].incomeSourceCode	95	8	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.vrk-sprendimais-pripazintos-ir-papildytos-dalyvio-politines-kampanijos-pajamos.records[].municipality	95	8	third-party	identifying	ship	a donor's name and municipality, as VRK publishes them (the law requires disclosure above the small-donation threshold)
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.vrk-sprendimais-pripazintos-ir-papildytos-dalyvio-politines-kampanijos-pajamos.records[].notes	95	8	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.vrk-sprendimais-pripazintos-ir-papildytos-dalyvio-politines-kampanijos-pajamos.records[].rowNumber	95	8	third-party	financial	ship	a donation: amount, date, source code, notes
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.vrk-sprendimais-pripazintos-ir-papildytos-dalyvio-politines-kampanijos-pajamos.title	95	8	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].aukos-pagal-sekcija.vrk-sprendimais-pripazintos-ir-papildytos-dalyvio-politines-kampanijos-pajamos.totals.is-viso	95	8	candidate	financial	ship	the campaign's donation totals and section headings
+normalized.politines-kampanijos-dalyvio-duomenys[].finansavimo-ataskaitos[]	3220	25	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.politines-kampanijos-dalyvio-duomenys[].finansavimo-ataskaitos[].advertisingAppendixUrls[]	16979	32	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.politines-kampanijos-dalyvio-duomenys[].finansavimo-ataskaitos[].approvedDate	16979	32	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.politines-kampanijos-dalyvio-duomenys[].finansavimo-ataskaitos[].reportType	274	3	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.politines-kampanijos-dalyvio-duomenys[].finansavimo-ataskaitos[].reportUrls[]	16979	32	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.politines-kampanijos-dalyvio-duomenys[].finansavimo-ataskaitos[].rowNumber	16979	32	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.politines-kampanijos-dalyvio-duomenys[].finansavimo-ataskaitos[].status	16979	32	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.politines-kampanijos-dalyvio-duomenys[].izdininkas	1311	20	candidate	public-record	ship	the campaign registration: status, dates, decision numbers
+normalized.politines-kampanijos-dalyvio-duomenys[].izdininkas.el-pastas	18888	32	third-party	contact	drop	the treasurer's / auditor's phone and e-mail; DROPPED by the public profile
+normalized.politines-kampanijos-dalyvio-duomenys[].izdininkas.imones-kodas	18888	32	third-party	organisation	ship	
+normalized.politines-kampanijos-dalyvio-duomenys[].izdininkas.imones-pavadinimas	18888	32	third-party	organisation	ship	
+normalized.politines-kampanijos-dalyvio-duomenys[].izdininkas.telefonas	18888	32	third-party	contact	drop	the treasurer's / auditor's phone and e-mail; DROPPED by the public profile
+normalized.politines-kampanijos-dalyvio-duomenys[].izdininkas.vardas-pavarde	18888	32	third-party	identifying	ship	the treasurer / auditor by name (790 people)
+normalized.politines-kampanijos-dalyvio-duomenys[].kontaktai	4	1	candidate	public-record	ship	the campaign registration: status, dates, decision numbers
+normalized.politines-kampanijos-dalyvio-duomenys[].kontaktai.el-pastas	20195	31	third-party	contact	conditional	the campaign's contact line; the treasurer's own phone and e-mail on 93 of 105 sampled 2016 records, so dropped by the public profile where it repeats one
+normalized.politines-kampanijos-dalyvio-duomenys[].kontaktai.telefonas-pasiteirauti	20195	31	third-party	contact	conditional	the campaign's contact line; the treasurer's own phone and e-mail on 93 of 105 sampled 2016 records, so dropped by the public profile where it repeats one
+normalized.politines-kampanijos-dalyvio-duomenys[].registravimo-data	20199	32	candidate	public-record	ship	the campaign registration: status, dates, decision numbers
+normalized.politines-kampanijos-dalyvio-duomenys[].sprendimai[]	19950	32	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.politines-kampanijos-dalyvio-duomenys[].sprendimai[].date	249	13	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.politines-kampanijos-dalyvio-duomenys[].sprendimai[].note	249	13	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.politines-kampanijos-dalyvio-duomenys[].sprendimai[].number	249	13	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.politines-kampanijos-dalyvio-duomenys[].sprendimai[].rowNumber	249	13	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.politines-kampanijos-dalyvio-duomenys[].sprendimai[].title	249	13	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.politines-kampanijos-dalyvio-duomenys[].sprendimai[].urls[]	249	13	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.politines-kampanijos-dalyvio-duomenys[].sprendimo-numeris	20199	32	candidate	public-record	ship	the campaign registration: status, dates, decision numbers
+normalized.politines-kampanijos-dalyvio-duomenys[].statusas	20199	32	candidate	public-record	ship	the campaign registration: status, dates, decision numbers
+normalized.politines-kampanijos-dalyvio-duomenys[].sutartys[]	6088	29	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.politines-kampanijos-dalyvio-duomenys[].sutartys[].agreementDate	14111	28	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.politines-kampanijos-dalyvio-duomenys[].sutartys[].agreementNumber	14111	28	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.politines-kampanijos-dalyvio-duomenys[].sutartys[].counterparty	14111	28	third-party	organisation	ship	the contract counterparty (an agency, a printer, a broadcaster)
+normalized.politines-kampanijos-dalyvio-duomenys[].sutartys[].rowNumber	14111	28	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.politines-kampanijos-dalyvio-duomenys[].sutartys[].subject	14111	28	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.politines-kampanijos-dalyvio-duomenys[].sutartys[].textAccessNote	14111	28	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.politines-kampanijos-dalyvio-duomenys[].sutartys[].textUrls[]	14111	28	none	public-record	ship	contracts, funding reports and VRK decisions as filed
+normalized.privaciu-interesu-deklaracija	561	11	none	technical	ship	an empty section: the key exists and holds nothing on this record
+normalized.privaciu-interesu-deklaracija.darboviete-ir-pareigos-valstybineje-tarnyboje	18296	6	candidate	biographical	ship	the declarant's employers, positions, memberships and activities
+normalized.privaciu-interesu-deklaracija.deklaruojancio-asmens-sutuoktinis-partneris.darboviete-es-pareigos	16399	1	family	biographical	ship	the spouse's or partner's employer and position
+normalized.privaciu-interesu-deklaracija.deklaruojancio-asmens-sutuoktinis-partneris.pavarde	16694	5	family	identifying	ship	the spouse's or partner's name
+normalized.privaciu-interesu-deklaracija.deklaruojancio-asmens-sutuoktinis-partneris.vardas	16694	5	family	identifying	ship	the spouse's or partner's name
+normalized.privaciu-interesu-deklaracija.deklaruojancio-asmens-sutuoktinis-partneris.visos-darbovietes-ir-pareigos	295	4	family	biographical	ship	the spouse's or partner's employer and position
+normalized.privaciu-interesu-deklaracija.deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris.pavarde	35094	20	family	identifying	ship	the spouse's or partner's name
+normalized.privaciu-interesu-deklaracija.deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris.sutuoktinio-sugyventinio-partnerio-darboviete-kitos-darbovietes-nurodomos-id001j-priede	35094	20	family	biographical	ship	the spouse's or partner's employer and position
+normalized.privaciu-interesu-deklaracija.deklaruojancio-asmens-sutuoktinis-sugyventinis-partneris.vardas	35094	20	family	identifying	ship	the spouse's or partner's name
+normalized.privaciu-interesu-deklaracija.deklaruojancio-darbovietes[].darbdavys	12442	10	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.deklaruojancio-darbovietes[].darboviete	10666	5	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.deklaruojancio-darbovietes[].juridinio-asmens-kodas	11813	10	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.deklaruojancio-darbovietes[].juridinio-asmens-teisine-forma	11813	10	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.deklaruojancio-darbovietes[].pareigos	12442	10	candidate	biographical	ship	the declarant's employers, positions, memberships and activities
+normalized.privaciu-interesu-deklaracija.deklaruojancio-darbovietes[].pareigu-pobudis	12442	10	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.deklaruojancio-darbovietes[].pavadinimas	12442	10	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.deklaruojancio-darbovietes[].registracijos-salis	11877	10	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.deklaruojancio-darbovietes[].rysio-pradzios-data	12442	10	candidate	biographical	ship	the declarant's employers, positions, memberships and activities
+normalized.privaciu-interesu-deklaracija.deklaruojanciojo-asmens-sutuoktinis-partneris.darboviete-es-pareigos	1602	1	family	biographical	ship	the spouse's or partner's employer and position
+normalized.privaciu-interesu-deklaracija.deklaruojanciojo-asmens-sutuoktinis-partneris.pavarde	1602	1	family	identifying	ship	the spouse's or partner's name
+normalized.privaciu-interesu-deklaracija.deklaruojanciojo-asmens-sutuoktinis-partneris.vardas	1602	1	family	identifying	ship	the spouse's or partner's name
+normalized.privaciu-interesu-deklaracija.deklaruojantis-asmuo	67696	35	candidate	identifying	ship	the declarant's name
+normalized.privaciu-interesu-deklaracija.deklaruojantysis-asmuo	1602	1	candidate	identifying	ship	the declarant's name
+normalized.privaciu-interesu-deklaracija.id001a	3	2	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.id001a.tekstas	1111	18	none	technical	ship	
+normalized.privaciu-interesu-deklaracija.id001f[].asmuo-kurio-rysys-bus-nurodomas	1978	19	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.id001f[].duomenys-ir-aplinkybes-del-kuriu-gali-kilti-interesu-konfliktas	1978	19	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.id001f[].rysiais-susieto-asmens-pilietybe	1978	19	third-party	identifying	ship	a natural person named in the declaration: a relative, a counterparty, a gift giver, a source of a possible conflict
+normalized.privaciu-interesu-deklaracija.id001f[].vardas-ir-pavarde	1060	10	third-party	identifying	ship	a natural person named in the declaration: a relative, a counterparty, a gift giver, a source of a possible conflict
+normalized.privaciu-interesu-deklaracija.id001f[].vardas-pavarde	918	9	third-party	identifying	ship	a natural person named in the declaration: a relative, a counterparty, a gift giver, a source of a possible conflict
+normalized.privaciu-interesu-deklaracija.id001i[].asmuo-kurio-individuali-veikla-bus-nurodoma	3225	10	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.id001i[].asmuo-kurio-individuali-veikla-toliau-bus-nurodoma	3258	9	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.id001i[].individualios-veiklos-pabaigos-data-jei-nepasibaige-pildyti-nereikia	6483	19	candidate	biographical	ship	the declarant's employers, positions, memberships and activities
+normalized.privaciu-interesu-deklaracija.id001i[].individualios-veiklos-pradzia	6483	19	candidate	biographical	ship	the declarant's employers, positions, memberships and activities
+normalized.privaciu-interesu-deklaracija.id001i[].individualios-veiklos-rusis	6483	19	candidate	biographical	ship	the declarant's employers, positions, memberships and activities
+normalized.privaciu-interesu-deklaracija.id001i[].papildomi-duomenys-apie-individualia-veikla	6483	19	candidate	biographical	ship	the declarant's employers, positions, memberships and activities
+normalized.privaciu-interesu-deklaracija.id001j[].asmuo-kurio-rysys-bus-nurodytas	22300	20	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.id001j[].juridinio-asmens-kodas	22300	20	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.id001j[].juridinio-asmens-pavadinimas	22300	20	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.id001j[].kiti-rysiai	22300	20	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.id001j[].rysio-pabaigos-data	22300	20	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.id001j[].rysio-pradzios-data	22300	20	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.id001j[].rysys-su-juridiniu-asmeniu	22300	20	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.id001j[].valstybe	22300	20	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.id001p[].asmuo-kurio-rysys-toliau-bus-nurodomas	82	3	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.id001p[].juridinio-asmens-kodas	82	3	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.id001p[].juridinio-asmens-pavadinimas-fizinio-asmens-vardas-pavarde	82	3	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.id001p[].pastabos-pildoma-kai-rysys-laukelyje-pasirenkama-kita-arba-asmuo-nori-detalizuoti-rysi	82	3	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.id001p[].rysio-data	82	3	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.id001p[].rysys	82	3	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.id001p[].valstybe	82	3	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.id001s[].kita-sandorio-salis	6745	20	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.id001s[].kitos-sandorio-salies-pavadinimas	6745	20	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.id001s[].sandori-sudares-asmuo	6745	20	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.id001s[].sandorio-forma	6745	20	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.id001s[].sandorio-objekto-pavadinimas	6745	20	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.id001s[].sandorio-pabaigos-data	6745	20	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.id001s[].sandorio-salies-kodas	6745	20	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.id001s[].sandorio-sudarymo-data	6745	20	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.id001s[].sandorio-suma	3483	10	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.id001s[].sandorio-suma-lt	3262	10	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.id001s[].sandorio-suma-valiuta	3483	10	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.id001s[].sandoris	6745	20	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.ii-dalyvavimas-juridiniuose-asmenyse[].dalyvavimo-budas	2873	5	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.ii-dalyvavimas-juridiniuose-asmenyse[].juridinio-asmens-kodas-registre	2873	5	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.ii-dalyvavimas-juridiniuose-asmenyse[].juridinio-asmens-teisine-forma-pavadinimas	2873	5	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.ii-dalyvavimas-juridiniuose-asmenyse[].tipas	2873	5	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.ii-turtas[].isigijimo-budas	12795	3	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.ii-turtas[].tipas	12795	3	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.ii-turtas[].vienetu-skaicius	12795	3	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.ii-turtas[].vietoves-pavadinimas	12795	3	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.iii-individuali-veikla[].tipas	1982	4	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.iii-individuali-veikla[].veiklos-apibudinimas	1982	4	candidate	biographical	ship	the declarant's employers, positions, memberships and activities
+normalized.privaciu-interesu-deklaracija.iii-individuali-veikla[].veiklos-pradzios-data	1982	4	candidate	biographical	ship	the declarant's employers, positions, memberships and activities
+normalized.privaciu-interesu-deklaracija.iii-pajamos[].pajamu-saltinio-pavadinimas	13927	3	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.iii-pajamos[].tipas	13927	3	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.iv-naryste-pareigos-imonese-istaigose-asociacijose-ar-fonduose[].juridinio-asmens-kodas-registre	3257	5	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.iv-naryste-pareigos-imonese-istaigose-asociacijose-ar-fonduose[].juridinio-asmens-teisine-forma-pavadinimas	3257	5	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.iv-naryste-pareigos-imonese-istaigose-asociacijose-ar-fonduose[].naryste-pareigos-veiklos-apibudinimas	3257	5	candidate	biographical	ship	the declarant's employers, positions, memberships and activities
+normalized.privaciu-interesu-deklaracija.iv-naryste-pareigos-imonese-istaigose-asociacijose-ar-fonduose[].tipas	3257	5	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.iv-vertybiniai-popieriai[].juridinio-asmens-pavadinimas	3094	3	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.iv-vertybiniai-popieriai[].tipas	3094	3	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.ix-kiti-duomenys-del-kuriu-gali-kilti-interesu-konfliktas[].aprasymas	65	2	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.ix-kiti-duomenys-del-kuriu-gali-kilti-interesu-konfliktas[].tipas	65	2	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.ix-naryste-pareigos-ir-rysiai-su-imonemis-istaigomis-bendrijomis-fondais-ar-asociacijomis-taip-pat-ir-tarptautinemis[].naryste-pareigos-ar-rysiai	2561	3	candidate	biographical	ship	the declarant's employers, positions, memberships and activities
+normalized.privaciu-interesu-deklaracija.ix-naryste-pareigos-ir-rysiai-su-imonemis-istaigomis-bendrijomis-fondais-ar-asociacijomis-taip-pat-ir-tarptautinemis[].organizacijos-pavadinimas	2561	3	candidate	biographical	ship	the declarant's employers, positions, memberships and activities
+normalized.privaciu-interesu-deklaracija.ix-naryste-pareigos-ir-rysiai-su-imonemis-istaigomis-bendrijomis-fondais-ar-asociacijomis-taip-pat-ir-tarptautinemis[].tipas	2561	3	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.kiti-duomenys[]	29	2	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.kiti-duomenys[].tekstas	889	7	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.kitos-darbovietes-pareigos	1602	1	candidate	biographical	ship	the declarant's employers, positions, memberships and activities
+normalized.privaciu-interesu-deklaracija.pateikimo-data	15908	10	none	technical	ship	
+normalized.privaciu-interesu-deklaracija.rysiai-su-juridiniais-asmenimis[].juridinio-asmens-kodas	6977	10	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.rysiai-su-juridiniais-asmenimis[].juridinio-asmens-pavadinimas	6981	10	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.rysiai-su-juridiniais-asmenimis[].juridinio-asmens-teisine-forma	6981	10	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.rysiai-su-juridiniais-asmenimis[].kieno-rysys	6981	10	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.rysiai-su-juridiniais-asmenimis[].papildomos-pastabos	288	8	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.rysiai-su-juridiniais-asmenimis[].registracijos-salis	6981	10	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.rysiai-su-juridiniais-asmenimis[].rysio-pabaigos-data	419	6	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.rysiai-su-juridiniais-asmenimis[].rysio-pobudis	6981	10	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.rysiai-su-juridiniais-asmenimis[].rysio-pradzios-data	6981	10	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.rysiai-sudarius-sandorius[].kieno-sandoris	2594	10	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.rysiai-sudarius-sandorius[].kita-sandorio-salis	2594	10	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.rysiai-sudarius-sandorius[].kitos-sandorio-salies-pavadinimas	2594	10	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.rysiai-sudarius-sandorius[].pabaigos-data	599	6	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.rysiai-sudarius-sandorius[].sandorio-rusis	2594	10	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.rysiai-sudarius-sandorius[].sudarymo-data	2594	10	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.sutuoktinio-darbovietes[].darbdavys	8180	10	family	biographical	ship	the spouse's or partner's employer and position
+normalized.privaciu-interesu-deklaracija.sutuoktinio-darbovietes[].darboviete	7023	5	family	biographical	ship	the spouse's or partner's employer and position
+normalized.privaciu-interesu-deklaracija.sutuoktinio-darbovietes[].juridinio-asmens-kodas	7407	10	family	biographical	ship	the spouse's or partner's employer and position
+normalized.privaciu-interesu-deklaracija.sutuoktinio-darbovietes[].juridinio-asmens-teisine-forma	7407	10	family	biographical	ship	the spouse's or partner's employer and position
+normalized.privaciu-interesu-deklaracija.sutuoktinio-darbovietes[].pareigos	8180	10	family	biographical	ship	the spouse's or partner's employer and position
+normalized.privaciu-interesu-deklaracija.sutuoktinio-darbovietes[].pareigu-pobudis	8180	10	family	biographical	ship	the spouse's or partner's employer and position
+normalized.privaciu-interesu-deklaracija.sutuoktinio-darbovietes[].pavadinimas	8180	10	family	biographical	ship	the spouse's or partner's employer and position
+normalized.privaciu-interesu-deklaracija.sutuoktinio-darbovietes[].registracijos-salis	7533	10	family	biographical	ship	the spouse's or partner's employer and position
+normalized.privaciu-interesu-deklaracija.sutuoktinio-darbovietes[].rysio-pradzios-data	8180	10	family	biographical	ship	the spouse's or partner's employer and position
+normalized.privaciu-interesu-deklaracija.sutuoktinis-sugyventinis-ar-partneris	15908	10	family	biographical	ship	the spouse's or partner's employer and position
+normalized.privaciu-interesu-deklaracija.v-gautos-dovanos[].dovanojusio-fizinio-asmens-vardas-pavarde-dovanojusio-juridinio-asmens-pavadinimas	176	3	third-party	identifying	ship	a natural person named in the declaration: a relative, a counterparty, a gift giver, a source of a possible conflict
+normalized.privaciu-interesu-deklaracija.v-gautos-dovanos[].dovanos-aprasymas	176	3	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.v-gautos-dovanos[].dovanos-gavimo-data	176	3	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.v-gautos-dovanos[].dovanos-vertes-litais-kodas	176	3	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.v-gautos-dovanos[].suma-skaiciais	176	3	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.v-gautos-dovanos[].suma-zodziais	176	3	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.v-gautos-dovanos[].tipas	176	3	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.v-turtines-prievoles[].isipareigojimo-data	4847	3	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.v-turtines-prievoles[].juridinio-asmens-pavadinimas	4847	3	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.v-turtines-prievoles[].tipas	4847	3	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.vi-individualios-imones-kitos-organizacijos-ir-istaigos[].pagrindines-veiklos	2211	3	candidate	biographical	ship	the declarant's employers, positions, memberships and activities
+normalized.privaciu-interesu-deklaracija.vi-individualios-imones-kitos-organizacijos-ir-istaigos[].pavadinimas	2211	3	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.vi-individualios-imones-kitos-organizacijos-ir-istaigos[].tipas	2211	3	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.vi-neatlygintinai-suteiktos-paslaugos-ar-apmoketos-islaidos[].paslauga-suteikusio-ar-apmokejusio-islaidas-fizinio-ar-juridinio-asmens-vardas-pavarde-ar-pavadinimas	26	2	third-party	identifying	ship	a natural person named in the declaration: a relative, a counterparty, a gift giver, a source of a possible conflict
+normalized.privaciu-interesu-deklaracija.vi-neatlygintinai-suteiktos-paslaugos-ar-apmoketos-islaidos[].paslaugos-ar-apmoketu-islaidu-aprasymas	26	2	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.vi-neatlygintinai-suteiktos-paslaugos-ar-apmoketos-islaidos[].paslaugos-gavimo-data	26	2	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.vi-neatlygintinai-suteiktos-paslaugos-ar-apmoketos-islaidos[].paslaugos-vertes-litais-kodas	26	2	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.vi-neatlygintinai-suteiktos-paslaugos-ar-apmoketos-islaidos[].suma-skaiciais	26	2	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.vi-neatlygintinai-suteiktos-paslaugos-ar-apmoketos-islaidos[].suma-zodziais	26	2	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.vi-neatlygintinai-suteiktos-paslaugos-ar-apmoketos-islaidos[].tipas	26	2	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.vii-gautos-dovanos[].data	108	3	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.vii-gautos-dovanos[].dovana	108	3	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.vii-gautos-dovanos[].dovanojusiojo-asmens-pavadinimas	108	3	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.vii-gautos-dovanos[].tipas	108	3	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.vii-sandoriai[].asmens-atliktas-veiksmas-pirkimas-pardavimas-paskolos-gavimas-ar-kt	1854	5	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.vii-sandoriai[].fizinio-ar-juridinio-asmens-sandorio-salies-iu-vardas-pavarde-ar-pavadinimas	1854	5	third-party	identifying	ship	a natural person named in the declaration: a relative, a counterparty, a gift giver, a source of a possible conflict
+normalized.privaciu-interesu-deklaracija.vii-sandoriai[].sandorio-objektas-ai	1854	5	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.vii-sandoriai[].sandorio-sudarymo-data	1854	5	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.vii-sandoriai[].sandorio-vertes-litais-kodas	1854	5	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.vii-sandoriai[].suma-skaiciais	1854	5	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.vii-sandoriai[].suma-zodziais	1854	5	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.vii-sandoriai[].tipas	1854	5	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.viii-fiziniai-ar-juridiniai-asmenys-del-kuriu-gali-kilti-interesu-konfliktas[].fizinio-asmens-vardas-pavarde-juridinio-asmens-pavadinimas	814	4	third-party	identifying	ship	a natural person named in the declaration: a relative, a counterparty, a gift giver, a source of a possible conflict
+normalized.privaciu-interesu-deklaracija.viii-fiziniai-ar-juridiniai-asmenys-del-kuriu-gali-kilti-interesu-konfliktas[].galimo-interesu-konflikto-pagrindas	814	4	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.viii-fiziniai-ar-juridiniai-asmenys-del-kuriu-gali-kilti-interesu-konfliktas[].tipas	814	4	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.viii-nemokamai-suteiktos-ar-kitu-asmenu-apmoketos-paslaugos[].data	18	2	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.viii-nemokamai-suteiktos-ar-kitu-asmenu-apmoketos-paslaugos[].kas-suteike-paslauga	18	2	third-party	identifying	ship	a natural person named in the declaration: a relative, a counterparty, a gift giver, a source of a possible conflict
+normalized.privaciu-interesu-deklaracija.viii-nemokamai-suteiktos-ar-kitu-asmenu-apmoketos-paslaugos[].paslauga	18	2	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.viii-nemokamai-suteiktos-ar-kitu-asmenu-apmoketos-paslaugos[].tipas	18	2	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.visos-darbovietes-ir-pareigos	295	4	candidate	biographical	ship	the declarant's employers, positions, memberships and activities
+normalized.privaciu-interesu-deklaracija.visos-darbovietes-pareigos	16399	1	candidate	biographical	ship	the declarant's employers, positions, memberships and activities
+normalized.privaciu-interesu-deklaracija.x-aplinkybes-del-kuriu-deklaruojanciojo-nuomone-gali-kilti-interesu-konfliktas[].aprasymas	114	2	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.x-aplinkybes-del-kuriu-deklaruojanciojo-nuomone-gali-kilti-interesu-konfliktas[].tipas	114	2	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.x-asmenys-del-kuriu-gali-kilti-viesuju-ir-privaciu-interesu-konfliktas[].galimo-interesu-konflikto-pagrindas	523	3	candidate	financial	ship	assets, income sources, securities, obligations, transactions, gifts and possible conflicts of interest
+normalized.privaciu-interesu-deklaracija.x-asmenys-del-kuriu-gali-kilti-viesuju-ir-privaciu-interesu-konfliktas[].tipas	523	3	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.privaciu-interesu-deklaracija.x-asmenys-del-kuriu-gali-kilti-viesuju-ir-privaciu-interesu-konfliktas[].vardas-pavarde	523	3	third-party	identifying	ship	a natural person named in the declaration: a relative, a counterparty, a gift giver, a source of a possible conflict
+normalized.privaciu-interesu-deklaracija.xi-kiti-duomenys-ar-aplinkybes-del-kuriu-deklaruojanciojo-nuomone-gali-kilti-viesuju-ir-privaciu-interesu-konfliktas[].pavadinimas	82	3	third-party	organisation	ship	the legal person or place named in the entry (a counterparty can also be a natural person)
+normalized.privaciu-interesu-deklaracija.xi-kiti-duomenys-ar-aplinkybes-del-kuriu-deklaruojanciojo-nuomone-gali-kilti-viesuju-ir-privaciu-interesu-konfliktas[].tipas	82	3	none	technical	ship	a selector or category: whose entry it is, what kind
+normalized.profilis.biografijos-nuoroda	950	6	none	technical	ship	
+normalized.profilis.dokumentu-pateikimo-data	29908	15	none	technical	ship	
+normalized.profilis.kandidatuoja-i	29908	15	candidate	public-record	ship	
+normalized.profilis.kita	10147	2	none	technical	ship	an empty section: the key exists and holds nothing on this record
+normalized.profilis.kita.apygarda-2.nuorodos[]	2803	4	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.apygarda-2.pavadinimas	2803	4	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.apygarda-2.reiksme	2803	4	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.apygarda-3.nuorodos[]	5	2	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.apygarda-3.pavadinimas	5	2	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.apygarda-3.reiksme	5	2	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.apygarda.nuorodos[]	29475	14	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.apygarda.pavadinimas	29475	14	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.apygarda.reiksme	29475	14	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.atstovaujamojo-politines-kampanijos-dalyvio-duomenys.nuorodos[]	1021	10	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.atstovaujamojo-politines-kampanijos-dalyvio-duomenys.pavadinimas	1021	10	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.atstovaujamojo-politines-kampanijos-dalyvio-duomenys.reiksme	1021	10	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.buves-numeris-sarase.nuorodos[]	686	2	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.buves-numeris-sarase.pavadinimas	686	2	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.buves-numeris-sarase.reiksme	686	2	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.daugiamandateje-apygardoje.nuorodos[]	3449	2	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.daugiamandateje-apygardoje.pavadinimas	3449	2	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.daugiamandateje-apygardoje.reiksme	3449	2	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.duomenu-anketa.nuorodos[]	17	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.duomenu-anketa.pavadinimas	17	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.duomenu-anketa.reiksme	17	1	none	technical	ship	the label of a linked document
+normalized.profilis.kita.gimimo-data.nuorodos[]	13429	2	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.gimimo-data.pavadinimas	13429	2	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.gimimo-data.reiksme	13429	2	candidate	identifying	ship	
+normalized.profilis.kita.gyventojo-turto-pajamu-deklaracija.nuorodos[]	6	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.gyventojo-turto-pajamu-deklaracija.pavadinimas	6	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.gyventojo-turto-pajamu-deklaracija.reiksme	6	1	none	technical	ship	the label of a linked document
+normalized.profilis.kita.i-turas.nuorodos[]	1815	4	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.i-turas.pavadinimas	1815	4	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.i-turas.reiksme	1815	4	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.ii-turas.nuorodos[]	286	4	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.ii-turas.pavadinimas	286	4	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.ii-turas.reiksme	286	4	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.interneto-svetaine.nuorodos[]	5	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.interneto-svetaine.pavadinimas	5	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.interneto-svetaine.reiksme	5	1	candidate	contact	ship	the candidate's own website
+normalized.profilis.kita.iskele-2.nuorodos[]	4199	9	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.iskele-2.pavadinimas	4199	9	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.iskele-2.reiksme	4199	9	candidate	political	ship	the nominating organisation and list
+normalized.profilis.kita.iskele-3.nuorodos[]	344	4	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.iskele-3.pavadinimas	344	4	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.iskele-3.reiksme	344	4	candidate	political	ship	the nominating organisation and list
+normalized.profilis.kita.iskele-4.nuorodos[]	2	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.iskele-4.pavadinimas	2	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.iskele-4.reiksme	2	1	candidate	political	ship	the nominating organisation and list
+normalized.profilis.kita.iskele-i-savivaldybes-merus.nuorodos[]	48	4	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.iskele-i-savivaldybes-merus.pavadinimas	48	4	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.iskele-i-savivaldybes-merus.reiksme	48	4	candidate	political	ship	the nominating organisation and list
+normalized.profilis.kita.iskele-i-tarybos-narius-ir-merus.nuorodos[]	406	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.iskele-i-tarybos-narius-ir-merus.pavadinimas	406	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.iskele-i-tarybos-narius-ir-merus.reiksme	406	1	candidate	political	ship	the nominating organisation and list
+normalized.profilis.kita.iskele-i-tarybos-narius-merus.nuorodos[]	450	5	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.iskele-i-tarybos-narius-merus.pavadinimas	450	5	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.iskele-i-tarybos-narius-merus.reiksme	450	5	candidate	political	ship	the nominating organisation and list
+normalized.profilis.kita.iskele.nuorodos[]	55877	29	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.iskele.pavadinimas	55877	29	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.iskele.reiksme	55877	29	candidate	political	ship	the nominating organisation and list
+normalized.profilis.kita.issikeles-kandidatas.nuorodos[]	518	3	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.issikeles-kandidatas.pavadinimas	518	3	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.issikeles-kandidatas.reiksme	518	3	candidate	political	ship	the nominating organisation and list
+normalized.profilis.kita.kandidata-iskele.nuorodos[]	8	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.kandidata-iskele.pavadinimas	8	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.kandidata-iskele.reiksme	8	1	candidate	political	ship	the nominating organisation and list
+normalized.profilis.kita.kandidatas-nera-savarankiskas-politines-kampanijos-dalyvis.nuorodos[]	6	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.kandidatas-nera-savarankiskas-politines-kampanijos-dalyvis.pavadinimas	6	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.kandidatas-nera-savarankiskas-politines-kampanijos-dalyvis.reiksme	6	1	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.kandidatas-registruotas-savarankisku-politines-kampanijos-dalyviu-sprendimas.nuorodos[]	459	2	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.kandidatas-registruotas-savarankisku-politines-kampanijos-dalyviu-sprendimas.pavadinimas	459	2	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.kandidatas-registruotas-savarankisku-politines-kampanijos-dalyviu-sprendimas.reiksme	459	2	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.numeris-partijos-sarase.nuorodos[]	153	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.numeris-partijos-sarase.pavadinimas	153	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.numeris-partijos-sarase.reiksme	153	1	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.numeris-sarase-2.nuorodos[]	1299	6	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.numeris-sarase-2.pavadinimas	1299	6	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.numeris-sarase-2.reiksme	1299	6	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.numeris-sarase.nuorodos[]	82542	28	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.numeris-sarase.pavadinimas	82542	28	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.numeris-sarase.reiksme	82542	28	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.pareiskimas.nuorodos[]	22	2	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.pareiskimas.pavadinimas	22	2	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.pareiskimas.reiksme	22	2	none	technical	ship	the label of a linked document
+normalized.profilis.kita.politines-kampanijos-dalyvio-duomenys.nuorodos[]	4	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.politines-kampanijos-dalyvio-duomenys.pavadinimas	4	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.politines-kampanijos-dalyvio-duomenys.reiksme	4	1	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.porinkiminis-eiles-numeris.nuorodos[]	4961	7	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.porinkiminis-eiles-numeris.pavadinimas	4961	7	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.porinkiminis-eiles-numeris.reiksme	4961	7	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.porinkiminis-numeris-sarase.nuorodos[]	28143	11	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.porinkiminis-numeris-sarase.pavadinimas	28143	11	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.porinkiminis-numeris-sarase.reiksme	28143	11	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.priesrinkiminis-numeris-sarase-2.nuorodos[]	298	2	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.priesrinkiminis-numeris-sarase-2.pavadinimas	298	2	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.priesrinkiminis-numeris-sarase-2.reiksme	298	2	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.priesrinkiminis-numeris-sarase.nuorodos[]	12454	4	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.priesrinkiminis-numeris-sarase.pavadinimas	12454	4	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.priesrinkiminis-numeris-sarase.reiksme	12454	4	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.registracija.nuorodos[]	22	2	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.registracija.pavadinimas	22	2	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.registracija.reiksme	22	2	none	technical	ship	the label of a linked document
+normalized.profilis.kita.sarasas.nuorodos[]	42983	19	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.sarasas.pavadinimas	42983	19	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.sarasas.reiksme	42983	19	candidate	political	ship	the nominating organisation and list
+normalized.profilis.kita.savarankisko-politines-kampanijos-dalyvio-duomenys.nuorodos[]	15809	14	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.savarankisko-politines-kampanijos-dalyvio-duomenys.pavadinimas	15809	14	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.savarankisko-politines-kampanijos-dalyvio-duomenys.reiksme	15809	14	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.savivaldybe.nuorodos[]	59772	14	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.savivaldybe.pavadinimas	59772	14	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.savivaldybe.reiksme	59772	14	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.seimos-turto-pajamu-deklaracija.nuorodos[]	11	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.seimos-turto-pajamu-deklaracija.pavadinimas	11	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.seimos-turto-pajamu-deklaracija.reiksme	11	1	none	technical	ship	the label of a linked document
+normalized.profilis.kita.sveikatos-pazyma.nuorodos[]	4	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.sveikatos-pazyma.pavadinimas	4	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.sveikatos-pazyma.reiksme	4	1	none	technical	ship	the label of a linked document
+normalized.profilis.kita.sveikatos-pazymejimas.nuorodos[]	1	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.sveikatos-pazymejimas.pavadinimas	1	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.sveikatos-pazymejimas.reiksme	1	1	none	technical	ship	the label of a linked document
+normalized.profilis.kita.tinklalapis.nuorodos[]	9	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.tinklalapis.pavadinimas	9	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.tinklalapis.reiksme	9	1	candidate	contact	ship	the candidate's own website
+normalized.profilis.kita.turas.nuorodos[]	5865	16	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.turas.pavadinimas	5865	16	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.turas.reiksme	5865	16	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.vienmandate-apygarda.nuorodos[]	4961	7	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.vienmandate-apygarda.pavadinimas	4961	7	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.vienmandate-apygarda.reiksme	4961	7	candidate	public-record	ship	a card row about the candidacy: constituency, municipality, list numbers, round, campaign registration
+normalized.profilis.kita.www-grybauskaite2009-lt.nuorodos[]	1	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.www-grybauskaite2009-lt.pavadinimas	1	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.www-grybauskaite2009-lt.reiksme	1	1	candidate	contact	ship	the candidate's own website
+normalized.profilis.kita.www-loretagrauziniene-lt.nuorodos[]	1	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.www-loretagrauziniene-lt.pavadinimas	1	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.www-loretagrauziniene-lt.reiksme	1	1	candidate	contact	ship	the candidate's own website
+normalized.profilis.kita.www-mazuronis-lt.nuorodos[]	1	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.www-mazuronis-lt.pavadinimas	1	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.www-mazuronis-lt.reiksme	1	1	candidate	contact	ship	the candidate's own website
+normalized.profilis.kita.www-prunskiene-lt.nuorodos[]	1	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.www-prunskiene-lt.pavadinimas	1	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.www-prunskiene-lt.reiksme	1	1	candidate	contact	ship	the candidate's own website
+normalized.profilis.kita.www-uzjezerska-lt.nuorodos[]	1	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.www-uzjezerska-lt.pavadinimas	1	1	none	technical	ship	the card row's own label and links
+normalized.profilis.kita.www-uzjezerska-lt.reiksme	1	1	candidate	contact	ship	the candidate's own website
+normalized.profilis.nuotrauka	106687	53	candidate	identifying	ship	the portrait's sidecar path; the bytes are the photos table, metadata-stripped in the public profile
+normalized.profilis.pajamu-deklaracijos-nuoroda	7336	8	none	technical	ship	
+normalized.profilis.pastaba	105737	47	candidate	public-record	ship	
+normalized.profilis.vardas-pavarde	113073	55	candidate	identifying	ship	
+normalized.programa.tekstas	21	2	candidate	biographical	ship	
+normalized.turto-ir-pajamu-deklaracijos.bendros-pinigines-lesos-banke-laikotarpio-pabaigoje	10162	2	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.bendros-pinigines-lesos-banke-laikotarpio-pradzioje	10162	2	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.darboviete	26037	11	candidate	biographical	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos-apimtis	94564	44	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos-forma	84402	42	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos-metai	84402	42	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos[]	27	2	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos[].apimtis	84375	42	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos[].forma	84375	42	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos[].metai	84375	42	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos[].pavadinimas	84375	42	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos[].reiksmes	1	1	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos[].reiksmes.gautos-pajamos	84343	42	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos[].reiksmes.gautos-paskolos	84339	42	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos[].reiksmes.individualios-veiklos-atskaitymai	31674	16	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos[].reiksmes.individualios-veiklos-pajamos	31674	16	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos[].reiksmes.pinigines-lesos	84339	42	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos[].reiksmes.privalomas-registruoti-turtas	84339	42	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos[].reiksmes.sumoketas-pajamu-mokestis	84343	42	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos[].reiksmes.suteiktos-paskolos	84339	42	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos[].reiksmes.turto-isigijimo-kaina	31674	16	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos[].reiksmes.turto-pardavimo-pajamos	31674	16	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos[].reiksmes.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai	84339	42	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.deklaracijos[].rusis	84375	42	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.forma	27	1	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.gautos-pajamos	112218	54	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.gautos-pajamos-darbo-santykiu	17654	10	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.gautos-paskolos	94564	44	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.grazintos-paskolos	10162	2	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.individualios-veiklos-atskaitymai	84402	42	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.individualios-veiklos-pajamos	84402	42	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.isdavimo-data	27	1	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.islaikytiniu-skaicius	17651	10	family	family	ship	counts of family members and dependants
+normalized.turto-ir-pajamu-deklaracijos.israsa-isdave	16761	5	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.israsai.pajamu-deklaracija.darboviete	1501	4	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.israsai.pajamu-deklaracija.gavimo-data	1501	4	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.israsai.pajamu-deklaracija.israsa-isdave	1501	4	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.israsai.pajamu-deklaracija.pavadinimas	1501	4	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.israsai.pajamu-deklaracija.pildymo-data	1501	4	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.israsai.turto-deklaracija	1	1	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.israsai.turto-deklaracija.darboviete	1500	4	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.israsai.turto-deklaracija.gavimo-data	1500	4	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.israsai.turto-deklaracija.israsa-isdave	1500	4	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.israsai.turto-deklaracija.pavadinimas	1500	4	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.israsai.turto-deklaracija.pildymo-data	1500	4	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.israso-data	17654	10	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.kalendoriniais-metais-isigytas-turtas	17654	10	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.mokesciu-nepriemoka	17654	10	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.nepagrindines-darbovietes	2909	8	candidate	biographical	ship	
+normalized.turto-ir-pajamu-deklaracijos.pajamos-pagal-forma[]	36388	18	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.pajamos-pagal-forma[].forma	14894	7	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.pajamos-pagal-forma[].gautos-pajamos	14894	7	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.pajamos-pagal-forma[].sumoketas-pajamu-mokestis	14894	7	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.pareigos	15397	9	candidate	biographical	ship	
+normalized.turto-ir-pajamu-deklaracijos.pareigos-nepagrindinese-darbovietese	2827	7	candidate	biographical	ship	
+normalized.turto-ir-pajamu-deklaracijos.pasiskolintos-ir-dovanotos-lesos	10162	2	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.pastaba	51282	22	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.pinigines-lesos	112218	54	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.pinigines-lesos-laikotarpio-pabaigoje	10162	2	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.pinigines-lesos-laikotarpio-pradzioje	10162	2	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.privaloma-sumoketi-mokesciu-ir-sankciju	17654	10	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas	112218	54	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.seimos-nariu-iki-18-metu	17651	10	family	family	ship	counts of family members and dependants
+normalized.turto-ir-pajamu-deklaracijos.seimos-nariu-skaicius	17651	10	family	family	ship	counts of family members and dependants
+normalized.turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis	112218	54	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.sumoketas-pajamu-mokestis-darbo-santykiu	17654	10	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.suteiktos-paskolos	94564	44	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.sutuoktinio.gautos-paskolos	352	1	family	financial	ship	the spouse's own declared figures (352 records)
+normalized.turto-ir-pajamu-deklaracijos.sutuoktinio.pinigines-lesos	352	1	family	financial	ship	the spouse's own declared figures (352 records)
+normalized.turto-ir-pajamu-deklaracijos.sutuoktinio.privalomas-registruoti-turtas	352	1	family	financial	ship	the spouse's own declared figures (352 records)
+normalized.turto-ir-pajamu-deklaracijos.sutuoktinio.suteiktos-paskolos	352	1	family	financial	ship	the spouse's own declared figures (352 records)
+normalized.turto-ir-pajamu-deklaracijos.sutuoktinio.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai	352	1	family	financial	ship	the spouse's own declared figures (352 records)
+normalized.turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pabaigoje	17654	10	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pradzioje	17654	10	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.turtas-ir-vertybiniai-popieriai-laikotarpio-pabaigoje	10162	2	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.turtas-ir-vertybiniai-popieriai-laikotarpio-pradzioje	10162	2	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.turto-isigijimo-kaina	84402	42	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.turto-pardavimo-pajamos	84402	42	candidate	financial	ship	
+normalized.turto-ir-pajamu-deklaracijos.valiuta	79098	34	none	technical	ship	
+normalized.turto-ir-pajamu-deklaracijos.vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai	94564	44	candidate	financial	ship	
+provenance.fetchedAt	113073	55	none	technical	ship	
+provenance.parsedAt	113073	55	none	technical	ship	
+provenance.parserCommit	113073	55	none	technical	ship	
+provenance.schemaVersion	113073	55	none	technical	ship	
+provenance.sourceSha256	113073	55	none	technical	ship	
+rawData.anketa.fields[]	1272	2	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.fields[].items[]	21	1	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.fields[].items[].note	9877	2	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.fields[].items[].value	9877	2	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.fields[].label	9878	2	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[]	2	2	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer	105713	45	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answerItems[]	1471	4	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[]	596	8	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].9-1-1-apkaltinamojo-nuosprendzio-sprendimo-data	244	1	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].9-1-2-apkaltinamojo-nuosprendzio-sprendimo-priemimo-valstybe-vieta	244	1	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].9-1-3-nuosprendi-sprendima-priemusios-institucijos-pavadinimas	244	1	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].9-1-4-nusikalstama-veikla-uz-kuria-buvote-nuteistas-pavadinimas	244	1	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].9-2-1-apkaltinamojo-nuosprendzio-sprendimo-data	6	1	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].9-2-2-apkaltinamojo-nuosprendzio-sprendimo-priemimo-valstybe-vieta	6	1	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].9-2-3-nuosprendi-sprendima-priemusios-institucijos-pavadinimas	6	1	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].9-2-4-nusikalstama-veika-uz-kuria-buvote-nuteistas-pavadinimas	6	1	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].9.1.1. Apkaltinamojo nuosprendžio (sprendimo) data:	2	2	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].9.1.2. Apkaltinamojo nuosprendžio (sprendimo) priėmimo valstybė (vieta):	2	2	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].9.1.3. Nuosprendį (sprendimą) priėmusios institucijos pavadinimas:	2	2	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].9.1.4. Nusikalstama veika, už kurią buvote nuteistas (pavadinimas):	2	2	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].9.2.1. Apkaltinamojo nuosprendžio (sprendimo) data	40	2	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].9.2.1. Apkaltinamojo nuosprendžio (sprendimo) data:	41	1	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].9.2.2. Apkaltinamojo nuosprendžio (sprendimo) priėmimo valstybė (vieta)	40	2	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].9.2.2. Apkaltinamojo nuosprendžio (sprendimo) priėmimo valstybė (vieta):	41	1	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].9.2.3. Nuosprendį (sprendimą) priėmusios institucijos pavadinimas	40	2	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].9.2.3. Nuosprendį (sprendimą) priėmusios institucijos pavadinimas:	41	1	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].9.2.4. Nusikalstama veika, už kurią buvote nuteistas (pavadinimas)	81	3	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].Baigimo metai	45799	25	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].Iki	1811	4	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].Institucijos pavadinimas, pareigos	9867	25	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].Išsilavinimas	45799	25	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].Laikotarpis	9867	25	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].Mokyklos įstaigos pavadinimas	238	1	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].Mokymo įstaigos pavadinimas	45561	24	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].Nuo	1811	4	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].Politinė organizacija	1811	4	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].Specialybė	45799	25	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].baigimo-metai	8891	6	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].institucijos-pavadinimas-pareigos	1769	6	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].issilavinimas	8891	6	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].laikotarpis	1769	6	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].mokyklos-istaigos-pavadinimas	27	1	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].mokymo-istaigos-pavadinimas	8864	5	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].answer[].specialybe	8891	6	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].explanation	62	2	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].key	9879	1	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].prompt	105713	45	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].questionNumber	95834	44	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].records[].iki	2035	1	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].records[].institucija	2035	1	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].records[].nuo	2035	1	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.anketa.rows[].rowIndex	94563	43	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.headingName	17	1	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.html	21554	29	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.rows[].answer	17666	11	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.rows[].answer[].Baigimo metai	2089	5	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.rows[].answer[].Darbo pabaiga	2085	5	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.rows[].answer[].Darbo pradžia	2085	5	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.rows[].answer[].Darbovietė	2085	5	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.rows[].answer[].Išsilavinimas	2089	5	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.rows[].answer[].Mokymo įstaigos pavadinimas	2089	5	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.rows[].answer[].Pareigos	2085	5	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.rows[].answer[].Specialybė	2089	5	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.rows[].answer[].baigimo-metai	13214	6	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.rows[].answer[].darbo-pabaiga	11693	6	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.rows[].answer[].darbo-pradzia	11693	6	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.rows[].answer[].darboviete	11693	6	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.rows[].answer[].issilavinimas	13214	6	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.rows[].answer[].mokymo-istaigos-pavadinimas	13214	6	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.rows[].answer[].pareigos	11693	6	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.rows[].answer[].specialybe	13214	6	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.rows[].prompt	17666	11	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.rows[].questionNumber	17666	11	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.rows[].rowIndex	17666	11	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.sourceUrl	22	2	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biografija.text	21576	31	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biography	597	2	none	technical	ship	an empty section: the key exists and holds nothing on this record
+rawData.biography.birthDate	925	6	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biography.birthPlace	925	6	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biography.birthYear	925	6	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.biography.text	1624	7	candidate	mixed	ship	the questionnaire / biography rows as published, prompt by prompt; normalized.anketa and normalized.biografija classify each field
+rawData.candidacies[].apygardaName	2221	7	candidate	public-record	ship	the archive card's candidacies and results
+rawData.candidacies[].apygardaNumber	2221	7	candidate	public-record	ship	the archive card's candidacies and results
+rawData.candidacies[].apygardaUrl	2221	7	candidate	public-record	ship	the archive card's candidacies and results
+rawData.candidacies[].electedNote	1271	1	candidate	public-record	ship	the archive card's candidacies and results
+rawData.candidacies[].isMultiMember	1271	1	candidate	public-record	ship	the archive card's candidacies and results
+rawData.candidacies[].listNumber	2221	7	candidate	public-record	ship	the archive card's candidacies and results
+rawData.candidacies[].memberListNumber	1271	1	candidate	public-record	ship	the archive card's candidacies and results
+rawData.candidacies[].memberParty	1271	1	candidate	public-record	ship	the archive card's candidacies and results
+rawData.candidacies[].memberPartyUrl	1271	1	candidate	public-record	ship	the archive card's candidacies and results
+rawData.candidacies[].nominator	2221	7	candidate	public-record	ship	the archive card's candidacies and results
+rawData.candidacies[].nominatorUrl	2221	7	candidate	public-record	ship	the archive card's candidacies and results
+rawData.candidacy.listName	9879	1	candidate	political	ship	the 1997 municipal card's list and nominator
+rawData.candidacy.listNumber	6386	2	candidate	public-record	ship	the 1997 municipal card's municipality and list numbers
+rawData.candidacy.listPosition	9879	1	candidate	public-record	ship	the 1997 municipal card's municipality and list numbers
+rawData.candidacy.listUrl	9879	1	candidate	public-record	ship	the 1997 municipal card's municipality and list numbers
+rawData.candidacy.memberListNumber	9879	1	candidate	public-record	ship	the 1997 municipal card's municipality and list numbers
+rawData.candidacy.memberParty	9879	1	candidate	political	ship	the 1997 municipal card's list and nominator
+rawData.candidacy.municipalityName	16265	3	candidate	public-record	ship	the 1997 municipal card's municipality and list numbers
+rawData.candidacy.municipalityNumber	16265	3	candidate	public-record	ship	the 1997 municipal card's municipality and list numbers
+rawData.candidacy.municipalityUrl	16265	3	candidate	public-record	ship	the 1997 municipal card's municipality and list numbers
+rawData.candidacy.nominator	6386	2	candidate	political	ship	the 1997 municipal card's list and nominator
+rawData.candidacy.nominatorUrl	6386	2	candidate	public-record	ship	the 1997 municipal card's municipality and list numbers
+rawData.declaration	832	4	none	technical	ship	an empty section: the key exists and holds nothing on this record
+rawData.declaration.darboviete	15875	9	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.declaration.gautos-pajamos	17654	10	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.declaration.gautos-pajamos-darbo-santykiu	17654	10	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.declaration.islaikytiniu-skaicius	17651	10	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.declaration.israsa-isdave	16734	4	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.declaration.israso-data	17654	10	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.declaration.kalendoriniais-metais-isigytas-turtas	17654	10	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.declaration.mokesciu-nepriemoka	17654	10	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.declaration.nepagrindines-darbovietes	2909	8	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.declaration.pareigos	15397	9	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.declaration.pareigos-nepagrindinese-darbovietese	2827	7	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.declaration.pinigines-lesos	17654	10	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.declaration.privaloma-sumoketi-mokesciu-ir-sankciju	17654	10	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.declaration.privalomas-registruoti-turtas	17654	10	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.declaration.seimos-nariu-iki-18-metu	17651	10	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.declaration.seimos-nariu-skaicius	17651	10	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.declaration.sumoketas-pajamu-mokestis	17654	10	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.declaration.sumoketas-pajamu-mokestis-darbo-santykiu	17654	10	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.declaration.turtas-ir-pinigines-lesos-metu-pabaigoje	17654	10	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.declaration.turtas-ir-pinigines-lesos-metu-pradzioje	17654	10	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.declaration.valiuta	17654	10	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.deklaracija.found	10138	1	candidate	mixed	ship	the 2003/2004 declaration form as published, prompt by prompt; see normalized.turto-ir-pajamu-deklaracijos
+rawData.deklaracija.items[]	3	1	candidate	mixed	ship	the 2003/2004 declaration form as published, prompt by prompt; see normalized.turto-ir-pajamu-deklaracijos
+rawData.deklaracija.items[].periods.pabaigoje	10135	1	candidate	mixed	ship	the 2003/2004 declaration form as published, prompt by prompt; see normalized.turto-ir-pajamu-deklaracijos
+rawData.deklaracija.items[].periods.pradzioje	10135	1	candidate	mixed	ship	the 2003/2004 declaration form as published, prompt by prompt; see normalized.turto-ir-pajamu-deklaracijos
+rawData.deklaracija.items[].prompt	10135	1	candidate	mixed	ship	the 2003/2004 declaration form as published, prompt by prompt; see normalized.turto-ir-pajamu-deklaracijos
+rawData.deklaracija.items[].value	10135	1	candidate	mixed	ship	the 2003/2004 declaration form as published, prompt by prompt; see normalized.turto-ir-pajamu-deklaracijos
+rawData.kita.links[]	67871	35	candidate	biographical	ship	
+rawData.kita.texts[]	67871	35	candidate	biographical	ship	
+rawData.nuotrauka.pageUrl	5	1	none	technical	ship	
+rawData.nuotrauka.photoUrl	5	1	none	technical	ship	
+rawData.nuotrauka.thumbnailUrl	5	1	none	technical	ship	
+rawData.patiketiniai.entries[]	9	1	third-party	identifying	ship	
+rawData.patiketiniai.records[]	1	1	third-party	identifying	ship	
+rawData.patiketiniai.records[].name	6	1	third-party	identifying	ship	
+rawData.patiketiniai.records[].number	6	1	third-party	identifying	ship	
+rawData.personal.aboutSelf	7336	8	candidate	biographical	ship	
+rawData.personal.academicDegree	7336	8	candidate	biographical	ship	
+rawData.personal.academicTitle	7336	8	candidate	biographical	ship	
+rawData.personal.birthDate	6386	2	candidate	identifying	ship	
+rawData.personal.birthPlace	7336	8	candidate	identifying	ship	
+rawData.personal.education	7336	8	candidate	biographical	ship	
+rawData.personal.familyMembers[]	2016	7	family	identifying	ship	family members by name and relation (the 1997 municipal card)
+rawData.personal.familyMembers[].name	5320	8	family	identifying	ship	family members by name and relation (the 1997 municipal card)
+rawData.personal.familyMembers[].relation	5320	8	family	identifying	ship	family members by name and relation (the 1997 municipal card)
+rawData.personal.familyStatus	7336	8	candidate	family	ship	
+rawData.personal.foreignLanguages[]	7336	8	candidate	biographical	ship	
+rawData.personal.mainWorkplace	7336	8	candidate	biographical	ship	
+rawData.personal.nationality	7336	8	candidate	ethnic	ship	
+rawData.personal.previouslyElected[]	7336	8	candidate	biographical	ship	
+rawData.personal.publicActivity	7336	8	candidate	biographical	ship	
+rawData.personal.residence	6386	2	candidate	contact	ship	
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditor	1256	13	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditor.auditoriausAtaskaita[].documentType	483	2	third-party	organisation	ship	
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditor.auditoriausAtaskaita[].rowNumber	483	2	third-party	organisation	ship	
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditor.auditoriausAtaskaita[].status	483	2	third-party	organisation	ship	
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditor.auditoriausAtaskaita[].urls[]	483	2	third-party	organisation	ship	
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditor.companyCode	2111	17	third-party	organisation	ship	
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditor.companyName	2111	17	third-party	organisation	ship	
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditor.email	2111	17	third-party	contact	drop	the treasurer's / auditor's phone and e-mail; DROPPED by the public profile
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditor.name	2111	17	third-party	identifying	ship	
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditor.phone	2111	17	third-party	contact	drop	the treasurer's / auditor's phone and e-mail; DROPPED by the public profile
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditor.title	2111	17	third-party	organisation	ship	
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditorius.person.el-pastas	16763	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditorius.person.imones-kodas	16763	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditorius.person.imones-pavadinimas	16763	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditorius.person.telefonas	16763	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditorius.person.vardas-pavarde	16763	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditorius.reports[]	1296	10	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditorius.reports[].date	15467	10	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditorius.reports[].rowNumber	15467	10	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditorius.reports[].status	15467	10	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditorius.reports[].type	15467	10	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].auditorius.reports[].urls[]	15467	10	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukos.sections[]	1053	5	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukos.sections[].records[].amountEur	13851	6	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukos.sections[].records[].amountLt	15311	11	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukos.sections[].records[].date	15710	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukos.sections[].records[].donor	15710	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukos.sections[].records[].municipality	15710	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukos.sections[].records[].notes	15433	12	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukos.sections[].records[].rowNumber	15710	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukos.sections[].summary[].amountEur	15710	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukos.sections[].summary[].amountLt	15710	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukos.sections[].summary[].label	15710	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukos.sections[].summary[].note	15710	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukos.sections[].title	15710	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].label	997	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].message	989	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].records[].amount	708	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].records[].date	708	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].records[].donor	708	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].records[].incomeSourceCode	708	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].records[].municipality	708	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].records[].notes	708	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].records[].rowNumber	708	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].status	989	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].title	997	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].totals.fiziniu-asmenu	707	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].totals.fiziniu-asmenu-mazos-aukos	707	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].totals.is-ju-grazinta-aukotojui-is-viso	181	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].totals.is-ju-pinigines-aukos-is-viso	707	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].totals.is-ju-savanoriski-darbai-is-viso	412	1	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].totals.is-viso	708	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].totals.juridiniu-asmenu	181	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].totals.juridiniu-asmenu-aukos	707	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].totals.kandidato-nuosavos-lesos	707	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].totals.nepinigines-aukos-is-viso	707	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].totals.pervesta-i-valstybes-biudzeta-is-viso	181	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].totals.politines-partijos-gauti-valstybes-biudzeto-asignavimai-panaudoti-politinei-kampanijai-finansuoti	707	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].totals.politines-partijos-lesos	707	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].aukuIrAukotojuSarasas.sections[].urls[]	997	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].availableTabs[]	782	9	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].availableTabs[].active	1128	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].availableTabs[].label	1128	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].availableTabs[].slug	1128	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].availableTabs[].url	1128	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].campaignKey	20199	32	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].campaignLabel	20199	32	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].campaignUrl	20199	32	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].card.atstovauja	15839	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].card.atstovauja.nuoroda	993	10	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].card.atstovauja.pavadinimas	993	10	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].card.kontaktai	4	1	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].card.kontaktai.el-pastas	16828	14	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].card.kontaktai.telefonas-pasiteirauti	16828	14	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].card.statusas	16832	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].card.title	16832	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].finansavimoAtaskaitos.publisherInfoUrls[]	997	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].finansavimoAtaskaitos.reports[]	511	1	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].finansavimoAtaskaitos.reports[].advertisingAppendixUrls[]	486	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].finansavimoAtaskaitos.reports[].approvedDate	486	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].finansavimoAtaskaitos.reports[].reportUrls[]	486	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].finansavimoAtaskaitos.reports[].rowNumber	486	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].finansavimoAtaskaitos.reports[].status	486	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].finansavimoAtaskaitos[]	961	3	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].finansavimoAtaskaitos[].advertisingAppendixUrls[]	15802	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].finansavimoAtaskaitos[].approvedDate	15802	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].finansavimoAtaskaitos[].reportType	274	3	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].finansavimoAtaskaitos[].reportUrls[]	15802	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].finansavimoAtaskaitos[].rowNumber	15802	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].finansavimoAtaskaitos[].status	15802	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].izdininkas.person.el-pastas	16763	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].izdininkas.person.imones-kodas	16763	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].izdininkas.person.imones-pavadinimas	16763	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].izdininkas.person.telefonas	16763	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].izdininkas.person.vardas-pavarde	16763	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].izdininkas.reports[]	16763	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].participant.decisionNumber	3367	17	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].participant.email	3367	17	third-party	contact	conditional	the campaign's contact line; dropped by the public profile where it repeats the treasurer's or auditor's
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].participant.inquiryPhone	3367	17	third-party	contact	conditional	the campaign's contact line; dropped by the public profile where it repeats the treasurer's or auditor's
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].participant.participantType	3367	17	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].participant.registeredDate	3367	17	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].participant.registrationNote	3367	17	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].participant.status	3367	17	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].participant.title	3367	17	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sectionDescription	3367	17	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sprendimai.records[].date	93	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sprendimai.records[].note	93	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sprendimai.records[].number	93	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sprendimai.records[].rowNumber	93	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sprendimai.records[].title	93	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sprendimai.records[].urls[]	93	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sprendimai.urls[]	93	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sutartys.contracts[]	537	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sutartys.contracts[].agreementDate	460	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sutartys.contracts[].agreementNumber	460	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sutartys.contracts[].counterparty	460	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sutartys.contracts[].rowNumber	460	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sutartys.contracts[].subject	460	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sutartys.contracts[].textAccessNote	460	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sutartys.contracts[].textUrls[]	460	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sutartys[]	3759	13	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sutartys[].agreementDate	13004	11	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sutartys[].agreementNumber	13004	11	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sutartys[].counterparty	13004	11	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sutartys[].rowNumber	13004	11	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sutartys[].subject	13004	11	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sutartys[].textAccessNote	13004	11	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].sutartys[].textUrls[]	13004	11	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[]	782	9	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data	1114	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.blocks[].columns[]	158	11	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.blocks[].rows[][]	158	11	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.blocks[].title	158	11	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.blocks[].urls[]	158	11	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.blocks[].values[]	158	11	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.contracts[]	467	6	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.contracts[].agreementDate	647	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.contracts[].agreementNumber	647	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.contracts[].counterparty	647	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.contracts[].rowNumber	647	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.contracts[].subject	647	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.contracts[].textAccessNote	647	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.contracts[].textUrls[]	647	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.publisherInfoUrls[]	1114	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.reports[]	423	2	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.reports[].advertisingAppendixUrls[]	691	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.reports[].approvedDate	691	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.reports[].reportUrls[]	691	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.reports[].rowNumber	691	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.reports[].status	691	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].label	1128	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].message	1082	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].records[].amount	783	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].records[].date	783	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].records[].donor	783	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].records[].incomeSourceCode	783	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].records[].municipality	783	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].records[].notes	783	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].records[].rowNumber	783	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].status	1082	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].title	1128	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].totals.fiziniu-asmenu	781	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].totals.fiziniu-asmenu-mazos-aukos	779	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].totals.is-ju-grazinta-aukotojui-is-viso	252	11	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].totals.is-ju-pinigines-aukos-is-viso	779	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].totals.is-ju-savanoriski-darbai-is-viso	109	4	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].totals.is-viso	783	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].totals.juridiniu-asmenu	252	11	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].totals.juridiniu-asmenu-aukos	779	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].totals.kandidato-nuosavos-lesos	779	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].totals.nepinigines-aukos-is-viso	779	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].totals.pervesta-i-valstybes-biudzeta-is-viso	252	11	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].totals.politines-partijos-gauti-valstybes-biudzeto-asignavimai-panaudoti-politinei-kampanijai-finansuoti	779	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].totals.politines-partijos-lesos	779	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].data.sections[].urls[]	1128	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].label	1128	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].slug	1128	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].tabs[].url	1128	15	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].treasurer	1242	10	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].treasurer.companyCode	2125	17	third-party	organisation	ship	
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].treasurer.companyName	2125	17	third-party	organisation	ship	
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].treasurer.email	2125	17	third-party	contact	drop	the treasurer's / auditor's phone and e-mail; DROPPED by the public profile
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].treasurer.name	2125	17	third-party	identifying	ship	
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].treasurer.phone	2125	17	third-party	contact	drop	the treasurer's / auditor's phone and e-mail; DROPPED by the public profile
+rawData.politinesKampanijosDalyvioDuomenys.campaigns[].treasurer.title	2125	17	third-party	organisation	ship	
+rawData.politinesKampanijosDalyvioDuomenys.sectionDescription	3367	17	candidate	mixed	ship	the campaign pages as published: donors, reports, contracts; see normalized.politines-kampanijos-dalyvio-duomenys
+rawData.privaciuInteresuDeklaracija.sections[]	406	8	candidate	mixed	ship	the private-interest declaration as published, spouse and third parties included; see normalized.privaciu-interesu-deklaracija
+rawData.privaciuInteresuDeklaracija.sections[].columns[]	46898	28	candidate	mixed	ship	the private-interest declaration as published, spouse and third parties included; see normalized.privaciu-interesu-deklaracija
+rawData.privaciuInteresuDeklaracija.sections[].description	34364	18	candidate	mixed	ship	the private-interest declaration as published, spouse and third parties included; see normalized.privaciu-interesu-deklaracija
+rawData.privaciuInteresuDeklaracija.sections[].items[]	150	2	candidate	mixed	ship	the private-interest declaration as published, spouse and third parties included; see normalized.privaciu-interesu-deklaracija
+rawData.privaciuInteresuDeklaracija.sections[].items[].key	53390	26	candidate	mixed	ship	the private-interest declaration as published, spouse and third parties included; see normalized.privaciu-interesu-deklaracija
+rawData.privaciuInteresuDeklaracija.sections[].items[].value	53390	26	candidate	mixed	ship	the private-interest declaration as published, spouse and third parties included; see normalized.privaciu-interesu-deklaracija
+rawData.privaciuInteresuDeklaracija.sections[].records[].items[]	6	1	candidate	mixed	ship	the private-interest declaration as published, spouse and third parties included; see normalized.privaciu-interesu-deklaracija
+rawData.privaciuInteresuDeklaracija.sections[].records[].items[].key	15908	10	candidate	mixed	ship	the private-interest declaration as published, spouse and third parties included; see normalized.privaciu-interesu-deklaracija
+rawData.privaciuInteresuDeklaracija.sections[].records[].items[].value	15908	10	candidate	mixed	ship	the private-interest declaration as published, spouse and third parties included; see normalized.privaciu-interesu-deklaracija
+rawData.privaciuInteresuDeklaracija.sections[].records[].recordType	15913	10	candidate	mixed	ship	the private-interest declaration as published, spouse and third parties included; see normalized.privaciu-interesu-deklaracija
+rawData.privaciuInteresuDeklaracija.sections[].rows[][]	46898	28	candidate	mixed	ship	the private-interest declaration as published, spouse and third parties included; see normalized.privaciu-interesu-deklaracija
+rawData.privaciuInteresuDeklaracija.sections[].sectionId	66584	28	candidate	mixed	ship	the private-interest declaration as published, spouse and third parties included; see normalized.privaciu-interesu-deklaracija
+rawData.privaciuInteresuDeklaracija.sections[].title	82497	38	candidate	mixed	ship	the private-interest declaration as published, spouse and third parties included; see normalized.privaciu-interesu-deklaracija
+rawData.profile.biographyUrl	950	6	candidate	mixed	ship	the candidate card as published: nomination, constituency, list, elected note, document links; see normalized.profilis
+rawData.profile.candidateDisplayName	113073	55	candidate	identifying	ship	
+rawData.profile.electedNote	105737	47	candidate	mixed	ship	the candidate card as published: nomination, constituency, list, elected note, document links; see normalized.profilis
+rawData.profile.fields[]	10147	2	candidate	mixed	ship	the candidate card as published: nomination, constituency, list, elected note, document links; see normalized.profilis
+rawData.profile.fields[].displayValue	95590	45	candidate	mixed	ship	the candidate card as published: nomination, constituency, list, elected note, document links; see normalized.profilis
+rawData.profile.fields[].key	95590	45	candidate	mixed	ship	the candidate card as published: nomination, constituency, list, elected note, document links; see normalized.profilis
+rawData.profile.fields[].urls[]	95590	45	candidate	mixed	ship	the candidate card as published: nomination, constituency, list, elected note, document links; see normalized.profilis
+rawData.profile.incomeDeclarationUrl	7336	8	candidate	mixed	ship	the candidate card as published: nomination, constituency, list, elected note, document links; see normalized.profilis
+rawData.profile.officeHeading	29908	15	candidate	mixed	ship	the candidate card as published: nomination, constituency, list, elected note, document links; see normalized.profilis
+rawData.profile.photoMeta.bytes	27493	49	none	technical	ship	
+rawData.profile.photoMeta.error	38	3	none	technical	ship	
+rawData.profile.photoMeta.fetchedAt	25332	41	none	technical	ship	
+rawData.profile.photoMeta.mime	27493	49	none	technical	ship	
+rawData.profile.photoMeta.sha256	27493	49	none	technical	ship	
+rawData.profile.photoMeta.url	25332	41	none	technical	ship	
+rawData.profile.photoSrc	105737	47	candidate	identifying	ship	the portrait reference (sidecar path or URL)
+rawData.profile.photoUrl	950	6	candidate	identifying	ship	the portrait reference (sidecar path or URL)
+rawData.programa.sourceUrl	21	2	candidate	biographical	ship	
+rawData.programa.text	21	2	candidate	biographical	ship	
+rawData.residence	12100	8	none	technical	ship	an empty section: the key exists and holds nothing on this record
+rawData.skenai.deklaracija.forma	17	1	candidate	technical	ship	the URLs of VRK's scanned documents on the 2002/2004 presidential pages (declaration, questionnaire, health certificate, statement); the corpus holds the links, not the scans
+rawData.skenai.deklaracija.url	17	1	candidate	technical	ship	the URLs of VRK's scanned documents on the 2002/2004 presidential pages (declaration, questionnaire, health certificate, statement); the corpus holds the links, not the scans
+rawData.skenai.duomenu-anketa[]	17	1	candidate	technical	ship	the URLs of VRK's scanned documents on the 2002/2004 presidential pages (declaration, questionnaire, health certificate, statement); the corpus holds the links, not the scans
+rawData.skenai.pareiskimas	17	1	candidate	technical	ship	the URLs of VRK's scanned documents on the 2002/2004 presidential pages (declaration, questionnaire, health certificate, statement); the corpus holds the links, not the scans
+rawData.skenai.sveikatos-pazyma[]	17	1	candidate	technical	ship	the URLs of VRK's scanned documents on the 2002/2004 presidential pages (declaration, questionnaire, health certificate, statement); the corpus holds the links, not the scans
+rawData.turtoIrPajamuDeklaracijos.forma	27	1	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.turtoIrPajamuDeklaracijos.found	27	1	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.turtoIrPajamuDeklaracijos.isdave	27	1	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.turtoIrPajamuDeklaracijos.isdavimoData	27	1	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.turtoIrPajamuDeklaracijos.items[].periods.pabaigoje	27	1	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.turtoIrPajamuDeklaracijos.items[].periods.pradzioje	27	1	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.turtoIrPajamuDeklaracijos.items[].prompt	27	1	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.turtoIrPajamuDeklaracijos.items[].value	27	1	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.turtoIrPajamuDeklaracijos.note	51282	22	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.turtoIrPajamuDeklaracijos.sections[]	27	2	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.turtoIrPajamuDeklaracijos.sections[].issuer	1501	4	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.turtoIrPajamuDeklaracijos.sections[].items[]	1	1	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.turtoIrPajamuDeklaracijos.sections[].items[].form	1501	4	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.turtoIrPajamuDeklaracijos.sections[].items[].income	1501	4	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.turtoIrPajamuDeklaracijos.sections[].items[].key	84374	42	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.turtoIrPajamuDeklaracijos.sections[].items[].label	1500	4	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.turtoIrPajamuDeklaracijos.sections[].items[].tax	1501	4	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.turtoIrPajamuDeklaracijos.sections[].items[].urls[]	17207	10	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.turtoIrPajamuDeklaracijos.sections[].items[].value	84374	42	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.turtoIrPajamuDeklaracijos.sections[].receivedDate	1501	4	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+rawData.turtoIrPajamuDeklaracijos.sections[].title	84375	42	candidate	mixed	ship	the declaration extract as published, family counts included; see normalized.turto-ir-pajamu-deklaracijos
+source.candidateSourceUrl	113073	55	none	technical	ship	

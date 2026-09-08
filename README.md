@@ -79,3 +79,17 @@ Where to start:
   for the project's ground rules.
 - **Browsing** — `dashboard/` is a local person-centric browser over the
   corpus ([docs/DASHBOARD.md](docs/DASHBOARD.md)).
+
+## Licence, data terms and personal data
+
+The code is MIT-licensed ([LICENSE](LICENSE)). The corpus it produces — the
+release assets, the record files, `dashboard/people.json` — is a compilation
+of VRK's public candidate pages published under **CC BY 4.0**;
+[DATA_TERMS.md](DATA_TERMS.md) states the required attribution, what the
+compilation adds to VRK's content, and how to ask for a person's record to be
+removed or corrected (an issue on this repository, or
+<viespirkiai@viespirkiai.org>). The same terms travel inside every release's
+`MANIFEST.json`. The corpus names about 60,700 people and the spouses,
+children, business partners, treasurers and auditors they declared;
+[docs/PERSONAL_DATA.md](docs/PERSONAL_DATA.md) is the field-by-field
+inventory of that, and says which fields the public release drops.

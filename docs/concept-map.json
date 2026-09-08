@@ -1672,6 +1672,56 @@
         "2023-spalio-8-kupiskio-mero": "profilis.kita.savivaldybe.reiksme",
         "2025-kovo-16-meru": "profilis.kita.savivaldybe.reiksme"
       }
+    },
+    "pirmumo-balsai": {
+      "label-lt": "Pirmumo balsai",
+      "paths": {
+        "2000-kovo-19-savivaldybiu-tarybu": "kandidatavimas.pirmumoBalsai",
+        "2000-seimo": "kandidatavimas.pirmumoBalsai",
+        "2002-gruodzio-22-savivaldybiu-tarybu": "kandidatavimas.pirmumoBalsai",
+        "2004-ep": "kandidatavimas.pirmumoBalsai",
+        "2004-seimo": "kandidatavimas.pirmumoBalsai",
+        "2008-seimo": "kandidatavimas.pirmumoBalsai",
+        "2011-vasario-27-savivaldybiu": "kandidatavimas.pirmumoBalsai",
+        "2012-seimo": "kandidatavimas.pirmumoBalsai",
+        "2015-birzelio-7-pakartotiniai-sirvintos-trakai": "kandidatavimas.pirmumoBalsai",
+        "2015-birzelio-21-pakartotiniai-silutes": "kandidatavimas.pirmumoBalsai",
+        "2015-kovo-1-savivaldybiu": "kandidatavimas.pirmumoBalsai",
+        "1996-spalio-20-seimo": "kandidatavimas.teigiami-balsai"
+      },
+      "note": "The candidate's preference votes on the list (issue #133): the root block's pirmumoBalsai on the 2000-2015 list elections -- read off the candidate's pages to 2004, joined from the results trees from 2007 (issue #99) -- and, on 1996-spalio-20-seimo, the rating system's positive votes (teigiami-balsai on the multi-mandate entry of the kandidatavimas list; the 1997-1999 by-elections had no list seats). scraper/shared/kandidatura.py returns it as pirmumo-balsai with pirmumo-balsu-matas naming which of the two it is, and reitingo-balai / neigiami-balsai verbatim beside it. The 2016-2025 elections publish no vote counts the records carry; there the numeris-sarase / porinkiminis-numeris pair is the only preference signal. 2004-seimo: the 128 LLRA list candidates carry a rank and a null figure (VRK did not rank the list)."
+    },
+    "sarasas-balsai": {
+      "label-lt": "Sąrašo balsai",
+      "paths": {
+        "2000-kovo-19-savivaldybiu-tarybu": "kandidatavimas.tarybosNarys.sarasoBalsai",
+        "2002-gruodzio-22-savivaldybiu-tarybu": "kandidatavimas.tarybosNarys.sarasoBalsai"
+      },
+      "note": "The LIST's votes in the municipality -- not the candidate's, hence the name kept apart from pirmumo-balsai (issue #133). Only the 2000 and 2002 municipal trees carry it beside the candidate's preference votes; every other list election's list totals are on results pages the corpus does not read."
+    },
+    "apygardos-balsai": {
+      "label-lt": "Balsai apygardoje (I turas)",
+      "paths": {
+        "2000-seimo": "kandidatavimas.vienmandatesBalsai.isViso",
+        "2007-spalio-7-seimo-dzukija": "kandidatavimas.vienmandatesBalsai.isViso",
+        "2008-seimo": "kandidatavimas.vienmandatesBalsai.isViso",
+        "2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai": "kandidatavimas.vienmandatesBalsai.isViso",
+        "2011-vasario-13-seimo-marijampole": "kandidatavimas.vienmandatesBalsai.isViso",
+        "2012-seimo": "kandidatavimas.vienmandatesBalsai.isViso",
+        "2013-kovo-3-seimo-birzai-zarasai-ukmerge": "kandidatavimas.vienmandatesBalsai.isViso",
+        "2015-birzelio-7-seimo-varena-eisiskes": "kandidatavimas.vienmandatesBalsai.isViso",
+        "2015-kovo-1-seimo-zirmunai": "kandidatavimas.vienmandatesBalsai.isViso",
+        "2002-prezidento": "kandidatavimas.turai.balsai",
+        "2003-birzelio-15-seimo-nauji": "kandidatavimas.turai.balsai",
+        "2004-prezidento": "kandidatavimas.turai.balsai",
+        "1996-spalio-20-seimo": "kandidatavimas.turai.balsai",
+        "1997-kovo-23-seimo-pakartotiniai": "kandidatavimas.turai.balsai",
+        "1997-gruodzio-21-seimo-pakartotiniai": "kandidatavimas.turai.balsai",
+        "1998-kovo-22-seimo-pakartotiniai": "kandidatavimas.turai.balsai",
+        "1998-lapkricio-15-seimo-pakartotiniai": "kandidatavimas.turai.balsai",
+        "1999-kovo-21-seimo-pakartotiniai": "kandidatavimas.turai.balsai"
+      },
+      "note": "The candidate's first-round votes in the single-winner race: a Seimas constituency, or the whole country for a presidential candidate (issue #133). Three shapes: the 2000-2015 root block's vienmandatesBalsai.isViso (vienmandatesBalsai2 is the runoff, which no dotted path can address in isolation), the presidential and 2003 pages' turai[] list (the fan-out resolves the first entry, round one), and the 1996-1999 archive family's per-candidacy turai inside the kandidatavimas list. 2004-seimo stays unmapped: its constituency round pages were not joined (OUTPUT_SCHEMA). The 2016-2025 elections publish no vote counts the records carry. scraper/shared/kandidatura.py returns every round as apygardos-turai and the last round contested flattened as apygardos-balsai / -turas / -vieta / -procentai; the dashboard's row reads the rounds off the record."
     }
   },
   "derived": {
@@ -1841,6 +1891,40 @@
         "ep-narys": 1338,
         "prezidentas": 53
       }
+    },
+    "rinkimu-rezultatas": {
+      "label-lt": "Rinkimų rezultatas",
+      "resolver": "scraper/shared/kandidatura.py :: kandidatura(record, kind)",
+      "inputs": [
+        "kandidatavimas.pirmumoBalsai",
+        "kandidatavimas.reitingoBalai",
+        "kandidatavimas.pirmumoBalsuSaltinis",
+        "kandidatavimas.tarybosNarys.sarasoBalsai",
+        "kandidatavimas.vienmandatesBalsai",
+        "kandidatavimas.vienmandatesBalsai2",
+        "kandidatavimas.turai",
+        "kandidatavimas.teigiami-balsai",
+        "kandidatavimas.neigiami-balsai",
+        "kandidatavimas.reitingo-balai",
+        "kandidatavimas.reitingo-saltinis",
+        "kandidatavimas.vienmandate.apygarda",
+        "kandidatavimas.vienmandate.apygardosNumeris",
+        "kandidatavimas.apygarda",
+        "kandidatavimas.apygardos-numeris",
+        "profilis.kita.vienmandate-apygarda.reiksme",
+        "profilis.kita.apygarda.reiksme"
+      ],
+      "states": {
+        "pirmumo-balsai": "The candidate's preference votes, with pirmumo-balsu-matas = pirmumo-balsai (2000-2015) or teigiami-balsai (1996).",
+        "apygardos-turai": "Every round of the single-winner race the candidate contested, oldest first: {turas, balsai, procentai, vieta, saltinis}; apygardos-balsai / -turas / -vieta / -procentai are the last of them.",
+        "apygarda": "The constituency's one name across the four label eras (scraper/shared/apygardos.py), with apygardos-numeris the district's number in that election and apygarda-raw the label as published; None for the 2000-2012 cards' 'Daugiamandatė' row."
+      },
+      "counts": {
+        "pirmumo-balsai": 57809,
+        "apygardos-turai": 3562,
+        "apygarda": 6329
+      },
+      "note": "Measured over all 113,073 records on 2026-09-08: 57,147 records carry pirmumoBalsai and 662 the 1996 teigiami-balsai; 2,563 carry a first-round constituency block and 286 a runoff, 49 a presidential/2003 turai list and 950 an archive one (3,562 rounds in all, 424 of them runoffs); 6,329 name a constituency once the 2,980 'Daugiamandatė' rows are read as the list, and their 312 raw labels are 136 district names. The candidacy table (docs/CANDIDACIES.md) projects all of it as preference_votes, preference_votes_measure, list_votes, constituency_number, constituency_votes, constituency_round, constituency_place, constituency_votes_pct, votes_source and list_movement; people.json carries v (preference votes), cv (last-round constituency votes) and ap (the interned constituency name)."
     }
   }
 }

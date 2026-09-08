@@ -208,6 +208,8 @@ def leaf_for(concept: str, form: str):
         return {"id": "28392", "number": 6, "name": "Tėvynės sąjunga"}
     if form.endswith(".irasai") or form.endswith("uzsienio-kalbos"):
         return ["Lietuvos socialdemokratų partija"]
+    if form.endswith(("Balsai", "balsai", "isViso")):
+        return 4321  # a vote count (issue #133)
     return "Reikšmė"
 
 
@@ -252,7 +254,7 @@ class EveryPathShapeRendersTests(unittest.TestCase):
             for name in (
                 "compactValue", "educationCell", "workHistoryCell", "nameCell", "convictionCell",
                 "convictionLines", "deslug", "labelFor", "isFilledValue", "walkValue", "resolveConcept",
-                "resolveRow", "rowLabel",
+                "resolveRow", "rowLabel", "votesCell", "constituencyRounds", "constituencyVotesCell",
             )
         )
         consts = "\n".join(
@@ -265,6 +267,8 @@ class EveryPathShapeRendersTests(unittest.TestCase):
                 (r"^const SECTION_LABELS = \{.*?^\};", re.S | re.M),
                 (r"^const ROOT_SECTIONS = .*?;$", re.S | re.M),
                 (r"^const CONCEPT_ROWS = \[.*?^\];", re.S | re.M),
+                (r"^const fmtInt = .*;$", re.M),
+                (r"^const ROUND_NUMERALS = .*;$", re.M),
             )
         )
         script = (

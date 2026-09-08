@@ -90,8 +90,9 @@
       <select id="fElection" title="Rinkimai"></select>
       <select id="fParty" title="Iškėlusi partija ar komitetas"></select>
       <select id="fMunicipality" title="Savivaldybė"></select>
+      <select id="fConstituency" title="Vienmandatė apygarda (Seimo rinkimai)"></select>
       <select id="fRole" title="Pareigos, į kurias kandidatuota"></select>
-      <select id="fWon" title="Rinkimų rezultatas" style="grid-column: 1 / -1"></select>
+      <select id="fWon" title="Rinkimų rezultatas"></select>
       <div id="filterrow">
         <span id="count"></span>
         <button id="csvBtn" title="Atsisiųsti dabartinę atranką CSV formatu">⬇ CSV</button>
@@ -328,6 +329,63 @@ function convictionLines(declaration, entries, freeText, related) {
   return lines.join("\n");
 }
 
+// The votes (issue #133): 29.5 million preference votes on 59,275
+// candidacies reached no consumer. `votesCell` renders a count; the
+// constituency row reads every round of the single-winner race off the
+// record, mirroring scraper/shared/kandidatura.py's `apygardos-turai` --
+// the 2000-2015 root block's vienmandatesBalsai / vienmandatesBalsai2, the
+// presidential and 2003 pages' turai[], the 1996-1999 archive's per-candidacy
+// turai -- because a dotted path can address round one only.
+function votesCell(value) {
+  const n = typeof value === "number" ? value : parseInt(value, 10);
+  return Number.isFinite(n) ? fmtInt(n) : null;
+}
+
+function constituencyRounds(record) {
+  const rounds = [];
+  const push = (turas, balsai, procentai, vieta) => {
+    if (typeof balsai !== "number") return;
+    rounds.push({
+      turas: typeof turas === "number" ? turas : 1,
+      balsai,
+      procentai: typeof procentai === "number" ? procentai : null,
+      vieta: typeof vieta === "number" ? vieta : null,
+    });
+  };
+  const root = record.kandidatavimas && typeof record.kandidatavimas === "object" && !Array.isArray(record.kandidatavimas)
+    ? record.kandidatavimas : null;
+  if (root) {
+    for (const [n, key] of [[1, "vienmandatesBalsai"], [2, "vienmandatesBalsai2"]]) {
+      const block = root[key];
+      if (block && typeof block === "object") push(n, block.isViso, block.procentai, block.vieta);
+    }
+    if (!rounds.length && Array.isArray(root.turai)) {
+      for (const t of root.turai) if (t && typeof t === "object") push(t.turas, t.balsai, t["procentai-nuo-galiojanciu"] ?? t.procentai, t.vieta);
+    }
+  }
+  const archive = (record.normalized || {}).kandidatavimas;
+  if (!rounds.length && Array.isArray(archive)) {
+    for (const entry of archive) {
+      if (!entry || !Array.isArray(entry.turai)) continue;
+      for (const t of entry.turai) if (t && typeof t === "object") push(t.turas, t.balsai, null, t.vieta);
+    }
+  }
+  return rounds.sort((a, b) => a.turas - b.turas);
+}
+
+const ROUND_NUMERALS = ["I", "II", "III"];
+function constituencyVotesCell(value, record) {
+  const rounds = constituencyRounds(record);
+  // A record whose rounds cannot be read still has the mapped round-one
+  // figure the resolver handed over; show that rather than a dash.
+  if (!rounds.length) return votesCell(value);
+  return rounds.map(r =>
+    `${ROUND_NUMERALS[r.turas - 1] || r.turas} turas: ${fmtInt(r.balsai)}`
+    + (r.procentai != null ? ` (${r.procentai.toLocaleString("lt-LT")} %)` : "")
+    + (r.vieta != null ? `, ${r.vieta} vieta` : "")
+  ).join("\n");
+}
+
 // Comparison rows. Each names a concept from docs/concept-map.json -- the
 // checked-in, corpus-verified bridge whose per-election paths
 // scripts/field_coverage.py gates against the data -- so this file carries
@@ -348,6 +406,9 @@ const CONCEPT_ROWS = [
   { concept: "savivaldybe", format: nameCell },
   { concept: "seimine-padetis" },
   { concept: "uzsienio-kalbos" },
+  { concept: "pirmumo-balsai", format: votesCell },
+  { concept: "apygardos-balsai", label: "Balsai apygardoje", format: constituencyVotesCell },
+  { concept: "sarasas-balsai", format: votesCell },
   { concept: "privalomas-registruoti-turtas", format: moneyCell },
   { concept: "pinigines-lesos", format: moneyCell },
   { concept: "gautos-pajamos", format: incomeCell },
@@ -682,6 +743,16 @@ function buildFilters() {
     .sort((a, b) => a[0].localeCompare(b[0], "lt"))
     .forEach(([name, i]) => addOption(fMunicipality, String(i), name));
 
+  // The single-mandate constituency by name (issue #133): one name per
+  // district across the four label eras (scraper/shared/apygardos.py), which
+  // is a name and not a boundary -- Kėdainių in 2000 and in 2020 are one row.
+  const fConstituency = document.getElementById("fConstituency");
+  addOption(fConstituency, "", "— visos apygardos —");
+  (INDEX.constituencies || [])
+    .map((name, i) => [name, i])
+    .sort((a, b) => a[0].localeCompare(b[0], "lt"))
+    .forEach(([name, i]) => addOption(fConstituency, String(i), name));
+
   const fRole = document.getElementById("fRole");
   addOption(fRole, "", "— visos pareigos —");
   for (const [code, label] of ROLE_LABELS) addOption(fRole, code, label);
@@ -692,7 +763,7 @@ function buildFilters() {
   addOption(fWon, "lost", "tik neišrinkti");
   addOption(fWon, "unknown", "be rezultatų duomenų");
 
-  for (const id of ["fElection", "fParty", "fMunicipality", "fRole", "fWon"]) {
+  for (const id of ["fElection", "fParty", "fMunicipality", "fConstituency", "fRole", "fWon"]) {
     document.getElementById(id).addEventListener("change", renderList);
   }
 }
@@ -702,10 +773,11 @@ function activeFilters() {
     election: document.getElementById("fElection").value,
     party: document.getElementById("fParty").value,
     municipality: document.getElementById("fMunicipality").value,
+    constituency: document.getElementById("fConstituency").value,
     role: document.getElementById("fRole").value,
     won: document.getElementById("fWon").value,
   };
-  f.any = !!(f.election || f.party || f.municipality || f.role || f.won);
+  f.any = !!(f.election || f.party || f.municipality || f.constituency || f.role || f.won);
   return f;
 }
 
@@ -716,6 +788,7 @@ function candidacyMatches(e, f) {
   if (f.election && !inElection(e, f.election)) return false;
   if (f.party && !inParty(e, f.party)) return false;
   if (f.municipality !== "" && e.sv !== +f.municipality) return false;
+  if (f.constituency && e.ap !== +f.constituency) return false;
   if (f.role && !rolesOf(e).includes(f.role)) return false;
   // With an office chosen, the outcome is that office's: "Meras" + "tik
   // išrinkti" is the 60 mayors of a year, not the 60 plus the council
@@ -840,7 +913,8 @@ function exportCSV() {
   const f = activeFilters();
   const header = [
     "pid", "vardas_pavarde", "gimimo_data", "rinkimai", "data",
-    "pareigos", "savivaldybe", "partijos_id", "partija", "isrinktas", "isrinktas_kaip",
+    "pareigos", "savivaldybe", "apygarda", "partijos_id", "partija", "isrinktas", "isrinktas_kaip",
+    "pirmumo_balsai", "balsai_apygardoje",
     "issilavinimas",
     "turtas_eur", "pinigines_lesos_eur", "pajamos_eur",
     "turtas_ir_lesos_eur", "deklaruota_litais", "tik_darbo_santykiu_pajamos",
@@ -857,9 +931,11 @@ function exportCSV() {
         e.id, (ELECTIONS.get(e.id) || {}).date || "",
         roleLabel(e),
         e.sv != null ? INDEX.municipalities[e.sv] : "",
+        e.ap != null ? (INDEX.constituencies || [])[e.ap] : "",
         e.p || "", e.p ? ((INDEX.parties[e.p] || {}).n || "") : "",
         e.w === true ? "taip" : e.w === false ? "ne" : "",
         electedLabel(e),
+        e.v ?? "", e.cv ?? "",
         e.ed ? ((INDEX.educationLevels || [])[e.ed - 1] || {}).label || "" : "",
         m[0] ?? "", m[1] ?? "", m[2] ?? "", m[3] ?? "",
         e.lt ? "taip" : "", e.ds ? "taip" : "",
@@ -1129,6 +1205,17 @@ async function showPerson(p) {
       party.textContent = partyName;
       sum.appendChild(party);
     }
+    // The showing (issue #133): the preference votes on the list, the votes
+    // of the single-winner race's last round, whichever the record has.
+    const showing = [
+      e.v != null ? `${fmtInt(e.v)} ${plural(e.v, "pirmumo balsas", "pirmumo balsai", "pirmumo balsų")}` : null,
+      e.cv != null ? `${fmtInt(e.cv)} ${plural(e.cv, "balsas", "balsai", "balsų")} apygardoje` : null,
+    ].filter(Boolean);
+    if (showing.length) {
+      const votes = document.createElement("span"); votes.className = "party";
+      votes.textContent = showing.join(" · ");
+      sum.appendChild(votes);
+    }
     if (e.w === true) {
       const win = document.createElement("span"); win.className = "win";
       // A council-and-mayor candidacy says which office was won.
@@ -1340,8 +1427,9 @@ function showAggregates() {
 
   function render() {
     const id = select.value;
-    const candidacies = [];
-    for (const p of INDEX.people) for (const e of p.e) if (inElection(e, id)) candidacies.push(e);
+    const pairs = [];
+    for (const p of INDEX.people) for (const e of p.e) if (inElection(e, id)) pairs.push([p, e]);
+    const candidacies = pairs.map(([, e]) => e);
     const total = candidacies.length;
     holder.replaceChildren();
 
@@ -1410,6 +1498,48 @@ function showAggregates() {
       wrap.appendChild(t);
       partyWrap.appendChild(wrap);
     }
+
+    // Votes (issue #133): the preference votes on the list and the votes of
+    // the single-winner race, where the records carry them -- and a plain
+    // statement where they do not, because an election with no vote data
+    // is not an election nobody voted in.
+    const withVotes = pairs.filter(([, e]) => e.v != null);
+    const withRace = pairs.filter(([, e]) => e.cv != null);
+    const votesWrap = section(
+      "Balsai",
+      withVotes.length
+        ? `Pirmumo balsai žinomi ${fmtInt(withVotes.length)} iš ${fmtInt(total)} kandidatavimų (${pct(withVotes.length, total)}): ` +
+          `iš viso ${fmtInt(withVotes.reduce((n, [, e]) => n + e.v, 0))}, mediana ${fmtInt(median(withVotes.map(([, e]) => e.v)))}.`
+        : withRace.length
+          ? `Balsai apygardoje žinomi ${fmtInt(withRace.length)} iš ${fmtInt(total)} kandidatavimų (${pct(withRace.length, total)}).`
+          : "Šių rinkimų įrašuose balsų skaičių nėra: VRK rezultatus skelbia puslapiuose, kurių korpusas neskaito (žr. docs/CANDIDACIES.md, votes_source)."
+    );
+    const ranking = (title, key, unit) => {
+      const rows = pairs.filter(([, e]) => e[key] != null).sort((a, b) => b[1][key] - a[1][key]).slice(0, 10);
+      if (!rows.length) return;
+      const h = document.createElement("div"); h.className = "aggnote"; h.textContent = title;
+      votesWrap.appendChild(h);
+      const t = document.createElement("table"); t.className = "cmp";
+      t.innerHTML = `<thead><tr><th>#</th><th>Asmuo</th><th>Iškėlėjas</th><th>${unit}</th><th>Išrinkta</th></tr></thead><tbody></tbody>`;
+      rows.forEach(([p, e], i) => {
+        const tr = t.tBodies[0].insertRow();
+        tr.insertCell().textContent = String(i + 1);
+        const cell = tr.insertCell();
+        const a = document.createElement("a");
+        a.href = "#" + p.pid;
+        a.textContent = p.n;
+        a.addEventListener("click", (ev) => { ev.preventDefault(); showPerson(p); });
+        cell.appendChild(a);
+        tr.insertCell().textContent = partyNameOf(e) || "—";
+        const votes = tr.insertCell(); votes.textContent = fmtInt(e[key]); votes.style.fontVariantNumeric = "tabular-nums";
+        tr.insertCell().textContent = e.w === true ? "taip" : e.w === false ? "ne" : "—";
+      });
+      const wrap = document.createElement("div"); wrap.className = "tablewrap";
+      wrap.appendChild(t);
+      votesWrap.appendChild(wrap);
+    };
+    ranking("Daugiausiai pirmumo balsų", "v", "Pirmumo balsai");
+    ranking("Daugiausiai balsų apygardoje (paskutinis turas)", "cv", "Balsai apygardoje");
 
     // Education mix
     const withEducation = candidacies.filter(e => e.ed != null);

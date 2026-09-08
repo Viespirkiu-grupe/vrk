@@ -11,13 +11,13 @@ repository looked at how often a mapped field is filled, so nothing could.
 ```bash
 python scripts/field_coverage.py                    # measure, check, exit 1 on a finding
 python scripts/field_coverage.py 2020-seimo         # one election's cells
-python scripts/field_coverage.py --update-baseline  # after a deliberate change
+python scripts/field_coverage.py --update-baseline  # after a deliberate change; refuses over a standing finding
 python scripts/field_coverage.py --unmapped         # also: a field the map denies an election that has it
 ```
 
 One pass over `data/` — about 30 seconds for 113,073 records — resolves every
 `docs/concept-map.json` path against every record of the elections that map it.
-That is 1,362 cells across 55 elections.
+That is 1,394 cells across 55 elections.
 
 ## What it produces
 
@@ -38,7 +38,7 @@ was the second kind.
 fill rate, a status word and a note. Only the rate is committed — the counts
 move with every scrape and would make the file a diff generator.
 
-## The two rules
+## The five rules
 
 **Zero fill.** A mapped cell no record fills. Every one has to be classified in
 the baseline, with a note saying why; a new one, or one still marked
@@ -49,6 +49,38 @@ than 90 % of the elections that map it, the message says so — that is the
 **Regression.** A fill rate more than `--max-drop` points (default 5) below the
 baseline. Re-parsing an election is allowed to change what it recovers; losing
 five points of a field without saying so is not.
+
+**Below its peers** (issue #135). A filled cell more than `--max-below-peers`
+points (default 25) under the concept's median across the *other* elections
+that map it, where that median is above 90 %. The first two rules cannot see a
+new election's regression: it has no baseline row to fall from, and 8 % is not
+zero — on a mirror with a synthetic 1,740-record `2027-seimo` whose birth
+dates were nulled on 1,600 records, the gate wrote `ok` at 8.0 % and exited 0.
+The concept's median elsewhere was already computed inside the gate to
+decorate the zero-fill message; now it is a rule. Such a cell carries
+`partly-published` or `partly-answered` with a note (below), or it is a
+finding. The 46 cells the rule flags on the
+2026-09-08 corpus are all
+classified, each checked against the retained pages: the archive by-elections
+whose declaration extracts VRK holds for one candidate in twenty, the 2004
+static site printing „-“ in a loan row nobody filled, the archive cards that
+recover a birth date from the biography's first sentence, the 2019 municipal
+questionnaire whose optional questions a third of candidates skipped.
+
+**Unmapped election** (issue #135). An election with records under `data/`
+that no concept maps. The coverage table cannot see it at all, and five of the
+candidacy table's 52 columns come out empty for it; until this rule the run
+mentioned it on stderr — under a docstring that said "not a rule" — and exited
+0. An election legitimately left out carries a `*` row in the baseline
+(`*<TAB><election-id><TAB>0.0<TAB>not-mapped<TAB>why`).
+
+**Peer gap** (issue #135). A *new* election — one with no baseline row yet —
+that maps fewer concepts than the closest already-mapped election of the same
+`kind` (nearest by date, from `scraper/elections.json`). Each concept the peer
+maps and the new election does not is a finding until it is mapped or recorded
+as a `not-mapped` row with a note. This is the rule that catches a new module
+whose author forgot half the concept map: the fixture tests pass, the cells
+that exist all read 100 %, and the missing ones are simply not there to fail.
 
 **Unmapped fill** (`--unmapped`, the third rule, opt-in). A concept's own path
 form that fills on at least one percent of the records of an election the map
@@ -69,22 +101,54 @@ that do not ask the question, recorded as such in the map's `verified` note.
 
 ## Status words
 
-Twenty-four of the 1,295 cells are filled by no record. Each carries one of:
+Twenty-four of the 1,394 cells are filled by no record, and 46 more are filled
+far below the concept's other elections. Each carries one of:
 
 | status | count | meaning |
 | --- | --- | --- |
-| `ok` | 1,242 | filled at some rate |
+| `ok` | 1,324 | filled at some rate, in line with the concept's other elections |
 | `upstream-absent` | 18 | the source publishes no value here — the label is missing, or printed and left blank |
 | `empty-is-the-answer` | 6 | every record carries the key and the empty value is the answer: nobody declared a conviction, nobody had an outstanding loan |
 | `parser-gap` | 0 | the source publishes it and the parser does not recover it |
+| `partly-published` | 29 | filled, but the source prints the field on only some of the election's records: the key is absent on the rest (a birth date recovered from prose where the card has none, a declaration extract VRK's archive holds for one candidate in twenty) |
+| `partly-answered` | 17 | filled, but far below the peers with the key on every record: the question was asked and left blank, or answered with the „-“ the 2004 forms print for "none" |
+| `not-mapped` | 0 | a `*` row for an election under `data/` that no concept maps, or a concept row for one the closest peer election maps and this one does not, each with a note saying why |
 | `unexplained` | 0 | nobody has looked. Fails the run. |
 
 `empty-is-the-answer` is checked, not taken on trust: a cell claiming it whose
 key is absent on some records is a finding, because that is a different thing
-from an empty answer.
+from an empty answer. The `partly-*` pair is checked the same way: the
+checked-in file's own rates say which cells are below their peers, and
+`tests/test_field_coverage.py` fails if one of them reads `ok`, or if a cell
+carries a `partly-*` word it no longer needs.
 
 `parser-gap` is the word the `2020-seimo` cell would have needed. That it is
 unused today is a claim this file makes and the run checks.
+
+## `--update-baseline` is additive and loud
+
+It used to rewrite all 1,336 rows and exit 0 whatever it found: on a mirror
+where a real 74-point drop on one election made the plain run exit 1, the
+update printed `Baseline rewritten` and the next plain run said `No findings`
+— and it was the first command the new-election checklist gave (issue #135).
+Now:
+
+- it **refuses** — writes nothing, exits 1 — while a finding stands on a row
+  the baseline already has (a regression, a zero that used to be filled), or
+  on a new election's concept set (an unmapped election, a peer gap). Fix or
+  classify those first; `--force` rewrites regardless;
+- it **reports** what it did: `N row(s) added, M changed, K down more than 5
+  points`;
+- it **exits 1** while any zero or below-peers cell it wrote is still
+  `unexplained`, listing each with the facts a reviewer needs (`8.0 % filled
+  (140 of 1,740) against a median 100.0 %; the key is present on every record,
+  1,600 left it blank`), like the candidacy table's gate always has. A new
+  election's first update therefore ends with the list of cells its author has
+  to classify — by editing the status word in the row, not by re-running.
+
+`scripts/build_candidacy_table.py --update-baseline` follows the same
+contract, and inherits a below-peers classification from the concept its
+column projects (`COLUMN_CONCEPTS`) so the same fact is classified once.
 
 ## Three resolution rules a naive walker gets wrong
 
@@ -114,9 +178,10 @@ and booleans always count; strings and containers have to hold something.
   both rules against the shapes the corpus produced, and the checked-in baseline
   against `concept-map.json` — mapping a new election without measuring it fails
   the suite, not just the gate.
-- The run says so on stderr when an election is in `data/` and no concept maps
-  it. That is how the two elections mapped in issue #85 were found: 10,165
-  records the coverage table could not see at all.
+- An election in `data/` that no concept maps fails the run (the
+  unmapped-election rule). That is how the two elections mapped in issue #85
+  were found — 10,165 records the coverage table could not see at all — when
+  it was still a stderr note.
 
 ## See also
 
