@@ -181,8 +181,9 @@ get it — `data/` is gitignored and the alternative was a ~27-hour scrape.
 `scripts/build_distribution.py` builds what a release ships:
 
 ```bash
-python scripts/build_distribution.py                    # full corpus + fill gate
+python scripts/build_distribution.py                    # full corpus + fill gate, public profile
 python scripts/build_distribution.py 2019-prezidento    # subset, no gate
+python scripts/build_distribution.py --profile full     # the archive verbatim
 ```
 
 | release asset | contents |
@@ -190,7 +191,7 @@ python scripts/build_distribution.py 2019-prezidento    # subset, no gate
 | `candidacies.csv.gz` | the flat table above |
 | `campaigns.csv.gz` | one row per campaign-finance participant |
 | `vrk.sqlite.gz` | the analysis database above, gzipped |
-| `vrk-corpus.sqlite.gz` | **everything**: the analysis tables plus `records`, `photos`, `anomalies` |
+| `vrk-corpus.sqlite.gz` | **everything**: the analysis tables plus `records`, `photos`, `anomalies` — under the public profile, less the third-party contacts and the portraits' metadata (below) |
 | `MANIFEST.json` | per-election record counts, build date, parser commit, sha256 + bytes per asset, and the terms (`license`, `dataLicense`, `attribution`, `terms`, `source` — [DATA_TERMS.md](../DATA_TERMS.md), issue #138) |
 
 `elections` is the registry as a table — `id, date, kind, parent, name,
@@ -222,6 +223,19 @@ since the 2026-08-29 re-parse; one reappearing means an election regressed).
 The candidacy-table pass and the records pass must agree on the record
 count.
 
+**The release is a profile of the archive** (issue #142). `--profile
+public`, the default, removes from every record the campaign treasurer's
+and auditor's phone and e-mail — both layers, eight paths listed in
+[PERSONAL_DATA.md](PERSONAL_DATA.md#what-the-public-release-drops) and held
+in `scripts/pii_inventory.py`'s `PUBLIC_PROFILE_DROPS` — and the campaign's
+own contact line where it repeats one of those values; none of them reaches
+this table, the coverage gate or the dashboard's comparison rows. It also
+passes every portrait through `scraper/shared/image_metadata.py`, so the
+`photos` table holds the picture without its Exif (GPS, camera serial,
+`Artist`), XMP, IPTC and comment blocks. `--profile full` ships the archive
+verbatim. `MANIFEST.json` records `profile`, the `redaction` paths and the
+number of values removed, and `counts.photosStripped`.
+
 In `vrk-corpus.sqlite` the three extra tables are:
 
 - `records(election_id, candidate_id, candidate_name, record_file,
@@ -230,10 +244,16 @@ In `vrk-corpus.sqlite` the three extra tables are:
   `(election_id, candidate_id)`. `raw_json` / `norm_json` are the record's
   `rawData` / `normalized`, compact-serialized (the files are
   pretty-printed; 34.5 % of `data/` was whitespace). The original record
-  reassembles losslessly from the row — `reconstruct_record` in the script
-  is the contract and a test pins the round trip.
-- `photos(sha256, mime, bytes, data)` — every sidecar portrait, stored once
-  by content hash; `records.photo_sha256` is the join. The pre-2016 and
+  reassembles from the row — `reconstruct_record` in the script is the
+  contract and a test pins the round trip: lossless under `--profile full`,
+  and under the public profile the record less the values the profile
+  removes (the keys are absent, not nulled).
+- `photos(sha256, mime, bytes, stripped, stripped_sha256, data)` — every
+  sidecar portrait, stored once by content hash; `records.photo_sha256` is
+  the join and `sha256` is always the archive's hash, whatever the profile
+  did to the bytes: under the public profile `data` is the picture with its
+  metadata segments removed, `stripped` says whether anything was, and
+  `stripped_sha256` hashes what is stored. The pre-2016 and
   2020+ eras link their portraits rather than embedding them, and those are
   archived the same way since issue #118 (`scripts/backfill_url_portraits.py`);
   a record still carrying an `http(s)://` reference is one whose portrait

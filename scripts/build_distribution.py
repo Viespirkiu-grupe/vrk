@@ -49,10 +49,26 @@ What makes the artifact trustworthy:
   build error: the 2026-08-29 re-parse (issue #91) externalized the last
   487, and shipping one again would mean an election regressed.
 
+* The release is a profile of the archive, not the archive (issue #142).
+  `--profile public`, the default, drops the campaign treasurer's and
+  auditor's phone and e-mail from every record -- 790 people who never
+  stood for election, on personal accounts and mobiles -- and the
+  campaign's own contact line where it repeats one of those values
+  (`scripts/pii_inventory.py` holds the list and the inventory behind it),
+  and passes every portrait through `scraper/shared/image_metadata.py`, so
+  the `photos` table carries the picture without the Exif GPS position,
+  camera serial, `Artist` and IPTC blocks 9,889 of the sidecars hold. The
+  bytes are stored under the *original* sha256 -- the join key and what the
+  record's `photoMeta.sha256` names -- with the stored bytes' own hash
+  beside them, so the archive stays verifiable. `--profile full` ships
+  everything verbatim, for a mirror of the archive; `MANIFEST.json` says
+  which profile built the assets and how many values were removed.
+
 Run from the repo root:
 
-    python scripts/build_distribution.py                    # full corpus + gate
+    python scripts/build_distribution.py                    # full corpus + gate, public profile
     python scripts/build_distribution.py 2019-prezidento    # subset, no gate
+    python scripts/build_distribution.py --profile full     # the archive verbatim
 """
 
 from __future__ import annotations
@@ -74,7 +90,15 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import build_candidacy_table as table  # noqa: E402
 import build_person_index as identity  # noqa: E402
+from pii_inventory import PUBLIC_PROFILE_CONDITIONAL, PUBLIC_PROFILE_DROPS  # noqa: E402
 from scraper.shared.files import PORTRAIT_KEYS  # noqa: E402
+from scraper.shared.image_metadata import strip_metadata  # noqa: E402
+
+#: What a build ships of the archive (issue #142): `public` redacts the
+#: third-party contact paths and strips portrait metadata, `full` is the
+#: archive verbatim.
+PROFILES = ("public", "full")
+DEFAULT_PROFILE = "public"
 
 #: The record envelope, as issue #89's census measured it over the whole
 #: corpus: six keys on every record, two optional. Closed on purpose.
@@ -171,6 +195,72 @@ def record_photo(record: dict[str, Any], record_path: Path) -> tuple[str, str | 
     return digest, mime, raw
 
 
+def _path_segments(path: str) -> list[tuple[str, bool]]:
+    """`a.b[].c` -> [("a", False), ("b", True), ("c", False)]: each segment's
+    key and whether a list is fanned out under it."""
+    return [(segment[:-2], True) if segment.endswith("[]") else (segment, False) for segment in path.split(".")]
+
+
+def _delete_path(value: Any, segments: list[tuple[str, bool]], keep: Any) -> int:
+    """Remove the leaf `segments` names from `value`, fanning out over lists,
+    unless `keep(leaf)` says the value stays. Returns how many leaves went."""
+    if not isinstance(value, dict):
+        return 0
+    key, is_list = segments[0]
+    if key not in value:
+        return 0
+    if len(segments) == 1:
+        if keep(value[key]):
+            return 0
+        del value[key]
+        return 1
+    child = value[key]
+    if is_list:
+        return sum(_delete_path(entry, segments[1:], keep) for entry in child) if isinstance(child, list) else 0
+    return _delete_path(child, segments[1:], keep)
+
+
+def _collect(value: Any, segments: list[tuple[str, bool]], out: set[str]) -> None:
+    if not isinstance(value, dict):
+        return
+    key, is_list = segments[0]
+    if key not in value:
+        return
+    if len(segments) == 1:
+        leaf = value[key]
+        if isinstance(leaf, str) and leaf.strip():
+            out.add(leaf.strip())
+        return
+    child = value[key]
+    if is_list:
+        if isinstance(child, list):
+            for entry in child:
+                _collect(entry, segments[1:], out)
+    else:
+        _collect(child, segments[1:], out)
+
+
+def redact_record(record: dict[str, Any]) -> int:
+    """The public profile, applied in place: the treasurer's and auditor's
+    phone and e-mail go (PUBLIC_PROFILE_DROPS, both layers), and the
+    campaign's own contact line goes where its value is one of those --
+    on 93 of 105 sampled 2016 records it is the treasurer's own number and
+    address again. Returns the number of values removed."""
+    third_party: set[str] = set()
+    for path in PUBLIC_PROFILE_DROPS:
+        _collect(record, _path_segments(path), third_party)
+    removed = 0
+    for path in PUBLIC_PROFILE_DROPS:
+        removed += _delete_path(record, _path_segments(path), keep=lambda leaf: False)
+    for path in PUBLIC_PROFILE_CONDITIONAL:
+        removed += _delete_path(
+            record,
+            _path_segments(path),
+            keep=lambda leaf: not (isinstance(leaf, str) and leaf.strip() in third_party),
+        )
+    return removed
+
+
 def _envelope_string(record: dict[str, Any], key: str, record_path: Path) -> str | None:
     value = record.get(key)
     if value is None or isinstance(value, str):
@@ -183,12 +273,17 @@ def write_corpus_sqlite(
     base_path: Path,
     data_root: Path,
     election_ids: list[str],
+    profile: str = DEFAULT_PROFILE,
 ) -> dict[str, Any]:
     """Copy the analysis database and extend it into the full corpus.
 
     Returns counts: records, per_election, photos (unique), photo_records,
-    photo_bytes, anomalies.
+    photo_bytes (as stored), anomalies, redacted_values, photos_stripped,
+    photos_untouched (containers the stripper leaves alone), photos_malformed.
     """
+    if profile not in PROFILES:
+        raise ValueError(f"unknown profile {profile!r}; one of {PROFILES}")
+    public = profile == "public"
     shutil.copyfile(base_path, corpus_path)
     connection = sqlite3.connect(corpus_path)
     counts: dict[str, Any] = {
@@ -198,6 +293,10 @@ def write_corpus_sqlite(
         "photo_records": 0,
         "photo_bytes": 0,
         "anomalies": 0,
+        "redacted_values": 0,
+        "photos_stripped": 0,
+        "photos_untouched": 0,
+        "photos_malformed": 0,
     }
     try:
         # A throwaway build: a crash mid-write is answered by rebuilding,
@@ -220,11 +319,16 @@ def write_corpus_sqlite(
                 PRIMARY KEY (election_id, candidate_id)
             )"""
         )
+        # `sha256` is the archive's hash -- what the record's photoMeta names
+        # and what records.photo_sha256 joins on -- whatever was done to the
+        # bytes on the way out; `stripped_sha256` hashes what is stored.
         connection.execute(
             """CREATE TABLE photos (
                 sha256 TEXT PRIMARY KEY,
                 mime TEXT,
                 bytes INTEGER NOT NULL,
+                stripped INTEGER NOT NULL,
+                stripped_sha256 TEXT NOT NULL,
                 data BLOB NOT NULL
             )"""
         )
@@ -260,12 +364,30 @@ def write_corpus_sqlite(
                     counts["photo_records"] += 1
                     if digest not in seen_photos:
                         seen_photos.add(digest)
+                        stored = raw
+                        stripped = False
+                        if public:
+                            result = strip_metadata(raw)
+                            stored, stripped = result.data, result.stripped
+                            counts["photos_stripped"] += stripped
+                            counts["photos_untouched"] += result.container == "other"
+                            counts["photos_malformed"] += result.malformed
                         connection.execute(
-                            "INSERT INTO photos VALUES (?, ?, ?, ?)",
-                            (digest, mime, len(raw), raw),
+                            "INSERT INTO photos VALUES (?, ?, ?, ?, ?, ?)",
+                            (
+                                digest,
+                                mime,
+                                len(stored),
+                                int(stripped),
+                                hashlib.sha256(stored).hexdigest(),
+                                stored,
+                            ),
                         )
                         counts["photos"] += 1
-                        counts["photo_bytes"] += len(raw)
+                        counts["photo_bytes"] += len(stored)
+
+                if public:
+                    counts["redacted_values"] += redact_record(record)
 
                 try:
                     connection.execute(
@@ -315,10 +437,12 @@ def write_corpus_sqlite(
 def reconstruct_record(row: sqlite3.Row) -> dict[str, Any]:
     """The original record, reassembled from a `records` row.
 
-    Structurally identical to the `data/<election-id>/<record_file>` JSON it
-    was built from; only the serialization differs (the files are
-    pretty-printed, the table is compact). The round trip is pinned by
-    tests/test_build_distribution.py.
+    Under `--profile full`, structurally identical to the
+    `data/<election-id>/<record_file>` JSON it was built from; only the
+    serialization differs (the files are pretty-printed, the table is
+    compact). Under the public profile it is that record less the values
+    `redact_record` removed -- the keys are absent, not nulled. Both are
+    pinned by tests/test_build_distribution.py.
     """
     record: dict[str, Any] = {
         "electionId": row["election_id"],
@@ -372,6 +496,7 @@ def write_manifest(
     stats: dict[str, Any],
     corpus_counts: dict[str, Any],
     subset: list[str] | None,
+    profile: str = DEFAULT_PROFILE,
 ) -> dict[str, Any]:
     built = datetime.now(timezone.utc)
     manifest: dict[str, Any] = {
@@ -386,6 +511,14 @@ def write_manifest(
         "attribution": ATTRIBUTION,
         "terms": TERMS_URL,
         "source": SOURCE_URL,
+        # Which profile of the archive this is (issue #142): what was
+        # removed from the records and what was stripped from the portraits.
+        "profile": profile,
+        "redaction": {
+            "paths": list(PUBLIC_PROFILE_DROPS) if profile == "public" else [],
+            "conditionalPaths": list(PUBLIC_PROFILE_CONDITIONAL) if profile == "public" else [],
+            "valuesRemoved": corpus_counts["redacted_values"],
+        },
         "counts": {
             "records": corpus_counts["records"],
             "elections": stats["elections"],
@@ -393,6 +526,9 @@ def write_manifest(
             "campaigns": stats["campaigns"],
             "photos": corpus_counts["photos"],
             "photoBytes": corpus_counts["photo_bytes"],
+            "photosStripped": corpus_counts["photos_stripped"],
+            "photosMetadataUntouched": corpus_counts["photos_untouched"],
+            "photosMalformed": corpus_counts["photos_malformed"],
             "anomalies": corpus_counts["anomalies"],
         },
         "recordsPerElection": corpus_counts["per_election"],
@@ -414,6 +550,7 @@ def build_distribution(
     dist: Path,
     subset: list[str] | None,
     max_drop: float = 5.0,
+    profile: str = DEFAULT_PROFILE,
 ) -> int:
     rows, campaigns, elections_table, stats = table.build(repo_root, subset)
     persons = stats.pop("persons_rows")
@@ -455,6 +592,7 @@ def build_distribution(
         dist / "vrk.sqlite",
         repo_root / "data",
         stats["elections_present"],
+        profile,
     )
     if corpus_counts["records"] != stats["records"]:
         raise SystemExit(
@@ -464,14 +602,22 @@ def build_distribution(
 
     gzip_file(dist / "vrk.sqlite", dist / "vrk.sqlite.gz", 9)
     gzip_file(dist / "vrk-corpus.sqlite", dist / "vrk-corpus.sqlite.gz", CORPUS_GZIP_LEVEL)
-    manifest = write_manifest(dist, stats, corpus_counts, subset)
+    manifest = write_manifest(dist, stats, corpus_counts, subset, profile)
 
+    print(f"profile:      {profile}" + (f" — {corpus_counts['redacted_values']} value(s) removed" if profile == "public" else " (the archive verbatim)"))
     print(f"candidacies:  {stats['records']} rows / {stats['elections']} election(s)")
     print(f"persons:      {stats['persons']}, campaigns: {stats['campaigns']}")
     print(
         f"photos:       {corpus_counts['photos']} unique"
         f" ({corpus_counts['photo_bytes'] / 1e6:.1f} MB)"
         f" across {corpus_counts['photo_records']} record(s)"
+        + (
+            f"; metadata stripped from {corpus_counts['photos_stripped']},"
+            f" {corpus_counts['photos_untouched']} in containers left alone,"
+            f" {corpus_counts['photos_malformed']} unparseable"
+            if profile == "public"
+            else ""
+        )
     )
     print(f"anomalies:    {corpus_counts['anomalies']} event(s)")
     for name in RELEASE_ARTIFACTS + ("vrk.sqlite", "vrk-corpus.sqlite", "MANIFEST.json"):
@@ -514,12 +660,19 @@ def main() -> int:
     parser.add_argument("--repo-root", type=Path, default=Path("."))
     parser.add_argument("--dist", type=Path, default=None, help="Output directory (default <repo-root>/dist).")
     parser.add_argument("--max-drop", type=float, default=5.0)
+    parser.add_argument(
+        "--profile",
+        choices=PROFILES,
+        default=DEFAULT_PROFILE,
+        help="public (default): drop third-party contacts, strip portrait metadata; full: the archive verbatim.",
+    )
     args = parser.parse_args()
     return build_distribution(
         args.repo_root,
         args.dist or (args.repo_root / "dist"),
         args.election_id or None,
         args.max_drop,
+        args.profile,
     )
 
 
