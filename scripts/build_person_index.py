@@ -393,6 +393,8 @@ def build_index(
     seen_elections: set[str] = set()
     municipalities: set[str] = set()
     unresolved_municipalities: set[str] = set()
+    constituencies: set[str] = set()
+    with_votes = 0
 
     for election_dir in sorted(p for p in data_root.iterdir() if p.is_dir()):
         election_id = election_dir.name
@@ -428,6 +430,10 @@ def build_index(
                     # nothing is hidden, and the run reports it so the
                     # registry gets the alias rather than the facet a twin.
                     unresolved_municipalities.add(candidacy["savivaldybe-raw"])
+            if candidacy["apygarda"]:
+                constituencies.add(candidacy["apygarda"])
+            if candidacy["pirmumo-balsai"] is not None or candidacy["apygardos-balsai"] is not None:
+                with_votes += 1
             workplace = None
             for paths in workplace_paths:
                 mapped = paths.get(election_id)
@@ -465,6 +471,14 @@ def build_index(
                     "electedMayor": candidacy["isrinktas-meru"],
                     "workplace": workplace,
                     "educationRank": issilavinimas(record, election_id)["rangas"],
+                    # The electoral result (issue #133): the preference votes
+                    # on the list, the last-round votes of a single-winner
+                    # race, and the constituency's one name across the label
+                    # eras (scraper/shared/apygardos.py), interned like the
+                    # municipality.
+                    "preferenceVotes": candidacy["pirmumo-balsai"],
+                    "constituencyVotes": candidacy["apygardos-balsai"],
+                    "constituency": candidacy["apygarda"],
                 }
             )
 
@@ -478,6 +492,8 @@ def build_index(
     # are 62 bodies, and the facet used to list all 127.
     municipality_list = sorted(municipalities)
     municipality_index = {name: i for i, name in enumerate(municipality_list)}
+    constituency_list = sorted(constituencies)
+    constituency_index = {name: i for i, name in enumerate(constituency_list)}
 
     def best_birth(records: list[dict]) -> str | None:
         # Like the display name, the shown birth follows the latest word:
@@ -526,9 +542,12 @@ def build_index(
             # with "wt"/"wm", the council seat's and the mayoralty's own
             # outcomes, beside "w" where a dual candidacy makes them differ
             # (issue #140: 448 council winners who lost the mayoralty),
-            # "wp" the workplace/position string the search box matches, and
+            # "wp" the workplace/position string the search box matches,
             # "ed" the education rank in scraper/shared/education.py's
-            # 13-tier ordinal (the top-level educationLevels list).
+            # 13-tier ordinal (the top-level educationLevels list), "v" the
+            # preference votes, "cv" the last-round votes of a single-winner
+            # race and "ap" an index into the top-level constituencies list
+            # (issue #133: 29.5 million preference votes reached no consumer).
             "e": [
                 {
                     "id": r["election"],
@@ -553,6 +572,9 @@ def build_index(
                     ),
                     **({"wp": r["workplace"]} if r["workplace"] else {}),
                     **({"ed": r["educationRank"]} if r["educationRank"] else {}),
+                    **({"v": r["preferenceVotes"]} if r["preferenceVotes"] is not None else {}),
+                    **({"cv": r["constituencyVotes"]} if r["constituencyVotes"] is not None else {}),
+                    **({"ap": constituency_index[r["constituency"]]} if r["constituency"] else {}),
                 }
                 for r in records
             ],
@@ -607,6 +629,9 @@ def build_index(
         "unresolvedMunicipalities": sorted(unresolved_municipalities),
         "parties": parties,
         "municipalities": municipality_list,
+        # The single-mandate constituencies by name -- one name per district
+        # across the four label eras, not one boundary: "ap" indexes here.
+        "constituencies": constituency_list,
         # The 13-tier education ordinal, rank order ("ed" is a 1-based index
         # into it); labels ride here because the slugs are ASCII-folded and
         # would de-slug without their diacritics.
@@ -629,6 +654,7 @@ def build_index(
             "candidaciesWon": won,
             "candidaciesLost": lost,
             "candidaciesWithoutResultsData": total - won - lost,
+            "candidaciesWithVotes": with_votes,
         },
         "people": entries,
     }
@@ -659,6 +685,7 @@ def main() -> int:
         f"{stats['candidaciesWithoutResultsData']} without results data"
     )
     print(f"municipalities:           {len(index['municipalities'])} (scraper/municipalities.json bodies)")
+    print(f"constituencies:           {len(index['constituencies'])} district names; {stats['candidaciesWithVotes']} candidacies carry a vote figure")
     generals = sum(1 for e in index["elections"] if "parent" not in e)
     print(
         f"elections:                {len(index['elections'])} of {len(load_registry())} registered "

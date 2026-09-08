@@ -414,7 +414,7 @@ class ElectionTermGroupingSourceTests(unittest.TestCase):
 
     def test_the_filter_and_the_stats_view_match_through_the_parent(self):
         self.assertIn("if (f.election && !inElection(e, f.election)) return false;", SOURCE)
-        self.assertIn("if (inElection(e, id)) candidacies.push(e);", SOURCE)
+        self.assertIn("if (inElection(e, id)) pairs.push([p, e]);", SOURCE)
         self.assertNotIn("e.id !== f.election", SOURCE)
 
     def test_a_term_row_says_what_it_covers(self):
@@ -693,6 +693,90 @@ class DualOfficeTests(unittest.TestCase):
         self.assertIn("electedLabel(e),", SOURCE)
 
 
+class VotesAndConstituencyTests(unittest.TestCase):
+    """Issue #133: 29.5 million preference votes on 59,275 candidacies and
+    the constituency on 9,309 reached no artifact. people.json now carries
+    `v`, `cv` and `ap`; the page offers the constituency as a facet, the
+    votes as comparison rows, CSV columns, a line on the election card and
+    a ranking in the election summary."""
+
+    ROOT_2000 = {
+        "kandidatavimas": {
+            "vienmandatesBalsai": {"balsadezese": 301, "pastu": 20, "isViso": 321, "procentai": 1.67, "vieta": 7},
+            "vienmandatesBalsai2": {"isViso": 6999, "procentai": 55.52, "vieta": 1},
+        },
+        "normalized": {},
+    }
+    PRESIDENTIAL = {"kandidatavimas": {"turai": [{"turas": 1, "balsai": 147610, "procentai-nuo-galiojanciu": 11.85}, {"turas": 2, "balsai": 700000}]}, "normalized": {}}
+    ARCHIVE = {"normalized": {"kandidatavimas": [{"apygarda": "Gargždų", "turai": [{"turas": 1, "balsai": 398, "vieta": 9}]}, {"apygarda": "Daugiamandatė"}]}}
+    MODERN = {"kandidatavimas": {"isrinktas": False}, "normalized": {"profilis": {"kita": {}}}}
+
+    def _run(self, expression):
+        helpers = "\n".join(
+            re.search(rf"^function {name}\(.*?^}}", SOURCE, re.S | re.M).group(0)
+            for name in ("votesCell", "constituencyRounds", "constituencyVotesCell", "rolesOf", "electedAs", "candidacyMatches")
+        )
+        consts = "\n".join(
+            re.search(pattern, SOURCE, re.S | re.M).group(0)
+            for pattern in (r"^const fmtInt = .*?;$", r"^const ROUND_NUMERALS = .*?;$", r"^const ROLE_LABELS = new Map\(\[.*?^\]\);", r"^const ROLE_BY_KIND = .*?;$")
+        )
+        script = (
+            'const ELECTIONS = new Map([["2016-seimo", {kind: "seimo"}]]);\n'
+            "function inElection() { return true; }\nfunction inParty() { return true; }\n"
+            f"{consts}\n{helpers}\n"
+            f"const ROOT_2000 = {json.dumps(self.ROOT_2000)}, PRESIDENTIAL = {json.dumps(self.PRESIDENTIAL)}, "
+            f"ARCHIVE = {json.dumps(self.ARCHIVE)}, MODERN = {json.dumps(self.MODERN)};\n"
+            f"console.log(JSON.stringify({expression}));"
+        )
+        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        return json.loads(out.stdout)
+
+    @staticmethod
+    def _spaces(text):
+        return text.replace("\u00a0", " ").replace("\u202f", " ") if isinstance(text, str) else text
+
+    def test_the_facet_the_csv_and_the_summary_are_in_the_page(self):
+        self.assertIn('id="fConstituency"', SOURCE)
+        self.assertIn("INDEX.constituencies", SOURCE)
+        self.assertIn('"apygarda", "partijos_id"', SOURCE)
+        self.assertIn('"pirmumo_balsai", "balsai_apygardoje"', SOURCE)
+        self.assertIn("Daugiausiai pirmumo balsų", SOURCE)
+        self.assertIn("balsų skaičių nėra", SOURCE)
+
+    def test_the_comparison_rows_name_the_three_vote_concepts(self):
+        for concept in ("pirmumo-balsai", "apygardos-balsai", "sarasas-balsai"):
+            self.assertIn(f'concept: "{concept}"', SOURCE)
+
+    @unittest.skipUnless(NODE, "node not installed")
+    def test_votes_render_as_a_count_and_nothing_as_nothing(self):
+        self.assertEqual(self._spaces(self._run("votesCell(4321)")), "4 321")
+        self.assertEqual(self._run("[votesCell(null), votesCell(''), votesCell('x')]"), [None, None, None])
+
+    @unittest.skipUnless(NODE, "node not installed")
+    def test_every_round_of_the_race_is_read_off_the_record(self):
+        rounds = self._run("[constituencyRounds(ROOT_2000), constituencyRounds(PRESIDENTIAL), constituencyRounds(ARCHIVE), constituencyRounds(MODERN)]")
+        self.assertEqual([[r["balsai"] for r in shape] for shape in rounds], [[321, 6999], [147610, 700000], [398], []])
+        self.assertEqual(rounds[0][0], {"turas": 1, "balsai": 321, "procentai": 1.67, "vieta": 7})
+        self.assertEqual(rounds[1][0]["procentai"], 11.85)
+
+    @unittest.skipUnless(NODE, "node not installed")
+    def test_the_constituency_row_prints_one_line_per_round(self):
+        cells = self._run("[constituencyVotesCell(null, ROOT_2000), constituencyVotesCell(null, PRESIDENTIAL), constituencyVotesCell(null, MODERN)]")
+        self.assertEqual(self._spaces(cells[0]), "I turas: 321 (1,67 %), 7 vieta\nII turas: 6 999 (55,52 %), 1 vieta")
+        self.assertEqual(self._spaces(cells[1]), "I turas: 147 610 (11,85 %)\nII turas: 700 000")
+        self.assertIsNone(cells[2])
+
+    @unittest.skipUnless(NODE, "node not installed")
+    def test_the_constituency_facet_matches_by_the_interned_index(self):
+        f = lambda ap: f'{{election: "", party: "", municipality: "", constituency: "{ap}", role: "", won: "", any: true}}'
+        self.assertEqual(
+            self._run(f"[candidacyMatches({{id: '2016-seimo', ap: 3}}, {f(3)}), candidacyMatches({{id: '2016-seimo', ap: 3}}, {f(0)}), candidacyMatches({{id: '2016-seimo'}}, {f(3)}), candidacyMatches({{id: '2016-seimo', ap: 0}}, {f(0)})]"),
+            [True, False, False, True],
+        )
+
+
 class PhotoShapeTests(unittest.TestCase):
     """25,332 records carry their portrait as VRK's own URL — the only shape
     29% of persons have — and the page used to refuse it, show a photo for
@@ -751,6 +835,7 @@ class ArchiveComparisonRowTests(unittest.TestCase):
                 "resolvePath", "compactValue", "educationCell", "workHistoryCell",
                 "nameCell", "convictionCell", "convictionLines", "deslug", "labelFor",
                 "isFilledValue", "walkValue", "resolveConcept", "resolveRow", "rowLabel",
+                "votesCell", "constituencyRounds", "constituencyVotesCell",
             )
         )
         consts = "\n".join(
@@ -759,6 +844,8 @@ class ArchiveComparisonRowTests(unittest.TestCase):
                 r"^const SECTION_LABELS = \{.*?^\};",
                 r"^const ROOT_SECTIONS = .*?;$",
                 r"^const CONCEPT_ROWS = \[.*?^\];",
+                r"^const fmtInt = .*?;$",
+                r"^const ROUND_NUMERALS = .*?;$",
             )
         )
         script = (

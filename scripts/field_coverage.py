@@ -38,7 +38,7 @@ Five rules fail the run, and a sixth is opt-in:
   elections is the yardstick a reviewer would reach for, so it is the rule:
   such a cell has to carry `partly-published` (the source prints the field on
   only some records) or `partly-answered` (asked everywhere, left blank by
-  many) with a note, or it is a finding. The 43 cells the rule flags on the
+  many) with a note, or it is a finding. The 46 cells the rule flags on the
   2026-09-08 corpus are classified in the baseline, each against the retained
   pages.
 * **unmapped election** (issue #135) -- an election with records under
@@ -140,7 +140,7 @@ EVERY_CONCEPT = "*"
 FILLED_EVERYWHERE = 90.0
 
 #: Points below the concept's median (across the other elections that map it)
-#: at which a filled cell becomes a finding. 25 flags 43 of the 1,362 cells on
+#: at which a filled cell becomes a finding. 25 flags 46 of the 1,394 cells on
 #: the 2026-09-08 corpus -- every one an era that prints the field for a
 #: minority, or a small election whose candidates skipped it -- and both
 #: regressions issue #135 injected (8.0 % and 2.3 %) by a wide margin.

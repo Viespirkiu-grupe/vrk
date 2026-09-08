@@ -54,12 +54,44 @@ class ArchiveList(unittest.TestCase):
     def test_both_candidacies_fill_one_row(self):
         answer = kandidatura(self.RECORD, "seimo")
         self.assertEqual(answer["vaidmuo"], "seimo-narys")
-        self.assertEqual(answer["apygarda"], "Lazdijų Druskininkų")
+        # The archive's dashless spelling is the district's one name (issue
+        # #133); the label rides beside it as published.
+        self.assertEqual(answer["apygarda"], "Lazdijų–Druskininkų")
+        self.assertEqual(answer["apygardos-numeris"], 71)
+        self.assertEqual(answer["apygarda-raw"], "Lazdijų Druskininkų")
         self.assertEqual(answer["sarasas"], "Lietuvos lenkų rinkimų akcija")
         self.assertEqual(answer["numeris-sarase"], 17)
         self.assertEqual(answer["porinkiminis-numeris"], 15)
         # Elected if any one of the candidacies is.
         self.assertIs(answer["isrinktas"], True)
+
+    def test_the_1996_rating_figures_and_the_round_votes(self):
+        record = json.loads(json.dumps(self.RECORD))
+        entries = record["normalized"]["kandidatavimas"]
+        entries[0]["turai"] = [
+            {"turas": 1, "apygardos-numeris": 71, "balsai-apygardoje": 388, "balsai-pastu": 10, "balsai": 398, "vieta": 9, "saltinis": "https://www.vrk.lt/r1"},
+        ]
+        entries[1].update({"teigiami-balsai": 193, "neigiami-balsai": 13, "reitingo-balai": 101836, "reitingo-saltinis": "https://www.vrk.lt/rk"})
+        answer = kandidatura(record, "seimo")
+        # The positive votes are the era's preference vote, and the measure says so.
+        self.assertEqual(answer["pirmumo-balsai"], 193)
+        self.assertEqual(answer["pirmumo-balsu-matas"], "teigiami-balsai")
+        self.assertEqual((answer["teigiami-balsai"], answer["neigiami-balsai"], answer["reitingo-balai"]), (193, 13, 101836))
+        self.assertEqual(answer["apygardos-turai"], [{"turas": 1, "balsai": 398, "procentai": None, "vieta": 9, "saltinis": "https://www.vrk.lt/r1"}])
+        self.assertEqual((answer["apygardos-balsai"], answer["apygardos-turas"], answer["apygardos-vieta"]), (398, 1, 9))
+        self.assertEqual(answer["balsu-saltinis"], "https://www.vrk.lt/rk")
+        self.assertIsNone(answer["sarasas-balsai"])
+
+    def test_a_by_election_entry_has_round_votes_and_no_list(self):
+        record = {"normalized": {"kandidatavimas": [{
+            "apygarda": "Nevėžio", "apygardos-numeris": 26, "iskele": "LDDP", "numeris-sarase": None, "isrinktas": True,
+            "turai": [{"turas": 1, "balsai": 4051, "vieta": 1, "saltinis": "https://www.vrk.lt/r1"}, {"turas": 2, "balsai": 6000, "vieta": 1, "saltinis": "https://www.vrk.lt/r2"}],
+        }]}}
+        answer = kandidatura(record, "seimo")
+        self.assertIsNone(answer["pirmumo-balsai"])
+        self.assertEqual([r["balsai"] for r in answer["apygardos-turai"]], [4051, 6000])
+        self.assertEqual((answer["apygardos-balsai"], answer["apygardos-turas"], answer["apygardos-vieta"]), (6000, 2, 1))
+        self.assertEqual(answer["balsu-saltinis"], "https://www.vrk.lt/r2")
 
 
 class Municipal1997(unittest.TestCase):
@@ -106,24 +138,100 @@ class Municipal1997(unittest.TestCase):
 
 
 class Seimas2000Root(unittest.TestCase):
+    RECORD = {
+        "kandidatavimas": {
+            "roles": ["daugiamandate", "vienmandate"],
+            "vienmandate": {"apygarda": "Šilainių", "apygardosNumeris": 21},
+            "daugiamandate": {"sarasas": "Lietuvos centro sąjunga", "numerisSarase": 9},
+            "isrinktas": False,
+            "porinkiminisNumerisSarase": 12,
+            "pirmumoBalsai": 22,
+            "partinisReitingas": 124,
+            "reitingoBalai": 0,
+            "pirmumoBalsuSaltinis": "https://www.vrk.lt/rdpbl",
+            "vienmandatesBalsai": {"balsadezese": 301, "pastu": 20, "isViso": 321, "procentai": 1.67, "vieta": 7, "saltinis": "https://www.vrk.lt/rvapgl"},
+        },
+        "normalized": {},
+    }
+
     def test_constituency_and_list_are_separate_facts(self):
-        record = {
-            "kandidatavimas": {
-                "roles": ["daugiamandate", "vienmandate"],
-                "vienmandate": {"apygarda": "Šilainių", "apygardosNumeris": 21},
-                "daugiamandate": {"sarasas": "Lietuvos centro sąjunga", "numerisSarase": 9},
-                "isrinktas": False,
-                "porinkiminisNumerisSarase": 12,
-            },
-            "normalized": {},
-        }
-        answer = kandidatura(record, "seimo")
+        answer = kandidatura(self.RECORD, "seimo")
         self.assertEqual(answer["vaidmuo"], "seimo-narys")
         self.assertEqual(answer["apygarda"], "Šilainių")
+        self.assertEqual(answer["apygardos-numeris"], 21)
         self.assertEqual(answer["sarasas"], "Lietuvos centro sąjunga")
         self.assertEqual(answer["numeris-sarase"], 9)
         self.assertEqual(answer["porinkiminis-numeris"], 12)
         self.assertIs(answer["isrinktas"], False)
+
+    def test_the_votes_of_both_races(self):
+        answer = kandidatura(self.RECORD, "seimo")
+        self.assertEqual((answer["pirmumo-balsai"], answer["pirmumo-balsu-matas"], answer["reitingo-balai"]), (22, "pirmumo-balsai", 0))
+        self.assertEqual(answer["apygardos-turai"], [{"turas": 1, "balsai": 321, "procentai": 1.67, "vieta": 7, "saltinis": "https://www.vrk.lt/rvapgl"}])
+        self.assertEqual((answer["apygardos-balsai"], answer["apygardos-turas"], answer["apygardos-vieta"], answer["apygardos-procentai"]), (321, 1, 7, 1.67))
+        self.assertEqual(answer["balsu-saltinis"], "https://www.vrk.lt/rdpbl")
+
+    def test_a_runoff_is_the_second_round_and_the_flat_figures_follow_it(self):
+        record = json.loads(json.dumps(self.RECORD))
+        del record["kandidatavimas"]["pirmumoBalsai"]
+        del record["kandidatavimas"]["pirmumoBalsuSaltinis"]
+        record["kandidatavimas"]["vienmandatesBalsai2"] = {"isViso": 6999, "procentai": 55.52, "vieta": 1, "saltinis": "https://www.vrk.lt/r2"}
+        answer = kandidatura(record, "seimo")
+        self.assertEqual([r["turas"] for r in answer["apygardos-turai"]], [1, 2])
+        self.assertEqual((answer["apygardos-balsai"], answer["apygardos-turas"], answer["apygardos-vieta"]), (6999, 2, 1))
+        self.assertIsNone(answer["pirmumo-balsai"])
+        self.assertIsNone(answer["pirmumo-balsu-matas"])
+        self.assertEqual(answer["balsu-saltinis"], "https://www.vrk.lt/r2")
+
+    def test_a_list_only_candidate_has_no_constituency(self):
+        # The 2000-2012 cards print "Daugiamandatė" in the constituency row
+        # of a list-only candidate: 2,980 rows shipped it as a district.
+        record = {"kandidatavimas": {"roles": ["daugiamandate"], "isrinktas": False}, "normalized": {}}
+        _kita(record, apygarda="Daugiamandatė", sarasas="LSDP", numeris_sarase="7")
+        answer = kandidatura(record, "seimo")
+        self.assertIsNone(answer["apygarda"])
+        self.assertIsNone(answer["apygardos-numeris"])
+        self.assertEqual(answer["apygarda-raw"], "Daugiamandatė")
+        self.assertEqual(answer["sarasas"], "LSDP")
+
+    def test_a_presidential_race_carries_its_rounds(self):
+        record = {"kandidatavimas": {"isrinktas": True, "turai": [
+            {"turas": 1, "balsai": 147610, "balsai-apylinkese": 126485, "balsai-pastu": 21125, "procentai-nuo-dalyvavusiu": 11.49, "procentai-nuo-galiojanciu": 11.85, "saltinis": "https://www.vrk.lt/p1"},
+            {"turas": 2, "balsai": 700000, "procentai-nuo-galiojanciu": 52.1, "saltinis": "https://www.vrk.lt/p2"},
+        ]}, "normalized": {}}
+        answer = kandidatura(record, "prezidento")
+        self.assertEqual(answer["vaidmuo"], "prezidentas")
+        self.assertEqual([(r["turas"], r["balsai"], r["procentai"], r["vieta"]) for r in answer["apygardos-turai"]], [(1, 147610, 11.85, None), (2, 700000, 52.1, None)])
+        self.assertEqual((answer["apygardos-balsai"], answer["apygardos-turas"]), (700000, 2))
+        self.assertEqual(answer["balsu-saltinis"], "https://www.vrk.lt/p2")
+
+
+class Municipal2000Root(unittest.TestCase):
+    def test_the_lists_votes_are_the_lists_not_the_candidates(self):
+        record = {"kandidatavimas": {
+            "savivaldybe": "Šiaulių rajono", "roles": ["tarybos-narys"],
+            "tarybosNarys": {"partyList": "Koalicija", "listPosition": 29, "sarasoBalsai": 3781, "sarasoMandatai": 5},
+            "isrinktas": False, "porinkiminisNumerisSarase": 18, "pirmumoBalsai": 50, "pirmumoBalsuSaltinis": "https://www.vrk.lt/rpb",
+        }, "normalized": {}}
+        answer = kandidatura(record, "savivaldybiu")
+        self.assertEqual((answer["pirmumo-balsai"], answer["sarasas-balsai"]), (50, 3781))
+        self.assertEqual(answer["apygardos-turai"], [])
+        self.assertIsNone(answer["apygardos-balsai"])
+        self.assertEqual(answer["balsu-saltinis"], "https://www.vrk.lt/rpb")
+
+
+class ModernCard(unittest.TestCase):
+    def test_the_2016_and_2020_labels_are_one_district_and_no_votes(self):
+        for label, number in (("Dzūkijos (Nr. 69)", 69), ("69. Dzūkijos", 69), ("Dzūkijos Nr. 69", 69), ("Dzūkijos", None)):
+            with self.subTest(label):
+                record = {"kandidatavimas": {"isrinktas": False}, "normalized": {}}
+                _kita(record, vienmandate_apygarda=label, turas="I")
+                answer = kandidatura(record, "seimo")
+                self.assertEqual(answer["apygarda"], "Dzūkijos")
+                self.assertEqual(answer["apygardos-numeris"], number)
+                self.assertEqual(answer["apygarda-raw"], label)
+                self.assertIsNone(answer["pirmumo-balsai"])
+                self.assertIsNone(answer["balsu-saltinis"])
 
 
 class Municipal2019(unittest.TestCase):

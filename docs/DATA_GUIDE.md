@@ -209,8 +209,14 @@ the 1996-1999 archive family spells the same facts kebab-case inside its
 per-candidacy `turai` list). The 2004-and-earlier figures come off the
 candidate's own pages, the 2007-2015 ones are joined from the results trees
 (issue #99). The 2016-2025 elections publish no results tree the records
-link, so their records hold no vote counts at all — an upstream absence,
-not a parse gap.
+link, so their records hold no vote counts at all — VRK's results for them
+are on pages the corpus does not read. Resolve all of it through
+`scraper/shared/kandidatura.py` rather than by key (issue #133): it returns
+`pirmumo-balsai` with its measure, `sarasas-balsai`, every round of the
+single-winner race as `apygardos-turai` and the last one flattened, and the
+constituency's one name; the candidacy table projects them as
+`preference_votes`, `list_votes`, `constituency_votes` and friends
+([CANDIDACIES.md](CANDIDACIES.md)), and people.json carries `v`, `cv`, `ap`.
 
 **Placeholders.** Four placeholder forms normalize to `null`: `Nenurodė`,
 `-`, the empty string, and a value that is nothing but the replacement

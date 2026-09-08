@@ -18,7 +18,7 @@ Reads `data/`, `docs/concept-map.json` and the registries; writes to
 
 | file | contents |
 |---|---|
-| `candidacies.csv.gz` | 113,073 rows × 55 columns, ~12 MB gzipped |
+| `candidacies.csv.gz` | 113,073 rows × 65 columns, ~12 MB gzipped |
 | `campaigns.csv.gz` | one row per campaign-finance participant (4,729) |
 | `vrk.sqlite` | the same two as tables, plus `elections`, `persons`, `parties`, `party_predecessors`, `municipalities`, with indexes |
 
@@ -60,6 +60,18 @@ official name — `Vilniaus miesto savivaldybė` whether the era's card said
 1997 Marijampolė bodies the 2000 reform merged keep ids of their own
 (`marijampoles-miesto`, `marijampoles-rajono`, `until: 2000` in the
 `municipalities` table). The published wording stays in the record file.
+`constituency` is the district's one name across the four label eras
+(`scraper/shared/apygardos.py`, issue #133: "Akmenės Joniškio", "Akmenės -
+Joniškio", "Aukštaitijos (Nr. 28)" and "33. Aukštaitijos" used to be four
+values; 315 labels are 136 names) and `constituency_number` its number in
+that election — the number moves with the 2016 redistricting, so the pair
+(election, number) is the boundary and the name is for reading; the
+2000–2012 cards' "Daugiamandatė" row, which 2,980 list-only candidates
+shipped as their constituency, is empty now. `list_movement` is
+`list_position − post_election_position`, positive when the preference
+votes moved the candidate up; for the 2016–2025 elections, which publish no
+vote counts the records carry, it is the only preference signal (90,809 rows
+have both positions).
 `elected` is 1/0 for **any office on this ballot**, empty only where no
 results exist: the five 2000 municipalities whose results tree VRK does not
 publish (the 1997 municipal pair was the larger gap until issue #92 joined its
@@ -74,6 +86,24 @@ mayors, because 448 of them won a council seat and lost the mayoral race
 flags and, on the 2015 ballots, from the seat VRK's results named
 (`isrinktasKaip`); 2015 has 57 elected mayors rather than 60 because three
 mayoral races were annulled and re-run in June.
+
+**Electoral result** (issue #133; `scraper/shared/kandidatura.py`). The
+26 elections whose records carry a vote figure — the 2000–2004 static sites
+on the candidate's own pages, the 2007–2015 trees joined by issue #99, the
+1996–1999 archive family's candidacy list — project it as `preference_votes`
+(the candidate's votes on the list; `preference_votes_measure` is
+`pirmumo-balsai`, or `teigiami-balsai` on 1996-spalio-20-seimo, whose
+rating system counted positive and negative votes and ranked by points),
+`list_votes` (the **list's** total, kept apart by name; only the 2000 and
+2002 municipal trees carry it), and the single-winner race's last round
+contested — `constituency_votes`, `constituency_round` (1 or 2),
+`constituency_place`, `constituency_votes_pct` (of valid ballots) — which
+for a presidential candidate is the whole country. `votes_source` names the
+VRK page the figures came from. 57,809 rows carry preference votes (30.9
+million of them), 3,562 a race round, 424 of them runoffs. Every other election's vote columns
+are empty and their baseline rows say `parser-gap`: VRK publishes those
+results on pages the corpus does not read, which is not the same as their
+not existing.
 
 **Education** (issue #88; `scraper/shared/education.py`).
 `education_status` types the absence — the difference between a candidate
@@ -156,11 +186,11 @@ flattened entries and free-text explanation as JSON where declared.
 ## The fill gate
 
 `docs/candidacy-baseline.tsv` checks in the per-column, per-election fill
-rate of every gated column (2,750 cells). A plain build fails when a rate
+rate of every gated column (3,465 cells). A plain build fails when a rate
 falls more than `--max-drop` points below the baseline, or when a cell no
 record fills appears without a classified reason — the shape of the
 2020-income defect ([FIELD_COVERAGE.md](FIELD_COVERAGE.md)), which this
-table would otherwise inherit silently. The 519 zero cells that are real all
+table would otherwise inherit silently. The 1,021 zero cells that are real all
 carry a status and a note ("a single-mandate Seimas by-election; no party
 list on the ballot"); `--update-baseline` auto-classifies only the zeros the
 builder can structurally explain and refuses the rest.

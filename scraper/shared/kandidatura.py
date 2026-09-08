@@ -13,7 +13,11 @@ This resolver flattens all of that into one answer per record:
 
     {"vaidmuo":     "seimo-narys" | "tarybos-narys" | "meras"
                     | "prezidentas" | "ep-narys",
-     "apygarda":               the single-mandate constituency, Seimas eras,
+     "apygarda":               the single-mandate constituency's name, Seimas
+                               eras, one name per district across the four
+                               label eras (scraper/shared/apygardos.py),
+     "apygardos-numeris":      its number in this election,
+     "apygarda-raw":           the label the record carries,
      "savivaldybe":            the municipality's official name, municipal/
                                mayoral eras (scraper/municipalities.json),
      "savivaldybe-id":         its registry id, None when no entry claims
@@ -28,7 +32,23 @@ This resolver flattens all of that into one answer per record:
      "isrinktas-tarybos-nariu": the council seat's own outcome,
      "isrinktas-meru":         the mayoralty's own outcome -- each True |
                                False | None, None where the office was not
-                               on the ballot or the record cannot say}
+                               on the ballot or the record cannot say,
+     "pirmumo-balsai":         the candidate's preference votes on the list,
+     "pirmumo-balsu-matas":    "pirmumo-balsai" (2000-2015) or
+                               "teigiami-balsai" (the 1996 rating system's
+                               positive votes; see below),
+     "teigiami-balsai", "neigiami-balsai", "reitingo-balai":
+                               the 1996 system's three list figures, and the
+                               2000/2008/2012 pages' rating points, verbatim,
+     "sarasas-balsai":         the LIST's votes in the municipality (2000 and
+                               2002 municipal) -- the list's, not the
+                               candidate's, hence the separate name,
+     "apygardos-turai":        the candidate's showing in each round of the
+                               single-winner race, oldest first:
+                               [{turas, balsai, procentai, vieta, saltinis}],
+     "apygardos-balsai", "apygardos-turas", "apygardos-vieta",
+     "apygardos-procentai":    the last round contested, flattened,
+     "balsu-saltinis":         the VRK page the vote figures came from}
 
 A candidacy that is both constituency and list (1996–2012 Seimas) is still
 one row: `apygarda` and `sarasas` are separate facts and both fill. A
@@ -50,6 +70,32 @@ municipalities appeared twice in every consumer. `savivaldybe` is the
 official name, `savivaldybe-id` the join key, `savivaldybe-raw` what the
 record says.
 
+**Votes** (issue #133). 59,275 candidacies across 26 elections carry a vote
+or rating figure -- 29.5 million preference votes -- and until this resolver
+returned them no consumer could see one. The 2000-2015 root block spells
+them `pirmumoBalsai` (with `reitingoBalai` where VRK printed rating points),
+`tarybosNarys.sarasoBalsai` (the list's own total), `vienmandatesBalsai`
+and `vienmandatesBalsai2` (the constituency's two rounds, `{isViso,
+procentai, vieta, saltinis}`) and, on the presidential and 2003 pages,
+`turai[]`; the 1996-1999 archive list spells the same facts kebab-case
+inside its constituency entry's `turai` and, on the 1996 multi-mandate
+entry, the rating system's `teigiami-balsai` / `neigiami-balsai` /
+`reitingo-balai`. The 1996 list vote was a rating: a voter marked the
+candidates they favoured and those they did not, and the order followed the
+points; `pirmumo-balsai` carries the positive votes there with
+`pirmumo-balsu-matas` saying so, because that is the era's preference vote,
+and the three figures ride verbatim beside it. The 2016-2025 records hold
+no votes at all (their results live on pages the corpus does not read), so
+every vote key is None there, and `apygarda` is the one thing those eras
+do publish about the race.
+
+The constituency is canonicalised through `scraper/shared/apygardos.py`:
+the label eras -- "Akmenės - Joniškio", "Akmenės Joniškio", "Aukštaitijos
+(Nr. 28)", "33. Aukštaitijos" -- become one name per district and the
+number travels separately, and the 2000-2012 cards' "Daugiamandatė" row
+(the list, not a district) reads as None rather than as the constituency
+of 2,980 list-only candidates.
+
 `isrinktas` is the corpus-wide elected flag: the root `kandidatavimas` value
 everywhere it exists (joined from VRK's results trees for the eras whose
 pages mark no winner, prose-derived for 2016–2025 — see DATA_GUIDE), any()
@@ -63,6 +109,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from scraper.shared.apygardos import apygarda as _apygarda
 from scraper.shared.municipalities import savivaldybe as _savivaldybe
 
 ROLE_SEIMAS = "seimo-narys"
@@ -125,11 +172,32 @@ def _kita_value(record: dict[str, Any], *keys: str) -> Any:
     return None
 
 
+PREFERENCE_VOTES = "pirmumo-balsai"
+POSITIVE_VOTES = "teigiami-balsai"
+
+VOTE_KEYS = (
+    "pirmumo-balsai",
+    "pirmumo-balsu-matas",
+    "teigiami-balsai",
+    "neigiami-balsai",
+    "reitingo-balai",
+    "sarasas-balsai",
+    "apygardos-turai",
+    "apygardos-balsai",
+    "apygardos-turas",
+    "apygardos-vieta",
+    "apygardos-procentai",
+    "balsu-saltinis",
+)
+
+
 def _empty(role: str | None, elected: Any) -> dict[str, Any]:
-    return {
+    answer: dict[str, Any] = {
         "vaidmuo": role,
         "vaidmenys": [role] if role else [],
         "apygarda": None,
+        "apygardos-numeris": None,
+        "apygarda-raw": None,
         "savivaldybe": None,
         "savivaldybe-id": None,
         "savivaldybe-raw": None,
@@ -140,6 +208,87 @@ def _empty(role: str | None, elected: Any) -> dict[str, Any]:
         "isrinktas-tarybos-nariu": None,
         "isrinktas-meru": None,
     }
+    answer.update(dict.fromkeys(VOTE_KEYS))
+    answer["apygardos-turai"] = []
+    return answer
+
+
+def _set_constituency(answer: dict[str, Any], label: Any, number: Any = None) -> None:
+    answer.update(_apygarda(_name_of(label), number))
+
+
+def _number(value: Any) -> int | float | None:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return _int_of(value)
+    return value
+
+
+def _round(turas: Any, balsai: Any, procentai: Any, vieta: Any, saltinis: Any) -> dict[str, Any] | None:
+    votes = _number(balsai)
+    if votes is None:
+        return None
+    return {
+        "turas": _int_of(turas) or 1,
+        "balsai": votes,
+        "procentai": _number(procentai),
+        "vieta": _int_of(vieta),
+        "saltinis": saltinis if isinstance(saltinis, str) else None,
+    }
+
+
+def _rounds_from_turai(turai: Any) -> list[dict[str, Any]]:
+    """The `turai` list of the presidential/2003 root block and the archive
+    family's constituency entry: kebab-case, one entry per round."""
+    rounds = []
+    for entry in turai if isinstance(turai, list) else []:
+        if not isinstance(entry, dict):
+            continue
+        one = _round(
+            entry.get("turas"),
+            entry.get("balsai"),
+            entry.get("procentai-nuo-galiojanciu", entry.get("procentai")),
+            entry.get("vieta"),
+            entry.get("saltinis"),
+        )
+        if one is not None:
+            rounds.append(one)
+    return sorted(rounds, key=lambda r: r["turas"])
+
+
+def _rounds_from_blocks(root: dict[str, Any]) -> list[dict[str, Any]]:
+    """The 2000-2015 root block's `vienmandatesBalsai` / `vienmandatesBalsai2`."""
+    rounds = []
+    for number, key in ((1, "vienmandatesBalsai"), (2, "vienmandatesBalsai2")):
+        block = root.get(key)
+        if not isinstance(block, dict):
+            continue
+        one = _round(number, block.get("isViso"), block.get("procentai"), block.get("vieta"), block.get("saltinis"))
+        if one is not None:
+            rounds.append(one)
+    return rounds
+
+
+def _set_rounds(answer: dict[str, Any], rounds: list[dict[str, Any]]) -> None:
+    answer["apygardos-turai"] = rounds
+    if not rounds:
+        return
+    last = rounds[-1]
+    answer["apygardos-balsai"] = last["balsai"]
+    answer["apygardos-turas"] = last["turas"]
+    answer["apygardos-vieta"] = last["vieta"]
+    answer["apygardos-procentai"] = last["procentai"]
+
+
+def _set_source(answer: dict[str, Any], *candidates: Any) -> None:
+    """The first page named: the preference page where there are preference
+    votes, else the last round's results page."""
+    for candidate in candidates:
+        if isinstance(candidate, str) and candidate.strip():
+            answer["balsu-saltinis"] = candidate.strip()
+            return
+    rounds = answer["apygardos-turai"]
+    if rounds and rounds[-1]["saltinis"]:
+        answer["balsu-saltinis"] = rounds[-1]["saltinis"]
 
 
 def _offices(root: dict[str, Any], roles: list[Any], kind: str | None, role: str) -> tuple[list[str], Any, Any]:
@@ -207,9 +356,24 @@ def _from_archive_list(entries: list[Any], kind: str | None) -> dict[str, Any]:
             answer["porinkiminis-numeris"] = answer["porinkiminis-numeris"] or _int_of(
                 entry.get("porinkiminis-numeris-sarase")
             )
+            # The 1996 rating system: positive and negative votes and the
+            # points VRK ranked by. The positive votes are the era's
+            # preference vote, and the measure says so.
+            for key in ("teigiami-balsai", "neigiami-balsai", "reitingo-balai"):
+                if answer[key] is None:
+                    answer[key] = _number(entry.get(key))
+            if answer["pirmumo-balsai"] is None and answer["teigiami-balsai"] is not None:
+                answer["pirmumo-balsai"] = answer["teigiami-balsai"]
+                answer["pirmumo-balsu-matas"] = POSITIVE_VOTES
+                _set_source(answer, entry.get("reitingo-saltinis"))
         else:
-            answer["apygarda"] = answer["apygarda"] or _name_of(entry.get("apygarda"))
+            if answer["apygarda"] is None:
+                _set_constituency(answer, entry.get("apygarda"), entry.get("apygardos-numeris"))
+            if not answer["apygardos-turai"]:
+                _set_rounds(answer, _rounds_from_turai(entry.get("turai")))
     answer["isrinktas"] = elected
+    if answer["balsu-saltinis"] is None:
+        _set_source(answer)
     return answer
 
 
@@ -235,7 +399,7 @@ def kandidatura(record: dict[str, Any], kind: str | None = None) -> dict[str, An
         _set_municipality(answer, norm_candidacy.get("savivaldybe"))
         answer["sarasas"] = _name_of(norm_candidacy.get("iskele"))
         answer["numeris-sarase"] = _int_of(norm_candidacy.get("numeris-sarase"))
-        return answer
+        return answer  # the 1997 pages publish no vote figures at all
 
     root = record.get("kandidatavimas")
     root = root if isinstance(root, dict) else {}
@@ -255,11 +419,11 @@ def kandidatura(record: dict[str, Any], kind: str | None = None) -> dict[str, An
 
     single = root.get("vienmandate")
     if isinstance(single, dict):
-        answer["apygarda"] = _name_of(single.get("apygarda"))
+        _set_constituency(answer, single.get("apygarda"), single.get("apygardosNumeris"))
     if answer["apygarda"] is None and kind == "seimo":
-        answer["apygarda"] = _name_of(
-            _kita_value(record, "vienmandate-apygarda", "apygarda")
-        )
+        # The 2004-2024 cards; the 2000-2012 ones print "Daugiamandatė" in
+        # this row for a list-only candidate, which apygardos reads as None.
+        _set_constituency(answer, _kita_value(record, "vienmandate-apygarda", "apygarda"))
 
     multi = root.get("daugiamandate")
     council = root.get("tarybosNarys")
@@ -285,4 +449,18 @@ def kandidatura(record: dict[str, Any], kind: str | None = None) -> dict[str, An
                 record, "porinkiminis-eiles-numeris", "porinkiminis-numeris-sarase"
             )
         )
+
+    # The votes (issue #133): the 2000-2015 root block's names, joined from
+    # the candidate pages (to 2004) and the results trees (2007-2015).
+    answer["pirmumo-balsai"] = _number(root.get("pirmumoBalsai"))
+    if answer["pirmumo-balsai"] is not None:
+        answer["pirmumo-balsu-matas"] = PREFERENCE_VOTES
+    answer["reitingo-balai"] = _number(root.get("reitingoBalai"))
+    if isinstance(council, dict):
+        answer["sarasas-balsai"] = _number(council.get("sarasoBalsai"))
+    rounds = _rounds_from_blocks(root)
+    if not rounds:
+        rounds = _rounds_from_turai(root.get("turai"))
+    _set_rounds(answer, rounds)
+    _set_source(answer, root.get("pirmumoBalsuSaltinis"))
     return answer

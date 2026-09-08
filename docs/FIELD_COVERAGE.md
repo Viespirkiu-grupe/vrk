@@ -17,7 +17,7 @@ python scripts/field_coverage.py --unmapped         # also: a field the map deni
 
 One pass over `data/` — about 30 seconds for 113,073 records — resolves every
 `docs/concept-map.json` path against every record of the elections that map it.
-That is 1,362 cells across 55 elections.
+That is 1,394 cells across 55 elections.
 
 ## What it produces
 
@@ -59,7 +59,8 @@ dates were nulled on 1,600 records, the gate wrote `ok` at 8.0 % and exited 0.
 The concept's median elsewhere was already computed inside the gate to
 decorate the zero-fill message; now it is a rule. Such a cell carries
 `partly-published` or `partly-answered` with a note (below), or it is a
-finding. The 43 cells the rule flags on the 2026-09-08 corpus are all
+finding. The 46 cells the rule flags on the
+2026-09-08 corpus are all
 classified, each checked against the retained pages: the archive by-elections
 whose declaration extracts VRK holds for one candidate in twenty, the 2004
 static site printing „-“ in a loan row nobody filled, the archive cards that
@@ -100,17 +101,17 @@ that do not ask the question, recorded as such in the map's `verified` note.
 
 ## Status words
 
-Twenty-four of the 1,362 cells are filled by no record, and 43 more are filled
+Twenty-four of the 1,394 cells are filled by no record, and 46 more are filled
 far below the concept's other elections. Each carries one of:
 
 | status | count | meaning |
 | --- | --- | --- |
-| `ok` | 1,295 | filled at some rate, in line with the concept's other elections |
+| `ok` | 1,324 | filled at some rate, in line with the concept's other elections |
 | `upstream-absent` | 18 | the source publishes no value here — the label is missing, or printed and left blank |
 | `empty-is-the-answer` | 6 | every record carries the key and the empty value is the answer: nobody declared a conviction, nobody had an outstanding loan |
 | `parser-gap` | 0 | the source publishes it and the parser does not recover it |
 | `partly-published` | 29 | filled, but the source prints the field on only some of the election's records: the key is absent on the rest (a birth date recovered from prose where the card has none, a declaration extract VRK's archive holds for one candidate in twenty) |
-| `partly-answered` | 14 | filled, but far below the peers with the key on every record: the question was asked and left blank, or answered with the „-“ the 2004 forms print for "none" |
+| `partly-answered` | 17 | filled, but far below the peers with the key on every record: the question was asked and left blank, or answered with the „-“ the 2004 forms print for "none" |
 | `not-mapped` | 0 | a `*` row for an election under `data/` that no concept maps, or a concept row for one the closest peer election maps and this one does not, each with a note saying why |
 | `unexplained` | 0 | nobody has looked. Fails the run. |
 

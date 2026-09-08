@@ -1,4 +1,22 @@
 concept	election	pct	status	note
+apygardos-balsai	1996-spalio-20-seimo	100.0	ok	
+apygardos-balsai	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
+apygardos-balsai	1997-kovo-23-seimo-pakartotiniai	100.0	ok	
+apygardos-balsai	1998-kovo-22-seimo-pakartotiniai	100.0	ok	
+apygardos-balsai	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
+apygardos-balsai	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
+apygardos-balsai	2000-seimo	55.2	partly-published	the constituency block is on the 702 candidates who stood in a constituency; the other 569 of 1271 stood on the list alone and had no single-winner race
+apygardos-balsai	2002-prezidento	100.0	ok	
+apygardos-balsai	2003-birzelio-15-seimo-nauji	100.0	ok	
+apygardos-balsai	2004-prezidento	100.0	ok	
+apygardos-balsai	2007-spalio-7-seimo-dzukija	100.0	ok	
+apygardos-balsai	2008-seimo	49.3	partly-published	the constituency block is on the 790 candidates who stood in a constituency; the other 813 of 1603 stood on the list alone and had no single-winner race
+apygardos-balsai	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	100.0	ok	
+apygardos-balsai	2011-vasario-13-seimo-marijampole	100.0	ok	
+apygardos-balsai	2012-seimo	50.8	partly-published	the constituency block is on the 978 candidates who stood in a constituency; the other 949 of 1927 stood on the list alone and had no single-winner race
+apygardos-balsai	2013-kovo-3-seimo-birzai-zarasai-ukmerge	100.0	ok	
+apygardos-balsai	2015-birzelio-7-seimo-varena-eisiskes	100.0	ok	
+apygardos-balsai	2015-kovo-1-seimo-zirmunai	100.0	ok	
 ar-buvote-pripazintas-kaltu	2000-kovo-19-savivaldybiu-tarybu	99.3	ok	
 ar-buvote-pripazintas-kaltu	2000-seimo	99.7	ok	
 ar-buvote-pripazintas-kaltu	2002-gruodzio-22-savivaldybiu-tarybu	100.0	ok	
@@ -737,6 +755,18 @@ pinigines-lesos	2024-ep	100.0	ok
 pinigines-lesos	2024-prezidento	100.0	ok	
 pinigines-lesos	2024-seimo	100.0	ok	
 pinigines-lesos	2025-kovo-16-meru	100.0	ok	
+pirmumo-balsai	1996-spalio-20-seimo	75.3	ok	
+pirmumo-balsai	2000-kovo-19-savivaldybiu-tarybu	91.8	ok	
+pirmumo-balsai	2000-seimo	90.6	ok	
+pirmumo-balsai	2002-gruodzio-22-savivaldybiu-tarybu	99.8	ok	
+pirmumo-balsai	2004-ep	100.0	ok	
+pirmumo-balsai	2004-seimo	84.3	ok	
+pirmumo-balsai	2008-seimo	98.4	ok	
+pirmumo-balsai	2011-vasario-27-savivaldybiu	99.1	ok	
+pirmumo-balsai	2012-seimo	97.1	ok	
+pirmumo-balsai	2015-birzelio-21-pakartotiniai-silutes	100.0	ok	
+pirmumo-balsai	2015-birzelio-7-pakartotiniai-sirvintos-trakai	97.6	ok	
+pirmumo-balsai	2015-kovo-1-savivaldybiu	99.9	ok	
 pomegiai	2000-seimo	74.9	ok	
 pomegiai	2003-birzelio-15-seimo-nauji	85.2	ok	
 pomegiai	2004-ep	80.9	ok	
@@ -840,6 +870,8 @@ privalomas-registruoti-turtas	2024-ep	100.0	ok
 privalomas-registruoti-turtas	2024-prezidento	100.0	ok	
 privalomas-registruoti-turtas	2024-seimo	100.0	ok	
 privalomas-registruoti-turtas	2025-kovo-16-meru	100.0	ok	
+sarasas-balsai	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
+sarasas-balsai	2002-gruodzio-22-savivaldybiu-tarybu	100.0	ok	
 savivaldybe	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	100.0	ok	
 savivaldybe	1997-kovo-23-savivaldybiu-tarybu	100.0	ok	
 savivaldybe	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
