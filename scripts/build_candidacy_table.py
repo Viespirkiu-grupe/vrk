@@ -69,7 +69,7 @@ import sys
 import unicodedata
 from collections import Counter, defaultdict
 from pathlib import Path
-from typing import Any, Iterator
+from typing import Any, Iterable, Iterator
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -265,19 +265,32 @@ VOTE_COLUMNS = (
 )
 
 #: The eight Seimas *generals* — every other seimo-kind election is a
-#: single-mandate by-election with no party list on the ballot.
-SEIMAS_GENERALS = frozenset(
-    {
-        "1996-spalio-20-seimo",
-        "2000-seimo",
-        "2004-seimo",
-        "2008-seimo",
-        "2012-seimo",
-        "2016-seimo",
-        "2020-seimo",
-        "2024-seimo",
-    }
+#: single-mandate by-election with no party list on the ballot. Derived from
+#: the registry rather than listed, because a hand copy is only right until
+#: the next election is added: `_known_zero_note` reads a seimo-kind election
+#: that is not in this set as a by-election, so a well-formed 2027-seimo
+#: would have been told it had no party list on the ballot — the note under
+#: which `list_name`, `list_position` and `post_election_position` are
+#: legitimately zero, three columns filled on 1,721 of 2024-seimo's 1,740
+#: rows (issue #165). `parent` is the general whose term a by-election,
+#: repeat or re-vote fills (issue #122), so the generals are the ones without
+#: one; the derivation is a no-op on today's registry.
+def _seimas_generals(registry: Iterable[dict[str, Any]]) -> frozenset[str]:
+    return frozenset(e["id"] for e in registry if e["kind"] == "seimo" and not e.get("parent"))
+
+
+SEIMAS_GENERALS = _seimas_generals(
+    identity.load_registry(Path(__file__).resolve().parents[1] / "scraper" / "elections.json")
 )
+
+#: The presidential elections whose cards print a "Kandidatą iškėlė" row.
+#: 2024's does and no earlier one does — verified in the retained anketa
+#: pages — so the blanket rule that presidential candidates self-nominate and
+#: the pages name no nominator was a false excuse standing over three columns
+#: filled on all 8 of 2024's rows (four parties, four genuine
+#: self-nominations). Found by the invariant issue #165 added, not by the
+#: issue itself.
+PRESIDENTIAL_NOMINATOR_PUBLISHED = frozenset({"2024-prezidento"})
 
 #: Elections whose candidates have no campaign-participant section at all —
 #: VRK ran the era's campaign finance through the parties (2008, 2011) or
@@ -297,19 +310,22 @@ NO_CAMPAIGN_PAGES = frozenset(
 #: postElectionPosition. Seimas by-elections and the mayoral races are
 #: covered by their own rules; these are the generals and EP elections that
 #: simply never printed one.
+#:
+#: This list was written against the corpus as it stood for issue #93 and
+#: went stale under it: issue #99's results join landed afterwards and
+#: recovered the ranking for six of the eleven — 35,507 values whose baseline
+#: rows had gone on saying VRK published none (issue #165). The six are gone
+#: from the set, so the excuse no longer stands ready to cover their loss;
+#: `ClassificationsAgreeWithTheBaseline` in the tests now measures every id
+#: here against the checked-in fill rates, so the next join cannot rot it in
+#: silence.
 POST_RANKING_ABSENT = frozenset(
     {
         "1997-kovo-23-savivaldybiu-tarybu",
         "1997-birzelio-29-svenciniu-tarybos-pakartotiniai",
         "2007-vasario-25-savivaldybiu",
-        "2008-seimo",
         "2009-ep",
-        "2011-vasario-27-savivaldybiu",
-        "2012-seimo",
         "2014-ep",
-        "2015-kovo-1-savivaldybiu",
-        "2015-birzelio-7-pakartotiniai-sirvintos-trakai",
-        "2015-birzelio-21-pakartotiniai-silutes",
     }
 )
 
@@ -919,7 +935,7 @@ def _known_zero_note(column: str, election: dict[str, Any]) -> field_coverage.Ba
         (column in {"list_name", "list_position", "post_election_position"} and seimas_by_election, "a single-mandate Seimas by-election; no party list on the ballot"),
         (column in {"list_name", "list_position"} and kind == "mero", "the mayoral card prints its Sąrašas row empty (verified upstream)"),
         (column == "post_election_position" and (kind == "mero" or eid in POST_RANKING_ABSENT), "VRK publishes no post-election list ranking for this election"),
-        (column in {"party_id", "party_name_raw", "nomination_kind"} and kind == "prezidento", "presidential candidates self-nominate; the pages name no nominator"),
+        (column in {"party_id", "party_name_raw", "nomination_kind"} and kind == "prezidento" and eid not in PRESIDENTIAL_NOMINATOR_PUBLISHED, "the presidential cards of this era name no nominator"),
         (column in {"campaign_key", "campaign_status"} and not campaign_era, "no campaign-finance pages before the 2007-10 Dzūkija by-election"),
         (column in {"campaign_key", "campaign_status"} and eid in NO_CAMPAIGN_PAGES, "VRK publishes no campaign-participant section for this election's candidates"),
         (column in {"education_level", "education_level_rank", "education_higher", "education_unfinished"} and eid in education.LEVEL_NOT_PUBLISHED, "the election publishes no education level for anyone (education_status: neskelbta)"),
@@ -945,7 +961,15 @@ def _known_zero_note(column: str, election: dict[str, Any]) -> field_coverage.Ba
         (column in {"assets_registered_eur", "securities_eur", "loans_received_eur"} and eid == "2003-birzelio-15-seimo-nauji", "the row is printed and holds „-“ on all 27 records"),
         (column in {"self_employment_income_eur", "self_employment_deductions_eur", "asset_sale_income_eur", "asset_acquisition_cost_eur"} and date < "2018", "rows added by the 2018 GPM308/GPM311 rewording; earlier forms never print them"),
         (column in {"securities_eur", "loans_given_eur", "loans_received_eur"} and date < "2002", "the 1996-2000 form folds these into its combined rows"),
-        (column == "income_floor_only" and date >= "2004", "every sectioned-era income figure is a declared total, so the flag is false everywhere"),
+        # There is no rule here for `income_floor_only` reading zero on the
+        # sectioned era. There was one, saying the flag is false everywhere
+        # from 2004 on, and it could never fire: the column is a bool, and
+        # `is_filled` counts False as an answer (a declared "no" is data),
+        # so the cell reads 100 % wherever the declaration block is parsed
+        # at all and 0 % only where it is absent — which the archive-scans
+        # rule above already answers for the one such election. It was the
+        # only one of the rules whose text appeared on no baseline row
+        # (issue #165).
         (column == "birth_place" and eid == "2000-kovo-19-savivaldybiu-tarybu", "the card prints no birth place"),
         (column == "birth_place" and eid == "2004-prezidento", "the five birthplace phrases are the prose helper's documented misses (concept map)"),
     ]

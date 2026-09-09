@@ -17,7 +17,7 @@ them:
     python scripts/field_coverage.py 2020-seimo         # one election's cells
     python scripts/field_coverage.py --update-baseline  # after a deliberate change
 
-Five rules fail the run, and a sixth is opt-in:
+Six rules fail the run, and a seventh is opt-in:
 
 * **zero fill** -- a mapped cell no record fills. Every one of them has to be
   classified in the baseline (`upstream-absent`, `parser-gap`) with a note
@@ -25,6 +25,17 @@ Five rules fail the run, and a sixth is opt-in:
   zero whose concept is filled on more than 90 % of the elections that map it
   is called out separately: that is the `2020-seimo` shape exactly, and it is
   a regression until someone proves otherwise.
+* **stale excuse** (issue #165) -- the reverse of the zero-fill rule: a cell
+  the baseline classifies as legitimately empty that now *fills*. The note is
+  then a false statement in a tracked file, and until this rule nothing could
+  say so -- a classified zero was skipped before any other rule saw it, in
+  both directions. Six lines of `docs/candidacy-baseline.tsv` read "VRK
+  publishes no post-election list ranking for this election" over 35,507
+  values that issue #99's results join had since recovered, and the same
+  silence would have covered their loss: `--update-baseline` would have
+  re-filed them under the excuse that was already there. Unlike every other
+  rule this one does not block `--update-baseline` -- re-measuring *is* the
+  fix, because a cell that fills drops its classification (`classify`).
 * **regression** -- a fill rate that fell more than `--max-drop` points below
   the baseline. Re-parsing an election is allowed to change what it recovers;
   losing five points of a field without saying so is not.
@@ -372,6 +383,25 @@ def low_fill_facts(cell: Cell, elsewhere: float) -> str:
     )
 
 
+def stale_zero_excuse(cell: Cell, prior: Baseline | None) -> bool:
+    """A cell the baseline excuses as legitimately empty that now fills.
+
+    The excuse is a note in a tracked file saying the source publishes
+    nothing here, or that the parser cannot recover it; a filled cell makes
+    it false. Split out from `check` because `update_baseline` needs the same
+    predicate with the opposite conclusion: every other finding blocks the
+    rewrite, and this one is *answered* by it -- `classify` drops the excuse
+    a filled cell no longer needs, so the row rewrites itself and a zero that
+    comes back has to be explained afresh (issue #165).
+    """
+    return (
+        bool(cell.records)
+        and cell.non_null > 0
+        and prior is not None
+        and prior.status in ZERO_STATUSES
+    )
+
+
 def classify(
     cell: Cell,
     prior: Baseline | None,
@@ -499,9 +529,9 @@ def check(
     max_drop: float,
     max_below: float = DEFAULT_MAX_BELOW_PEERS,
 ) -> list[str]:
-    """The three per-cell rules -- zero fill, regression, below its peers.
-    Returns one tab-separated line per finding (concept, election, what),
-    empty when the corpus is clean."""
+    """The four per-cell rules -- zero fill, stale excuse, regression, below
+    its peers. Returns one tab-separated line per finding (concept, election,
+    what), empty when the corpus is clean."""
     findings: list[str] = []
     medians = peer_medians(cells)
     for cell in cells:
@@ -534,6 +564,19 @@ def check(
             findings.append(
                 f"{cell.concept}\t{cell.election}\t"
                 f"0 of {cell.records} records fill a mapped path ({status}){shape}"
+            )
+            continue
+
+        if stale_zero_excuse(cell, prior):
+            # The row says nothing fills here and something does. Reported
+            # rather than skipped, because the excuse is what would cover the
+            # values' loss the next time they go (issue #165).
+            findings.append(
+                f"{cell.concept}\t{cell.election}\t"
+                f"classified {prior.status} but fills at {cell.pct:.1f}%"
+                f" ({cell.non_null} of {cell.records} records) -- the baseline note is a"
+                f" false statement: {prior.note.strip() or '(no note)'}"
+                " (--update-baseline drops an excuse a filled cell no longer needs)"
             )
             continue
 
@@ -783,7 +826,9 @@ def update_baseline(
     the baseline already has (a regression, a zero that used to be filled)
     or on the concept set of a new election (a peer gap, an unmapped
     election): those are things to fix or to classify, not to sign off by
-    re-measuring. `force` writes anyway. Then it reports the rows added and
+    re-measuring. A stale excuse (issue #165) is the one finding re-measuring
+    does answer, so it does not refuse over one. `force` writes anyway over
+    the rest. Then it reports the rows added and
     changed and how many fell more than `max_drop`, and exits 1 while any
     zero or below-peers cell it wrote is `unexplained`, so the first run over
     a new election ends with the list of cells a human has to classify.
@@ -793,8 +838,18 @@ def update_baseline(
     # new election's zeros and low cells are written unexplained instead,
     # below). `election_findings` -- an unmapped election, a peer gap -- are
     # about what is *not* measured, so writing rows cannot answer them and
-    # they always block.
-    blocking = [f for f in cell_findings if finding_key(f) in previous] + list(election_findings)
+    # they always block. The one exception is a stale excuse: a classified
+    # zero that now fills is answered by the rewrite itself, and blocking on
+    # it would only teach the next person to reach for --force (issue #165).
+    by_key = {(cell.concept, cell.election): cell for cell in cells}
+    stale = {
+        key
+        for key, cell in by_key.items()
+        if stale_zero_excuse(cell, previous.get(key))
+    }
+    blocking = [
+        f for f in cell_findings if finding_key(f) in previous and finding_key(f) not in stale
+    ] + list(election_findings)
     if blocking and not force:
         print(f"--update-baseline refused: {len(blocking)} finding(s) stand on what is already", file=out)
         print("checked in, or on a new election's concept set. Fix or classify them first;", file=out)
@@ -820,7 +875,6 @@ def update_baseline(
     unexplained = sorted(key for key, row in rows.items() if row.status == UNEXPLAINED)
     if unexplained:
         medians = peer_medians(cells)
-        by_key = {(cell.concept, cell.election): cell for cell in cells}
         print(
             f"{len(unexplained)} cell(s) written {UNEXPLAINED}. A zero takes one of"
             f" {', '.join(sorted(ZERO_STATUSES))}, a below-peers cell one of"

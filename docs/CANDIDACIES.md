@@ -190,10 +190,24 @@ rate of every gated column (3,465 cells). A plain build fails when a rate
 falls more than `--max-drop` points below the baseline, or when a cell no
 record fills appears without a classified reason — the shape of the
 2020-income defect ([FIELD_COVERAGE.md](FIELD_COVERAGE.md)), which this
-table would otherwise inherit silently. The 1,021 zero cells that are real all
+table would otherwise inherit silently. The 1,026 zero cells that are real all
 carry a status and a note ("a single-mandate Seimas by-election; no party
 list on the ballot"); `--update-baseline` auto-classifies only the zeros the
 builder can structurally explain and refuses the rest.
+
+Those structural reasons are hand-written lists of election ids, and a list
+written against one corpus goes stale under the next: issue #99's results
+join recovered the post-election ranking for six of the eleven elections
+`POST_RANKING_ABSENT` said had never printed one, and six baseline rows went
+on denying 35,507 values (issue #165). Two things now stop that. The gate
+reports a classification that has gone false — *stale excuse*, in
+[FIELD_COVERAGE.md](FIELD_COVERAGE.md) — instead of skipping a classified
+zero unread; and `tests/test_candidacy_table.py` measures every rule against
+the checked-in rates, so a rule that excuses a column the baseline says is
+filled fails on a clone with no corpus present. That test found a seventh
+stale reason the audit had not: the 2024 presidential cards do print a
+`Kandidatą iškėlė` row, over a note saying presidential pages name no
+nominator.
 
 ## What this table is not
 
