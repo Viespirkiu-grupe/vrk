@@ -934,10 +934,6 @@ class ArchiveComparisonRowTests(unittest.TestCase):
         self.assertIsNone(self._cells(self.RECORD)["Einamos pareigos / darbovietė"])
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
 class ThreeFalsehoods(unittest.TestCase):
     """Three views stated something false rather than showing a gap (#148).
 
@@ -1000,3 +996,194 @@ class ThreeFalsehoods(unittest.TestCase):
     def test_the_facet_note_is_silent_when_nothing_is_filtered(self):
         # The absence of the line is the default and is not a claim.
         self.assertIn("if (!named.length) return;", SOURCE)
+
+
+class ExportTests(unittest.TestCase):
+    """What the CSV hands to a spreadsheet (issue #149).
+
+    `exportCSV` writes a BOM and joins on ';' "which is what lt-LT Excel
+    expects", and then wrote its money through `String(number)`: replaying the
+    page's own field function over all 113,073 rows gave 308,135 money cells,
+    199,626 of them with a '.' decimal -- which an lt-LT import reads as text,
+    so no sum, no sort, no chart -- and 90 cells starting with one of
+    `= + - @ TAB CR`, which Excel renders as #NAME?.
+    """
+
+    def _run(self, names, script):
+        helpers = "\n".join(
+            re.search(rf"^function {name}\(.*?^\}}$", SOURCE, re.S | re.M).group(0)
+            for name in names
+        )
+        out = subprocess.run(
+            [NODE, "-e", f"{helpers}\n{script}"], capture_output=True, text=True, timeout=30
+        )
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        return json.loads(out.stdout)
+
+    @unittest.skipIf(NODE is None, "node not installed")
+    def test_money_carries_a_comma_decimal(self):
+        cells = self._run(
+            ["csvMoney"],
+            "console.log(JSON.stringify([12345.67, 0, 0.5, -8.25, null, 1000000]"
+            ".map(csvMoney)));",
+        )
+        self.assertEqual(cells, ["12345,67", "0", "0,5", "-8,25", "", "1000000"])
+
+    @unittest.skipIf(NODE is None, "node not installed")
+    def test_a_formula_looking_cell_is_quoted_out(self):
+        cells = self._run(
+            ["csvField"],
+            "console.log(JSON.stringify(["
+            '"=SUM(A1:A2)", "+37060000000", "-8,25", "@svetaine.lt", "\\tPastaba",'
+            ' "UAB \\"Katos studija\\"", "Salės nuoma", null'
+            "].map(csvField)));",
+        )
+        self.assertEqual(
+            cells,
+            [
+                "'=SUM(A1:A2)",
+                "'+37060000000",
+                "'-8,25",
+                "'@svetaine.lt",
+                # A tab is not the ';' separator, so it needs the apostrophe
+                # but no quoting.
+                "'\tPastaba",
+                '"UAB ""Katos studija"""',
+                "Salės nuoma",
+                "",
+            ],
+        )
+
+    def test_the_election_column_carries_its_name_beside_the_slug(self):
+        # The nominator has had an id/name pair since #82; the election, which
+        # is the column a reader groups by, had only "2024-seimo".
+        self.assertIn('"rinkimai", "rinkimu_pavadinimas", "data",', SOURCE)
+        self.assertIn(
+            '(ELECTIONS.get(e.id) || {}).name || (ELECTIONS.get(e.id) || {}).shortName || ""',
+            SOURCE,
+        )
+
+    def test_every_money_column_goes_through_the_money_formatter(self):
+        self.assertIn("csvMoney(m[0]), csvMoney(m[1]), csvMoney(m[2]), csvMoney(m[3]),", SOURCE)
+
+
+class AssetChartTests(unittest.TestCase):
+    """The chart's axis and its width (issue #149)."""
+
+    @unittest.skipIf(NODE is None, "node not installed")
+    def test_no_bar_rises_above_the_top_gridline(self):
+        # Bars were scaled to `max` and gridlines drawn while `t <= max`, so
+        # the top label was floor(max/tick)*tick: replayed over every person,
+        # 59,177 of the 60,379 charts with a value (98.01 %) had their
+        # tallest bar above the axis, median ratio 0.824, worst 0.667.
+        script = """
+        const cases = [316000, 240000, 1, 999, 1000, 4001, 1234567, 0.5];
+        console.log(JSON.stringify(cases.map(max => {
+          const step = Math.pow(10, Math.floor(Math.log10(max / 4)));
+          const tick = Math.ceil(max / 4 / step) * step;
+          const axisMax = Math.ceil(max / tick) * tick;
+          let top = 0;
+          for (let t = 0; t <= axisMax; t += tick) top = t;
+          return [max <= axisMax, Math.abs(top - axisMax) < tick / 1000];
+        })));
+        """
+        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        for fits, labelled in json.loads(out.stdout):
+            self.assertTrue(fits, "a bar can still exceed the axis")
+            self.assertTrue(labelled, "the top gridline is not the axis maximum")
+
+    def test_the_axis_maximum_drives_the_bars_the_gridlines_and_the_loop(self):
+        self.assertIn("const axisMax = Math.ceil(max / tick) * tick;", SOURCE)
+        self.assertIn("const y = (v) => mT + plotH - (v / axisMax) * plotH;", SOURCE)
+        self.assertIn("for (let t = 0; t <= axisMax; t += tick)", SOURCE)
+        self.assertIn("const h = Math.max(1.5, (v / axisMax) * plotH);", SOURCE)
+        self.assertNotIn("(v / max) * plotH", SOURCE)
+
+    def test_the_chart_is_sized_to_the_pane_it_is_drawn_into(self):
+        # It was `cols.length * 132 + 100` whatever it had to fit in: 2,740 px
+        # in an 830 px wrapper for a 20-candidacy person. Columns narrow to
+        # fit, down to 52 px, and only past that does the wrapper scroll --
+        # verified in the browser at 1280x900, where 1 to 13 candidacies fit
+        # whole and 20 scrolls 321 px instead of 1,910.
+        self.assertIn("function availableWidth() {", SOURCE)
+        self.assertIn(
+            "const colW = Math.max(52, Math.min(132, (availableWidth() - mL - mR) / cols.length));",
+            SOURCE,
+        )
+        self.assertNotIn("cols.length * 132 + 100", UNCOMMENTED)
+
+    def test_a_scrolling_chart_opens_on_the_most_recent_election(self):
+        # Built while its tab is display:none, where every width is 0, so the
+        # scroll has to wait for the tab to be shown.
+        self.assertIn('pane.dataset.scrollRight = "1";', SOURCE)
+        self.assertIn("scrollRightOnce(pane);", SOURCE)
+        self.assertIn(
+            'for (const wrap of pane.querySelectorAll(".tablewrap")) wrap.scrollLeft = wrap.scrollWidth;',
+            SOURCE,
+        )
+
+    def test_a_wrapper_with_more_to_show_says_so(self):
+        rule = re.search(r"\.tablewrap \{(.*?)\n  \}", SOURCE, re.S).group(1)
+        self.assertIn("overflow-x: auto", rule)
+        # The scrolling-shadows pair: a panel-coloured mask that scrolls with
+        # the content, and a shadow fixed to each edge.
+        self.assertIn("background-attachment: local, local, scroll, scroll", rule)
+        self.assertEqual(rule.count("radial-gradient(farthest-side"), 2)
+
+
+class NarrowScreenTests(unittest.TestCase):
+    """Under 900 px (issue #149).
+
+    Measured at 375x812 before the fix: the header took 158.5 px, the list
+    361.75 and the person pane 291.75 -- 35.9 % of the screen for the thing
+    the page is for -- and `body { overflow: hidden }` meant there was no
+    scrolling to reclaim it. After: the same person's pane is 3,035 px tall in
+    a 3,683 px document that scrolls, with no horizontal overflow.
+    """
+
+    QUERY = re.search(r"@media \(max-width: 900px\) \{(.*?)\n  \}", SOURCE, re.S).group(1)
+
+    def test_the_document_scrolls(self):
+        self.assertIn("html, body { height: auto; }", self.QUERY)
+        self.assertIn("body { overflow: visible; }", self.QUERY)
+        self.assertIn("#person { overflow-y: visible;", self.QUERY)
+
+    def test_the_result_list_keeps_a_bounded_scroll_of_its_own(self):
+        # Otherwise the document grows by every rendered row.
+        self.assertIn("#left { max-height: none;", self.QUERY)
+        self.assertIn("#results { max-height: 46vh; }", self.QUERY)
+
+    def test_the_filters_fold_away(self):
+        self.assertIn('<button id="filterToggle" type="button" aria-controls="filters"', SOURCE)
+        self.assertIn("#filterToggle { display: inline-block; }", self.QUERY)
+        # `display: grid` on #filters beats the UA sheet's rule for [hidden],
+        # which is why this has to be said -- and why the filters come back by
+        # themselves on a wide screen whatever the button was left at.
+        self.assertIn("#filters[hidden] { display: none; }", self.QUERY)
+        self.assertIn("setFilters(!narrow.matches);", SOURCE)
+        self.assertIn('filterToggle.setAttribute("aria-expanded", String(open));', SOURCE)
+
+    def test_the_field_list_stacks(self):
+        # 260px of label beside the value leaves 100px for the value on a
+        # 375px screen.
+        self.assertIn("dl { grid-template-columns: minmax(0, 1fr);", self.QUERY)
+
+
+class BareUrlTests(unittest.TestCase):
+    def test_a_url_renders_as_a_link(self):
+        # 17 keys hold a bare http(s) URL and 802 of the 1,329 sampled
+        # records printed at least one as an 88-character string, while
+        # `appendSourceLinks` had rendered the `nuorodos` shape as anchors all
+        # along. Verified live: a 6-candidacy person's page went from 0 to 5
+        # anchors, each rel="noopener noreferrer".
+        scalar = re.search(r'if \(typeof v !== "object"\) \{(.*?)\n  \}', SOURCE, re.S).group(1)
+        self.assertIn('if (/^https?:\\/\\/\\S+$/.test(text)) {', scalar)
+        self.assertIn('a.rel = "noopener noreferrer";', scalar)
+        self.assertIn('a.target = "_blank";', scalar)
+
+
+if __name__ == "__main__":
+    unittest.main()

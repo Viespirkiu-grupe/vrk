@@ -16,6 +16,7 @@
   header h1 { font-size: 17px; margin: 0; }
   header .stats { color: var(--muted); font-size: 13px; }
   header .hbtn { padding: 6px 12px; border: 1px solid var(--line); background: var(--panel); border-radius: 8px; cursor: pointer; font-size: 13.5px; }
+  #filterToggle { display: none; margin-top: 8px; padding: 5px 10px; border: 1px solid var(--line); background: var(--panel); border-radius: 6px; cursor: pointer; font-size: 12.5px; }
   main { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 0; flex: 1; min-height: 0; }
   #left { border-right: 1px solid var(--line); background: var(--panel); display: flex; flex-direction: column; min-height: 0; min-width: 0; }
   #searchbox { padding: 12px 12px 8px; }
@@ -63,7 +64,22 @@
   table.rec { border-collapse: collapse; font-size: 13.5px; margin: 4px 0; max-width: 100%; display: block; overflow-x: auto; }
   table.rec th, table.rec td { border: 1px solid var(--line); padding: 4px 8px; text-align: left; vertical-align: top; min-width: 110px; }
   table.rec th { background: var(--accent-soft); font-weight: 600; }
-  .tablewrap { overflow-x: auto; }
+  /* Scrolling shadows: a wrapper whose content is wider than it is shows a
+     shadow on the side it can still scroll toward, and nothing when it fits.
+     A 20-candidacy person's chart was 2,740 px in an 830 px wrapper with no
+     hint that anything lay off-screen (issue #149). The two `local` gradients
+     are the panel-coloured mask that hides the shadow at each end. */
+  .tablewrap {
+    overflow-x: auto;
+    background:
+      linear-gradient(to right, var(--panel) 40%, rgba(255, 255, 255, 0)) left center,
+      linear-gradient(to left, var(--panel) 40%, rgba(255, 255, 255, 0)) right center,
+      radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .16), rgba(0, 0, 0, 0)) left center,
+      radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .16), rgba(0, 0, 0, 0)) right center;
+    background-repeat: no-repeat;
+    background-size: 36px 100%, 36px 100%, 13px 100%, 13px 100%;
+    background-attachment: local, local, scroll, scroll;
+  }
   table.cmp { border-collapse: collapse; width: 100%; font-size: 13.5px; background: var(--panel); }
   table.cmp th, table.cmp td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; white-space: pre-line; }
   table.cmp thead th { background: var(--accent-soft); position: sticky; top: 0; z-index: 2; }
@@ -73,7 +89,29 @@
   table.cmp td.unmapped { color: var(--muted); background: var(--bg); }
   .loading { color: var(--muted); padding: 20px; }
   .aggnote { color: var(--muted); font-size: 13px; margin: 6px 0 14px; }
-  @media (max-width: 900px) { main { grid-template-columns: minmax(0, 1fr); } #left { max-height: 50vh; } }
+  /* Under 900 px the two panes stack, and the viewport-locked layout that
+     works side by side does not: measured at 375x812 the header took 158.5 px,
+     the list 361.75 px and the person pane 291.75 px -- 35.9 % of the screen
+     for the thing the page is for -- and `body { overflow: hidden }` meant
+     there was no scrolling to reclaim it (issue #149). So: the document
+     scrolls, the person pane grows with its content, the result list keeps a
+     bounded scroll of its own, and the six filter selects fold behind a
+     button. `#filters[hidden]` needs saying because the `display: grid` above
+     it beats the UA sheet's rule for [hidden] -- which is also why the
+     filters reappear by themselves on a wide screen, whatever the button was
+     last left at. */
+  @media (max-width: 900px) {
+    html, body { height: auto; }
+    body { overflow: visible; }
+    main { grid-template-columns: minmax(0, 1fr); flex: none; }
+    #left { max-height: none; border-right: none; border-bottom: 1px solid var(--line); }
+    #results { max-height: 46vh; }
+    #person { overflow-y: visible; padding: 16px 14px; }
+    #filters[hidden] { display: none; }
+    #filterToggle { display: inline-block; }
+    dl { grid-template-columns: minmax(0, 1fr); gap: 0 0; }
+    dt { margin-top: 8px; font-size: 13px; }
+  }
 </style>
 </head>
 <body>
@@ -85,7 +123,9 @@
 </header>
 <main>
   <div id="left">
-    <div id="searchbox"><input id="search" type="search" placeholder="Ieškokite asmens, partijos ar darbovietės…" autofocus></div>
+    <div id="searchbox"><input id="search" type="search" placeholder="Ieškokite asmens, partijos ar darbovietės…" autofocus>
+      <button id="filterToggle" type="button" aria-controls="filters" aria-expanded="true">Filtrai</button>
+    </div>
     <div id="filters">
       <select id="fElection" title="Rinkimai"></select>
       <select id="fParty" title="Iškėlusi partija ar komitetas"></select>
@@ -513,8 +553,16 @@ function deslug(key) {
 
 let CONCEPT_LABELS = {};
 let SEGMENT_LABELS = {};
+// dashboard/field-labels.json: the keys deslug spells wrong. Measured over all
+// 113,073 records (issue #149): 480 distinct keys reach a label and 398 fell
+// through to deslug, 125 of them provably mis-spelled ("Pavarde",
+// "Numeris sarase", "Seimos nariu skaicius") and 47 printed in English
+// ("Row number", on 4,020,284 cells). Each entry there carries the proof of
+// its label; the page just reads them.
+let FIELD_LABELS = {};
 function labelFor(key) {
-  return SECTION_LABELS[key] || CONCEPT_LABELS[key] || SEGMENT_LABELS[key] || deslug(key);
+  return SECTION_LABELS[key] || CONCEPT_LABELS[key] || SEGMENT_LABELS[key]
+    || (FIELD_LABELS[key] || {}).lt || deslug(key);
 }
 
 let INDEX = null;
@@ -550,18 +598,30 @@ async function boot() {
   // along: the comparison rows resolve through it, so the page carries no
   // path list of its own.
   let conceptMap;
+  let labelsRes;
   try {
-    const [indexRes, mapRes] = await Promise.all([
+    const [indexRes, mapRes, fieldRes] = await Promise.all([
       fetch("people.json", { cache: "no-store" }),
       fetch("../docs/concept-map.json", { cache: "no-store" }),
+      fetch("field-labels.json", { cache: "no-store" }).catch(() => null),
     ]);
     if (!indexRes.ok) throw new Error(`people.json: HTTP ${indexRes.status}`);
     if (!mapRes.ok) throw new Error(`docs/concept-map.json: HTTP ${mapRes.status}`);
     INDEX = await indexRes.json();
     conceptMap = await mapRes.json();
+    labelsRes = fieldRes;
   } catch (err) {
     bootFailed(err);
     return;
+  }
+  // Not fatal: a page without the labels de-slugs, which is what it did
+  // before the file existed. It says so once, in the console, rather than
+  // replacing the whole view with an error.
+  try {
+    if (labelsRes && labelsRes.ok) FIELD_LABELS = (await labelsRes.json()).labels || {};
+    else throw new Error(`HTTP ${labelsRes ? labelsRes.status : "no response"}`);
+  } catch (err) {
+    console.warn(`field-labels.json neįkeltas (${err.message}); laukų vardai bus be diakritikų`);
   }
   ELECTIONS = new Map((INDEX.elections || []).map(e => [e.id, e]));
   CONCEPTS = conceptMap.concepts || {};
@@ -620,6 +680,20 @@ async function boot() {
       if (first) { ev.preventDefault(); first.focus(); }
     }
   });
+  // The filter fold, which only exists under 900 px (see the media query).
+  // It starts collapsed on a narrow screen -- the six selects are 100 px of a
+  // 375 px-wide phone, above the results -- and the CSS makes the filters
+  // reappear on a wide one whatever this was last set to.
+  const filterToggle = document.getElementById("filterToggle");
+  const filters = document.getElementById("filters");
+  const narrow = window.matchMedia("(max-width: 900px)");
+  const setFilters = (open) => {
+    filters.hidden = !open;
+    filterToggle.setAttribute("aria-expanded", String(open));
+    filterToggle.textContent = open ? "Filtrai ▴" : "Filtrai ▾";
+  };
+  setFilters(!narrow.matches);
+  filterToggle.addEventListener("click", () => setFilters(filters.hidden));
   document.getElementById("moversBtn").addEventListener("click", showMovers);
   document.getElementById("aggBtn").addEventListener("click", showAggregates);
   document.getElementById("csvBtn").addEventListener("click", exportCSV);
@@ -904,15 +978,33 @@ function updateCompareBar() {
 
 function csvField(value) {
   if (value == null) return "";
-  const s = String(value);
+  let s = String(value);
+  // A cell a spreadsheet would read as a formula gets a leading apostrophe.
+  // 90 cells of the full export start with one of these — 88 workplace
+  // strings and two negative money figures — and Excel renders them as
+  // #NAME? (issue #149).
+  if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;
   return /[;"\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+}
+
+// Money for an lt-LT spreadsheet: a comma decimal, because the locale's
+// decimal separator is a comma and `String(number)` writes a dot. 199,626
+// of the export's 308,135 money cells carried a dot, which imports as
+// left-aligned text — no sum, no sort, no chart (issue #149). The field
+// separator is `;`, so a comma inside a cell needs no quoting.
+function csvMoney(value) {
+  if (value == null) return "";
+  return String(value).replace(".", ",");
 }
 
 function exportCSV() {
   const q = fold(document.getElementById("search").value.trim());
   const f = activeFilters();
   const header = [
-    "pid", "vardas_pavarde", "gimimo_data", "rinkimai", "data",
+    // `rinkimai` is the slug, and `rinkimu_pavadinimas` its registry name:
+    // the nominator column pair has had both since #82, while the election
+    // — the column a reader groups by — had only the id (issue #149).
+    "pid", "vardas_pavarde", "gimimo_data", "rinkimai", "rinkimu_pavadinimas", "data",
     "pareigos", "savivaldybe", "apygarda", "partijos_id", "partija", "isrinktas", "isrinktas_kaip",
     "pirmumo_balsai", "balsai_apygardoje",
     "issilavinimas",
@@ -928,7 +1020,9 @@ function exportCSV() {
       const m = e.m || [];
       rows.push([
         p.pid, p.n, p.b || "",
-        e.id, (ELECTIONS.get(e.id) || {}).date || "",
+        e.id,
+        (ELECTIONS.get(e.id) || {}).name || (ELECTIONS.get(e.id) || {}).shortName || "",
+        (ELECTIONS.get(e.id) || {}).date || "",
         roleLabel(e),
         e.sv != null ? INDEX.municipalities[e.sv] : "",
         e.ap != null ? (INDEX.constituencies || [])[e.ap] : "",
@@ -937,7 +1031,7 @@ function exportCSV() {
         electedLabel(e),
         e.v ?? "", e.cv ?? "",
         e.ed ? ((INDEX.educationLevels || [])[e.ed - 1] || {}).label || "" : "",
-        m[0] ?? "", m[1] ?? "", m[2] ?? "", m[3] ?? "",
+        csvMoney(m[0]), csvMoney(m[1]), csvMoney(m[2]), csvMoney(m[3]),
         e.lt ? "taip" : "", e.ds ? "taip" : "",
         e.wp || "",
       ]);
@@ -1084,7 +1178,23 @@ function appendSourceLinks(dd, nuorodos) {
 function renderValue(v) {
   if (v == null || v === "") { const s = document.createElement("span"); s.textContent = "—"; s.style.color = "var(--muted)"; return s; }
   if (typeof v === "boolean") { const s = document.createElement("span"); s.textContent = v ? "taip" : "ne"; return s; }
-  if (typeof v !== "object") { const s = document.createElement("span"); s.textContent = String(v); return s; }
+  if (typeof v !== "object") {
+    const text = String(v);
+    // 17 record keys hold a bare http(s) URL, and 802 of a 1,329-record
+    // sample (60.3 %) print at least one as an 88-character string —
+    // although `appendSourceLinks` has rendered the `nuorodos` shape as
+    // anchors all along (issue #149).
+    if (/^https?:\/\/\S+$/.test(text)) {
+      const a = document.createElement("a");
+      a.href = text;
+      a.textContent = text;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.style.wordBreak = "break-all";
+      return a;
+    }
+    const s = document.createElement("span"); s.textContent = text; return s;
+  }
   if (Array.isArray(v)) {
     if (v.every(x => x == null || typeof x !== "object")) {
       const s = document.createElement("span"); s.textContent = v.filter(x => x != null).join("; ") || "—"; return s;
@@ -1305,6 +1415,7 @@ async function showPerson(p) {
       for (const [, other] of panes) other.style.display = "none";
       for (const b of tabs.children) b.className = "";
       pane.style.display = ""; btn.className = "on";
+      scrollRightOnce(pane);
     });
     tabs.appendChild(btn);
     pane.style.display = "none";
@@ -1833,6 +1944,31 @@ function moneyEUR(record, path) {
 
 const fmtEUR = (n) => n.toLocaleString("lt-LT", { maximumFractionDigits: 0 }) + " €";
 
+// What a chart drawn into the person pane has to fit into: the pane's own
+// content box less the card's padding and border. Read at build time because
+// the pane is not in the document yet, and floored so a hidden or unmeasured
+// pane (a detached test fixture, a display:none tab) still draws a chart
+// rather than a sliver.
+// A pane that asked to open on its right-hand end, now that it has a width.
+function scrollRightOnce(pane) {
+  if (pane.dataset.scrollRight !== "1") return;
+  delete pane.dataset.scrollRight;
+  for (const wrap of pane.querySelectorAll(".tablewrap")) wrap.scrollLeft = wrap.scrollWidth;
+}
+
+function availableWidth() {
+  const pane = document.getElementById("person");
+  if (!pane) return 320;
+  const pad = getComputedStyle(pane);
+  const inner = pane.clientWidth - parseFloat(pad.paddingLeft) - parseFloat(pad.paddingRight)
+    - 34   // the .ecard's own 16px padding either side, and its 1px border
+    - 17;  // and the pane's own vertical scrollbar, which a record's worth of
+           // content brings with it *after* this is read: measured 15px in
+           // the browser, so a 6-candidacy chart came out 15px too wide and
+           // scrolled by exactly that.
+  return Math.max(320, inner);
+}
+
 function buildAssetPane(loaded, failedCount = 0) {
   const pane = document.createElement("div");
   const cols = loaded.map(([e, r]) => ({
@@ -1852,28 +1988,44 @@ function buildAssetPane(loaded, failedCount = 0) {
   }
 
   const max = Math.max(...allValues, 1);
-  const W = Math.max(560, cols.length * 132 + 100), H = 340;
+  const H = 340;
   const mL = 84, mR = 12, mT = 16, mB = 64;
+  // The chart used to be `cols.length * 132 + 100` px wide whatever it had to
+  // fit in: a 20-candidacy person got 2,740 px in an 830 px wrapper, 4.9
+  // screenfuls opening on 1996 (issue #149). Columns now narrow to fit the
+  // pane, down to 52 px -- which holds all three bars and a rotated year --
+  // and only past that does the wrapper scroll. Measured over people.json:
+  // 99.03 % of the 60,568 people have 8 candidacies or fewer and fit whole on
+  // a 1280 px window; the 590 who do not scroll 306 px instead of 1,910.
+  const colW = Math.max(52, Math.min(132, (availableWidth() - mL - mR) / cols.length));
+  const W = Math.max(Math.min(560, availableWidth()), Math.round(cols.length * colW) + mL + mR);
   const plotW = W - mL - mR, plotH = H - mT - mB;
-  const y = (v) => mT + plotH - (v / max) * plotH;
 
-  // 4 round-number gridlines
+  // 4 round-number gridlines, and the axis runs to the last of them.
+  // Bars were scaled to `max` while gridlines were drawn while `t <= max`,
+  // so the top label was floor(max/tick)*tick and the tallest bar stood
+  // above it: 59,177 of the 60,379 charts with a value (98.0 %), median
+  // ratio 0.824, worst 0.667 — a 316,000 € bar over an axis labelled to
+  // 240,000 € (issue #149). Scaling to `axisMax` puts every bar under the
+  // top gridline and costs nothing but a little headroom.
   const step = Math.pow(10, Math.floor(Math.log10(max / 4)));
   const tick = Math.ceil(max / 4 / step) * step;
+  const axisMax = Math.ceil(max / tick) * tick;
+  const y = (v) => mT + plotH - (v / axisMax) * plotH;
   // The svg keeps its natural width and the card scrolls instead: squeezed
   // to the pane, an 8-election chart shrank its 11px labels to 3.3px.
   let svg = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img">`;
-  for (let t = 0; t <= max; t += tick) {
+  for (let t = 0; t <= axisMax; t += tick) {
     svg += `<line x1="${mL}" y1="${y(t)}" x2="${W - mR}" y2="${y(t)}" stroke="#e3e3de"/>` +
       `<text x="${mL - 8}" y="${y(t) + 4}" text-anchor="end" font-size="11" fill="#6d6d68">${fmtEUR(t)}</text>`;
   }
-  const groupW = plotW / cols.length, barW = Math.min(30, groupW * 0.24);
+  const groupW = plotW / cols.length, barW = Math.min(30, Math.max(7, groupW * 0.24));
   cols.forEach((col, i) => {
     const cx = mL + groupW * (i + 0.5);
     col.values.forEach((v, s) => {
       const x = cx + (s - 1) * (barW + 3) - barW / 2;
       if (v == null) return;
-      const h = Math.max(1.5, (v / max) * plotH);
+      const h = Math.max(1.5, (v / axisMax) * plotH);
       svg += `<rect x="${x.toFixed(1)}" y="${(mT + plotH - h).toFixed(1)}" width="${barW.toFixed(1)}" height="${h.toFixed(1)}" fill="${MONEY_SERIES[s][2]}" rx="2"><title>${MONEY_SERIES[s][0]}: ${fmtEUR(v)}</title></rect>`;
     });
     svg += `<text x="${cx}" y="${mT + plotH + 14}" text-anchor="end" font-size="11.5" fill="#1c1c1a" transform="rotate(-24 ${cx} ${mT + plotH + 14})">${col.label}</text>`;
@@ -1890,6 +2042,11 @@ function buildAssetPane(loaded, failedCount = 0) {
     `<span style="margin-left:auto">nėra stulpelio — nedeklaruota arba nepaskelbta · užveskite pelę ant stulpelio, kad matytumėte sumą` +
     `</span></div>`;
   pane.appendChild(card);
+  // A chart too wide for its wrapper opens on the newest election, not the
+  // oldest: the scroll shadow on the left says the earlier ones are there.
+  // It has to run when the tab is shown -- the pane is built `display: none`,
+  // where every width is 0.
+  pane.dataset.scrollRight = "1";
 
   // the numbers behind the bars
   const t = document.createElement("table"); t.className = "cmp"; t.style.marginTop = "14px";

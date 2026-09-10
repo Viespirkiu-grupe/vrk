@@ -136,7 +136,8 @@ party that grew out of a committee, or a union of parties, is a group whose
 person matches when at least one of their candidacies passes every active
 filter — and **⬇ CSV** exports the current selection (semicolon-separated,
 BOM-prefixed for lt-LT Excel, uncapped even when the list shows only the
-first 300 rows). Checking rows collects persons for **Palyginti**, a
+first 300 rows; see *What the page exports* below for what a cell looks
+like). Checking rows collects persons for **Palyginti**, a
 side-by-side table whose columns are persons and whose cells show each
 person's newest resolving answer tagged with its election. **📊 Rinkimų
 suvestinė** aggregates one election — party mix, education mix, money
@@ -171,6 +172,98 @@ did:
   showing the filters and nothing saying two had been dropped. Both apply
   every facet now, name them above the figures, and offer *rodyti visus* to
   clear them.
+
+## What the page renders, and what it exports
+
+Everything here was measured over the whole corpus and re-measured against
+the running page (issue #149).
+
+**The export is for a Lithuanian spreadsheet.** The separator and the BOM
+always were; the numbers were not. Money went through `String(number)`, and
+`build_person_index` rounds with a dot: 199,626 of the export's 308,135 money
+cells carried a `.` decimal, which an lt-LT import reads as *text* — no sum,
+no sort, no chart. `csvMoney` writes the comma the locale expects, and since
+the separator is `;` the comma needs no quoting. Ninety cells — 88
+`darbovietė` strings and two negative figures — began with one of
+`= + - @ TAB CR`, which Excel evaluates and renders as `#NAME?`; `csvField`
+prefixes those with an apostrophe. And the election column, the one a reader
+groups by, held only the slug while the nominator had carried an id/name pair
+since issue #82: `rinkimu_pavadinimas` now sits beside `rinkimai` with the
+registry name.
+
+**No bar rises above the top gridline.** The asset chart scaled its bars to
+the tallest value and drew its gridlines while `t <= max`, so the top label
+was `floor(max/tick)*tick` and the tallest bar stood above it — 59,177 of the
+60,379 charts with a value (98.01 %), median ratio 0.824, worst 0.667: a
+316,000 € bar over an axis labelled to 240,000 €. `axisMax = ceil(max/tick) *
+tick` drives the bars, the gridlines and the loop, and costs nothing but a
+little headroom.
+
+**A chart is sized to the pane it is drawn into.** It used to be
+`cols.length * 132 + 100` px wide whatever it had to fit in: a 20-candidacy
+person got 2,740 px in an 830 px wrapper, 4.9 screenfuls opening on 1996,
+with nothing to say more lay off-screen. Columns narrow to fit, down to 52 px
+— which still holds three bars and a rotated year — and only past that does
+the wrapper scroll, opening on the most recent election. 99.03 % of the
+60,568 people have eight candidacies or fewer and their chart fits whole on a
+1280 px window; the 590 who do not scroll 306 px instead of 1,910. Every
+`.tablewrap` on the page now carries the scrolling-shadows pair, so a wrapper
+with more to show says so and one that fits shows nothing.
+
+**A phone gets the record, not a letterbox.** Measured at 375×812 before the
+fix: the header took 158.5 px, the result list 361.75 px and the person pane
+291.75 px — 35.9 % of the screen for the thing the page is for — and
+`body { overflow: hidden }` meant there was no scrolling to reclaim it (the
+page has never overflowed *horizontally*, which is worth saying). Under
+900 px the document scrolls, the person pane grows with its content (3,035 px
+for the same person, in a 3,683 px document), the result list keeps a bounded
+scroll of its own, the field list stacks label over value, and the six filter
+selects fold behind a **Filtrai** button. `#filters[hidden] { display: none }`
+has to be said because the `display: grid` rule above it beats the UA sheet —
+which is also why the filters come back by themselves on a wide screen,
+whatever the button was last left at.
+
+**A label is VRK's word, or the key's own word spelled properly.**
+`labelFor` resolves a record key against the record sections, the concept
+map's `label-lt`, the map's path segments, then `dashboard/field-labels.json`,
+then `deslug` — which lower-cases an ASCII-folded slug and cannot put a
+diacritic back. Of the 442 keys that reach a label over the whole corpus, 398
+fell through to `deslug`, 125 of them provably mis-spelled (`Pavarde`,
+`Darboviete`, `Numeris sarase`, `Seimos nariu skaicius` — the last also
+reading as *Seimas members*) and 47 printed in English: `Row number`, on
+4,020,284 cells. The labels file holds 253 of those keys and **every entry
+says where its label comes from**, which is what
+`tests/test_dashboard_field_labels.py` gates:
+
+- `printed` (118) — the string VRK prints, such that
+  `scraper.shared.files.slugify(label) == key`. Slugifying the printed label
+  is *how the parser made the key*, so the proof needs no corpus and no
+  wording is ours. The one normalization is a capital first letter.
+- `header` (21) — the column heading VRK prints above the value, for the
+  campaign-finance tables whose columns the parsers named in English
+  (`donor` → `Aukotojas`, `amountEur` → `Aukos suma, Eur`). Quoted from the
+  archived pages under `samples/`, which the test reads back.
+- `restored` (94) — the key's own words with their diacritics, case and
+  punctuation restored, so folding the label reproduces what `deslug` makes
+  of the key, word for word. No entry can quietly reword a field.
+- `structural` (20) — a key the parsers invented that no VRK page labels
+  (`records`, `label`, `listKind`). No external proof exists, so the test
+  holds these to an enumerated list: adding one is a deliberate act.
+
+The 189 keys that still de-slug were read one by one — `adresas`, `data`,
+`forma`, `metai`, `pareigos`, `turas`, `koalicijosPartija` and the rest carry
+no diacritic, so de-slugging them is right and an entry for one would be dead
+weight, which the test refuses. A new election that adds keys of its own
+moves the pinned count, and that is the signal to look at its labels. The
+file is fetched at boot beside the concept map and is *not* fatal: without it
+the page de-slugs, as it did before the file existed, and says so in the
+console.
+
+**A bare URL is a link.** 17 keys hold one, and 802 of 1,329 sampled records
+printed at least one as an 88-character string — while `appendSourceLinks`
+had rendered the `nuorodos` shape as anchors all along. `renderValue`'s
+scalar branch emits an anchor with `rel="noopener noreferrer"` for a string
+matching `/^https?:\/\/\S+$/`.
 
 ## The comparison table
 
@@ -427,6 +520,10 @@ pins every rule, so a new entry either follows them or fails there.
   override file, this is derived output).
 - `dashboard/index.html` — the whole app: no dependencies, vanilla JS, served
   statically next to `data/`.
+- `dashboard/field-labels.json` — the Lithuanian label for each record key
+  `deslug` spells wrong (version controlled), one entry per key with the
+  proof of its label: `printed`, `header`, `restored` or `structural`. The
+  page fetches it at boot and works without it.
 - `tests/test_person_index.py` — pins the grouping rules, the pid and the
   override merges on synthetic records.
 - `tests/test_identity_merge_review.py` — pins the review scorer's tiers on
@@ -441,8 +538,14 @@ pins every rule, so a new entry either follows them or fails there.
 - `tests/test_dashboard_ui.py` — pins the page's Lithuanian chrome, the
   sidebar's `nowrap`, the plural rule across the 11/21 boundaries, the
   tri-state outcome rendering, keyboard reachability, boot failure
-  reporting, the term-grouped election pickers and their match rule, and
-  the archive-era concept rows end to end.
+  reporting, the term-grouped election pickers and their match rule, the
+  archive-era concept rows end to end, and issue #149's presentation and
+  export pass: the CSV's comma decimals and formula guard, the chart axis and
+  its width cap, the scroll affordance, the narrow-screen layout and the bare
+  URL anchors.
+- `tests/test_dashboard_field_labels.py` — holds `field-labels.json` to the
+  four proofs its entries claim, and every key in it to still occurring in
+  the corpus.
 - `tests/test_dashboard_concept_rows.py` — closes issue #87's test gap: the
   rows name real, corpus-measured concepts; the page's resolver agrees with
   `field_coverage.concept_value` on the shapes a naive walker gets wrong;
