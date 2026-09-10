@@ -18,7 +18,7 @@ Reads `data/`, `docs/concept-map.json` and the registries; writes to
 
 | file | contents |
 |---|---|
-| `candidacies.csv.gz` | 113,073 rows × 65 columns, ~12 MB gzipped |
+| `candidacies.csv.gz` | 113,073 rows × 67 columns, ~12 MB gzipped |
 | `campaigns.csv.gz` | one row per campaign-finance participant (4,729) |
 | `vrk.sqlite` | the same two as tables, plus `elections`, `persons`, `parties`, `party_predecessors`, `municipalities`, with indexes |
 
@@ -236,7 +236,35 @@ python scripts/build_distribution.py --profile full     # the archive verbatim
 | `campaigns.csv.gz` | one row per campaign-finance participant |
 | `vrk.sqlite.gz` | the analysis database above, gzipped |
 | `vrk-corpus.sqlite.gz` | **everything**: the analysis tables plus `records`, `photos`, `anomalies` — under the public profile, less the third-party contacts and the portraits' metadata (below) |
-| `MANIFEST.json` | per-election record counts, build date, parser commit, sha256 + bytes per asset, and the terms (`license`, `dataLicense`, `attribution`, `terms`, `source` — [DATA_TERMS.md](../DATA_TERMS.md), issue #138) |
+| `MANIFEST.json` | `schemaVersion`, per-election record counts, build date, `buildCommit` (dirty-aware), `corpusParserCommits`, sha256 + bytes per asset, and the terms (`license`, `dataLicense`, `attribution`, `terms`, `source` — [DATA_TERMS.md](../DATA_TERMS.md), issue #138) |
+
+**And back again.** `scripts/unpack_corpus.py` turns `vrk-corpus.sqlite`
+into a `data/` tree — one JSON file per record in the corpus's own key
+order, each election's `anomalies.jsonl`, and every portrait sidecar the
+records name — so a download is an alternative to the scrape and not just to
+reading it:
+
+```bash
+gh release download corpus-2026-08-30 --pattern 'vrk-corpus.sqlite.gz'
+gunzip vrk-corpus.sqlite.gz
+python scripts/unpack_corpus.py vrk-corpus.sqlite            # -> ./data
+python scripts/unpack_corpus.py vrk-corpus.sqlite --into /tmp/corpus
+```
+
+After it, `build_person_index.py` and `build_candidacy_table.py` run against
+the unpacked tree. Under `--profile full` the round trip is exact: same
+records, same key order, same portrait bytes, which
+`tests/test_build_distribution.py`'s `CorpusRoundTrip` holds file for file.
+Under the public profile the redacted paths are absent (not nulled), which
+is what the manifest's `redaction` block lists. Nothing in the repository
+read a release asset before issue #156 — 0 of the 21 scripts — so the assets
+existed and the corpus behind them could not be reassembled.
+
+**Both databases say what they are.** `meta(key, value)` carries
+`schemaVersion`, `profile`, `builtAt`, `buildCommit`, the row counts, the
+licence and the attribution, and `PRAGMA user_version` carries the schema
+version too — so a 602 MB download can be identified with two queries and
+no repository. Before, it was an anonymous 2.5 GB file.
 
 `elections` is the registry as a table — `id, date, kind, parent, name,
 shortName, records` — where `parent` is the general election whose term a
@@ -245,6 +273,16 @@ by-election, repeat or re-vote fills, NULL for a general election, so
 `municipalities(municipality_id, name, kind, until)` is the municipality
 registry as a table (issue #137): the 60 bodies of the 2000 reform plus the two
 it dissolved, `kind` ∈ `miesto` | `rajono` | `savivaldybe`.
+`persons(person_id, name, birth_key, candidacies, elections, merged_keys)` is
+the identity layer as a table (issue #96): `person_id` is the `pid` the
+dashboard puts in its URL — `p` plus 12 hex digits of blake2s over the
+natural key — `name` the display name (the latest election's spelling),
+`birth_key` the natural key itself (`NAME|YYYY-MM-DD`, or `NAME|~YYYY` where
+only a year is published and `NAME|?` where nothing is), `candidacies` and
+`elections` how many of each the person has, and `merged_keys` how many
+*other* natural keys were folded into this person by
+`scraper/person_overrides.json` — 0 for the great majority, and the count of
+former names for a reviewed merge.
 `party_predecessors(party_id, predecessor_id)` is the nominator registry's
 lineage (issue #123): one row per organisation a party, coalition or
 committee continues — the merged parties behind `ts-lkd`, the committee and
@@ -310,15 +348,20 @@ number of values removed, and `counts.photosStripped`.
 In `vrk-corpus.sqlite` the three extra tables are:
 
 - `records(election_id, candidate_id, candidate_name, record_file,
-  source_json, kandidatavimas_json, candidate_note, photo_sha256, raw_json,
-  norm_json, provenance_json)` — one row per record file, primary key
+  source_json, kandidatavimas_json, candidate_note_json, photo_sha256,
+  raw_json, norm_json, provenance_json)` — one row per record file, primary key
   `(election_id, candidate_id)`. `raw_json` / `norm_json` are the record's
   `rawData` / `normalized`, compact-serialized (the files are
   pretty-printed; 34.5 % of `data/` was whitespace). The original record
   reassembles from the row — `reconstruct_record` in the script is the
   contract and a test pins the round trip: lossless under `--profile full`,
   and under the public profile the record less the values the profile
-  removes (the keys are absent, not nulled).
+  removes (the keys are absent, not nulled). `candidate_note_json` holds
+  JSON and not text for a measured reason: `candidateNote` is present *and
+  null* on 27,472 of the 27,478 records that carry it, a TEXT column cannot
+  tell that from absent, and the round trip therefore dropped the key on
+  every one of those records while three places called it lossless
+  (issue #156).
 - `photos(sha256, mime, bytes, stripped, stripped_sha256, data)` — every
   sidecar portrait, stored once by content hash; `records.photo_sha256` is
   the join and `sha256` is always the archive's hash, whatever the profile
@@ -344,5 +387,8 @@ WHERE c.election_id = '2019-prezidento';
 
 Releases are tagged `corpus-YYYY-MM-DD` (the manifest's `version`), so the
 corpus is versioned by release tag rather than by whatever happens to be on
-one disk; `parserCommit` in the manifest names the exact code that produced
-it. A full build prints the `gh release create` line, filled in.
+one disk. `buildCommit` names the code that built the assets — dirty-aware,
+so a build from a modified checkout says so — and `corpusParserCommits` the
+spread of commits the *records* carry: the corpus is not from one commit, and
+one string implied it was (issue #156). A full build prints the
+`gh release create` line, filled in.

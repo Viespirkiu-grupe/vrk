@@ -66,7 +66,15 @@ Where to start:
   [`corpus-YYYY-MM-DD` release](https://github.com/Viespirkiu-grupe/vrk/releases):
   `candidacies.csv.gz` for the comparison surface, `vrk-corpus.sqlite.gz`
   for every record, portrait and anomaly log in one queryable file
-  ([docs/CANDIDACIES.md](docs/CANDIDACIES.md#distribution));
+  ([docs/CANDIDACIES.md](docs/CANDIDACIES.md#distribution)). Either query it
+  where it is, or turn it back into a corpus:
+
+  ```bash
+  gh release download corpus-2026-08-30 --pattern 'vrk-corpus.sqlite.gz'
+  gunzip vrk-corpus.sqlite.gz
+  python scripts/unpack_corpus.py vrk-corpus.sqlite   # writes ./data
+  ```
+
   `python scripts/build_distribution.py` rebuilds and checksums the assets.
 - **One comparable table** — [docs/CANDIDACIES.md](docs/CANDIDACIES.md):
   `python scripts/build_candidacy_table.py` projects the corpus into
@@ -83,8 +91,11 @@ Where to start:
   detail.
 - **Contributing an election module** —
   [docs/ADDING_AN_ELECTION.md](docs/ADDING_AN_ELECTION.md) for the route from
-  a VRK listing URL to a scraped election, and [docs/goal.md](docs/goal.md)
-  for the project's ground rules.
+  a VRK listing URL to a scraped election: the ten edit sites in
+  `scraper/cli.py`, the gates a change has to leave green, and the frozen
+  counts a new election moves. [docs/goal.md](docs/goal.md) is the original
+  design notes — why plain `requests`, no browser, one file per candidacy —
+  and describes a one-election project, which it says at the top.
 - **Browsing** — `dashboard/` is a local person-centric browser over the
   corpus ([docs/DASHBOARD.md](docs/DASHBOARD.md)).
 

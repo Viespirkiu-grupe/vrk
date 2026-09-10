@@ -129,6 +129,13 @@ COLUMNS = (
     "election_id",
     "election_date",
     "election_kind",
+    # The name and the term, in the flat file itself: `candidacies.csv.gz` is
+    # the "Start here" asset and carried the slug alone, with no elections
+    # table beside it, so the `COALESCE(parent, id)` grouping the docs
+    # prescribe was unavailable to a CSV reader for the 1,119 rows across 28
+    # elections that need it (issue #156).
+    "election_name",
+    "election_parent",
     "candidate_id",
     "candidate_name",
     "source_url",
@@ -485,6 +492,10 @@ def project_record(
     row["election_id"] = election_id
     row["election_date"] = election["date"]
     row["election_kind"] = election["kind"]
+    row["election_name"] = election.get("name") or election.get("shortName")
+    # The general election whose term this one fills, or the election itself:
+    # `election_parent` is never null, so grouping by it needs no COALESCE.
+    row["election_parent"] = election.get("parent") or election_id
     row["candidate_id"] = record.get("candidateId")
     row["candidate_name"] = record.get("candidateName")
     row["source_url"] = _source_url(record)
@@ -783,6 +794,7 @@ def write_sqlite(
     elections_table: list[dict[str, Any]],
     persons: list[dict[str, Any]],
     parties_path: Path,
+    meta: dict[str, str] | None = None,
 ) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.unlink(missing_ok=True)
@@ -860,6 +872,13 @@ def write_sqlite(
             "campaigns(campaign_key)",
         ):
             connection.execute(f"CREATE INDEX idx_{index.replace('(', '_').replace(')', '')} ON {index}")
+        if meta:
+            # What this file is, readable without the repository (issue #156).
+            connection.execute("CREATE TABLE meta (key TEXT PRIMARY KEY, value TEXT)")
+            connection.executemany("INSERT INTO meta VALUES (?, ?)", sorted(meta.items()))
+            version = meta.get("schemaVersion")
+            if version and version.isdigit():
+                connection.execute(f"PRAGMA user_version = {int(version)}")
         connection.commit()
     finally:
         connection.close()

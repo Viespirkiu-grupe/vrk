@@ -82,6 +82,7 @@ import shutil
 import sqlite3
 import subprocess
 import sys
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -92,8 +93,15 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_candidacy_table as table  # noqa: E402
 import build_person_index as identity  # noqa: E402
 from pii_inventory import PUBLIC_PROFILE_CONDITIONAL, PUBLIC_PROFILE_DROPS  # noqa: E402
+from scraper.shared import provenance  # noqa: E402
 from scraper.shared.files import PORTRAIT_KEYS, write_json  # noqa: E402
 from scraper.shared.image_metadata import strip_metadata  # noqa: E402
+
+#: The shape of what a release ships. Bumped when a column, table or manifest
+#: key changes meaning; a consumer reads it from `MANIFEST.json`, from the
+#: `meta` table of either database, and from `PRAGMA user_version`. Before
+#: issue #156 a 602 MB download said nothing at all about what it was.
+SCHEMA_VERSION = 1
 
 #: What a build ships of the archive (issue #142): `public` redacts the
 #: third-party contact paths and strips portrait metadata, `full` is the
@@ -142,7 +150,11 @@ RECORD_COLUMNS = (
     "record_file",
     "source_json",
     "kandidatavimas_json",
-    "candidate_note",
+    # JSON, not TEXT: `candidateNote` is present *and null* on 27,472 of the
+    # 27,478 records that have it, and a TEXT column cannot tell that from
+    # absent — so the round trip dropped the key on all 27,472 while three
+    # places called it lossless (issue #156).
+    "candidate_note_json",
     "photo_sha256",
     "raw_json",
     "norm_json",
@@ -298,7 +310,10 @@ def write_corpus_sqlite(
         "photos_stripped": 0,
         "photos_untouched": 0,
         "photos_malformed": 0,
+        "parser_commits": {},
     }
+    parser_commits: Counter[str] = Counter()
+    anomaly_files: list[str] = []
     try:
         # A throwaway build: a crash mid-write is answered by rebuilding,
         # so durability buys nothing here and the journal only costs time.
@@ -312,7 +327,7 @@ def write_corpus_sqlite(
                 record_file TEXT NOT NULL,
                 source_json TEXT,
                 kandidatavimas_json TEXT,
-                candidate_note TEXT,
+                candidate_note_json TEXT,
                 photo_sha256 TEXT REFERENCES photos(sha256),
                 raw_json TEXT,
                 norm_json TEXT,
@@ -387,6 +402,9 @@ def write_corpus_sqlite(
                         counts["photos"] += 1
                         counts["photo_bytes"] += len(stored)
 
+                stamp = (record.get("provenance") or {}).get("parserCommit")
+                parser_commits[stamp or "none"] += 1
+
                 if public:
                     counts["redacted_values"] += redact_record(record)
 
@@ -402,7 +420,9 @@ def write_corpus_sqlite(
                             _compact(record["kandidatavimas"])
                             if "kandidatavimas" in record
                             else None,
-                            _envelope_string(record, "candidateNote", record_path),
+                            _compact(record["candidateNote"])
+                            if "candidateNote" in record
+                            else None,
                             digest,
                             _compact(record["rawData"]),
                             _compact(record["normalized"]),
@@ -420,6 +440,11 @@ def write_corpus_sqlite(
 
             anomalies_path = data_root / eid / "anomalies.jsonl"
             if anomalies_path.is_file():
+                # An *empty* anomalies.jsonl says "scraped, nothing to
+                # report", which is not the same as no file at all — and with
+                # no row to carry it, the unpacked tree lost that distinction
+                # (issue #156). The election ids are recorded in `meta`.
+                anomaly_files.append(eid)
                 for line in anomalies_path.read_text(encoding="utf-8").splitlines():
                     if not line.strip():
                         continue
@@ -429,10 +454,40 @@ def write_corpus_sqlite(
                     )
                     counts["anomalies"] += 1
 
+        write_meta(connection, {
+            "schemaVersion": str(SCHEMA_VERSION),
+            "profile": profile,
+            "builtAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "buildCommit": build_commit() or "",
+            "records": str(counts["records"]),
+            "elections": str(len(election_ids)),
+            "photos": str(counts["photos"]),
+            "anomalyFiles": ",".join(anomaly_files),
+            "source": SOURCE_URL,
+            "dataLicense": DATA_LICENSE,
+            "attribution": ATTRIBUTION,
+            "terms": TERMS_URL,
+        })
         connection.commit()
     finally:
         connection.close()
+    counts["parser_commits"] = dict(parser_commits.most_common())
     return counts
+
+
+def write_meta(connection: sqlite3.Connection, entries: dict[str, str]) -> None:
+    """`meta(key, value)` plus `PRAGMA user_version`, in both databases.
+
+    A consumer who downloads the 602 MB "Everything" asset had an anonymous
+    2.5 GB file: no meta table, no user_version, no schemaVersion anywhere
+    (issue #156). Both are cheap and both are readable without this
+    repository — `SELECT * FROM meta` and `PRAGMA user_version`.
+    """
+    connection.execute("CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT)")
+    connection.executemany(
+        "INSERT OR REPLACE INTO meta VALUES (?, ?)", sorted(entries.items())
+    )
+    connection.execute(f"PRAGMA user_version = {SCHEMA_VERSION}")
 
 
 def reconstruct_record(row: sqlite3.Row) -> dict[str, Any]:
@@ -445,18 +500,23 @@ def reconstruct_record(row: sqlite3.Row) -> dict[str, Any]:
     `redact_record` removed -- the keys are absent, not nulled. Both are
     pinned by tests/test_build_distribution.py.
     """
+    # Built in the order the record files use --
+    # electionId, candidateId, candidateName, [candidateNote],
+    # [kandidatavimas], source, rawData, normalized, [provenance] -- so an
+    # unpacked corpus is byte-comparable with the one it was built from and
+    # not merely equal as JSON (issue #156).
     record: dict[str, Any] = {
         "electionId": row["election_id"],
         "candidateId": row["candidate_id"],
         "candidateName": row["candidate_name"],
-        "source": json.loads(row["source_json"]),
-        "rawData": json.loads(row["raw_json"]),
-        "normalized": json.loads(row["norm_json"]),
     }
+    if row["candidate_note_json"] is not None:
+        record["candidateNote"] = json.loads(row["candidate_note_json"])
     if row["kandidatavimas_json"] is not None:
         record["kandidatavimas"] = json.loads(row["kandidatavimas_json"])
-    if row["candidate_note"] is not None:
-        record["candidateNote"] = row["candidate_note"]
+    record["source"] = json.loads(row["source_json"])
+    record["rawData"] = json.loads(row["raw_json"])
+    record["normalized"] = json.loads(row["norm_json"])
     if row["provenance_json"] is not None:
         record["provenance"] = json.loads(row["provenance_json"])
     return record
@@ -477,19 +537,18 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def parser_commit() -> str | None:
-    """The commit the parsers are at — read where the code lives, not at
-    --repo-root, which may be a bare data tree."""
-    try:
-        return subprocess.run(
-            ["git", "rev-parse", "--short", "HEAD"],
-            cwd=Path(__file__).resolve().parent,
-            capture_output=True,
-            text=True,
-            check=True,
-        ).stdout.strip()
-    except (OSError, subprocess.CalledProcessError):
-        return None
+def build_commit() -> str | None:
+    """The commit this build ran at, `-dirty` when the checkout was not clean.
+
+    `scraper.shared.provenance.parser_commit` already reads it that way and
+    caches it; this used to be a bare `git rev-parse --short HEAD` with no
+    dirty check, which stamped a release built from a modified checkout as
+    though it came from the commit (issue #156). It is also *this build's*
+    commit and not the corpus's: the records carry their own
+    `provenance.parserCommit`, and the manifest reports the spread of those
+    separately.
+    """
+    return provenance.parser_commit()
 
 
 def write_manifest(
@@ -504,7 +563,13 @@ def write_manifest(
     manifest: dict[str, Any] = {
         "version": "corpus-" + built.strftime("%Y-%m-%d"),
         "builtAt": built.strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "parserCommit": parser_commit(),
+        "schemaVersion": SCHEMA_VERSION,
+        "buildCommit": build_commit(),
+        # The corpus is not from one commit, and a single string implied it
+        # was: 49,586 of the 113,073 records carry no `parserCommit` at all
+        # (they predate provenance) and the rest carry several. The counter
+        # says so, most records first (issue #156).
+        "corpusParserCommits": corpus_counts["parser_commits"],
         # The terms travel with the assets (issue #138): a downloaded
         # directory of gzips says what may be done with it and whom to
         # write to, without the repository at hand.
@@ -532,6 +597,9 @@ def write_manifest(
             "persons": stats["persons"],
             "campaigns": stats["campaigns"],
             "photos": corpus_counts["photos"],
+            # Unique images against the records that carry one: the same
+            # portrait can be the newest on two candidacies of one person.
+            "photoRecords": corpus_counts["photo_records"],
             "photoBytes": corpus_counts["photo_bytes"],
             "photosStripped": corpus_counts["photos_stripped"],
             "photosMetadataUntouched": corpus_counts["photos_untouched"],
@@ -657,6 +725,18 @@ def build_distribution(
             elections_table,
             persons,
             repo_root / "scraper" / "parties.json",
+            meta={
+                "schemaVersion": str(SCHEMA_VERSION),
+                "profile": profile,
+                "builtAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "buildCommit": build_commit() or "",
+                "candidacies": str(len(rows)),
+                "elections": str(len(elections_table)),
+                "source": SOURCE_URL,
+                "dataLicense": DATA_LICENSE,
+                "attribution": ATTRIBUTION,
+                "terms": TERMS_URL,
+            },
         )
 
         corpus_counts = write_corpus_sqlite(
