@@ -9,7 +9,6 @@ from bs4 import BeautifulSoup, Tag
 
 from scraper.elections.prezidento_2019.sitemap import ELECTION_ID
 from scraper.elections.seimo_2016.anketa_parser import (
-    _build_prompt_text,
     _extract_answer_text,
     _extract_links,
     _extract_non_empty_text_nodes,
@@ -40,6 +39,7 @@ from scraper.elections.seimo_2016.anketa_parser import (
     normalize_space,
 )
 from scraper.elections.ep_2019.anketa_parser import parse_office_heading
+from scraper.shared.anketa_cells import prompt_text as _build_prompt_text
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.election_results import candidacy_from_elected_note
 from scraper.shared.deklaracijos import normalize_declaration

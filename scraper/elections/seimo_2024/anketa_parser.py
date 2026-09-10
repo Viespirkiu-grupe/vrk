@@ -36,6 +36,7 @@ from scraper.elections.seimo_2016.anketa_parser import (
     _row_answer_text,
     parse_question_number,
 )
+from scraper.shared.anketa_cells import prompt_text as _build_prompt_text
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.election_results import candidacy_from_elected_note
 from scraper.shared.conviction_details import conviction_entries, conviction_records
@@ -85,20 +86,6 @@ def _tag_text(tag: Tag | None) -> str:
     if tag is None:
         return ""
     return normalize_space(tag.get_text(" ", strip=True))
-
-
-def _build_prompt_text(cell: Tag) -> str:
-    clone_soup = BeautifulSoup(str(cell), "lxml")
-    clone_cell = clone_soup.find("td")
-    if clone_cell is None:
-        return ""
-
-    for nested_table in clone_cell.find_all("table"):
-        nested_table.decompose()
-    for bold in clone_cell.find_all("b"):
-        bold.decompose()
-
-    return _tag_text(clone_cell)
 
 
 def _extract_answer_text(cell: Tag, nested_tables: list[Tag]) -> str:

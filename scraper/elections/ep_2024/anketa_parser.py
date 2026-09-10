@@ -14,7 +14,6 @@ from scraper.elections.ep_2019.anketa_parser import (
     _select_profile_table,
 )
 from scraper.elections.seimo_2016.anketa_parser import (
-    _build_prompt_text,
     _extract_answer_text,
     _extract_links,
     _find_row_by_question_number,
@@ -38,6 +37,7 @@ from scraper.elections.seimo_2016.anketa_parser import (
     normalize_space,
     parse_question_number,
 )
+from scraper.shared.anketa_cells import prompt_text as _build_prompt_text
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.election_results import candidacy_from_elected_note
 from scraper.shared.conviction_details import conviction_entries, conviction_records
