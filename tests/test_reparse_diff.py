@@ -131,7 +131,7 @@ class RoundTripTests(unittest.TestCase):
         self.assertEqual(errors, [])
         self.assertGreater(parsed, 0)
 
-    def _run(self, **kwargs) -> tuple[bool, int, object]:
+    def _run(self, **kwargs) -> tuple[bool, int, object, int]:
         options = dict(full=False, apply=False, jobs=1, top=5)
         options.update(kwargs)
         return script.run_election(ELECTION_ID, self.root, self.work_root, **options)
@@ -140,7 +140,8 @@ class RoundTripTests(unittest.TestCase):
         return sorted(self.data_dir.glob("*.json"))
 
     def test_an_untouched_corpus_reports_no_drift(self) -> None:
-        ok, differing, histogram = self._run()
+        ok, differing, histogram, unreached = self._run()
+        self.assertEqual(unreached, 0)
         self.assertTrue(ok)
         self.assertEqual(differing, 0)
         self.assertEqual(histogram, {})
@@ -152,7 +153,7 @@ class RoundTripTests(unittest.TestCase):
         record["normalized"]["anketa"].pop("pedagoginis-vardas", None)
         target.write_text(json.dumps(record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-        ok, differing, histogram = self._run()
+        ok, differing, histogram, _ = self._run()
         self.assertTrue(ok)
         self.assertEqual(differing, 1)
         self.assertEqual(histogram[("normalized.profilis.nuotrauka", "changed")], 1)
@@ -171,13 +172,13 @@ class RoundTripTests(unittest.TestCase):
         record["normalized"]["profilis"]["nuotrauka"] = "data:;base64,AAAA"
         target.write_text(json.dumps(record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-        ok, differing, _ = script.run_election(
+        ok, differing, _, _ = script.run_election(
             ELECTION_ID, self.root, self.work_root, full=True, apply=True, jobs=1, top=5
         )
         self.assertTrue(ok)
         self.assertEqual(differing, 1)
 
-        ok, differing, _ = self._run()
+        ok, differing, _, _ = self._run()
         self.assertTrue(ok)
         self.assertEqual(differing, 0, "a second pass must be clean")
         self.assertEqual(
@@ -185,6 +186,78 @@ class RoundTripTests(unittest.TestCase):
             before[untouched],
             "records that did not drift must not be rewritten",
         )
+
+    def test_a_full_run_that_reached_only_some_records_says_so(self) -> None:
+        # Issue #157: the gate's claim is that exit 0 means the corpus is
+        # what the parsers produce, and it cannot mean that over records the
+        # run never read. `compared` and `stored_total` were printed and
+        # thrown away, so 2 of 1,271 re-parsed read as "0 differ", exit 0.
+        stored = self._records()
+        extra = self.data_dir / "somebody-else-2003-birzelio-15-seimo-nauji.json"
+        extra.write_text(
+            json.dumps({"candidateId": "somebody-else"}, ensure_ascii=False), encoding="utf-8"
+        )
+        ok, differing, _, unreached = self._run(full=True)
+        self.assertTrue(ok)
+        self.assertEqual(differing, 0, "the record the run could not reach is not 'drifted'")
+        self.assertEqual(unreached, 1)
+        self.assertEqual(len(self._records()), len(stored) + 1)
+
+    def test_a_fixture_run_is_partial_by_design_and_is_not_gated_on_coverage(self) -> None:
+        extra = self.data_dir / "somebody-else-2003-birzelio-15-seimo-nauji.json"
+        extra.write_text(json.dumps({"candidateId": "x"}, ensure_ascii=False), encoding="utf-8")
+        _, _, _, unreached = self._run(full=False)
+        self.assertEqual(unreached, 0)
+
+    def test_a_short_full_run_exits_one(self) -> None:
+        extra = self.data_dir / "somebody-else-2003-birzelio-15-seimo-nauji.json"
+        extra.write_text(json.dumps({"candidateId": "x"}, ensure_ascii=False), encoding="utf-8")
+        argv = [
+            "reparse_diff.py", "--full",
+            "--repo-root", str(self.root),
+            "--work-root", str(self.work_root),
+            ELECTION_ID,
+        ]
+        with mock.patch.object(sys, "argv", argv):
+            with contextlib.redirect_stdout(io.StringIO()):
+                with contextlib.redirect_stderr(io.StringIO()) as stderr:
+                    code = script.main()
+        self.assertEqual(code, 1)
+        self.assertIn("not covered by this run", stderr.getvalue())
+        self.assertIn(f"{ELECTION_ID} (1)", stderr.getvalue())
+
+    def test_a_full_run_that_reached_everything_exits_zero(self) -> None:
+        argv = [
+            "reparse_diff.py", "--full",
+            "--repo-root", str(self.root),
+            "--work-root", str(self.work_root),
+            ELECTION_ID,
+        ]
+        with mock.patch.object(sys, "argv", argv):
+            with contextlib.redirect_stdout(io.StringIO()):
+                with contextlib.redirect_stderr(io.StringIO()) as stderr:
+                    code = script.main()
+        self.assertEqual(code, 0, stderr.getvalue())
+
+    def test_a_short_apply_says_the_corpus_is_now_mixed(self) -> None:
+        # --apply was half-protected: it used the coverage number to decide
+        # whether to rewrite anomalies.jsonl, and neither for the record copy
+        # nor for the exit code. A run that reached part of an election left
+        # the rest at the old parser's output and reported success.
+        extra = self.data_dir / "somebody-else-2003-birzelio-15-seimo-nauji.json"
+        extra.write_text(json.dumps({"candidateId": "x"}, ensure_ascii=False), encoding="utf-8")
+        argv = [
+            "reparse_diff.py", "--full", "--apply",
+            "--repo-root", str(self.root),
+            "--work-root", str(self.work_root),
+            ELECTION_ID,
+        ]
+        with mock.patch.object(sys, "argv", argv):
+            with contextlib.redirect_stdout(io.StringIO()):
+                with contextlib.redirect_stderr(io.StringIO()) as stderr:
+                    code = script.main()
+        self.assertEqual(code, 1)
+        self.assertIn("the corpus is now mixed", stderr.getvalue())
 
     def test_apply_refuses_a_fixture_run(self) -> None:
         # Applying a fixture run would rewrite a handful of records and leave

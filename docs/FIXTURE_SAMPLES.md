@@ -101,6 +101,27 @@ What still skips on a clone is what no tracked fixture can stand in for: the
 municipal `lists/` walks and the sitemap tests over them, the two `results/`
 trees over the limit, and a handful of value pins on portrait-bearing pages.
 
+## What the tracked fixtures parse to
+
+`tests/fixture-record-hashes.tsv` is one sha256 per tracked candidate — 649
+lines, 73 KiB — over the record the parsers produce for it, with
+`provenance` dropped (its run-stamps differ between any two honest parses).
+`scripts/fixture_record_hashes.py` measures and checks it; a deliberate
+parser change updates it with `--update` in the same commit.
+
+It exists because none of the three commands that check the corpus against
+the parsers can run in CI: `reparse_diff.py`, `field_coverage.py` and
+`anomalies-report` all read `data/`, which is gitignored, and the one
+test-level equivalent skips there for the same reason (issue #157). So a
+parser change answered, in CI, only to the per-election value pins — real
+coverage, but assertions about named fields of named candidates rather than
+about the record as a whole. The manifest is the whole-record half, and its
+diff names every election a change reached.
+
+It is not a second corpus and not a baseline: it says nothing about whether
+a value is *right*, only that today's parsers produce the same bytes as the
+parsers that wrote the hash.
+
 ## Why fixtures are versioned
 
 Fixtures are used for:
@@ -977,6 +998,7 @@ covers the same one.
 ```bash
 pytest                                        # the suite, about 100 s
 pytest tests/test_tracked_fixtures.py         # git and the 1 MiB rule agree
+python scripts/fixture_record_hashes.py       # the fixtures still parse to the recorded records
 pytest tests/test_seimo_2016_sample_allowlist.py
 pytest tests/test_seimo_2016_candidate_samples.py
 pytest tests/test_seimo_2016_campaign_parser.py

@@ -55,6 +55,18 @@ truncating it to the subset it saw.
 
 Exit status is the gate: 0 when nothing differs, 1 when something does, 2 when
 the run could not be made (a missing sample tree, a parser that raised).
+
+Coverage is part of that (issue #157). The gate's claim is that exit 0 means
+the corpus is what the parsers produce, and it cannot mean that over records
+the run never read: a checkout whose `data/2000-seimo` holds all 1,271 records
+but whose retained tree holds two candidate directories used to print
+`2 of 1271 stored records re-parsed from retained, 0 differ` and exit 0, with
+nothing on stderr. `compared` and `stored_total` were printed and thrown away.
+So a `--full` run whose sources do not cover every stored record now names the
+shortfall and exits 1, and `--apply` does the same rather than leaving half the
+corpus at the old parser's output while reporting the other half clean. A
+default (fixture) run is partial by design and is not gated on coverage --
+that is what `--full` is for.
 """
 
 from __future__ import annotations
@@ -380,17 +392,22 @@ def run_election(
     apply: bool,
     jobs: int,
     top: int,
-) -> tuple[bool, int, Counter]:
-    """Re-parse and diff one election. Returns (ok, differing, histogram)."""
+) -> tuple[bool, int, Counter, int]:
+    """Re-parse and diff one election.
+
+    Returns (ok, differing, histogram, unreached) -- the last being the
+    stored records the run never re-parsed, which only `--full` treats as a
+    finding (issue #157: a fixture run is partial by design).
+    """
     stored_root = repo_root / "data" / election_id
     if not stored_root.is_dir():
         print(f"{election_id}: no data/ directory, skipped")
-        return True, 0, Counter()
+        return True, 0, Counter(), 0
 
     sources = resolve_sample_sources(repo_root, election_id, full)
     if not sources:
         print(f"{election_id}: no sample tree, skipped", file=sys.stderr)
-        return False, 0, Counter()
+        return False, 0, Counter(), 0
 
     fresh_root = work_root / election_id
     if fresh_root.exists():
@@ -420,10 +437,21 @@ def run_election(
     if differing and differing <= 5:
         print("    records: " + ", ".join(name.removesuffix(".json") for name in differing_records))
 
+    # What a `--full` run claims is every stored record; `unknown` is a fresh
+    # record data/ does not hold, which is a different thing and not a
+    # shortfall. A fixture run is partial by design and reports 0 here.
+    unreached = max(stored_total - compared - unknown, 0) if full else 0
+    if unreached:
+        print(
+            f"    {unreached} stored record(s) had no retained HTML and were not"
+            " re-parsed: this run does not cover them",
+            file=sys.stderr,
+        )
+
     if apply:
         if parsed == 0 or errors:
             print("    NOT applied — the re-parse did not complete", file=sys.stderr)
-            return False, differing, histogram
+            return False, differing, histogram, unreached
         records, photos = apply_records(fresh_root, stored_root, differing_records)
         rewrote = compared + unknown >= stored_total and write_anomalies(
             stored_root / ANOMALIES_NAME, anomalies
@@ -442,7 +470,7 @@ def run_election(
     if not apply:
         shutil.rmtree(fresh_root, ignore_errors=True)
 
-    return not errors, differing, histogram
+    return not errors, differing, histogram, unreached
 
 
 def main() -> int:
@@ -492,11 +520,13 @@ def main() -> int:
     election_ids = args.election_id or PARSABLE_ELECTION_IDS
     ok = True
     total_differing = 0
+    total_unreached = 0
     totals: Counter = Counter()
     drifted: list[str] = []
+    uncovered: list[str] = []
 
     for election_id in election_ids:
-        election_ok, differing, histogram = run_election(
+        election_ok, differing, histogram, unreached = run_election(
             election_id,
             repo_root,
             work_root,
@@ -507,9 +537,12 @@ def main() -> int:
         )
         ok = ok and election_ok
         total_differing += differing
+        total_unreached += unreached
         totals.update(histogram)
         if differing:
             drifted.append(election_id)
+        if unreached:
+            uncovered.append(f"{election_id} ({unreached})")
 
     if len(election_ids) > 1:
         print(
@@ -521,9 +554,38 @@ def main() -> int:
         if drifted:
             print("    drifted: " + " ".join(drifted))
 
+    if total_unreached:
+        # Issue #157: coverage never reached the exit status, so a run that
+        # re-parsed 2 of 1,271 records said "0 differ" and exited 0 -- and
+        # the gate's whole claim is that exit 0 means the corpus is what the
+        # parsers produce. It cannot mean that over records it never read.
+        print(
+            f"\n{total_unreached} stored record(s) across {len(uncovered)} election(s) were"
+            " not covered by this run:",
+            file=sys.stderr,
+        )
+        for entry in uncovered[:20]:
+            print(f"    {entry}", file=sys.stderr)
+        if len(uncovered) > 20:
+            print(f"    ... and {len(uncovered) - 20} more", file=sys.stderr)
+        print(
+            "    Their retained HTML is absent, so nothing here says whether they still"
+            "\n    parse to what data/ holds. Re-fetch with retention, or name the"
+            "\n    elections whose coverage you accept.",
+            file=sys.stderr,
+        )
+
     if not ok:
         return 2
-    return 1 if total_differing else 0
+    if total_unreached and args.apply:
+        # A partial --apply leaves part of the corpus at the old parser's
+        # output while reporting the elections it did rewrite as clean.
+        print(
+            "    --apply did not reach every stored record; the corpus is now mixed.",
+            file=sys.stderr,
+        )
+        return 1
+    return 1 if total_differing or total_unreached else 0
 
 
 if __name__ == "__main__":

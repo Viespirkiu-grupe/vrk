@@ -18,6 +18,7 @@ making while these hold:
 
 from __future__ import annotations
 
+import importlib.util
 import json
 import os
 import subprocess
@@ -37,6 +38,12 @@ from scraper.shared.files import write_json
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = REPO_ROOT / "scripts"
+
+_spec = importlib.util.spec_from_file_location(
+    "fixture_record_hashes", SCRIPTS / "fixture_record_hashes.py"
+)
+hashes = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(hashes)
 
 # Small enough to parse twice in a test, complete enough to mean something:
 # all 27 candidates of the 2003 by-election are inside the tracked fixture
@@ -147,6 +154,48 @@ class ReparseByteIdentity(unittest.TestCase):
                     json.dumps(stored_record, ensure_ascii=False, indent=2),
                     f"{produced.name} re-parses to different content than the corpus holds",
                 )
+
+
+class FixtureRecordHashes(unittest.TestCase):
+    """Every tracked fixture parses to the record the manifest holds (#157).
+
+    The test above is the same claim against `data/`, and it skips wherever
+    the corpus is absent — which is CI, `data/` being gitignored, as are all
+    three of the commands that check the corpus against the parsers. So in
+    CI a parser change answered only to the per-election value pins: real
+    coverage, but assertions about named fields of named candidates rather
+    than about the record as a whole. `tests/fixture-record-hashes.tsv` is
+    73 KiB that closes it — one sha256 per tracked candidate, over the parse
+    content with `provenance` dropped.
+    """
+
+    def test_the_manifest_is_what_the_parsers_produce(self):
+        measured, errors = hashes.measure(list(hashes.PARSABLE_ELECTION_IDS), REPO_ROOT)
+        self.assertEqual(errors, [])
+        manifest = hashes.read_manifest(REPO_ROOT / hashes.MANIFEST)
+        self.assertTrue(manifest, f"{hashes.MANIFEST} is missing or empty")
+        findings = hashes.compare(measured, manifest)
+        self.assertEqual(
+            findings,
+            [],
+            "the tracked fixtures no longer parse to the recorded records. A"
+            " deliberate parser change updates the manifest in the same commit:"
+            " python scripts/fixture_record_hashes.py --update",
+        )
+
+    def test_the_manifest_covers_every_parsable_election(self):
+        # A manifest missing an election proves nothing about it, and would
+        # go on passing while that election's parser drifted.
+        manifest = hashes.read_manifest(REPO_ROOT / hashes.MANIFEST)
+        covered = {fixture.split("/", 1)[0] for fixture in manifest}
+        self.assertEqual(sorted(covered), sorted(hashes.PARSABLE_ELECTION_IDS))
+
+    def test_the_digest_ignores_the_run_stamps_and_nothing_else(self):
+        base = {"candidateId": "x", "normalized": {"a": 1}, "provenance": {"parsedAt": "now"}}
+        other_run = {"candidateId": "x", "normalized": {"a": 1}, "provenance": {"parsedAt": "later"}}
+        changed = {"candidateId": "x", "normalized": {"a": 2}, "provenance": {"parsedAt": "now"}}
+        self.assertEqual(hashes.record_digest(base), hashes.record_digest(other_run))
+        self.assertNotEqual(hashes.record_digest(base), hashes.record_digest(changed))
 
 
 class RunScripts(unittest.TestCase):
