@@ -210,9 +210,9 @@ class RecordShapeTests(unittest.TestCase):
         # longer occurs, while the field that *is* routinely null carried no
         # number at all.
         share = self.census.without_parser_commit / self.census.records * 100
-        self.assertAlmostEqual(share, 49.5, delta=0.1)
+        self.assertAlmostEqual(share, 43.9, delta=0.1)
         for document in (DATA_GUIDE, OUTPUT_SCHEMA):
-            self.assertIn("55,972 records", document)
+            self.assertIn("49,586 records", document)
         self.assertNotIn("About 0.4 % of records have no retained primary page", OUTPUT_SCHEMA)
 
     # -- sections -----------------------------------------------------------

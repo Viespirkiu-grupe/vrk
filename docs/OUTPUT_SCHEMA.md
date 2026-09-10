@@ -81,8 +81,8 @@ Every one of the 113,073 records carries the block, with exactly these five
 keys and `schemaVersion` 1 throughout. A record whose primary page is not
 retained anywhere would carry no block rather than a fabricated one — that is
 the policy, and as of the 2026-09 corpus no record is in that state. The
-field that *is* routinely absent is `parserCommit`: `null` on 55,972 records
-(49.5 %), which were written before provenance existed.
+field that *is* routinely absent is `parserCommit`: `null` on 49,586 records
+(43.9 %), which were written before provenance existed.
 
 ## `rawData`
 
@@ -179,7 +179,11 @@ Notes:
   `scraper/shared/seimo_archive_1990s.py` emitted
   `profilis|anketa|kandidatavimas` for 950. They agree now, and
   `tests/test_record_shape.py` holds the order over every record in the
-  corpus.
+  corpus. (`scripts/reparse_diff.py` cannot see a re-order — it compares
+  parsed objects, so it reported `0 differ` and `--apply` copied nothing —
+  and the 6,386 records were brought over from the re-parsed tree by hand
+  after checking that each was content-identical apart from `provenance`.
+  That gap between the two gates is issue #169.)
 - **A section can be absent** when the source page never published its tab, so
   a consumer parser should treat every section as optional rather than crash
   on the promised order. Counting only the elections that publish a section on

@@ -62,7 +62,7 @@ The seven:
   ([docs/OUTPUT_SCHEMA.md](OUTPUT_SCHEMA.md#provenance)). Every one of the
   113,073 records carries it, with the same five keys and `schemaVersion` 1.
   Compare records by content, not by `parsedAt`/`parserCommit` — those stamp
-  the parse run, and `parserCommit` is `null` on 55,972 records (49.5 %),
+  the parse run, and `parserCommit` is `null` on 49,586 records (43.9 %),
   which were written before provenance existed.
 
 And the two:
