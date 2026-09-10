@@ -11,11 +11,15 @@ GitHub release ships:
     campaigns.csv.gz        one row per campaign-finance participant
     vrk.sqlite(.gz)         the analysis database: those two as tables,
                             plus elections / persons / parties, indexed
-    vrk-corpus.sqlite(.gz)  everything: the analysis database plus a
-                            `records` table carrying each record's full
-                            rawData / normalized JSON, a `photos` table
-                            deduplicated by content hash, and the
+    vrk-corpus.sqlite(.gz)  everything but the image bytes: the analysis
+                            database plus a `records` table carrying each
+                            record's full rawData / normalized JSON, a
+                            `photos` table (one row per unique portrait,
+                            naming the part that holds it), and the
                             per-election anomaly log
+    vrk-photos-N.sqlite     the portraits themselves, deduplicated by
+                            content hash, in as many parts as keep every
+                            asset under GitHub's 2 GiB cap (issue #130)
     MANIFEST.json           per-election record counts, the build date,
                             the parser commit, and a sha256 + byte size
                             for each release artifact
@@ -41,13 +45,22 @@ What makes the artifact trustworthy:
   than dropping it.
 * Photos are stored once and verified. Every `photos/…` sidecar a record
   points at must exist and hash to the record's own `photoMeta.sha256`;
-  the bytes land in `photos(sha256, …, data)` and `records.photo_sha256`
+  the bytes land in a part's `photos(sha256, …, data)`, the corpus
+  database's own `photos` row names that part, and `records.photo_sha256`
   is the join. A portrait still in URL form is one whose fetch failed or
   was never attempted (scripts/backfill_url_portraits.py, issue #118) — the
   record keeps the URL and, if it was tried, a `photoMeta` saying how the
   fetch failed; there are no bytes to store. An inline base64 portrait is a
   build error: the 2026-08-29 re-parse (issue #91) externalized the last
   487, and shipping one again would mean an election regressed.
+* No asset is larger than GitHub will take (issue #130). The portrait
+  archive of issue #118 put 5.5 GB of JPEG and PNG -- which gzip cannot
+  shrink -- into the corpus database, and GitHub refuses a release asset
+  over 2 GiB, so the first full build after it could not have been
+  uploaded. The images now fill `vrk-photos-1.sqlite`,
+  `vrk-photos-2.sqlite`, … in build order, each closed before the next
+  image would take it past PHOTO_PART_BUDGET, and every asset is measured
+  against the cap before anything reaches dist/.
 
 * The release is a profile of the archive, not the archive (issue #142).
   `--profile public`, the default, drops the campaign treasurer's and
@@ -78,6 +91,7 @@ import gzip
 import hashlib
 import json
 import os
+import shlex
 import shutil
 import sqlite3
 import subprocess
@@ -99,9 +113,11 @@ from scraper.shared.image_metadata import strip_metadata  # noqa: E402
 
 #: The shape of what a release ships. Bumped when a column, table or manifest
 #: key changes meaning; a consumer reads it from `MANIFEST.json`, from the
-#: `meta` table of either database, and from `PRAGMA user_version`. Before
+#: `meta` table of every database, and from `PRAGMA user_version`. Before
 #: issue #156 a 602 MB download said nothing at all about what it was.
-SCHEMA_VERSION = 1
+#: 2 (issue #130): the image bytes moved out of `vrk-corpus.sqlite` into the
+#: `vrk-photos-N.sqlite` parts, and its `photos.data` column became `part`.
+SCHEMA_VERSION = 2
 
 #: What a build ships of the archive (issue #142): `public` redacts the
 #: third-party contact paths and strips portrait metadata, `full` is the
@@ -131,7 +147,8 @@ ATTRIBUTION = (
     " CC BY 4.0. Source: Lietuvos Respublikos vyriausioji rinkimų komisija (vrk.lt)."
 )
 
-#: What a release ships, beside MANIFEST.json (which checksums these four).
+#: What every release ships beside MANIFEST.json, ahead of the photo parts
+#: the build fills (`release_assets` lists both; the manifest checksums all).
 RELEASE_ARTIFACTS = (
     "candidacies.csv.gz",
     "campaigns.csv.gz",
@@ -142,6 +159,21 @@ RELEASE_ARTIFACTS = (
 #: Level 6 for the ~1 GB corpus database — minutes faster than 9 for a few
 #: per-cent of size; the small artifacts can afford 9.
 CORPUS_GZIP_LEVEL = 6
+
+#: GitHub refuses a release asset larger than this.
+RELEASE_ASSET_LIMIT = 2 * 1024**3
+
+#: The portraits ship beside the corpus database, not inside it (issue #130):
+#: 27,493 sidecars are 5.5 GB of JPEG and PNG that gzip cannot shrink, and in
+#: one database they made a ~6 GB asset. The unique images fill numbered parts
+#: in build order -- election by election, record file by record file -- and
+#: a part is closed before the next image would take its image bytes past the
+#: budget, which leaves 247 MB of the cap for SQLite's own pages. The parts
+#: are not gzipped: there is nothing in them for gzip to take out, and an
+#: uncompressed part can be ATTACHed where it lands.
+PHOTO_PART_NAME = "vrk-photos-{index}.sqlite"
+PHOTO_PART_GLOB = "vrk-photos-*.sqlite"
+PHOTO_PART_BUDGET = 1_900_000_000
 
 RECORD_COLUMNS = (
     "election_id",
@@ -281,18 +313,126 @@ def _envelope_string(record: dict[str, Any], key: str, record_path: Path) -> str
     raise SystemExit(f"{record_path}: envelope key {key} is {type(value).__name__}, not a string")
 
 
+PART_PHOTOS_TABLE = """CREATE TABLE photos (
+    sha256 TEXT PRIMARY KEY,
+    mime TEXT,
+    bytes INTEGER NOT NULL,
+    stripped INTEGER NOT NULL,
+    stripped_sha256 TEXT NOT NULL,
+    data BLOB NOT NULL
+)"""
+
+
+class PhotoParts:
+    """The portraits' bytes, packed into release-sized SQLite files (issue #130).
+
+    Images arrive in build order -- election by election, record file by
+    record file, each unique image once -- and fill `vrk-photos-1.sqlite`
+    until the next one would take its image bytes past the budget, then
+    `vrk-photos-2.sqlite`, and so on. The split is therefore the same on
+    every build of the same corpus, and an election's portraits sit together
+    except where one straddles a boundary. Each part is a slice of what used
+    to be one `photos` table, columns and all, so it reads on its own; its
+    `meta` says which slice it is.
+    """
+
+    def __init__(self, directory: Path, budget: int) -> None:
+        self.directory = directory
+        self.budget = budget
+        self.parts: list[dict[str, Any]] = []
+        self._connections: list[sqlite3.Connection] = []
+
+    def add(self, election_id: str, row: tuple[str, str | None, int, int, str, bytes]) -> str:
+        """Store one image row; returns the name of the part holding it.
+
+        A part takes at least one image, so a single image bigger than the
+        budget still lands somewhere -- and `check_asset_sizes` then says so.
+        """
+        size = len(row[5])
+        current = self.parts[-1] if self.parts else None
+        if current is None or (current["photos"] and current["photoBytes"] + size > self.budget):
+            current = self._open()
+        self._connections[-1].execute("INSERT INTO photos VALUES (?, ?, ?, ?, ?, ?)", row)
+        current["photos"] += 1
+        current["photoBytes"] += size
+        if election_id not in current["elections"]:
+            current["elections"].append(election_id)
+        return current["name"]
+
+    def _open(self) -> dict[str, Any]:
+        name = PHOTO_PART_NAME.format(index=len(self.parts) + 1)
+        path = self.directory / name
+        path.unlink(missing_ok=True)
+        connection = sqlite3.connect(path)
+        connection.execute("PRAGMA journal_mode=OFF")
+        connection.execute("PRAGMA synchronous=OFF")
+        connection.execute(PART_PHOTOS_TABLE)
+        self._connections.append(connection)
+        self.parts.append({"name": name, "photos": 0, "photoBytes": 0, "elections": []})
+        return self.parts[-1]
+
+    def close(self, meta: dict[str, str] | None) -> None:
+        """Close every part, writing its `meta` first when the build finished."""
+        for index, (connection, part) in enumerate(zip(self._connections, self.parts), start=1):
+            try:
+                if meta is not None:
+                    write_meta(connection, meta | {
+                        "part": str(index),
+                        "parts": str(len(self.parts)),
+                        "photos": str(part["photos"]),
+                        "elections": ",".join(part["elections"]),
+                    })
+                    connection.commit()
+            finally:
+                connection.close()
+        self._connections = []
+
+
+def release_assets(corpus_counts: dict[str, Any]) -> tuple[str, ...]:
+    """Every file a release uploads beside MANIFEST.json: the four fixed
+    artifacts, then the photo parts this build filled."""
+    return RELEASE_ARTIFACTS + tuple(part["name"] for part in corpus_counts["photo_parts"])
+
+
+def check_asset_sizes(directory: Path, names: tuple[str, ...]) -> None:
+    """Refuse a build holding an asset GitHub would refuse (issue #130).
+
+    Measured, not predicted: the budget keeps a photo part under the cap and
+    the corpus database gzips to a fraction of it, but a corpus that grows is
+    exactly how the last estimate went stale.
+    """
+    oversized = [
+        (name, (directory / name).stat().st_size)
+        for name in names
+        if (directory / name).stat().st_size > RELEASE_ASSET_LIMIT
+    ]
+    if oversized:
+        listed = "\n".join(f"    {name}: {size:,} bytes" for name, size in oversized)
+        raise SystemExit(
+            f"{len(oversized)} asset(s) over the {RELEASE_ASSET_LIMIT:,}-byte limit GitHub"
+            f" puts on a release asset:\n{listed}\nNothing was promoted to dist/; lower"
+            " PHOTO_PART_BUDGET, or split whatever grew."
+        )
+
+
 def write_corpus_sqlite(
     corpus_path: Path,
     base_path: Path,
     data_root: Path,
     election_ids: list[str],
     profile: str = DEFAULT_PROFILE,
+    part_budget: int | None = None,
 ) -> dict[str, Any]:
     """Copy the analysis database and extend it into the full corpus.
 
+    The portraits' bytes go into `vrk-photos-N.sqlite` parts beside
+    `corpus_path` (issue #130); the corpus database's `photos` table keeps
+    one row per image -- its hashes, type and size -- and the part holding it.
+
     Returns counts: records, per_election, photos (unique), photo_records,
     photo_bytes (as stored), anomalies, redacted_values, photos_stripped,
-    photos_untouched (containers the stripper leaves alone), photos_malformed.
+    photos_untouched (containers the stripper leaves alone), photos_malformed,
+    and photo_parts -- one {name, photos, photoBytes, elections} per part.
     """
     if profile not in PROFILES:
         raise ValueError(f"unknown profile {profile!r}; one of {PROFILES}")
@@ -314,6 +454,8 @@ def write_corpus_sqlite(
     }
     parser_commits: Counter[str] = Counter()
     anomaly_files: list[str] = []
+    parts = PhotoParts(corpus_path.parent, PHOTO_PART_BUDGET if part_budget is None else part_budget)
+    part_meta: dict[str, str] | None = None
     try:
         # A throwaway build: a crash mid-write is answered by rebuilding,
         # so durability buys nothing here and the journal only costs time.
@@ -337,7 +479,8 @@ def write_corpus_sqlite(
         )
         # `sha256` is the archive's hash -- what the record's photoMeta names
         # and what records.photo_sha256 joins on -- whatever was done to the
-        # bytes on the way out; `stripped_sha256` hashes what is stored.
+        # bytes on the way out; `stripped_sha256` hashes what is stored. The
+        # bytes themselves are in the part `part` names (issue #130).
         connection.execute(
             """CREATE TABLE photos (
                 sha256 TEXT PRIMARY KEY,
@@ -345,7 +488,7 @@ def write_corpus_sqlite(
                 bytes INTEGER NOT NULL,
                 stripped INTEGER NOT NULL,
                 stripped_sha256 TEXT NOT NULL,
-                data BLOB NOT NULL
+                part TEXT NOT NULL
             )"""
         )
         connection.execute(
@@ -388,16 +531,16 @@ def write_corpus_sqlite(
                             counts["photos_stripped"] += stripped
                             counts["photos_untouched"] += result.container == "other"
                             counts["photos_malformed"] += result.malformed
+                        row = (
+                            digest,
+                            mime,
+                            len(stored),
+                            int(stripped),
+                            hashlib.sha256(stored).hexdigest(),
+                        )
+                        part = parts.add(eid, row + (stored,))
                         connection.execute(
-                            "INSERT INTO photos VALUES (?, ?, ?, ?, ?, ?)",
-                            (
-                                digest,
-                                mime,
-                                len(stored),
-                                int(stripped),
-                                hashlib.sha256(stored).hexdigest(),
-                                stored,
-                            ),
+                            "INSERT INTO photos VALUES (?, ?, ?, ?, ?, ?)", row + (part,)
                         )
                         counts["photos"] += 1
                         counts["photo_bytes"] += len(stored)
@@ -454,24 +597,32 @@ def write_corpus_sqlite(
                     )
                     counts["anomalies"] += 1
 
-        write_meta(connection, {
+        terms = {
             "schemaVersion": str(SCHEMA_VERSION),
             "profile": profile,
             "builtAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "buildCommit": build_commit() or "",
-            "records": str(counts["records"]),
-            "elections": str(len(election_ids)),
-            "photos": str(counts["photos"]),
-            "anomalyFiles": ",".join(anomaly_files),
             "source": SOURCE_URL,
             "dataLicense": DATA_LICENSE,
             "attribution": ATTRIBUTION,
             "terms": TERMS_URL,
+        }
+        write_meta(connection, terms | {
+            "records": str(counts["records"]),
+            "elections": str(len(election_ids)),
+            "photos": str(counts["photos"]),
+            # The parts holding the image bytes, in order (issue #130):
+            # what unpack_corpus.py looks for beside this file.
+            "photoParts": ",".join(part["name"] for part in parts.parts),
+            "anomalyFiles": ",".join(anomaly_files),
         })
         connection.commit()
+        part_meta = terms
     finally:
+        parts.close(part_meta)
         connection.close()
     counts["parser_commits"] = dict(parser_commits.most_common())
+    counts["photo_parts"] = parts.parts
     return counts
 
 
@@ -604,12 +755,16 @@ def write_manifest(
             "photosStripped": corpus_counts["photos_stripped"],
             "photosMetadataUntouched": corpus_counts["photos_untouched"],
             "photosMalformed": corpus_counts["photos_malformed"],
+            "photoParts": len(corpus_counts["photo_parts"]),
             "anomalies": corpus_counts["anomalies"],
         },
         "recordsPerElection": corpus_counts["per_election"],
+        # Which part holds which elections' portraits (issue #130), so a
+        # consumer after one era's pictures downloads one part, not all.
+        "photoParts": corpus_counts["photo_parts"],
         "artifacts": {
             name: {"bytes": (dist / name).stat().st_size, "sha256": sha256_file(dist / name)}
-            for name in RELEASE_ARTIFACTS
+            for name in release_assets(corpus_counts)
         },
     }
     if subset:
@@ -621,12 +776,12 @@ def write_manifest(
     return manifest
 
 
-#: Everything a build writes, in promotion order. MANIFEST.json is last on
-#: purpose, and is removed from dist/ before the first asset moves: it
-#: checksums the other five, so a manifest that outlives the assets it
-#: describes is worse than no manifest at all. The invariant a consumer can
-#: rely on is that MANIFEST.json is present only while it matches what sits
-#: beside it.
+#: Everything a build writes but its photo parts, in promotion order.
+#: MANIFEST.json is last on purpose, and is removed from dist/ before the
+#: first asset moves: it checksums the other assets, so a manifest that
+#: outlives the assets it describes is worse than no manifest at all. The
+#: invariant a consumer can rely on is that MANIFEST.json is present only
+#: while it matches what sits beside it.
 BUILD_OUTPUTS = RELEASE_ARTIFACTS + ("vrk.sqlite", "vrk-corpus.sqlite")
 
 
@@ -640,7 +795,14 @@ def promote(staging: Path, dist: Path) -> None:
     no manifest, which is a state a reader can recognise.
     """
     (dist / "MANIFEST.json").unlink(missing_ok=True)
-    for name in BUILD_OUTPUTS:
+    # A part the previous build filled and this one did not -- fewer
+    # portraits, a smaller budget -- would sit beside a manifest that does
+    # not name it, and an upload of dist/* would ship it.
+    parts = sorted(path.name for path in staging.glob(PHOTO_PART_GLOB))
+    for stale in dist.glob(PHOTO_PART_GLOB):
+        if stale.name not in parts:
+            stale.unlink()
+    for name in BUILD_OUTPUTS + tuple(parts):
         os.replace(staging / name, dist / name)
     os.replace(staging / "MANIFEST.json", dist / "MANIFEST.json")
 
@@ -754,6 +916,7 @@ def build_distribution(
 
         gzip_file(staging / "vrk.sqlite", staging / "vrk.sqlite.gz", 9)
         gzip_file(staging / "vrk-corpus.sqlite", staging / "vrk-corpus.sqlite.gz", CORPUS_GZIP_LEVEL)
+        check_asset_sizes(staging, release_assets(corpus_counts))
         manifest = write_manifest(
             staging, stats, corpus_counts, subset, profile, registered=len(registry_by_id)
         )
@@ -777,12 +940,19 @@ def build_distribution(
         )
     )
     print(f"anomalies:    {corpus_counts['anomalies']} event(s)")
-    for name in RELEASE_ARTIFACTS + ("vrk.sqlite", "vrk-corpus.sqlite", "MANIFEST.json"):
+    for part in corpus_counts["photo_parts"]:
+        print(
+            f"photo part:   {part['name']}: {part['photos']} portrait(s),"
+            f" {part['photoBytes'] / 1e6:.1f} MB, {len(part['elections'])} election(s)"
+        )
+    for name in release_assets(corpus_counts) + ("vrk.sqlite", "vrk-corpus.sqlite", "MANIFEST.json"):
         size = (dist / name).stat().st_size
         print(f"wrote {dist / name} ({size / 1024 / 1024:.1f} MB)")
 
     if subset is None:
-        assets = " ".join(f"{dist / name}" for name in RELEASE_ARTIFACTS + ("MANIFEST.json",))
+        assets = " ".join(
+            shlex.quote(str(dist / name)) for name in release_assets(corpus_counts) + ("MANIFEST.json",)
+        )
         print(
             f"\npublish:\n  gh release create {manifest['version']} {assets}"
             f" --title 'VRK corpus {manifest['version'].removeprefix('corpus-')}'"

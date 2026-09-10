@@ -12,9 +12,10 @@ across all 55 elections.
 Get it without scraping: every `corpus-YYYY-MM-DD` GitHub release ships the
 corpus ready-made — the flat comparison table (`candidacies.csv.gz`) and the
 whole corpus as one SQLite database (`vrk-corpus.sqlite.gz`: every record's
-raw and normalized JSON, portraits deduplicated by content hash, the anomaly
-logs), with a `MANIFEST.json` naming the parser commit, per-election counts
-and a checksum per asset. `python scripts/build_distribution.py` builds the
+raw and normalized JSON and the anomaly logs), its portraits beside it in
+`vrk-photos-N.sqlite` parts (deduplicated by content hash, split to stay
+under GitHub's 2 GiB per-asset cap), with a `MANIFEST.json` naming the
+parser commit, per-election counts and a checksum per asset. `python scripts/build_distribution.py` builds the
 assets (issue #94); [CANDIDACIES.md](CANDIDACIES.md#distribution) documents
 them. The corpus is published under CC BY 4.0 with a required attribution
 and a removal contact — [DATA_TERMS.md](../DATA_TERMS.md) (issue #138); the
@@ -256,10 +257,11 @@ six BMP and one TIFF portrait as `image/jpeg` under `.jpg` names, and 911
 transient and cleared on retry.
 
 The archive is what makes the corpus's portraits shippable, and it is also
-what makes them heavy: `vrk-corpus.sqlite` now carries 5.5 GB of image bytes
-that gzip cannot shrink, so the next release cannot be one asset — GitHub
-caps a release asset at 2 GiB — and the photos will have to ship beside the
-database rather than inside it (a follow-up, not part of issue #118).
+what makes them heavy: 5.5 GB of image bytes that gzip cannot shrink, which
+inside `vrk-corpus.sqlite` would have made a ~6 GB asset where GitHub caps
+one at 2 GiB. Since issue #130 they ship beside the database instead, in
+`vrk-photos-N.sqlite` parts of at most 1.9 GB of images each, and the build
+measures every asset against the cap before it promotes anything.
 
 ### The 2026-08-29 corpus re-parse, and the gate that found it
 

@@ -65,12 +65,13 @@ Where to start:
 - **Getting the data** — the latest
   [`corpus-YYYY-MM-DD` release](https://github.com/Viespirkiu-grupe/vrk/releases):
   `candidacies.csv.gz` for the comparison surface, `vrk-corpus.sqlite.gz`
-  for every record, portrait and anomaly log in one queryable file
+  for every record and anomaly log in one queryable file, and the
+  `vrk-photos-N.sqlite` parts beside it for the portraits
   ([docs/CANDIDACIES.md](docs/CANDIDACIES.md#distribution)). Either query it
   where it is, or turn it back into a corpus:
 
   ```bash
-  gh release download corpus-2026-08-30 --pattern 'vrk-corpus.sqlite.gz'
+  gh release download --pattern 'vrk-corpus.sqlite.gz' --pattern 'vrk-photos-*.sqlite'
   gunzip vrk-corpus.sqlite.gz
   python scripts/unpack_corpus.py vrk-corpus.sqlite   # writes ./data
   ```
