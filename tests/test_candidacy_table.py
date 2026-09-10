@@ -533,5 +533,199 @@ class KnownLows(unittest.TestCase):
                 self.assertIn(concept, concepts)
 
 
+class WriterTests(unittest.TestCase):
+    """The two writers, which no test named (issue #163).
+
+    `write_csv_gz`, `write_sqlite`, `_sqlite_type` and `_sqlite_value` were
+    reached only through a three-candidate synthetic build in the
+    distribution suite, which asserts table names and row counts. Nothing
+    asserted that a CSV cell equals its sqlite cell, that a column gets the
+    right affinity — adding `_id` to the REAL suffixes would silently retype
+    `person_id`, `party_id` and `campaign_key` in every shipped database —
+    or that the five indexes exist.
+    """
+
+    ROWS = [
+        {
+            "person_id": "p1",
+            "election_id": "2020-seimo",
+            "candidate_id": "a",
+            "party_id": "ts-lkd",
+            "campaign_key": "dalyvis-1",
+            "income_eur": 1234.5,
+            "currency_rate": 1.0,
+            "elected": True,
+            "elected_council": None,
+            "list_position": 7,
+            "education_higher": False,
+            "education_entries": [{"level": "aukstasis"}],
+            "declared_currency": "EUR",
+        },
+        {
+            "person_id": "p2",
+            "election_id": "2020-seimo",
+            "candidate_id": "b",
+            "party_id": None,
+            "campaign_key": None,
+            "income_eur": None,
+            "currency_rate": 3.4528,
+            "elected": False,
+            "elected_council": True,
+            "list_position": None,
+            "education_higher": None,
+            "education_entries": [],
+            "declared_currency": None,
+        },
+    ]
+
+    def _write(self, directory: Path):
+        csv_path = directory / "candidacies.csv.gz"
+        sqlite_path = directory / "vrk.sqlite"
+        table.write_csv_gz(csv_path, table.COLUMNS, self.ROWS)
+        table.write_sqlite(
+            sqlite_path,
+            self.ROWS,
+            campaigns={},
+            elections_table=[
+                {"id": "2020-seimo", "date": "2020-10-11", "kind": "seimo", "parent": None,
+                 "name": "2020 Seimas", "shortName": "2020 Seimas", "records": 2}
+            ],
+            persons=[
+                {"person_id": "p1", "name": "A", "birth_key": "A|1970-01-01",
+                 "candidacies": 1, "elections": 1, "merged_keys": 0}
+            ],
+            parties_path=REPO_ROOT / "scraper" / "parties.json",
+        )
+        return csv_path, sqlite_path
+
+    def test_every_csv_cell_is_its_sqlite_cell(self):
+        import csv
+        import gzip
+        import io
+        import sqlite3
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            csv_path, sqlite_path = self._write(Path(tmp))
+            with gzip.open(csv_path) as handle:
+                csv_rows = list(csv.DictReader(io.TextIOWrapper(handle, encoding="utf-8")))
+            connection = sqlite3.connect(sqlite_path)
+            connection.row_factory = sqlite3.Row
+            try:
+                sql_rows = [
+                    dict(row)
+                    for row in connection.execute("SELECT * FROM candidacies ORDER BY candidate_id")
+                ]
+            finally:
+                connection.close()
+
+        self.assertEqual(len(csv_rows), len(sql_rows))
+        self.assertEqual(list(csv_rows[0]), list(table.COLUMNS))
+        for csv_row, sql_row in zip(csv_rows, sql_rows):
+            for column in table.COLUMNS:
+                with self.subTest(candidate=csv_row["candidate_id"], column=column):
+                    value = sql_row[column]
+                    # Both writers put a value through the same conversion —
+                    # a bool becomes 1/0, a dict or list becomes compact
+                    # JSON, None becomes empty — so the CSV cell is `str()`
+                    # of the sqlite cell, in every column, with no exceptions.
+                    self.assertEqual(csv_row[column], "" if value is None else str(value))
+
+    def test_a_column_gets_the_affinity_its_name_implies(self):
+        for column, affinity in (
+            ("income_eur", "REAL"),
+            ("currency_rate", "REAL"),
+            ("donations_total_eur", "REAL"),
+            ("list_position", "INTEGER"),
+            ("declaration_year", "INTEGER"),
+            ("preference_votes", "INTEGER"),
+            ("elected", "INTEGER"),
+            ("education_higher", "INTEGER"),
+            ("person_id", "TEXT"),
+            ("party_id", "TEXT"),
+            ("campaign_key", "TEXT"),
+            ("election_id", "TEXT"),
+            ("education_entries", "TEXT"),
+        ):
+            with self.subTest(column):
+                self.assertEqual(table._sqlite_type(column), affinity)
+
+    def test_the_declared_affinities_are_what_the_database_holds(self):
+        import sqlite3
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            _, sqlite_path = self._write(Path(tmp))
+            connection = sqlite3.connect(sqlite_path)
+            try:
+                declared = {
+                    row[1]: row[2]
+                    for row in connection.execute("PRAGMA table_info(candidacies)")
+                }
+                indexes = {
+                    row[0]
+                    for row in connection.execute(
+                        "SELECT name FROM sqlite_master WHERE type = 'index' AND name LIKE 'idx_%'"
+                    )
+                }
+            finally:
+                connection.close()
+        self.assertEqual(declared, {column: table._sqlite_type(column) for column in table.COLUMNS})
+        # The five the query examples in docs/CANDIDACIES.md rely on.
+        self.assertEqual(
+            indexes,
+            {
+                "idx_candidacies_person_id",
+                "idx_candidacies_election_id",
+                "idx_candidacies_party_id",
+                "idx_candidacies_campaign_key",
+                "idx_campaigns_campaign_key",
+            },
+        )
+
+    def test_a_value_sqlite_cannot_hold_is_json(self):
+        self.assertEqual(table._sqlite_value(True), 1)
+        self.assertEqual(table._sqlite_value(False), 0)
+        self.assertEqual(table._sqlite_value(None), None)
+        self.assertEqual(table._sqlite_value(3.5), 3.5)
+        self.assertEqual(table._sqlite_value([{"a": 1}]), '[{"a":1}]')
+        self.assertEqual(table._sqlite_value({"a": "ą"}), '{"a":"ą"}')
+
+    def test_the_other_tables_are_created_with_their_documented_columns(self):
+        import sqlite3
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            _, sqlite_path = self._write(Path(tmp))
+            connection = sqlite3.connect(sqlite_path)
+            try:
+                tables = {
+                    row[0]
+                    for row in connection.execute(
+                        "SELECT name FROM sqlite_master WHERE type = 'table'"
+                    )
+                }
+                columns = {
+                    name: [row[1] for row in connection.execute(f"PRAGMA table_info({name})")]
+                    for name in sorted(tables)
+                }
+            finally:
+                connection.close()
+        self.assertEqual(
+            tables,
+            {"candidacies", "campaigns", "elections", "persons", "municipalities", "parties",
+             "party_predecessors"},
+        )
+        self.assertEqual(
+            columns["persons"],
+            ["person_id", "name", "birth_key", "candidacies", "elections", "merged_keys"],
+        )
+        self.assertEqual(columns["parties"], ["party_id", "name", "short_name", "type"])
+        self.assertEqual(columns["party_predecessors"], ["party_id", "predecessor_id"])
+        self.assertEqual(
+            columns["elections"], ["id", "date", "kind", "parent", "name", "shortName", "records"]
+        )
+
+
 if __name__ == "__main__":
     unittest.main()

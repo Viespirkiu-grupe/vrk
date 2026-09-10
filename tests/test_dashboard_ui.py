@@ -1320,5 +1320,230 @@ class FacetUsabilityTests(unittest.TestCase):
         self.assertIn('document.getElementById(id).addEventListener("change", renderList);', SOURCE)
 
 
+@unittest.skipIf(NODE is None, "node not installed — behavioural checks skipped")
+class FilterCompositionTests(unittest.TestCase):
+    """`candidacyMatches`, the point where every facet meets (issue #163).
+
+    `grep -rl candidacyMatches tests/` was empty: the tested predicates
+    (`inElection`, `inParty`) were covered and the function that composes them
+    with the municipality, constituency, role and tri-state outcome filters
+    was not — and three separately-filed defects sat in that gap, including
+    the dual-role outcome collapse of issue #140 and the facet scoping of
+    #155.
+    """
+
+    ELECTIONS = [
+        {"id": "2019-kovo-3-savivaldybiu-tarybu", "kind": "savivaldybiu", "date": "2019-03-03"},
+        {"id": "2020-seimo", "kind": "seimo", "date": "2020-10-11"},
+        {"id": "2021-spalio-10-meru", "kind": "mero", "date": "2021-10-10",
+         "parent": "2019-kovo-3-savivaldybiu-tarybu"},
+        {"id": "2019-prezidento", "kind": "prezidento", "date": "2019-05-12"},
+    ]
+
+    #: A council-and-mayor candidacy that won the seat and lost the mayoralty
+    #: — 448 people in 2019/2023 — plus one of each simpler shape.
+    DUAL = {"id": "2019-kovo-3-savivaldybiu-tarybu", "r": "tm", "w": True, "wt": True, "wm": False,
+            "sv": 0, "p": "ts-lkd"}
+    COUNCIL = {"id": "2019-kovo-3-savivaldybiu-tarybu", "w": False, "sv": 12, "p": "lsdp"}
+    SEIMAS = {"id": "2020-seimo", "w": True, "ap": 0, "p": "ts-lkd"}
+    NO_RESULTS = {"id": "2019-prezidento", "p": "ts-lkd"}
+    BY_ELECTION = {"id": "2021-spalio-10-meru", "r": "m", "w": True, "sv": 12}
+
+    def _matches(self, candidacy, **filters):
+        full = {"election": "", "party": "", "municipality": "", "constituency": "",
+                "role": "", "won": "", "any": True}
+        full.update(filters)
+        helpers = "\n".join(
+            re.search(pattern, SOURCE, re.S | re.M).group(0)
+            for pattern in (
+                r"^const PARTY_LINEAGE_PREFIX = .*?;$",
+                r"^const electionParent = .*?;$",
+                r"^const inElection = .*?;$",
+                r"^const inParty = \(e, value\).*?;$",
+                r"^const ROLE_BY_KIND = .*?;$",
+                r"^function rolesOf\(e\) \{.*?^\}",
+                r"^function electedAs\(e, role\) \{.*?^\}",
+                r"^function candidacyMatches\(e, f\) \{.*?^\}",
+            )
+        )
+        script = (
+            f"const ELECTIONS = new Map({json.dumps(self.ELECTIONS)}.map(e => [e.id, e]));\n"
+            "const PARTY_LINEAGES = new Map();\n"
+            f"{helpers}\n"
+            f"console.log(JSON.stringify(candidacyMatches({json.dumps(candidacy)}, {json.dumps(full)})));"
+        )
+        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        return json.loads(out.stdout)
+
+    def test_an_office_filter_reads_that_offices_outcome(self):
+        # "Meras" + "tik išrinkti" is the mayors, not the mayors plus the
+        # council winners who also stood for mayor (issue #140).
+        self.assertTrue(self._matches(self.DUAL, role="t", won="won"))
+        self.assertFalse(self._matches(self.DUAL, role="m", won="won"))
+        self.assertTrue(self._matches(self.DUAL, role="m", won="lost"))
+        # And with no office chosen the any-office flag applies.
+        self.assertTrue(self._matches(self.DUAL, won="won"))
+
+    def test_the_outcome_filter_is_tri_state(self):
+        self.assertTrue(self._matches(self.NO_RESULTS, won="unknown"))
+        self.assertFalse(self._matches(self.NO_RESULTS, won="lost"))
+        self.assertFalse(self._matches(self.NO_RESULTS, won="won"))
+        self.assertTrue(self._matches(self.COUNCIL, won="lost"))
+        self.assertFalse(self._matches(self.COUNCIL, won="unknown"))
+
+    def test_municipality_zero_is_a_municipality(self):
+        # `if (f.municipality !== "")` rather than a truthiness test: index 0
+        # is Akmenė, and `!f.municipality` would drop it.
+        self.assertTrue(self._matches(self.DUAL, municipality="0"))
+        self.assertFalse(self._matches(self.COUNCIL, municipality="0"))
+        self.assertTrue(self._matches(self.COUNCIL, municipality="12"))
+
+    def test_constituency_zero_is_a_constituency(self):
+        self.assertTrue(self._matches(self.SEIMAS, constituency="0"))
+        self.assertFalse(self._matches(self.COUNCIL, constituency="0"))
+
+    def test_the_role_comes_from_the_election_kind_or_the_candidacy(self):
+        self.assertTrue(self._matches(self.SEIMAS, role="s"))
+        self.assertFalse(self._matches(self.SEIMAS, role="t"))
+        self.assertTrue(self._matches(self.COUNCIL, role="t"))
+        self.assertTrue(self._matches(self.DUAL, role="t"))
+        self.assertTrue(self._matches(self.DUAL, role="m"))
+        self.assertTrue(self._matches(self.BY_ELECTION, role="m"))
+
+    def test_a_general_election_filter_includes_its_seat_fills(self):
+        self.assertTrue(self._matches(self.BY_ELECTION, election="2019-kovo-3-savivaldybiu-tarybu"))
+        self.assertTrue(self._matches(self.BY_ELECTION, election="2021-spalio-10-meru"))
+        self.assertFalse(self._matches(self.COUNCIL, election="2021-spalio-10-meru"))
+
+    def test_the_filters_conjoin(self):
+        self.assertTrue(
+            self._matches(self.DUAL, election="2019-kovo-3-savivaldybiu-tarybu",
+                          party="ts-lkd", municipality="0", role="t", won="won")
+        )
+        # One clause failing is enough.
+        self.assertFalse(
+            self._matches(self.DUAL, election="2019-kovo-3-savivaldybiu-tarybu",
+                          party="lsdp", municipality="0", role="t", won="won")
+        )
+
+
+@unittest.skipIf(NODE is None, "node not installed — behavioural checks skipped")
+class CsvRowTests(unittest.TestCase):
+    """The row `exportCSV` writes, which nothing exercised (issue #163).
+
+    `csvField` and `csvMoney` are pinned above; this runs the whole row
+    builder over a synthetic index, because the defects issue #149 measured
+    were in how the row *assembles* — a money column that skipped the
+    formatter, a missing election name — not in the helpers.
+    """
+
+    INDEX = {
+        "elections": [
+            {"id": "2020-seimo", "kind": "seimo", "date": "2020-10-11",
+             "name": "2020 m. spalio 11 d. Lietuvos Respublikos Seimo rinkimai",
+             "shortName": "2020 Seimas"},
+        ],
+        "municipalities": ["Akmenės rajono"],
+        "constituencies": ["Aukštaitijos"],
+        "parties": {"ts-lkd": {"n": "Tėvynės sąjunga – Lietuvos krikščionys demokratai"}},
+        "educationLevels": [{"label": "Aukštasis universitetinis"}],
+        "people": [
+            {"pid": "p1", "n": "Vardenė PAVARDENĖ", "b": "1970-01-02", "_f": "",
+             "e": [{"id": "2020-seimo", "w": True, "sv": 0, "ap": 0, "p": "ts-lkd",
+                    "v": 1234, "cv": 5678, "ed": 1, "wp": "=UAB \"Rizika\"",
+                    "m": [1234.5, 0, 98765.43, None], "lt": True, "ds": False}]},
+        ],
+    }
+
+    def _row(self):
+        helpers = "\n".join(
+            re.search(pattern, SOURCE, re.S | re.M).group(0)
+            for pattern in (
+                r"^const PARTY_LINEAGE_PREFIX = .*?;$",
+                r"^const electionParent = .*?;$",
+                r"^const inElection = .*?;$",
+                r"^const inParty = \(e, value\).*?;$",
+                r"^const ROLE_LABELS = new Map\(\[.*?\]\);$",
+                r"^const ROLE_BY_KIND = .*?;$",
+                r"^function rolesOf\(e\) \{.*?^\}",
+                r"^function electedAs\(e, role\) \{.*?^\}",
+                r"^function roleLabel\(e\) \{.*?^\}",
+                r"^function electedLabel\(e\) \{.*?^\}",
+                r"^function candidacyMatches\(e, f\) \{.*?^\}",
+                r"^function personMatches\(p, q, f\) \{.*?^\}",
+                r"^function csvField\(value\) \{.*?^\}",
+                r"^function csvMoney\(value\) \{.*?^\}",
+                r"^function exportCSV\(\) \{.*?^\}",
+            )
+        )
+        # exportCSV reads the search box and the facets, and hands the rows to
+        # a Blob and an anchor: the smallest possible stand-ins for both, so
+        # the row builder itself is what runs.
+        stubs = """
+        const INDEX = %s;
+        const ELECTIONS = new Map(INDEX.elections.map(e => [e.id, e]));
+        const PARTY_LINEAGES = new Map();
+        const fold = (s) => (s || "").toUpperCase();
+        const activeFilters = () => ({election: "", party: "", municipality: "",
+          constituency: "", role: "", won: "", any: false});
+        let captured = "";
+        globalThis.document = {
+          getElementById: () => ({ value: "" }),
+          createElement: () => ({ click() {}, set href(v) {}, get href() { return ""; } }),
+        };
+        globalThis.Blob = class { constructor(parts) { captured = parts.join(""); } };
+        globalThis.URL = { createObjectURL: () => "blob:x", revokeObjectURL() {} };
+        """ % json.dumps(self.INDEX)
+        script = f"{stubs}\n{helpers}\nexportCSV();\nconsole.log(JSON.stringify(captured));"
+        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        return json.loads(out.stdout)
+
+    def _cells(self):
+        text = self._row()
+        self.assertTrue(text.startswith("\ufeff"), "no BOM: lt-LT Excel needs one")
+        lines = text.lstrip("\ufeff").split("\r\n")
+        self.assertEqual(len(lines), 2)
+        header, row = (line.split(";") for line in lines)
+        self.assertEqual(len(header), len(row))
+        return dict(zip(header, row))
+
+    def test_the_export_is_a_bom_a_header_and_one_row_per_candidacy(self):
+        self.assertEqual(self._cells()["pid"], "p1")
+
+    def test_every_column_holds_what_it_says(self):
+        cells = self._cells()
+        self.assertEqual(cells["vardas_pavarde"], "Vardenė PAVARDENĖ")
+        self.assertEqual(cells["gimimo_data"], "1970-01-02")
+        self.assertEqual(cells["rinkimai"], "2020-seimo")
+        # The registry name beside the slug (issue #149). No `;` or `"` in it,
+        # so `csvField` leaves it unquoted.
+        self.assertEqual(
+            cells["rinkimu_pavadinimas"],
+            "2020 m. spalio 11 d. Lietuvos Respublikos Seimo rinkimai",
+        )
+        self.assertEqual(cells["data"], "2020-10-11")
+        self.assertEqual(cells["pareigos"], "Seimo narys")
+        self.assertEqual(cells["savivaldybe"], "Akmenės rajono")
+        self.assertEqual(cells["apygarda"], "Aukštaitijos")
+        self.assertEqual(cells["isrinktas"], "taip")
+        self.assertEqual(cells["pirmumo_balsai"], "1234")
+        self.assertEqual(cells["balsai_apygardoje"], "5678")
+        self.assertEqual(cells["deklaruota_litais"], "taip")
+        self.assertEqual(cells["tik_darbo_santykiu_pajamos"], "")
+
+    def test_money_is_comma_decimal_and_a_formula_is_neutralised(self):
+        cells = self._cells()
+        self.assertEqual(cells["turtas_eur"], "1234,5")
+        self.assertEqual(cells["pinigines_lesos_eur"], "0")
+        self.assertEqual(cells["pajamos_eur"], "98765,43")
+        self.assertEqual(cells["turtas_ir_lesos_eur"], "")
+        # A workplace starting with `=` is a formula to Excel.
+        self.assertEqual(cells["darboviete"], '"\'=UAB ""Rizika"""')
+
+
 if __name__ == "__main__":
     unittest.main()
