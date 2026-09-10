@@ -69,6 +69,30 @@ Each election ID uses its own parser module, HTML samples, sitemap, and output f
 Running or editing workflows for `2020-seimo` should not require touching `2016-seimo`, and vice versa, because election HTML layouts differ.
 The election ID in each command is the isolation boundary that selects the correct scraper implementation.
 
+## Fetching: pacing and byte fidelity
+
+Every request the scraper makes goes through `scraper/shared/http.py`, and
+issue #136 gave it the three properties it had been documenting without
+having:
+
+- **Pacing.** `VRK_MIN_REQUEST_INTERVAL` (default `0.15`, seconds) is the
+  floor on the interval between two requests out of one process, enforced
+  inside `fetch_text` and `fetch_bytes`. There used to be no delay anywhere
+  in the module or in any of the 55 `candidate_samples.py`; the only throttle
+  was `THROTTLE_SECONDS` between candidates in
+  `scripts/run_election_batches.sh`, which the per-candidate commands below
+  bypass entirely. The corpus cost 495,337 requests. Set it to `0` against a
+  local stub, or higher to be kinder.
+- **Explicit decoding.** The charset comes from the response's own
+  declaration, or from UTF-8, and anything else is a *guess* that gets
+  reported — see the module docstring. A charset-less `text/html` used to be
+  decoded as latin-1, which is silently wrong for every Lithuanian
+  diacritic; the eleven modern-era elections declare no charset anywhere.
+- **A truncated body is retried**, and a 200 that is a bot-check
+  interstitial is refused rather than written into the retained tree under a
+  candidate's name. A 403 is *not* retried: the only one this project has met
+  was vrk.lt refusing a CI runner by address.
+
 ## Commands
 
 ### `fetch-sample`

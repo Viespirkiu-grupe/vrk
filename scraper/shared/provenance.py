@@ -28,7 +28,12 @@ plausible time is exactly the kind of metadata this block exists to end.
 page, the one at ``source.candidateSourceUrl`` — the same way
 ``photoMeta.sha256`` already fingerprints portraits. It is what lets a
 re-parse gate split "the parser changed" from "the page changed"
-(scripts/reparse_diff.py).
+(scripts/reparse_diff.py). It is a fingerprint of the retained *file*, not
+proof of what vrk.lt served: the fetchers decode a page and write the string,
+so a page whose bytes the fetcher could not decode is hashed as its
+re-encoding. 130 retained pages hold 192 such characters, from before the
+decode became explicit and reportable (issue #136,
+``scraper/shared/http.py``).
 
 ``parserCommit`` is ``git rev-parse --short HEAD`` where the parsers live,
 with ``-dirty`` appended when the working tree has uncommitted changes, and
