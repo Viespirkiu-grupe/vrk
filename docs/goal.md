@@ -1,10 +1,27 @@
 # Scraping Plan
 
+> **Original design notes, written 2026-08 for a one-election project.** Kept
+> as written, because the choices it argues for are still the project's
+> choices — plain `requests` + `beautifulsoup4`, no browser automation, one
+> JSON file per (candidate, election), fixture-driven parser work — and
+> because the reasoning behind a decision is worth more than a restatement of
+> its outcome.
+>
+> It is **not** the current state and not the place to look one up. What it
+> describes as "one election module" is 55; the corpus reaches 1996–2025 and
+> its inventory is [DATASET.md](DATASET.md); the record shape is
+> [OUTPUT_SCHEMA.md](OUTPUT_SCHEMA.md) and [DATA_GUIDE.md](DATA_GUIDE.md);
+> the commands are [CLI_REFERENCE.md](CLI_REFERENCE.md); the route for a new
+> election is [ADDING_AN_ELECTION.md](ADDING_AN_ELECTION.md), which is the
+> maintained document. Its era paragraph stops in 1998 and its "current
+> suite" names seven test files where there are now more than 180
+> (issue #146).
+
 ## Goal
 
-Collect structured election and candidate data from VRK election pages, while keeping the workflow reliable and easy to extend election-by-election. The corpus began with the 2016 Seimo election and now reaches back through 2015 and 2009-2014 (the same pre-2016 static layout, one module per election: `seimo_dzukijos_2007`, `seimo_2008`, `prezidento_2009`, `ep_2009`, `seimo_silales_silutes_vilniaus_salcininku_2009`, `seimo_marijampoles_2011`, `seimo_2012`, `seimo_birzu_zarasu_ukmerges_2013`, `prezidento_2014`, `ep_2014`), to 2004 (`ep_2004` and `seimo_2004` — Lithuania's first EP election and the Seimas general that followed it, on VRK's original static site, a layout family of its own; `seimo_kedainiu_2005`, the 2005 Kėdainiai by-election, is the same site one year on, and `seimo_nauji_2003`, the June 2003 new elections in four constituencies, the same site one generation early), and further still to 1996-1998 — those earlier pages are Teleport Pro-captured archive snapshots of the original Oracle CGI site rather than the 2016+ anketa-tab layout, documented in `docs/PLAN_2015_ELECTIONS.md` and in `scraper/shared/seimo_archive_1990s.py` / `scraper/shared/savivaldybiu_archive_1997.py`'s module docstrings.
+Collect structured election and candidate data from VRK election pages, while keeping the workflow reliable and easy to extend election-by-election. The corpus began with the 2016 Seimo election and now reaches back through 2015 and 2009-2014 (the same pre-2016 static layout, one module per election: `seimo_dzukijos_2007`, `seimo_2008`, `prezidento_2009`, `ep_2009`, `seimo_silales_silutes_vilniaus_salcininku_2009`, `seimo_marijampoles_2011`, `seimo_2012`, `seimo_birzu_zarasu_ukmerges_2013`, `prezidento_2014`, `ep_2014`), to 2004 (`ep_2004` and `seimo_2004` — Lithuania's first EP election and the Seimas general that followed it, on VRK's original static site, a layout family of its own; `seimo_kedainiu_2005`, the 2005 Kėdainiai by-election, is the same site one year on, and `seimo_nauji_2003`, the June 2003 new elections in four constituencies, the same site one generation early), and further still to 1996-1998 — those earlier pages are Teleport Pro-captured archive snapshots of the original Oracle CGI site rather than the 2016+ anketa-tab layout, documented in [OUTPUT_SCHEMA.md](OUTPUT_SCHEMA.md)'s Seimas-archive appendix and in `scraper/shared/seimo_archive_1990s.py` / `scraper/shared/savivaldybiu_archive_1997.py`'s module docstrings. (This sentence cited `docs/PLAN_2015_ELECTIONS.md` until issue #146; that file contains no occurrence of 1996, 1997, 1998 or "archive".)
 
-The current implementation is intentionally focused on one election module and fixture-driven parser development.
+The implementation was intentionally focused on one election module and fixture-driven parser development. The second half of that is still how every module is built; the first half stopped being true at the second election.
 
 ## Stack
 
@@ -67,6 +84,12 @@ Current top-level fields include:
 - `source` (contains `candidateSourceUrl`)
 - `rawData`
 - `normalized`
+
+(Six of the nine the records carry today. `provenance` joined them with
+issue #89 and is on every record; `kandidatavimas` and `candidateNote` are the
+two optional ones — [OUTPUT_SCHEMA.md](OUTPUT_SCHEMA.md#top-level-record) has
+the measured scope of each, and `tests/test_record_shape.py` holds it against
+`data/`.)
 
 2016 Seimo currently stores:
 

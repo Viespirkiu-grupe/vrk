@@ -1,6 +1,11 @@
 # Plan: the six 2015 backlog elections (issues #48–#53)
 
-> **Status (2026-08-21).** All six modules are built, tested, wired and
+> **Historical — completed 2026-08-21.** The build it plans is done and all
+> six elections are in the corpus; it is kept for the page-layout research in
+> §2–§4, which is the only written account of the 2015 era's quirks. For what
+> the corpus holds now, read [DATASET.md](DATASET.md).
+
+> **Completed (2026-08-21).** All six modules are built, tested, wired and
 > documented — `seimo_zirmunu_2015` (#48), `seimo_varenos_eisiskiu_2015`
 > (#50), `telsiu_mero_2015` (#53), `pakartotiniai_sirvintu_traku_2015` (#51),
 > `pakartotiniai_silutes_2015` (#52) and `savivaldybiu_2015` (#49). What the
@@ -26,8 +31,11 @@
 >   marker/join cross-check has to be read, not assumed zero.
 > - A candidacy can have no questionnaire at all (`Rengiama`); that is an
 >   `AnketaNotPublished` warning, not a parse failure.
-> - Full scrapes are still outstanding for #51, #52 and #49 (fixture sets
->   only); the three small by-elections are complete fields already.
+> - **All six elections are fully scraped** (this said "full scrapes are
+>   still outstanding for #51, #52 and #49" until issue #146): 15,149 records
+>   for the March municipal general, 366 for the Šilutė repeat and 327 for
+>   Širvintos–Trakai, all green in the re-parse gate. `DATASET.md`'s
+>   inventory is the live count.
 > - Downstream registration is done: person-index order, dashboard labels,
 >   concept map and `goal.md` scope all know about the 2015 elections.
 > - Elected status **shipped 2026-08-21** via the results join (`python -m scraper build-results <id>`, `scraper/shared/election_results.py`) — §4 below is the investigation that preceded it; its traps held, and the recipe changed in one respect: the election-night source is the municipality *results* page (per-list mandate counts and post-preference rankings with the mayor-elect marked), with the composition pages as the cross-check rather than the source.
