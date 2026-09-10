@@ -15,15 +15,31 @@ takes three forms on a rule that does not follow English's — 1 asmuo,
 
 ```bash
 python scripts/build_person_index.py   # writes dashboard/people.json (~28 MB)
-python3 scripts/serve_dashboard.py     # serve the repo root, gzipped
+python3 scripts/serve_dashboard.py     # serve dashboard/, data/, docs/, gzipped
 ```
 
 Then open <http://127.0.0.1:8791/dashboard/>. Both commands run from the repo
 root — the index builder reads `data/`, and the page fetches candidate JSONs
 and `docs/concept-map.json` relative to the server root. `serve_dashboard.py`
-is the stdlib server plus gzip: the index compresses 4.2× (29 MB → 7 MB) and
+is the stdlib server plus gzip: the index compresses 4.1× (29 MB → 7 MB) and
 the page fetches it `no-store` on every load, so plain `python3 -m
-http.server 8791` works but pays the full weight each time. A person page is
+http.server 8791` works but pays the full weight each time.
+
+It serves those **three directories and nothing else** (issue #160). It used
+to hand out the whole repository root with listings — `/` indexed `.git`,
+`.run-state/`, `samples-full/` and `.venv/`, and `/.git/config`,
+`/conftest.py` and `/scraper/person_overrides.json` all answered 200 — and it
+checked no `Host`, so a page open in the same browser could read every byte
+under the root as same-origin after a DNS rebind. A foreign `Host` is
+refused, a path outside the three is refused, a directory gets no listing,
+and every response carries `nosniff`, a narrow CSP and `no-referrer`. It also
+answers `/dashboard` with a 301 rather than serving the page under a base URL
+one level too high — which is what made the page report a wrong working
+directory when only the trailing slash was missing — sends `ETag` and
+`Last-Modified` so a reload gets a 304 instead of 7 MB, and evicts one cache
+entry instead of clearing all 512.
+
+A person page is
 deep-linkable via the URL hash, which is the person's `pid` (below); a
 pre-pid `name|birth` hash and a merged-away fragment's key still resolve and
 are rewritten to the pid.
@@ -372,8 +388,11 @@ pins every rule, so a new entry either follows them or fails there.
 - `scripts/build_person_index.py` — builds `dashboard/people.json`
   (gitignored); applies the override merges, assigns pids, prints the audit
   counts on every run.
-- `scripts/serve_dashboard.py` — the stdlib server plus gzip and an
-  mtime-keyed compression cache; run from the repo root.
+- `scripts/serve_dashboard.py` — the stdlib server plus gzip, an LRU
+  compression cache keyed on mtime, and the guards of issue #160 (three
+  served directories, a loopback-only `Host`, no listings, conditional
+  requests); run from the repo root. `tests/test_serve_dashboard.py` drives
+  a real server on an ephemeral port.
 - `scripts/find_identity_merge_candidates.py` — scores possible
   surname-change splits and prints the undecided ones; writes
   `dashboard/merge-review.csv` (gitignored — the record of decisions is the
