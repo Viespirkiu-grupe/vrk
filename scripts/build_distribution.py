@@ -77,6 +77,7 @@ import argparse
 import gzip
 import hashlib
 import json
+import os
 import shutil
 import sqlite3
 import subprocess
@@ -497,6 +498,7 @@ def write_manifest(
     corpus_counts: dict[str, Any],
     subset: list[str] | None,
     profile: str = DEFAULT_PROFILE,
+    registered: int = 0,
 ) -> dict[str, Any]:
     built = datetime.now(timezone.utc)
     manifest: dict[str, Any] = {
@@ -522,6 +524,11 @@ def write_manifest(
         "counts": {
             "records": corpus_counts["records"],
             "elections": stats["elections"],
+            # What the registry says a complete corpus holds (issue #132).
+            # Without it a manifest over 2 elections was byte-for-byte
+            # indistinguishable in shape from one over 55, so a consumer had
+            # no way to ask whether a release was the whole archive.
+            "electionsRegistered": registered,
             "persons": stats["persons"],
             "campaigns": stats["campaigns"],
             "photos": corpus_counts["photos"],
@@ -545,6 +552,30 @@ def write_manifest(
     return manifest
 
 
+#: Everything a build writes, in promotion order. MANIFEST.json is last on
+#: purpose, and is removed from dist/ before the first asset moves: it
+#: checksums the other five, so a manifest that outlives the assets it
+#: describes is worse than no manifest at all. The invariant a consumer can
+#: rely on is that MANIFEST.json is present only while it matches what sits
+#: beside it.
+BUILD_OUTPUTS = RELEASE_ARTIFACTS + ("vrk.sqlite", "vrk-corpus.sqlite")
+
+
+def promote(staging: Path, dist: Path) -> None:
+    """Move a finished build into `dist/`, manifest last.
+
+    `os.replace` is atomic per file and the loop is not, so the window in
+    which dist/ is mixed shrinks from the whole build -- minutes, over 2.5 GB
+    -- to a handful of renames on the same filesystem. Removing the old
+    manifest first is what closes the rest: until the new one lands there is
+    no manifest, which is a state a reader can recognise.
+    """
+    (dist / "MANIFEST.json").unlink(missing_ok=True)
+    for name in BUILD_OUTPUTS:
+        os.replace(staging / name, dist / name)
+    os.replace(staging / "MANIFEST.json", dist / "MANIFEST.json")
+
+
 def build_distribution(
     repo_root: Path,
     dist: Path,
@@ -552,14 +583,41 @@ def build_distribution(
     max_drop: float = 5.0,
     profile: str = DEFAULT_PROFILE,
 ) -> int:
+    registry = identity.load_registry(repo_root / "scraper" / "elections.json")
+    registry_by_id = {entry["id"]: entry for entry in registry}
+
     rows, campaigns, elections_table, stats = table.build(repo_root, subset)
     persons = stats.pop("persons_rows")
 
     if subset is None:
-        registry_by_id = {
-            entry["id"]: entry
-            for entry in identity.load_registry(repo_root / "scraper" / "elections.json")
-        }
+        # Issue #132: a full build over a data/ holding 2 of the 55
+        # registered elections exited 0, said "Fill gate: no findings", wrote
+        # all five assets and printed the ready-to-run `gh release create`
+        # line. Nothing could see it: `elections_present` is whatever is
+        # under data/, and only an *unregistered* directory raised; the fill
+        # gate iterates cells, and a wholly absent election has none; and the
+        # two-pass record count compares two passes over the same truncated
+        # list. This is not hypothetical -- data/ in a worktree is a symlink
+        # set, and this project's history records corpus directories dying
+        # with one (#92's results files).
+        #
+        # A partial build is what naming elections is for: that path marks
+        # the manifest `subset` and skips the gate. A build that names none
+        # claims the whole archive, so it has to hold it.
+        missing = sorted(set(registry_by_id) - set(stats["elections_present"]))
+        if missing:
+            named = "\n".join(f"    {eid}" for eid in missing[:20])
+            if len(missing) > 20:
+                named += f"\n    ... and {len(missing) - 20} more"
+            raise SystemExit(
+                f"the corpus under {repo_root / 'data'} holds"
+                f" {len(stats['elections_present'])} of the {len(registry_by_id)} registered"
+                " elections.\nA build that names no election claims to be the whole archive,"
+                " and nothing downstream would say otherwise: the manifest of a 10-record"
+                f" build is the same shape as one of 113,073.\n\n{len(missing)} missing:\n{named}"
+                "\n\nScrape them, or name the ones you mean —"
+                " `build_distribution.py <election-id> …` marks the manifest a subset."
+            )
         cells = table.measure_cells(rows)
         gate = table.gate(cells, repo_root / table.BASELINE, registry_by_id, False, max_drop)
         if gate:
@@ -572,37 +630,55 @@ def build_distribution(
     else:
         print("(subset build: fill gate skipped)")
 
-    table.write_csv_gz(dist / "candidacies.csv.gz", table.COLUMNS, rows)
-    table.write_csv_gz(
-        dist / "campaigns.csv.gz",
-        table.CAMPAIGN_COLUMNS,
-        sorted(campaigns.values(), key=lambda c: (c["election_id"], c["campaign_key"])),
-    )
-    table.write_sqlite(
-        dist / "vrk.sqlite",
-        rows,
-        campaigns,
-        elections_table,
-        persons,
-        repo_root / "scraper" / "parties.json",
-    )
-
-    corpus_counts = write_corpus_sqlite(
-        dist / "vrk-corpus.sqlite",
-        dist / "vrk.sqlite",
-        repo_root / "data",
-        stats["elections_present"],
-        profile,
-    )
-    if corpus_counts["records"] != stats["records"]:
-        raise SystemExit(
-            f"the two passes disagree: the candidacy table projected {stats['records']}"
-            f" rows, the records table holds {corpus_counts['records']}"
+    # Everything is written into a staging directory beside dist/ and moved
+    # into place only once the manifest exists (issue #132). A build that
+    # dies partway -- a record whose envelope moved, a Ctrl-C, a full disk
+    # during the 2.5 GB corpus write -- used to leave dist/ mixed: MANIFEST
+    # describing the previous build, candidacies.csv.gz from this one, three
+    # assets from the old, `gzip.decompress(vrk.sqlite.gz) != vrk.sqlite`,
+    # and `SELECT COUNT(*) FROM records` = 0 on a database whose
+    # integrity_check said ok. Nothing in the error mentioned dist/.
+    dist.mkdir(parents=True, exist_ok=True)
+    staging = dist / f".staging-{os.getpid()}"
+    shutil.rmtree(staging, ignore_errors=True)
+    staging.mkdir()
+    try:
+        table.write_csv_gz(staging / "candidacies.csv.gz", table.COLUMNS, rows)
+        table.write_csv_gz(
+            staging / "campaigns.csv.gz",
+            table.CAMPAIGN_COLUMNS,
+            sorted(campaigns.values(), key=lambda c: (c["election_id"], c["campaign_key"])),
+        )
+        table.write_sqlite(
+            staging / "vrk.sqlite",
+            rows,
+            campaigns,
+            elections_table,
+            persons,
+            repo_root / "scraper" / "parties.json",
         )
 
-    gzip_file(dist / "vrk.sqlite", dist / "vrk.sqlite.gz", 9)
-    gzip_file(dist / "vrk-corpus.sqlite", dist / "vrk-corpus.sqlite.gz", CORPUS_GZIP_LEVEL)
-    manifest = write_manifest(dist, stats, corpus_counts, subset, profile)
+        corpus_counts = write_corpus_sqlite(
+            staging / "vrk-corpus.sqlite",
+            staging / "vrk.sqlite",
+            repo_root / "data",
+            stats["elections_present"],
+            profile,
+        )
+        if corpus_counts["records"] != stats["records"]:
+            raise SystemExit(
+                f"the two passes disagree: the candidacy table projected {stats['records']}"
+                f" rows, the records table holds {corpus_counts['records']}"
+            )
+
+        gzip_file(staging / "vrk.sqlite", staging / "vrk.sqlite.gz", 9)
+        gzip_file(staging / "vrk-corpus.sqlite", staging / "vrk-corpus.sqlite.gz", CORPUS_GZIP_LEVEL)
+        manifest = write_manifest(
+            staging, stats, corpus_counts, subset, profile, registered=len(registry_by_id)
+        )
+        promote(staging, dist)
+    finally:
+        shutil.rmtree(staging, ignore_errors=True)
 
     print(f"profile:      {profile}" + (f" — {corpus_counts['redacted_values']} value(s) removed" if profile == "public" else " (the archive verbatim)"))
     print(f"candidacies:  {stats['records']} rows / {stats['elections']} election(s)")

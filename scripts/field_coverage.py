@@ -17,7 +17,7 @@ them:
     python scripts/field_coverage.py 2020-seimo         # one election's cells
     python scripts/field_coverage.py --update-baseline  # after a deliberate change
 
-Six rules fail the run, and a seventh is opt-in:
+Seven rules fail the run, and an eighth is opt-in:
 
 * **zero fill** -- a mapped cell no record fills. Every one of them has to be
   classified in the baseline (`upstream-absent`, `parser-gap`) with a note
@@ -62,6 +62,13 @@ Six rules fail the run, and a seventh is opt-in:
   yet) that maps fewer concepts than the closest already-mapped election of
   the same kind. A concept the peer maps and the new election does not is a
   finding until it is mapped or recorded as a `not-mapped` row with a note.
+* **vanished election** (issue #132) -- the reverse: an election the map
+  still covers and the baseline still measures, with nothing under `data/`.
+  Every per-cell rule iterates cells, and an election with no records
+  produces none, so a whole election could leave the corpus in silence --
+  which is how a distribution built over 2 of the 55 registered elections
+  passed every check here and printed its `gh release create` line. Dropping
+  the election from the concept map is the deliberate way out.
 * **unmapped fill** (`--unmapped`) -- a concept's own path form that fills on
   at least one percent of an election the map does not give the concept for.
   The dashboard renders an unmapped cell as "this election never published
@@ -710,6 +717,40 @@ def unmapped_election_findings(
     return findings
 
 
+def vanished_election_findings(
+    data_root: Path,
+    paths_by_concept: dict[str, dict[str, Any]],
+    baseline: dict[tuple[str, str], Baseline],
+) -> list[str]:
+    """An election the map still covers and the baseline still measures, with
+    no records under `data/` (issue #132).
+
+    Every per-cell rule iterates *cells*, and an election with no records
+    produces none, so a whole election could leave the corpus without a
+    single finding: `main` filters it out of `election_ids` and the gate goes
+    on measuring the rest. That is how a build over 2 of 55 elections passed
+    every check this repository has and printed its `gh release create` line.
+
+    The opt-out is to stop mapping it: an election dropped from
+    `docs/concept-map.json` is a deliberate removal and this says nothing
+    about it, and `--update-baseline` then drops its rows.
+    """
+    mapped = {election for paths in paths_by_concept.values() for election in paths}
+    measured = {election for _, election in baseline if election in mapped}
+    findings = []
+    for election in sorted(measured):
+        if (data_root / election).is_dir():
+            continue
+        rows = sum(1 for _, other in baseline if other == election)
+        findings.append(
+            f"{EVERY_CONCEPT}\t{election}\t"
+            f"mapped, {rows} baseline row(s), and no records under {data_root}/ —"
+            " an election with no cells trips no per-cell rule. Scrape it, or drop it"
+            " from the concept map."
+        )
+    return findings
+
+
 def new_elections(
     election_ids: list[str], baseline: dict[tuple[str, str], Baseline]
 ) -> list[str]:
@@ -993,6 +1034,12 @@ def main() -> int:
     election_findings.extend(
         peer_gap_findings(paths_by_concept, load_registry(repo_root), election_ids, baseline)
     )
+    if not args.election_id:
+        # Only on a whole-corpus run: naming ids is asking about those, not
+        # declaring the rest gone.
+        election_findings.extend(
+            vanished_election_findings(data_root, paths_by_concept, baseline)
+        )
 
     if args.update_baseline:
         return update_baseline(

@@ -20,6 +20,7 @@ import shutil
 import sqlite3
 import tempfile
 import unittest
+import unittest.mock
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -390,6 +391,161 @@ class RedactionTests(unittest.TestCase):
         for entry in record["normalized"]["politines-kampanijos-dalyvio-duomenys"]:
             self.assertNotIn("telefonas", entry["izdininkas"])
             self.assertNotIn("el-pastas", entry["auditorius"])
+
+
+class CompletenessGate(unittest.TestCase):
+    """A build that names no election claims the whole archive (issue #132).
+
+    Measured before the gate: a `data/` holding 2 of the 55 registered
+    elections, built as a *full* build, exited 0, printed "Fill gate: no
+    findings", wrote all five assets and offered its `gh release create`
+    line — and its MANIFEST was indistinguishable in shape from a
+    113,073-record one, since a full build writes no `subset` key. Nothing
+    could see it: `elections_present` is whatever is under `data/` and only
+    an unregistered directory raised, the fill gate iterates cells and a
+    wholly absent election has none, and the two-pass record count compares
+    two passes over the same truncated list.
+    """
+
+    def _root_with(self, election_ids: list[str]) -> Path:
+        root = make_repo_root()
+        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        for election_id in election_ids:
+            data_dir = root / "data" / election_id
+            data_dir.mkdir(parents=True, exist_ok=True)
+            record = make_record("kazys-x-9", "Kazys X")
+            record["electionId"] = election_id
+            write_record(data_dir, record)
+        return root
+
+    def test_a_full_build_over_a_partial_corpus_refuses_before_writing(self):
+        root = self._root_with([ELECTION])
+        dist = root / "dist"
+        with self.assertRaises(SystemExit) as raised:
+            dist_mod.build_distribution(root, dist, None)
+        message = str(raised.exception)
+        self.assertIn("of the 55 registered elections", message)
+        self.assertIn("54 missing", message)
+        self.assertIn("1996-spalio-20-seimo", message)
+        self.assertIn("and 34 more", message)
+        self.assertFalse(dist.exists(), "nothing may be written before the corpus is checked")
+
+    def test_naming_the_elections_is_the_way_to_build_a_subset(self):
+        root = self._root_with([ELECTION])
+        dist = root / "dist"
+        self.assertEqual(dist_mod.build_distribution(root, dist, [ELECTION]), 0)
+        manifest = json.loads((dist / "MANIFEST.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["subset"], [ELECTION])
+        self.assertEqual(manifest["counts"]["elections"], 1)
+        self.assertEqual(manifest["counts"]["electionsRegistered"], 55)
+
+    def test_the_manifest_says_what_a_complete_corpus_would_hold(self):
+        # Without this a consumer cannot ask whether a release is the whole
+        # archive: `counts.elections` alone is just a number.
+        root = self._root_with([ELECTION])
+        dist = root / "dist"
+        dist_mod.build_distribution(root, dist, [ELECTION])
+        manifest = json.loads((dist / "MANIFEST.json").read_text(encoding="utf-8"))
+        registered = len(
+            json.loads((REPO_ROOT / "scraper" / "elections.json").read_text(encoding="utf-8"))[
+                "elections"
+            ]
+        )
+        self.assertEqual(manifest["counts"]["electionsRegistered"], registered)
+
+
+class BuildAtomicity(unittest.TestCase):
+    """A build that dies partway leaves `dist/` as it was (issue #132).
+
+    The assets were written straight into `dist/` and MANIFEST.json last, so
+    a record whose envelope had moved — or a Ctrl-C, a full disk or an OOM
+    during the 2.5 GB corpus write — left MANIFEST describing the *previous*
+    build, candidacies.csv.gz from this one, three assets from the old,
+    `gzip.decompress(vrk.sqlite.gz) != vrk.sqlite`, and `SELECT COUNT(*) FROM
+    records` = 0 on a database whose `PRAGMA integrity_check` said ok. The
+    error mentioned none of it.
+    """
+
+    def _root(self) -> Path:
+        root = make_repo_root()
+        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        data_dir = root / "data" / ELECTION
+        data_dir.mkdir(parents=True, exist_ok=True)
+        write_record(data_dir, make_record("kazys-x-9", "Kazys X"))
+        return root
+
+    @staticmethod
+    def _snapshot(dist: Path) -> dict[str, str]:
+        return {
+            path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+            for path in sorted(dist.iterdir())
+            if path.is_file()
+        }
+
+    def test_a_failed_second_build_leaves_the_first_intact(self):
+        root = self._root()
+        dist = root / "dist"
+        self.assertEqual(dist_mod.build_distribution(root, dist, [ELECTION]), 0)
+        before = self._snapshot(dist)
+        self.assertIn("MANIFEST.json", before)
+
+        # An envelope key that moved: read only by the corpus writer, which
+        # runs after both CSVs and the analysis database are written.
+        record_path = next((root / "data" / ELECTION).glob("*.json"))
+        record = json.loads(record_path.read_text(encoding="utf-8"))
+        record["candidateNote"] = {"moved": "the envelope changed shape"}
+        record_path.write_text(json.dumps(record, ensure_ascii=False), encoding="utf-8")
+
+        with self.assertRaises(SystemExit):
+            dist_mod.build_distribution(root, dist, [ELECTION])
+
+        self.assertEqual(self._snapshot(dist), before, "dist/ must be byte-identical")
+        self.assertEqual(
+            [p.name for p in dist.iterdir() if p.name.startswith(".staging")],
+            [],
+            "the staging directory must be removed on any exit",
+        )
+
+    def test_the_manifest_never_outlives_the_assets_it_checksums(self):
+        # The one invariant a reader can rely on through a promotion: either
+        # there is no manifest, or it matches what sits beside it.
+        root = self._root()
+        dist = root / "dist"
+        dist_mod.build_distribution(root, dist, [ELECTION])
+        manifest = json.loads((dist / "MANIFEST.json").read_text(encoding="utf-8"))
+        for name, artifact in manifest["artifacts"].items():
+            with self.subTest(name):
+                self.assertEqual(
+                    hashlib.sha256((dist / name).read_bytes()).hexdigest(), artifact["sha256"]
+                )
+
+    def test_promote_removes_the_old_manifest_before_moving_an_asset(self):
+        order: list[str] = []
+        root = self._root()
+        dist = root / "dist"
+        dist.mkdir(parents=True)
+        staging = dist / ".staging-test"
+        staging.mkdir()
+        for name in dist_mod.BUILD_OUTPUTS + ("MANIFEST.json",):
+            (staging / name).write_bytes(b"new")
+            (dist / name).write_bytes(b"old")
+
+        real_replace, real_unlink = dist_mod.os.replace, Path.unlink
+
+        def replace(src, dst):
+            order.append(f"replace {Path(dst).name}")
+            real_replace(src, dst)
+
+        def unlink(self, **kwargs):
+            order.append(f"unlink {self.name}")
+            real_unlink(self, **kwargs)
+
+        with unittest.mock.patch.object(dist_mod.os, "replace", replace):
+            with unittest.mock.patch.object(Path, "unlink", unlink):
+                dist_mod.promote(staging, dist)
+
+        self.assertEqual(order[0], "unlink MANIFEST.json")
+        self.assertEqual(order[-1], "replace MANIFEST.json")
 
 
 class RefusedCorruption(unittest.TestCase):

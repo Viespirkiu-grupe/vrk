@@ -337,6 +337,60 @@ class UnmappedElectionRuleTests(unittest.TestCase):
             self.assertEqual(script.unmapped_election_findings(root, self.PATHS, {}), [])
 
 
+class VanishedElectionRuleTests(unittest.TestCase):
+    """An election the map covers and the baseline measures, with nothing
+    under data/, is a finding (issue #132).
+
+    Every other cell rule iterates *cells*, and an election with no records
+    produces none — so a whole election could leave the corpus and every
+    check here would pass. A distribution built over 2 of the 55 registered
+    elections did exactly that, down to the `gh release create` line.
+    """
+
+    PATHS = {
+        "gimimo-data": {"2024-seimo": "a", "2020-seimo": "a"},
+        "gimimo-vieta": {"2024-seimo": "b"},
+    }
+    BASELINE = {
+        ("gimimo-data", "2024-seimo"): script.Baseline(99.0, "ok", ""),
+        ("gimimo-vieta", "2024-seimo"): script.Baseline(98.0, "ok", ""),
+        ("gimimo-data", "2020-seimo"): script.Baseline(97.0, "ok", ""),
+    }
+
+    def test_an_election_that_left_the_corpus_is_a_finding(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _synthetic_corpus(root, "2024-seimo", [{"normalized": {}}] * 2)
+            findings = script.vanished_election_findings(root, self.PATHS, self.BASELINE)
+        self.assertEqual(len(findings), 1)
+        self.assertTrue(findings[0].startswith("*\t2020-seimo\t"))
+        self.assertIn("1 baseline row(s)", findings[0])
+
+    def test_a_corpus_holding_every_mapped_election_is_clean(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _synthetic_corpus(root, "2024-seimo", [{"normalized": {}}] * 2)
+            _synthetic_corpus(root, "2020-seimo", [{"normalized": {}}] * 2)
+            self.assertEqual(script.vanished_election_findings(root, self.PATHS, self.BASELINE), [])
+
+    def test_dropping_the_election_from_the_map_is_the_way_out(self) -> None:
+        # A deliberate removal edits the concept map; the stale baseline rows
+        # then go on the next --update-baseline.
+        paths = {"gimimo-data": {"2024-seimo": "a"}, "gimimo-vieta": {"2024-seimo": "b"}}
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _synthetic_corpus(root, "2024-seimo", [{"normalized": {}}] * 2)
+            self.assertEqual(script.vanished_election_findings(root, paths, self.BASELINE), [])
+
+    def test_an_election_with_no_baseline_rows_is_the_peer_gap_rules_business(self) -> None:
+        paths = {**self.PATHS, "gimimo-data": {**self.PATHS["gimimo-data"], "2027-seimo": "a"}}
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _synthetic_corpus(root, "2024-seimo", [{"normalized": {}}] * 2)
+            _synthetic_corpus(root, "2020-seimo", [{"normalized": {}}] * 2)
+            self.assertEqual(script.vanished_election_findings(root, paths, self.BASELINE), [])
+
+
 class PeerGapRuleTests(unittest.TestCase):
     """A new election maps every concept its closest mapped peer of the same
     kind maps, or says why not (issue #135). On the mirror that motivated it,

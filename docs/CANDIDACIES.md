@@ -267,6 +267,33 @@ since the 2026-08-29 re-parse; one reappearing means an election regressed).
 The candidacy-table pass and the records pass must agree on the record
 count.
 
+**A build that names no election claims the whole archive** (issue #132), so
+it refuses one that does not hold it — before writing anything — naming the
+registered elections `data/` lacks. Nothing used to: `elections_present` is
+whatever sits under `data/` and only an *unregistered* directory raised, the
+fill gate iterates cells and a wholly absent election has none, and the
+two-pass record count compares two passes over the same truncated list. A
+build over 2 of the 55 registered elections therefore exited 0, said "Fill
+gate: no findings", wrote all five assets and printed its `gh release
+create` line — over a manifest indistinguishable in shape from a
+113,073-record one. It is not a hypothetical: `data/` in a worktree is a
+symlink set, and this project's history records corpus directories dying
+with one. `counts.electionsRegistered` now sits beside `counts.elections`,
+so a consumer can ask the manifest the same question; a partial build is
+what naming elections is for, and marks the manifest `subset`.
+`scripts/field_coverage.py` grew the matching rule at the other end — an
+election it still maps with nothing under `data/` is a finding of its own.
+
+**A build that dies partway leaves `dist/` as it was.** Everything is
+written into `dist/.staging-<pid>/` and moved into place only once the
+manifest exists, old manifest removed first: either there is no manifest, or
+it checksums what sits beside it. Before, a record whose envelope had moved
+— or a Ctrl-C, a full disk or an OOM during the 2.5 GB corpus write — left
+MANIFEST describing the *previous* build, one asset from this one, three
+from the old, `gzip.decompress(vrk.sqlite.gz) != vrk.sqlite`, and `SELECT
+COUNT(*) FROM records` = 0 on a database whose `PRAGMA integrity_check` said
+ok. The error mentioned none of it.
+
 **The release is a profile of the archive** (issue #142). `--profile
 public`, the default, removes from every record the campaign treasurer's
 and auditor's phone and e-mail — both layers, eight paths listed in
