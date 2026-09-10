@@ -136,8 +136,8 @@ party that grew out of a committee, or a union of parties, is a group whose
 person matches when at least one of their candidacies passes every active
 filter — and **⬇ CSV** exports the current selection (semicolon-separated,
 BOM-prefixed for lt-LT Excel, uncapped even when the list shows only the
-first 300 rows; see *What the page exports* below for what a cell looks
-like). Checking rows collects persons for **Palyginti**, a
+first 300 rows; see *What the page renders, and what it exports* below for
+what a cell looks like). Checking rows collects persons for **Palyginti**, a
 side-by-side table whose columns are persons and whose cells show each
 person's newest resolving answer tagged with its election. **📊 Rinkimų
 suvestinė** aggregates one election — party mix, education mix, money
@@ -264,6 +264,64 @@ printed at least one as an 88-character string — while `appendSourceLinks`
 had rendered the `nuorodos` shape as anchors all along. `renderValue`'s
 scalar branch emits an anchor with `rel="noopener noreferrer"` for a string
 matching `/^https?:\/\/\S+$/`.
+
+## Keyboard, screen reader and the Back button
+
+Also measured live, and also re-measured after (issue #147).
+
+**A row is a link and a checkbox, not a button wrapping one.** Each result
+row used to be a `role="button"` div containing the comparison checkbox —
+which makes the checkbox *presentational* to ARIA (no role, no name, no
+checked state) while the row's own keydown handler preventDefaulted Space and
+opened the person instead. Space arrived at a focused checkbox with
+`defaultPrevented: true` and the box stayed unticked, so **Palyginti was
+mouse-only**. The name is an `<a href="#pid">` now, Enter opens the person,
+Space is left to the checkbox — which says whom it would compare — and the
+arrow keys still walk the list.
+
+**The pane takes focus, and says what is on it.** The first focusable element
+inside `#person` was the **614th** tab stop, after 300 rows and their 300
+checkboxes, and `showPerson` moved no focus and announced nothing: the page
+had **zero** `aria-live` nodes, **zero** `<label>` elements, and no
+`aria-label` on the search box — the six facets carried only a `title`. Now
+`#person` is `tabindex="-1"` and focused on every render (its top aligned to
+the viewport, because plain `focus()` scrolls the nearest edge into view and
+on a phone landed 1,095 px *below* the person's name), a visually hidden
+`role="status"` region names the person and any records that failed, and the
+search box and all six facets carry real labels.
+
+**One way in: the URL.** `grep hashchange|popstate|pushState` matched
+nothing. The hash was read once at boot, `showPerson` assigned it and three
+views assigned `""`, so Back moved history while the pane kept the previous
+person and the shared URL no longer matched the screen. `routeFromHash` is
+now the single entry point — boot, a click on a row's link, and `hashchange`
+all go through it — `showPerson` only *canonicalises* a legacy `name|birth`
+or merged-away key to the pid, with `replaceState` so it adds no entry, and
+the three header views drop the person from the URL the same way. A hash
+naming nobody says so instead of leaving the last person on screen. Driven
+live: two clicks, then Back brings the first person and their hash back, Back
+again lands on the placeholder, Forward returns the person, and a legacy
+`INGRIDA ŠIMONYTĖ|1974-11-15` link resolves and rewrites itself to
+`#p0a1d6eb067f0`.
+
+**A slow render cannot land on a later one.** `fetchRecord` memoises by file,
+so an uncached 20-election person followed by a cached one could end with the
+first rendered under the second's URL and row highlight. Every view takes a
+`renderToken` and checks it after each await; the three synchronous views
+bump it, which ends whatever was in flight. Driven live: the second person
+stays, under their own hash and announcement.
+
+**The facets are readable and typing is cheap.** `#filters` is a two-column
+grid in a 360 px pane, which left 139 px of usable text: 299 of the 338
+nominator options (88.5 %, the widest 7.1× over) and 50 of the 63
+municipality ones were wider than their box, and only 25 options carried a
+`title`. Those two facets take the whole grid row — 163 → 333 px, which
+leaves 123 of 338 and 0 of 63 over — and `addOption` gives every option its
+label as a tooltip. And `renderList`, bound straight to the `input` event,
+rebuilt 300 rows over a scan costing 14.0 ms per keystroke; a 120 ms debounce
+turns a burst into one render (measured: typing `KAZLAUSKAS` renders once,
+not ten times), while the facet `change` handlers stay immediate because a
+select fires once.
 
 ## The comparison table
 
@@ -539,10 +597,12 @@ pins every rule, so a new entry either follows them or fails there.
   sidebar's `nowrap`, the plural rule across the 11/21 boundaries, the
   tri-state outcome rendering, keyboard reachability, boot failure
   reporting, the term-grouped election pickers and their match rule, the
-  archive-era concept rows end to end, and issue #149's presentation and
-  export pass: the CSV's comma decimals and formula guard, the chart axis and
+  archive-era concept rows end to end, issue #149's presentation and
+  export pass (the CSV's comma decimals and formula guard, the chart axis and
   its width cap, the scroll affordance, the narrow-screen layout and the bare
-  URL anchors.
+  URL anchors) and issue #147's keyboard, screen-reader and routing pass (the
+  row's link and checkbox, the focus move and the live region, the hash
+  router, the render token, the facet widths and the search debounce).
 - `tests/test_dashboard_field_labels.py` — holds `field-labels.json` to the
   four proofs its entries claim, and every key in it to still occurring in
   the corpus.

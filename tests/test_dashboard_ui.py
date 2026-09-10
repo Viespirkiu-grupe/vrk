@@ -341,13 +341,23 @@ class DeepLinkTests(unittest.TestCase):
     """
 
     def test_the_page_writes_the_pid_into_the_hash(self):
-        self.assertIn("location.hash = p.pid;", SOURCE)
+        # A row's link *is* the pid URL, so the click, the shared link and the
+        # Back button all take one path (issue #147). showPerson only
+        # canonicalises a legacy key, and with replaceState, so it adds no
+        # history entry and does not re-enter the router.
+        self.assertIn('main.href = `#${p.pid}`;', SOURCE)
+        self.assertIn(
+            'if (decodeURIComponent(location.hash.slice(1)) !== p.pid) {\n'
+            '    history.replaceState(null, "", `#${p.pid}`);',
+            SOURCE,
+        )
+        self.assertNotIn("location.hash = p.pid;", SOURCE)
         self.assertNotIn("location.hash = encodeURIComponent(p.k)", SOURCE)
 
     def test_a_legacy_or_merged_away_hash_still_resolves(self):
         self.assertRegex(
             SOURCE,
-            r"p\.pid === hashKey \|\| p\.k === hashKey \|\| \(p\.ak \|\| \[\]\)\.includes\(hashKey\)",
+            r"p\.pid === key \|\| p\.k === key \|\| \(p\.ak \|\| \[\]\)\.includes\(key\)",
         )
 
     def test_every_name_a_person_ran_under_is_searchable(self):
@@ -590,16 +600,38 @@ class PartyLineageTests(unittest.TestCase):
 
 class KeyboardAccessTests(unittest.TestCase):
     """The people list used to be unreachable by keyboard: two focusable
-    elements in the whole document, 300 rendered rows of tabIndex -1 divs."""
+    elements in the whole document, 300 rendered rows of tabIndex -1 divs.
+    Then it was reachable but its comparison checkbox was not (issue #147):
+    each row was a `role="button"` div wrapping the box, which makes the box
+    presentational to ARIA -- no role, no name, no checked state -- while the
+    row's own keydown handler preventDefaulted Space and opened the person
+    instead. Measured in the live page: the box was focusable, Space arrived
+    with `defaultPrevented: true` and the box stayed unticked, so the
+    Palyginti flow that docs/DASHBOARD.md presents as a headline feature was
+    mouse-only.
+    """
 
-    def test_rows_are_focusable_buttons(self):
-        self.assertIn("div.tabIndex = 0;", SOURCE)
-        self.assertIn('div.setAttribute("role", "button");', SOURCE)
+    def test_the_row_is_not_a_button_wrapping_a_checkbox(self):
+        self.assertNotIn('div.setAttribute("role", "button");', SOURCE)
+        self.assertNotIn("div.tabIndex = 0;", SOURCE)
+        # Nothing swallows a key on the row any more, and the box is not
+        # asked to stop a click from reaching a handler that is gone.
+        self.assertNotIn('ev.key === "Enter" || ev.key === " "', SOURCE)
+        self.assertNotIn('box.addEventListener("click", (ev) => ev.stopPropagation());', SOURCE)
 
-    def test_rows_open_on_enter_and_space_and_arrow_between_rows(self):
-        for fragment in ('ev.key === "Enter"', 'ev.key === "ArrowDown"', 'ev.key === "ArrowUp"'):
+    def test_the_name_is_a_link_and_the_checkbox_says_whom_it_compares(self):
+        self.assertIn('const main = document.createElement("a");', SOURCE)
+        self.assertIn('main.href = `#${p.pid}`;', SOURCE)
+        self.assertIn('box.setAttribute("aria-label", `Pažymėti palyginimui: ${p.n}`);', SOURCE)
+
+    def test_the_arrow_keys_still_walk_the_list(self):
+        for fragment in ('ev.key === "ArrowDown"', 'ev.key === "ArrowUp"'):
             with self.subTest(fragment):
                 self.assertIn(fragment, SOURCE)
+        # From the last row back up to the search box, and from the search box
+        # down into the first row's link.
+        self.assertIn('else document.getElementById("search").focus();', SOURCE)
+        self.assertIn('document.querySelector("#results .row .rowmain")', SOURCE)
 
 
 class BootFailureTests(unittest.TestCase):
@@ -1183,6 +1215,109 @@ class BareUrlTests(unittest.TestCase):
         self.assertIn('if (/^https?:\\/\\/\\S+$/.test(text)) {', scalar)
         self.assertIn('a.rel = "noopener noreferrer";', scalar)
         self.assertIn('a.target = "_blank";', scalar)
+
+
+class RoutingTests(unittest.TestCase):
+    """The URL and the screen say the same thing (issue #147).
+
+    `grep hashchange|popstate|pushState` matched nothing: the hash was read
+    once at boot, `showPerson` assigned it (one history entry per person) and
+    three views assigned `""`, so Back moved history while the pane still
+    showed the previous person and the shared URL no longer matched the
+    screen. Driven in the live page after the fix: two clicks, then Back
+    brings the first person *and their hash* back, Back again lands on the
+    empty hash with the placeholder, and Forward returns the person.
+    """
+
+    def test_the_hash_is_the_one_way_in(self):
+        self.assertIn('window.addEventListener("hashchange", routeFromHash);', SOURCE)
+        self.assertIn("function routeFromHash() {", SOURCE)
+        self.assertIn("function personFromHash() {", SOURCE)
+        # Boot routes through the same function rather than reading the hash
+        # itself.
+        self.assertIn("  routeFromHash();\n}", SOURCE)
+
+    def test_a_hash_naming_nobody_is_said_out_loud(self):
+        # Leaving the last person on screen under a stale link is the defect;
+        # the placeholder names the key that resolved to nothing.
+        self.assertIn("function showPlaceholder(message) {", SOURCE)
+        self.assertIn("Nuoroda „${key}“ nieko neatitinka.", SOURCE)
+
+    def test_the_three_header_views_do_not_claim_a_person(self):
+        # `location.hash = ""` pushes an entry and re-enters the router.
+        self.assertNotIn('location.hash = ""', SOURCE)
+        self.assertEqual(SOURCE.count("clearHash();"), 3)
+        self.assertIn(
+            'history.replaceState(null, "", location.pathname + location.search);', SOURCE
+        )
+
+    def test_a_slow_render_cannot_land_on_a_later_one(self):
+        # `fetchRecord` memoises by file, so an uncached 20-election person
+        # followed by a cached one used to end with the first rendered under
+        # the second's URL and row highlight. Driven live after the fix: the
+        # second person is on screen, under their own hash and
+        # announcement.
+        self.assertIn("let renderToken = 0;", SOURCE)
+        self.assertEqual(SOURCE.count("const token = ++renderToken;"), 2)
+        self.assertEqual(SOURCE.count("if (token !== renderToken) return;"), 2)
+        # And the three synchronous views end whatever is in flight.
+        self.assertEqual(SOURCE.count("renderToken += 1;"), 3)
+
+
+class ScreenReaderTests(unittest.TestCase):
+    """Measured in the live page before the fix: 0 elements with aria-live, 0
+    `<label>` elements, `aria-label` on `#search` null -- the six facets
+    carried only a `title` -- and `showPerson` moved no focus and announced
+    nothing while the first focusable inside `#person` was the 614th tab stop
+    (issue #147). After: 7 labels, one live region, and focus on the pane.
+    """
+
+    def test_the_search_box_and_every_facet_have_a_label(self):
+        for control in ("search", "fElection", "fParty", "fMunicipality", "fConstituency", "fRole", "fWon"):
+            with self.subTest(control):
+                self.assertIn(f'<label class="sr" for="{control}">', SOURCE)
+        rule = re.search(r"\.sr \{(.*?)\n  \}", SOURCE, re.S).group(1)
+        self.assertIn("position: absolute", rule)
+        self.assertIn("clip: rect(0 0 0 0)", rule)
+
+    def test_the_page_has_a_live_region_and_uses_it(self):
+        self.assertIn('<div id="announce" class="sr" role="status" aria-live="polite">', SOURCE)
+        self.assertIn("function announce(text) {", SOURCE)
+        # Whose record is on screen, and whether any of it failed to load.
+        self.assertIn("`${p.n}: ${fmtInt(p.e.length)}", SOURCE)
+
+    def test_a_rendered_person_takes_focus(self):
+        self.assertIn('<div id="person" tabindex="-1">', SOURCE)
+        self.assertIn("root.focus({ preventScroll: true });", SOURCE)
+        self.assertIn('root.scrollIntoView({ block: "start" });', SOURCE)
+        self.assertIn("root.scrollTop = 0;", SOURCE)
+        # Focused programmatically on every render, so the ring belongs to
+        # keyboard navigation only.
+        self.assertIn("#person:focus:not(:focus-visible) { outline: none; }", SOURCE)
+
+
+class FacetUsabilityTests(unittest.TestCase):
+    """The selects and the typing cost (issue #147)."""
+
+    def test_every_option_carries_its_label_as_a_tooltip(self):
+        # 299 of 338 nominator options were wider than their box, the widest
+        # 7.1x over, and 25 of them had a title.
+        self.assertIn("  option.title = label;", SOURCE)
+
+    def test_the_two_long_label_facets_take_the_whole_row(self):
+        self.assertIn("#fParty, #fMunicipality { grid-column: 1 / -1; }", SOURCE)
+        # Measured live after the fix: the box goes 163 -> 333 px, the
+        # nominator overflow 299 -> 123 of 338 and the municipality 50 -> 0
+        # of 63.
+
+    def test_typing_renders_once_a_burst_not_once_a_keystroke(self):
+        # renderList rebuilds 300 rows over a scan costing 14.0 ms; measured
+        # live, "KAZLAUSKAS" now renders the list once instead of ten times.
+        self.assertIn("const SEARCH_DEBOUNCE_MS = 120;", SOURCE)
+        self.assertIn("searchTimer = setTimeout(renderList, SEARCH_DEBOUNCE_MS);", SOURCE)
+        self.assertNotIn('addEventListener("input", renderList)', SOURCE)
+        # A select fires once, so the facets stay immediate.
+        self.assertIn('document.getElementById(id).addEventListener("change", renderList);', SOURCE)
 
 
 if __name__ == "__main__":
