@@ -29,6 +29,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from scraper.shared.savivaldybiu_archive_1997 import education_record  # noqa: E402
+from scraper.shared.files import write_json
 
 DATA_ROOT = Path("data")
 ELECTIONS = [
@@ -66,10 +67,7 @@ def main() -> int:
             anketa["issilavinimas"] = education_record(value)
             counts["reshaped"] += 1
             if not args.dry_run:
-                path.write_text(
-                    json.dumps(record, ensure_ascii=False, indent=2) + "\n",
-                    encoding="utf-8",
-                )
+                write_json(path, record)
         print(f"  {election_id}: {counts['records']} records — reshaped "
               f"{counts['reshaped']}, already shaped {counts['already']}, "
               f"no value {counts['absent']}")

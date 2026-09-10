@@ -35,7 +35,7 @@ from scraper.elections.seimo_2016.anketa_parser import (
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.deklaracijos import normalize_declaration, section_form
 from scraper.shared.election_results import ANKETA_ID_PATTERN, load_results_lookup
-from scraper.shared.files import write_candidate_record
+from scraper.shared.files import load_candidate_index, write_candidate_record
 from scraper.shared.values import as_money
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2015-kovo-1-seimo-zirmunai")
@@ -1361,15 +1361,7 @@ def _parse_optional_subpages(
     return pages
 
 
-def _load_candidate_meta(candidate_dir: Path) -> dict[str, Any]:
-    index_path = candidate_dir / "index.json"
-    if not index_path.exists():
-        return {}
-    try:
-        payload = json.loads(index_path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError:
-        return {}
-    return payload if isinstance(payload, dict) else {}
+_load_candidate_meta = load_candidate_index
 
 
 # ---------------------------------------------------------------------------

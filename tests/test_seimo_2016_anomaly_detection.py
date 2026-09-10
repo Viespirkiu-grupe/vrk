@@ -1,3 +1,4 @@
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -28,6 +29,16 @@ class Seimo2016AnomalyDetectionTests(unittest.TestCase):
             candidate_dir.mkdir(parents=True, exist_ok=True)
             (candidate_dir / "anketa.html").write_text(
                 "<html><body><p>broken layout</p></body></html>",
+                encoding="utf-8",
+            )
+            # The fetch stage writes index.json beside every anketa.html --
+            # 0 of the corpus's 43,664 retained candidate directories hold one
+            # without the other -- and since issue #153 its absence raises
+            # rather than producing a quietly degraded record. This test is
+            # about the *anketa* anomalies, so the candidate gets the index a
+            # real one has.
+            (candidate_dir / "index.json").write_text(
+                json.dumps({"candidate": {"candidateId": "broken-candidate", "url": "https://x"}}),
                 encoding="utf-8",
             )
 

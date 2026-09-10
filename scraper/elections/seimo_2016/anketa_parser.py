@@ -15,7 +15,7 @@ from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.election_results import candidacy_from_elected_note
 from scraper.shared.conviction_details import conviction_field_keys, conviction_records
 from scraper.shared.deklaracijos import normalize_declaration
-from scraper.shared.files import slugify, write_candidate_record, write_json
+from scraper.shared.files import load_candidate_index, slugify, write_candidate_record, write_json
 from scraper.shared.values import as_money, clean_value, interest_row_columns
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2016-seimo")
@@ -2206,19 +2206,7 @@ def _sitemap_notes(sitemap_path: Path) -> dict[str, str]:
     }
 
 
-def _load_candidate_meta(candidate_dir: Path) -> dict[str, Any]:
-    index_path = candidate_dir / "index.json"
-    if not index_path.exists():
-        return {}
-
-    try:
-        payload = json.loads(index_path.read_text(encoding="utf-8"))
-    except Exception:
-        return {}
-
-    if not isinstance(payload, dict):
-        return {}
-    return payload
+_load_candidate_meta = load_candidate_index
 
 
 def parse_anketa_sample(

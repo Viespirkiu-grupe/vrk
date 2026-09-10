@@ -44,6 +44,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from scraper.shared.nominator import nominator_paths, resolve_nominator  # noqa: E402
+from scraper.shared.files import write_json
 from scraper.shared.parties import REGISTRY_PATH, entry, load_registry, match  # noqa: E402
 
 FORMS_TABLE = Path("docs/nominator-forms.tsv")
@@ -83,9 +84,7 @@ def write_forms_table(path: Path, counts: Counter[str]) -> None:
 def write_unmatched(unmatched: list[str]) -> None:
     registry = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
     registry["unmatched"] = unmatched
-    REGISTRY_PATH.write_text(
-        json.dumps(registry, ensure_ascii=False, indent=1) + "\n", encoding="utf-8"
-    )
+    write_json(REGISTRY_PATH, registry, indent=1)
 
 
 def main() -> int:

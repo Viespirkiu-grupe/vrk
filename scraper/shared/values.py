@@ -46,7 +46,7 @@ account false for all 20 of them):
 * a **closing** quote after a phrase an opening one begins — 15 more, whose
   surviving glyph decides whether `“` or `"` is written back;
 * an opening quote VRK followed with a space — 2, skipped by the old rule's
-  `\S` lookahead;
+  `\\S` lookahead;
 * an opening **bracket** whose closing one is a few characters away — 1.
 
 That leaves **6 values holding 9 characters**, and not one of them is a

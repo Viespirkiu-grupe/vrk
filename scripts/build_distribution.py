@@ -92,7 +92,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_candidacy_table as table  # noqa: E402
 import build_person_index as identity  # noqa: E402
 from pii_inventory import PUBLIC_PROFILE_CONDITIONAL, PUBLIC_PROFILE_DROPS  # noqa: E402
-from scraper.shared.files import PORTRAIT_KEYS  # noqa: E402
+from scraper.shared.files import PORTRAIT_KEYS, write_json  # noqa: E402
 from scraper.shared.image_metadata import strip_metadata  # noqa: E402
 
 #: What a build ships of the archive (issue #142): `public` redacts the
@@ -546,9 +546,10 @@ def write_manifest(
     }
     if subset:
         manifest["subset"] = sorted(subset)
-    (dist / "MANIFEST.json").write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
+    # Through the atomic writer: this is the file whose presence means the
+    # assets beside it are described, and a half-written one would say so
+    # falsely (issues #132, #153).
+    write_json(dist / "MANIFEST.json", manifest)
     return manifest
 
 

@@ -117,6 +117,7 @@ from scraper.shared.kandidatura import ROLE_COUNCIL, ROLE_MAYOR, kandidatura  # 
 from scraper.shared.parties import entry as party_entry  # noqa: E402
 from scraper.shared.parties import partija  # noqa: E402
 from scraper.shared.provenance import parser_commit, utc_now_iso  # noqa: E402
+from scraper.shared.files import write_json  # noqa: E402
 
 import field_coverage  # noqa: E402
 
@@ -693,11 +694,10 @@ def main() -> int:
         print(f"No {DATA_ROOT}/ here — run from the repo root.", file=sys.stderr)
         return 1
     index = build_index(DATA_ROOT)
-    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT_PATH.write_text(
-        json.dumps(index, ensure_ascii=False, separators=(",", ":")),
-        encoding="utf-8",
-    )
+    # 29 MB the dashboard fetches whole on every load, and the file with the
+    # most to lose from a half-write: through the atomic writer, in the
+    # compact form the page expects (issue #153).
+    write_json(OUTPUT_PATH, index, indent=None, separators=(",", ":"), newline=False)
     stats = index["stats"]
     print(f"vintage:                  corpus parsed ≤ {stats['corpusParsedAt']}, index built by {stats['parserCommit']}")
     print(f"records:                  {stats['records']}")

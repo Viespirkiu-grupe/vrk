@@ -52,7 +52,7 @@ from scraper.elections.seimo_2016.anketa_parser import (
 )
 from scraper.elections.seimo_zirmunu_2015.anketa_parser import _apply_results, load_results
 from scraper.shared.anomalies import build_anomaly_event
-from scraper.shared.files import write_candidate_record
+from scraper.shared.files import load_candidate_index, write_candidate_record
 from scraper.shared.seimo_archive_1990s import (
     extract_biography_birth_date,
     extract_biography_birth_place,
@@ -123,15 +123,7 @@ def _biography_anketa(text: str) -> dict[str, Any]:
     return anketa
 
 
-def _load_candidate_meta(candidate_dir: Path) -> dict[str, Any]:
-    index_path = candidate_dir / "index.json"
-    if not index_path.exists():
-        return {}
-    try:
-        payload = json.loads(index_path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError:
-        return {}
-    return payload if isinstance(payload, dict) else {}
+_load_candidate_meta = load_candidate_index
 
 
 def parse_anketa_sample(

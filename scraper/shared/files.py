@@ -1,6 +1,7 @@
 import base64
 import binascii
 import hashlib
+import errno
 import json
 import os
 import re
@@ -15,15 +16,70 @@ def ensure_parent(path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
 
 
-def write_json(path: Path, data: Any) -> None:
-    # Serialized first and landed with os.replace: the runners resume on file
-    # existence, so a write that dies halfway must leave either the previous
-    # file or nothing — never a truncated file that counts as done (issue #95).
-    payload = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
+def write_json(
+    path: Path,
+    data: Any,
+    indent: int | None = 2,
+    separators: tuple[str, str] | None = None,
+    newline: bool = True,
+) -> None:
+    """Every JSON file this project writes, landed atomically.
+
+    Serialized first and landed with `os.replace`: the runners resume on file
+    existence, so a write that dies halfway must leave either the previous
+    file or nothing — never a truncated file that counts as done (issue #95).
+
+    The layout parameters exist so that the files whose format is not the
+    corpus's two-space indent can be written through here anyway — the point
+    is the atomicity, not the layout (issue #153):
+
+    * `indent=1` for the two registries checked in at one space
+      (`scraper/shared/vietovardziai.json`, `scraper/parties.json`);
+    * `indent=None, separators=(",", ":"), newline=False` for
+      `dashboard/people.json`, 29 MB of compact JSON the page fetches whole,
+      and the file with the most to lose from a half-write.
+    """
+    payload = json.dumps(data, ensure_ascii=False, indent=indent, separators=separators)
+    if newline:
+        payload += "\n"
     ensure_parent(path)
     tmp_path = path.with_name(path.name + ".tmp")
     tmp_path.write_text(payload, encoding="utf-8")
     os.replace(tmp_path, path)
+
+
+def load_candidate_index(candidate_dir: Path) -> dict[str, Any]:
+    """A retained candidate's `index.json`, or a raise.
+
+    The fetch stage writes this file last and the parse stage reads its
+    `candidate` block for the candidacy, the source URL, the display name and
+    the campaign sample list. Eight modules had a copy of this function and
+    all eight answered `{}` for a file that was absent *or* would not parse —
+    so a half-written `index.json` produced a record that looks complete and
+    is not.
+
+    Measured on the tracked 2023 fixture `mykolas-majauskas-2420485` with its
+    5,666-byte index truncated to 4,000: the parse wrote a record, reported
+    zero anomalies, and lost `kandidatavimas` (vrkCandidateId, savivaldybė,
+    roles, meras all null), the whole 29,894-character campaign section, and
+    `source.candidateSourceUrl`; `candidateName` fell back to the page's
+    shouted heading and `normalized` went from 37,034 characters to 7,097.
+    28 modules read it, covering 54,711 of the corpus's 113,073 records
+    (issue #153).
+
+    So it raises, both ways. `FileNotFoundError` is what `anketa.html`'s
+    absence already raises and what the runner turns into a recorded
+    `CandidateParseFailed`; a `JSONDecodeError` means the fetch did not
+    finish, and the answer to that is to fetch the candidate again, which a
+    recorded failure says and a quietly degraded record does not.
+    """
+    index_path = candidate_dir / "index.json"
+    if not index_path.exists():
+        raise FileNotFoundError(errno.ENOENT, "Missing candidate index", str(index_path))
+    payload = json.loads(index_path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError(f"{index_path}: expected a JSON object, got {type(payload).__name__}")
+    return payload
 
 
 def slugify(text: str) -> str:

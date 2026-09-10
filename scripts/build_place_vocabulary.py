@@ -60,6 +60,10 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from scraper.shared.files import write_json  # noqa: E402
+
 DATA_ROOT = Path("data")
 OUTPUT_PATH = Path("scraper/shared/vietovardziai.json")
 
@@ -186,9 +190,7 @@ def main() -> int:
         return 1
 
     existing["places"] = places
-    output_path.write_text(
-        json.dumps(existing, ensure_ascii=False, indent=1) + "\n", encoding="utf-8"
-    )
+    write_json(output_path, existing, indent=1)
     print(f"wrote {output_path}: {len(added)} added, {len(dropped)} dropped")
     return 0
 
