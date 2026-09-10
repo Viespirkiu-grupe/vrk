@@ -287,9 +287,14 @@ class DeklaruotosPajamosTests(unittest.TestCase):
     """
 
     def test_a_declared_total_is_returned_as_one(self) -> None:
+        # `valiuta` comes back resolved, not raw (issue #161): a null there
+        # is the euro era, which no record spells out, and this used to hand
+        # the absence straight to the caller while its sibling
+        # `deklaracijos_valiuta` answered "EUR" on the same block — the two
+        # disagreed on 33,120 of the 112,218 records with a declaration.
         self.assertEqual(
             deklaruotos_pajamos({"gautos-pajamos": 18200, "valiuta": None}),
-            {"suma": 18200, "saltinis": "deklaruota-suma", "valiuta": None},
+            {"suma": 18200, "saltinis": "deklaruota-suma", "valiuta": "EUR"},
         )
 
     def test_a_refused_total_falls_back_to_row_one_and_says_so(self) -> None:

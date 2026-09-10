@@ -137,11 +137,22 @@ def is_unfinished(text: Any) -> bool:
 DEGREES = ("nera", "bakalauras", "magistras", "daktaras", "habilituotas-daktaras")
 DEGREE_RANK = {degree: index for index, degree in enumerate(DEGREES)}
 
-_DEGREE_RULES: tuple[tuple[re.Pattern[str], str], ...] = tuple(
+#: A pattern mapped to None is a *guard*: it matches, and answers "no degree
+#: is stated", stopping a later substring rule from claiming one. The level
+#: rules have carried the same guard since issue #88 — `magistrant|magistratur`
+#: ahead of `magistr`, because Magistrantūra is a completed bachelor in
+#: master's studies, not a master — and these did not, so 17 records were
+#: given `magistras` while their level said `aukstasis-bakalauras`, across 12
+#: surface forms ("Magistrantūra", "Magistrantas", "Magistratūros studijos"…).
+#: `education_degree` shipped that contradiction (issue #161). A frozen
+#: dissertation is the same shape: an unfinished doctorate is not a doctor.
+_DEGREE_RULES: tuple[tuple[re.Pattern[str], str | None], ...] = tuple(
     (re.compile(pattern), degree)
     for pattern, degree in (
         (r"habilituot", "habilituotas-daktaras"),
+        (r"disertacij\w*\s+isaldyt|isaldyt\w*\s+disertacij", None),
         (r"daktar", "daktaras"),
+        (r"magistrant|magistratur", None),
         (r"magistr", "magistras"),
         (r"bakalaur", "bakalauras"),
         (r"^(neturiu|neturi|nera|-|neturime)[\s.,!]*$", "nera"),
@@ -161,6 +172,11 @@ def degree_of(text: Any) -> str | None:
     laipsnį"), the answer landed under `pedagoginis-vardas` alone — the degree
     was never published separately (verified against the retained HTML), so
     reading degree words out of that field is the only recovery there is.
+
+    First rule wins, and a rule may answer *None* — a guard. "Magistrantūra"
+    contains "magistr" and is not a master's degree, and a frozen dissertation
+    is not a doctorate; without the guards the substring rules claimed both
+    (issue #161).
     """
     if not isinstance(text, str) or not text.strip():
         return None
@@ -218,17 +234,51 @@ def _degree_fields(record: dict[str, Any]) -> list[Any]:
     return values
 
 
+#: `Nenurodė`, folded. The decline VRK prints where a candidate declined to
+#: state a level, whether as the education row's whole answer or as the level
+#: of an entry inside its table.
+_DECLINE = "nenurode"
+
+
+def _entry_level(entry: dict[str, Any]) -> str | None:
+    """An education entry's level field, under either key spelling.
+
+    The 2020-era rows carry slugged keys (`issilavinimas`), the 2011-2016
+    ones the display labels (`Išsilavinimas`) — the same field, and a reader
+    that knows only one spelling sees half the corpus (issue #161).
+    """
+    for key, value in entry.items():
+        if "issilavinim" in _fold(str(key)):
+            return value if isinstance(value, str) else None
+    return None
+
+
 def _declined_on_page(record: dict[str, Any]) -> bool:
     """Whether the page itself printed the decline.
 
     The 2016-era pages keep the questionnaire as `rawData.anketa.rows` and the
     2020-era as `rawData.biografija.rows`, and both print
-    `Išsilavinimas: Nenurodė` for a candidate who declined — 5,091 of 5,091
-    no-level records in `2019-kovo-3` and 2,304 of 2,304 in `2023-kovo-5`.
-    The earlier eras print no education row at all for a blank answer
-    (measured against the retained HTML: 397–400 of 400 sampled no-level
-    records per election), so this returns False there and the status stays
-    `neatsakyta`.
+    `Išsilavinimas: Nenurodė` for a candidate who declined — 5,090 of the
+    5,101 records with no resolved level in `2019-kovo-3` and 2,304 of 2,326
+    in `2023-kovo-5` (the denominator is `lygis is None`, so it includes the
+    handful whose level text the taxonomy does not map). The earlier eras
+    print no education row at all for a blank answer (measured against the
+    retained HTML: 397–400 of 400 sampled no-level records per election), so
+    this returns False there and the status stays `neatsakyta`.
+
+    The decline comes in two shapes, and only the first was read. Where the
+    row's whole answer is the string, it is the row's answer; where the row
+    carries the education *table*, VRK prints it as the level of each entry,
+    beside the school and the year the candidate did give. This used to fall
+    through to `neatsakyta` on 78 records — "the page shows no answer", over
+    a page showing an explicit refusal to answer, and `education_status`
+    shipped it (2023-kovo-5 47, 2019-kovo-3 19, 2015-kovo-1 6, 2011 4,
+    2012-seimo 1, 2016-seimo 1).
+
+    A table where *some* entries decline and others state a level is not a
+    decline: that candidate answered, for the schooling they chose to list.
+    Those records have a level, so this is not consulted for them anyway —
+    but the rule is "every entry", not "any", because that is what is true.
     """
     raw = record.get("rawData") or {}
     for section in ("anketa", "biografija"):
@@ -242,9 +292,15 @@ def _declined_on_page(record: dict[str, Any]) -> bool:
             prompt = row.get("prompt") or row.get("label") or ""
             if not _EDUCATION_PROMPT.search(_fold(prompt)):
                 continue
-            answer = str(row.get("answer") or "").strip()
-            if answer == "Nenurodė":
+            answer = row.get("answer")
+            if isinstance(answer, str) and _fold(answer).strip() == _DECLINE:
                 return True
+            if isinstance(answer, list):
+                levels = [
+                    _entry_level(entry) for entry in answer if isinstance(entry, dict)
+                ]
+                if levels and all(_fold(str(level or "")).strip() == _DECLINE for level in levels):
+                    return True
     return False
 
 
