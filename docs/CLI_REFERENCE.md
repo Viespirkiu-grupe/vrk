@@ -2358,6 +2358,50 @@ finding is settled by adding the earlier id to the later entry's
 two organisations; `tests/test_party_registry.py` holds the links to a forest
 and the reviewed pairs to entries that exist and stay unlinked.
 
+## What is in `scripts/`, and what is spent
+
+Twenty-six scripts, in four kinds (issue #159 found the one-offs
+indistinguishable from the live ones, and five of them stating as their reason
+to exist a fact the corpus had since contradicted):
+
+**The gates and the builders**, run whenever the corpus or the parsers move:
+`reparse_diff.py`, `field_coverage.py`, `value_plausibility.py`,
+`fixture_record_hashes.py`, `build_person_index.py`,
+`build_candidacy_table.py`, `build_distribution.py`, `unpack_corpus.py`,
+`nominator_report.py`, `party_lineage_report.py`, `tracked_fixtures.py`,
+`pii_inventory.py`, `serve_dashboard.py`.
+
+**Per-election steps**, run for a new election:
+`backfill_url_portraits.py` (step 2 of `run_all_elections.sh`),
+`refetch_campaign_subtabs.py` (the campaign sub-tabs an interrupted scrape
+left behind — its `--dry-run` reports 0 pending fetches today, and separately
+counts the 844 campaigns holding `root.html` alone whose "unpublished"
+verdict was recorded in prose rather than in their own `index.json`).
+
+**Reports**, read rather than run for effect: `constituency_report.py`,
+`build_place_vocabulary.py`, `find_identity_merge_candidates.py`.
+
+**Spent one-offs.** Each did a job the parsers now do, each changes nothing
+today, and each says so at the top of its own docstring with the measurement
+and its date:
+
+| script | what it did | measured spent |
+|---|---|---|
+| `backfill_provenance.py` | stamped `provenance` onto the pre-#89 corpus | all 113,073 carry it |
+| `backfill_conviction_details.py` | `anketa.teistumo-detales` for #86's six elections | 0 pending |
+| `backfill_1997_card_fields.py` | the four card fields #69 recovered | 0 of 6,386 |
+| `backfill_archive_birthplaces.py` | birthplaces from 1996–1997 prose | 0 of 950 |
+| `backfill_archive_declarations.py` | the archive `kpdl.htm` declarations | 0 of 7,336 |
+| `backfill_value_hygiene.py` | #101's value rules where no page was retained | 0 records lack a page |
+| `renormalize_declarations.py` | the declaration block from `rawData` | 0 of ~60,000 |
+| `reshape_1997_education.py` | `issilavinimas` into the corpus shape | 0 of 6,386 |
+
+They stay in `scripts/` rather than moving to `scripts/historic/` — the docs,
+the per-election checklist and this page reference them by path, and a moved
+path is a broken reference for a reader following a commit message. What
+issue #159 asked for was that nothing mark them spent; the banner and this
+table are that mark.
+
 ## Helpful Checks
 
 ```bash

@@ -243,5 +243,71 @@ class NominatorFormsTableTests(unittest.TestCase):
         self.assertEqual(len(forms), 393)
 
 
+class SpentScriptTests(unittest.TestCase):
+    """The one-offs say they are spent, and one page lists them (issue #159).
+
+    Every one of them exited 0 with nothing to do against the live corpus,
+    and nothing marked any of them: `docs/CLI_REFERENCE.md` gave a section to
+    5 of the 21 scripts, and two stated as their reason to exist a fact the
+    corpus had since contradicted — a re-parse that would drop 5,471
+    declarations (the declarations are retained now) and 38 records with no
+    retained page (there are none).
+    """
+
+    SPENT = (
+        "backfill_provenance",
+        "backfill_conviction_details",
+        "backfill_1997_card_fields",
+        "backfill_archive_birthplaces",
+        "backfill_archive_declarations",
+        "backfill_value_hygiene",
+        "renormalize_declarations",
+        "reshape_1997_education",
+    )
+
+    def test_each_one_says_so_in_its_module_docstring(self):
+        for name in self.SPENT:
+            with self.subTest(name):
+                module = load(name)
+                self.assertIn(
+                    "**Spent",
+                    module.__doc__ or "",
+                    f"{name}'s docstring does not say it is spent",
+                )
+
+    def test_the_reference_lists_every_one_of_them(self):
+        reference = (REPO_ROOT / "docs" / "CLI_REFERENCE.md").read_text(encoding="utf-8")
+        self.assertIn("## What is in `scripts/`, and what is spent", reference)
+        for name in self.SPENT:
+            with self.subTest(name):
+                self.assertIn(f"`{name}.py`", reference)
+
+    def test_the_two_false_preconditions_are_gone(self):
+        card = (REPO_ROOT / "scripts" / "backfill_1997_card_fields.py").read_text(encoding="utf-8")
+        self.assertNotIn("a full re-parse would *drop* the income declarations", card)
+        self.assertIn("5,472\n`declaration.html` files are retained today", card)
+        hygiene = (REPO_ROOT / "scripts" / "backfill_value_hygiene.py").read_text(encoding="utf-8")
+        self.assertIn("**0 of 113,073** have no retained primary page", hygiene)
+
+    def test_the_refetch_reads_the_absence_marker_it_writes(self):
+        text = (REPO_ROOT / "scripts" / "refetch_campaign_subtabs.py").read_text(encoding="utf-8")
+        self.assertIn("def known_absent_slugs(campaign_dir: Path) -> set[str]:", text)
+        self.assertIn("existing_slugs |= absent_marker", text)
+        # And a dry run distinguishes "settled" from "nobody has tried".
+        self.assertIn("self.root_only_unmarked = 0", text)
+
+    def test_the_index_builder_checks_before_it_writes(self):
+        text = (REPO_ROOT / "scripts" / "build_person_index.py").read_text(encoding="utf-8")
+        problems = text.index("problems = index_problems(index)")
+        write = text.index("write_json(OUTPUT_PATH, index")
+        self.assertLess(problems, write, "the registry checks must precede the write")
+        self.assertIn("argparse.ArgumentParser(", text)
+
+    def test_the_reparse_gate_removes_its_tree_after_applying(self):
+        text = (REPO_ROOT / "scripts" / "reparse_diff.py").read_text(encoding="utf-8")
+        self.assertNotIn("    if not apply:\n        shutil.rmtree(fresh_root", text)
+        self.assertIn("kept the re-parsed tree for inspection", text)
+
+
 if __name__ == "__main__":
     unittest.main()

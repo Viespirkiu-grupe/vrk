@@ -1,5 +1,10 @@
 """Reshape the 1997 municipal archive's `issilavinimas` into the corpus shape.
 
+**Spent** (issue #159): `--dry-run` reshapes 0 of the 6,386 records —
+5,192 are already in the corpus shape and 1,194 publish no level. The parser
+emits the shape itself, so a re-parse keeps it that way; this is kept as the
+record of how the existing records got it.
+
 Every election from 2007 on publishes `anketa.issilavinimas` (or
 `biografija.issilavinimas` from 2020) as `{"aprasas", "irasai": [...]}`. The
 two 1997 municipal archive elections published it as a bare string -- one

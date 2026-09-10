@@ -1,5 +1,9 @@
 """Backfill `anketa.teistumo-detales` into the elections that never got it.
 
+**Spent** (issue #159): `--dry-run` updates 0 records — 1,740 of 2024-seimo
+and 14 of 2025-kovo-16-meru are already current. The parsers write the key
+now, so a re-parse is the route.
+
 Issue #86: 1,614 candidates in the corpus declared that a court had found them
 guilty, and 331 of them had conviction details published by VRK that the corpus
 could not be asked about. Two separate losses, both recoverable offline:

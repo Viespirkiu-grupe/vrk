@@ -1,5 +1,10 @@
 """Recover birthplaces from the 1996-1997 biographies already in the corpus.
 
+**Spent** (issue #159): `--dry-run` recovers 0 of the family's 950 records —
+868 already carry the place, 25 have no biography and 57 have prose the
+extractor does not resolve. The parser applies the same fallback inline, so a
+re-parse leaves nothing here to do.
+
 Historical: written when these cards were thought to publish no birth-place
 field at all. They do -- "Gimimo vieta" sits inside the malformed
 `<!--sql format>` comment alongside the residence, invisible to a DOM parser,

@@ -467,7 +467,14 @@ def run_election(
                 )
             print(note)
 
-    if not apply:
+    # The fresh tree goes whether or not it was applied: a `--full --apply`
+    # sweep over the whole corpus used to leave a second copy of `data/` --
+    # 8.6 GB -- in a gitignored directory, with nothing printed about it
+    # (issue #159). It is kept only when the parse failed, where it is the
+    # evidence, and the path is printed so it can be looked at or deleted.
+    if errors:
+        print(f"    kept the re-parsed tree for inspection: {fresh_root}", file=sys.stderr)
+    else:
         shutil.rmtree(fresh_root, ignore_errors=True)
 
     return not errors, differing, histogram, unreached

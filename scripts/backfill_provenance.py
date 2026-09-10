@@ -1,5 +1,11 @@
 """Stamp `provenance` onto the records the corpus already holds (issue #89).
 
+**Spent** (issue #159): every one of the 113,073 records carries the block,
+with one key-set and `schemaVersion` 1 throughout (measured 2026-09-10). What
+is still routinely absent is `parserCommit` — null on 49,586 records that were
+written before provenance existed, and unknowable for them; a re-parse is the
+only thing that fills it.
+
 Newly written records get the block from `write_candidate_record`; the 113,073
 records written before it existed do not have one, and re-parsing the whole
 corpus just to add metadata would conflate "the envelope gained a block" with

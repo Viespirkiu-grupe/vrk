@@ -95,6 +95,7 @@ check.
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import re
@@ -690,10 +691,33 @@ def build_index(
 
 
 def main() -> int:
+    # An argparse even though there are no options, so `--help` prints the
+    # docstring instead of walking 113,073 records and overwriting the 29 MB
+    # artifact (issue #159).
+    argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    ).parse_args()
+
     if not DATA_ROOT.is_dir():
         print(f"No {DATA_ROOT}/ here — run from the repo root.", file=sys.stderr)
         return 1
     index = build_index(DATA_ROOT)
+
+    # The checks come before the write, not after it. With an unregistered
+    # election present this printed "wrote dashboard/people.json (28600 KB)"
+    # over 114,813 records and *then* exited 1 — so a caller reading the exit
+    # code had already shipped the file, and a caller reading stdout had a
+    # success line over a rejected build (issue #159).
+    problems = index_problems(index)
+    if problems:
+        for line in problems:
+            print(line, file=sys.stderr)
+        print(
+            f"\nnot written: {OUTPUT_PATH} still holds the previous build",
+            file=sys.stderr,
+        )
+        return 1
+
     # 29 MB the dashboard fetches whole on every load, and the file with the
     # most to lose from a half-write: through the atomic writer, in the
     # compact form the page expects (issue #153).
@@ -720,38 +744,42 @@ def main() -> int:
         f"({generals} general, {len(index['elections']) - generals} grouped under a parent)"
     )
     print(f"wrote {OUTPUT_PATH} ({OUTPUT_PATH.stat().st_size // 1024} KB)")
-    failed = False
+    return 0
+
+
+def index_problems(index: dict) -> list[str]:
+    """Every reason not to ship this index, as lines to print.
+
+    Three of them, each a registry the corpus has moved out from under: an
+    election with no entry (it would reach the dashboard as a raw slug), a
+    municipality wording no entry claims (it becomes a facet row of its own),
+    and an override key matching no person (a merge decision that no longer
+    applies to anybody).
+    """
+    lines: list[str] = []
     unregistered = index["unregisteredElections"]
     if unregistered:
-        print(
-            f"\n{len(unregistered)} election(s) have no entry in {REGISTRY_PATH} and will\n"
-            "render as raw ids — add them there:",
-            file=sys.stderr,
+        lines.append(
+            f"{len(unregistered)} election(s) have no entry in {REGISTRY_PATH} and would"
+            "\nrender as raw ids — add them there:"
         )
-        for eid in unregistered:
-            print(f"  {eid}", file=sys.stderr)
-        failed = True
+        lines += [f"  {eid}" for eid in unregistered]
     unresolved = index["unresolvedMunicipalities"]
     if unresolved:
-        print(
-            f"\n{len(unresolved)} municipality wording(s) no entry of scraper/municipalities.json claims —\n"
-            "each is a facet row of its own until the registry gets the alias:",
-            file=sys.stderr,
+        lines.append(
+            f"\n{len(unresolved)} municipality wording(s) no entry of"
+            " scraper/municipalities.json claims —\neach would be a facet row of its own"
+            " until the registry gets the alias:"
         )
-        for form in unresolved:
-            print(f"  {form}", file=sys.stderr)
-        failed = True
+        lines += [f"  {form}" for form in unresolved]
     stale = index["unmatchedOverrideKeys"]
     if stale:
-        print(
-            f"\n{len(stale)} override key(s) in {OVERRIDES_PATH} match no person —\n"
-            "the corpus moved under the override file; fix the keys:",
-            file=sys.stderr,
+        lines.append(
+            f"\n{len(stale)} override key(s) in {OVERRIDES_PATH} match no person —"
+            "\nthe corpus moved under the override file; fix the keys:"
         )
-        for key in stale:
-            print(f"  {key}", file=sys.stderr)
-        failed = True
-    return 1 if failed else 0
+        lines += [f"  {key}" for key in stale]
+    return lines
 
 
 if __name__ == "__main__":

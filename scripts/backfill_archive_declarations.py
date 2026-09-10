@@ -1,5 +1,9 @@
 """Fetch and merge the 1996-1997 archive income declarations into the corpus.
 
+**Spent** (issue #159, measured 2026-09-04): `--dry-run` has 0 of the 7,336
+records left to fetch. The declarations are retained beside the cards since
+issue #75, so `reparse_diff.py --full --apply` reaches them offline.
+
 The five archive elections were scraped before their `kpdl.htm` declarations
 were parsed, so their records carry `profilis.pajamu-deklaracijos-nuoroda` and
 no figures. The candidate pages themselves have not changed -- only the
