@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import errno
 import json
+from functools import lru_cache
 from pathlib import Path
 import re
 import unicodedata
@@ -14,7 +15,7 @@ from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.election_results import candidacy_from_elected_note
 from scraper.shared.conviction_details import conviction_field_keys, conviction_records
 from scraper.shared.deklaracijos import normalize_declaration
-from scraper.shared.files import slugify, write_candidate_record, write_json
+from scraper.shared.files import load_candidate_index, slugify, write_candidate_record, write_json
 from scraper.shared.values import as_money, clean_value, interest_row_columns
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2016-seimo")
@@ -2184,19 +2185,28 @@ def _parse_optional_subpages(
     return pages
 
 
-def _load_candidate_meta(candidate_dir: Path) -> dict[str, Any]:
-    index_path = candidate_dir / "index.json"
-    if not index_path.exists():
-        return {}
+#: The election's crawl plan, read as a fallback for the listing's status
+#: note (issue #164). A candidate's `index.json` carries it from the fetch
+#: stage on, and the 1,415 written before then do not -- so the sitemap,
+#: which is tracked and is what `candidate_samples` copies from, answers for
+#: them and a re-parse recovers the note without a re-fetch.
+DEFAULT_SITEMAP_PATH = Path("sitemaps/2016-seimo.json")
 
+
+@lru_cache(maxsize=None)
+def _sitemap_notes(sitemap_path: Path) -> dict[str, str]:
     try:
-        payload = json.loads(index_path.read_text(encoding="utf-8"))
+        payload = json.loads(sitemap_path.read_text(encoding="utf-8"))
     except Exception:
         return {}
+    return {
+        str(entry.get("candidateId", "")): str(entry.get("candidateNote", "")).strip()
+        for entry in payload.get("entries", [])
+        if isinstance(entry, dict) and str(entry.get("candidateNote", "")).strip()
+    }
 
-    if not isinstance(payload, dict):
-        return {}
-    return payload
+
+_load_candidate_meta = load_candidate_index
 
 
 def parse_anketa_sample(
@@ -2296,8 +2306,12 @@ def parse_anketa_sample(
         nested_campaigns = []
 
     candidate_name = ""
+    candidate_note = ""
     if isinstance(candidate_meta, dict):
         candidate_name = str(candidate_meta.get("candidateName", "")).strip()
+        candidate_note = str(candidate_meta.get("candidateNote", "")).strip()
+    if not candidate_note:
+        candidate_note = _sitemap_notes(DEFAULT_SITEMAP_PATH).get(candidate_id, "")
     if not candidate_name:
         candidate_name = parsed["profile"].get("candidateDisplayName", "")
 
@@ -2372,6 +2386,10 @@ def parse_anketa_sample(
         "electionId": ELECTION_ID,
         "candidateId": candidate_id,
         "candidateName": candidate_name,
+        # The listing's status note, the one place this election records that
+        # a candidate died before polling day or had their registration
+        # revoked; the candidate page leaves the line blank (issue #164).
+        **({"candidateNote": candidate_note} if candidate_note else {}),
         # Elected status exists on these pages only as the profile's prose
         # note; the derived flag pair keeps it queryable (issue #100).
         "kandidatavimas": candidacy_from_elected_note(normalized["profilis"].get("pastaba")),

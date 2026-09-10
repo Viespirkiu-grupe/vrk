@@ -235,10 +235,40 @@ final_report() {
   local total missing
   total=$(awk 'NF' "$ALL_IDS_PATH" | wc -l | tr -d ' ')
   missing=$(wc -l < "$missing_path" | tr -d ' ')
-  if [[ "$missing" == "0" ]]; then
+  # A record on disk is not the same as a complete fetch: a candidate whose
+  # anketa landed and whose six tabs all 503'd leaves a record, and the id
+  # went into done_ids.txt because `fetch-candidate-samples` exited 0
+  # whatever it recorded (issue #158). So "complete" also requires that no
+  # error-severity fetch event stands against the election.
+  local fetch_errors
+  fetch_errors=$("$PYTHON_BIN" - "$ANOMALIES_PATH" <<'FETCH_PY'
+import json, sys
+from pathlib import Path
+path = Path(sys.argv[1])
+if not path.is_file():
+    print("")
+    raise SystemExit(0)
+ids = []
+for line in path.read_text(encoding="utf-8").splitlines():
+    if not line.strip():
+        continue
+    event = json.loads(line)
+    if event.get("stage") == "fetch" and event.get("severity") in {"error", "critical"}:
+        ids.append(f"{event.get('candidateId')} ({event.get('eventType')})")
+print(" ".join(sorted(set(ids))))
+FETCH_PY
+  )
+  if [[ "$missing" == "0" && -z "$fetch_errors" ]]; then
     echo "[$ELECTION_ID] complete: all $total sitemap candidates have records in $OUTPUT_ROOT"
     rm -f "$missing_path"
     return 0
+  fi
+  if [[ "$missing" == "0" ]]; then
+    echo "[$ELECTION_ID] INCOMPLETE: every sitemap candidate has a record, but a fetch"
+    echo "[$ELECTION_ID] error stands against: $fetch_errors"
+    echo "[$ELECTION_ID] those records are not what a complete fetch would produce;"
+    echo "[$ELECTION_ID] re-fetch the candidates, or record why they cannot be fetched"
+    return 1
   fi
   echo "[$ELECTION_ID] INCOMPLETE: $missing of $total sitemap candidates have no record; ids in $missing_path"
   echo "[$ELECTION_ID] retry them by emptying $FAILED_IDS_PATH and re-running"

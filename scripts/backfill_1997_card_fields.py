@@ -7,14 +7,18 @@ them: 156 academic degrees and 112 academic titles in the general election
 alone, plus the two family-role concepts (`sutuoktinio-vardas-pavarde`,
 `vaiku-vardai-pavardes`) the corpus keys separately.
 
-The obvious fix -- re-run `parse-anketa-samples` -- is not available for the
-general election: `samples-full/1997-kovo-23-savivaldybiu-tarybu/` retained
-`candidate.html` for all 6,270 candidates but no `declaration.html` at all, so
-a full re-parse would *drop* the income declarations of 5,471 records to gain
-these fields. This script reads the retained `candidate.html` and replaces
-only the two blocks that come from it -- `rawData.personal` and
-`normalized.anketa` -- leaving the declaration, the candidacy and everything
-else exactly as stored.
+**Spent.** `--dry-run` over the corpus changes nothing (0 of 6,386), and the
+premise it was written on no longer holds: the retained tree held
+`candidate.html` for all 6,270 candidates and *no* `declaration.html`, so a
+full re-parse would have dropped 5,471 records' income declarations — which
+is why this replaced only the two blocks the card supplies
+(`rawData.personal` and `normalized.anketa`) and left the declaration alone.
+Issue #75's retention audit then archived the declarations: 5,472
+`declaration.html` files are retained today, and 0 of the election's 5,477
+records with a declaration have no retained page for it (measured
+2026-09-10, issue #159). `reparse_diff.py --full --apply` is the route now,
+and this script is kept for the record of how those fields reached the
+corpus.
 
 Replacing those blocks wholesale (rather than merging key by key) is what
 keeps their key order identical to a fresh parse. It is safe because the

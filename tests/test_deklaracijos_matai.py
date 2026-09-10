@@ -17,6 +17,7 @@ from scraper.shared.deklaracijos import (
     LITAS_PER_EURO,
     deklaracijos_valiuta,
     deklaruotas_turtas,
+    deklaruotos_pajamos,
     deklaruotos_pajamos_bruto,
     mokescio_matas,
     pajamu_matas,
@@ -68,6 +69,39 @@ class Valiuta(unittest.TestCase):
         # which this turns into an explicit answer.
         self.assertEqual(deklaracijos_valiuta(MODERN), "EUR")
         self.assertIsNone(deklaracijos_valiuta(None))
+
+    def test_deklaruotos_pajamos_reports_the_same_currency(self):
+        # It used to return `declaration.get("valiuta")` raw, so the two
+        # disagreed on 33,120 of the 112,218 records with a declaration:
+        # None where its sibling says EUR. Latent, because both builders take
+        # the currency from the sibling — but a consumer reading this
+        # function's own `valiuta` got the absence the resolver exists to
+        # remove (issue #161).
+        for name, declaration, expected in (
+            ("archive", ARCHIVE, "Lt"),
+            ("2002 municipal", MUNICIPAL_2002, "Lt"),
+            ("modern", MODERN, "EUR"),
+            ("none", None, None),
+        ):
+            with self.subTest(name):
+                self.assertEqual(
+                    deklaruotos_pajamos(declaration)["valiuta"],
+                    deklaracijos_valiuta(declaration),
+                )
+                self.assertEqual(deklaruotos_pajamos(declaration)["valiuta"], expected)
+
+    def test_the_currency_travels_with_every_income_source(self):
+        # All three branches of deklaruotos_pajamos: a stated total, the
+        # employment floor, and nothing at all.
+        employment_only = {k: v for k, v in MODERN.items() if k != "gautos-pajamos"}
+        employment_only["gautos-pajamos-darbo-santykiu"] = 30000.0
+        for name, declaration in (
+            ("total", MODERN),
+            ("employment floor", employment_only),
+            ("nothing", {"deklaracijos-forma": "GPM311"}),
+        ):
+            with self.subTest(name):
+                self.assertEqual(deklaruotos_pajamos(declaration)["valiuta"], "EUR")
 
 
 class Turtas(unittest.TestCase):

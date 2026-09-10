@@ -1,5 +1,10 @@
 """Rebuild the asset-and-income declaration block from each record's rawData.
 
+**Spent** (issue #159, measured 2026-09-04): `--dry-run` rewrites 0 of the
+~60,000 records it walks. It exists for the records a re-parse cannot reach,
+and as of 2026-09-10 there are none — every record of the corpus has a
+retained primary page.
+
 `scripts/reparse_diff.py --full --apply` is the primary route for a parser fix:
 it re-parses the retained HTML and writes what the parsers now produce. This
 script is the shorter one, for the records that route cannot reach — it starts

@@ -61,6 +61,13 @@ class ElectionStats:
         self.fetched = 0
         self.reused = 0
         self.absent = 0
+        # Campaigns holding `root.html` and nothing else, with no
+        # `derivedTabsAbsent` marker: the 2026-09-01 run decided those tabs
+        # were unpublished and recorded the verdict in DATASET.md's prose
+        # rather than in the campaigns' own index.json, so this cannot tell
+        # them from a campaign nobody has tried (issue #159). Counted apart
+        # from `updated` so a dry run says which population it is looking at.
+        self.root_only_unmarked = 0
         self.skipped_after_probe = 0
         self.errors: list[str] = []
         # The probe verdict: campaigns whose every attempted derived fetch
@@ -76,6 +83,24 @@ def _is_404(exc: Exception) -> bool:
         and response is not None
         and response.status_code == 404
     )
+
+
+def known_absent_slugs(campaign_dir: Path) -> set[str]:
+    """The sub-tabs this campaign's own index.json records as unpublished.
+
+    Written by a previous run of this script (a 404 on a derived URL is the
+    source saying the tab does not exist), and read here so the same URL is
+    not requested again.
+    """
+    index_path = campaign_dir / "index.json"
+    if not index_path.is_file():
+        return set()
+    try:
+        payload = json.loads(index_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return set()
+    absent = payload.get("derivedTabsAbsent")
+    return {str(slug) for slug in absent} if isinstance(absent, list) else set()
 
 
 def refetch_campaign(
@@ -104,6 +129,15 @@ def refetch_campaign(
         campaign["tabSamples"] = tab_samples
     existing_slugs = {tab.get("slug") for tab in tab_samples if isinstance(tab, dict)}
     existing_urls = {tab.get("url") for tab in tab_samples if isinstance(tab, dict)}
+    # A tab VRK does not publish is recorded as `derivedTabsAbsent` in the
+    # campaign's own index.json, and this used to compute its work from
+    # `tabSamples` alone and never read that back: `--dry-run` reported 1,218
+    # campaigns and 6,089 sub-pages pending across six elections — precisely
+    # the ones DATASET.md records as settled by the source's own absence —
+    # and a real run re-requested about 40 known-404 URLs per election
+    # (issue #159). The marker is part of the work set now.
+    absent_marker = known_absent_slugs(campaign_dir)
+    existing_slugs |= absent_marker
     missing = [
         tab
         for tab in derived
@@ -113,9 +147,15 @@ def refetch_campaign(
         stats.complete += 1
         return False
     if dry_run:
-        stats.updated += 1
-        stats.fetched += sum(1 for tab in missing if tab["url"] != campaign_url)
-        stats.reused += sum(1 for tab in missing if tab["url"] == campaign_url)
+        root_only = not absent_marker and not any(
+            path.name != "root.html" for path in campaign_dir.glob("*.html")
+        )
+        if root_only:
+            stats.root_only_unmarked += 1
+        else:
+            stats.updated += 1
+            stats.fetched += sum(1 for tab in missing if tab["url"] != campaign_url)
+            stats.reused += sum(1 for tab in missing if tab["url"] == campaign_url)
         return False
 
     new_entries: list[dict[str, Any]] = []
@@ -278,6 +318,12 @@ def main() -> int:
         )
         if stats.absent:
             note += f", {stats.absent} sub-page(s) unpublished"
+        if stats.root_only_unmarked:
+            note += (
+                f"; {stats.root_only_unmarked} campaign(s) hold root.html alone with no"
+                " `derivedTabsAbsent` marker — a run would attempt those URLs once"
+                " and then record the verdict"
+            )
         if stats.skipped_after_probe:
             note += (
                 f"; declared unpublished after {stats.probed_all_absent} all-404 probe(s), "

@@ -35,7 +35,7 @@ from scraper.elections.seimo_2016.anketa_parser import (
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.deklaracijos import normalize_declaration, section_form
 from scraper.shared.election_results import ANKETA_ID_PATTERN, load_results_lookup
-from scraper.shared.files import write_candidate_record
+from scraper.shared.files import load_candidate_index, write_candidate_record
 from scraper.shared.values import as_money
 
 DEFAULT_SAMPLES_ROOT = Path("samples/html/2015-kovo-1-seimo-zirmunai")
@@ -424,9 +424,11 @@ def _parse_anketa_cell(cell: Tag | None) -> dict[str, Any]:
 
 def _normalize_answer_value(value: str) -> str | None:
     # The page template joins workplace and position with a comma, so an
-    # empty pair renders as a bare "," — an artifact, not an answer.
-    if isinstance(value, str) and not value.strip(" ,"):
-        return None
+    # empty pair renders as a bare "," — an artifact, not an answer. This is
+    # `is_missing_marker`'s job since issue #164 widened `_EMPTY_MARKS` to
+    # cover it: the local rule here tested `value.strip(" ,")`, which caught
+    # the bare comma and not the `-,-` a candidate who dashed *both* halves
+    # produced, and the other 41 modules never had even that.
     return _normalize_text_value(value)
 
 
@@ -1359,15 +1361,7 @@ def _parse_optional_subpages(
     return pages
 
 
-def _load_candidate_meta(candidate_dir: Path) -> dict[str, Any]:
-    index_path = candidate_dir / "index.json"
-    if not index_path.exists():
-        return {}
-    try:
-        payload = json.loads(index_path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError:
-        return {}
-    return payload if isinstance(payload, dict) else {}
+_load_candidate_meta = load_candidate_index
 
 
 # ---------------------------------------------------------------------------

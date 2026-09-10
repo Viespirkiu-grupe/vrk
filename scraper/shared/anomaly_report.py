@@ -47,6 +47,73 @@ class Key(NamedTuple):
     severity: str
 
 
+#: The event a candidate VRK listed and the corpus does not hold carries.
+#: `scripts/run_election_batches.sh` writes it, and so does the
+#: reconciliation below for a gap nothing recorded at the time.
+FETCH_FAILED = "CandidateFetchFailed"
+
+
+def sitemap_gaps(
+    repo_root: Path, election_ids: list[str] | None = None
+) -> dict[str, list[str]]:
+    """Candidates a sitemap lists that `data/` has no record for.
+
+    The corpus's completeness had no standing check. `final_report` in
+    `scripts/run_election_batches.sh` diffs the sitemap against the records on
+    disk, but only during a scrape, into a `.run-state/` directory that is
+    gitignored and died with the worktrees those scrapes ran in — and
+    `docs/DATASET.md` pointed at those files for the explanation of each gap.
+    Nine candidates across four elections have no record (2000-kovo-19 2 of
+    9,881; 2002-gruodzio-22 1 of 10,139; 2007-vasario-25 3 of 13,422;
+    2011-vasario-27 3 of 16,403) and all three gates passed with them absent
+    (issue #158).
+
+    So the reconciliation runs here, where a candidate that could not be
+    fetched belongs: a gap with a `CandidateFetchFailed` event against it is
+    recorded and explained, and a gap with none is a finding.
+    """
+    gaps: dict[str, list[str]] = {}
+    for sitemap in sorted((repo_root / "sitemaps").glob("*.json")):
+        election_id = sitemap.stem
+        if ".results" in sitemap.name:
+            continue
+        if election_ids is not None and election_id not in election_ids:
+            continue
+        records = repo_root / "data" / election_id
+        if not records.is_dir():
+            continue
+        try:
+            entries = json.loads(sitemap.read_text(encoding="utf-8")).get("entries", [])
+        except json.JSONDecodeError:
+            continue
+        listed = {
+            str(entry["candidateId"])
+            for entry in entries
+            if isinstance(entry, dict) and entry.get("candidateId")
+        }
+        held = {path.stem.removesuffix(f"-{election_id}") for path in records.glob("*.json")}
+        missing = sorted(listed - held)
+        if missing:
+            gaps[election_id] = missing
+    return gaps
+
+
+def unrecorded_gaps(
+    gaps: dict[str, list[str]], events: list[dict[str, Any]]
+) -> dict[str, list[str]]:
+    """The gaps no `CandidateFetchFailed` event accounts for."""
+    recorded: set[tuple[str, str]] = {
+        (str(event.get("electionId")), str(event.get("candidateId")))
+        for event in events
+        if event.get("eventType") == FETCH_FAILED
+    }
+    return {
+        election_id: [c for c in candidates if (election_id, c) not in recorded]
+        for election_id, candidates in gaps.items()
+        if [c for c in candidates if (election_id, c) not in recorded]
+    }
+
+
 def read_events(data_root: Path, election_ids: list[str] | None = None) -> Iterator[dict[str, Any]]:
     """Every anomaly event in the corpus, or in the named elections.
 

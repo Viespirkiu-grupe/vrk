@@ -16,7 +16,7 @@ from scraper.shared.campaign_tabs import (
     is_absent_derived_tab,
     merge_campaign_tab_links,
 )
-from scraper.shared.files import slugify
+from scraper.shared.files import slugify, write_json
 from scraper.shared.http import fetch_text
 
 DEFAULT_SITEMAP_PATH = Path("sitemaps/2023-spalio-8-kupiskio-mero.json")
@@ -282,10 +282,7 @@ def _fetch_campaign_tabs(
         "campaignRootPath": str(campaign_dir / "root.html") if not extracted_links else "",
         **({"derivedTabsAbsent": absent_tab_slugs} if absent_tab_slugs else {}),
     }
-    index_path.write_text(
-        json.dumps(index_payload, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    write_json(index_path, index_payload)
 
     return {
         "campaignKey": campaign_key,
@@ -447,10 +444,7 @@ def _fetch_candidate_tabs(
         "campaignSamples": campaign_samples,
         "anomalies": anomalies,
     }
-    index_path.write_text(
-        json.dumps(index_payload, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    write_json(index_path, index_payload)
 
     return {
         "election_id": ELECTION_ID,

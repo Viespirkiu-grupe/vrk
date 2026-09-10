@@ -358,6 +358,147 @@ class KnownZeros(unittest.TestCase):
         )
 
 
+class ClassificationsAgreeWithTheBaseline(unittest.TestCase):
+    """A structural reason is a claim about the corpus, and the checked-in
+    baseline is the corpus's own measurement of it (issue #165).
+
+    `_known_zero_note`'s rules are hand-written lists of elections, and a
+    list written against one corpus goes stale under the next: issue #99's
+    results join recovered the post-election ranking for six of the eleven
+    elections `POST_RANKING_ABSENT` says never printed one, and six rows of
+    `docs/candidacy-baseline.tsv` went on saying "VRK publishes no
+    post-election list ranking for this election" over 35,507 values. Nothing
+    could tell, because a rule is only consulted when a cell reads zero.
+
+    So the rules are checked against the baseline instead of against a
+    corpus: both files are tracked, so this runs on a clone, and a rule that
+    excuses a column the baseline measures as filled is a false statement in
+    a tracked file whichever direction it rotted from.
+    """
+
+    BASELINE = table.field_coverage.read_baseline(REPO_ROOT / "docs" / "candidacy-baseline.tsv")
+    REGISTRY = {
+        e["id"]: e for e in table.identity.load_registry(REPO_ROOT / "scraper" / "elections.json")
+    }
+
+    def test_every_zero_row_carries_a_status_and_a_reason(self):
+        # `docs/coverage-baseline.tsv` has had these three file-level
+        # invariants since #135 (test_field_coverage.CheckedInBaselineTests);
+        # the candidacy baseline, the one that rotted, was read by no test
+        # at all.
+        for key, row in sorted(self.BASELINE.items()):
+            if row.pct:
+                continue
+            with self.subTest(key):
+                self.assertIn(row.status, table.field_coverage.ZERO_STATUSES)
+                self.assertTrue(row.note.strip(), "a zero-fill classification needs a reason")
+
+    def test_a_filled_row_carries_no_excuse_it_does_not_need(self):
+        for key, row in sorted(self.BASELINE.items()):
+            if not row.pct:
+                continue
+            with self.subTest(key):
+                self.assertIn(
+                    row.status, {table.field_coverage.OK, *table.field_coverage.LOW_STATUSES}
+                )
+                if row.status in table.field_coverage.LOW_STATUSES:
+                    self.assertTrue(row.note.strip(), "a low-fill classification needs a reason")
+
+    def test_nothing_is_unexplained(self):
+        self.assertEqual(
+            sorted(k for k, row in self.BASELINE.items() if row.status == table.field_coverage.UNEXPLAINED),
+            [],
+        )
+
+    def test_no_rule_excuses_a_column_the_baseline_measures_as_filled(self):
+        for (column, election), row in sorted(self.BASELINE.items()):
+            if row.pct <= 0.0 or election not in self.REGISTRY:
+                continue
+            with self.subTest(column=column, election=election):
+                known = table._known_zero_note(column, self.REGISTRY[election])
+                self.assertIsNone(
+                    known,
+                    f"{column}/{election} fills at {row.pct:.1f}% and a rule calls it"
+                    f" structurally empty: {known.status} -- {known.note}"
+                    if known
+                    else "",
+                )
+
+    def test_a_rule_that_fires_on_a_zero_agrees_with_its_checked_in_status(self):
+        # The other direction: where a rule does fire, its status is what
+        # the baseline carries. An `upstream-absent` rule over a row filed
+        # `parser-gap` (or the reverse) means one of the two is lying about
+        # whether vrk.lt publishes the value.
+        for (column, election), row in sorted(self.BASELINE.items()):
+            if row.pct > 0.0 or election not in self.REGISTRY:
+                continue
+            known = table._known_zero_note(column, self.REGISTRY[election])
+            if known is None:
+                continue
+            with self.subTest(column=column, election=election):
+                self.assertEqual(known.status, row.status)
+
+    def test_every_post_ranking_absent_election_really_fills_none(self):
+        # The named form of the same check, because this is the constant
+        # that rotted and the one whose loss would cost the most.
+        for election in sorted(table.POST_RANKING_ABSENT):
+            with self.subTest(election):
+                row = self.BASELINE.get(("post_election_position", election))
+                self.assertIsNotNone(row, "no baseline row: is the election still in the corpus?")
+                self.assertEqual(row.pct, 0.0)
+
+    def test_the_seimas_generals_come_from_the_registry(self):
+        # A hand copy is right until the next election is added, and a
+        # seimo-kind election missing from the set is read as a by-election
+        # with no list on the ballot -- the excuse for three columns a
+        # general fills on nearly every row.
+        self.assertEqual(
+            table.SEIMAS_GENERALS,
+            frozenset(
+                e["id"] for e in self.REGISTRY.values() if e["kind"] == "seimo" and not e.get("parent")
+            ),
+        )
+        # Adding an election means adding it to scraper/elections.json, and
+        # the set is re-derived from that file on import -- so the state to
+        # check is the module as it would load the day after. A by-election
+        # of the same term still reads as one.
+        future = {"id": "2028-seimo", "kind": "seimo", "date": "2028-10-08", "parent": None}
+        by_election = {"id": "2029-kovo-4-seimo-x", "kind": "seimo", "date": "2029-03-04", "parent": "2028-seimo"}
+        derived = table._seimas_generals([*self.REGISTRY.values(), future, by_election])
+        self.assertIn("2028-seimo", derived)
+        self.assertNotIn("2029-kovo-4-seimo-x", derived)
+        with mock.patch.object(table, "SEIMAS_GENERALS", derived):
+            for column in ("list_name", "list_position", "post_election_position"):
+                with self.subTest(column):
+                    self.assertIsNone(
+                        table._known_zero_note(column, future),
+                        "a new Seimas general must inherit no by-election excuse",
+                    )
+                    self.assertIn(
+                        "by-election", table._known_zero_note(column, by_election).note
+                    )
+
+    def test_every_rule_text_appears_on_a_baseline_row(self):
+        # A rule whose note is on no row either never fires or describes
+        # something that never happens. `income_floor_only`'s did the
+        # latter: the column is a bool and `is_filled` counts False as an
+        # answer, so the cell can never read zero on a parsed declaration.
+        #
+        # This ties a rule's wording to the tracked measurement, so
+        # rewording one means rewriting the rows that carry it --
+        # `--update-baseline` will not, by design: `classify` keeps the note
+        # a classified zero already has rather than clobbering a note a
+        # human wrote.
+        notes = {row.note for row in self.BASELINE.values() if row.note.strip()}
+        unused = []
+        for election in self.REGISTRY.values():
+            for column in table.COLUMNS:
+                known = table._known_zero_note(column, election)
+                if known is not None and known.note not in notes:
+                    unused.append((column, election["id"], known.note))
+        self.assertEqual(unused, [], "rule text on no baseline row")
+
+
 class KnownLows(unittest.TestCase):
     """A column far below its peers inherits its concept's classification
     from docs/coverage-baseline.tsv (issue #135), so the same fact -- the
@@ -390,6 +531,200 @@ class KnownLows(unittest.TestCase):
             with self.subTest(column):
                 self.assertIn(column, table.COLUMNS)
                 self.assertIn(concept, concepts)
+
+
+class WriterTests(unittest.TestCase):
+    """The two writers, which no test named (issue #163).
+
+    `write_csv_gz`, `write_sqlite`, `_sqlite_type` and `_sqlite_value` were
+    reached only through a three-candidate synthetic build in the
+    distribution suite, which asserts table names and row counts. Nothing
+    asserted that a CSV cell equals its sqlite cell, that a column gets the
+    right affinity — adding `_id` to the REAL suffixes would silently retype
+    `person_id`, `party_id` and `campaign_key` in every shipped database —
+    or that the five indexes exist.
+    """
+
+    ROWS = [
+        {
+            "person_id": "p1",
+            "election_id": "2020-seimo",
+            "candidate_id": "a",
+            "party_id": "ts-lkd",
+            "campaign_key": "dalyvis-1",
+            "income_eur": 1234.5,
+            "currency_rate": 1.0,
+            "elected": True,
+            "elected_council": None,
+            "list_position": 7,
+            "education_higher": False,
+            "education_entries": [{"level": "aukstasis"}],
+            "declared_currency": "EUR",
+        },
+        {
+            "person_id": "p2",
+            "election_id": "2020-seimo",
+            "candidate_id": "b",
+            "party_id": None,
+            "campaign_key": None,
+            "income_eur": None,
+            "currency_rate": 3.4528,
+            "elected": False,
+            "elected_council": True,
+            "list_position": None,
+            "education_higher": None,
+            "education_entries": [],
+            "declared_currency": None,
+        },
+    ]
+
+    def _write(self, directory: Path):
+        csv_path = directory / "candidacies.csv.gz"
+        sqlite_path = directory / "vrk.sqlite"
+        table.write_csv_gz(csv_path, table.COLUMNS, self.ROWS)
+        table.write_sqlite(
+            sqlite_path,
+            self.ROWS,
+            campaigns={},
+            elections_table=[
+                {"id": "2020-seimo", "date": "2020-10-11", "kind": "seimo", "parent": None,
+                 "name": "2020 Seimas", "shortName": "2020 Seimas", "records": 2}
+            ],
+            persons=[
+                {"person_id": "p1", "name": "A", "birth_key": "A|1970-01-01",
+                 "candidacies": 1, "elections": 1, "merged_keys": 0}
+            ],
+            parties_path=REPO_ROOT / "scraper" / "parties.json",
+        )
+        return csv_path, sqlite_path
+
+    def test_every_csv_cell_is_its_sqlite_cell(self):
+        import csv
+        import gzip
+        import io
+        import sqlite3
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            csv_path, sqlite_path = self._write(Path(tmp))
+            with gzip.open(csv_path) as handle:
+                csv_rows = list(csv.DictReader(io.TextIOWrapper(handle, encoding="utf-8")))
+            connection = sqlite3.connect(sqlite_path)
+            connection.row_factory = sqlite3.Row
+            try:
+                sql_rows = [
+                    dict(row)
+                    for row in connection.execute("SELECT * FROM candidacies ORDER BY candidate_id")
+                ]
+            finally:
+                connection.close()
+
+        self.assertEqual(len(csv_rows), len(sql_rows))
+        self.assertEqual(list(csv_rows[0]), list(table.COLUMNS))
+        for csv_row, sql_row in zip(csv_rows, sql_rows):
+            for column in table.COLUMNS:
+                with self.subTest(candidate=csv_row["candidate_id"], column=column):
+                    value = sql_row[column]
+                    # Both writers put a value through the same conversion —
+                    # a bool becomes 1/0, a dict or list becomes compact
+                    # JSON, None becomes empty — so the CSV cell is `str()`
+                    # of the sqlite cell, in every column, with no exceptions.
+                    self.assertEqual(csv_row[column], "" if value is None else str(value))
+
+    def test_a_column_gets_the_affinity_its_name_implies(self):
+        for column, affinity in (
+            ("income_eur", "REAL"),
+            ("currency_rate", "REAL"),
+            ("donations_total_eur", "REAL"),
+            ("list_position", "INTEGER"),
+            ("declaration_year", "INTEGER"),
+            ("preference_votes", "INTEGER"),
+            ("elected", "INTEGER"),
+            ("education_higher", "INTEGER"),
+            ("person_id", "TEXT"),
+            ("party_id", "TEXT"),
+            ("campaign_key", "TEXT"),
+            ("election_id", "TEXT"),
+            ("education_entries", "TEXT"),
+        ):
+            with self.subTest(column):
+                self.assertEqual(table._sqlite_type(column), affinity)
+
+    def test_the_declared_affinities_are_what_the_database_holds(self):
+        import sqlite3
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            _, sqlite_path = self._write(Path(tmp))
+            connection = sqlite3.connect(sqlite_path)
+            try:
+                declared = {
+                    row[1]: row[2]
+                    for row in connection.execute("PRAGMA table_info(candidacies)")
+                }
+                indexes = {
+                    row[0]
+                    for row in connection.execute(
+                        "SELECT name FROM sqlite_master WHERE type = 'index' AND name LIKE 'idx_%'"
+                    )
+                }
+            finally:
+                connection.close()
+        self.assertEqual(declared, {column: table._sqlite_type(column) for column in table.COLUMNS})
+        # The five the query examples in docs/CANDIDACIES.md rely on.
+        self.assertEqual(
+            indexes,
+            {
+                "idx_candidacies_person_id",
+                "idx_candidacies_election_id",
+                "idx_candidacies_party_id",
+                "idx_candidacies_campaign_key",
+                "idx_campaigns_campaign_key",
+            },
+        )
+
+    def test_a_value_sqlite_cannot_hold_is_json(self):
+        self.assertEqual(table._sqlite_value(True), 1)
+        self.assertEqual(table._sqlite_value(False), 0)
+        self.assertEqual(table._sqlite_value(None), None)
+        self.assertEqual(table._sqlite_value(3.5), 3.5)
+        self.assertEqual(table._sqlite_value([{"a": 1}]), '[{"a":1}]')
+        self.assertEqual(table._sqlite_value({"a": "ą"}), '{"a":"ą"}')
+
+    def test_the_other_tables_are_created_with_their_documented_columns(self):
+        import sqlite3
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            _, sqlite_path = self._write(Path(tmp))
+            connection = sqlite3.connect(sqlite_path)
+            try:
+                tables = {
+                    row[0]
+                    for row in connection.execute(
+                        "SELECT name FROM sqlite_master WHERE type = 'table'"
+                    )
+                }
+                columns = {
+                    name: [row[1] for row in connection.execute(f"PRAGMA table_info({name})")]
+                    for name in sorted(tables)
+                }
+            finally:
+                connection.close()
+        self.assertEqual(
+            tables,
+            {"candidacies", "campaigns", "elections", "persons", "municipalities", "parties",
+             "party_predecessors"},
+        )
+        self.assertEqual(
+            columns["persons"],
+            ["person_id", "name", "birth_key", "candidacies", "elections", "merged_keys"],
+        )
+        self.assertEqual(columns["parties"], ["party_id", "name", "short_name", "type"])
+        self.assertEqual(columns["party_predecessors"], ["party_id", "predecessor_id"])
+        self.assertEqual(
+            columns["elections"], ["id", "date", "kind", "parent", "name", "shortName", "records"]
+        )
 
 
 if __name__ == "__main__":

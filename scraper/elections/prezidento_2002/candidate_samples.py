@@ -34,6 +34,7 @@ from pathlib import Path
 from typing import Any
 
 from scraper.elections.prezidento_2002.sitemap import ELECTION_ID
+from scraper.shared.files import write_json
 from scraper.elections.seimo_zirmunu_2015.candidate_samples import (
     _load_sitemap_entries,
     _load_sitemap_entries_by_candidate_id,
@@ -181,10 +182,7 @@ def _fetch_candidate(
         "campaignSamples": [],
         "anomalies": anomalies,
     }
-    index_path.write_text(
-        json.dumps(index_payload, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    write_json(index_path, index_payload)
 
     return {
         "election_id": ELECTION_ID,

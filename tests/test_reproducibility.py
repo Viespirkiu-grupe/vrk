@@ -18,6 +18,7 @@ making while these hold:
 
 from __future__ import annotations
 
+import importlib.util
 import json
 import os
 import subprocess
@@ -37,6 +38,12 @@ from scraper.shared.files import write_json
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = REPO_ROOT / "scripts"
+
+_spec = importlib.util.spec_from_file_location(
+    "fixture_record_hashes", SCRIPTS / "fixture_record_hashes.py"
+)
+hashes = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(hashes)
 
 # Small enough to parse twice in a test, complete enough to mean something:
 # all 27 candidates of the 2003 by-election are inside the tracked fixture
@@ -149,6 +156,77 @@ class ReparseByteIdentity(unittest.TestCase):
                 )
 
 
+class FixtureRecordHashes(unittest.TestCase):
+    """Every tracked fixture parses to the record the manifest holds (#157).
+
+    The test above is the same claim against `data/`, and it skips wherever
+    the corpus is absent — which is CI, `data/` being gitignored, as are all
+    three of the commands that check the corpus against the parsers. So in
+    CI a parser change answered only to the per-election value pins: real
+    coverage, but assertions about named fields of named candidates rather
+    than about the record as a whole. `tests/fixture-record-hashes.tsv` is
+    73 KiB that closes it — one sha256 per tracked candidate, over the parse
+    content with `provenance` dropped.
+
+    Nine elections are outside it on a clone, and the manifest says so in its
+    own `# needs` lines: their crawl plan or results file is over the 1 MiB
+    limit on a tracked unit, so a clone parses their fixtures without the
+    elected join and gets different records. Until issue #150 one of those
+    absences raised and failed this test on every CI run, while another passed
+    silently as ten changed hashes. 569 of the 649 fixtures are checked on a
+    clone, all 649 where the corpus was scraped.
+    """
+
+    def test_the_manifest_is_what_the_parsers_produce(self):
+        # An election whose parse reads a local-data input this checkout does
+        # not carry cannot reproduce its records here, so it is skipped rather
+        # than compared — the manifest's `# needs` lines say which inputs each
+        # election read when it was written. Two are over the 1 MiB limit on a
+        # tracked unit and so absent from every clone:
+        # `sitemaps/1997-kovo-23-savivaldybiu-tarybu.json` (2.9 MB), whose
+        # absence *raised* and failed this test on every CI run, and
+        # `sitemaps/2000-kovo-19-savivaldybiu-tarybu.results.json` (3.5 MB),
+        # whose absence was quieter and worse — the parse dropped the elected
+        # join and ten fixtures hashed differently (issue #150).
+        needs = hashes.read_needs(REPO_ROOT / hashes.MANIFEST)
+        self.assertEqual(len(needs), len(hashes.PARSABLE_ELECTION_IDS))
+        measured, errors, absent = hashes.measure(
+            list(hashes.PARSABLE_ELECTION_IDS), REPO_ROOT, needs
+        )
+        self.assertEqual(errors, [])
+        # Nine elections' crawl plans (and for five of them their results
+        # files) are over the 1 MiB limit on a tracked unit, so no clone can
+        # reproduce their records: the five municipal generals from 2007 on,
+        # the 1997, 2000 and 2002 municipal ones, and 2012-seimo. Everything
+        # else is checked wherever the suite runs — 569 of the 649 fixtures on
+        # a clone, all 649 on the scraping machine.
+        self.assertLessEqual(len(absent), 9, absent)
+        manifest = hashes.read_manifest(REPO_ROOT / hashes.MANIFEST)
+        self.assertTrue(manifest, f"{hashes.MANIFEST} is missing or empty")
+        findings = hashes.compare(measured, manifest, absent)
+        self.assertEqual(
+            findings,
+            [],
+            "the tracked fixtures no longer parse to the recorded records. A"
+            " deliberate parser change updates the manifest in the same commit:"
+            " python scripts/fixture_record_hashes.py --update",
+        )
+
+    def test_the_manifest_covers_every_parsable_election(self):
+        # A manifest missing an election proves nothing about it, and would
+        # go on passing while that election's parser drifted.
+        manifest = hashes.read_manifest(REPO_ROOT / hashes.MANIFEST)
+        covered = {fixture.split("/", 1)[0] for fixture in manifest}
+        self.assertEqual(sorted(covered), sorted(hashes.PARSABLE_ELECTION_IDS))
+
+    def test_the_digest_ignores_the_run_stamps_and_nothing_else(self):
+        base = {"candidateId": "x", "normalized": {"a": 1}, "provenance": {"parsedAt": "now"}}
+        other_run = {"candidateId": "x", "normalized": {"a": 1}, "provenance": {"parsedAt": "later"}}
+        changed = {"candidateId": "x", "normalized": {"a": 2}, "provenance": {"parsedAt": "now"}}
+        self.assertEqual(hashes.record_digest(base), hashes.record_digest(other_run))
+        self.assertNotEqual(hashes.record_digest(base), hashes.record_digest(changed))
+
+
 class RunScripts(unittest.TestCase):
     def _script(self, name: str) -> Path:
         return SCRIPTS / name
@@ -176,6 +254,35 @@ class RunScripts(unittest.TestCase):
         self.assertIn("FETCHABLE_ELECTION_IDS", text)
         self.assertIn("build-results", text)
         self.assertIn("CandidateFetchFailed", text)
+
+    def test_the_full_run_archives_the_portraits_it_claims_to(self):
+        """docs/DATASET.md calls this the reproduction entry point.
+
+        It ran the scrape and stopped (issue #143). The portraits every era
+        but 2016-2019 *links* are archived by a second pass, and only
+        `scripts/backfill_url_portraits.py` writes the `portrait.json` a
+        `photos/` sidecar comes from: measured over the shipped corpus,
+        25,332 records carry a photoMeta naming a fetched URL and 25,294 of
+        the 27,493 sidecar files exist only because that script ran. Step 1
+        alone reproduces neither.
+        """
+        text = self._script("run_all_elections.sh").read_text(encoding="utf-8")
+        self.assertIn("backfill_url_portraits.py", text)
+        self.assertIn("reparse_diff.py", text)
+        self.assertIn('--full --jobs "$REPARSE_JOBS" --apply', text)
+        # Only over an election the runner finished, and its exit code counts.
+        self.assertIn('if [[ $status -eq 0 && "$FETCH_PORTRAITS" != "0" ]]; then', text)
+        self.assertIn("portraits=$portrait_status reparse=$reparse_status", text)
+        # The offline escape hatch, and the warning that it leaves a gap.
+        self.assertIn('FETCH_PORTRAITS="${FETCH_PORTRAITS:-1}"', text)
+        self.assertIn("linked portraits not archived", text)
+
+    def test_the_docs_do_not_promise_portraits_from_the_scrape_alone(self):
+        dataset = (REPO_ROOT / "docs" / "DATASET.md").read_text(encoding="utf-8")
+        readme = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertIn("three\nsteps per election", dataset)
+        self.assertIn("backfill_url_portraits.py", dataset)
+        self.assertIn("archived by a second pass over\nthe finished scrape", readme)
 
     def test_the_fetchable_ids_match_the_election_registry(self):
         registry = json.loads(

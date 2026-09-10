@@ -15,15 +15,31 @@ takes three forms on a rule that does not follow English's — 1 asmuo,
 
 ```bash
 python scripts/build_person_index.py   # writes dashboard/people.json (~28 MB)
-python3 scripts/serve_dashboard.py     # serve the repo root, gzipped
+python3 scripts/serve_dashboard.py     # serve dashboard/, data/, docs/, gzipped
 ```
 
 Then open <http://127.0.0.1:8791/dashboard/>. Both commands run from the repo
 root — the index builder reads `data/`, and the page fetches candidate JSONs
 and `docs/concept-map.json` relative to the server root. `serve_dashboard.py`
-is the stdlib server plus gzip: the index compresses 4.2× (29 MB → 7 MB) and
+is the stdlib server plus gzip: the index compresses 4.1× (29 MB → 7 MB) and
 the page fetches it `no-store` on every load, so plain `python3 -m
-http.server 8791` works but pays the full weight each time. A person page is
+http.server 8791` works but pays the full weight each time.
+
+It serves those **three directories and nothing else** (issue #160). It used
+to hand out the whole repository root with listings — `/` indexed `.git`,
+`.run-state/`, `samples-full/` and `.venv/`, and `/.git/config`,
+`/conftest.py` and `/scraper/person_overrides.json` all answered 200 — and it
+checked no `Host`, so a page open in the same browser could read every byte
+under the root as same-origin after a DNS rebind. A foreign `Host` is
+refused, a path outside the three is refused, a directory gets no listing,
+and every response carries `nosniff`, a narrow CSP and `no-referrer`. It also
+answers `/dashboard` with a 301 rather than serving the page under a base URL
+one level too high — which is what made the page report a wrong working
+directory when only the trailing slash was missing — sends `ETag` and
+`Last-Modified` so a reload gets a 304 instead of 7 MB, and evicts one cache
+entry instead of clearing all 512.
+
+A person page is
 deep-linkable via the URL hash, which is the person's `pid` (below); a
 pre-pid `name|birth` hash and a merged-away fragment's key still resolve and
 are rewritten to the pid.
@@ -37,10 +53,17 @@ URLs is a per-election registration id — so identity is resolved by
 - birth date is present on all but 234 records; 170 of those (the 1996-1998
   Seimas archive, which publishes no birth date) carry a birth *year* and
   group by name + `~year`, and the 64 left group by name alone,
-- the pair collides for **zero** same-election record pairs,
-- **1,989 names** are shared by people with distinct birth keys — real
-  namesakes that name-only grouping would have merged wrongly,
-- the join yields **60,725 persons**, 23,163 of them in more than one
+- the pair collides for **zero** same-election record pairs — nobody stands
+  twice on one ballot, which makes a shared election the discriminator the
+  identity review reaches for when the names and dates agree,
+- **1,849 names** are shared by people with distinct birth keys — real
+  namesakes that name-only grouping would have merged wrongly. It read 1,989
+  until issue #141: 140 of those "namesakes" were one person, split by a
+  short key rather than by a different one, with 154 candidacies on the wrong
+  side (`VYTAUTAS LANDSBERGIS|?` beside `|1932-10-18`). 157 merges and 23
+  `distinct` decisions are in `scraper/person_overrides.json`, each with its
+  evidence,
+- the join yields **60,568 persons**, 23,204 of them in more than one
   election.
 
 Names are NFC-normalized, uppercased and whitespace-collapsed; diacritics are
@@ -56,23 +79,46 @@ historical sweep is done. The old `name|birth` deep links keep resolving —
 the page accepts a pid, a natural key, or a merged-away fragment's key (from
 `"ak"`) and rewrites the hash to the pid.
 
-**Surname changes are healed by hand, not by rule.** The natural key splits
-anyone who changed surname between elections — marriage, mostly — into two
-persons. `scripts/find_identity_merge_candidates.py` finds the plausible
-splits: within each birth key it pairs persons sharing a first name and
-scores each pair `strong` (a surname token or the maiden→married stem links
-them), `given-name` (only a shared middle given name — the scorer's known
-false-positive shape) or `weak`, marks the pairs where one name is the other
-plus appended tokens, and prints whatever is still undecided. Decisions live
-in `scraper/person_overrides.json` — checked in, one entry per reviewed pair
-with the evidence written down: `merge` folds the fragments into one person
-(the former keys land in `"ak"`, so old links and maiden-name searches still
-work), `distinct` records that the pair is genuinely two people. The
-2026-08-30 review worked through all 99 strong pairs of the corpus plus the
-token-order, transliteration and no-birth-date splits: 102 merges, 1 pair
-left distinct for lack of evidence. Merging another pair is a one-line edit
-of the override file, not a code change; the builder fails if an override
-key stops matching, so the file cannot rot silently.
+**A split person is healed by hand, not by rule.**
+`scripts/find_identity_merge_candidates.py` finds the plausible splits in
+four passes, and the key splits a person three ways:
+
+- **a changed surname** — marriage, mostly. Within each birth key, persons
+  sharing a first name are paired and scored `strong` (a surname token or the
+  maiden→married stem links them), `given-name` (only a shared middle given
+  name — the scorer's known false-positive shape) or `weak`, with the pairs
+  where one name is the other plus appended tokens marked;
+- **a key shorter than a birth date** (issue #141) — the 1996-1999 Seimas
+  archive publishes none, so a person who stood then and later has a
+  `NAME|?` or `NAME|~YYYY` entry beside their real one. 147 such pairs sat in
+  the index, holding 154 candidacies, and this review could not form one of
+  them: it bucketed on the exact birth string, so a `~YYYY` bucket could
+  never contain a full-date person and a dateless one was skipped outright.
+  It printed `1,370 pairs, 0 strong, 0 undecided`, which reads as a reviewed
+  corpus;
+- **two spellings of one given name** on one birth date and surname
+  (issue #141) — VIKTOR/VIKTORAS USPASKICH, EDUARD/EDVARD TRUSEVIČ. 64 pairs
+  the first-name bucketing could not form either.
+
+Two discriminators settle a pair the other way, and both are hard: a pair
+whose halves stand in **one election** is two people, because nobody is on a
+ballot twice (this is what separates VIKTOR/VIKTORAS from 21 same-birthday
+sibling pairs); and a half whose birth date makes them **a minor** at an
+election the other half contested is somebody else (`VYTAUTAS ASTRAUSKAS`,
+born 1982 and 14 at the 1996 Seimas election). The run also prints how many
+fragment keys it could pair with *nothing*, so "0 undecided" stops reading as
+"clean".
+
+Decisions live in `scraper/person_overrides.json` — checked in, one entry per
+reviewed pair with the evidence written down: `merge` folds the fragments into
+one person (the former keys land in `"ak"`, so old links and maiden-name
+searches still work), `distinct` records that the pair is genuinely two
+people. The file now holds **259 merges and 24 `distinct`** decisions — the
+2026-08-30 review's 102 merges plus issue #141's 157, whose evidence is a
+shared birthplace token, education entry or workplace on 120 of them and an
+absence of any contradiction on the rest. Merging another pair is a one-line
+edit of the override file, not a code change; the builder fails if any
+override key stops matching — `distinct` included, which it used to skip.
 
 ## What the page offers
 
@@ -90,13 +136,192 @@ party that grew out of a committee, or a union of parties, is a group whose
 person matches when at least one of their candidacies passes every active
 filter — and **⬇ CSV** exports the current selection (semicolon-separated,
 BOM-prefixed for lt-LT Excel, uncapped even when the list shows only the
-first 300 rows). Checking rows collects persons for **Palyginti**, a
+first 300 rows; see *What the page renders, and what it exports* below for
+what a cell looks like). Checking rows collects persons for **Palyginti**, a
 side-by-side table whose columns are persons and whose cells show each
 person's newest resolving answer tagged with its election. **📊 Rinkimų
 suvestinė** aggregates one election — party mix, education mix, money
 medians — with the denominator printed beside every figure, because the
 higher-education share alone swings up to 28.9 points on that choice.
 **📈 Didžiausi pokyčiai** ranks first-to-last declared money deltas.
+
+**A view never states what it does not know** (issue #148). Three of them
+did:
+
+- The party-mix table folds everything past the top 15 nominators into a
+  `kiti (N)` row whose *Išrinkta* cell was the empty string while its count
+  and share were filled — and an empty cell in a column of numbers reads as
+  a zero. 2019 municipal printed `išrinkta 1 505` above a column summing to
+  1 184, with **321 winners hidden in the blank**; 17 of the 55 terms hid at
+  least one, 1,101 elected candidacies in all. The cell is filled, and the
+  column now sums to the summary line.
+- The comparison view discarded failed record loads
+  (`records.filter(([, r]) => !r._error)`) and rendered its 16 concept rows
+  as em dashes over them, with the two index-derived rows above still looking
+  authoritative — so a reader concluded those people had answered nothing.
+  Both it and the person view now show one banner, which says that the empty
+  cells below it are not answers. Neither the missing trailing slash nor a
+  data-less checkout is hypothetical; both produce exactly that page. The
+  asset pane's empty state used to say "nothing was declared in any of this
+  person's elections", a claim about the data, where the truth was that
+  nothing had loaded.
+- **Rinkimų suvestinė** copied one facet across — the election — and then
+  walked every person, and **Didžiausi pokyčiai** read none at all: with an
+  election, a nominator and *tik išrinkti* chosen, the list said one number
+  and the summary reported the whole election, with the three selects still
+  showing the filters and nothing saying two had been dropped. Both apply
+  every facet now, name them above the figures, and offer *rodyti visus* to
+  clear them.
+
+## What the page renders, and what it exports
+
+Everything here was measured over the whole corpus and re-measured against
+the running page (issue #149).
+
+**The export is for a Lithuanian spreadsheet.** The separator and the BOM
+always were; the numbers were not. Money went through `String(number)`, and
+`build_person_index` rounds with a dot: 199,626 of the export's 308,135 money
+cells carried a `.` decimal, which an lt-LT import reads as *text* — no sum,
+no sort, no chart. `csvMoney` writes the comma the locale expects, and since
+the separator is `;` the comma needs no quoting. Ninety cells — 88
+`darbovietė` strings and two negative figures — began with one of
+`= + - @ TAB CR`, which Excel evaluates and renders as `#NAME?`; `csvField`
+prefixes those with an apostrophe. And the election column, the one a reader
+groups by, held only the slug while the nominator had carried an id/name pair
+since issue #82: `rinkimu_pavadinimas` now sits beside `rinkimai` with the
+registry name.
+
+**No bar rises above the top gridline.** The asset chart scaled its bars to
+the tallest value and drew its gridlines while `t <= max`, so the top label
+was `floor(max/tick)*tick` and the tallest bar stood above it — 59,177 of the
+60,379 charts with a value (98.01 %), median ratio 0.824, worst 0.667: a
+316,000 € bar over an axis labelled to 240,000 €. `axisMax = ceil(max/tick) *
+tick` drives the bars, the gridlines and the loop, and costs nothing but a
+little headroom.
+
+**A chart is sized to the pane it is drawn into.** It used to be
+`cols.length * 132 + 100` px wide whatever it had to fit in: a 20-candidacy
+person got 2,740 px in an 830 px wrapper, 4.9 screenfuls opening on 1996,
+with nothing to say more lay off-screen. Columns narrow to fit, down to 52 px
+— which still holds three bars and a rotated year — and only past that does
+the wrapper scroll, opening on the most recent election. 99.03 % of the
+60,568 people have eight candidacies or fewer and their chart fits whole on a
+1280 px window; the 590 who do not scroll 306 px instead of 1,910. Every
+`.tablewrap` on the page now carries the scrolling-shadows pair, so a wrapper
+with more to show says so and one that fits shows nothing.
+
+**A phone gets the record, not a letterbox.** Measured at 375×812 before the
+fix: the header took 158.5 px, the result list 361.75 px and the person pane
+291.75 px — 35.9 % of the screen for the thing the page is for — and
+`body { overflow: hidden }` meant there was no scrolling to reclaim it (the
+page has never overflowed *horizontally*, which is worth saying). Under
+900 px the document scrolls, the person pane grows with its content (3,035 px
+for the same person, in a 3,683 px document), the result list keeps a bounded
+scroll of its own, the field list stacks label over value, and the six filter
+selects fold behind a **Filtrai** button. `#filters[hidden] { display: none }`
+has to be said because the `display: grid` rule above it beats the UA sheet —
+which is also why the filters come back by themselves on a wide screen,
+whatever the button was last left at.
+
+**A label is VRK's word, or the key's own word spelled properly.**
+`labelFor` resolves a record key against the record sections, the concept
+map's `label-lt`, the map's path segments, then `dashboard/field-labels.json`,
+then `deslug` — which lower-cases an ASCII-folded slug and cannot put a
+diacritic back. Of the 442 keys that reach a label over the whole corpus, 398
+fell through to `deslug`, 125 of them provably mis-spelled (`Pavarde`,
+`Darboviete`, `Numeris sarase`, `Seimos nariu skaicius` — the last also
+reading as *Seimas members*) and 47 printed in English: `Row number`, on
+4,020,284 cells. The labels file holds 253 of those keys and **every entry
+says where its label comes from**, which is what
+`tests/test_dashboard_field_labels.py` gates:
+
+- `printed` (118) — the string VRK prints, such that
+  `scraper.shared.files.slugify(label) == key`. Slugifying the printed label
+  is *how the parser made the key*, so the proof needs no corpus and no
+  wording is ours. The one normalization is a capital first letter.
+- `header` (21) — the column heading VRK prints above the value, for the
+  campaign-finance tables whose columns the parsers named in English
+  (`donor` → `Aukotojas`, `amountEur` → `Aukos suma, Eur`). Quoted from the
+  archived pages under `samples/`, which the test reads back.
+- `restored` (94) — the key's own words with their diacritics, case and
+  punctuation restored, so folding the label reproduces what `deslug` makes
+  of the key, word for word. No entry can quietly reword a field.
+- `structural` (20) — a key the parsers invented that no VRK page labels
+  (`records`, `label`, `listKind`). No external proof exists, so the test
+  holds these to an enumerated list: adding one is a deliberate act.
+
+The 189 keys that still de-slug were read one by one — `adresas`, `data`,
+`forma`, `metai`, `pareigos`, `turas`, `koalicijosPartija` and the rest carry
+no diacritic, so de-slugging them is right and an entry for one would be dead
+weight, which the test refuses. A new election that adds keys of its own
+moves the pinned count, and that is the signal to look at its labels. The
+file is fetched at boot beside the concept map and is *not* fatal: without it
+the page de-slugs, as it did before the file existed, and says so in the
+console.
+
+**A bare URL is a link.** 17 keys hold one, and 802 of 1,329 sampled records
+printed at least one as an 88-character string — while `appendSourceLinks`
+had rendered the `nuorodos` shape as anchors all along. `renderValue`'s
+scalar branch emits an anchor with `rel="noopener noreferrer"` for a string
+matching `/^https?:\/\/\S+$/`.
+
+## Keyboard, screen reader and the Back button
+
+Also measured live, and also re-measured after (issue #147).
+
+**A row is a link and a checkbox, not a button wrapping one.** Each result
+row used to be a `role="button"` div containing the comparison checkbox —
+which makes the checkbox *presentational* to ARIA (no role, no name, no
+checked state) while the row's own keydown handler preventDefaulted Space and
+opened the person instead. Space arrived at a focused checkbox with
+`defaultPrevented: true` and the box stayed unticked, so **Palyginti was
+mouse-only**. The name is an `<a href="#pid">` now, Enter opens the person,
+Space is left to the checkbox — which says whom it would compare — and the
+arrow keys still walk the list.
+
+**The pane takes focus, and says what is on it.** The first focusable element
+inside `#person` was the **614th** tab stop, after 300 rows and their 300
+checkboxes, and `showPerson` moved no focus and announced nothing: the page
+had **zero** `aria-live` nodes, **zero** `<label>` elements, and no
+`aria-label` on the search box — the six facets carried only a `title`. Now
+`#person` is `tabindex="-1"` and focused on every render (its top aligned to
+the viewport, because plain `focus()` scrolls the nearest edge into view and
+on a phone landed 1,095 px *below* the person's name), a visually hidden
+`role="status"` region names the person and any records that failed, and the
+search box and all six facets carry real labels.
+
+**One way in: the URL.** `grep hashchange|popstate|pushState` matched
+nothing. The hash was read once at boot, `showPerson` assigned it and three
+views assigned `""`, so Back moved history while the pane kept the previous
+person and the shared URL no longer matched the screen. `routeFromHash` is
+now the single entry point — boot, a click on a row's link, and `hashchange`
+all go through it — `showPerson` only *canonicalises* a legacy `name|birth`
+or merged-away key to the pid, with `replaceState` so it adds no entry, and
+the three header views drop the person from the URL the same way. A hash
+naming nobody says so instead of leaving the last person on screen. Driven
+live: two clicks, then Back brings the first person and their hash back, Back
+again lands on the placeholder, Forward returns the person, and a legacy
+`INGRIDA ŠIMONYTĖ|1974-11-15` link resolves and rewrites itself to
+`#p0a1d6eb067f0`.
+
+**A slow render cannot land on a later one.** `fetchRecord` memoises by file,
+so an uncached 20-election person followed by a cached one could end with the
+first rendered under the second's URL and row highlight. Every view takes a
+`renderToken` and checks it after each await; the three synchronous views
+bump it, which ends whatever was in flight. Driven live: the second person
+stays, under their own hash and announcement.
+
+**The facets are readable and typing is cheap.** `#filters` is a two-column
+grid in a 360 px pane, which left 139 px of usable text: 299 of the 338
+nominator options (88.5 %, the widest 7.1× over) and 50 of the 63
+municipality ones were wider than their box, and only 25 options carried a
+`title`. Those two facets take the whole grid row — 163 → 333 px, which
+leaves 123 of 338 and 0 of 63 over — and `addOption` gives every option its
+label as a tooltip. And `renderList`, bound straight to the `input` event,
+rebuilt 300 rows over a scan costing 14.0 ms per keystroke; a 120 ms debounce
+turns a burst into one render (measured: typing `KAZLAUSKAS` renders once,
+not ten times), while the facet `change` handlers stay immediate because a
+select fires once.
 
 ## The comparison table
 
@@ -226,8 +451,9 @@ three separate footnotes was noise rather than information.
 The comparison table did not always convert. It read the stored number
 straight through `compactValue`, so a litas figure printed raw, unlabelled,
 and 3.4528× too large beside the euro columns next to it — the same field
-disagreeing between two tabs of the same person, across the 36,362 of 76,776
-records that declare in litas. `CONCEPT_ROWS` entries may carry an optional
+disagreeing between two tabs of the same person, across the 79,098 of 112,218
+records with a declaration block that declare in litas (issue #150: the
+figures here were 36,362 of 76,776, which corresponded to nothing measured). `CONCEPT_ROWS` entries may carry an optional
 `(value, record) => string` formatter; the asset rows use `moneyCell` and the
 income row `incomeCell`, which converts the same way after resolving the
 `deklaruotos-pajamos` concept (below).
@@ -342,14 +568,21 @@ pins every rule, so a new entry either follows them or fails there.
 - `scripts/build_person_index.py` — builds `dashboard/people.json`
   (gitignored); applies the override merges, assigns pids, prints the audit
   counts on every run.
-- `scripts/serve_dashboard.py` — the stdlib server plus gzip and an
-  mtime-keyed compression cache; run from the repo root.
+- `scripts/serve_dashboard.py` — the stdlib server plus gzip, an LRU
+  compression cache keyed on mtime, and the guards of issue #160 (three
+  served directories, a loopback-only `Host`, no listings, conditional
+  requests); run from the repo root. `tests/test_serve_dashboard.py` drives
+  a real server on an ephemeral port.
 - `scripts/find_identity_merge_candidates.py` — scores possible
   surname-change splits and prints the undecided ones; writes
   `dashboard/merge-review.csv` (gitignored — the record of decisions is the
   override file, this is derived output).
 - `dashboard/index.html` — the whole app: no dependencies, vanilla JS, served
   statically next to `data/`.
+- `dashboard/field-labels.json` — the Lithuanian label for each record key
+  `deslug` spells wrong (version controlled), one entry per key with the
+  proof of its label: `printed`, `header`, `restored` or `structural`. The
+  page fetches it at boot and works without it.
 - `tests/test_person_index.py` — pins the grouping rules, the pid and the
   override merges on synthetic records.
 - `tests/test_identity_merge_review.py` — pins the review scorer's tiers on
@@ -364,8 +597,16 @@ pins every rule, so a new entry either follows them or fails there.
 - `tests/test_dashboard_ui.py` — pins the page's Lithuanian chrome, the
   sidebar's `nowrap`, the plural rule across the 11/21 boundaries, the
   tri-state outcome rendering, keyboard reachability, boot failure
-  reporting, the term-grouped election pickers and their match rule, and
-  the archive-era concept rows end to end.
+  reporting, the term-grouped election pickers and their match rule, the
+  archive-era concept rows end to end, issue #149's presentation and
+  export pass (the CSV's comma decimals and formula guard, the chart axis and
+  its width cap, the scroll affordance, the narrow-screen layout and the bare
+  URL anchors) and issue #147's keyboard, screen-reader and routing pass (the
+  row's link and checkbox, the focus move and the live region, the hash
+  router, the render token, the facet widths and the search debounce).
+- `tests/test_dashboard_field_labels.py` — holds `field-labels.json` to the
+  four proofs its entries claim, and every key in it to still occurring in
+  the corpus.
 - `tests/test_dashboard_concept_rows.py` — closes issue #87's test gap: the
   rows name real, corpus-measured concepts; the page's resolver agrees with
   `field_coverage.concept_value` on the shapes a naive walker gets wrong;

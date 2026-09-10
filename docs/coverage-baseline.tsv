@@ -397,7 +397,7 @@ gimimo-data	2024-ep	100.0	ok
 gimimo-data	2024-prezidento	100.0	ok	
 gimimo-data	2024-seimo	100.0	ok	
 gimimo-data	2025-kovo-16-meru	100.0	ok	
-gimimo-vieta	1996-spalio-20-seimo	95.2	ok	
+gimimo-vieta	1996-spalio-20-seimo	95.3	ok	
 gimimo-vieta	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	76.4	ok	
 gimimo-vieta	1997-gruodzio-21-seimo-pakartotiniai	75.0	ok	
 gimimo-vieta	1997-kovo-23-savivaldybiu-tarybu	9.3	partly-answered	the 1997 municipal card prints the Gimimo vieta field on every record and it is empty on 5694 of 6276 (rawData.personal.birthPlace is "")
@@ -662,7 +662,7 @@ naryste-politinese-organizacijose	2020-seimo	96.8	ok
 naryste-politinese-organizacijose	2021-balandzio-11-radviliskio-mero	100.0	ok	
 naryste-politinese-organizacijose	2021-spalio-10-meru	100.0	ok	
 naryste-politinese-organizacijose	2023-geguzes-7-visagino-mero	100.0	ok	
-naryste-politinese-organizacijose	2023-kovo-5-savivaldybiu-tarybu-ir-meru	94.2	ok	
+naryste-politinese-organizacijose	2023-kovo-5-savivaldybiu-tarybu-ir-meru	94.1	ok	
 naryste-politinese-organizacijose	2023-rugsejo-3-seimo-raseiniai-kedainiai	100.0	ok	
 naryste-politinese-organizacijose	2023-spalio-8-kupiskio-mero	100.0	ok	
 naryste-politinese-organizacijose	2024-ep	91.8	ok	
@@ -692,17 +692,17 @@ pagrindine-darboviete	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	
 pagrindine-darboviete	2009-prezidento	100.0	ok	
 pagrindine-darboviete	2011-vasario-13-seimo-marijampole	100.0	ok	
 pagrindine-darboviete	2011-vasario-27-savivaldybiu	81.3	ok	
-pagrindine-darboviete	2012-seimo	93.5	ok	
+pagrindine-darboviete	2012-seimo	90.6	ok	
 pagrindine-darboviete	2013-kovo-3-seimo-birzai-zarasai-ukmerge	73.0	ok	
-pagrindine-darboviete	2014-ep	95.8	ok	
+pagrindine-darboviete	2014-ep	95.3	ok	
 pagrindine-darboviete	2014-prezidento	100.0	ok	
-pagrindine-darboviete	2015-birzelio-21-pakartotiniai-silutes	77.6	ok	
-pagrindine-darboviete	2015-birzelio-7-pakartotiniai-sirvintos-trakai	70.9	ok	
+pagrindine-darboviete	2015-birzelio-21-pakartotiniai-silutes	77.3	ok	
+pagrindine-darboviete	2015-birzelio-7-pakartotiniai-sirvintos-trakai	70.6	ok	
 pagrindine-darboviete	2015-birzelio-7-seimo-varena-eisiskes	87.5	ok	
-pagrindine-darboviete	2015-kovo-1-savivaldybiu	79.5	ok	
+pagrindine-darboviete	2015-kovo-1-savivaldybiu	79.4	ok	
 pagrindine-darboviete	2015-kovo-1-seimo-zirmunai	83.3	ok	
 pagrindine-darboviete	2015-lapkricio-8-telsiu-mero	71.4	ok	
-pagrindine-darboviete	2016-seimo	83.3	ok	
+pagrindine-darboviete	2016-seimo	83.1	ok	
 pagrindine-darboviete	2017-balandzio-23-meru	100.0	ok	
 pagrindine-darboviete	2017-balandzio-23-seimo-anyksciai-panevezys	90.9	ok	
 pagrindine-darboviete	2017-rugsejo-10-marijampoles-mero	87.5	ok	
@@ -891,7 +891,7 @@ savivaldybe	2023-geguzes-7-visagino-mero	100.0	ok
 savivaldybe	2023-kovo-5-savivaldybiu-tarybu-ir-meru	100.0	ok	
 savivaldybe	2023-spalio-8-kupiskio-mero	100.0	ok	
 savivaldybe	2025-kovo-16-meru	100.0	ok	
-seimine-padetis	1996-spalio-20-seimo	85.4	ok	
+seimine-padetis	1996-spalio-20-seimo	83.4	ok	
 seimine-padetis	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	85.5	ok	
 seimine-padetis	1997-gruodzio-21-seimo-pakartotiniai	50.0	ok	
 seimine-padetis	1997-kovo-23-savivaldybiu-tarybu	91.0	ok	

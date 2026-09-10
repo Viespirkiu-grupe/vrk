@@ -77,10 +77,12 @@ import argparse
 import gzip
 import hashlib
 import json
+import os
 import shutil
 import sqlite3
 import subprocess
 import sys
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -91,8 +93,15 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_candidacy_table as table  # noqa: E402
 import build_person_index as identity  # noqa: E402
 from pii_inventory import PUBLIC_PROFILE_CONDITIONAL, PUBLIC_PROFILE_DROPS  # noqa: E402
-from scraper.shared.files import PORTRAIT_KEYS  # noqa: E402
+from scraper.shared import provenance  # noqa: E402
+from scraper.shared.files import PORTRAIT_KEYS, write_json  # noqa: E402
 from scraper.shared.image_metadata import strip_metadata  # noqa: E402
+
+#: The shape of what a release ships. Bumped when a column, table or manifest
+#: key changes meaning; a consumer reads it from `MANIFEST.json`, from the
+#: `meta` table of either database, and from `PRAGMA user_version`. Before
+#: issue #156 a 602 MB download said nothing at all about what it was.
+SCHEMA_VERSION = 1
 
 #: What a build ships of the archive (issue #142): `public` redacts the
 #: third-party contact paths and strips portrait metadata, `full` is the
@@ -141,7 +150,11 @@ RECORD_COLUMNS = (
     "record_file",
     "source_json",
     "kandidatavimas_json",
-    "candidate_note",
+    # JSON, not TEXT: `candidateNote` is present *and null* on 27,472 of the
+    # 27,478 records that have it, and a TEXT column cannot tell that from
+    # absent — so the round trip dropped the key on all 27,472 while three
+    # places called it lossless (issue #156).
+    "candidate_note_json",
     "photo_sha256",
     "raw_json",
     "norm_json",
@@ -297,7 +310,10 @@ def write_corpus_sqlite(
         "photos_stripped": 0,
         "photos_untouched": 0,
         "photos_malformed": 0,
+        "parser_commits": {},
     }
+    parser_commits: Counter[str] = Counter()
+    anomaly_files: list[str] = []
     try:
         # A throwaway build: a crash mid-write is answered by rebuilding,
         # so durability buys nothing here and the journal only costs time.
@@ -311,7 +327,7 @@ def write_corpus_sqlite(
                 record_file TEXT NOT NULL,
                 source_json TEXT,
                 kandidatavimas_json TEXT,
-                candidate_note TEXT,
+                candidate_note_json TEXT,
                 photo_sha256 TEXT REFERENCES photos(sha256),
                 raw_json TEXT,
                 norm_json TEXT,
@@ -386,6 +402,9 @@ def write_corpus_sqlite(
                         counts["photos"] += 1
                         counts["photo_bytes"] += len(stored)
 
+                stamp = (record.get("provenance") or {}).get("parserCommit")
+                parser_commits[stamp or "none"] += 1
+
                 if public:
                     counts["redacted_values"] += redact_record(record)
 
@@ -401,7 +420,9 @@ def write_corpus_sqlite(
                             _compact(record["kandidatavimas"])
                             if "kandidatavimas" in record
                             else None,
-                            _envelope_string(record, "candidateNote", record_path),
+                            _compact(record["candidateNote"])
+                            if "candidateNote" in record
+                            else None,
                             digest,
                             _compact(record["rawData"]),
                             _compact(record["normalized"]),
@@ -419,6 +440,11 @@ def write_corpus_sqlite(
 
             anomalies_path = data_root / eid / "anomalies.jsonl"
             if anomalies_path.is_file():
+                # An *empty* anomalies.jsonl says "scraped, nothing to
+                # report", which is not the same as no file at all — and with
+                # no row to carry it, the unpacked tree lost that distinction
+                # (issue #156). The election ids are recorded in `meta`.
+                anomaly_files.append(eid)
                 for line in anomalies_path.read_text(encoding="utf-8").splitlines():
                     if not line.strip():
                         continue
@@ -428,10 +454,40 @@ def write_corpus_sqlite(
                     )
                     counts["anomalies"] += 1
 
+        write_meta(connection, {
+            "schemaVersion": str(SCHEMA_VERSION),
+            "profile": profile,
+            "builtAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "buildCommit": build_commit() or "",
+            "records": str(counts["records"]),
+            "elections": str(len(election_ids)),
+            "photos": str(counts["photos"]),
+            "anomalyFiles": ",".join(anomaly_files),
+            "source": SOURCE_URL,
+            "dataLicense": DATA_LICENSE,
+            "attribution": ATTRIBUTION,
+            "terms": TERMS_URL,
+        })
         connection.commit()
     finally:
         connection.close()
+    counts["parser_commits"] = dict(parser_commits.most_common())
     return counts
+
+
+def write_meta(connection: sqlite3.Connection, entries: dict[str, str]) -> None:
+    """`meta(key, value)` plus `PRAGMA user_version`, in both databases.
+
+    A consumer who downloads the 602 MB "Everything" asset had an anonymous
+    2.5 GB file: no meta table, no user_version, no schemaVersion anywhere
+    (issue #156). Both are cheap and both are readable without this
+    repository — `SELECT * FROM meta` and `PRAGMA user_version`.
+    """
+    connection.execute("CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT)")
+    connection.executemany(
+        "INSERT OR REPLACE INTO meta VALUES (?, ?)", sorted(entries.items())
+    )
+    connection.execute(f"PRAGMA user_version = {SCHEMA_VERSION}")
 
 
 def reconstruct_record(row: sqlite3.Row) -> dict[str, Any]:
@@ -444,18 +500,23 @@ def reconstruct_record(row: sqlite3.Row) -> dict[str, Any]:
     `redact_record` removed -- the keys are absent, not nulled. Both are
     pinned by tests/test_build_distribution.py.
     """
+    # Built in the order the record files use --
+    # electionId, candidateId, candidateName, [candidateNote],
+    # [kandidatavimas], source, rawData, normalized, [provenance] -- so an
+    # unpacked corpus is byte-comparable with the one it was built from and
+    # not merely equal as JSON (issue #156).
     record: dict[str, Any] = {
         "electionId": row["election_id"],
         "candidateId": row["candidate_id"],
         "candidateName": row["candidate_name"],
-        "source": json.loads(row["source_json"]),
-        "rawData": json.loads(row["raw_json"]),
-        "normalized": json.loads(row["norm_json"]),
     }
+    if row["candidate_note_json"] is not None:
+        record["candidateNote"] = json.loads(row["candidate_note_json"])
     if row["kandidatavimas_json"] is not None:
         record["kandidatavimas"] = json.loads(row["kandidatavimas_json"])
-    if row["candidate_note"] is not None:
-        record["candidateNote"] = row["candidate_note"]
+    record["source"] = json.loads(row["source_json"])
+    record["rawData"] = json.loads(row["raw_json"])
+    record["normalized"] = json.loads(row["norm_json"])
     if row["provenance_json"] is not None:
         record["provenance"] = json.loads(row["provenance_json"])
     return record
@@ -476,19 +537,18 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def parser_commit() -> str | None:
-    """The commit the parsers are at — read where the code lives, not at
-    --repo-root, which may be a bare data tree."""
-    try:
-        return subprocess.run(
-            ["git", "rev-parse", "--short", "HEAD"],
-            cwd=Path(__file__).resolve().parent,
-            capture_output=True,
-            text=True,
-            check=True,
-        ).stdout.strip()
-    except (OSError, subprocess.CalledProcessError):
-        return None
+def build_commit() -> str | None:
+    """The commit this build ran at, `-dirty` when the checkout was not clean.
+
+    `scraper.shared.provenance.parser_commit` already reads it that way and
+    caches it; this used to be a bare `git rev-parse --short HEAD` with no
+    dirty check, which stamped a release built from a modified checkout as
+    though it came from the commit (issue #156). It is also *this build's*
+    commit and not the corpus's: the records carry their own
+    `provenance.parserCommit`, and the manifest reports the spread of those
+    separately.
+    """
+    return provenance.parser_commit()
 
 
 def write_manifest(
@@ -497,12 +557,19 @@ def write_manifest(
     corpus_counts: dict[str, Any],
     subset: list[str] | None,
     profile: str = DEFAULT_PROFILE,
+    registered: int = 0,
 ) -> dict[str, Any]:
     built = datetime.now(timezone.utc)
     manifest: dict[str, Any] = {
         "version": "corpus-" + built.strftime("%Y-%m-%d"),
         "builtAt": built.strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "parserCommit": parser_commit(),
+        "schemaVersion": SCHEMA_VERSION,
+        "buildCommit": build_commit(),
+        # The corpus is not from one commit, and a single string implied it
+        # was: 49,586 of the 113,073 records carry no `parserCommit` at all
+        # (they predate provenance) and the rest carry several. The counter
+        # says so, most records first (issue #156).
+        "corpusParserCommits": corpus_counts["parser_commits"],
         # The terms travel with the assets (issue #138): a downloaded
         # directory of gzips says what may be done with it and whom to
         # write to, without the repository at hand.
@@ -522,9 +589,17 @@ def write_manifest(
         "counts": {
             "records": corpus_counts["records"],
             "elections": stats["elections"],
+            # What the registry says a complete corpus holds (issue #132).
+            # Without it a manifest over 2 elections was byte-for-byte
+            # indistinguishable in shape from one over 55, so a consumer had
+            # no way to ask whether a release was the whole archive.
+            "electionsRegistered": registered,
             "persons": stats["persons"],
             "campaigns": stats["campaigns"],
             "photos": corpus_counts["photos"],
+            # Unique images against the records that carry one: the same
+            # portrait can be the newest on two candidacies of one person.
+            "photoRecords": corpus_counts["photo_records"],
             "photoBytes": corpus_counts["photo_bytes"],
             "photosStripped": corpus_counts["photos_stripped"],
             "photosMetadataUntouched": corpus_counts["photos_untouched"],
@@ -539,10 +614,35 @@ def write_manifest(
     }
     if subset:
         manifest["subset"] = sorted(subset)
-    (dist / "MANIFEST.json").write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
+    # Through the atomic writer: this is the file whose presence means the
+    # assets beside it are described, and a half-written one would say so
+    # falsely (issues #132, #153).
+    write_json(dist / "MANIFEST.json", manifest)
     return manifest
+
+
+#: Everything a build writes, in promotion order. MANIFEST.json is last on
+#: purpose, and is removed from dist/ before the first asset moves: it
+#: checksums the other five, so a manifest that outlives the assets it
+#: describes is worse than no manifest at all. The invariant a consumer can
+#: rely on is that MANIFEST.json is present only while it matches what sits
+#: beside it.
+BUILD_OUTPUTS = RELEASE_ARTIFACTS + ("vrk.sqlite", "vrk-corpus.sqlite")
+
+
+def promote(staging: Path, dist: Path) -> None:
+    """Move a finished build into `dist/`, manifest last.
+
+    `os.replace` is atomic per file and the loop is not, so the window in
+    which dist/ is mixed shrinks from the whole build -- minutes, over 2.5 GB
+    -- to a handful of renames on the same filesystem. Removing the old
+    manifest first is what closes the rest: until the new one lands there is
+    no manifest, which is a state a reader can recognise.
+    """
+    (dist / "MANIFEST.json").unlink(missing_ok=True)
+    for name in BUILD_OUTPUTS:
+        os.replace(staging / name, dist / name)
+    os.replace(staging / "MANIFEST.json", dist / "MANIFEST.json")
 
 
 def build_distribution(
@@ -552,14 +652,41 @@ def build_distribution(
     max_drop: float = 5.0,
     profile: str = DEFAULT_PROFILE,
 ) -> int:
+    registry = identity.load_registry(repo_root / "scraper" / "elections.json")
+    registry_by_id = {entry["id"]: entry for entry in registry}
+
     rows, campaigns, elections_table, stats = table.build(repo_root, subset)
     persons = stats.pop("persons_rows")
 
     if subset is None:
-        registry_by_id = {
-            entry["id"]: entry
-            for entry in identity.load_registry(repo_root / "scraper" / "elections.json")
-        }
+        # Issue #132: a full build over a data/ holding 2 of the 55
+        # registered elections exited 0, said "Fill gate: no findings", wrote
+        # all five assets and printed the ready-to-run `gh release create`
+        # line. Nothing could see it: `elections_present` is whatever is
+        # under data/, and only an *unregistered* directory raised; the fill
+        # gate iterates cells, and a wholly absent election has none; and the
+        # two-pass record count compares two passes over the same truncated
+        # list. This is not hypothetical -- data/ in a worktree is a symlink
+        # set, and this project's history records corpus directories dying
+        # with one (#92's results files).
+        #
+        # A partial build is what naming elections is for: that path marks
+        # the manifest `subset` and skips the gate. A build that names none
+        # claims the whole archive, so it has to hold it.
+        missing = sorted(set(registry_by_id) - set(stats["elections_present"]))
+        if missing:
+            named = "\n".join(f"    {eid}" for eid in missing[:20])
+            if len(missing) > 20:
+                named += f"\n    ... and {len(missing) - 20} more"
+            raise SystemExit(
+                f"the corpus under {repo_root / 'data'} holds"
+                f" {len(stats['elections_present'])} of the {len(registry_by_id)} registered"
+                " elections.\nA build that names no election claims to be the whole archive,"
+                " and nothing downstream would say otherwise: the manifest of a 10-record"
+                f" build is the same shape as one of 113,073.\n\n{len(missing)} missing:\n{named}"
+                "\n\nScrape them, or name the ones you mean —"
+                " `build_distribution.py <election-id> …` marks the manifest a subset."
+            )
         cells = table.measure_cells(rows)
         gate = table.gate(cells, repo_root / table.BASELINE, registry_by_id, False, max_drop)
         if gate:
@@ -572,37 +699,67 @@ def build_distribution(
     else:
         print("(subset build: fill gate skipped)")
 
-    table.write_csv_gz(dist / "candidacies.csv.gz", table.COLUMNS, rows)
-    table.write_csv_gz(
-        dist / "campaigns.csv.gz",
-        table.CAMPAIGN_COLUMNS,
-        sorted(campaigns.values(), key=lambda c: (c["election_id"], c["campaign_key"])),
-    )
-    table.write_sqlite(
-        dist / "vrk.sqlite",
-        rows,
-        campaigns,
-        elections_table,
-        persons,
-        repo_root / "scraper" / "parties.json",
-    )
-
-    corpus_counts = write_corpus_sqlite(
-        dist / "vrk-corpus.sqlite",
-        dist / "vrk.sqlite",
-        repo_root / "data",
-        stats["elections_present"],
-        profile,
-    )
-    if corpus_counts["records"] != stats["records"]:
-        raise SystemExit(
-            f"the two passes disagree: the candidacy table projected {stats['records']}"
-            f" rows, the records table holds {corpus_counts['records']}"
+    # Everything is written into a staging directory beside dist/ and moved
+    # into place only once the manifest exists (issue #132). A build that
+    # dies partway -- a record whose envelope moved, a Ctrl-C, a full disk
+    # during the 2.5 GB corpus write -- used to leave dist/ mixed: MANIFEST
+    # describing the previous build, candidacies.csv.gz from this one, three
+    # assets from the old, `gzip.decompress(vrk.sqlite.gz) != vrk.sqlite`,
+    # and `SELECT COUNT(*) FROM records` = 0 on a database whose
+    # integrity_check said ok. Nothing in the error mentioned dist/.
+    dist.mkdir(parents=True, exist_ok=True)
+    staging = dist / f".staging-{os.getpid()}"
+    shutil.rmtree(staging, ignore_errors=True)
+    staging.mkdir()
+    try:
+        table.write_csv_gz(staging / "candidacies.csv.gz", table.COLUMNS, rows)
+        table.write_csv_gz(
+            staging / "campaigns.csv.gz",
+            table.CAMPAIGN_COLUMNS,
+            sorted(campaigns.values(), key=lambda c: (c["election_id"], c["campaign_key"])),
+        )
+        table.write_sqlite(
+            staging / "vrk.sqlite",
+            rows,
+            campaigns,
+            elections_table,
+            persons,
+            repo_root / "scraper" / "parties.json",
+            meta={
+                "schemaVersion": str(SCHEMA_VERSION),
+                "profile": profile,
+                "builtAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "buildCommit": build_commit() or "",
+                "candidacies": str(len(rows)),
+                "elections": str(len(elections_table)),
+                "source": SOURCE_URL,
+                "dataLicense": DATA_LICENSE,
+                "attribution": ATTRIBUTION,
+                "terms": TERMS_URL,
+            },
         )
 
-    gzip_file(dist / "vrk.sqlite", dist / "vrk.sqlite.gz", 9)
-    gzip_file(dist / "vrk-corpus.sqlite", dist / "vrk-corpus.sqlite.gz", CORPUS_GZIP_LEVEL)
-    manifest = write_manifest(dist, stats, corpus_counts, subset, profile)
+        corpus_counts = write_corpus_sqlite(
+            staging / "vrk-corpus.sqlite",
+            staging / "vrk.sqlite",
+            repo_root / "data",
+            stats["elections_present"],
+            profile,
+        )
+        if corpus_counts["records"] != stats["records"]:
+            raise SystemExit(
+                f"the two passes disagree: the candidacy table projected {stats['records']}"
+                f" rows, the records table holds {corpus_counts['records']}"
+            )
+
+        gzip_file(staging / "vrk.sqlite", staging / "vrk.sqlite.gz", 9)
+        gzip_file(staging / "vrk-corpus.sqlite", staging / "vrk-corpus.sqlite.gz", CORPUS_GZIP_LEVEL)
+        manifest = write_manifest(
+            staging, stats, corpus_counts, subset, profile, registered=len(registry_by_id)
+        )
+        promote(staging, dist)
+    finally:
+        shutil.rmtree(staging, ignore_errors=True)
 
     print(f"profile:      {profile}" + (f" — {corpus_counts['redacted_values']} value(s) removed" if profile == "public" else " (the archive verbatim)"))
     print(f"candidacies:  {stats['records']} rows / {stats['elections']} election(s)")

@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 
 from scraper.shared.files import slugify, write_json
 from scraper.shared.http import fetch_text
+from scraper.shared.values import candidate_status_note
 
 ELECTION_ID = "2016-seimo"
 LISTING_URL = (
@@ -48,6 +49,24 @@ def clean_candidate_name(raw_name: str) -> str:
             break
         name = cleaned
     return name
+
+
+def extract_candidate_note(raw_name: str) -> str:
+    """The status note `clean_candidate_name` strips, kept (issue #164).
+
+    Two candidates of this election carry one -- "(panaikinta kandidato
+    registracija)" on Kęstas Komskis, "(mirė)" on Juras Požela -- and both
+    were stripped while nothing kept them, so the corpus said a candidate who
+    died before polling day and one whose registration was revoked were
+    ordinary losing candidates. The candidate page leaves that line blank.
+
+    Only a *status* marker is kept. This listing also parenthesises the
+    constituency an elected member won in, `(D)` or `(V)`, on 141 of its
+    1,415 rows -- a fact about the ballot, already carried by the elected
+    flags, and reading it here would put a role letter in `candidateNote` on
+    a tenth of the election.
+    """
+    return candidate_status_note(raw_name)
 
 
 def resolve_candidate_url(href: str) -> str:
@@ -137,7 +156,9 @@ def build_sitemap_from_sample(
             )
             continue
 
-        candidate_name = clean_candidate_name(link.get_text(" ", strip=True))
+        raw_candidate_name = link.get_text(" ", strip=True)
+        candidate_name = clean_candidate_name(raw_candidate_name)
+        candidate_note = extract_candidate_note(raw_candidate_name)
         if not candidate_name:
             skipped.append({"rowIndex": row_index, "reason": "empty-name"})
             continue
@@ -162,6 +183,12 @@ def build_sitemap_from_sample(
         provisional_entries.append(
             {
                 "candidateName": candidate_name,
+                # Only where there is one: two of the 1,415 rows carry a
+                # status marker, and a `""` on the other 1,413 would put a
+                # key in every entry that the fixture `index.json` files
+                # written before this change do not have -- which
+                # tests/test_fixture_sitemap_agreement.py holds equal.
+                **({"candidateNote": candidate_note} if candidate_note else {}),
                 "candidateId": candidate_id,
                 "url": resolve_candidate_url(href),
             }

@@ -337,7 +337,9 @@ class FetchAnomalyPlumbingTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "fetch-anomalies.jsonl"
             code, out = self._fetch("--anomalies-path", str(path))
-            self.assertEqual(code, 0)
+            # An error-severity event means the candidate was not fetched, and
+            # the exit status says so since issue #158.
+            self.assertEqual(code, 1)
             written = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
         self.assertEqual(written, [self.ANOMALY])
         self.assertIn("Total anomalies: 1", out)
@@ -353,9 +355,33 @@ class FetchAnomalyPlumbingTests(unittest.TestCase):
 
     def test_without_the_flag_the_events_are_at_least_named(self) -> None:
         code, out = self._fetch()
-        self.assertEqual(code, 0)
+        self.assertEqual(code, 1)
         self.assertIn("TabDownloadFailed=1", out)
         self.assertIn("--anomalies-path", out)
+
+    def test_a_fetch_error_exits_non_zero_so_the_candidate_stays_pending(self) -> None:
+        # It returned 0 whatever it recorded: driving this branch with every
+        # tab answering 503 produced six TabDownloadFailed plus one
+        # TabDownloadPartial, all severity=error, and exited 0 — so the batch
+        # runner's `if ! fetch_candidate` never fired, the id went into
+        # done_ids.txt, and the run reported "complete" (issue #158).
+        self.assertEqual(self._fetch()[0], 1)
+
+    def test_a_warning_only_fetch_still_succeeds(self) -> None:
+        # A missing optional tab is a warning, not a lost candidate: the
+        # exit status is about whether the fetch got the page.
+        payload = self._payload()
+        payload["results"][0]["anomalies"] = [dict(self.ANOMALY, severity="warning")]
+        with mock.patch.object(
+            cli, "_fetch_candidates_with_tabs_for_election", return_value=payload
+        ):
+            with mock.patch.object(
+                sys,
+                "argv",
+                ["scraper", "fetch-candidate-samples", "2020-seimo", "--candidate-id", "someone"],
+            ):
+                with contextlib.redirect_stdout(io.StringIO()):
+                    self.assertEqual(cli.main(), 0)
 
     def test_an_empty_run_still_writes_the_file(self) -> None:
         # The batch runner appends this file per candidate; a missing file and
@@ -475,3 +501,82 @@ class ParseAnomalyOwnershipTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SitemapGapTests(unittest.TestCase):
+    """What the corpus does *not* hold (issue #158).
+
+    Nine candidates across four elections have no record — 2000-kovo-19 2 of
+    9,881, 2002-gruodzio-22 1 of 10,139, 2007-vasario-25 3 of 13,422,
+    2011-vasario-27 3 of 16,403 — and all three gates passed with them
+    absent. `docs/DATASET.md` explained each group by pointing at a
+    `.run-state/…/failed_ids.txt`; those are gitignored, and only one of the
+    four survived on the scraping machine, covering 3 of the 9.
+    """
+
+    def _repo(self, listed: dict[str, list[str]], held: dict[str, list[str]]) -> Path:
+        root = Path(tempfile.mkdtemp())
+        self.addCleanup(lambda: __import__("shutil").rmtree(root, ignore_errors=True))
+        (root / "sitemaps").mkdir()
+        for election_id, ids in listed.items():
+            (root / "sitemaps" / f"{election_id}.json").write_text(
+                json.dumps({"entries": [{"candidateId": i} for i in ids]}), encoding="utf-8"
+            )
+            (root / "data" / election_id).mkdir(parents=True, exist_ok=True)
+        for election_id, ids in held.items():
+            for candidate_id in ids:
+                (root / "data" / election_id / f"{candidate_id}-{election_id}.json").write_text(
+                    "{}", encoding="utf-8"
+                )
+        return root
+
+    def test_a_candidate_in_the_sitemap_with_no_record_is_a_gap(self) -> None:
+        root = self._repo({"2016-seimo": ["a", "b", "c"]}, {"2016-seimo": ["a"]})
+        self.assertEqual(anomaly_report.sitemap_gaps(root), {"2016-seimo": ["b", "c"]})
+
+    def test_a_complete_election_has_no_gap(self) -> None:
+        root = self._repo({"2016-seimo": ["a", "b"]}, {"2016-seimo": ["a", "b"]})
+        self.assertEqual(anomaly_report.sitemap_gaps(root), {})
+
+    def test_an_election_with_no_records_directory_is_not_measured(self) -> None:
+        # An election in `sitemaps/` that has not been scraped yet is not a
+        # gap; the coverage gate in field_coverage.py is what asks about a
+        # whole election.
+        root = self._repo({"2016-seimo": ["a"]}, {})
+        (root / "data" / "2016-seimo").rmdir()
+        self.assertEqual(anomaly_report.sitemap_gaps(root), {})
+
+    def test_a_results_sitemap_is_not_a_candidate_list(self) -> None:
+        root = self._repo({"2016-seimo": ["a"]}, {"2016-seimo": ["a"]})
+        (root / "sitemaps" / "2016-seimo.results.json").write_text(
+            json.dumps({"entries": [{"candidateId": "zzz"}]}), encoding="utf-8"
+        )
+        self.assertEqual(anomaly_report.sitemap_gaps(root), {})
+
+    def test_a_gap_with_a_fetch_failure_against_it_is_accounted_for(self) -> None:
+        gaps = {"2016-seimo": ["b", "c"]}
+        recorded = [
+            _event("2016-seimo", anomaly_report.FETCH_FAILED, "error") | {"candidateId": "b"}
+        ]
+        self.assertEqual(anomaly_report.unrecorded_gaps(gaps, recorded), {"2016-seimo": ["c"]})
+        both = recorded + [
+            _event("2016-seimo", anomaly_report.FETCH_FAILED, "error") | {"candidateId": "c"}
+        ]
+        self.assertEqual(anomaly_report.unrecorded_gaps(gaps, both), {})
+
+    def test_another_event_type_does_not_account_for_a_gap(self) -> None:
+        gaps = {"2016-seimo": ["b"]}
+        other = [_event("2016-seimo", "TabDownloadFailed", "error") | {"candidateId": "b"}]
+        self.assertEqual(anomaly_report.unrecorded_gaps(gaps, other), gaps)
+
+    def test_the_corpus_accounts_for_every_gap_it_has(self) -> None:
+        repo_root = Path(__file__).resolve().parents[1]
+        if not (repo_root / "data").is_dir():
+            raise unittest.SkipTest("no local corpus — the reconciliation needs data/")
+        gaps = anomaly_report.sitemap_gaps(repo_root)
+        events = list(anomaly_report.read_events(repo_root / "data"))
+        self.assertEqual(
+            anomaly_report.unrecorded_gaps(gaps, events),
+            {},
+            "a sitemap candidate with no record and no CandidateFetchFailed event",
+        )

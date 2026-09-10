@@ -1,6 +1,6 @@
 """Resolve every record's nominator, join it to the party registry, and gate both.
 
-Issue #82: party affiliation was spread over eleven paths and 427 surface
+Issue #82: party affiliation was spread over eleven paths and 393 surface
 forms with no canonical id. The resolver (`scraper/shared/nominator.py`) and
 the registry (`scraper/parties.json`, matched by `scraper/shared/parties.py`)
 fixed that for the corpus as it is -- this script keeps it fixed as the corpus
@@ -44,6 +44,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from scraper.shared.nominator import nominator_paths, resolve_nominator  # noqa: E402
+from scraper.shared.files import write_json
 from scraper.shared.parties import REGISTRY_PATH, entry, load_registry, match  # noqa: E402
 
 FORMS_TABLE = Path("docs/nominator-forms.tsv")
@@ -83,9 +84,7 @@ def write_forms_table(path: Path, counts: Counter[str]) -> None:
 def write_unmatched(unmatched: list[str]) -> None:
     registry = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
     registry["unmatched"] = unmatched
-    REGISTRY_PATH.write_text(
-        json.dumps(registry, ensure_ascii=False, indent=1) + "\n", encoding="utf-8"
-    )
+    write_json(REGISTRY_PATH, registry, indent=1)
 
 
 def main() -> int:

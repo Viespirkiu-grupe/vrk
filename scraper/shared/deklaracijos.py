@@ -702,8 +702,21 @@ def deklaruotos_pajamos(declaration: dict[str, Any] | None) -> dict[str, Any]:
     a total the page contradicts stays refused, and a consumer that wants the
     floor asks for it here and is told what it got.
     """
+    # Through `deklaracijos_valiuta`, not `declaration.get("valiuta")` — that
+    # is the raw key, which is absent on every euro-era record, and the
+    # resolver exists precisely because "in the stored corpus the euro is
+    # marked by absence, which is too load-bearing to hand a consumer"
+    # (issue #97). Reading it raw here made the two disagree on 33,120 of the
+    # 112,218 records with a declaration: None where the sibling says EUR
+    # (issue #161). Latent, because both builders take the currency from the
+    # sibling — but a consumer reading this function's own `valiuta` got the
+    # absence back.
+    #
+    # Resolved before the coercion below, so *no declaration* stays None:
+    # an empty block would otherwise read as the euro era, which is the same
+    # absence-as-meaning mistake one level up.
+    currency = deklaracijos_valiuta(declaration)
     declaration = declaration if isinstance(declaration, dict) else {}
-    currency = declaration.get("valiuta")
 
     total = declaration.get("gautos-pajamos")
     if total is not None:

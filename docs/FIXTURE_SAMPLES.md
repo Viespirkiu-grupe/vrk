@@ -76,10 +76,14 @@ from vrk.lt on the laptop and passed, then met a 403 on the runner — it skips
 on the absent cache now, and any other test that would fetch fails locally
 first. `VRK_TESTS_ALLOW_NETWORK=1` lifts the refusal for a deliberate live run.
 
-On a clone the suite is about 1,685 passed and 408 skipped
-(from 1,484 / 516 before the sitemaps were tracked), 2,140
-subtests passed (`verbosity_subtests` in `pyproject.toml` makes the summary
-line count them); here, with everything scraped, 1,919 passed.
+On a clone the suite is 1,993 passed and 426 skipped, 16,393 subtests passed
+in about a minute (`verbosity_subtests` in `pyproject.toml` makes the summary
+line count them); here, with everything scraped, 2,313 passed, nothing
+skipped, 16,858 subtests, six minutes — the whole-corpus walks are most of
+the difference. Both figures were measured on 2026-09-10, the
+clone one by cloning the branch and running `CI=1 pytest` in it, which is
+also how issue #150 found CI red on a fixture the 1 MiB rule keeps out of
+git.
 
 A skip is a test that did not run, and a test that only ever runs on the
 scraping laptop can sit asserting a shape two refactors old while CI stays
@@ -100,6 +104,27 @@ green — the 2019 declaration tests did exactly that after issue #98 (issue
 What still skips on a clone is what no tracked fixture can stand in for: the
 municipal `lists/` walks and the sitemap tests over them, the two `results/`
 trees over the limit, and a handful of value pins on portrait-bearing pages.
+
+## What the tracked fixtures parse to
+
+`tests/fixture-record-hashes.tsv` is one sha256 per tracked candidate — 649
+lines, 73 KiB — over the record the parsers produce for it, with
+`provenance` dropped (its run-stamps differ between any two honest parses).
+`scripts/fixture_record_hashes.py` measures and checks it; a deliberate
+parser change updates it with `--update` in the same commit.
+
+It exists because none of the three commands that check the corpus against
+the parsers can run in CI: `reparse_diff.py`, `field_coverage.py` and
+`anomalies-report` all read `data/`, which is gitignored, and the one
+test-level equivalent skips there for the same reason (issue #157). So a
+parser change answered, in CI, only to the per-election value pins — real
+coverage, but assertions about named fields of named candidates rather than
+about the record as a whole. The manifest is the whole-record half, and its
+diff names every election a change reached.
+
+It is not a second corpus and not a baseline: it says nothing about whether
+a value is *right*, only that today's parsers produce the same bytes as the
+parsers that wrote the hash.
 
 ## Why fixtures are versioned
 
@@ -126,7 +151,40 @@ This is enforced by:
 ## Other elections
 
 Each election folder keeps its own small, test-protected fixture set under
-`samples/html/<election_id>/` with the same policy. For `2019-ep` the allowlist
+`samples/html/<election_id>/` with the same policy.
+
+For `2020-seimo` the allowlist (`tests/test_seimo_2020_sample_allowlist.py`)
+is **six candidates out of 1,754**:
+
+- `ingrida-simonyte` — elected in a single-mandate constituency from the top
+  of her party's list (`isrinktasKaip: vienmandate`, list number 1)
+- `gabrielius-landsbergis` — the same shape one list place down, and the
+  worked example in `docs/DATA_GUIDE.md`
+- `algirdas-butkevicius` — elected in a constituency for a third party, which
+  makes him the identity thread through 2012, 2016, 2020 and 2024
+- `agne-sirinskiene` — elected off the multi-mandate list
+  (`isrinktasKaip: daugiamandate`)
+- `giedrius-drukteinis` — not elected, with a campaign participant tab
+- `regina-ablom` — not elected, list place 83, and the one fixture of this
+  election with no campaign tab at all
+
+`list.html` is 2.4 MB of embedded portraits, over the 1 MiB limit on a
+tracked fixture unit, so `page.html` is the only top-level file a clone
+carries. The declaration half of this election is the GPM308 form, whose
+label-prefix income rows issue #81 fixed.
+
+For `2024-seimo` the allowlist (`tests/test_seimo_2024_sample_allowlist.py`)
+is **five candidates out of 1,740**, the same spread one election later:
+
+- `ingrida-simonyte` and `algirdas-butkevicius` — elected in constituencies
+- `gabrielius-landsbergis` and `saulius-skvernelis` — elected off the lists
+- `vilma-aasrum` — not elected, list place 47, and the alphabetically first
+  candidate of the election
+
+Its declarations are the GPM311 form, and as in 2020 `list.html` (2.3 MB)
+stays untracked while `page.html` is carried.
+
+For `2019-ep` the allowlist
 (`tests/test_ep_2019_sample_allowlist.py`) is:
 
 - `daiva-adutaviciene`
@@ -605,6 +663,30 @@ complete fields — 23 and 4 candidates — since both re-run elections are this
 small already. The March re-run's fixture set covers both a masculine and a
 feminine self-nomination spelling (`Išsikėlė pats` / `Išsikėlė pati`).
 
+For `1998-kovo-22-seimo-pakartotiniai`,
+`1998-lapkricio-15-seimo-pakartotiniai` and `1999-kovo-21-seimo-pakartotiniai`
+the allowlists (`tests/test_seimo_pakartotiniai_1998_kovo_sample_allowlist.py`,
+`tests/test_seimo_nevezio_1998_lapkricio_sample_allowlist.py`,
+`tests/test_seimo_pakartotiniai_1999_kovo_sample_allowlist.py`) are the
+complete fields — 11, 11 and 22 candidates — so `samples/html/` *is* each of
+these elections and none of them has a `samples-full/` capture:
+
+- March 1998 re-ran two constituencies, Naujosios Vilnios (No. 10) and
+  Vilniaus Trakų (No. 57), with 5 and 6 candidates. Only
+  `filipovic-tadeus` and `tomasevski-valdemar` link a `kpdl.htm`
+  declaration; the other nine publish none, which the allowlist test names
+  so that a missing declaration reads as the source's and not the parser's.
+- November 1998 re-ran one constituency, Nevėžio (No. 26), with 11
+  candidates.
+- March 1999 re-ran three — Naujosios Vilnios, Nevėžio and Vilniaus Trakų —
+  with 7, 8 and 7. Six of its candidates stood in one of the 1998 repeats
+  too, which is what makes this trio the corpus's smallest identity test.
+
+All three are read by the same two shared parsers as the 1996 general
+(`scraper/shared/seimo_archive_1990s.py` and the card questionnaire whose
+three fields hide inside a malformed HTML comment, issue #69), and their
+elected flags come from the results rows joined in by issue #79.
+
 For `1997-kovo-23-savivaldybiu-tarybu` the allowlist
 (`tests/test_savivaldybiu_1997_sample_allowlist.py`) is **six candidates out
 of 6,276** — a sample rather than the field, as with the other municipal
@@ -975,8 +1057,9 @@ covers the same one.
 ## Recommended baseline checks
 
 ```bash
-pytest                                        # the suite, about 100 s
+pytest                                        # the suite: ~1 min on a clone, ~5.5 with the corpus
 pytest tests/test_tracked_fixtures.py         # git and the 1 MiB rule agree
+python scripts/fixture_record_hashes.py       # the fixtures still parse to the recorded records
 pytest tests/test_seimo_2016_sample_allowlist.py
 pytest tests/test_seimo_2016_candidate_samples.py
 pytest tests/test_seimo_2016_campaign_parser.py

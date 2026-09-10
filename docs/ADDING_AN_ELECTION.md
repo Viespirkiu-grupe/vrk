@@ -124,7 +124,25 @@ Three files, mirroring the closest existing election:
   recorded in `index.json`, neither fetched nor reported missing.
 - `anketa_parser.py` — the question-to-key mapping, reusing shared helpers.
 
-Then wire five dispatch points in `scraper/cli.py`.
+Then wire it into `scraper/cli.py`. That is **ten edit sites**, not the five
+this said until issue #146 — counted on `seimo_2024`, and the same for every
+module:
+
+- **three import statements** (`sitemap`, `candidate_samples`,
+  `anketa_parser`), bringing in six names: the module's `ELECTION_ID` and its
+  five entry points;
+- **two id lists** — `FETCHABLE_ELECTION_IDS` (what
+  `scripts/run_all_elections.sh` runs) and `PARSABLE_ELECTION_IDS` (what
+  `scripts/reparse_diff.py` and `scripts/fixture_record_hashes.py` walk) —
+  plus `RESULTS_ELECTION_IDS` where the candidate pages mark no winner and
+  the elected flag comes from a results tree, which makes eleven;
+- **five `if election_id == …` branches**, one per command: `fetch-sample`,
+  `sitemap`, `fetch-first-candidate-samples`, `fetch-candidate-samples`,
+  `parse-anketa-samples`.
+
+`tests/test_cli_dispatch.py` walks all of them, so a missing branch fails
+rather than falling through to another election's parser. (Collapsing the
+five branches into one table keyed by election id is issue #90.)
 
 ### If the election has more than one listing structure
 
@@ -295,6 +313,32 @@ would have made a null mean two different things depending on the election.
     `2026-kovo-15-seimo-zirmunai` → `2024-seimo`). A general election has no
     `parent`. The dashboard folds the entry under its parent and includes it
     when the parent is selected (issue #122).
+- **The counts a new election moves.** Several tests hold a measured figure
+  over the whole corpus or the whole registry, so they fail on the *day the
+  entry lands* and again after the scrape — as findings, not as breakage.
+  Expect to update, in this order (issue #146: none of them was written down,
+  so a maintainer met them as red CI):
+  - `tests/test_elections_registry.py` — the registry's own shape and
+    chronology, and that every scraped election has an entry;
+  - `tests/test_cli_dispatch.py` — every id in the three lists reaches a
+    branch;
+  - `tests/test_doc_counts.py` — the `N candidate records across M elections`
+    headline in README and DATA_GUIDE, the id list in CLI_REFERENCE, the
+    section in FIXTURE_SAMPLES, and the DATASET inventory row;
+  - `tests/test_record_shape.py` — the root key-sets, the distinct-key count
+    and the section order;
+  - `tests/test_doc_numbers.py` — the documented storage, litas, anomaly and
+    candidacy figures;
+  - `tests/fixture-record-hashes.tsv` via
+    `python scripts/fixture_record_hashes.py --update` — one hash per tracked
+    fixture, plus the `# needs` line saying which local-data inputs the
+    election's parse reads.
+
+  And the four baselines, each with its own command:
+  `docs/coverage-baseline.tsv` (`field_coverage.py --update-baseline`),
+  `docs/candidacy-baseline.tsv` (`build_candidacy_table.py --update-baseline`),
+  `docs/anomaly-baseline.tsv` (`anomalies-report --update-baseline`) and
+  `docs/plausibility-register.tsv` (`value_plausibility.py --update`).
 
 ## 6. Full scrape
 
@@ -319,8 +363,10 @@ deletes as it parses, prints a warning (issue #95). The runner also builds
 "complete" until every sitemap id has a record on disk.
 
 The portraits the pages *link* (every era but 2016-2019, which embed them)
-are not part of that retention until you fetch them. Once the scrape is
-complete:
+are not part of that retention until you fetch them.
+`scripts/run_all_elections.sh` runs these two steps itself for every election
+it scrapes (issue #143); after a single-election run, or after
+`FETCH_PORTRAITS=0`, run them by hand once the scrape is complete:
 
 ```bash
 python scripts/backfill_url_portraits.py <election-id>

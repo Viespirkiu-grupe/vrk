@@ -158,6 +158,43 @@ class CheckTests(unittest.TestCase):
         }
         self.assertEqual(script.check(cells, baseline, max_drop=5.0), [])
 
+    def test_a_classified_zero_that_now_fills_is_a_finding(self) -> None:
+        # Issue #165: six lines of the candidacy baseline said VRK published
+        # no post-election ranking over 35,507 values a later results join
+        # had recovered. A classified zero was skipped before any rule saw
+        # it, so the file could say something false indefinitely -- and the
+        # same excuse stood ready to cover the values' loss.
+        cells = self._concept_at(("2011-vasario-27-savivaldybiu", 16400, 16257))
+        baseline = {
+            ("gautos-pajamos", "2011-vasario-27-savivaldybiu"): script.Baseline(
+                0.0, "upstream-absent", "VRK publishes no such thing for this election"
+            )
+        }
+        findings = script.check(cells, baseline, max_drop=5.0)
+        self.assertEqual(len(findings), 1)
+        self.assertIn("classified upstream-absent but fills at 99.1%", findings[0])
+        self.assertIn("16257 of 16400", findings[0])
+        self.assertIn("VRK publishes no such thing", findings[0])
+
+    def test_a_parser_gap_that_the_parser_closed_is_the_same_finding(self) -> None:
+        cells = self._concept_at(("2004-seimo", 1000, 900))
+        baseline = {
+            ("gautos-pajamos", "2004-seimo"): script.Baseline(0.0, "parser-gap", "not joined")
+        }
+        self.assertIn("classified parser-gap", script.check(cells, baseline, max_drop=5.0)[0])
+
+    def test_a_low_or_ok_classification_is_not_a_stale_excuse(self) -> None:
+        # Only the zero statuses claim the cell is empty. `partly-published`
+        # is a claim about a cell that fills, and the below-peers rule owns
+        # it; `not-mapped` is the peer-gap rule's.
+        cells = self._concept_at(("2016-seimo", 1000, 900))
+        for status in ("ok", "partly-published", "partly-answered", script.NOT_MAPPED):
+            with self.subTest(status):
+                baseline = {("gautos-pajamos", "2016-seimo"): script.Baseline(0.0, status, "n")}
+                self.assertEqual(
+                    [f for f in script.check(cells, baseline, max_drop=5.0) if "classified" in f], []
+                )
+
     def test_empty_is_the_answer_may_not_hide_a_missing_key(self) -> None:
         # The claim is that the parser answered everywhere and the answer was
         # empty. A key that is absent on some records is a different thing.
@@ -300,6 +337,60 @@ class UnmappedElectionRuleTests(unittest.TestCase):
             self.assertEqual(script.unmapped_election_findings(root, self.PATHS, {}), [])
 
 
+class VanishedElectionRuleTests(unittest.TestCase):
+    """An election the map covers and the baseline measures, with nothing
+    under data/, is a finding (issue #132).
+
+    Every other cell rule iterates *cells*, and an election with no records
+    produces none — so a whole election could leave the corpus and every
+    check here would pass. A distribution built over 2 of the 55 registered
+    elections did exactly that, down to the `gh release create` line.
+    """
+
+    PATHS = {
+        "gimimo-data": {"2024-seimo": "a", "2020-seimo": "a"},
+        "gimimo-vieta": {"2024-seimo": "b"},
+    }
+    BASELINE = {
+        ("gimimo-data", "2024-seimo"): script.Baseline(99.0, "ok", ""),
+        ("gimimo-vieta", "2024-seimo"): script.Baseline(98.0, "ok", ""),
+        ("gimimo-data", "2020-seimo"): script.Baseline(97.0, "ok", ""),
+    }
+
+    def test_an_election_that_left_the_corpus_is_a_finding(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _synthetic_corpus(root, "2024-seimo", [{"normalized": {}}] * 2)
+            findings = script.vanished_election_findings(root, self.PATHS, self.BASELINE)
+        self.assertEqual(len(findings), 1)
+        self.assertTrue(findings[0].startswith("*\t2020-seimo\t"))
+        self.assertIn("1 baseline row(s)", findings[0])
+
+    def test_a_corpus_holding_every_mapped_election_is_clean(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _synthetic_corpus(root, "2024-seimo", [{"normalized": {}}] * 2)
+            _synthetic_corpus(root, "2020-seimo", [{"normalized": {}}] * 2)
+            self.assertEqual(script.vanished_election_findings(root, self.PATHS, self.BASELINE), [])
+
+    def test_dropping_the_election_from_the_map_is_the_way_out(self) -> None:
+        # A deliberate removal edits the concept map; the stale baseline rows
+        # then go on the next --update-baseline.
+        paths = {"gimimo-data": {"2024-seimo": "a"}, "gimimo-vieta": {"2024-seimo": "b"}}
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _synthetic_corpus(root, "2024-seimo", [{"normalized": {}}] * 2)
+            self.assertEqual(script.vanished_election_findings(root, paths, self.BASELINE), [])
+
+    def test_an_election_with_no_baseline_rows_is_the_peer_gap_rules_business(self) -> None:
+        paths = {**self.PATHS, "gimimo-data": {**self.PATHS["gimimo-data"], "2027-seimo": "a"}}
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _synthetic_corpus(root, "2024-seimo", [{"normalized": {}}] * 2)
+            _synthetic_corpus(root, "2020-seimo", [{"normalized": {}}] * 2)
+            self.assertEqual(script.vanished_election_findings(root, paths, self.BASELINE), [])
+
+
 class PeerGapRuleTests(unittest.TestCase):
     """A new election maps every concept its closest mapped peer of the same
     kind maps, or says why not (issue #135). On the mirror that motivated it,
@@ -391,6 +482,36 @@ class UpdateBaselineTests(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertEqual(before, after, "the refusal must leave the file as it was")
         self.assertIn("refused", err)
+        self.assertIn("a drop of 74.0 points", err)
+
+    def test_a_stale_excuse_does_not_refuse_the_rewrite(self) -> None:
+        # The one finding re-measuring answers (issue #165): the row claims
+        # nothing fills here and something does, and the rewrite drops the
+        # excuse. Refusing would leave --force as the only way through, and
+        # --force signs off every *other* finding in the same run.
+        previous = {
+            ("gautos-pajamos", "2016-seimo"): script.Baseline(0.0, "upstream-absent", "never printed")
+        }
+        cells = self.PEERS + [script.Cell("gautos-pajamos", "2016-seimo", 1000, 1000, 980)]
+        code, _, _, rows, err = self._run(cells, previous)
+        self.assertEqual(code, 0, err)
+        self.assertNotIn("refused", err)
+        self.assertEqual(rows[("gautos-pajamos", "2016-seimo")].pct, 98.0)
+        self.assertEqual(rows[("gautos-pajamos", "2016-seimo")].status, script.OK)
+        self.assertEqual(rows[("gautos-pajamos", "2016-seimo")].note, "")
+
+    def test_a_stale_excuse_does_not_excuse_the_findings_beside_it(self) -> None:
+        previous = {
+            ("gautos-pajamos", "2016-seimo"): script.Baseline(0.0, "upstream-absent", "never printed"),
+            ("gautos-pajamos", "2020-seimo"): script.Baseline(97.8, "ok", ""),
+        }
+        cells = self.PEERS + [
+            script.Cell("gautos-pajamos", "2016-seimo", 1000, 1000, 980),
+            script.Cell("gautos-pajamos", "2020-seimo", 1000, 1000, 238),
+        ]
+        code, before, after, _, err = self._run(cells, previous)
+        self.assertEqual(code, 1)
+        self.assertEqual(before, after)
         self.assertIn("a drop of 74.0 points", err)
 
     def test_force_writes_over_the_drop_and_says_so(self) -> None:

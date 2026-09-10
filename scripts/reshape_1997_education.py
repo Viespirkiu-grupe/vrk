@@ -1,5 +1,10 @@
 """Reshape the 1997 municipal archive's `issilavinimas` into the corpus shape.
 
+**Spent** (issue #159): `--dry-run` reshapes 0 of the 6,386 records —
+5,192 are already in the corpus shape and 1,194 publish no level. The parser
+emits the shape itself, so a re-parse keeps it that way; this is kept as the
+record of how the existing records got it.
+
 Every election from 2007 on publishes `anketa.issilavinimas` (or
 `biografija.issilavinimas` from 2020) as `{"aprasas", "irasai": [...]}`. The
 two 1997 municipal archive elections published it as a bare string -- one
@@ -29,6 +34,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from scraper.shared.savivaldybiu_archive_1997 import education_record  # noqa: E402
+from scraper.shared.files import write_json
 
 DATA_ROOT = Path("data")
 ELECTIONS = [
@@ -66,10 +72,7 @@ def main() -> int:
             anketa["issilavinimas"] = education_record(value)
             counts["reshaped"] += 1
             if not args.dry_run:
-                path.write_text(
-                    json.dumps(record, ensure_ascii=False, indent=2) + "\n",
-                    encoding="utf-8",
-                )
+                write_json(path, record)
         print(f"  {election_id}: {counts['records']} records — reshaped "
               f"{counts['reshaped']}, already shaped {counts['already']}, "
               f"no value {counts['absent']}")

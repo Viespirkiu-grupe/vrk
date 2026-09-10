@@ -15,6 +15,7 @@ from scraper.elections.kupiskio_mero_2023.candidate_samples import (
 from scraper.elections.savivaldybiu_2023.sitemap import ELECTION_ID
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.http import fetch_text
+from scraper.shared.files import write_json
 
 DEFAULT_SITEMAP_PATH = Path(f"sitemaps/{ELECTION_ID}.json")
 DEFAULT_SAMPLES_ROOT = Path(f"samples/html/{ELECTION_ID}")
@@ -257,10 +258,7 @@ def _fetch_candidate_tabs(
         "campaignSamples": campaign_samples,
         "anomalies": anomalies,
     }
-    index_path.write_text(
-        json.dumps(index_payload, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    write_json(index_path, index_payload)
 
     return {
         "election_id": ELECTION_ID,

@@ -1,5 +1,10 @@
 """Recover birthplaces from the 1996-1997 biographies already in the corpus.
 
+**Spent** (issue #159): `--dry-run` recovers 0 of the family's 950 records —
+868 already carry the place, 25 have no biography and 57 have prose the
+extractor does not resolve. The parser applies the same fallback inline, so a
+re-parse leaves nothing here to do.
+
 Historical: written when these cards were thought to publish no birth-place
 field at all. They do -- "Gimimo vieta" sits inside the malformed
 `<!--sql format>` comment alongside the residence, invisible to a DOM parser,
@@ -33,6 +38,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from scraper.shared.seimo_archive_1990s import extract_biography_birth_place  # noqa: E402
+from scraper.shared.files import write_json
 
 DATA_ROOT = Path("data")
 ELECTIONS = [
@@ -86,10 +92,7 @@ def main() -> int:
                 biography["birthPlace"] = place
             counts["recovered"] += 1
             if not args.dry_run:
-                path.write_text(
-                    json.dumps(record, ensure_ascii=False, indent=2) + "\n",
-                    encoding="utf-8",
-                )
+                write_json(path, record)
         print(f"  {election_id}: " + ", ".join(f"{k} {v}" for k, v in counts.items()))
         for key, value in counts.items():
             totals[key] += value

@@ -341,13 +341,23 @@ class DeepLinkTests(unittest.TestCase):
     """
 
     def test_the_page_writes_the_pid_into_the_hash(self):
-        self.assertIn("location.hash = p.pid;", SOURCE)
+        # A row's link *is* the pid URL, so the click, the shared link and the
+        # Back button all take one path (issue #147). showPerson only
+        # canonicalises a legacy key, and with replaceState, so it adds no
+        # history entry and does not re-enter the router.
+        self.assertIn('main.href = `#${p.pid}`;', SOURCE)
+        self.assertIn(
+            'if (decodeURIComponent(location.hash.slice(1)) !== p.pid) {\n'
+            '    history.replaceState(null, "", `#${p.pid}`);',
+            SOURCE,
+        )
+        self.assertNotIn("location.hash = p.pid;", SOURCE)
         self.assertNotIn("location.hash = encodeURIComponent(p.k)", SOURCE)
 
     def test_a_legacy_or_merged_away_hash_still_resolves(self):
         self.assertRegex(
             SOURCE,
-            r"p\.pid === hashKey \|\| p\.k === hashKey \|\| \(p\.ak \|\| \[\]\)\.includes\(hashKey\)",
+            r"p\.pid === key \|\| p\.k === key \|\| \(p\.ak \|\| \[\]\)\.includes\(key\)",
         )
 
     def test_every_name_a_person_ran_under_is_searchable(self):
@@ -413,8 +423,12 @@ class ElectionTermGroupingSourceTests(unittest.TestCase):
         self.assertNotIn(".reverse()) addOption(", SOURCE)
 
     def test_the_filter_and_the_stats_view_match_through_the_parent(self):
+        # The stats view scopes through `candidacyMatches` now, which starts
+        # with the same `inElection` test — and applies the other five facets
+        # too, which it used to drop (issue #148).
         self.assertIn("if (f.election && !inElection(e, f.election)) return false;", SOURCE)
-        self.assertIn("if (inElection(e, id)) pairs.push([p, e]);", SOURCE)
+        self.assertIn("if (candidacyMatches(e, f)) pairs.push([p, e]);", SOURCE)
+        self.assertIn("function scopedFilters(electionId)", SOURCE)
         self.assertNotIn("e.id !== f.election", SOURCE)
 
     def test_a_term_row_says_what_it_covers(self):
@@ -586,16 +600,38 @@ class PartyLineageTests(unittest.TestCase):
 
 class KeyboardAccessTests(unittest.TestCase):
     """The people list used to be unreachable by keyboard: two focusable
-    elements in the whole document, 300 rendered rows of tabIndex -1 divs."""
+    elements in the whole document, 300 rendered rows of tabIndex -1 divs.
+    Then it was reachable but its comparison checkbox was not (issue #147):
+    each row was a `role="button"` div wrapping the box, which makes the box
+    presentational to ARIA -- no role, no name, no checked state -- while the
+    row's own keydown handler preventDefaulted Space and opened the person
+    instead. Measured in the live page: the box was focusable, Space arrived
+    with `defaultPrevented: true` and the box stayed unticked, so the
+    Palyginti flow that docs/DASHBOARD.md presents as a headline feature was
+    mouse-only.
+    """
 
-    def test_rows_are_focusable_buttons(self):
-        self.assertIn("div.tabIndex = 0;", SOURCE)
-        self.assertIn('div.setAttribute("role", "button");', SOURCE)
+    def test_the_row_is_not_a_button_wrapping_a_checkbox(self):
+        self.assertNotIn('div.setAttribute("role", "button");', SOURCE)
+        self.assertNotIn("div.tabIndex = 0;", SOURCE)
+        # Nothing swallows a key on the row any more, and the box is not
+        # asked to stop a click from reaching a handler that is gone.
+        self.assertNotIn('ev.key === "Enter" || ev.key === " "', SOURCE)
+        self.assertNotIn('box.addEventListener("click", (ev) => ev.stopPropagation());', SOURCE)
 
-    def test_rows_open_on_enter_and_space_and_arrow_between_rows(self):
-        for fragment in ('ev.key === "Enter"', 'ev.key === "ArrowDown"', 'ev.key === "ArrowUp"'):
+    def test_the_name_is_a_link_and_the_checkbox_says_whom_it_compares(self):
+        self.assertIn('const main = document.createElement("a");', SOURCE)
+        self.assertIn('main.href = `#${p.pid}`;', SOURCE)
+        self.assertIn('box.setAttribute("aria-label", `Pažymėti palyginimui: ${p.n}`);', SOURCE)
+
+    def test_the_arrow_keys_still_walk_the_list(self):
+        for fragment in ('ev.key === "ArrowDown"', 'ev.key === "ArrowUp"'):
             with self.subTest(fragment):
                 self.assertIn(fragment, SOURCE)
+        # From the last row back up to the search box, and from the search box
+        # down into the first row's link.
+        self.assertIn('else document.getElementById("search").focus();', SOURCE)
+        self.assertIn('document.querySelector("#results .row .rowmain")', SOURCE)
 
 
 class BootFailureTests(unittest.TestCase):
@@ -928,6 +964,585 @@ class ArchiveComparisonRowTests(unittest.TestCase):
         # the era-bridged one: einamos-pareigos falls back to
         # pagrindine-darboviete, which is what the 1996 card maps.
         self.assertIsNone(self._cells(self.RECORD)["Einamos pareigos / darbovietė"])
+
+
+class ThreeFalsehoods(unittest.TestCase):
+    """Three views stated something false rather than showing a gap (#148).
+
+    Each of the three was reproduced against the running dashboard before it
+    was fixed, and again after; these hold the shipped code to what those
+    runs showed.
+    """
+
+    def test_the_remainder_row_fills_its_winner_cell(self):
+        # It was set to the empty string while the count and share were
+        # filled, and an empty cell in a column of numbers reads as a zero:
+        # 2019 municipal's summary said "išrinkta 1 505" over a column
+        # summing to 1 184, hiding 321 winners. Verified live after the fix:
+        # the column sums to 1,505 and the "kiti (99)" row reads 321.
+        self.assertIn("const restIds = new Set(top.slice(15).map(([pid]) => pid));", SOURCE)
+        self.assertIn(
+            "const restWon = withParty.filter(e => restIds.has(e.p) && e.w === true).length;",
+            SOURCE,
+        )
+        self.assertIn("tr.insertCell().textContent = fmtInt(restWon);", SOURCE)
+        self.assertNotIn('tr.insertCell().textContent = "";', SOURCE)
+
+    def test_a_failed_record_load_is_said_out_loud_in_every_view(self):
+        # The comparison view ended its fan-out in
+        # `records.filter(([, r]) => !r._error)` and rendered 16 rows of em
+        # dashes over the failures, with two index-derived rows above still
+        # looking authoritative. One banner, both views.
+        self.assertIn("function failureBanner(failed) {", SOURCE)
+        self.assertIn('warn.setAttribute("role", "alert");', SOURCE)
+        self.assertIn("const banner = failureBanner(failed);", SOURCE)
+        self.assertIn("const compareBanner = failureBanner(failed);", SOURCE)
+        self.assertIn(
+            "return [p, records.filter(([, r]) => !r._error), records.filter(([, r]) => r._error)];",
+            SOURCE,
+        )
+        # And it says what the empty cells below it do not mean.
+        self.assertIn("tušti langeliai nereiškia, kad nebuvo atsakyta", UNCOMMENTED)
+
+    def test_the_asset_pane_does_not_claim_nothing_was_declared(self):
+        # "Nė vienuose šio asmens rinkimuose turto ar pajamų nedeklaruota" is
+        # a claim about the data; with every record failing to load it is a
+        # claim about nothing.
+        self.assertIn("function buildAssetPane(loaded, failedCount = 0) {", SOURCE)
+        self.assertIn("buildAssetPane(loaded, failed.length)", SOURCE)
+        self.assertIn("Nėra ką rodyti:", UNCOMMENTED)
+
+    def test_the_header_views_honour_the_sidebar_facets(self):
+        # `showAggregates` copied one facet across (the election) and then
+        # walked every person; `showMovers` read none. With 2024 Seimas +
+        # a party + "tik išrinkti" the list said one number and the summary
+        # another, with the selects still showing the filters.
+        self.assertIn("function scopedFilters(electionId)", SOURCE)
+        self.assertIn("if (candidacyMatches(e, f)) pairs.push([p, e]);", SOURCE)
+        self.assertIn("if (f.any && !p.e.some(e => candidacyMatches(e, f))) continue;", SOURCE)
+        # Both views name what they are scoped by, and offer a way out.
+        self.assertEqual(SOURCE.count("appendFacetNote(facetLine,"), 2)
+        self.assertIn("Taikomi šoniniai filtrai", UNCOMMENTED)
+        self.assertIn('clear.textContent = "rodyti visus";', SOURCE)
+
+    def test_the_facet_note_is_silent_when_nothing_is_filtered(self):
+        # The absence of the line is the default and is not a claim.
+        self.assertIn("if (!named.length) return;", SOURCE)
+
+
+class ExportTests(unittest.TestCase):
+    """What the CSV hands to a spreadsheet (issue #149).
+
+    `exportCSV` writes a BOM and joins on ';' "which is what lt-LT Excel
+    expects", and then wrote its money through `String(number)`: replaying the
+    page's own field function over all 113,073 rows gave 308,135 money cells,
+    199,626 of them with a '.' decimal -- which an lt-LT import reads as text,
+    so no sum, no sort, no chart -- and 90 cells starting with one of
+    `= + - @ TAB CR`, which Excel renders as #NAME?.
+    """
+
+    def _run(self, names, script):
+        helpers = "\n".join(
+            re.search(rf"^function {name}\(.*?^\}}$", SOURCE, re.S | re.M).group(0)
+            for name in names
+        )
+        out = subprocess.run(
+            [NODE, "-e", f"{helpers}\n{script}"], capture_output=True, text=True, timeout=30
+        )
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        return json.loads(out.stdout)
+
+    @unittest.skipIf(NODE is None, "node not installed")
+    def test_money_carries_a_comma_decimal(self):
+        cells = self._run(
+            ["csvMoney"],
+            "console.log(JSON.stringify([12345.67, 0, 0.5, -8.25, null, 1000000]"
+            ".map(csvMoney)));",
+        )
+        self.assertEqual(cells, ["12345,67", "0", "0,5", "-8,25", "", "1000000"])
+
+    @unittest.skipIf(NODE is None, "node not installed")
+    def test_a_formula_looking_cell_is_quoted_out(self):
+        cells = self._run(
+            ["csvField"],
+            "console.log(JSON.stringify(["
+            '"=SUM(A1:A2)", "+37060000000", "-8,25", "@svetaine.lt", "\\tPastaba",'
+            ' "UAB \\"Katos studija\\"", "Salės nuoma", null'
+            "].map(csvField)));",
+        )
+        self.assertEqual(
+            cells,
+            [
+                "'=SUM(A1:A2)",
+                "'+37060000000",
+                "'-8,25",
+                "'@svetaine.lt",
+                # A tab is not the ';' separator, so it needs the apostrophe
+                # but no quoting.
+                "'\tPastaba",
+                '"UAB ""Katos studija"""',
+                "Salės nuoma",
+                "",
+            ],
+        )
+
+    def test_the_election_column_carries_its_name_beside_the_slug(self):
+        # The nominator has had an id/name pair since #82; the election, which
+        # is the column a reader groups by, had only "2024-seimo".
+        self.assertIn('"rinkimai", "rinkimu_pavadinimas", "data",', SOURCE)
+        self.assertIn(
+            '(ELECTIONS.get(e.id) || {}).name || (ELECTIONS.get(e.id) || {}).shortName || ""',
+            SOURCE,
+        )
+
+    def test_every_money_column_goes_through_the_money_formatter(self):
+        self.assertIn("csvMoney(m[0]), csvMoney(m[1]), csvMoney(m[2]), csvMoney(m[3]),", SOURCE)
+
+
+class AssetChartTests(unittest.TestCase):
+    """The chart's axis and its width (issue #149)."""
+
+    @unittest.skipIf(NODE is None, "node not installed")
+    def test_no_bar_rises_above_the_top_gridline(self):
+        # Bars were scaled to `max` and gridlines drawn while `t <= max`, so
+        # the top label was floor(max/tick)*tick: replayed over every person,
+        # 59,177 of the 60,379 charts with a value (98.01 %) had their
+        # tallest bar above the axis, median ratio 0.824, worst 0.667.
+        script = """
+        const cases = [316000, 240000, 1, 999, 1000, 4001, 1234567, 0.5];
+        console.log(JSON.stringify(cases.map(max => {
+          const step = Math.pow(10, Math.floor(Math.log10(max / 4)));
+          const tick = Math.ceil(max / 4 / step) * step;
+          const axisMax = Math.ceil(max / tick) * tick;
+          let top = 0;
+          for (let t = 0; t <= axisMax; t += tick) top = t;
+          return [max <= axisMax, Math.abs(top - axisMax) < tick / 1000];
+        })));
+        """
+        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        for fits, labelled in json.loads(out.stdout):
+            self.assertTrue(fits, "a bar can still exceed the axis")
+            self.assertTrue(labelled, "the top gridline is not the axis maximum")
+
+    def test_the_axis_maximum_drives_the_bars_the_gridlines_and_the_loop(self):
+        self.assertIn("const axisMax = Math.ceil(max / tick) * tick;", SOURCE)
+        self.assertIn("const y = (v) => mT + plotH - (v / axisMax) * plotH;", SOURCE)
+        self.assertIn("for (let t = 0; t <= axisMax; t += tick)", SOURCE)
+        self.assertIn("const h = Math.max(1.5, (v / axisMax) * plotH);", SOURCE)
+        self.assertNotIn("(v / max) * plotH", SOURCE)
+
+    def test_the_chart_is_sized_to_the_pane_it_is_drawn_into(self):
+        # It was `cols.length * 132 + 100` whatever it had to fit in: 2,740 px
+        # in an 830 px wrapper for a 20-candidacy person. Columns narrow to
+        # fit, down to 52 px, and only past that does the wrapper scroll --
+        # verified in the browser at 1280x900, where 1 to 13 candidacies fit
+        # whole and 20 scrolls 321 px instead of 1,910.
+        self.assertIn("function availableWidth() {", SOURCE)
+        self.assertIn(
+            "const colW = Math.max(52, Math.min(132, (availableWidth() - mL - mR) / cols.length));",
+            SOURCE,
+        )
+        self.assertNotIn("cols.length * 132 + 100", UNCOMMENTED)
+
+    def test_a_scrolling_chart_opens_on_the_most_recent_election(self):
+        # Built while its tab is display:none, where every width is 0, so the
+        # scroll has to wait for the tab to be shown.
+        self.assertIn('pane.dataset.scrollRight = "1";', SOURCE)
+        self.assertIn("scrollRightOnce(pane);", SOURCE)
+        self.assertIn(
+            'for (const wrap of pane.querySelectorAll(".tablewrap")) wrap.scrollLeft = wrap.scrollWidth;',
+            SOURCE,
+        )
+
+    def test_a_wrapper_with_more_to_show_says_so(self):
+        rule = re.search(r"\.tablewrap \{(.*?)\n  \}", SOURCE, re.S).group(1)
+        self.assertIn("overflow-x: auto", rule)
+        # The scrolling-shadows pair: a panel-coloured mask that scrolls with
+        # the content, and a shadow fixed to each edge.
+        self.assertIn("background-attachment: local, local, scroll, scroll", rule)
+        self.assertEqual(rule.count("radial-gradient(farthest-side"), 2)
+
+
+class NarrowScreenTests(unittest.TestCase):
+    """Under 900 px (issue #149).
+
+    Measured at 375x812 before the fix: the header took 158.5 px, the list
+    361.75 and the person pane 291.75 -- 35.9 % of the screen for the thing
+    the page is for -- and `body { overflow: hidden }` meant there was no
+    scrolling to reclaim it. After: the same person's pane is 3,035 px tall in
+    a 3,683 px document that scrolls, with no horizontal overflow.
+    """
+
+    QUERY = re.search(r"@media \(max-width: 900px\) \{(.*?)\n  \}", SOURCE, re.S).group(1)
+
+    def test_the_document_scrolls(self):
+        self.assertIn("html, body { height: auto; }", self.QUERY)
+        self.assertIn("body { overflow: visible; }", self.QUERY)
+        self.assertIn("#person { overflow-y: visible;", self.QUERY)
+
+    def test_the_result_list_keeps_a_bounded_scroll_of_its_own(self):
+        # Otherwise the document grows by every rendered row.
+        self.assertIn("#left { max-height: none;", self.QUERY)
+        self.assertIn("#results { max-height: 46vh; }", self.QUERY)
+
+    def test_the_filters_fold_away(self):
+        self.assertIn('<button id="filterToggle" type="button" aria-controls="filters"', SOURCE)
+        self.assertIn("#filterToggle { display: inline-block; }", self.QUERY)
+        # `display: grid` on #filters beats the UA sheet's rule for [hidden],
+        # which is why this has to be said -- and why the filters come back by
+        # themselves on a wide screen whatever the button was left at.
+        self.assertIn("#filters[hidden] { display: none; }", self.QUERY)
+        self.assertIn("setFilters(!narrow.matches);", SOURCE)
+        self.assertIn('filterToggle.setAttribute("aria-expanded", String(open));', SOURCE)
+
+    def test_the_field_list_stacks(self):
+        # 260px of label beside the value leaves 100px for the value on a
+        # 375px screen.
+        self.assertIn("dl { grid-template-columns: minmax(0, 1fr);", self.QUERY)
+
+
+class BareUrlTests(unittest.TestCase):
+    def test_a_url_renders_as_a_link(self):
+        # 17 keys hold a bare http(s) URL and 802 of the 1,329 sampled
+        # records printed at least one as an 88-character string, while
+        # `appendSourceLinks` had rendered the `nuorodos` shape as anchors all
+        # along. Verified live: a 6-candidacy person's page went from 0 to 5
+        # anchors, each rel="noopener noreferrer".
+        scalar = re.search(r'if \(typeof v !== "object"\) \{(.*?)\n  \}', SOURCE, re.S).group(1)
+        self.assertIn('if (/^https?:\\/\\/\\S+$/.test(text)) {', scalar)
+        self.assertIn('a.rel = "noopener noreferrer";', scalar)
+        self.assertIn('a.target = "_blank";', scalar)
+
+
+class RoutingTests(unittest.TestCase):
+    """The URL and the screen say the same thing (issue #147).
+
+    `grep hashchange|popstate|pushState` matched nothing: the hash was read
+    once at boot, `showPerson` assigned it (one history entry per person) and
+    three views assigned `""`, so Back moved history while the pane still
+    showed the previous person and the shared URL no longer matched the
+    screen. Driven in the live page after the fix: two clicks, then Back
+    brings the first person *and their hash* back, Back again lands on the
+    empty hash with the placeholder, and Forward returns the person.
+    """
+
+    def test_the_hash_is_the_one_way_in(self):
+        self.assertIn('window.addEventListener("hashchange", routeFromHash);', SOURCE)
+        self.assertIn("function routeFromHash() {", SOURCE)
+        self.assertIn("function personFromHash() {", SOURCE)
+        # Boot routes through the same function rather than reading the hash
+        # itself.
+        self.assertIn("  routeFromHash();\n}", SOURCE)
+
+    def test_a_hash_naming_nobody_is_said_out_loud(self):
+        # Leaving the last person on screen under a stale link is the defect;
+        # the placeholder names the key that resolved to nothing.
+        self.assertIn("function showPlaceholder(message) {", SOURCE)
+        self.assertIn("Nuoroda „${key}“ nieko neatitinka.", SOURCE)
+
+    def test_the_three_header_views_do_not_claim_a_person(self):
+        # `location.hash = ""` pushes an entry and re-enters the router.
+        self.assertNotIn('location.hash = ""', SOURCE)
+        self.assertEqual(SOURCE.count("clearHash();"), 3)
+        self.assertIn(
+            'history.replaceState(null, "", location.pathname + location.search);', SOURCE
+        )
+
+    def test_a_slow_render_cannot_land_on_a_later_one(self):
+        # `fetchRecord` memoises by file, so an uncached 20-election person
+        # followed by a cached one used to end with the first rendered under
+        # the second's URL and row highlight. Driven live after the fix: the
+        # second person is on screen, under their own hash and
+        # announcement.
+        self.assertIn("let renderToken = 0;", SOURCE)
+        self.assertEqual(SOURCE.count("const token = ++renderToken;"), 2)
+        self.assertEqual(SOURCE.count("if (token !== renderToken) return;"), 2)
+        # And the three synchronous views end whatever is in flight.
+        self.assertEqual(SOURCE.count("renderToken += 1;"), 3)
+
+
+class ScreenReaderTests(unittest.TestCase):
+    """Measured in the live page before the fix: 0 elements with aria-live, 0
+    `<label>` elements, `aria-label` on `#search` null -- the six facets
+    carried only a `title` -- and `showPerson` moved no focus and announced
+    nothing while the first focusable inside `#person` was the 614th tab stop
+    (issue #147). After: 7 labels, one live region, and focus on the pane.
+    """
+
+    def test_the_search_box_and_every_facet_have_a_label(self):
+        for control in ("search", "fElection", "fParty", "fMunicipality", "fConstituency", "fRole", "fWon"):
+            with self.subTest(control):
+                self.assertIn(f'<label class="sr" for="{control}">', SOURCE)
+        rule = re.search(r"\.sr \{(.*?)\n  \}", SOURCE, re.S).group(1)
+        self.assertIn("position: absolute", rule)
+        self.assertIn("clip: rect(0 0 0 0)", rule)
+
+    def test_the_page_has_a_live_region_and_uses_it(self):
+        self.assertIn('<div id="announce" class="sr" role="status" aria-live="polite">', SOURCE)
+        self.assertIn("function announce(text) {", SOURCE)
+        # Whose record is on screen, and whether any of it failed to load.
+        self.assertIn("`${p.n}: ${fmtInt(p.e.length)}", SOURCE)
+
+    def test_a_rendered_person_takes_focus(self):
+        self.assertIn('<div id="person" tabindex="-1">', SOURCE)
+        self.assertIn("root.focus({ preventScroll: true });", SOURCE)
+        self.assertIn('root.scrollIntoView({ block: "start" });', SOURCE)
+        self.assertIn("root.scrollTop = 0;", SOURCE)
+        # Focused programmatically on every render, so the ring belongs to
+        # keyboard navigation only.
+        self.assertIn("#person:focus:not(:focus-visible) { outline: none; }", SOURCE)
+
+
+class FacetUsabilityTests(unittest.TestCase):
+    """The selects and the typing cost (issue #147)."""
+
+    def test_every_option_carries_its_label_as_a_tooltip(self):
+        # 299 of 338 nominator options were wider than their box, the widest
+        # 7.1x over, and 25 of them had a title.
+        self.assertIn("  option.title = label;", SOURCE)
+
+    def test_the_two_long_label_facets_take_the_whole_row(self):
+        self.assertIn("#fParty, #fMunicipality { grid-column: 1 / -1; }", SOURCE)
+        # Measured live after the fix: the box goes 163 -> 333 px, the
+        # nominator overflow 299 -> 123 of 338 and the municipality 50 -> 0
+        # of 63.
+
+    def test_typing_renders_once_a_burst_not_once_a_keystroke(self):
+        # renderList rebuilds 300 rows over a scan costing 14.0 ms; measured
+        # live, "KAZLAUSKAS" now renders the list once instead of ten times.
+        self.assertIn("const SEARCH_DEBOUNCE_MS = 120;", SOURCE)
+        self.assertIn("searchTimer = setTimeout(renderList, SEARCH_DEBOUNCE_MS);", SOURCE)
+        self.assertNotIn('addEventListener("input", renderList)', SOURCE)
+        # A select fires once, so the facets stay immediate.
+        self.assertIn('document.getElementById(id).addEventListener("change", renderList);', SOURCE)
+
+
+@unittest.skipIf(NODE is None, "node not installed — behavioural checks skipped")
+class FilterCompositionTests(unittest.TestCase):
+    """`candidacyMatches`, the point where every facet meets (issue #163).
+
+    `grep -rl candidacyMatches tests/` was empty: the tested predicates
+    (`inElection`, `inParty`) were covered and the function that composes them
+    with the municipality, constituency, role and tri-state outcome filters
+    was not — and three separately-filed defects sat in that gap, including
+    the dual-role outcome collapse of issue #140 and the facet scoping of
+    #155.
+    """
+
+    ELECTIONS = [
+        {"id": "2019-kovo-3-savivaldybiu-tarybu", "kind": "savivaldybiu", "date": "2019-03-03"},
+        {"id": "2020-seimo", "kind": "seimo", "date": "2020-10-11"},
+        {"id": "2021-spalio-10-meru", "kind": "mero", "date": "2021-10-10",
+         "parent": "2019-kovo-3-savivaldybiu-tarybu"},
+        {"id": "2019-prezidento", "kind": "prezidento", "date": "2019-05-12"},
+    ]
+
+    #: A council-and-mayor candidacy that won the seat and lost the mayoralty
+    #: — 448 people in 2019/2023 — plus one of each simpler shape.
+    DUAL = {"id": "2019-kovo-3-savivaldybiu-tarybu", "r": "tm", "w": True, "wt": True, "wm": False,
+            "sv": 0, "p": "ts-lkd"}
+    COUNCIL = {"id": "2019-kovo-3-savivaldybiu-tarybu", "w": False, "sv": 12, "p": "lsdp"}
+    SEIMAS = {"id": "2020-seimo", "w": True, "ap": 0, "p": "ts-lkd"}
+    NO_RESULTS = {"id": "2019-prezidento", "p": "ts-lkd"}
+    BY_ELECTION = {"id": "2021-spalio-10-meru", "r": "m", "w": True, "sv": 12}
+
+    def _matches(self, candidacy, **filters):
+        full = {"election": "", "party": "", "municipality": "", "constituency": "",
+                "role": "", "won": "", "any": True}
+        full.update(filters)
+        helpers = "\n".join(
+            re.search(pattern, SOURCE, re.S | re.M).group(0)
+            for pattern in (
+                r"^const PARTY_LINEAGE_PREFIX = .*?;$",
+                r"^const electionParent = .*?;$",
+                r"^const inElection = .*?;$",
+                r"^const inParty = \(e, value\).*?;$",
+                r"^const ROLE_BY_KIND = .*?;$",
+                r"^function rolesOf\(e\) \{.*?^\}",
+                r"^function electedAs\(e, role\) \{.*?^\}",
+                r"^function candidacyMatches\(e, f\) \{.*?^\}",
+            )
+        )
+        script = (
+            f"const ELECTIONS = new Map({json.dumps(self.ELECTIONS)}.map(e => [e.id, e]));\n"
+            "const PARTY_LINEAGES = new Map();\n"
+            f"{helpers}\n"
+            f"console.log(JSON.stringify(candidacyMatches({json.dumps(candidacy)}, {json.dumps(full)})));"
+        )
+        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        return json.loads(out.stdout)
+
+    def test_an_office_filter_reads_that_offices_outcome(self):
+        # "Meras" + "tik išrinkti" is the mayors, not the mayors plus the
+        # council winners who also stood for mayor (issue #140).
+        self.assertTrue(self._matches(self.DUAL, role="t", won="won"))
+        self.assertFalse(self._matches(self.DUAL, role="m", won="won"))
+        self.assertTrue(self._matches(self.DUAL, role="m", won="lost"))
+        # And with no office chosen the any-office flag applies.
+        self.assertTrue(self._matches(self.DUAL, won="won"))
+
+    def test_the_outcome_filter_is_tri_state(self):
+        self.assertTrue(self._matches(self.NO_RESULTS, won="unknown"))
+        self.assertFalse(self._matches(self.NO_RESULTS, won="lost"))
+        self.assertFalse(self._matches(self.NO_RESULTS, won="won"))
+        self.assertTrue(self._matches(self.COUNCIL, won="lost"))
+        self.assertFalse(self._matches(self.COUNCIL, won="unknown"))
+
+    def test_municipality_zero_is_a_municipality(self):
+        # `if (f.municipality !== "")` rather than a truthiness test: index 0
+        # is Akmenė, and `!f.municipality` would drop it.
+        self.assertTrue(self._matches(self.DUAL, municipality="0"))
+        self.assertFalse(self._matches(self.COUNCIL, municipality="0"))
+        self.assertTrue(self._matches(self.COUNCIL, municipality="12"))
+
+    def test_constituency_zero_is_a_constituency(self):
+        self.assertTrue(self._matches(self.SEIMAS, constituency="0"))
+        self.assertFalse(self._matches(self.COUNCIL, constituency="0"))
+
+    def test_the_role_comes_from_the_election_kind_or_the_candidacy(self):
+        self.assertTrue(self._matches(self.SEIMAS, role="s"))
+        self.assertFalse(self._matches(self.SEIMAS, role="t"))
+        self.assertTrue(self._matches(self.COUNCIL, role="t"))
+        self.assertTrue(self._matches(self.DUAL, role="t"))
+        self.assertTrue(self._matches(self.DUAL, role="m"))
+        self.assertTrue(self._matches(self.BY_ELECTION, role="m"))
+
+    def test_a_general_election_filter_includes_its_seat_fills(self):
+        self.assertTrue(self._matches(self.BY_ELECTION, election="2019-kovo-3-savivaldybiu-tarybu"))
+        self.assertTrue(self._matches(self.BY_ELECTION, election="2021-spalio-10-meru"))
+        self.assertFalse(self._matches(self.COUNCIL, election="2021-spalio-10-meru"))
+
+    def test_the_filters_conjoin(self):
+        self.assertTrue(
+            self._matches(self.DUAL, election="2019-kovo-3-savivaldybiu-tarybu",
+                          party="ts-lkd", municipality="0", role="t", won="won")
+        )
+        # One clause failing is enough.
+        self.assertFalse(
+            self._matches(self.DUAL, election="2019-kovo-3-savivaldybiu-tarybu",
+                          party="lsdp", municipality="0", role="t", won="won")
+        )
+
+
+@unittest.skipIf(NODE is None, "node not installed — behavioural checks skipped")
+class CsvRowTests(unittest.TestCase):
+    """The row `exportCSV` writes, which nothing exercised (issue #163).
+
+    `csvField` and `csvMoney` are pinned above; this runs the whole row
+    builder over a synthetic index, because the defects issue #149 measured
+    were in how the row *assembles* — a money column that skipped the
+    formatter, a missing election name — not in the helpers.
+    """
+
+    INDEX = {
+        "elections": [
+            {"id": "2020-seimo", "kind": "seimo", "date": "2020-10-11",
+             "name": "2020 m. spalio 11 d. Lietuvos Respublikos Seimo rinkimai",
+             "shortName": "2020 Seimas"},
+        ],
+        "municipalities": ["Akmenės rajono"],
+        "constituencies": ["Aukštaitijos"],
+        "parties": {"ts-lkd": {"n": "Tėvynės sąjunga – Lietuvos krikščionys demokratai"}},
+        "educationLevels": [{"label": "Aukštasis universitetinis"}],
+        "people": [
+            {"pid": "p1", "n": "Vardenė PAVARDENĖ", "b": "1970-01-02", "_f": "",
+             "e": [{"id": "2020-seimo", "w": True, "sv": 0, "ap": 0, "p": "ts-lkd",
+                    "v": 1234, "cv": 5678, "ed": 1, "wp": "=UAB \"Rizika\"",
+                    "m": [1234.5, 0, 98765.43, None], "lt": True, "ds": False}]},
+        ],
+    }
+
+    def _row(self):
+        helpers = "\n".join(
+            re.search(pattern, SOURCE, re.S | re.M).group(0)
+            for pattern in (
+                r"^const PARTY_LINEAGE_PREFIX = .*?;$",
+                r"^const electionParent = .*?;$",
+                r"^const inElection = .*?;$",
+                r"^const inParty = \(e, value\).*?;$",
+                r"^const ROLE_LABELS = new Map\(\[.*?\]\);$",
+                r"^const ROLE_BY_KIND = .*?;$",
+                r"^function rolesOf\(e\) \{.*?^\}",
+                r"^function electedAs\(e, role\) \{.*?^\}",
+                r"^function roleLabel\(e\) \{.*?^\}",
+                r"^function electedLabel\(e\) \{.*?^\}",
+                r"^function candidacyMatches\(e, f\) \{.*?^\}",
+                r"^function personMatches\(p, q, f\) \{.*?^\}",
+                r"^function csvField\(value\) \{.*?^\}",
+                r"^function csvMoney\(value\) \{.*?^\}",
+                r"^function exportCSV\(\) \{.*?^\}",
+            )
+        )
+        # exportCSV reads the search box and the facets, and hands the rows to
+        # a Blob and an anchor: the smallest possible stand-ins for both, so
+        # the row builder itself is what runs.
+        stubs = """
+        const INDEX = %s;
+        const ELECTIONS = new Map(INDEX.elections.map(e => [e.id, e]));
+        const PARTY_LINEAGES = new Map();
+        const fold = (s) => (s || "").toUpperCase();
+        const activeFilters = () => ({election: "", party: "", municipality: "",
+          constituency: "", role: "", won: "", any: false});
+        let captured = "";
+        globalThis.document = {
+          getElementById: () => ({ value: "" }),
+          createElement: () => ({ click() {}, set href(v) {}, get href() { return ""; } }),
+        };
+        globalThis.Blob = class { constructor(parts) { captured = parts.join(""); } };
+        globalThis.URL = { createObjectURL: () => "blob:x", revokeObjectURL() {} };
+        """ % json.dumps(self.INDEX)
+        script = f"{stubs}\n{helpers}\nexportCSV();\nconsole.log(JSON.stringify(captured));"
+        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        return json.loads(out.stdout)
+
+    def _cells(self):
+        text = self._row()
+        self.assertTrue(text.startswith("\ufeff"), "no BOM: lt-LT Excel needs one")
+        lines = text.lstrip("\ufeff").split("\r\n")
+        self.assertEqual(len(lines), 2)
+        header, row = (line.split(";") for line in lines)
+        self.assertEqual(len(header), len(row))
+        return dict(zip(header, row))
+
+    def test_the_export_is_a_bom_a_header_and_one_row_per_candidacy(self):
+        self.assertEqual(self._cells()["pid"], "p1")
+
+    def test_every_column_holds_what_it_says(self):
+        cells = self._cells()
+        self.assertEqual(cells["vardas_pavarde"], "Vardenė PAVARDENĖ")
+        self.assertEqual(cells["gimimo_data"], "1970-01-02")
+        self.assertEqual(cells["rinkimai"], "2020-seimo")
+        # The registry name beside the slug (issue #149). No `;` or `"` in it,
+        # so `csvField` leaves it unquoted.
+        self.assertEqual(
+            cells["rinkimu_pavadinimas"],
+            "2020 m. spalio 11 d. Lietuvos Respublikos Seimo rinkimai",
+        )
+        self.assertEqual(cells["data"], "2020-10-11")
+        self.assertEqual(cells["pareigos"], "Seimo narys")
+        self.assertEqual(cells["savivaldybe"], "Akmenės rajono")
+        self.assertEqual(cells["apygarda"], "Aukštaitijos")
+        self.assertEqual(cells["isrinktas"], "taip")
+        self.assertEqual(cells["pirmumo_balsai"], "1234")
+        self.assertEqual(cells["balsai_apygardoje"], "5678")
+        self.assertEqual(cells["deklaruota_litais"], "taip")
+        self.assertEqual(cells["tik_darbo_santykiu_pajamos"], "")
+
+    def test_money_is_comma_decimal_and_a_formula_is_neutralised(self):
+        cells = self._cells()
+        self.assertEqual(cells["turtas_eur"], "1234,5")
+        self.assertEqual(cells["pinigines_lesos_eur"], "0")
+        self.assertEqual(cells["pajamos_eur"], "98765,43")
+        self.assertEqual(cells["turtas_ir_lesos_eur"], "")
+        # A workplace starting with `=` is a formula to Excel.
+        self.assertEqual(cells["darboviete"], '"\'=UAB ""Rizika"""')
 
 
 if __name__ == "__main__":

@@ -1,18 +1,25 @@
 """Apply the corpus-wide value rules to the records a re-parse cannot reach.
 
+**Spent.** `--dry-run` over the corpus changes nothing, and the records it
+existed for no longer exist: **0 of 113,073** have no retained primary page
+(measured 2026-09-10, issue #159).
+
 `scripts/reparse_diff.py --full --apply` is the route for a parser fix: it
 re-parses the retained HTML and writes what the parsers now produce. Issue
 #101's rules went in that way and reached all but 38 of the corpus's 113,073
-records. What it cannot reach is the record whose page exists in neither
+records. What it could not reach was the record whose page existed in neither
 sample tree -- 4 in `2018-rugsejo-16-seimo-zanavykai`, 8 in `2019-prezidento`
 and 26 in `2019-rugsejo-8-seimo`, measured 2026-08-29 -- and those kept the
 shapes the rules exist to remove: a money column that is `int` where the rest
 of its election is `float`, a transaction sum still stored as the string
-`"22000 EUR"`, a value ending in a separator that separates nothing.
+`"22000 EUR"`, a value ending in a separator that separates nothing. Issue
+#99 refetched those pages, so the re-parse reaches every record now.
 
-Left alone, 38 records are worse than 38 stale records: they are 38 records
-that make an otherwise-uniform column non-uniform, which is exactly the thing
-#94's typed export cannot have.
+Left alone, 38 records were worse than 38 stale records: they were 38 records
+making an otherwise-uniform column non-uniform, which is exactly the thing
+#94's typed export cannot have. The primitives below are still the ones the
+parsers call, so this remains the way to apply a value rule to a record no
+re-parse can reach -- if one ever exists again.
 
 So this walks `normalized` and applies the same primitives the parsers call
 (`scraper/shared/values.py`) to what is already stored:

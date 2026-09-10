@@ -22,7 +22,7 @@ Records are written as:
 
 ## Top-Level Record
 
-Each record contains:
+Every record contains these seven:
 
 - `electionId`
 - `candidateId`
@@ -31,6 +31,20 @@ Each record contains:
 - `rawData`
 - `normalized`
 - `provenance`
+
+and most carry one or both of these two. A full-corpus root-key census finds
+exactly three key-sets — the seven (7,336 records, 8 elections), the seven
+plus `kandidatavimas` (78,259, 44), and the seven plus `kandidatavimas` and
+`candidateNote` (27,478, 4) — and `tests/test_record_shape.py` holds this
+list against `data/`:
+
+- `kandidatavimas` — the candidacy block (appendix below): a **root** field on
+  105,737 records across 47 of the 55 elections. The exceptions are the
+  1996–1999 archive family, whose eight elections carry the same block
+  *inside* `normalized`; see the section list below.
+- `candidateNote` — VRK's note beside the candidate, on 27,478 records of
+  `2016-seimo`, `2019-kovo-3-savivaldybiu-tarybu`,
+  `2023-kovo-5-savivaldybiu-tarybu-ir-meru` and `2025-kovo-16-meru`.
 
 `source` currently includes:
 
@@ -63,8 +77,12 @@ corpus by `scripts/backfill_provenance.py`:
   runs).
 - `schemaVersion` — `1`.
 
-About 0.4 % of records have no retained primary page anywhere; they carry no
-`provenance` block rather than a fabricated one.
+Every one of the 113,073 records carries the block, with exactly these five
+keys and `schemaVersion` 1 throughout. A record whose primary page is not
+retained anywhere would carry no block rather than a fabricated one — that is
+the policy, and as of the 2026-09 corpus no record is in that state. The
+field that *is* routinely absent is `parserCommit`: `null` on 49,586 records
+(43.9 %), which were written before provenance existed.
 
 ## `rawData`
 
@@ -131,25 +149,54 @@ Expected section order in current implementation:
 
 `normalized` stores analysis-ready structures.
 
-Expected section order in current implementation:
+Section order, over all 113,073 records: eleven names in one order, of which
+each record carries a subset. Nineteen distinct sequences exist and every one
+of them is this list with names left out (issue #144, which also found the
+four sections below that the list used to omit):
 
 1. `profilis`
 2. `anketa`
-3. `biografija`
-4. `turto-ir-pajamu-deklaracijos`
-5. `privaciu-interesu-deklaracija`
-6. `politines-kampanijos-dalyvio-duomenys` (optional)
-7. `kita`
+3. `kandidatavimas` — the 1996–1999 archive family only, 7,336 records of
+   eight elections. Every other election carries this block at the *root*
+   instead; see "Top-Level Record" above.
+4. `gyvenamoji-vieta` — the six 1996–1999 Seimas elections, 950 records.
+5. `biografija`
+6. `programa` — `2002-prezidento` and `2004-prezidento`, 21 records.
+7. `turto-ir-pajamu-deklaracijos`
+8. `privaciu-interesu-deklaracija`
+9. `patiketiniai` — `2014-prezidento` and `2019-prezidento`, 16 records
+   (a presidential candidate's trustees).
+10. `politines-kampanijos-dalyvio-duomenys` (optional)
+11. `kita`
 
 Notes:
 
 - Keys are source-close and often Lithuanian.
-- Section order is fixed, but a section can be absent when the source page
-  never published its tab: `gintaras-binkauskas-2016-seimo` has no
-  `biografija`, and `jonas-korsakas-2020-seimo` has neither `biografija` nor
-  `turto-ir-pajamu-deklaracijos`. Those are the only two such records in the
-  corpus, but a consumer parser should treat every section as optional rather
-  than crash on the promised order.
+- Section order is fixed, in the order listed above. Until issue #144 the two
+  modules of the 1996–1999 family disagreed about where their own
+  `kandidatavimas` goes: `scraper/shared/savivaldybiu_archive_1997.py`
+  emitted `profilis|kandidatavimas|anketa` for 6,386 records while
+  `scraper/shared/seimo_archive_1990s.py` emitted
+  `profilis|anketa|kandidatavimas` for 950. They agree now, and
+  `tests/test_record_shape.py` holds the order over every record in the
+  corpus. (`scripts/reparse_diff.py` cannot see a re-order — it compares
+  parsed objects, so it reported `0 differ` and `--apply` copied nothing —
+  and the 6,386 records were brought over from the re-parsed tree by hand
+  after checking that each was content-identical apart from `provenance`.
+  That gap between the two gates is issue #169.)
+- **A section can be absent** when the source page never published its tab, so
+  a consumer parser should treat every section as optional rather than crash
+  on the promised order. Counting only the elections that publish a section on
+  more than 99 % of their records — elsewhere its absence is the era, not a
+  gap — eleven records lose one: `biografija` on
+  `gintaras-binkauskas-2012-seimo`, `gintaras-binkauskas-2016-seimo` and
+  `jonas-korsakas-2020-seimo`; `turto-ir-pajamu-deklaracijos` on
+  `stasys-stankus-205466`, `saulius-jancys-205870` and
+  `mindaugas-kucinskas-205871` of `2002-gruodzio-22`, on
+  `genovaite-ziobakiene-2004-seimo`, on
+  `darius-juodeska-72579-2015-kovo-1-savivaldybiu` and again on
+  `jonas-korsakas-2020-seimo`; and `politines-kampanijos-dalyvio-duomenys` on
+  `algimantas-matulevicius-2009-ep` and `valdemar-tomasevski-2009-ep`.
 - Exactly three placeholder strings normalize to null: `Nenurodė`, `-` and the
   empty string. Candidate-typed "none" variants survive verbatim by design —
   an answered "none" is an answer, not an unanswered field. The variants that
@@ -1723,8 +1770,13 @@ There *is* a questionnaire, contrary to what this appendix said before
 2026-08-26: the card prints one below the candidacies, and three of its
 fields sit inside the malformed comment described below, invisible to a DOM
 parser. Issue #69 taught the parser to read all of it, so every one of the
-906 records now carries an `anketa` (the earlier text — "there is no `anketa`
-section … these pages carry no questionnaire" — was wrong).
+family's 950 records carries an `anketa` (the earlier text — "there is no
+`anketa` section … these pages carry no questionnaire" — was wrong).
+
+Every figure in this appendix is measured over all **950** records of the six
+elections. Until issue #150 five of them said 906, which is the 1996 general
+and the two 1997 repeats — the family as it stood when the appendix was
+written, before the three 1998/1999 repeats were built.
 
 - `rawData` section order: `profile`, `candidacies`, `residence`, `personal`,
   `biography`, `declaration`. `normalized` order: `profilis`, `anketa`,
@@ -1792,8 +1844,10 @@ section … these pages carry no questionnaire" — was wrong).
   recovered by regex over the raw HTML rather than through DOM parsing:
   `rawData.residence` (`Gyvenamoji vieta`), `rawData.personal.birthPlace`
   (`Gimimo vieta`) and `rawData.personal.nationality` (`Tautybė`). Each is
-  `<b>`-delimited on every page that prints it — 1,730 label occurrences,
-  1,730 captures, 0 blank across all 906 cards. The eligibility Q&A caught in
+  `<b>`-delimited on every page that prints it, and the parser captures every
+  occurrence: over the 950 records, `rawData.residence` carries a value on
+  949, `personal.birthPlace` on 873 and `personal.nationality` on 483 — the
+  gaps being cards that print the label and leave it blank. The eligibility Q&A caught in
   the same comment is deliberately **not** stored: it is the failed query's
   default rendering, identical on every page, not an answer.
 - **`rawData.personal` is the card's questionnaire**, keyed exactly as the
@@ -1804,7 +1858,7 @@ section … these pages carry no questionnaire" — was wrong).
   complete — a label the candidate left blank reads as `""` or `[]`, never a
   missing key. (`residence` is the exception, kept at `rawData.residence`
   where it has always been.) Outside the comment each label gets its own
-  paragraph: no card of the 906 puts two in one, so no stop list is needed on
+  paragraph: no card of the 950 puts two in one, so no stop list is needed on
   this side, unlike the municipal card.
 - **`normalized.anketa`** carries those under the corpus's kebab-case concept
   keys — `tautybe`, `issilavinimas`, `mokslo-laipsnis`, `pedagoginis-vardas`,
@@ -1829,14 +1883,17 @@ section … these pages carry no questionnaire" — was wrong).
     "Sutuoktinis/sutuoktinė" and "Vaikas". Two "Augintinis (ė)" and two
     "Anūkas (ė)" across the whole family belong to neither and appear only in
     `seimos-nariai`.
-  - Per-field coverage over the 906 records (1996 / 1997-03 / 1997-12):
-    `gimimo-vieta` 837/21/3, `seimine-padetis` 751/19/2, `uzsienio-kalbos`
-    710/18/4, `seimos-nariai` 697/19/4, `tautybe` 421/23/4, `issilavinimas`
-    337/19/1, `anksciau-isrinktas` 319/11/2, `mokslo-laipsnis` 161/5/2,
-    `visuomenine-veikla` 100/11/2, `pedagoginis-vardas` 84/2/0,
-    `kita-apie-save` 38/0/0, `pagrindine-darboviete` 1/23/4. That last row is
-    not a typo: the 1996 general election's candidates left the workplace
-    line blank almost universally, while both 1997 repeats filled it in.
+  - Per-field coverage over all 950 records, by election (1996-10 / 1997-03 /
+    1997-12 / 1998-03 / 1998-11 / 1999-03): `gimimo-vieta` 838/21/3/9/5/16
+    (892), `seimine-padetis` 733/19/2/6/7/12 (779), `uzsienio-kalbos`
+    710/18/4/7/10/21 (770), `seimos-nariai` 697/19/4/6/10/20 (756), `tautybe`
+    421/23/4/5/10/20 (483), `issilavinimas` 337/19/1/8/10/21 (396),
+    `anksciau-isrinktas` 317/11/2/1/6/7 (344), `mokslo-laipsnis`
+    161/5/2/0/3/2 (173), `visuomenine-veikla` 99/11/2/0/4/16 (132),
+    `pedagoginis-vardas` 84/2/0/0/2/1 (89), `kita-apie-save` 38/0/0/0/0/0
+    (38), `pagrindine-darboviete` 1/23/4/8/10/20 (66). That last row is not a
+    typo: the 1996 general election's candidates left the workplace line
+    blank almost universally, while every later repeat filled it in.
 - `rawData.biography` is `null` when the candidate page links no `Biografija`
   page (`astrauskas-vytautas` in the 1996 fixture set); otherwise
   `{"text", "birthDate", "birthYear"}` — the full free-text paragraph
@@ -1868,10 +1925,10 @@ section … these pages carry no questionnaire" — was wrong).
   does not.** `gimimo-vietos-saltinis: "biografijos-tekstas"` marks *only* the
   fallback: its presence means "derived from prose, weaker than a published
   field", and its absence means the card published the value, exactly like
-  every other era. The card supplies **852 of 906** (1996: 830, 1997-03: 20,
-  1997-12: 2); prose reaches **9** more, seven of them people born outside
-  Lithuania (Rusija, Ukraina, Krasnojarsko kraštas), whose card leaves the
-  field blank. 45 records have neither.
+  every other era. The card supplies **873 of 950**; prose reaches **19**
+  more, seven of them people born outside Lithuania (Rusija, Ukraina,
+  Krasnojarsko kraštas), whose card leaves the field blank. 58 records have
+  neither.
 
   The card's form is the same one the municipal archive family stores —
   `"Melagėnų k. , Švenčionių raj."`, spacing included — because it is
@@ -1916,16 +1973,18 @@ section … these pages carry no questionnaire" — was wrong).
   date is the one fact these pages genuinely never print. (`anketa` is
   omitted entirely when neither the card nor the biography yields anything;
   since #69 no record of this family is in that position.)
-  - Coverage over the 906 records of this family: 692 full dates (76%), 157
-    year-only, 61 neither.
+  - Coverage over the 950 records of this family: 722 full dates (76 %), 169
+    year-only, 59 neither. (The old triple here — 692/157/61 — was scoped to
+    906 records and summed to 910, which cannot partition either number.)
   - `gimimo-metai` holds the year-only cases ("Gimė 1950 m."). A year is
     **never** promoted to a birth date — it would masquerade as a stronger
     fact than it is — but since issue #96 the person index keys those
     records by name + `~year`, which keeps same-named archive candidates
     born in different years apart.
-  - Accuracy, measured: of the 149 extracted dates whose candidate shares a
-    name with a modern candidate who has a published birth date, 133 (89%)
-    match exactly. 13 of the 16 that differ are plainly different people
+  - Accuracy, measured once on 2026-08-26 over the 906 records the family
+    then held: of the 149 extracted dates whose candidate shares a name with a
+    modern candidate who has a published birth date, 133 (89 %) match
+    exactly. 13 of the 16 that differ are plainly different people
     (born decades apart); the remaining 3 are genuine disagreements between
     VRK's own biography and questionnaire (Julius Sabatauskas: 1958-03-01 in
     the biography, 1958-04-01 in the modern record), not parse failures. A

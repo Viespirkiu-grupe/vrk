@@ -20,6 +20,7 @@ import shutil
 import sqlite3
 import tempfile
 import unittest
+import unittest.mock
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -88,16 +89,26 @@ def campaign_block() -> tuple[dict, dict]:
     return normalized, raw
 
 
-def make_record(candidate_id: str, name: str) -> dict:
-    return {
+def make_record(candidate_id: str, name: str, note: str | None = ...) -> dict:
+    """A record in the corpus's own key order.
+
+    The order matters to the round trip: `reconstruct_record` rebuilds a
+    record in this order so an unpacked tree is byte-comparable with a
+    scraped one, and a fixture in a different order would make that
+    untestable (issue #156).
+    """
+    record: dict = {
         "electionId": ELECTION,
         "candidateId": candidate_id,
         "candidateName": name,
-        "source": {"candidateSourceUrl": f"https://www.vrk.lt/{candidate_id}"},
-        "kandidatavimas": {"isrinktas": False},
-        "rawData": {"profile": {"fields": {"Pavadinimas": "reikšmė"}}},
-        "normalized": {"profilis": {"vardas-pavarde": name}},
     }
+    if note is not ...:
+        record["candidateNote"] = note
+    record["kandidatavimas"] = {"isrinktas": False}
+    record["source"] = {"candidateSourceUrl": f"https://www.vrk.lt/{candidate_id}"}
+    record["rawData"] = {"profile": {"fields": {"Pavadinimas": "reikšmė"}}}
+    record["normalized"] = {"profilis": {"vardas-pavarde": name}}
+    return record
 
 
 def write_record(data_dir: Path, record: dict) -> Path:
@@ -135,13 +146,12 @@ class DistributionBuild(unittest.TestCase):
         (photos / "ona.jpg").write_bytes(JPEG)
         (photos / "jonas.jpg").write_bytes(JPEG)
 
-        ona = make_record("ona-a-1", "Ona A")
+        ona = make_record("ona-a-1", "Ona A", note="Išrinkta")
         ona["rawData"]["profile"]["photoSrc"] = "photos/ona.jpg"
         ona["rawData"]["profile"]["photoMeta"] = {
             "mime": "image/jpeg", "bytes": len(JPEG), "sha256": JPEG_SHA,
         }
         ona["normalized"]["profilis"]["nuotrauka"] = "photos/ona.jpg"
-        ona["candidateNote"] = "Išrinkta"
         normalized_campaign, raw_campaign = campaign_block()
         ona["normalized"]["politines-kampanijos-dalyvio-duomenys"] = normalized_campaign
         ona["rawData"]["politinesKampanijosDalyvioDuomenys"] = raw_campaign
@@ -166,7 +176,13 @@ class DistributionBuild(unittest.TestCase):
         petras["rawData"]["profile"]["photoSrc"] = "https://www.vrk.lt/petras.jpg"
         del petras["kandidatavimas"]
 
-        cls.records = {r["candidateId"]: r for r in (ona, jonas, petras)}
+        # `candidateNote` present *and null* — the shape 27,472 of the 27,478
+        # records that carry the key have, and the one a TEXT column could
+        # not tell from absent, so the round trip dropped the key on every
+        # one of them while three places called it lossless (issue #156).
+        rasa = make_record("rasa-d-4", "Rasa D", note=None)
+
+        cls.records = {r["candidateId"]: r for r in (ona, jonas, petras, rasa)}
         for record in cls.records.values():
             write_record(data_dir, record)
         (data_dir / "anomalies.jsonl").write_text(
@@ -200,7 +216,7 @@ class DistributionBuild(unittest.TestCase):
     def test_records_round_trip_less_only_the_public_profile_redactions(self):
         connection = self.corpus_connection()
         rows = connection.execute("SELECT * FROM records ORDER BY candidate_id").fetchall()
-        self.assertEqual(len(rows), 3)
+        self.assertEqual(len(rows), len(self.records))
         for row in rows:
             self.assertEqual(row["record_file"], f"{row['candidate_id']}.json")
             rebuilt = dist_mod.reconstruct_record(row)
@@ -264,7 +280,8 @@ class DistributionBuild(unittest.TestCase):
             tables,
         )
         self.assertEqual(
-            connection.execute("SELECT COUNT(*) FROM candidacies").fetchone()[0], 3
+            connection.execute("SELECT COUNT(*) FROM candidacies").fetchone()[0],
+            len(self.records),
         )
         anomalies = connection.execute("SELECT election_id, event_json FROM anomalies").fetchall()
         self.assertEqual(len(anomalies), 1)
@@ -274,11 +291,18 @@ class DistributionBuild(unittest.TestCase):
     def test_manifest_checksums_match_the_artifacts(self):
         manifest = json.loads((self.dist / "MANIFEST.json").read_text(encoding="utf-8"))
         self.assertRegex(manifest["version"], r"^corpus-\d{4}-\d{2}-\d{2}$")
-        self.assertTrue(manifest["parserCommit"])
-        self.assertEqual(manifest["counts"]["records"], 3)
+        # This build's own commit, dirty-aware, and the schema of what it
+        # wrote — a release used to say neither (issue #156).
+        self.assertTrue(manifest["buildCommit"])
+        self.assertEqual(manifest["schemaVersion"], dist_mod.SCHEMA_VERSION)
+        # The corpus is not from one commit, and the manifest says so: one
+        # of these four records carries a parserCommit and three carry none.
+        self.assertEqual(manifest["corpusParserCommits"], {"none": 3, "959f055": 1})
+        self.assertEqual(manifest["counts"]["records"], len(self.records))
         self.assertEqual(manifest["counts"]["photos"], 1)
+        self.assertEqual(manifest["counts"]["photoRecords"], 2)
         self.assertEqual(manifest["counts"]["anomalies"], 1)
-        self.assertEqual(manifest["recordsPerElection"], {ELECTION: 3})
+        self.assertEqual(manifest["recordsPerElection"], {ELECTION: len(self.records)})
         self.assertEqual(manifest["subset"], [ELECTION])
         # The profile and what it did (issue #142).
         self.assertEqual(manifest["profile"], "public")
@@ -317,8 +341,168 @@ class DistributionBuild(unittest.TestCase):
             )
         with gzip.open(self.dist / "candidacies.csv.gz", "rt", encoding="utf-8") as handle:
             rows = list(csv.reader(handle))
-        self.assertEqual(len(rows), 4)  # header + three candidacies
+        self.assertEqual(len(rows), len(self.records) + 1)  # header + one row each
         self.assertEqual(rows[0][:2], ["person_id", "election_id"])
+
+
+class CorpusRoundTrip(unittest.TestCase):
+    """`scripts/unpack_corpus.py`: the release turned back into `data/`.
+
+    Until issue #156 nothing in the repository read a release asset — 0 of
+    the 21 scripts — so the corpus the download came from could not be
+    reassembled from it. `reconstruct_record` existed and was called by one
+    test.
+
+    A `full`-profile build round-trips exactly: same records, same key order,
+    same bytes for every portrait, and the anomaly file back beside them.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.root = make_repo_root()
+        cls.addClassCleanup(shutil.rmtree, cls.root, ignore_errors=True)
+        data_dir = cls.root / "data" / ELECTION
+        (data_dir / "photos").mkdir()
+        (data_dir / "photos" / "ona.jpg").write_bytes(JPEG)
+
+        ona = make_record("ona-a-1", "Ona A", note="Išrinkta")
+        ona["rawData"]["profile"]["photoSrc"] = "photos/ona.jpg"
+        ona["rawData"]["profile"]["photoMeta"] = {
+            "mime": "image/jpeg", "bytes": len(JPEG), "sha256": JPEG_SHA,
+        }
+        ona["normalized"]["profilis"]["nuotrauka"] = "photos/ona.jpg"
+        # Present and null: the shape the round trip dropped on 27,472
+        # records of the real corpus.
+        rasa = make_record("rasa-d-4", "Rasa D", note=None)
+        cls.records = {r["candidateId"]: r for r in (ona, rasa)}
+        cls.paths = {cid: write_record(data_dir, r) for cid, r in cls.records.items()}
+        (data_dir / "anomalies.jsonl").write_text(
+            json.dumps({"stage": "parse", "type": "TestEvent", "electionId": ELECTION}) + "\n",
+            encoding="utf-8",
+        )
+        cls.dist = cls.root / "dist"
+        assert dist_mod.build_distribution(cls.root, cls.dist, [ELECTION], profile="full") == 0
+
+        spec = importlib.util.spec_from_file_location(
+            "unpack_corpus", REPO_ROOT / "scripts" / "unpack_corpus.py"
+        )
+        cls.unpack = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(cls.unpack)
+
+        cls.into = cls.root / "unpacked"
+        cls.counts, cls.problems = cls.unpack.unpack(
+            cls.dist / "vrk-corpus.sqlite", cls.into
+        )
+
+    def test_it_writes_every_record_with_no_problems(self):
+        self.assertEqual(self.problems, [])
+        self.assertEqual(self.counts["records"], len(self.records))
+        self.assertEqual(self.counts["elections"], 1)
+        self.assertEqual(self.counts["photos"], 1)
+        self.assertEqual(self.counts["anomalies"], 1)
+
+    def test_every_record_comes_back_key_for_key_in_order(self):
+        for candidate_id, original in self.records.items():
+            with self.subTest(candidate_id):
+                path = self.into / ELECTION / f"{candidate_id}.json"
+                self.assertTrue(path.is_file())
+                rebuilt = json.loads(path.read_text(encoding="utf-8"))
+                self.assertEqual(rebuilt, original)
+                self.assertEqual(list(rebuilt), list(original), "key order moved")
+
+    def test_a_present_and_null_note_survives(self):
+        rebuilt = json.loads(
+            (self.into / ELECTION / "rasa-d-4.json").read_text(encoding="utf-8")
+        )
+        self.assertIn("candidateNote", rebuilt)
+        self.assertIsNone(rebuilt["candidateNote"])
+
+    def test_the_portrait_comes_back_byte_identical(self):
+        self.assertEqual((self.into / ELECTION / "photos" / "ona.jpg").read_bytes(), JPEG)
+
+    def test_the_anomaly_file_comes_back(self):
+        events = (self.into / ELECTION / "anomalies.jsonl").read_text(encoding="utf-8").splitlines()
+        self.assertEqual(len(events), 1)
+        self.assertEqual(json.loads(events[0])["type"], "TestEvent")
+
+    def test_the_unpacked_tree_is_the_scraped_tree(self):
+        # What a `diff -r` sees: the same files, and the same JSON in each.
+        original = sorted(p.name for p in (self.root / "data" / ELECTION).rglob("*") if p.is_file())
+        unpacked = sorted(p.name for p in (self.into / ELECTION).rglob("*") if p.is_file())
+        self.assertEqual(original, unpacked)
+
+    def test_it_refuses_a_database_with_no_records_table(self):
+        with self.assertRaises(SystemExit):
+            self.unpack.unpack(self.dist / "vrk.sqlite", self.root / "nope")
+
+    def test_it_refuses_an_election_the_database_does_not_hold(self):
+        with self.assertRaises(SystemExit):
+            self.unpack.unpack(self.dist / "vrk-corpus.sqlite", self.root / "nope", ["2029-seimo"])
+
+    def test_both_databases_say_what_they_are(self):
+        for name, expected in (
+            ("vrk-corpus.sqlite", {"records", "photos"}),
+            ("vrk.sqlite", {"candidacies", "elections"}),
+        ):
+            with self.subTest(name):
+                connection = sqlite3.connect(self.dist / name)
+                try:
+                    meta = dict(connection.execute("SELECT key, value FROM meta"))
+                    version = connection.execute("PRAGMA user_version").fetchone()[0]
+                finally:
+                    connection.close()
+                self.assertEqual(int(meta["schemaVersion"]), dist_mod.SCHEMA_VERSION)
+                self.assertEqual(version, dist_mod.SCHEMA_VERSION)
+                self.assertEqual(meta["profile"], "full")
+                self.assertTrue(meta["buildCommit"])
+                self.assertEqual(meta["dataLicense"], dist_mod.DATA_LICENSE)
+                self.assertTrue(set(meta) & {"records", "candidacies"})
+
+
+class RealElectionRoundTrip(unittest.TestCase):
+    """The same round trip over a real election, byte for byte.
+
+    The synthetic one above pins the shapes; this one answers the question a
+    downloader actually has — does the release rebuild the corpus? — against
+    records the scrapers wrote. It skips without a corpus, like every other
+    whole-corpus check.
+    """
+
+    ELECTION = "2019-prezidento"
+
+    def test_a_full_build_unpacks_to_the_corpus_it_came_from(self):
+        from tests import local_data
+
+        source = REPO_ROOT / "data" / self.ELECTION
+        local_data.require(source)
+        with tempfile.TemporaryDirectory() as tmp:
+            dist = Path(tmp) / "dist"
+            self.assertEqual(
+                dist_mod.build_distribution(REPO_ROOT, dist, [self.ELECTION], profile="full"), 0
+            )
+            spec = importlib.util.spec_from_file_location(
+                "unpack_corpus", REPO_ROOT / "scripts" / "unpack_corpus.py"
+            )
+            unpack = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(unpack)
+            into = Path(tmp) / "unpacked"
+            counts, problems = unpack.unpack(dist / "vrk-corpus.sqlite", into)
+            self.assertEqual(problems, [])
+
+            originals = sorted(p for p in source.rglob("*") if p.is_file())
+            self.assertEqual(counts["records"], sum(1 for p in originals if p.suffix == ".json"))
+            for original in originals:
+                relative = original.relative_to(source)
+                with self.subTest(str(relative)):
+                    rebuilt = into / self.ELECTION / relative
+                    self.assertTrue(rebuilt.is_file(), f"{relative} was not written")
+                    self.assertEqual(
+                        rebuilt.read_bytes(), original.read_bytes(), f"{relative} differs"
+                    )
+            self.assertEqual(
+                sorted(p.relative_to(into / self.ELECTION) for p in (into / self.ELECTION).rglob("*") if p.is_file()),
+                sorted(p.relative_to(source) for p in originals),
+            )
 
 
 class FullProfileBuild(unittest.TestCase):
@@ -390,6 +574,164 @@ class RedactionTests(unittest.TestCase):
         for entry in record["normalized"]["politines-kampanijos-dalyvio-duomenys"]:
             self.assertNotIn("telefonas", entry["izdininkas"])
             self.assertNotIn("el-pastas", entry["auditorius"])
+
+
+class CompletenessGate(unittest.TestCase):
+    """A build that names no election claims the whole archive (issue #132).
+
+    Measured before the gate: a `data/` holding 2 of the 55 registered
+    elections, built as a *full* build, exited 0, printed "Fill gate: no
+    findings", wrote all five assets and offered its `gh release create`
+    line — and its MANIFEST was indistinguishable in shape from a
+    113,073-record one, since a full build writes no `subset` key. Nothing
+    could see it: `elections_present` is whatever is under `data/` and only
+    an unregistered directory raised, the fill gate iterates cells and a
+    wholly absent election has none, and the two-pass record count compares
+    two passes over the same truncated list.
+    """
+
+    def _root_with(self, election_ids: list[str]) -> Path:
+        root = make_repo_root()
+        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        for election_id in election_ids:
+            data_dir = root / "data" / election_id
+            data_dir.mkdir(parents=True, exist_ok=True)
+            record = make_record("kazys-x-9", "Kazys X")
+            record["electionId"] = election_id
+            write_record(data_dir, record)
+        return root
+
+    def test_a_full_build_over_a_partial_corpus_refuses_before_writing(self):
+        root = self._root_with([ELECTION])
+        dist = root / "dist"
+        with self.assertRaises(SystemExit) as raised:
+            dist_mod.build_distribution(root, dist, None)
+        message = str(raised.exception)
+        self.assertIn("of the 55 registered elections", message)
+        self.assertIn("54 missing", message)
+        self.assertIn("1996-spalio-20-seimo", message)
+        self.assertIn("and 34 more", message)
+        self.assertFalse(dist.exists(), "nothing may be written before the corpus is checked")
+
+    def test_naming_the_elections_is_the_way_to_build_a_subset(self):
+        root = self._root_with([ELECTION])
+        dist = root / "dist"
+        self.assertEqual(dist_mod.build_distribution(root, dist, [ELECTION]), 0)
+        manifest = json.loads((dist / "MANIFEST.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["subset"], [ELECTION])
+        self.assertEqual(manifest["counts"]["elections"], 1)
+        self.assertEqual(manifest["counts"]["electionsRegistered"], 55)
+
+    def test_the_manifest_says_what_a_complete_corpus_would_hold(self):
+        # Without this a consumer cannot ask whether a release is the whole
+        # archive: `counts.elections` alone is just a number.
+        root = self._root_with([ELECTION])
+        dist = root / "dist"
+        dist_mod.build_distribution(root, dist, [ELECTION])
+        manifest = json.loads((dist / "MANIFEST.json").read_text(encoding="utf-8"))
+        registered = len(
+            json.loads((REPO_ROOT / "scraper" / "elections.json").read_text(encoding="utf-8"))[
+                "elections"
+            ]
+        )
+        self.assertEqual(manifest["counts"]["electionsRegistered"], registered)
+
+
+class BuildAtomicity(unittest.TestCase):
+    """A build that dies partway leaves `dist/` as it was (issue #132).
+
+    The assets were written straight into `dist/` and MANIFEST.json last, so
+    a record whose envelope had moved — or a Ctrl-C, a full disk or an OOM
+    during the 2.5 GB corpus write — left MANIFEST describing the *previous*
+    build, candidacies.csv.gz from this one, three assets from the old,
+    `gzip.decompress(vrk.sqlite.gz) != vrk.sqlite`, and `SELECT COUNT(*) FROM
+    records` = 0 on a database whose `PRAGMA integrity_check` said ok. The
+    error mentioned none of it.
+    """
+
+    def _root(self) -> Path:
+        root = make_repo_root()
+        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        data_dir = root / "data" / ELECTION
+        data_dir.mkdir(parents=True, exist_ok=True)
+        write_record(data_dir, make_record("kazys-x-9", "Kazys X"))
+        return root
+
+    @staticmethod
+    def _snapshot(dist: Path) -> dict[str, str]:
+        return {
+            path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+            for path in sorted(dist.iterdir())
+            if path.is_file()
+        }
+
+    def test_a_failed_second_build_leaves_the_first_intact(self):
+        root = self._root()
+        dist = root / "dist"
+        self.assertEqual(dist_mod.build_distribution(root, dist, [ELECTION]), 0)
+        before = self._snapshot(dist)
+        self.assertIn("MANIFEST.json", before)
+
+        # An envelope key that appeared: read only by the corpus writer, which
+        # runs after both CSVs and the analysis database are written. (It used
+        # to be a `candidateNote` of the wrong type, which the note's own
+        # column rejected; the column holds JSON since issue #156, so a dict
+        # there is legal and this is the check that still fires late.)
+        record_path = next((root / "data" / ELECTION).glob("*.json"))
+        record = json.loads(record_path.read_text(encoding="utf-8"))
+        record["candidateWeather"] = "the envelope changed shape"
+        record_path.write_text(json.dumps(record, ensure_ascii=False), encoding="utf-8")
+
+        with self.assertRaises(SystemExit):
+            dist_mod.build_distribution(root, dist, [ELECTION])
+
+        self.assertEqual(self._snapshot(dist), before, "dist/ must be byte-identical")
+        self.assertEqual(
+            [p.name for p in dist.iterdir() if p.name.startswith(".staging")],
+            [],
+            "the staging directory must be removed on any exit",
+        )
+
+    def test_the_manifest_never_outlives_the_assets_it_checksums(self):
+        # The one invariant a reader can rely on through a promotion: either
+        # there is no manifest, or it matches what sits beside it.
+        root = self._root()
+        dist = root / "dist"
+        dist_mod.build_distribution(root, dist, [ELECTION])
+        manifest = json.loads((dist / "MANIFEST.json").read_text(encoding="utf-8"))
+        for name, artifact in manifest["artifacts"].items():
+            with self.subTest(name):
+                self.assertEqual(
+                    hashlib.sha256((dist / name).read_bytes()).hexdigest(), artifact["sha256"]
+                )
+
+    def test_promote_removes_the_old_manifest_before_moving_an_asset(self):
+        order: list[str] = []
+        root = self._root()
+        dist = root / "dist"
+        dist.mkdir(parents=True)
+        staging = dist / ".staging-test"
+        staging.mkdir()
+        for name in dist_mod.BUILD_OUTPUTS + ("MANIFEST.json",):
+            (staging / name).write_bytes(b"new")
+            (dist / name).write_bytes(b"old")
+
+        real_replace, real_unlink = dist_mod.os.replace, Path.unlink
+
+        def replace(src, dst):
+            order.append(f"replace {Path(dst).name}")
+            real_replace(src, dst)
+
+        def unlink(self, **kwargs):
+            order.append(f"unlink {self.name}")
+            real_unlink(self, **kwargs)
+
+        with unittest.mock.patch.object(dist_mod.os, "replace", replace):
+            with unittest.mock.patch.object(Path, "unlink", unlink):
+                dist_mod.promote(staging, dist)
+
+        self.assertEqual(order[0], "unlink MANIFEST.json")
+        self.assertEqual(order[-1], "replace MANIFEST.json")
 
 
 class RefusedCorruption(unittest.TestCase):

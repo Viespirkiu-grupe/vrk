@@ -33,40 +33,73 @@ removed from the corpus instead of documented (issues #86 and #91).
 
 ## Record anatomy
 
-Seven top-level fields on every record:
+Seven top-level fields on every record, and two more on most of them. A
+full-corpus root-key census (`tests/test_record_shape.py`, which holds this
+list against `data/`) finds exactly three key-sets, and no others:
+
+| records | elections | root fields |
+| --- | --- | --- |
+| 78,259 | 44 | the seven, plus `kandidatavimas` |
+| 27,478 | 4 | the seven, plus `kandidatavimas` and `candidateNote` |
+| 7,336 | 8 | the seven |
+
+The seven:
 
 - `electionId`, `candidateId`, `candidateName`
 - `source` — the VRK page URL(s) the record was parsed from
 - `rawData` — source-close parse of the page, camelCase sections
   (`profile`, `anketa`, `turtoIrPajamuDeklaracijos`, …)
-- `normalized` — the analysis-ready layer, Lithuanian kebab-case sections
-  (`profilis`, `anketa`, `biografija`, `turto-ir-pajamu-deklaracijos`,
-  `privaciu-interesu-deklaracija`, `politines-kampanijos-dalyvio-duomenys`,
-  `kita`)
+- `normalized` — the analysis-ready layer, Lithuanian kebab-case sections in
+  one fixed order (`profilis`, `anketa`, `kandidatavimas`,
+  `gyvenamoji-vieta`, `biografija`, `programa`,
+  `turto-ir-pajamu-deklaracijos`, `privaciu-interesu-deklaracija`,
+  `patiketiniai`, `politines-kampanijos-dalyvio-duomenys`, `kita`), of which
+  each record carries a subset — the last five names of that list are one
+  election family or two elections each, and
+  [docs/OUTPUT_SCHEMA.md](OUTPUT_SCHEMA.md#normalized) says which
 - `provenance` — when the primary page was fetched, when this record was
   parsed, by parsers at which commit, and the source page's sha256
-  ([docs/OUTPUT_SCHEMA.md](OUTPUT_SCHEMA.md#provenance)). Compare records by
-  content, not by `parsedAt`/`parserCommit` — those stamp the parse run.
-  Absent only where no page is retained (a handful of records).
+  ([docs/OUTPUT_SCHEMA.md](OUTPUT_SCHEMA.md#provenance)). Every one of the
+  113,073 records carries it, with the same five keys and `schemaVersion` 1.
+  Compare records by content, not by `parsedAt`/`parserCommit` — those stamp
+  the parse run, and `parserCommit` is `null` on 49,586 records (43.9 %),
+  which were written before provenance existed.
+
+And the two:
+
+- `kandidatavimas` — the candidacy block: municipality, role(s), party list
+  (`tarybosNarys.partyList.{id, number, name}`), list positions, per-role
+  `elected` flags and the results-join source URLs. A **root** field on
+  105,737 records across 47 of the 55 elections. The eight exceptions are the
+  1996–1999 archive family (`1996-spalio-20-seimo`, the five 1997–1999 Seimas
+  repeats, and the two 1997 municipal elections), which carry the same block
+  *inside* `normalized` instead — so a consumer that walks the root for it
+  finds nothing there for 7,336 records.
+- `candidateNote` — VRK's own note beside the candidate, on 27,478 records of
+  four elections: `2016-seimo`, `2019-kovo-3-savivaldybiu-tarybu`,
+  `2023-kovo-5-savivaldybiu-tarybu-ir-meru` and `2025-kovo-16-meru`.
 
 Query `normalized`; fall back to `rawData` when you need the verbatim source
 text (nearly every normalized value is traceable to a byte-identical string
-there). Sections can be absent — two records are missing sections upstream
-(`gintaras-binkauskas-2016-seimo` has no `biografija`;
-`jonas-korsakas-2020-seimo` has neither `biografija` nor
-`turto-ir-pajamu-deklaracijos`) — so do not assume fixed section presence.
-
-The municipal elections extend the envelope: `candidateNote` (both municipal
-generals and `2025-kovo-16-meru`) and `kandidatavimas` (the two municipal
-generals only) — a camelCase block carrying municipality, role(s), party
-list (`tarybosNarys.partyList.{id, number, name}`), list positions and
-per-role `elected` flags.
+there). **Sections can be absent**, so do not assume fixed section presence.
+Counting only the elections that publish a section on more than 99 % of their
+records — elsewhere its absence is the era, not a gap — eleven records lose
+one: `biografija` on `gintaras-binkauskas-2012-seimo`,
+`gintaras-binkauskas-2016-seimo` and `jonas-korsakas-2020-seimo`;
+`turto-ir-pajamu-deklaracijos` on three of `2002-gruodzio-22`
+(`stasys-stankus-205466`, `saulius-jancys-205870`,
+`mindaugas-kucinskas-205871`), on `genovaite-ziobakiene-2004-seimo`, on
+`darius-juodeska-72579-2015-kovo-1-savivaldybiu` and again on
+`jonas-korsakas-2020-seimo`; and
+`politines-kampanijos-dalyvio-duomenys` on `algimantas-matulevicius-2009-ep`
+and `valdemar-tomasevski-2009-ep`.
 
 ## Cross-election invariants
 
 **Money.** `turto-ir-pajamu-deklaracijos` carries the same eleven value keys on
 every election from 2004 on — the ones whose pages publish the declaration as
-titled sections — at 100% presence:
+titled sections — at 100 % presence *of the records that have the section*,
+which is all but the six named under Record anatomy above:
 
 - `privalomas-registruoti-turtas`
 - `vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai`
@@ -315,10 +348,13 @@ by law (see the next section for the canonical party join).
 ## Joining people across elections
 
 There is **no cross-election person id**. The `rkndId` in candidate URLs is
-a per-election registration id, and `candidateId` comes in two formats: a
-name slug with positional `-2`/`-3` suffixes for namesakes (18 elections)
-vs name-slug-plus-VRK-candidate-id (`ada-grakauskiene-2420696`) in the two
-municipal generals. Never join on it.
+a per-election registration id, and `candidateId` comes in two formats. A
+name slug plus VRK's own candidate id (`ada-grakauskiene-2420696`) is the
+form on **92,357 records of seven elections** — every municipal general from
+2000 on. Everywhere else it is the name slug alone, with a positional
+`-2`/`-3` suffix where two candidates of one election slug the same way:
+**64 records over nine elections**, 47 of them in the 1997 municipal general.
+Never join on it.
 
 The tested recipe (measured in [DASHBOARD.md](DASHBOARD.md)): **normalized
 name + birth key** — NFC-normalize, uppercase and whitespace-collapse the
@@ -483,8 +519,9 @@ and none of it is canonicalised by the registry.
   having declared nothing.
 - **Pre-2016 money is in litas, and the rule is data-driven: divide by
   3.4528 whenever `valiuta == "Lt"`.** That key is `"Lt"` on every record
-  that carries a declaration block from 1996 through 2015 — all 79,071 of
-  them, not just the 2004–2015 slice an earlier revision of this page named
+  that carries a declaration block from 1996 through 2015 — all 79,098 of
+  them over 34 elections, not just the 2004–2015 slice an earlier revision of
+  this page named
   — and absent from 2016 on. **No record anywhere says `"EUR"`**: in the
   stored corpus the euro era is marked by the key's absence, so a consumer
   who checks for `"EUR"` converts nothing.
@@ -509,21 +546,33 @@ and none of it is canonicalised by the registry.
   "photo" is a ZIP archive, stored as `.zip`, and a handful of portraits VRK
   serves as PNG bytes under a `.jpg` URL are stored as `.png`, because the
   extension follows the bytes.
-- **20 values still hold a replacement character, and that is VRK's.**
-  `U+FFFD` reached the corpus in 203 values. Fetching one of those pages live
-  returns the replacement character in VRK's own bytes, so the original was
-  destroyed upstream and no re-decode recovers it. 30 of them were the whole
-  value (a NUL byte where a biography should be) and normalize to `null`; 153
-  stood where a Lithuanian opening quote belongs, closed by a `"` that proves
-  the pair, and are restored to `„` (`AB „Lietuvos geležinkeliai"`). The
-  remaining **20 have nothing to prove what they were and are left as
-  published** rather than guessed at — 9 in `2000-seimo`, 9 in `2004-seimo`,
-  2 in `2004-ep`. `tests/test_corpus_value_hygiene.py` pins that 20 so it
-  cannot grow.
-- **`VšĮ` is not a parsing bug.** 20,651 normalized values contain a
+- **6 values still hold a replacement character, and it is never a
+  recoverable quote.** `U+FFFD` reached the corpus in 203 values. Fetching one of those
+  pages live returns the character in VRK's own bytes, so the original was
+  destroyed upstream and no re-decode recovers it — but the *character it
+  stood for* is often recoverable from the surviving half of a pair, and 194
+  of the 203 now are: 30 were the whole value (a NUL byte where a biography
+  should be) and normalize to `null`; 153 opened a phrase a closing quote
+  ends and are restored to `„` (`AB „Lietuvos geležinkeliai"`); 8 *closed*
+  one an opening glyph begins; 2 opened one VRK followed with a space; 1 was
+  a bracket.
+  What is left is two classes. Five `2000-seimo` biographies hold a
+  destroyed *letter* — a `š` or `Š` inside a Lithuanian word (`i�rinktas`,
+  `Roki�kio`, `vir�ininku`), on pages where the same words appear correctly
+  elsewhere; a rule that turned an in-word replacement into `š` would be
+  right on all five and wrong the first time the lost byte was a `ž`. And
+  one `2004-seimo` biography holds four closing quotes whose *opening*
+  partner VRK also lost, to a hyphen (`-Termoizoliacija�`, `-Lietuvos
+  rytas�`) — there is no surviving quote glyph to pair against, and "a
+  hyphen opens a quotation" is not a rule this corpus can afford. Both are
+  **left as published**, and `tests/test_corpus_value_hygiene.py` pins the 6
+  so the class cannot grow. (The old account called all 20 survivors quotes
+  with no closing partner, which was false for every one — issue #164.)
+- **`VšĮ` is not a parsing bug.** 20,711 normalized values contain a
   lowercase letter immediately followed by an uppercase one, which reads like
-  a lost line break. It is not: 13,158 of them are the legal-form
-  abbreviation `VšĮ`, and the rest are company names (`UAB "inChase"`, `DnB`,
+  a lost line break. It is not: 12,950 of them carry the legal-form
+  abbreviation `VšĮ` (13,224 occurrences of it), and the rest are company
+  names (`UAB "inChase"`, `DnB`,
   `GmbH`, `StepArc`) and VRK's own typing (`kAUNO`, `Partija tTvarka`). A
   sample of 835 such junctions checked against the retained HTML found 797
   present verbatim, with no tag boundary between the two letters, and the

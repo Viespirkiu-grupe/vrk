@@ -2,18 +2,39 @@
 
 One person appears in many elections under no shared VRK identifier — the
 per-election rkndId is a registration id, not a person id — so identity is
-resolved by normalized name + birth date. Measured over the 33,119-record
-corpus: birth date is present on 33,118 records, the pair collides for zero
-same-election record pairs, and 305 names are shared by people with distinct
-birth dates, which name-only matching would have wrongly merged. A record
-without a birth date groups by name alone and is flagged; there were two
-before the 1996-1998 Seimas archive family was added, and the second is a
-known duplicate rather than a second person. VRK issued Marija Puč two
-candidate ids in the 2015 Trakai repeat election and published the council
-one as an unfilled "Rengiama" page, so that record has a name and no birth
-date and splits off from her real entry. Merging it on name alone is exactly
-what the birth-date key exists to prevent, so it is left split and recorded
-here instead — see docs/DATASET.md.
+resolved by normalized name + birth date. What the run prints is the current
+measurement and this paragraph does not repeat it: it used to state the
+figures from a 33,119-record corpus ("birth date present on 33,118 records…
+there were two" without one) against a corpus three times the size, and
+contradicted itself twenty lines later (issue #141).
+
+Today, over 113,073 records: 64 carry no birth date and group by name alone,
+170 carry a birth *year* only and group by name + `~year`, and the pair
+collides for zero same-election record pairs — which is the property the key
+rests on, and the one the review below uses as a discriminator in the other
+direction. VRK issued Marija Puč two candidate ids in the 2015 Trakai repeat
+election and published the council one as an unfilled "Rengiama" page, so
+that record has a name and no birth date and splits off from her real entry.
+Merging it on name alone is exactly what the birth-date key exists to
+prevent, so it is left split and recorded in the override file as `distinct`
+— see docs/DATASET.md.
+
+A short key is not a second person, though, and 147 of them were being read
+as one: a person whose 1996-1999 archive pages publish no birth date and
+whose later pages do had a `NAME|?` or `NAME|~YYYY` entry beside their real
+one, with 154 candidacies on the wrong side of it (issue #141). 145 of those
+are merged now, on the evidence that the name has exactly one full-date
+bearer, the year agrees where the fragment states one, the birthplace or
+education entries corroborate on 120 of them, and no pair stands in one
+election; two are recorded `distinct`, one because both halves stand in the
+2015 Trakai repeat and one because the full-date half would have been 14 at
+the 1996 election its namesake contested. Twelve more merges came from the
+same review's other new pass — one birth date, one surname and two spellings
+of one given name (VIKTOR/VIKTORAS USPASKICH, EDUARD/EDVARD TRUSEVIČ) — and
+21 pairs of that shape are recorded `distinct` because both halves stand in
+one election, which nobody does twice.
+`scripts/find_identity_merge_candidates.py` is the review that finds all of
+them, and until #141 it could not form a single such pair.
 
 The 1996-1998 Seimas archive family (`1996-spalio-20-seimo`,
 `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`;
@@ -74,6 +95,7 @@ check.
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import re
@@ -96,6 +118,7 @@ from scraper.shared.kandidatura import ROLE_COUNCIL, ROLE_MAYOR, kandidatura  # 
 from scraper.shared.parties import entry as party_entry  # noqa: E402
 from scraper.shared.parties import partija  # noqa: E402
 from scraper.shared.provenance import parser_commit, utc_now_iso  # noqa: E402
+from scraper.shared.files import write_json  # noqa: E402
 
 import field_coverage  # noqa: E402
 
@@ -341,11 +364,18 @@ def apply_merges(
     former: dict[str, list[str]] = defaultdict(list)
     unmatched: list[str] = []
     for decision in overrides.get("decisions", []):
+        keys = [canonical_of.get(k, k) for k in decision["keys"]]
+        # Key presence is checked for *every* decision, before the merge
+        # guard (issue #141). It used to sit after it, so a `distinct` whose
+        # key had gone stale -- a name corrected upstream, a birth date
+        # recovered -- failed nothing, although the override file says a key
+        # matching no person fails the build. A stale `distinct` is worse
+        # than a stale `merge`: it silently stops being a decision at all,
+        # and the pair goes back to being an unreviewed finding.
+        unmatched.extend(k for k in keys if k not in grouped)
         if decision.get("decision") != "merge":
             continue
-        keys = [canonical_of.get(k, k) for k in decision["keys"]]
         present = sorted({k for k in keys if k in grouped})
-        unmatched.extend(k for k in keys if k not in grouped)
         if len(present) < 2:
             continue
 
@@ -661,15 +691,37 @@ def build_index(
 
 
 def main() -> int:
+    # An argparse even though there are no options, so `--help` prints the
+    # docstring instead of walking 113,073 records and overwriting the 29 MB
+    # artifact (issue #159).
+    argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    ).parse_args()
+
     if not DATA_ROOT.is_dir():
         print(f"No {DATA_ROOT}/ here — run from the repo root.", file=sys.stderr)
         return 1
     index = build_index(DATA_ROOT)
-    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT_PATH.write_text(
-        json.dumps(index, ensure_ascii=False, separators=(",", ":")),
-        encoding="utf-8",
-    )
+
+    # The checks come before the write, not after it. With an unregistered
+    # election present this printed "wrote dashboard/people.json (28600 KB)"
+    # over 114,813 records and *then* exited 1 — so a caller reading the exit
+    # code had already shipped the file, and a caller reading stdout had a
+    # success line over a rejected build (issue #159).
+    problems = index_problems(index)
+    if problems:
+        for line in problems:
+            print(line, file=sys.stderr)
+        print(
+            f"\nnot written: {OUTPUT_PATH} still holds the previous build",
+            file=sys.stderr,
+        )
+        return 1
+
+    # 29 MB the dashboard fetches whole on every load, and the file with the
+    # most to lose from a half-write: through the atomic writer, in the
+    # compact form the page expects (issue #153).
+    write_json(OUTPUT_PATH, index, indent=None, separators=(",", ":"), newline=False)
     stats = index["stats"]
     print(f"vintage:                  corpus parsed ≤ {stats['corpusParsedAt']}, index built by {stats['parserCommit']}")
     print(f"records:                  {stats['records']}")
@@ -692,38 +744,42 @@ def main() -> int:
         f"({generals} general, {len(index['elections']) - generals} grouped under a parent)"
     )
     print(f"wrote {OUTPUT_PATH} ({OUTPUT_PATH.stat().st_size // 1024} KB)")
-    failed = False
+    return 0
+
+
+def index_problems(index: dict) -> list[str]:
+    """Every reason not to ship this index, as lines to print.
+
+    Three of them, each a registry the corpus has moved out from under: an
+    election with no entry (it would reach the dashboard as a raw slug), a
+    municipality wording no entry claims (it becomes a facet row of its own),
+    and an override key matching no person (a merge decision that no longer
+    applies to anybody).
+    """
+    lines: list[str] = []
     unregistered = index["unregisteredElections"]
     if unregistered:
-        print(
-            f"\n{len(unregistered)} election(s) have no entry in {REGISTRY_PATH} and will\n"
-            "render as raw ids — add them there:",
-            file=sys.stderr,
+        lines.append(
+            f"{len(unregistered)} election(s) have no entry in {REGISTRY_PATH} and would"
+            "\nrender as raw ids — add them there:"
         )
-        for eid in unregistered:
-            print(f"  {eid}", file=sys.stderr)
-        failed = True
+        lines += [f"  {eid}" for eid in unregistered]
     unresolved = index["unresolvedMunicipalities"]
     if unresolved:
-        print(
-            f"\n{len(unresolved)} municipality wording(s) no entry of scraper/municipalities.json claims —\n"
-            "each is a facet row of its own until the registry gets the alias:",
-            file=sys.stderr,
+        lines.append(
+            f"\n{len(unresolved)} municipality wording(s) no entry of"
+            " scraper/municipalities.json claims —\neach would be a facet row of its own"
+            " until the registry gets the alias:"
         )
-        for form in unresolved:
-            print(f"  {form}", file=sys.stderr)
-        failed = True
+        lines += [f"  {form}" for form in unresolved]
     stale = index["unmatchedOverrideKeys"]
     if stale:
-        print(
-            f"\n{len(stale)} override key(s) in {OVERRIDES_PATH} match no person —\n"
-            "the corpus moved under the override file; fix the keys:",
-            file=sys.stderr,
+        lines.append(
+            f"\n{len(stale)} override key(s) in {OVERRIDES_PATH} match no person —"
+            "\nthe corpus moved under the override file; fix the keys:"
         )
-        for key in stale:
-            print(f"  {key}", file=sys.stderr)
-        failed = True
-    return 1 if failed else 0
+        lines += [f"  {key}" for key in stale]
+    return lines
 
 
 if __name__ == "__main__":

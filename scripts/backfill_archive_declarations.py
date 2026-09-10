@@ -1,5 +1,9 @@
 """Fetch and merge the 1996-1997 archive income declarations into the corpus.
 
+**Spent** (issue #159, measured 2026-09-04): `--dry-run` has 0 of the 7,336
+records left to fetch. The declarations are retained beside the cards since
+issue #75, so `reparse_diff.py --full --apply` reaches them offline.
+
 The five archive elections were scraped before their `kpdl.htm` declarations
 were parsed, so their records carry `profilis.pajamu-deklaracijos-nuoroda` and
 no figures. The candidate pages themselves have not changed -- only the
@@ -59,6 +63,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from scraper.shared.anomalies import build_anomaly_event  # noqa: E402
+from scraper.shared.files import write_json
 from scraper.shared.deklaracija_archive_1990s import parse_declaration  # noqa: E402
 from scraper.shared.http import fetch_text  # noqa: E402
 
@@ -202,9 +207,7 @@ def backfill_election(election_id: str, dry_run: bool, retain_only: bool) -> dic
         # Appended last, which is where build_candidate_record puts it.
         record.setdefault("rawData", {})["declaration"] = parsed["declaration"]
         record["normalized"][DECLARATION_KEY] = parsed["declaration"]
-        path.write_text(
-            json.dumps(record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-        )
+        write_json(path, record)
 
         if parsed["anomalies"]:
             with anomalies_path.open("a", encoding="utf-8") as handle:

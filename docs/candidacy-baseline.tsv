@@ -329,7 +329,7 @@ birth_date	2024-ep	100.0	ok
 birth_date	2024-prezidento	100.0	ok	
 birth_date	2024-seimo	100.0	ok	
 birth_date	2025-kovo-16-meru	100.0	ok	
-birth_place	1996-spalio-20-seimo	95.2	ok	
+birth_place	1996-spalio-20-seimo	95.3	ok	
 birth_place	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	76.4	ok	
 birth_place	1997-gruodzio-21-seimo-pakartotiniai	75.0	ok	
 birth_place	1997-kovo-23-savivaldybiu-tarybu	9.3	partly-answered	as the gimimo-vieta concept: the 1997 municipal card prints the Gimimo vieta field on every record and it is empty on 5694 of 6276 (rawData.personal.birthPlace is "")
@@ -1283,7 +1283,7 @@ education_degree	2004-seimo	16.4	ok
 education_degree	2005-lapkricio-20-seimo-kedainiai	20.0	ok	
 education_degree	2007-spalio-7-seimo-dzukija	20.0	ok	
 education_degree	2007-vasario-25-savivaldybiu	5.7	ok	
-education_degree	2008-seimo	16.4	ok	
+education_degree	2008-seimo	16.3	ok	
 education_degree	2009-ep	29.0	ok	
 education_degree	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	17.6	ok	
 education_degree	2009-prezidento	28.6	ok	
@@ -1299,16 +1299,16 @@ education_degree	2015-birzelio-7-seimo-varena-eisiskes	25.0	ok
 education_degree	2015-kovo-1-savivaldybiu	11.6	ok	
 education_degree	2015-kovo-1-seimo-zirmunai	41.7	ok	
 education_degree	2015-lapkricio-8-telsiu-mero	0.0	upstream-absent	asked; no candidate of this small election states a degree
-education_degree	2016-seimo	31.5	ok	
+education_degree	2016-seimo	31.4	ok	
 education_degree	2017-balandzio-23-meru	54.5	ok	
 education_degree	2017-balandzio-23-seimo-anyksciai-panevezys	36.4	ok	
 education_degree	2017-rugsejo-10-marijampoles-mero	50.0	ok	
 education_degree	2018-rugsejo-16-seimo-zanavykai	66.7	ok	
-education_degree	2019-ep	44.5	ok	
+education_degree	2019-ep	44.2	ok	
 education_degree	2019-kovo-3-savivaldybiu-tarybu	19.3	ok	
 education_degree	2019-prezidento	55.6	ok	
 education_degree	2019-rugsejo-8-seimo	51.9	ok	
-education_degree	2020-seimo	48.9	ok	
+education_degree	2020-seimo	48.8	ok	
 education_degree	2021-balandzio-11-radviliskio-mero	14.3	ok	
 education_degree	2021-spalio-10-meru	71.4	ok	
 education_degree	2023-geguzes-7-visagino-mero	0.0	upstream-absent	asked; no candidate of this small election states a degree
@@ -2705,10 +2705,10 @@ nomination_kind	1999-kovo-21-seimo-pakartotiniai	100.0	ok
 nomination_kind	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
 nomination_kind	2000-seimo	100.0	ok	
 nomination_kind	2002-gruodzio-22-savivaldybiu-tarybu	100.0	ok	
-nomination_kind	2002-prezidento	0.0	upstream-absent	presidential candidates self-nominate; the pages name no nominator
+nomination_kind	2002-prezidento	0.0	upstream-absent	the presidential cards of this era name no nominator
 nomination_kind	2003-birzelio-15-seimo-nauji	100.0	ok	
 nomination_kind	2004-ep	100.0	ok	
-nomination_kind	2004-prezidento	0.0	upstream-absent	presidential candidates self-nominate; the pages name no nominator
+nomination_kind	2004-prezidento	0.0	upstream-absent	the presidential cards of this era name no nominator
 nomination_kind	2004-seimo	100.0	ok	
 nomination_kind	2005-lapkricio-20-seimo-kedainiai	100.0	ok	
 nomination_kind	2007-spalio-7-seimo-dzukija	100.0	ok	
@@ -2716,13 +2716,13 @@ nomination_kind	2007-vasario-25-savivaldybiu	100.0	ok
 nomination_kind	2008-seimo	100.0	ok	
 nomination_kind	2009-ep	100.0	ok	
 nomination_kind	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	100.0	ok	
-nomination_kind	2009-prezidento	0.0	upstream-absent	presidential candidates self-nominate; the pages name no nominator
+nomination_kind	2009-prezidento	0.0	upstream-absent	the presidential cards of this era name no nominator
 nomination_kind	2011-vasario-13-seimo-marijampole	100.0	ok	
 nomination_kind	2011-vasario-27-savivaldybiu	100.0	ok	
 nomination_kind	2012-seimo	100.0	ok	
 nomination_kind	2013-kovo-3-seimo-birzai-zarasai-ukmerge	100.0	ok	
 nomination_kind	2014-ep	100.0	ok	
-nomination_kind	2014-prezidento	0.0	upstream-absent	presidential candidates self-nominate; the pages name no nominator
+nomination_kind	2014-prezidento	0.0	upstream-absent	the presidential cards of this era name no nominator
 nomination_kind	2015-birzelio-21-pakartotiniai-silutes	100.0	ok	
 nomination_kind	2015-birzelio-7-pakartotiniai-sirvintos-trakai	100.0	ok	
 nomination_kind	2015-birzelio-7-seimo-varena-eisiskes	100.0	ok	
@@ -2736,7 +2736,7 @@ nomination_kind	2017-rugsejo-10-marijampoles-mero	100.0	ok
 nomination_kind	2018-rugsejo-16-seimo-zanavykai	100.0	ok	
 nomination_kind	2019-ep	100.0	ok	
 nomination_kind	2019-kovo-3-savivaldybiu-tarybu	100.0	ok	
-nomination_kind	2019-prezidento	0.0	upstream-absent	presidential candidates self-nominate; the pages name no nominator
+nomination_kind	2019-prezidento	0.0	upstream-absent	the presidential cards of this era name no nominator
 nomination_kind	2019-rugsejo-8-seimo	100.0	ok	
 nomination_kind	2020-seimo	100.0	ok	
 nomination_kind	2021-balandzio-11-radviliskio-mero	100.0	ok	
@@ -2760,10 +2760,10 @@ party_id	1999-kovo-21-seimo-pakartotiniai	100.0	ok
 party_id	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
 party_id	2000-seimo	100.0	ok	
 party_id	2002-gruodzio-22-savivaldybiu-tarybu	100.0	ok	
-party_id	2002-prezidento	0.0	upstream-absent	presidential candidates self-nominate; the pages name no nominator
+party_id	2002-prezidento	0.0	upstream-absent	the presidential cards of this era name no nominator
 party_id	2003-birzelio-15-seimo-nauji	100.0	ok	
 party_id	2004-ep	100.0	ok	
-party_id	2004-prezidento	0.0	upstream-absent	presidential candidates self-nominate; the pages name no nominator
+party_id	2004-prezidento	0.0	upstream-absent	the presidential cards of this era name no nominator
 party_id	2004-seimo	100.0	ok	
 party_id	2005-lapkricio-20-seimo-kedainiai	100.0	ok	
 party_id	2007-spalio-7-seimo-dzukija	100.0	ok	
@@ -2771,13 +2771,13 @@ party_id	2007-vasario-25-savivaldybiu	100.0	ok
 party_id	2008-seimo	100.0	ok	
 party_id	2009-ep	100.0	ok	
 party_id	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	100.0	ok	
-party_id	2009-prezidento	0.0	upstream-absent	presidential candidates self-nominate; the pages name no nominator
+party_id	2009-prezidento	0.0	upstream-absent	the presidential cards of this era name no nominator
 party_id	2011-vasario-13-seimo-marijampole	100.0	ok	
 party_id	2011-vasario-27-savivaldybiu	100.0	ok	
 party_id	2012-seimo	100.0	ok	
 party_id	2013-kovo-3-seimo-birzai-zarasai-ukmerge	100.0	ok	
 party_id	2014-ep	100.0	ok	
-party_id	2014-prezidento	0.0	upstream-absent	presidential candidates self-nominate; the pages name no nominator
+party_id	2014-prezidento	0.0	upstream-absent	the presidential cards of this era name no nominator
 party_id	2015-birzelio-21-pakartotiniai-silutes	100.0	ok	
 party_id	2015-birzelio-7-pakartotiniai-sirvintos-trakai	100.0	ok	
 party_id	2015-birzelio-7-seimo-varena-eisiskes	100.0	ok	
@@ -2791,7 +2791,7 @@ party_id	2017-rugsejo-10-marijampoles-mero	100.0	ok
 party_id	2018-rugsejo-16-seimo-zanavykai	100.0	ok	
 party_id	2019-ep	100.0	ok	
 party_id	2019-kovo-3-savivaldybiu-tarybu	100.0	ok	
-party_id	2019-prezidento	0.0	upstream-absent	presidential candidates self-nominate; the pages name no nominator
+party_id	2019-prezidento	0.0	upstream-absent	the presidential cards of this era name no nominator
 party_id	2019-rugsejo-8-seimo	100.0	ok	
 party_id	2020-seimo	100.0	ok	
 party_id	2021-balandzio-11-radviliskio-mero	100.0	ok	
@@ -2815,10 +2815,10 @@ party_name_raw	1999-kovo-21-seimo-pakartotiniai	100.0	ok
 party_name_raw	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
 party_name_raw	2000-seimo	100.0	ok	
 party_name_raw	2002-gruodzio-22-savivaldybiu-tarybu	100.0	ok	
-party_name_raw	2002-prezidento	0.0	upstream-absent	presidential candidates self-nominate; the pages name no nominator
+party_name_raw	2002-prezidento	0.0	upstream-absent	the presidential cards of this era name no nominator
 party_name_raw	2003-birzelio-15-seimo-nauji	100.0	ok	
 party_name_raw	2004-ep	100.0	ok	
-party_name_raw	2004-prezidento	0.0	upstream-absent	presidential candidates self-nominate; the pages name no nominator
+party_name_raw	2004-prezidento	0.0	upstream-absent	the presidential cards of this era name no nominator
 party_name_raw	2004-seimo	100.0	ok	
 party_name_raw	2005-lapkricio-20-seimo-kedainiai	100.0	ok	
 party_name_raw	2007-spalio-7-seimo-dzukija	100.0	ok	
@@ -2826,13 +2826,13 @@ party_name_raw	2007-vasario-25-savivaldybiu	100.0	ok
 party_name_raw	2008-seimo	100.0	ok	
 party_name_raw	2009-ep	100.0	ok	
 party_name_raw	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	100.0	ok	
-party_name_raw	2009-prezidento	0.0	upstream-absent	presidential candidates self-nominate; the pages name no nominator
+party_name_raw	2009-prezidento	0.0	upstream-absent	the presidential cards of this era name no nominator
 party_name_raw	2011-vasario-13-seimo-marijampole	100.0	ok	
 party_name_raw	2011-vasario-27-savivaldybiu	100.0	ok	
 party_name_raw	2012-seimo	100.0	ok	
 party_name_raw	2013-kovo-3-seimo-birzai-zarasai-ukmerge	100.0	ok	
 party_name_raw	2014-ep	100.0	ok	
-party_name_raw	2014-prezidento	0.0	upstream-absent	presidential candidates self-nominate; the pages name no nominator
+party_name_raw	2014-prezidento	0.0	upstream-absent	the presidential cards of this era name no nominator
 party_name_raw	2015-birzelio-21-pakartotiniai-silutes	100.0	ok	
 party_name_raw	2015-birzelio-7-pakartotiniai-sirvintos-trakai	100.0	ok	
 party_name_raw	2015-birzelio-7-seimo-varena-eisiskes	100.0	ok	
@@ -2846,7 +2846,7 @@ party_name_raw	2017-rugsejo-10-marijampoles-mero	100.0	ok
 party_name_raw	2018-rugsejo-16-seimo-zanavykai	100.0	ok	
 party_name_raw	2019-ep	100.0	ok	
 party_name_raw	2019-kovo-3-savivaldybiu-tarybu	100.0	ok	
-party_name_raw	2019-prezidento	0.0	upstream-absent	presidential candidates self-nominate; the pages name no nominator
+party_name_raw	2019-prezidento	0.0	upstream-absent	the presidential cards of this era name no nominator
 party_name_raw	2019-rugsejo-8-seimo	100.0	ok	
 party_name_raw	2020-seimo	100.0	ok	
 party_name_raw	2021-balandzio-11-radviliskio-mero	100.0	ok	

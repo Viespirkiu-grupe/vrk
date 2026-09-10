@@ -116,6 +116,40 @@ class DegreeWords(unittest.TestCase):
                      "Mokytoja metodininkė", "Aukštasis"):
             self.assertIsNone(degree_of(text), text)
 
+    def test_a_masters_student_is_not_a_master(self):
+        # The level rules have guarded `magistrant|magistratur` ahead of
+        # `magistr` since issue #88 — Magistrantūra is a completed bachelor
+        # in master's studies — and the degree rules did not, so 17 records
+        # were given `magistras` while their level said `aukstasis-bakalauras`
+        # and `education_degree` shipped the contradiction (issue #161).
+        # These are the corpus's own 12 surface forms.
+        for text in ("Magistrantūra", "Magistrantas", "Magistrantė", "magistrantas",
+                     "Magistrantūros", "Magistrantūro laipsnis",
+                     "Magistrantūra verslo administravimas", "Magistratūra",
+                     "Magistratura", "Magistratūros", "Magistratūros studijos",
+                     "METODININKĖ, magistratūra", "Metodininkas, Magistrantas"):
+            with self.subTest(text):
+                self.assertIsNone(degree_of(text))
+        # And the guard must not swallow the degree itself.
+        self.assertEqual(degree_of("Magistras"), "magistras")
+        self.assertEqual(degree_of("Viešojo administravimo magistras"), "magistras")
+        self.assertEqual(degree_of("Magistro kvalifikacijos laipsnis"), "magistras")
+
+    def test_a_frozen_dissertation_is_not_a_doctorate(self):
+        self.assertIsNone(
+            degree_of("Daktaro disertacija įšaldyta (išlaikyti visi doktorantūros egzaminai)")
+        )
+        self.assertEqual(degree_of("Socialinių mokslų daktaras"), "daktaras")
+
+    def test_the_level_and_the_degree_agree_on_every_surface_form(self):
+        # The two rule sets read the same words out of different fields, and
+        # a form that yields a bachelor's *level* must not yield a master's
+        # *degree*. That pairing was the shipped contradiction.
+        for text in ("Magistrantūra", "Magistratūros studijos", "Aukštasis, magistrantūra"):
+            with self.subTest(text):
+                self.assertEqual(level_of(text), "aukstasis-bakalauras")
+                self.assertIsNone(degree_of(text))
+
 
 def _record(election_id, section="anketa", levels=(), aprasas=None,
             degree=None, raw_answer=None):
@@ -165,6 +199,59 @@ class Resolver(unittest.TestCase):
     def test_printed_decline_is_nenurode(self):
         answer = issilavinimas(_record("2019-kovo-3-savivaldybiu-tarybu", raw_answer="Nenurodė"))
         self.assertEqual(answer["busena"], "nenurode")
+
+    def test_a_decline_inside_the_education_table_is_nenurode_too(self):
+        # The second shape of the same refusal (issue #161): VRK prints the
+        # decline as the *level of each entry*, beside the school and the year
+        # the candidate did give. 78 records fell through to `neatsakyta` --
+        # "the page shows no answer", over a page showing an explicit refusal
+        # -- and `education_status` shipped it.
+        answer = issilavinimas(
+            _record(
+                "2023-kovo-5-savivaldybiu-tarybu-ir-meru",
+                raw_answer=[{
+                    "issilavinimas": "Nenurodė",
+                    "mokymo-istaigos-pavadinimas": "Kauno technikos profesinio mokymo centras",
+                    "specialybe": "Orlaivio mechanika",
+                    "baigimo-metai": "2021",
+                }],
+            )
+        )
+        self.assertEqual(answer["busena"], "nenurode")
+
+    def test_the_declines_display_label_spelling_is_read_too(self):
+        # The 2011-2016 rows carry the display labels, the 2020-era ones the
+        # slugs. A reader that knows only one spelling sees half the corpus.
+        answer = issilavinimas(
+            _record(
+                "2016-seimo",
+                raw_answer=[{
+                    "Išsilavinimas": "Nenurodė",
+                    "Mokymo įstaigos pavadinimas": "Kauno politechnikos institutas",
+                    "Specialybė": "inžinerija",
+                    "Baigimo metai": "1974",
+                }],
+            )
+        )
+        self.assertEqual(answer["busena"], "nenurode")
+
+    def test_a_table_where_only_some_entries_decline_is_an_answer(self):
+        # Those candidates answered, for the schooling they chose to list.
+        record = _record(
+            "2023-kovo-5-savivaldybiu-tarybu-ir-meru",
+            levels=("Vidurinis",),
+            raw_answer=[
+                {"issilavinimas": "Nenurodė", "mokymo-istaigos-pavadinimas": "x"},
+                {"issilavinimas": "Vidurinis", "mokymo-istaigos-pavadinimas": "y"},
+            ],
+        )
+        answer = issilavinimas(record)
+        self.assertEqual(answer["busena"], "nurodyta")
+        self.assertEqual(answer["lygis"], "vidurinis")
+
+    def test_an_empty_education_table_is_not_a_decline(self):
+        answer = issilavinimas(_record("2016-seimo", raw_answer=[]))
+        self.assertEqual(answer["busena"], "neatsakyta")
 
     def test_level_not_published_elections(self):
         # 2000-seimo publishes institution/specialty/year and zero levels;

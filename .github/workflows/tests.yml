@@ -8,6 +8,12 @@
 # here on purpose rather than inherited from the runner image: without it 42
 # of them skip, and the root conftest refuses to start a CI session that has
 # no node (issue #145). The whole job is a couple of minutes.
+#
+# The three commands that check the corpus against the parsers all read
+# `data/` and so cannot run here. What stands in for them is inside the
+# suite: `tests/fixture-record-hashes.tsv` pins what every tracked fixture
+# parses to, and `tests/test_cli_dispatch.py` exercises all 275 election-id
+# bindings of the five CLI dispatchers (issue #157).
 
 name: tests
 

@@ -32,7 +32,7 @@ from typing import Any
 
 from bs4 import NavigableString, Tag
 
-from scraper.shared.values import clean_value
+from scraper.shared.values import clean_value, is_refusal
 
 
 def normalize_space(value: str) -> str:
@@ -172,13 +172,20 @@ def previously_elected_record(values: list[str]) -> dict[str, Any] | None:
     The card names bodies only ("Lietuvos Respublikos Seimas"), one `<b>` per
     body, with no term dates -- so `laikotarpis` is null, exactly as the 2000
     Seimas card's entries are.
+
+    A candidate who wrote VRK's refusal token into this field held no prior
+    mandate, and two 1996 records shipped `Nenurodė` as the *name of the body
+    they had been elected to* -- the corpus asserting a mandate over a page
+    declining to answer (issue #164). A card whose only entry is the refusal
+    yields no block at all.
     """
-    if not values:
+    entries = [value for value in values if not is_refusal(value)]
+    if not entries:
         return None
     return {
         "aprasas": None,
         "irasai": [
-            {"institucijos-pavadinimas-pareigos": value, "laikotarpis": None} for value in values
+            {"institucijos-pavadinimas-pareigos": value, "laikotarpis": None} for value in entries
         ],
     }
 

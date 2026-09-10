@@ -26,9 +26,14 @@ table:
 
 ```
 concept          election                   records  keyPresent  nonNull  pct   status  note
-gautos-pajamos   2020-seimo                    1754        1753     1719  98.0  ok
+gautos-pajamos   2020-seimo                    1754        1753     1753  99.9  ok
 gimimo-vieta     2000-kovo-19-savivaldybiu…    9879        9879        0   0.0  upstream-absent  The 2000 municipal card…
 ```
+
+(Those are the gate's own rows for those two cells today. The income one read
+`1719 / 98.0` when this page was written, before issue #81 recovered the
+label-prefix rows — and it went on reading that here for two corpora after,
+which is issue #150.)
 
 The `keyPresent` / `nonNull` split is the point. A key the parser never wrote
 and a key it wrote as `null` are different failures, and the 2020-seimo defect
@@ -38,7 +43,7 @@ was the second kind.
 fill rate, a status word and a note. Only the rate is committed — the counts
 move with every scrape and would make the file a diff generator.
 
-## The five rules
+## The six rules
 
 **Zero fill.** A mapped cell no record fills. Every one has to be classified in
 the baseline, with a note saying why; a new one, or one still marked
@@ -46,14 +51,33 @@ the baseline, with a note saying why; a new one, or one still marked
 than 90 % of the elections that map it, the message says so — that is the
 2020-seimo shape exactly, and it is a regression until someone proves otherwise.
 
+**Stale excuse** (issue #165). The zero-fill rule read backwards: a cell the
+baseline classifies as legitimately empty that now *fills*. A classified zero
+used to be skipped before any other rule saw it, in both directions, so a note
+saying VRK publishes nothing here could go on saying it over values that had
+since arrived — and six lines of `docs/candidacy-baseline.tsv` did, over the
+35,507 post-election rankings issue #99's results join recovered. That is not
+merely an untrue file: it is the excuse that would have covered the values'
+*loss*, because `--update-baseline` re-files a zero under the classification
+already there. The rule closes the window in which the two can drift apart:
+the note is reported false the first time the gate runs after the values
+arrive.
+
+This is the one finding that does not block `--update-baseline`. Re-measuring
+is the fix — `classify` drops an excuse a filled cell no longer needs, so the
+row rewrites itself as `ok` and a zero that comes back has to be explained
+afresh. Blocking would leave `--force` as the only way through, and `--force`
+signs off every *other* finding in the same run.
+
 **Regression.** A fill rate more than `--max-drop` points (default 5) below the
 baseline. Re-parsing an election is allowed to change what it recovers; losing
 five points of a field without saying so is not.
 
 **Below its peers** (issue #135). A filled cell more than `--max-below-peers`
 points (default 25) under the concept's median across the *other* elections
-that map it, where that median is above 90 %. The first two rules cannot see a
-new election's regression: it has no baseline row to fall from, and 8 % is not
+that map it, where that median is above 90 %. The zero-fill and regression
+rules cannot see a new election's regression: it has no baseline row to fall
+from, and 8 % is not
 zero — on a mirror with a synthetic 1,740-record `2027-seimo` whose birth
 dates were nulled on 1,600 records, the gate wrote `ok` at 8.0 % and exited 0.
 The concept's median elsewhere was already computed inside the gate to
@@ -82,7 +106,7 @@ as a `not-mapped` row with a note. This is the rule that catches a new module
 whose author forgot half the concept map: the fixture tests pass, the cells
 that exist all read 100 %, and the missing ones are simply not there to fail.
 
-**Unmapped fill** (`--unmapped`, the third rule, opt-in). A concept's own path
+**Unmapped fill** (`--unmapped`, the opt-in seventh). A concept's own path
 form that fills on at least one percent of the records of an election the map
 does *not* give the concept for. The dashboard renders an unmapped cell as
 "Šių rinkimų anketa šio lauko neskelbė" — this election never published this
@@ -136,7 +160,9 @@ Now:
 - it **refuses** — writes nothing, exits 1 — while a finding stands on a row
   the baseline already has (a regression, a zero that used to be filled), or
   on a new election's concept set (an unmapped election, a peer gap). Fix or
-  classify those first; `--force` rewrites regardless;
+  classify those first; `--force` rewrites regardless. A stale excuse is the
+  one exception (issue #165): re-measuring answers it, so it is written
+  through rather than refused over;
 - it **reports** what it did: `N row(s) added, M changed, K down more than 5
   points`;
 - it **exits 1** while any zero or below-peers cell it wrote is still

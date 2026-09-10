@@ -766,11 +766,20 @@ def build_candidate_record(
         "declaration": declaration,
     }
 
+    # Section order follows the corpus's: `profilis`, `anketa`, then the
+    # era's own `kandidatavimas`, then the declaration. This module used to
+    # put `kandidatavimas` second, which made its 6,386 records the only ones
+    # in the corpus to interleave a section between `profilis` and `anketa` --
+    # against its own sibling `seimo_archive_1990s.py`, which emits
+    # `profilis|anketa|kandidatavimas` for the other 950 records of the same
+    # era, and against docs/OUTPUT_SCHEMA.md, which calls the order fixed
+    # (issue #144).
     normalized = {
         "profilis": {
             "vardas-pavarde": detail["candidateDisplayName"],
             "pajamu-deklaracijos-nuoroda": detail["incomeDeclarationUrl"] or None,
         },
+        "anketa": card_anketa(personal),
         "kandidatavimas": {
             "savivaldybe": candidacy["municipalityName"],
             "savivaldybes-numeris": candidacy["municipalityNumber"],
@@ -779,7 +788,6 @@ def build_candidate_record(
             "iskele-nuoroda": candidacy["nominatorUrl"] or None,
             "numeris-sarase": candidacy["listNumber"],
         },
-        "anketa": card_anketa(personal),
         # Same key the whole corpus declares under, so the person index,
         # concept map and dashboard need no special case for this era.
         **({"turto-ir-pajamu-deklaracijos": declaration} if declaration else {}),

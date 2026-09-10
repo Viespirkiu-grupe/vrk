@@ -183,20 +183,30 @@ neighbouring question (a grave conviction on Q9.3, say) rather than on the
 one `ar-buvote-pripazintas-kaltu` carries. See
 [Conviction data](#conviction-data-one-concept-three-published-shapes).
 
-Records live under `data/<election-id>/` (~0.66 GB of JSON plus 5.5 GB of
-photo sidecar files under `data/<election-id>/photos/` — 27,493 portraits:
+Records live under `data/<election-id>/` (3.41 GB of JSON over the 113,073
+files, plus 5.54 GB of photo sidecars under `data/<election-id>/photos/` —
+27,493 portraits:
 the 2,199 from the embedded-photo eras, externalized 2026-08-19 and verified
 byte-identical to a pre-migration sha256 manifest, file for file, and the
 25,294 every other era's pages linked on vrk.lt, fetched 2026-09-02) and are **not** version
 controlled — `data/`, `sitemaps/` and `samples/` are gitignored, so the corpus is
 reproduced by running the scrapers rather than by cloning — or downloaded
 from a `corpus-YYYY-MM-DD` release (see the top of this page). The
-reproduction entry point is `scripts/run_all_elections.sh`: it drives every
-election the CLI can fetch, and per election the batch runner builds the
-`isrinktas` results join first, retains the fetched HTML by default, writes a
+reproduction entry point is `scripts/run_all_elections.sh`, which is **three
+steps per election**: the batch runner builds the `isrinktas` results join
+first, retains the fetched HTML by default, writes a
 `CandidateFetchFailed`/`CandidateParseFailed` anomaly for any candidate it
 cannot land, and refuses to report an election complete until every sitemap
-id has a record on disk (issue #95).
+id has a record on disk (issue #95); then
+`scripts/backfill_url_portraits.py` archives every portrait the pages
+*linked*, which it can only do once the scrape has finished, because it reads
+the records to find the URLs; then `scripts/reparse_diff.py --full --apply`
+turns those URLs into `photos/` sidecars. The second and third steps used to
+be documented only per election, in `docs/ADDING_AN_ELECTION.md`, and running
+step 1 alone leaves 25,332 records differing from the shipped ones in three
+paths each and 25,294 of the 27,493 sidecar files absent — 92 % of them, 5.2
+of the 5.5 GB (issue #143). `FETCH_PORTRAITS=0` stops after step 1 for an
+offline run, and says at the end what is missing.
 
 ### The 2026-09-02 portrait archive (issue #118)
 
@@ -333,7 +343,9 @@ What the 20,534 records gained, all of it measured before it was applied:
 
 Nothing was lost: the record count is 113,073 before and after, and every
 `removed` path in the diff is one of the empty columns or the duplicated block
-above. The corpus is **370 MB smaller** (3,447.6 → 3,077.4 MB).
+above. That pass left the corpus **370 MB smaller** (3,447.6 → 3,077.4 MB as
+it stood then; the current size is at the top of this page, and every
+re-parse since has moved it).
 
 Six elections' `anomalies.jsonl` were regenerated as well, since a complete
 re-parse reproduces the whole file and every anomaly in the corpus is a
@@ -361,7 +373,7 @@ python scripts/reparse_diff.py --full --jobs 8 --apply <id>
 
 It exits non-zero when any record differs, so "a parser change is not done
 until the gate is green" is checkable — see
-[ADDING_AN_ELECTION.md](ADDING_AN_ELECTION.md#7-changing-a-parser-that-already-has-a-corpus).
+[ADDING_AN_ELECTION.md](ADDING_AN_ELECTION.md#8-changing-a-parser-that-already-has-a-corpus).
 Without `--full` it re-parses each election's fixtures, which is fast enough to
 run on every change; `--full` re-parses all 113,073 records from
 `samples-full/` in about an hour on eight processes, offline. Its fixture mode
@@ -1517,9 +1529,12 @@ Both municipal general elections were re-scraped overnight with
 `KEEP_SAMPLES=1` — 2023 in 3h33m, 2019 in 3h29m, zero fetch failures, zero
 failed candidates, zero anomalies in either. This was the corpus's last
 planned scrape: with it, **every election's full raw HTML is retained**
-(`samples-full/` for the seven large elections, the fixture tree for the
-twelve small ones — 3.6 GB total), so any future parser fix lands by offline
-re-parse.
+(`samples-full/` for the 27 elections whose field is too large for the
+fixture tree, the fixture tree itself for the rest — 13.5 GB over 27 and 55
+trees respectively, measured 2026-09-10), so any future parser fix lands by
+offline re-parse. A full reproduction therefore needs about **23 GB**: 8.95
+in `data/`, 13.04 in `samples-full/`, 0.48 in `samples/` and 0.09 in
+`sitemaps/`.
 
 Measured against the archived pre-scrape copies:
 
@@ -1797,6 +1812,24 @@ All of these are verbatim from VRK's own pages (verified present in
   `nėra`, `ND`, `b/n`).
 - `nuosprendzio-data` (conviction date) is year-only for 272 values against
   642 full ISO dates — year-only is what VRK publishes.
+- **42 values are impossible rather than merely odd**, and all 42 are VRK's
+  own typing — each traced verbatim to its own record's `rawData`. 39 are
+  dates outside 1900–2100 (`1111-11-11` five times, `9999-12-31` six, a run
+  of 2004 declarations whose `Pildymo data` reads `0204.05.04`, one
+  `3003-05-20`); two are declaration totals exceeding their own
+  employment-income row by 29,603× and 12,383×, already flagged
+  `quality_flags: saltinio-klaida`; and one is a birth date.
+  `damanskis-adolfas` (`1996-spalio-20-seimo`) carries `gimimo-data`
+  1995-05-22, which made him **1.4 years old** at the election — and the
+  biography on the same page names parents born 1908 and 1917, so the year is
+  wrong by one digit. It matters more than the rest because the person index
+  keys identity on that field, and because it is the sole outlier in an
+  otherwise exact distribution: the youngest candidate of every large
+  election sits on its statutory floor to within a tenth of a year. None is
+  corrected — a guessed birth date would invent an identity — and
+  `scripts/value_plausibility.py` gates the set against
+  `docs/plausibility-register.tsv`, where each carries its reason (issue
+  #152).
 - One control character: the fourth campaign contract subject of
   `kestutis-masiulis-2016-seimo` carries `\x06` where `Ė` belongs
   (`PIRK\x06JO ir PARDAV\x06JO`) — mangled in VRK's contract registry itself.
@@ -1804,23 +1837,31 @@ All of these are verbatim from VRK's own pages (verified present in
   employer `If P&amp;C Insurance AS` in `biografija.darbo-patirtis` — the
   source HTML carried `&amp;amp;`, an upstream double-encoding, not a parser
   unescape miss.
-- 20,651 values contain a lowercase letter immediately followed by an
+- 20,711 values contain a lowercase letter immediately followed by an
   uppercase one, and **none of them is a lost line break**. Issue #101 read
   that pattern as 20,704 "glued run-ons" a whitespace repair would fix;
   checking 835 of the junctions against the retained HTML found 797 present
   verbatim, with no tag boundary between the two letters (the misses were a
-  parser-authored enum value and one biography split across files). 13,158 of
-  them are `VšĮ`, the legal-form abbreviation; the rest are company names
+  parser-authored enum value and one biography split across files). 12,950 of
+  them carry `VšĮ`, the legal-form abbreviation (13,224 occurrences of it, a
+  handful of values holding two); the rest are company names
   (`UAB "inChase"`, `DnB`, `GmbH`, `StepArc`) and VRK's own typing (`kAUNO`,
   `šIAULIŲ`, `Partija tTvarka ir teisingumas`). Inserting spaces there would
   corrupt 13,000 institution names to fix nothing.
-- 20 values keep a `U+FFFD` replacement character. VRK serves it: fetching a
+- 6 values keep a `U+FFFD` replacement character. VRK serves it: fetching a
   2004 page live on 2026-08-29 returns the character in its own bytes, so the
-  original was destroyed upstream and no re-decode recovers it. These 20 are
-  the ones with no closing quote to say what the character stood for; the 153
-  that have one are restored to the Lithuanian opening quote `„`, and the 30
-  values that were *only* the character (a NUL byte where a biography should
-  be, 28 of them in `2008-seimo`) normalize to `null`.
+  original was destroyed upstream and no re-decode recovers it. What the
+  character *stood for* is recoverable wherever the surviving half of a pair
+  proves it, and 194 of the 203 now are: 153 opening quotes restored to `„`,
+  8 closing ones, 2 openings VRK followed with a space, 1 bracket, and the 30
+  that were *only* the character (a NUL byte where a biography should be, 28
+  of them in `2008-seimo`) normalizing to `null`. The 6 that remain are five
+  `2000-seimo` biographies holding a destroyed *letter* — a `š` or `Š` inside
+  a Lithuanian word — and one `2004-seimo` biography whose four closing
+  quotes lost their opening partner to a hyphen as well, so nothing survives
+  to pair against. Both left as published rather than guessed at (issue #164,
+  which found the previous "no closing quote" account false for all 20 of its
+  survivors).
 
 ### Per-election schemas are deliberately not identical
 
@@ -1942,28 +1983,39 @@ somebody has to remember:
   cells between them, validated against every record.
 - **`python -m scraper anomalies-report`** reads `data/*/anomalies.jsonl` back
   and diffs it against `docs/anomaly-baseline.tsv`. Before this the fetch
-  stage's events were computed, counted and dropped: 8,949 events in the corpus
-  and not one saying `stage: "fetch"`, against the 147 fetch-stage call sites that
-  can raise them. `fetch-candidate-samples` now takes `--anomalies-path` and the
-  batch runner appends it, so a failed tab download will surface in the same
-  file the parse stage's findings do.
+  stage's events were computed, counted and dropped: every event in the corpus
+  said `stage: "parse"`, against the 147 fetch-stage call sites that can raise
+  them. `fetch-candidate-samples` now takes `--anomalies-path` and the batch
+  runner appends it, so a failed tab download surfaces in the same file the
+  parse stage's findings do — 47 of the corpus's 9,027 events now say
+  `"fetch"` (38 `PortraitFetchFailed`, 9 `CandidateFetchFailed`).
+
+A fourth is `tests/test_doc_numbers.py`, which re-measures the figures *this
+page and six others* state — the storage sizes, the litas count, the anomaly
+totals and severity table, the `candidateId` shapes, the two date shapes, the
+archive appendix's coverage and the candidacy table's measures — because
+issue #84 fixed one generation of headline counts and issue #150 found the
+next generation had rotted the same way, about thirty figures across seven
+documents. Whatever a document says a measurement is, that test measures it.
 
 A third detector joined them for issue #101, and it is a test rather than a
 script because what it guards is not a rate but an invariant:
 **`tests/test_corpus_value_hygiene.py`** walks every record and asserts that
 no value ends in a bare separator, no money column is a string, no column
 holds both an `int` and a `float`, and no value is nothing but a replacement
-character — plus two pinned counts (the 20 surviving `U+FFFD` and the 20,651
-lowercase-uppercase junctions) so that a *rise* in either is a finding. It
+character — plus two pinned counts (the 6 surviving `U+FFFD` and the 20,711
+lowercase-uppercase junctions) so that a *rise* in either is a finding. The
+test owns both numbers and this page quotes them; issue #150 found it quoting
+a third and a fourth. It
 exists because each election owns its parser: a value rule wired into six
 normalizers and not the seventh is invisible until somebody counts, which is
 how the seventh election's records came to look exactly like everybody
 else's. It skips on a checkout with no `data/`, which is every CI run.
 
-The same pass reclassified the corpus's loudest event. 8,598 of the 8,949 are
+The same pass reclassified the corpus's loudest event. 8,598 of the 9,027 are
 one archive declaration page contradicting its own totals *below VRK's own
 "Klaida užklausoje" banner* — the source saying its query failed. Those are now
-`info` rather than `warning`, which leaves 351 events somebody should look at
+`info` rather than `warning`, which leaves 429 events somebody should look at
 and makes `STOP_ON_ANOMALY=1` usable on an archive election for the first time.
 The five affected elections were re-parsed from their retained HTML to
 regenerate their anomaly files; all 18,415 records came back byte-identical.
@@ -2060,22 +2112,21 @@ parser changed" — the distinction issue #89 was filed for.
   votes), Gerda Ivaškevičiūtė (61654, Vilnius, Jaunoji Lietuva position 31,
   92 votes) and Aleksandras Bukinas (53039, Vilnius, LLRA–Rusų aljansas
   coalition position 34, 239 votes). None was elected. They are in the
-  sitemap (16,403 entries) and in `.run-state/…/failed_ids.txt`, and have no
-  record (16,400); a record cannot be written without a candidate page.
+  sitemap (16,403 entries) and have no record (16,400); a record cannot be
+  written without a candidate page.
 - Likewise two 2000 municipal candidates: the March 2000 list pages carry
   their rows and the preference pages their votes, but `kandvl.htm-84814.htm`
   (Gintaras Binkauskas, Vilnius, Lietuvių nacionalinės partijos ir "Jaunosios
   Lietuvos" sąjungos list position 2, 1,198 preference votes) and
   `kandvl.htm-86936.htm` (Vilma Kalendauskaitė, Alytaus rajonas, TS list
   position 10, 42 votes) are 404s in VRK's archive. Neither was elected.
-  They are in the sitemap (9,881 entries) and `.run-state/…/failed_ids.txt`,
-  and have no record (9,879).
+  They are in the sitemap (9,881 entries) and have no record (9,879).
 - Likewise one 2002 municipal candidate: the Kauno miesto constituency page
   links Zita Vincentina Liubarskienė (asm_kod 158225, list 8 position 4) and
   the preference page carries her 1,019 votes and rank 4, but both her
   anketa and declaration pages are 404s on vrk.lt. She was not elected. She
-  is in the sitemap (10,139 entries) and `.run-state/…/failed_ids.txt`, and
-  has no record (10,138). Four parse warnings in the same election are
+  is in the sitemap (10,139 entries) and has no record (10,138). Four parse
+  warnings in the same election are
   source blanks, verified in the retained HTML: three declaration pages VRK
   published with an empty table cell and one anketa whose birth-date bold is
   empty; one of the 27 conviction disclosures carries an empty explanation
@@ -2091,8 +2142,17 @@ parser changed" — the distinction issue #89 was filed for.
   every tab of `Kandidatas<ID>/` is a 404 on vrk.lt — Antanas Katinas
   (1835, Skuodas, LVLS position 14), Genrika Rynkun (6582, Švenčionys,
   Lietuvos lenkų liaudies partija position 3) and Juzefa Bagdonienė (1336,
-  Varėna, LRLS position 15). None was elected. In the sitemap (13,422) and
-  `failed_ids.txt`, no record (13,419).
+  Varėna, LRLS position 15). None was elected. In the sitemap (13,422), no
+  record (13,419).
+
+**All nine now carry a `CandidateFetchFailed` event in their election's
+`anomalies.jsonl`** (issue #158). The `.run-state/…/failed_ids.txt` files
+this section used to point at were gitignored and died with the worktrees
+those scrapes ran in — only one of the four survived on the scraping
+machine, covering 3 of the 9 — so the corpus's own record of what it does
+not hold was a path to a file that no longer exists. `anomalies-report`
+reconciles every sitemap against `data/` on each run: a gap with an event
+against it is recorded and explained, and a gap with none exits 1.
 - ~~Three 2015 elections have not had their full scrapes yet~~ — completed
   2026-08-21 with `KEEP_SAMPLES=1`: 327 (Širvintos–Trakai), 366 (Šilutė)
   and 15,149 (the March municipal general, the corpus's third-largest

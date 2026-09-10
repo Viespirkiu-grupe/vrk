@@ -41,6 +41,9 @@ python -m scraper <command> [args]
 - `1996-spalio-20-seimo` (1996-10-20 Seimas general election, 71 single-member constituencies)
 - `1997-kovo-23-seimo-pakartotiniai` (1997-03-23 Seimo repeat election in four Vilnius-region constituencies)
 - `1997-gruodzio-21-seimo-pakartotiniai` (1997-12-21 Seimo repeat election in Aukštaitijos No. 28)
+- `1998-kovo-22-seimo-pakartotiniai` (1998-03-22 Seimo repeat elections in Naujosios Vilnios No. 10 and Vilniaus Trakų No. 57)
+- `1998-lapkricio-15-seimo-pakartotiniai` (1998-11-15 Seimo repeat election in Nevėžio No. 26)
+- `1999-kovo-21-seimo-pakartotiniai` (1999-03-21 Seimo repeat elections in Naujosios Vilnios No. 10, Nevėžio No. 26 and Vilniaus Trakų No. 57)
 - `1997-kovo-23-savivaldybiu-tarybu` (1997-03-23 municipal council general election, all 56 municipalities)
 - `1997-birzelio-29-svenciniu-tarybos-pakartotiniai` (1997-06-29 Švenčionys district council repeat election)
 - `2007-spalio-7-seimo-dzukija` (2007-10-07 Seimo new election in Dzūkijos No. 69)
@@ -68,6 +71,30 @@ python -m scraper <command> [args]
 Each election ID uses its own parser module, HTML samples, sitemap, and output folder.
 Running or editing workflows for `2020-seimo` should not require touching `2016-seimo`, and vice versa, because election HTML layouts differ.
 The election ID in each command is the isolation boundary that selects the correct scraper implementation.
+
+## Fetching: pacing and byte fidelity
+
+Every request the scraper makes goes through `scraper/shared/http.py`, and
+issue #136 gave it the three properties it had been documenting without
+having:
+
+- **Pacing.** `VRK_MIN_REQUEST_INTERVAL` (default `0.15`, seconds) is the
+  floor on the interval between two requests out of one process, enforced
+  inside `fetch_text` and `fetch_bytes`. There used to be no delay anywhere
+  in the module or in any of the 55 `candidate_samples.py`; the only throttle
+  was `THROTTLE_SECONDS` between candidates in
+  `scripts/run_election_batches.sh`, which the per-candidate commands below
+  bypass entirely. The corpus cost 495,337 requests. Set it to `0` against a
+  local stub, or higher to be kinder.
+- **Explicit decoding.** The charset comes from the response's own
+  declaration, or from UTF-8, and anything else is a *guess* that gets
+  reported — see the module docstring. A charset-less `text/html` used to be
+  decoded as latin-1, which is silently wrong for every Lithuanian
+  diacritic; the eleven modern-era elections declare no charset anywhere.
+- **A truncated body is retried**, and a 200 that is a bot-check
+  interstitial is refused rather than written into the retained tree under a
+  candidate's name. A 403 is *not* retried: the only one this project has met
+  was vrk.lt refusing a CI runner by address.
 
 ## Commands
 
@@ -156,8 +183,11 @@ Options:
 - `--anomalies-path <path>`: Optional, and there is no default. The fetch
   stage's events (`TabDownloadFailed`, `MissingExpectedTab`,
   `CampaignRootFetchFailed`, ...) are written there as JSONL. Without it they
-  are named on stdout and dropped, which is why the corpus holds 8,949 anomaly
-  events and not one of them says `stage: "fetch"` (issue #85). No default,
+  are named on stdout and dropped, which is why 8,980 of the corpus's 9,027
+  anomaly events say `stage: "parse"` (issue #85). The 47 that say `"fetch"`
+  were written by the two commands that pass the flag: 38
+  `PortraitFetchFailed` from the portrait backfill and 9
+  `CandidateFetchFailed` from the batch runner. No default,
   because this command writes the file it is given whole — the portrait
   backfill's fetch events for the same candidate are not its to replace — so
   a default of `data/<election-id>/anomalies.jsonl` would truncate that file;
@@ -2327,6 +2357,50 @@ finding is settled by adding the earlier id to the later entry's
 `predecessors`, or by adding the pair to `reviewedDistinct` with why they are
 two organisations; `tests/test_party_registry.py` holds the links to a forest
 and the reviewed pairs to entries that exist and stay unlinked.
+
+## What is in `scripts/`, and what is spent
+
+Twenty-six scripts, in four kinds (issue #159 found the one-offs
+indistinguishable from the live ones, and five of them stating as their reason
+to exist a fact the corpus had since contradicted):
+
+**The gates and the builders**, run whenever the corpus or the parsers move:
+`reparse_diff.py`, `field_coverage.py`, `value_plausibility.py`,
+`fixture_record_hashes.py`, `build_person_index.py`,
+`build_candidacy_table.py`, `build_distribution.py`, `unpack_corpus.py`,
+`nominator_report.py`, `party_lineage_report.py`, `tracked_fixtures.py`,
+`pii_inventory.py`, `serve_dashboard.py`.
+
+**Per-election steps**, run for a new election:
+`backfill_url_portraits.py` (step 2 of `run_all_elections.sh`),
+`refetch_campaign_subtabs.py` (the campaign sub-tabs an interrupted scrape
+left behind — its `--dry-run` reports 0 pending fetches today, and separately
+counts the 844 campaigns holding `root.html` alone whose "unpublished"
+verdict was recorded in prose rather than in their own `index.json`).
+
+**Reports**, read rather than run for effect: `constituency_report.py`,
+`build_place_vocabulary.py`, `find_identity_merge_candidates.py`.
+
+**Spent one-offs.** Each did a job the parsers now do, each changes nothing
+today, and each says so at the top of its own docstring with the measurement
+and its date:
+
+| script | what it did | measured spent |
+|---|---|---|
+| `backfill_provenance.py` | stamped `provenance` onto the pre-#89 corpus | all 113,073 carry it |
+| `backfill_conviction_details.py` | `anketa.teistumo-detales` for #86's six elections | 0 pending |
+| `backfill_1997_card_fields.py` | the four card fields #69 recovered | 0 of 6,386 |
+| `backfill_archive_birthplaces.py` | birthplaces from 1996–1997 prose | 0 of 950 |
+| `backfill_archive_declarations.py` | the archive `kpdl.htm` declarations | 0 of 7,336 |
+| `backfill_value_hygiene.py` | #101's value rules where no page was retained | 0 records lack a page |
+| `renormalize_declarations.py` | the declaration block from `rawData` | 0 of ~60,000 |
+| `reshape_1997_education.py` | `issilavinimas` into the corpus shape | 0 of 6,386 |
+
+They stay in `scripts/` rather than moving to `scripts/historic/` — the docs,
+the per-election checklist and this page reference them by path, and a moved
+path is a broken reference for a reader following a commit message. What
+issue #159 asked for was that nothing mark them spent; the banner and this
+table are that mark.
 
 ## Helpful Checks
 

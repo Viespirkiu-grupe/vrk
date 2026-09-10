@@ -6,6 +6,7 @@ election	eventType	severity	count
 1997-kovo-23-savivaldybiu-tarybu	DeclarationTotalBelowItsOwnRow	info	8597
 1997-kovo-23-savivaldybiu-tarybu	ElectedCandidacyMismatch	warning	31
 1997-kovo-23-savivaldybiu-tarybu	ResidenceMissing	warning	8
+2000-kovo-19-savivaldybiu-tarybu	CandidateFetchFailed	error	2
 2000-kovo-19-savivaldybiu-tarybu	DeclarationPageUnreadable	error	1
 2000-kovo-19-savivaldybiu-tarybu	DeclarationTotalBelowItsOwnRow	warning	297
 2000-seimo	DeclarationTotalBelowItsOwnRow	warning	12
@@ -13,9 +14,12 @@ election	eventType	severity	count
 2000-seimo	PortraitFetchFailed	warning	32
 2000-seimo	ResidenceMissing	warning	2
 2002-gruodzio-22-savivaldybiu-tarybu	BirthDateMissing	warning	1
+2002-gruodzio-22-savivaldybiu-tarybu	CandidateFetchFailed	error	1
 2002-gruodzio-22-savivaldybiu-tarybu	DeclarationSectionMissing	warning	3
 2005-lapkricio-20-seimo-kedainiai	PortraitFetchFailed	warning	5
+2007-vasario-25-savivaldybiu	CandidateFetchFailed	error	3
 2008-seimo	AnketaNotPublished	warning	1
 2009-ep	CampaignRootMissing	warning	2
+2011-vasario-27-savivaldybiu	CandidateFetchFailed	error	3
 2015-birzelio-7-pakartotiniai-sirvintos-trakai	AnketaNotPublished	warning	1
 2020-seimo	PortraitFetchFailed	warning	1

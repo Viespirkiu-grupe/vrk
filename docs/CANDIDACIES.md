@@ -18,7 +18,7 @@ Reads `data/`, `docs/concept-map.json` and the registries; writes to
 
 | file | contents |
 |---|---|
-| `candidacies.csv.gz` | 113,073 rows × 65 columns, ~12 MB gzipped |
+| `candidacies.csv.gz` | 113,073 rows × 67 columns, ~12 MB gzipped |
 | `campaigns.csv.gz` | one row per campaign-finance participant (4,729) |
 | `vrk.sqlite` | the same two as tables, plus `elections`, `persons`, `parties`, `party_predecessors`, `municipalities`, with indexes |
 
@@ -132,8 +132,8 @@ fields (`nera` < `bakalauras` < `magistras` < `daktaras` <
 `habilituotas-daktaras`), including the eight elections whose page fused the
 degree and title questions into one row, and `education_entries` is the
 entry list as JSON with `2004-ep`'s institution-key spelling folded in.
-Fill: 82.4 % of all records carry a mapped level; 59.9 % of all records are
-higher-educated on the all-records denominator, 72.7 % on the answered-only
+Fill: 82.4 % of all records carry a mapped level; 59.8 % of all records are
+higher-educated on the all-records denominator, 72.6 % on the answered-only
 one — always print the denominator, the three municipal generals change
 *direction* between the two conventions.
 
@@ -141,9 +141,9 @@ one — always print the denominator, the three municipal generals change
 `declared_currency` is `Lt` or `EUR` (`EUR` made explicit — in the records
 the euro era is marked only by the *absence* of `valiuta`), and
 `currency_rate` the divisor applied (3.4528, the irrevocable changeover
-rate, or 1.0). `declaration_status` types the missing section: `yra` /
-`archyvo-skenai` (`2002-prezidento`, published only as page scans) / `nera`
-(855 records). The eleven declaration keys become
+rate, or 1.0). `declaration_status` types the missing section: `yra` (112,218 records) /
+`archyvo-skenai` (17 — `2002-prezidento`, published only as page scans) /
+`nera` (838). The eleven declaration keys become
 `assets_registered_eur`, `securities_eur`, `cash_eur`, `loans_given_eur`,
 `loans_received_eur`, `income_eur`, `income_tax_eur`,
 `self_employment_income_eur`, `self_employment_deductions_eur`,
@@ -155,8 +155,8 @@ measures different things across eras:
 
 | column | values | the trap it names |
 |---|---|---|
-| `assets_measure` | `skaidytas` \| `turtas-plius-lesos` \| `turtas-plius-vp` | `assets_total_eur` is property+securities+cash summed from split rows (2004 on), the 1996–2000 form's single combined row, or 2002's property-and-securities row plus its cash row. The archive eras leave the modern keys as null placeholders — summing the documented seven keys reads €0 for 17,654 declarations that do state their wealth |
-| `income_measure` | `neto-archyvas` \| `fr0462` \| `gpm-bruto` \| `deklaruota-apmokestinamos` | 1996–2002 income is **net of tax** (provable from the numbers: the modal tax/income ratio there exceeds the era's statutory rate); everything from 2004 on is gross. 23,141 populated records are net |
+| `assets_measure` | `skaidytas` \| `turtas-plius-lesos` \| `turtas-plius-vp` | `assets_total_eur` is property+securities+cash summed from split rows (2004 on), the 1996–2000 form's single combined row, or 2002's property-and-securities row plus its cash row. The archive eras leave the modern keys as null placeholders — summing the documented seven keys reads €0 for 17,799 declarations that do state their wealth |
+| `income_measure` | `neto-archyvas` \| `fr0462` \| `gpm-bruto` \| `deklaruota-apmokestinamos` | 1996–2002 income is **net of tax** (provable from the numbers: the modal tax/income ratio there exceeds the era's statutory rate); everything from 2004 on is gross. 27,795 records carry a net figure (27,816 rows are typed `neto-archyvas`) |
 | `tax_measure` | `sumoketas` \| `moketinas` | the tax row flips from tax *paid* to tax *payable* with the 2018 rewording |
 
 `income_gross_eur` is the comparable series: the declared figure where the
@@ -190,10 +190,24 @@ rate of every gated column (3,465 cells). A plain build fails when a rate
 falls more than `--max-drop` points below the baseline, or when a cell no
 record fills appears without a classified reason — the shape of the
 2020-income defect ([FIELD_COVERAGE.md](FIELD_COVERAGE.md)), which this
-table would otherwise inherit silently. The 1,021 zero cells that are real all
+table would otherwise inherit silently. The 1,026 zero cells that are real all
 carry a status and a note ("a single-mandate Seimas by-election; no party
 list on the ballot"); `--update-baseline` auto-classifies only the zeros the
 builder can structurally explain and refuses the rest.
+
+Those structural reasons are hand-written lists of election ids, and a list
+written against one corpus goes stale under the next: issue #99's results
+join recovered the post-election ranking for six of the eleven elections
+`POST_RANKING_ABSENT` said had never printed one, and six baseline rows went
+on denying 35,507 values (issue #165). Two things now stop that. The gate
+reports a classification that has gone false — *stale excuse*, in
+[FIELD_COVERAGE.md](FIELD_COVERAGE.md) — instead of skipping a classified
+zero unread; and `tests/test_candidacy_table.py` measures every rule against
+the checked-in rates, so a rule that excuses a column the baseline says is
+filled fails on a clone with no corpus present. That test found a seventh
+stale reason the audit had not: the 2024 presidential cards do print a
+`Kandidatą iškėlė` row, over a note saying presidential pages name no
+nominator.
 
 ## What this table is not
 
@@ -222,7 +236,35 @@ python scripts/build_distribution.py --profile full     # the archive verbatim
 | `campaigns.csv.gz` | one row per campaign-finance participant |
 | `vrk.sqlite.gz` | the analysis database above, gzipped |
 | `vrk-corpus.sqlite.gz` | **everything**: the analysis tables plus `records`, `photos`, `anomalies` — under the public profile, less the third-party contacts and the portraits' metadata (below) |
-| `MANIFEST.json` | per-election record counts, build date, parser commit, sha256 + bytes per asset, and the terms (`license`, `dataLicense`, `attribution`, `terms`, `source` — [DATA_TERMS.md](../DATA_TERMS.md), issue #138) |
+| `MANIFEST.json` | `schemaVersion`, per-election record counts, build date, `buildCommit` (dirty-aware), `corpusParserCommits`, sha256 + bytes per asset, and the terms (`license`, `dataLicense`, `attribution`, `terms`, `source` — [DATA_TERMS.md](../DATA_TERMS.md), issue #138) |
+
+**And back again.** `scripts/unpack_corpus.py` turns `vrk-corpus.sqlite`
+into a `data/` tree — one JSON file per record in the corpus's own key
+order, each election's `anomalies.jsonl`, and every portrait sidecar the
+records name — so a download is an alternative to the scrape and not just to
+reading it:
+
+```bash
+gh release download corpus-2026-08-30 --pattern 'vrk-corpus.sqlite.gz'
+gunzip vrk-corpus.sqlite.gz
+python scripts/unpack_corpus.py vrk-corpus.sqlite            # -> ./data
+python scripts/unpack_corpus.py vrk-corpus.sqlite --into /tmp/corpus
+```
+
+After it, `build_person_index.py` and `build_candidacy_table.py` run against
+the unpacked tree. Under `--profile full` the round trip is exact: same
+records, same key order, same portrait bytes, which
+`tests/test_build_distribution.py`'s `CorpusRoundTrip` holds file for file.
+Under the public profile the redacted paths are absent (not nulled), which
+is what the manifest's `redaction` block lists. Nothing in the repository
+read a release asset before issue #156 — 0 of the 21 scripts — so the assets
+existed and the corpus behind them could not be reassembled.
+
+**Both databases say what they are.** `meta(key, value)` carries
+`schemaVersion`, `profile`, `builtAt`, `buildCommit`, the row counts, the
+licence and the attribution, and `PRAGMA user_version` carries the schema
+version too — so a 602 MB download can be identified with two queries and
+no repository. Before, it was an anonymous 2.5 GB file.
 
 `elections` is the registry as a table — `id, date, kind, parent, name,
 shortName, records` — where `parent` is the general election whose term a
@@ -231,6 +273,16 @@ by-election, repeat or re-vote fills, NULL for a general election, so
 `municipalities(municipality_id, name, kind, until)` is the municipality
 registry as a table (issue #137): the 60 bodies of the 2000 reform plus the two
 it dissolved, `kind` ∈ `miesto` | `rajono` | `savivaldybe`.
+`persons(person_id, name, birth_key, candidacies, elections, merged_keys)` is
+the identity layer as a table (issue #96): `person_id` is the `pid` the
+dashboard puts in its URL — `p` plus 12 hex digits of blake2s over the
+natural key — `name` the display name (the latest election's spelling),
+`birth_key` the natural key itself (`NAME|YYYY-MM-DD`, or `NAME|~YYYY` where
+only a year is published and `NAME|?` where nothing is), `candidacies` and
+`elections` how many of each the person has, and `merged_keys` how many
+*other* natural keys were folded into this person by
+`scraper/person_overrides.json` — 0 for the great majority, and the count of
+former names for a reviewed merge.
 `party_predecessors(party_id, predecessor_id)` is the nominator registry's
 lineage (issue #123): one row per organisation a party, coalition or
 committee continues — the merged parties behind `ts-lkd`, the committee and
@@ -253,6 +305,33 @@ since the 2026-08-29 re-parse; one reappearing means an election regressed).
 The candidacy-table pass and the records pass must agree on the record
 count.
 
+**A build that names no election claims the whole archive** (issue #132), so
+it refuses one that does not hold it — before writing anything — naming the
+registered elections `data/` lacks. Nothing used to: `elections_present` is
+whatever sits under `data/` and only an *unregistered* directory raised, the
+fill gate iterates cells and a wholly absent election has none, and the
+two-pass record count compares two passes over the same truncated list. A
+build over 2 of the 55 registered elections therefore exited 0, said "Fill
+gate: no findings", wrote all five assets and printed its `gh release
+create` line — over a manifest indistinguishable in shape from a
+113,073-record one. It is not a hypothetical: `data/` in a worktree is a
+symlink set, and this project's history records corpus directories dying
+with one. `counts.electionsRegistered` now sits beside `counts.elections`,
+so a consumer can ask the manifest the same question; a partial build is
+what naming elections is for, and marks the manifest `subset`.
+`scripts/field_coverage.py` grew the matching rule at the other end — an
+election it still maps with nothing under `data/` is a finding of its own.
+
+**A build that dies partway leaves `dist/` as it was.** Everything is
+written into `dist/.staging-<pid>/` and moved into place only once the
+manifest exists, old manifest removed first: either there is no manifest, or
+it checksums what sits beside it. Before, a record whose envelope had moved
+— or a Ctrl-C, a full disk or an OOM during the 2.5 GB corpus write — left
+MANIFEST describing the *previous* build, one asset from this one, three
+from the old, `gzip.decompress(vrk.sqlite.gz) != vrk.sqlite`, and `SELECT
+COUNT(*) FROM records` = 0 on a database whose `PRAGMA integrity_check` said
+ok. The error mentioned none of it.
+
 **The release is a profile of the archive** (issue #142). `--profile
 public`, the default, removes from every record the campaign treasurer's
 and auditor's phone and e-mail — both layers, eight paths listed in
@@ -269,15 +348,20 @@ number of values removed, and `counts.photosStripped`.
 In `vrk-corpus.sqlite` the three extra tables are:
 
 - `records(election_id, candidate_id, candidate_name, record_file,
-  source_json, kandidatavimas_json, candidate_note, photo_sha256, raw_json,
-  norm_json, provenance_json)` — one row per record file, primary key
+  source_json, kandidatavimas_json, candidate_note_json, photo_sha256,
+  raw_json, norm_json, provenance_json)` — one row per record file, primary key
   `(election_id, candidate_id)`. `raw_json` / `norm_json` are the record's
   `rawData` / `normalized`, compact-serialized (the files are
   pretty-printed; 34.5 % of `data/` was whitespace). The original record
   reassembles from the row — `reconstruct_record` in the script is the
   contract and a test pins the round trip: lossless under `--profile full`,
   and under the public profile the record less the values the profile
-  removes (the keys are absent, not nulled).
+  removes (the keys are absent, not nulled). `candidate_note_json` holds
+  JSON and not text for a measured reason: `candidateNote` is present *and
+  null* on 27,472 of the 27,478 records that carry it, a TEXT column cannot
+  tell that from absent, and the round trip therefore dropped the key on
+  every one of those records while three places called it lossless
+  (issue #156).
 - `photos(sha256, mime, bytes, stripped, stripped_sha256, data)` — every
   sidecar portrait, stored once by content hash; `records.photo_sha256` is
   the join and `sha256` is always the archive's hash, whatever the profile
@@ -303,5 +387,8 @@ WHERE c.election_id = '2019-prezidento';
 
 Releases are tagged `corpus-YYYY-MM-DD` (the manifest's `version`), so the
 corpus is versioned by release tag rather than by whatever happens to be on
-one disk; `parserCommit` in the manifest names the exact code that produced
-it. A full build prints the `gh release create` line, filled in.
+one disk. `buildCommit` names the code that built the assets — dirty-aware,
+so a build from a modified checkout says so — and `corpusParserCommits` the
+spread of commits the *records* carry: the corpus is not from one commit, and
+one string implied it was (issue #156). A full build prints the
+`gh release create` line, filled in.

@@ -35,9 +35,16 @@ class SvencioniuTarybos1997AnketaParserTests(unittest.TestCase):
             list(self.lauzadis["rawData"].keys()),
             ["profile", "candidacy", "personal", "declaration"],
         )
+        # `anketa` before `kandidatavimas` since issue #144: this module used
+        # to emit them the other way round, which made its 6,386 records the
+        # only ones in the corpus to interleave a section between `profilis`
+        # and `anketa` -- against its own sibling `seimo_archive_1990s.py`,
+        # which emits `profilis|anketa|kandidatavimas` for the other 950
+        # records of the same era. `tests/test_record_shape.py` holds the one
+        # order over the whole corpus.
         self.assertEqual(
             list(self.lauzadis["normalized"].keys()),
-            ["profilis", "kandidatavimas", "anketa", "turto-ir-pajamu-deklaracijos"],
+            ["profilis", "anketa", "kandidatavimas", "turto-ir-pajamu-deklaracijos"],
         )
 
     def test_candidacy_fields(self) -> None:
