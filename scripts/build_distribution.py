@@ -9,6 +9,9 @@ GitHub release ships:
     candidacies.csv.gz      the flat comparison table (issue #93's
                             build_candidacy_table, re-used verbatim)
     campaigns.csv.gz        one row per campaign-finance participant
+    coverage.tsv            what each election's form asks and how much of
+                            it is answered: concept x election, and the
+                            candidacy table's columns x election (issue #162)
     vrk.sqlite(.gz)         the analysis database: those two as tables,
                             plus elections / persons / parties, indexed
     vrk-corpus.sqlite(.gz)  everything but the image bytes: the analysis
@@ -152,6 +155,7 @@ ATTRIBUTION = (
 RELEASE_ARTIFACTS = (
     "candidacies.csv.gz",
     "campaigns.csv.gz",
+    "coverage.tsv",
     "vrk.sqlite.gz",
     "vrk-corpus.sqlite.gz",
 )
@@ -880,6 +884,8 @@ def build_distribution(
             table.CAMPAIGN_COLUMNS,
             sorted(campaigns.values(), key=lambda c: (c["election_id"], c["campaign_key"])),
         )
+        coverage = table.coverage_rows(stats["concept_cells"], stats["concepts"], rows, stats["elections_present"])
+        table.write_tsv(staging / "coverage.tsv", table.COVERAGE_COLUMNS, coverage)
         table.write_sqlite(
             staging / "vrk.sqlite",
             rows,
@@ -899,6 +905,7 @@ def build_distribution(
                 "attribution": ATTRIBUTION,
                 "terms": TERMS_URL,
             },
+            coverage=coverage,
         )
 
         corpus_counts = write_corpus_sqlite(

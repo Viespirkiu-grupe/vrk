@@ -255,6 +255,8 @@ class EveryPathShapeRendersTests(unittest.TestCase):
                 "compactValue", "educationCell", "workHistoryCell", "nameCell", "convictionCell",
                 "convictionLines", "deslug", "labelFor", "isFilledValue", "walkValue", "resolveConcept",
                 "resolveRow", "rowLabel", "votesCell", "constituencyRounds", "constituencyVotesCell",
+                "priorOfficeCell", "declarationScopeCell", "campaignCell", "declarationsCell",
+                "declarationAnswerClass",
             )
         )
         consts = "\n".join(
@@ -269,6 +271,7 @@ class EveryPathShapeRendersTests(unittest.TestCase):
                 (r"^const CONCEPT_ROWS = \[.*?^\];", re.S | re.M),
                 (r"^const fmtInt = .*;$", re.M),
                 (r"^const ROUND_NUMERALS = .*;$", re.M),
+                (r"^const DECLARATION_SCOPES = \{.*?^\};", re.S | re.M),
             )
         )
         script = (

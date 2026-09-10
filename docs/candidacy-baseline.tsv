@@ -1099,6 +1099,116 @@ currency_rate	2024-ep	100.0	ok
 currency_rate	2024-prezidento	100.0	ok	
 currency_rate	2024-seimo	100.0	ok	
 currency_rate	2025-kovo-16-meru	100.0	ok	
+declaration_form	1996-spalio-20-seimo	0.0	upstream-absent	no form code (FR0462, GPM305/308/311) is printed before the 2004 extracts
+declaration_form	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	0.0	upstream-absent	no form code (FR0462, GPM305/308/311) is printed before the 2004 extracts
+declaration_form	1997-gruodzio-21-seimo-pakartotiniai	0.0	upstream-absent	no form code (FR0462, GPM305/308/311) is printed before the 2004 extracts
+declaration_form	1997-kovo-23-savivaldybiu-tarybu	0.0	upstream-absent	no form code (FR0462, GPM305/308/311) is printed before the 2004 extracts
+declaration_form	1997-kovo-23-seimo-pakartotiniai	0.0	upstream-absent	no form code (FR0462, GPM305/308/311) is printed before the 2004 extracts
+declaration_form	1998-kovo-22-seimo-pakartotiniai	0.0	upstream-absent	no form code (FR0462, GPM305/308/311) is printed before the 2004 extracts
+declaration_form	1998-lapkricio-15-seimo-pakartotiniai	0.0	upstream-absent	no form code (FR0462, GPM305/308/311) is printed before the 2004 extracts
+declaration_form	1999-kovo-21-seimo-pakartotiniai	0.0	upstream-absent	no form code (FR0462, GPM305/308/311) is printed before the 2004 extracts
+declaration_form	2000-kovo-19-savivaldybiu-tarybu	0.0	upstream-absent	no form code (FR0462, GPM305/308/311) is printed before the 2004 extracts
+declaration_form	2000-seimo	0.0	upstream-absent	no form code (FR0462, GPM305/308/311) is printed before the 2004 extracts
+declaration_form	2002-gruodzio-22-savivaldybiu-tarybu	0.0	upstream-absent	no form code (FR0462, GPM305/308/311) is printed before the 2004 extracts
+declaration_form	2002-prezidento	0.0	upstream-absent	declarations published only as archive scans
+declaration_form	2003-birzelio-15-seimo-nauji	0.0	upstream-absent	no form code (FR0462, GPM305/308/311) is printed before the 2004 extracts
+declaration_form	2004-ep	100.0	ok	
+declaration_form	2004-prezidento	100.0	ok	
+declaration_form	2004-seimo	99.9	ok	
+declaration_form	2005-lapkricio-20-seimo-kedainiai	100.0	ok	
+declaration_form	2007-spalio-7-seimo-dzukija	100.0	ok	
+declaration_form	2007-vasario-25-savivaldybiu	99.6	ok	
+declaration_form	2008-seimo	100.0	ok	
+declaration_form	2009-ep	100.0	ok	
+declaration_form	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	100.0	ok	
+declaration_form	2009-prezidento	100.0	ok	
+declaration_form	2011-vasario-13-seimo-marijampole	100.0	ok	
+declaration_form	2011-vasario-27-savivaldybiu	100.0	ok	
+declaration_form	2012-seimo	100.0	ok	
+declaration_form	2013-kovo-3-seimo-birzai-zarasai-ukmerge	100.0	ok	
+declaration_form	2014-ep	99.5	ok	
+declaration_form	2014-prezidento	100.0	ok	
+declaration_form	2015-birzelio-21-pakartotiniai-silutes	100.0	ok	
+declaration_form	2015-birzelio-7-pakartotiniai-sirvintos-trakai	99.7	ok	
+declaration_form	2015-birzelio-7-seimo-varena-eisiskes	100.0	ok	
+declaration_form	2015-kovo-1-savivaldybiu	100.0	ok	
+declaration_form	2015-kovo-1-seimo-zirmunai	100.0	ok	
+declaration_form	2015-lapkricio-8-telsiu-mero	100.0	ok	
+declaration_form	2016-seimo	100.0	ok	
+declaration_form	2017-balandzio-23-meru	100.0	ok	
+declaration_form	2017-balandzio-23-seimo-anyksciai-panevezys	100.0	ok	
+declaration_form	2017-rugsejo-10-marijampoles-mero	100.0	ok	
+declaration_form	2018-rugsejo-16-seimo-zanavykai	100.0	ok	
+declaration_form	2019-ep	100.0	ok	
+declaration_form	2019-kovo-3-savivaldybiu-tarybu	100.0	ok	
+declaration_form	2019-prezidento	100.0	ok	
+declaration_form	2019-rugsejo-8-seimo	100.0	ok	
+declaration_form	2020-seimo	99.9	ok	
+declaration_form	2021-balandzio-11-radviliskio-mero	100.0	ok	
+declaration_form	2021-spalio-10-meru	100.0	ok	
+declaration_form	2023-geguzes-7-visagino-mero	100.0	ok	
+declaration_form	2023-kovo-5-savivaldybiu-tarybu-ir-meru	100.0	ok	
+declaration_form	2023-rugsejo-3-seimo-raseiniai-kedainiai	100.0	ok	
+declaration_form	2023-spalio-8-kupiskio-mero	100.0	ok	
+declaration_form	2024-ep	100.0	ok	
+declaration_form	2024-prezidento	100.0	ok	
+declaration_form	2024-seimo	100.0	ok	
+declaration_form	2025-kovo-16-meru	100.0	ok	
+declaration_scope	1996-spalio-20-seimo	0.0	upstream-absent	the 1996-2000 extract names the declaration type without the resident-or-family scope the 2002-on headings state
+declaration_scope	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	0.0	upstream-absent	the 1996-2000 extract names the declaration type without the resident-or-family scope the 2002-on headings state
+declaration_scope	1997-gruodzio-21-seimo-pakartotiniai	0.0	upstream-absent	the 1996-2000 extract names the declaration type without the resident-or-family scope the 2002-on headings state
+declaration_scope	1997-kovo-23-savivaldybiu-tarybu	0.0	upstream-absent	the 1996-2000 extract names the declaration type without the resident-or-family scope the 2002-on headings state
+declaration_scope	1997-kovo-23-seimo-pakartotiniai	0.0	upstream-absent	the 1996-2000 extract names the declaration type without the resident-or-family scope the 2002-on headings state
+declaration_scope	1998-kovo-22-seimo-pakartotiniai	0.0	upstream-absent	the 1996-2000 extract names the declaration type without the resident-or-family scope the 2002-on headings state
+declaration_scope	1998-lapkricio-15-seimo-pakartotiniai	0.0	upstream-absent	the 1996-2000 extract names the declaration type without the resident-or-family scope the 2002-on headings state
+declaration_scope	1999-kovo-21-seimo-pakartotiniai	0.0	upstream-absent	the 1996-2000 extract names the declaration type without the resident-or-family scope the 2002-on headings state
+declaration_scope	2000-kovo-19-savivaldybiu-tarybu	0.0	upstream-absent	the 1996-2000 extract names the declaration type without the resident-or-family scope the 2002-on headings state
+declaration_scope	2000-seimo	0.0	upstream-absent	the 1996-2000 extract names the declaration type without the resident-or-family scope the 2002-on headings state
+declaration_scope	2002-gruodzio-22-savivaldybiu-tarybu	100.0	ok	
+declaration_scope	2002-prezidento	0.0	upstream-absent	declarations published only as archive scans
+declaration_scope	2003-birzelio-15-seimo-nauji	100.0	ok	
+declaration_scope	2004-ep	100.0	ok	
+declaration_scope	2004-prezidento	100.0	ok	
+declaration_scope	2004-seimo	99.8	ok	
+declaration_scope	2005-lapkricio-20-seimo-kedainiai	100.0	ok	
+declaration_scope	2007-spalio-7-seimo-dzukija	100.0	ok	
+declaration_scope	2007-vasario-25-savivaldybiu	99.4	ok	
+declaration_scope	2008-seimo	100.0	ok	
+declaration_scope	2009-ep	100.0	ok	
+declaration_scope	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	100.0	ok	
+declaration_scope	2009-prezidento	100.0	ok	
+declaration_scope	2011-vasario-13-seimo-marijampole	100.0	ok	
+declaration_scope	2011-vasario-27-savivaldybiu	100.0	ok	
+declaration_scope	2012-seimo	100.0	ok	
+declaration_scope	2013-kovo-3-seimo-birzai-zarasai-ukmerge	100.0	ok	
+declaration_scope	2014-ep	100.0	ok	
+declaration_scope	2014-prezidento	100.0	ok	
+declaration_scope	2015-birzelio-21-pakartotiniai-silutes	100.0	ok	
+declaration_scope	2015-birzelio-7-pakartotiniai-sirvintos-trakai	99.7	ok	
+declaration_scope	2015-birzelio-7-seimo-varena-eisiskes	100.0	ok	
+declaration_scope	2015-kovo-1-savivaldybiu	100.0	ok	
+declaration_scope	2015-kovo-1-seimo-zirmunai	100.0	ok	
+declaration_scope	2015-lapkricio-8-telsiu-mero	100.0	ok	
+declaration_scope	2016-seimo	100.0	ok	
+declaration_scope	2017-balandzio-23-meru	100.0	ok	
+declaration_scope	2017-balandzio-23-seimo-anyksciai-panevezys	100.0	ok	
+declaration_scope	2017-rugsejo-10-marijampoles-mero	100.0	ok	
+declaration_scope	2018-rugsejo-16-seimo-zanavykai	100.0	ok	
+declaration_scope	2019-ep	100.0	ok	
+declaration_scope	2019-kovo-3-savivaldybiu-tarybu	100.0	ok	
+declaration_scope	2019-prezidento	100.0	ok	
+declaration_scope	2019-rugsejo-8-seimo	100.0	ok	
+declaration_scope	2020-seimo	99.9	ok	
+declaration_scope	2021-balandzio-11-radviliskio-mero	100.0	ok	
+declaration_scope	2021-spalio-10-meru	100.0	ok	
+declaration_scope	2023-geguzes-7-visagino-mero	100.0	ok	
+declaration_scope	2023-kovo-5-savivaldybiu-tarybu-ir-meru	100.0	ok	
+declaration_scope	2023-rugsejo-3-seimo-raseiniai-kedainiai	100.0	ok	
+declaration_scope	2023-spalio-8-kupiskio-mero	100.0	ok	
+declaration_scope	2024-ep	100.0	ok	
+declaration_scope	2024-prezidento	100.0	ok	
+declaration_scope	2024-seimo	100.0	ok	
+declaration_scope	2025-kovo-16-meru	100.0	ok	
 declaration_status	1996-spalio-20-seimo	100.0	ok	
 declaration_status	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	100.0	ok	
 declaration_status	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
@@ -1209,6 +1319,61 @@ declaration_year	2024-ep	100.0	ok
 declaration_year	2024-prezidento	100.0	ok	
 declaration_year	2024-seimo	100.0	ok	
 declaration_year	2025-kovo-16-meru	100.0	ok	
+declarations_status	1996-spalio-20-seimo	100.0	ok	
+declarations_status	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	100.0	ok	
+declarations_status	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
+declarations_status	1997-kovo-23-savivaldybiu-tarybu	100.0	ok	
+declarations_status	1997-kovo-23-seimo-pakartotiniai	100.0	ok	
+declarations_status	1998-kovo-22-seimo-pakartotiniai	100.0	ok	
+declarations_status	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
+declarations_status	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
+declarations_status	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
+declarations_status	2000-seimo	100.0	ok	
+declarations_status	2002-gruodzio-22-savivaldybiu-tarybu	100.0	ok	
+declarations_status	2002-prezidento	100.0	ok	
+declarations_status	2003-birzelio-15-seimo-nauji	100.0	ok	
+declarations_status	2004-ep	100.0	ok	
+declarations_status	2004-prezidento	100.0	ok	
+declarations_status	2004-seimo	100.0	ok	
+declarations_status	2005-lapkricio-20-seimo-kedainiai	100.0	ok	
+declarations_status	2007-spalio-7-seimo-dzukija	100.0	ok	
+declarations_status	2007-vasario-25-savivaldybiu	100.0	ok	
+declarations_status	2008-seimo	100.0	ok	
+declarations_status	2009-ep	100.0	ok	
+declarations_status	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	100.0	ok	
+declarations_status	2009-prezidento	100.0	ok	
+declarations_status	2011-vasario-13-seimo-marijampole	100.0	ok	
+declarations_status	2011-vasario-27-savivaldybiu	100.0	ok	
+declarations_status	2012-seimo	100.0	ok	
+declarations_status	2013-kovo-3-seimo-birzai-zarasai-ukmerge	100.0	ok	
+declarations_status	2014-ep	100.0	ok	
+declarations_status	2014-prezidento	100.0	ok	
+declarations_status	2015-birzelio-21-pakartotiniai-silutes	100.0	ok	
+declarations_status	2015-birzelio-7-pakartotiniai-sirvintos-trakai	100.0	ok	
+declarations_status	2015-birzelio-7-seimo-varena-eisiskes	100.0	ok	
+declarations_status	2015-kovo-1-savivaldybiu	100.0	ok	
+declarations_status	2015-kovo-1-seimo-zirmunai	100.0	ok	
+declarations_status	2015-lapkricio-8-telsiu-mero	100.0	ok	
+declarations_status	2016-seimo	100.0	ok	
+declarations_status	2017-balandzio-23-meru	100.0	ok	
+declarations_status	2017-balandzio-23-seimo-anyksciai-panevezys	100.0	ok	
+declarations_status	2017-rugsejo-10-marijampoles-mero	100.0	ok	
+declarations_status	2018-rugsejo-16-seimo-zanavykai	100.0	ok	
+declarations_status	2019-ep	100.0	ok	
+declarations_status	2019-kovo-3-savivaldybiu-tarybu	100.0	ok	
+declarations_status	2019-prezidento	100.0	ok	
+declarations_status	2019-rugsejo-8-seimo	100.0	ok	
+declarations_status	2020-seimo	100.0	ok	
+declarations_status	2021-balandzio-11-radviliskio-mero	100.0	ok	
+declarations_status	2021-spalio-10-meru	100.0	ok	
+declarations_status	2023-geguzes-7-visagino-mero	100.0	ok	
+declarations_status	2023-kovo-5-savivaldybiu-tarybu-ir-meru	100.0	ok	
+declarations_status	2023-rugsejo-3-seimo-raseiniai-kedainiai	100.0	ok	
+declarations_status	2023-spalio-8-kupiskio-mero	100.0	ok	
+declarations_status	2024-ep	100.0	ok	
+declarations_status	2024-prezidento	100.0	ok	
+declarations_status	2024-seimo	100.0	ok	
+declarations_status	2025-kovo-16-meru	100.0	ok	
 declared_currency	1996-spalio-20-seimo	100.0	ok	
 declared_currency	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	98.2	ok	
 declared_currency	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
@@ -1979,6 +2144,116 @@ election_kind	2024-ep	100.0	ok
 election_kind	2024-prezidento	100.0	ok	
 election_kind	2024-seimo	100.0	ok	
 election_kind	2025-kovo-16-meru	100.0	ok	
+election_name	1996-spalio-20-seimo	100.0	ok	
+election_name	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	100.0	ok	
+election_name	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
+election_name	1997-kovo-23-savivaldybiu-tarybu	100.0	ok	
+election_name	1997-kovo-23-seimo-pakartotiniai	100.0	ok	
+election_name	1998-kovo-22-seimo-pakartotiniai	100.0	ok	
+election_name	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
+election_name	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
+election_name	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
+election_name	2000-seimo	100.0	ok	
+election_name	2002-gruodzio-22-savivaldybiu-tarybu	100.0	ok	
+election_name	2002-prezidento	100.0	ok	
+election_name	2003-birzelio-15-seimo-nauji	100.0	ok	
+election_name	2004-ep	100.0	ok	
+election_name	2004-prezidento	100.0	ok	
+election_name	2004-seimo	100.0	ok	
+election_name	2005-lapkricio-20-seimo-kedainiai	100.0	ok	
+election_name	2007-spalio-7-seimo-dzukija	100.0	ok	
+election_name	2007-vasario-25-savivaldybiu	100.0	ok	
+election_name	2008-seimo	100.0	ok	
+election_name	2009-ep	100.0	ok	
+election_name	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	100.0	ok	
+election_name	2009-prezidento	100.0	ok	
+election_name	2011-vasario-13-seimo-marijampole	100.0	ok	
+election_name	2011-vasario-27-savivaldybiu	100.0	ok	
+election_name	2012-seimo	100.0	ok	
+election_name	2013-kovo-3-seimo-birzai-zarasai-ukmerge	100.0	ok	
+election_name	2014-ep	100.0	ok	
+election_name	2014-prezidento	100.0	ok	
+election_name	2015-birzelio-21-pakartotiniai-silutes	100.0	ok	
+election_name	2015-birzelio-7-pakartotiniai-sirvintos-trakai	100.0	ok	
+election_name	2015-birzelio-7-seimo-varena-eisiskes	100.0	ok	
+election_name	2015-kovo-1-savivaldybiu	100.0	ok	
+election_name	2015-kovo-1-seimo-zirmunai	100.0	ok	
+election_name	2015-lapkricio-8-telsiu-mero	100.0	ok	
+election_name	2016-seimo	100.0	ok	
+election_name	2017-balandzio-23-meru	100.0	ok	
+election_name	2017-balandzio-23-seimo-anyksciai-panevezys	100.0	ok	
+election_name	2017-rugsejo-10-marijampoles-mero	100.0	ok	
+election_name	2018-rugsejo-16-seimo-zanavykai	100.0	ok	
+election_name	2019-ep	100.0	ok	
+election_name	2019-kovo-3-savivaldybiu-tarybu	100.0	ok	
+election_name	2019-prezidento	100.0	ok	
+election_name	2019-rugsejo-8-seimo	100.0	ok	
+election_name	2020-seimo	100.0	ok	
+election_name	2021-balandzio-11-radviliskio-mero	100.0	ok	
+election_name	2021-spalio-10-meru	100.0	ok	
+election_name	2023-geguzes-7-visagino-mero	100.0	ok	
+election_name	2023-kovo-5-savivaldybiu-tarybu-ir-meru	100.0	ok	
+election_name	2023-rugsejo-3-seimo-raseiniai-kedainiai	100.0	ok	
+election_name	2023-spalio-8-kupiskio-mero	100.0	ok	
+election_name	2024-ep	100.0	ok	
+election_name	2024-prezidento	100.0	ok	
+election_name	2024-seimo	100.0	ok	
+election_name	2025-kovo-16-meru	100.0	ok	
+election_parent	1996-spalio-20-seimo	100.0	ok	
+election_parent	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	100.0	ok	
+election_parent	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
+election_parent	1997-kovo-23-savivaldybiu-tarybu	100.0	ok	
+election_parent	1997-kovo-23-seimo-pakartotiniai	100.0	ok	
+election_parent	1998-kovo-22-seimo-pakartotiniai	100.0	ok	
+election_parent	1998-lapkricio-15-seimo-pakartotiniai	100.0	ok	
+election_parent	1999-kovo-21-seimo-pakartotiniai	100.0	ok	
+election_parent	2000-kovo-19-savivaldybiu-tarybu	100.0	ok	
+election_parent	2000-seimo	100.0	ok	
+election_parent	2002-gruodzio-22-savivaldybiu-tarybu	100.0	ok	
+election_parent	2002-prezidento	100.0	ok	
+election_parent	2003-birzelio-15-seimo-nauji	100.0	ok	
+election_parent	2004-ep	100.0	ok	
+election_parent	2004-prezidento	100.0	ok	
+election_parent	2004-seimo	100.0	ok	
+election_parent	2005-lapkricio-20-seimo-kedainiai	100.0	ok	
+election_parent	2007-spalio-7-seimo-dzukija	100.0	ok	
+election_parent	2007-vasario-25-savivaldybiu	100.0	ok	
+election_parent	2008-seimo	100.0	ok	
+election_parent	2009-ep	100.0	ok	
+election_parent	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	100.0	ok	
+election_parent	2009-prezidento	100.0	ok	
+election_parent	2011-vasario-13-seimo-marijampole	100.0	ok	
+election_parent	2011-vasario-27-savivaldybiu	100.0	ok	
+election_parent	2012-seimo	100.0	ok	
+election_parent	2013-kovo-3-seimo-birzai-zarasai-ukmerge	100.0	ok	
+election_parent	2014-ep	100.0	ok	
+election_parent	2014-prezidento	100.0	ok	
+election_parent	2015-birzelio-21-pakartotiniai-silutes	100.0	ok	
+election_parent	2015-birzelio-7-pakartotiniai-sirvintos-trakai	100.0	ok	
+election_parent	2015-birzelio-7-seimo-varena-eisiskes	100.0	ok	
+election_parent	2015-kovo-1-savivaldybiu	100.0	ok	
+election_parent	2015-kovo-1-seimo-zirmunai	100.0	ok	
+election_parent	2015-lapkricio-8-telsiu-mero	100.0	ok	
+election_parent	2016-seimo	100.0	ok	
+election_parent	2017-balandzio-23-meru	100.0	ok	
+election_parent	2017-balandzio-23-seimo-anyksciai-panevezys	100.0	ok	
+election_parent	2017-rugsejo-10-marijampoles-mero	100.0	ok	
+election_parent	2018-rugsejo-16-seimo-zanavykai	100.0	ok	
+election_parent	2019-ep	100.0	ok	
+election_parent	2019-kovo-3-savivaldybiu-tarybu	100.0	ok	
+election_parent	2019-prezidento	100.0	ok	
+election_parent	2019-rugsejo-8-seimo	100.0	ok	
+election_parent	2020-seimo	100.0	ok	
+election_parent	2021-balandzio-11-radviliskio-mero	100.0	ok	
+election_parent	2021-spalio-10-meru	100.0	ok	
+election_parent	2023-geguzes-7-visagino-mero	100.0	ok	
+election_parent	2023-kovo-5-savivaldybiu-tarybu-ir-meru	100.0	ok	
+election_parent	2023-rugsejo-3-seimo-raseiniai-kedainiai	100.0	ok	
+election_parent	2023-spalio-8-kupiskio-mero	100.0	ok	
+election_parent	2024-ep	100.0	ok	
+election_parent	2024-prezidento	100.0	ok	
+election_parent	2024-seimo	100.0	ok	
+election_parent	2025-kovo-16-meru	100.0	ok	
 income_eur	1996-spalio-20-seimo	99.8	ok	
 income_eur	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	98.2	ok	
 income_eur	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
@@ -2694,6 +2969,61 @@ municipality_id	2024-ep	0.0	upstream-absent	not a municipal or mayoral election
 municipality_id	2024-prezidento	0.0	upstream-absent	not a municipal or mayoral election
 municipality_id	2024-seimo	0.0	upstream-absent	not a municipal or mayoral election
 municipality_id	2025-kovo-16-meru	100.0	ok	
+nationality	1996-spalio-20-seimo	47.9	partly-published	as the tautybe concept: the card field sits inside a malformed HTML comment and is recovered by regex where present: 421 of 879 (OUTPUT_SCHEMA, the 1996-1998 archive)
+nationality	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	85.5	ok	
+nationality	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	
+nationality	1997-kovo-23-savivaldybiu-tarybu	97.7	ok	
+nationality	1997-kovo-23-seimo-pakartotiniai	100.0	ok	
+nationality	1998-kovo-22-seimo-pakartotiniai	45.5	partly-published	as the tautybe concept: the card field sits inside a malformed HTML comment and is recovered by regex where present: 5 of 11 (OUTPUT_SCHEMA, the 1996-1998 archive)
+nationality	1998-lapkricio-15-seimo-pakartotiniai	90.9	ok	
+nationality	1999-kovo-21-seimo-pakartotiniai	90.9	ok	
+nationality	2000-kovo-19-savivaldybiu-tarybu	0.0	upstream-absent	the form asks no nationality: the 2000 municipal and Seimas cards, the 2002 and 2004 presidential pages and every form from 2024 on (a handful of 2000-seimo biographies name it in prose)
+nationality	2000-seimo	0.0	upstream-absent	the form asks no nationality: the 2000 municipal and Seimas cards, the 2002 and 2004 presidential pages and every form from 2024 on (a handful of 2000-seimo biographies name it in prose)
+nationality	2002-gruodzio-22-savivaldybiu-tarybu	91.4	ok	
+nationality	2002-prezidento	0.0	upstream-absent	the form asks no nationality: the 2000 municipal and Seimas cards, the 2002 and 2004 presidential pages and every form from 2024 on (a handful of 2000-seimo biographies name it in prose)
+nationality	2003-birzelio-15-seimo-nauji	96.3	ok	
+nationality	2004-ep	98.8	ok	
+nationality	2004-prezidento	0.0	upstream-absent	the form asks no nationality: the 2000 municipal and Seimas cards, the 2002 and 2004 presidential pages and every form from 2024 on (a handful of 2000-seimo biographies name it in prose)
+nationality	2004-seimo	98.4	ok	
+nationality	2005-lapkricio-20-seimo-kedainiai	100.0	ok	
+nationality	2007-spalio-7-seimo-dzukija	90.0	ok	
+nationality	2007-vasario-25-savivaldybiu	87.3	ok	
+nationality	2008-seimo	96.6	ok	
+nationality	2009-ep	97.3	ok	
+nationality	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	100.0	ok	
+nationality	2009-prezidento	100.0	ok	
+nationality	2011-vasario-13-seimo-marijampole	100.0	ok	
+nationality	2011-vasario-27-savivaldybiu	90.9	ok	
+nationality	2012-seimo	94.4	ok	
+nationality	2013-kovo-3-seimo-birzai-zarasai-ukmerge	83.8	ok	
+nationality	2014-ep	95.8	ok	
+nationality	2014-prezidento	100.0	ok	
+nationality	2015-birzelio-21-pakartotiniai-silutes	82.0	ok	
+nationality	2015-birzelio-7-pakartotiniai-sirvintos-trakai	80.4	ok	
+nationality	2015-birzelio-7-seimo-varena-eisiskes	87.5	ok	
+nationality	2015-kovo-1-savivaldybiu	87.2	ok	
+nationality	2015-kovo-1-seimo-zirmunai	100.0	ok	
+nationality	2015-lapkricio-8-telsiu-mero	85.7	ok	
+nationality	2016-seimo	90.7	ok	
+nationality	2017-balandzio-23-meru	90.9	ok	
+nationality	2017-balandzio-23-seimo-anyksciai-panevezys	100.0	ok	
+nationality	2017-rugsejo-10-marijampoles-mero	87.5	ok	
+nationality	2018-rugsejo-16-seimo-zanavykai	100.0	ok	
+nationality	2019-ep	84.1	ok	
+nationality	2019-kovo-3-savivaldybiu-tarybu	78.1	ok	
+nationality	2019-prezidento	100.0	ok	
+nationality	2019-rugsejo-8-seimo	100.0	ok	
+nationality	2020-seimo	97.4	ok	
+nationality	2021-balandzio-11-radviliskio-mero	100.0	ok	
+nationality	2021-spalio-10-meru	100.0	ok	
+nationality	2023-geguzes-7-visagino-mero	50.0	partly-answered	as the tautybe concept: two candidates; one left the field blank
+nationality	2023-kovo-5-savivaldybiu-tarybu-ir-meru	96.6	ok	
+nationality	2023-rugsejo-3-seimo-raseiniai-kedainiai	100.0	ok	
+nationality	2023-spalio-8-kupiskio-mero	100.0	ok	
+nationality	2024-ep	0.0	upstream-absent	the form asks no nationality: the 2000 municipal and Seimas cards, the 2002 and 2004 presidential pages and every form from 2024 on (a handful of 2000-seimo biographies name it in prose)
+nationality	2024-prezidento	0.0	upstream-absent	the form asks no nationality: the 2000 municipal and Seimas cards, the 2002 and 2004 presidential pages and every form from 2024 on (a handful of 2000-seimo biographies name it in prose)
+nationality	2024-seimo	0.0	upstream-absent	the form asks no nationality: the 2000 municipal and Seimas cards, the 2002 and 2004 presidential pages and every form from 2024 on (a handful of 2000-seimo biographies name it in prose)
+nationality	2025-kovo-16-meru	0.0	upstream-absent	the form asks no nationality: the 2000 municipal and Seimas cards, the 2002 and 2004 presidential pages and every form from 2024 on (a handful of 2000-seimo biographies name it in prose)
 nomination_kind	1996-spalio-20-seimo	100.0	ok	
 nomination_kind	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	100.0	ok	
 nomination_kind	1997-gruodzio-21-seimo-pakartotiniai	100.0	ok	

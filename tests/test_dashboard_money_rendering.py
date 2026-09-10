@@ -105,7 +105,7 @@ class ConceptRowWiringTests(unittest.TestCase):
                 )
 
     def test_the_compare_table_applies_the_formatter(self):
-        self.assertIn("const c = format ? format(v, r) : compactValue(v);", SOURCE)
+        self.assertIn("const c = format ? format(v, r, e) : compactValue(v);", SOURCE)
 
     def test_no_conversion_marker_is_shown_anywhere(self):
         # The figures are converted; saying so on every column and in three

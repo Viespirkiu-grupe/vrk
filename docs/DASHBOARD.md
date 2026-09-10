@@ -125,7 +125,9 @@ override key stops matching — `distinct` included, which it used to skip.
 The left pane is search plus facets, all answered from `people.json` alone:
 free text over names, canonical party names and each candidacy's
 workplace/position string; selects for election, nominating party/committee,
-municipality, single-mandate constituency, office and outcome. The election select lists terms, newest
+municipality, single-mandate constituency, office, outcome and declared
+nationality (issue #162: the 45 census groups `scraper/shared/tautybe.py`
+folds 117 spellings into). The election select lists terms, newest
 first: a general election is one row, or a group holding itself and its
 seat-fills, and picking the general — `2016 Seimas (visa kadencija)` —
 includes the 2017–2019 by-elections of that same Seimas, which an exact-id
@@ -140,10 +142,45 @@ first 300 rows; see *What the page renders, and what it exports* below for
 what a cell looks like). Checking rows collects persons for **Palyginti**, a
 side-by-side table whose columns are persons and whose cells show each
 person's newest resolving answer tagged with its election. **📊 Rinkimų
-suvestinė** aggregates one election — party mix, education mix, money
-medians — with the denominator printed beside every figure, because the
-higher-education share alone swings up to 28.9 points on that choice.
-**📈 Didžiausi pokyčiai** ranks first-to-last declared money deltas.
+suvestinė** aggregates one election — party mix, votes, campaign finance,
+declared nationality, education mix, money medians — with the denominator
+printed beside every figure, because the higher-education share alone swings
+up to 28.9 points on that choice. **🏛 Iškėlėjai** is the same summary with
+the grouping key swapped: one nominator across every election it fielded
+candidates in. **▦ Aprėptis** is the concept × election grid of what each
+form asks. **📈 Didžiausi pokyčiai** ranks first-to-last declared money deltas.
+
+**What issue #162 brought up from the records.** Three layers the corpus held
+and no view read:
+
+- **Campaign money.** €25.7 M of declared donations over 4,729 campaigns.
+  `people.json` carries a top-level `campaigns` table — `k` the campaignKey,
+  `d` the donations in euro, `n` the candidacies sharing it — and each
+  candidacy's `ck` points into it, because a campaign is not a candidate: a
+  party's campaign is one participant for its whole list, and summing its
+  total per candidate reads €2.68 bn (issue #97). So every figure carries its
+  count. The comparison row prints `276 968 € — visa kampanija, bendra 105
+  kandidatavimams`; the election summary's *Kampanijų finansavimas* counts
+  campaigns, not candidacies, and names a shared campaign by its nominators;
+  the CSV adds `kampanijos_aukos_eur` beside `kampanijos_kandidatavimu`.
+- **Concepts measured and never shown.** Comparison rows for *Tautybė*,
+  *Visuomeninė veikla*, *Pomėgiai*, *Anksčiau išrinktas* (the offices, one
+  line each, or the candidate's own "Nebuvo"), *Deklaracijos forma* and
+  *Deklaracijos apimtis*, and a derived *Pareiškimai* row: the statutory
+  declarations the election's form asks, listing only the answers that depart
+  from each question's usual one (`eina nesuderinamas pareigas: Einu`), else
+  `Įprasti atsakymai (N klausimų)`, else `Neklausta` — never a blank that
+  reads as a denial. The usual answer is the concept map's
+  `iprastas-atsakymas`, which `scraper/shared/pareiskimai.py` reads too;
+  `tests/test_pareiskimai.py` holds the two readings together. The spouse's
+  and children's names and the address are left out on purpose, and the
+  concept map's description says so.
+- **The aggregates' blind spots.** The party table's top-15 rule left 227 of
+  312 nominators in no aggregate anywhere; *rodyti visus* now lists them all,
+  and the nominator view gives each its own summary: per election its
+  candidacies, their share of the election, the elected, the higher-education
+  share, the median income and its campaigns' donations, then the people it
+  fielded most.
 
 **A view never states what it does not know** (issue #148). Three of them
 did:
@@ -426,6 +463,19 @@ election whose records carry no votes says so in that section rather than
 showing an empty table: VRK publishes its results on pages the corpus does
 not read.
 
+**Campaigns, nationality and coverage** (issue #162). `"ck"` indexes the
+top-level `campaigns` list (`{k, d, n}`: the campaignKey, the donations in
+euro where the campaign publishes them, the candidacies sharing it; 4,729
+rows over 20,199 candidacies), `"tb"` the `nationalities` list (the 45
+groups, largest first; an unclaimed spelling fails the build, like an
+unregistered municipality wording), and the top-level `coverage` block holds
+the concept × election matrix the **▦ Aprėptis** grid draws: `concepts` in
+the concept map's order, `records` per election, and per election the filled
+count of each concept, `null` where the form never asks. All three come from
+the shared resolvers — `scraper/shared/kampanija.py`,
+`scraper/shared/tautybe.py`, `field_coverage.resolve_any` — and the index
+build takes 35 s.
+
 **Photos.** The corpus stores portraits as externalized sidecars
 (`photos/<candidateId>.<ext>`, 27,493 records — the 2,199 the pages embedded
 and, since issue #118, the 25,294 they linked), keeps VRK's own hosted URL
@@ -454,9 +504,11 @@ and 3.4528× too large beside the euro columns next to it — the same field
 disagreeing between two tabs of the same person, across the 79,098 of 112,218
 records with a declaration block that declare in litas (issue #150: the
 figures here were 36,362 of 76,776, which corresponded to nothing measured). `CONCEPT_ROWS` entries may carry an optional
-`(value, record) => string` formatter; the asset rows use `moneyCell` and the
-income row `incomeCell`, which converts the same way after resolving the
-`deklaruotos-pajamos` concept (below).
+`(value, record, candidacy) => string` formatter — `candidacy` is the
+`people.json` entry, which the campaign and declaration rows read (issue
+#162); the asset rows use `moneyCell` and the income row `incomeCell`, which
+converts the same way after resolving the `deklaruotos-pajamos` concept
+(below).
 
 ## Assets & income across two different forms
 
@@ -607,6 +659,12 @@ pins every rule, so a new entry either follows them or fails there.
 - `tests/test_dashboard_field_labels.py` — holds `field-labels.json` to the
   four proofs its entries claim, and every key in it to still occurring in
   the corpus.
+- `tests/test_pareiskimai.py` — pins the declarations rule (the answer-word
+  classes, the per-question usual answer, "not asked" apart from "nothing to
+  declare") and runs the page's `declarationsCell` against the Python reading
+  under node (issue #162).
+- `tests/test_tautybe.py` — every one of the corpus's 117 nationality
+  spellings folds to a group, on a clone and against `data/` alike.
 - `tests/test_dashboard_concept_rows.py` — closes issue #87's test gap: the
   rows name real, corpus-measured concepts; the page's resolver agrees with
   `field_coverage.concept_value` on the shapes a naive walker gets wrong;

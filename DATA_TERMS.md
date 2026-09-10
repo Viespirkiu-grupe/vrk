@@ -26,8 +26,8 @@ covers.
 ## Licence of the compilation
 
 The corpus — every release asset (`candidacies.csv.gz`, `campaigns.csv.gz`,
-`vrk.sqlite.gz`, `vrk-corpus.sqlite.gz`, the `vrk-photos-N.sqlite` portrait
-parts, `MANIFEST.json`), the record files
+`coverage.tsv`, `vrk.sqlite.gz`, `vrk-corpus.sqlite.gz`, the
+`vrk-photos-N.sqlite` portrait parts, `MANIFEST.json`), the record files
 under `data/`, `dashboard/people.json` and the documentation describing
 them — is published under the **Creative Commons Attribution 4.0
 International licence (CC BY 4.0)**:

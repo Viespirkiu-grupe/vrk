@@ -17,7 +17,18 @@ python scripts/field_coverage.py --unmapped         # also: a field the map deni
 
 One pass over `data/` — about 30 seconds for 113,073 records — resolves every
 `docs/concept-map.json` path against every record of the elections that map it.
-That is 1,394 cells across 55 elections.
+That is 1,684 cells across 55 elections: 61 concepts, 17 of them added by
+issue #162 — the sixteen statutory declarations of the `pareiskimai` block
+and `anksciau-isrinktas` — whose 290 cells went in measured, seven of them
+classified against the retained pages (the 1996–1999 archive cards print
+their *Buvo išrinktas* line only for someone who was; 2004-ep asked its
+voting-rights question only of the one candidate with another EU
+citizenship).
+
+The matrix is not only a gate's input any more (issue #162): the candidacy
+table ships it as `coverage.tsv` and the `coverage` table of `vrk.sqlite`, and
+the dashboard draws it — **▦ Aprėptis**, one row per concept, one column per
+election, a hatched dash where the form never asks.
 
 ## What it produces
 

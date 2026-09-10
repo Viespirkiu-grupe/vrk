@@ -205,6 +205,25 @@ were removed.
 | `rawData.politinesKampanijosDalyvioDuomenys.campaigns[].participant.email` (where it repeats a dropped value) | 3,367 | the campaign's contact line; dropped by the public profile where it repeats the treasurer's or auditor's |
 | `rawData.politinesKampanijosDalyvioDuomenys.campaigns[].participant.inquiryPhone` (where it repeats a dropped value) | 3,367 | the campaign's contact line; dropped by the public profile where it repeats the treasurer's or auditor's |
 
+## What the derived layers surface
+
+The release carries every record whole; what the candidacy table, the person
+index and the dashboard lift *out* of the records is a narrower, deliberate
+set (issue #162). Declared nationality (`ethnic` above, a special category
+of personal data) is the candidacy table's `nationality` and the dashboard's
+nationality facet, comparison row and summary section, folded from 117
+spellings into 45 census groups by `scraper/shared/tautybe.py` -- the
+corpus's one minority-representation series, 89,154 answers over 30 years.
+The statutory declarations (`eligibility`: another citizenship, an oath to a
+foreign state, military service, collaboration with foreign or Soviet
+special services, a lost mandate) are concepts in `docs/concept-map.json`,
+the table's `declarations_status` and `declarations_flagged`, and one
+dashboard row that lists only the answers departing from the usual one.
+Deliberately *not* surfaced: the spouse's and children's names are measured
+by the fill gate and read by no column, row or index field, and the home
+address is mapped nowhere -- VRK prints them for the voter reading one page,
+not for a register.
+
 ## Portraits
 
 Every portrait is stored once in the `photos` table under the sha256 of the

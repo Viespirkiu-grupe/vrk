@@ -116,6 +116,14 @@
   table.cmp td.unmapped { color: var(--muted); background: var(--bg); }
   .loading { color: var(--muted); padding: 20px; }
   .aggnote { color: var(--muted); font-size: 13px; margin: 6px 0 14px; }
+  /* The coverage grid (issue #162): one row per concept, one column per
+     election, each cell shaded by its fill rate. A form that never asks the
+     question is a hatched dash, which is not the same as nobody answering. */
+  table.covgrid { border-collapse: collapse; font-size: 12px; background: var(--panel); }
+  table.covgrid th, table.covgrid td { border: 1px solid var(--line); padding: 2px 4px; text-align: center; font-variant-numeric: tabular-nums; }
+  table.covgrid thead th.vert { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; font-weight: 500; padding: 6px 2px; height: 150px; vertical-align: bottom; }
+  table.covgrid th.concept { position: sticky; left: 0; background: var(--panel); text-align: left; white-space: nowrap; font-weight: 500; z-index: 1; }
+  table.covgrid td.never { color: var(--muted); background: repeating-linear-gradient(45deg, var(--bg), var(--bg) 3px, var(--panel) 3px, var(--panel) 6px); }
   /* Under 900 px the two panes stack, and the viewport-locked layout that
      works side by side does not: measured at 375x812 the header took 158.5 px,
      the list 361.75 px and the person pane 291.75 px -- 35.9 % of the screen
@@ -146,6 +154,8 @@
   <h1>VRK kandidatų naršyklė</h1>
   <span class="stats" id="topstats">kraunamas indeksas…</span>
   <button id="aggBtn" class="hbtn" style="margin-left:auto">📊 Rinkimų suvestinė</button>
+  <button id="nominatorBtn" class="hbtn">🏛 Iškėlėjai</button>
+  <button id="coverageBtn" class="hbtn">▦ Aprėptis</button>
   <button id="moversBtn" class="hbtn">📈 Didžiausi pokyčiai</button>
 </header>
 <main>
@@ -168,6 +178,8 @@
       <select id="fRole" title="Pareigos, į kurias kandidatuota"></select>
       <label class="sr" for="fWon">Rinkimų rezultatas</label>
       <select id="fWon" title="Rinkimų rezultatas"></select>
+      <label class="sr" for="fNationality">Tautybė</label>
+      <select id="fNationality" title="Tautybė"></select>
       <div id="filterrow">
         <span id="count"></span>
         <button id="csvBtn" title="Atsisiųsti dabartinę atranką CSV formatu">⬇ CSV</button>
@@ -463,6 +475,90 @@ function constituencyVotesCell(value, record) {
   ).join("\n");
 }
 
+// "Anksčiau išrinktas" (issue #162): the questionnaire's block of offices the
+// candidate was elected to before -- {aprasas, irasai:[{institucijos-
+// pavadinimas-pareigos, laikotarpis}]} -- one line per office, or the bare
+// "Nebuvo" the block carries for someone never elected, which is an answer.
+function priorOfficeCell(value) {
+  if (value == null || value === "") return null;
+  if (typeof value !== "object") return String(value);
+  const entries = Array.isArray(value) ? value : (value.irasai || []);
+  const lines = entries
+    .filter(entry => entry && typeof entry === "object")
+    .map(entry => {
+      const office = entry["institucijos-pavadinimas-pareigos"];
+      const period = entry["laikotarpis"];
+      return office ? (period ? `${office} (${period})` : String(office)) : null;
+    })
+    .filter(Boolean);
+  if (lines.length) return lines.join("\n");
+  return !Array.isArray(value) && value.aprasas ? String(value.aprasas) : null;
+}
+
+// Whose wealth a declaration covers (`deklaracijos-apimtis`, issue #162): the
+// resident's alone, or with the family's. The record stores the slug.
+const DECLARATION_SCOPES = {
+  "gyventojo": "gyventojo (kandidato)",
+  "gyventojo-seimos": "gyventojo ir jo šeimos",
+  "seimos": "šeimos",
+};
+function declarationScopeCell(value) {
+  if (value == null || value === "") return null;
+  if (typeof value !== "string") return compactValue(value);
+  return DECLARATION_SCOPES[value] || deslug(value);
+}
+
+// Campaign money (issue #162): the candidacy's campaign from people.json's
+// top-level campaigns table, never a per-candidate figure. A party campaign
+// is one participant for its whole list, so its total is printed with the
+// number of candidacies it covers -- summed once per candidate, the corpus's
+// campaigns read €2.68 bn where they declared €25.7 M (issue #97).
+function campaignCell(_value, _record, e) {
+  const campaign = e && e.ck != null ? (INDEX.campaigns || [])[e.ck] : null;
+  if (!campaign) return null;
+  const shared = campaign.n > 1
+    ? ` — visa kampanija, bendra ${fmtInt(campaign.n)} ${plural(campaign.n, "kandidatavimui", "kandidatavimams", "kandidatavimų")}`
+    : "";
+  if (campaign.d == null) return `aukų suma nepaskelbta${shared}`;
+  return `${fmtEUR(campaign.d)}${shared}`;
+}
+
+// The declarations block (issue #162), mirrored from
+// scraper/shared/pareiskimai.py and held to it by tests/test_pareiskimai.py:
+// every concept the map groups under "pareiskimai" and maps for this
+// election, and the answers that depart from the question's usual one --
+// "Ne" for most, "Taip" for the presidential eligibility questions, as the
+// map's `iprastas-atsakymas` says. The answer word echoes the question's verb
+// (Esu/Nesu, Turiu/Neturiu, Einu/Neinu), so the classes are word lists.
+const DECLARATION_NEGATIVE = new Set(["ne", "nesu", "neturiu", "neturi", "neinu", "nėra", "nebuvo", "nebuvau", "nesu/nebuvau", "neapribota"]);
+const DECLARATION_AFFIRMATIVE = new Set(["taip", "esu", "turiu", "turi", "einu", "yra", "buvo", "buvau", "esu/buvau"]);
+function declarationAnswerClass(value) {
+  if (typeof value !== "string") return null;
+  const word = value.trim().toLowerCase();
+  if (DECLARATION_NEGATIVE.has(word)) return "neigiamas";
+  if (DECLARATION_AFFIRMATIVE.has(word)) return "teigiamas";
+  return null;
+}
+function declarationsCell(_value, record, e) {
+  const electionId = e ? e.id : null;
+  const departures = [];
+  let asked = 0;
+  for (const [id, spec] of Object.entries(CONCEPTS)) {
+    if (spec.grupe !== "pareiskimai") continue;
+    const { mapped, value } = resolveConcept(record, electionId, id);
+    if (!mapped) continue;
+    asked += 1;
+    if (value == null) continue;
+    if (declarationAnswerClass(value) !== (spec["iprastas-atsakymas"] || "neigiamas")) {
+      departures.push(`${spec.trumpas || spec["label-lt"] || id}: ${String(value).trim()}`);
+    }
+  }
+  if (!asked) return "Neklausta";
+  return departures.length
+    ? departures.join("\n")
+    : `Įprasti atsakymai (${fmtInt(asked)} ${plural(asked, "klausimas", "klausimai", "klausimų")})`;
+}
+
 // Comparison rows. Each names a concept from docs/concept-map.json -- the
 // checked-in, corpus-verified bridge whose per-election paths
 // scripts/field_coverage.py gates against the data -- so this file carries
@@ -471,18 +567,24 @@ function constituencyVotesCell(value, record) {
 // that are one question split across page eras: einamos-pareigos is the
 // 2020-on wording of the pre-2020 pagrindine-darboviete, and without the
 // chain each half rendered permanently empty for the other's era. A `format`
-// is (value, record) => string for concepts a bare compactValue() renders
-// wrongly; `derived: true` marks concepts the formatter resolves from the
-// whole record (the map's `derived` block), so no path lookup happens.
+// is (value, record, candidacy) => string for concepts a bare compactValue()
+// renders wrongly -- `candidacy` is the people.json entry, which the campaign
+// and declaration rows read; `derived: true` marks concepts the formatter
+// resolves from the whole record (the map's `derived` block), so no path
+// lookup happens.
 const CONCEPT_ROWS = [
   { concept: "einamos-pareigos", fallbacks: ["pagrindine-darboviete"], label: "Einamos pareigos / darbovietė" },
   { concept: "darbo-patirtis", format: workHistoryCell },
   { concept: "issilavinimas", format: educationCell },
   { concept: "iskele", format: nameCell },
   { concept: "naryste-politinese-organizacijose" },
+  { concept: "anksciau-isrinktas", format: priorOfficeCell },
   { concept: "savivaldybe", format: nameCell },
   { concept: "seimine-padetis" },
+  { concept: "tautybe" },
   { concept: "uzsienio-kalbos" },
+  { concept: "visuomenine-veikla" },
+  { concept: "pomegiai" },
   { concept: "pirmumo-balsai", format: votesCell },
   { concept: "apygardos-balsai", label: "Balsai apygardoje", format: constituencyVotesCell },
   { concept: "sarasas-balsai", format: votesCell },
@@ -493,7 +595,11 @@ const CONCEPT_ROWS = [
   { concept: "turtas-ir-pinigines-lesos-metu-pradzioje", format: moneyCell },
   { concept: "kalendoriniais-metais-isigytas-turtas", format: moneyCell },
   { concept: "gautos-pajamos-darbo-santykiu", format: moneyCell },
+  { concept: "deklaracijos-forma" },
+  { concept: "deklaracijos-apimtis", format: declarationScopeCell },
+  { concept: "kampanijos-aukos", derived: true, format: campaignCell },
   { concept: "teistumas", derived: true, format: convictionCell },
+  { concept: "pareiskimai", derived: true, format: declarationsCell },
 ];
 
 // The offices a candidacy ran for: the election's kind decides it everywhere
@@ -620,6 +726,7 @@ const fold = (s) => (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCa
 const PLURAL = new Intl.PluralRules("lt");
 const plural = (n, one, few, rest) => ({ one, few, many: rest, other: rest })[PLURAL.select(n)];
 const fmtInt = (n) => n.toLocaleString("lt-LT");
+const capitalize = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
 
 function bootFailed(err) {
   const message = `Nepavyko įkelti duomenų: ${err.message || err}. ` +
@@ -747,6 +854,8 @@ async function boot() {
   filterToggle.addEventListener("click", () => setFilters(filters.hidden));
   document.getElementById("moversBtn").addEventListener("click", showMovers);
   document.getElementById("aggBtn").addEventListener("click", showAggregates);
+  document.getElementById("nominatorBtn").addEventListener("click", showNominator);
+  document.getElementById("coverageBtn").addEventListener("click", showCoverage);
   document.getElementById("csvBtn").addEventListener("click", exportCSV);
   document.getElementById("cmpGo").addEventListener("click", showCompare);
   document.getElementById("cmpClear").addEventListener("click", () => {
@@ -935,6 +1044,16 @@ function buildFilters() {
     .sort((a, b) => a[0].localeCompare(b[0], "lt"))
     .forEach(([name, i]) => addOption(fConstituency, String(i), name));
 
+  // Declared nationality by group (issue #162; scraper/shared/tautybe.py):
+  // the census's names, the largest first, each with its candidacy count.
+  const fNationality = document.getElementById("fNationality");
+  addOption(fNationality, "", "— visos tautybės —");
+  const nationalityCounts = new Map();
+  for (const p of INDEX.people) for (const e of p.e) if (e.tb != null) nationalityCounts.set(e.tb, (nationalityCounts.get(e.tb) || 0) + 1);
+  (INDEX.nationalities || []).forEach((n, i) => {
+    addOption(fNationality, String(i), `${capitalize(n.label)} (${fmtInt(nationalityCounts.get(i) || 0)})`);
+  });
+
   const fRole = document.getElementById("fRole");
   addOption(fRole, "", "— visos pareigos —");
   for (const [code, label] of ROLE_LABELS) addOption(fRole, code, label);
@@ -945,7 +1064,7 @@ function buildFilters() {
   addOption(fWon, "lost", "tik neišrinkti");
   addOption(fWon, "unknown", "be rezultatų duomenų");
 
-  for (const id of ["fElection", "fParty", "fMunicipality", "fConstituency", "fRole", "fWon"]) {
+  for (const id of ["fElection", "fParty", "fMunicipality", "fConstituency", "fRole", "fWon", "fNationality"]) {
     document.getElementById(id).addEventListener("change", renderList);
   }
 }
@@ -958,8 +1077,9 @@ function activeFilters() {
     constituency: document.getElementById("fConstituency").value,
     role: document.getElementById("fRole").value,
     won: document.getElementById("fWon").value,
+    nationality: document.getElementById("fNationality").value,
   };
-  f.any = !!(f.election || f.party || f.municipality || f.constituency || f.role || f.won);
+  f.any = !!(f.election || f.party || f.municipality || f.constituency || f.role || f.won || f.nationality);
   return f;
 }
 
@@ -971,6 +1091,7 @@ function candidacyMatches(e, f) {
   if (f.party && !inParty(e, f.party)) return false;
   if (f.municipality !== "" && e.sv !== +f.municipality) return false;
   if (f.constituency && e.ap !== +f.constituency) return false;
+  if (f.nationality && e.tb !== +f.nationality) return false;
   if (f.role && !rolesOf(e).includes(f.role)) return false;
   // With an office chosen, the outcome is that office's: "Meras" + "tik
   // išrinkti" is the 60 mayors of a year, not the 60 plus the council
@@ -1127,6 +1248,10 @@ function exportCSV() {
     "turtas_eur", "pinigines_lesos_eur", "pajamos_eur",
     "turtas_ir_lesos_eur", "deklaruota_litais", "tik_darbo_santykiu_pajamos",
     "darboviete",
+    // Issue #162: the declared nationality's group, and the candidacy's
+    // campaign -- its declared donations *and* how many candidacies share
+    // them, because a party campaign's total is its whole list's.
+    "tautybe", "kampanijos_aukos_eur", "kampanijos_kandidatavimu",
   ];
   const rows = [header];
   for (const p of INDEX.people) {
@@ -1134,6 +1259,7 @@ function exportCSV() {
     for (const e of p.e) {
       if (f.any && !candidacyMatches(e, f)) continue;
       const m = e.m || [];
+      const campaign = e.ck != null ? (INDEX.campaigns || [])[e.ck] : null;
       rows.push([
         p.pid, p.n, p.b || "",
         e.id,
@@ -1150,6 +1276,9 @@ function exportCSV() {
         csvMoney(m[0]), csvMoney(m[1]), csvMoney(m[2]), csvMoney(m[3]),
         e.lt ? "taip" : "", e.ds ? "taip" : "",
         e.wp || "",
+        e.tb != null ? ((INDEX.nationalities || [])[e.tb] || {}).label || "" : "",
+        campaign && campaign.d != null ? csvMoney(campaign.d) : "",
+        campaign ? campaign.n : "",
       ]);
     }
   }
@@ -1513,7 +1642,7 @@ async function showPerson(p) {
       const v = value;
       const format = row.format;
       const td = tr.insertCell();
-      const c = format ? format(v, r) : compactValue(v);
+      const c = format ? format(v, r, e) : compactValue(v);
       td.textContent = c == null ? "—" : c;
       if (c == null) {
         td.className = mapped ? "null" : "null unmapped";
@@ -1634,7 +1763,7 @@ async function showCompare() {
       let cell = null;
       for (const [e, r] of [...records].reverse()) {
         const { value } = resolveRow(row, r, e.id);
-        const c = row.format ? row.format(value, r) : compactValue(value);
+        const c = row.format ? row.format(value, r, e) : compactValue(value);
         // "Neklausta" is a real answer state but not this person's answer —
         // keep scanning back for an election that asked.
         if (c == null || c === "Neklausta") continue;
@@ -1679,6 +1808,7 @@ const FACET_LABELS = [
   ["constituency", "fConstituency", "apygarda"],
   ["role", "fRole", "pareigos"],
   ["won", "fWon", "rezultatas"],
+  ["nationality", "fNationality", "tautybė"],
 ];
 
 function facetNote(f, { withElection = false } = {}) {
@@ -1758,6 +1888,7 @@ function showAggregates() {
     render();
   }
 
+  let showAllParties = false;
   function render() {
     const id = select.value;
     const f = scopedFilters(id);
@@ -1815,14 +1946,17 @@ function showAggregates() {
       const top = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
       const t = document.createElement("table"); t.className = "cmp";
       t.innerHTML = "<thead><tr><th>Iškėlėjas</th><th>Kandidatavimų</th><th>Dalis (iš žinomų)</th><th>Išrinkta</th></tr></thead><tbody></tbody>";
-      for (const [pid, count] of top.slice(0, 15)) {
+      // Fifteen by default and every nominator on request: 227 of the 312
+      // appeared in no aggregate anywhere while the rest were one "kiti"
+      // row (issue #162).
+      for (const [pid, count] of showAllParties ? top : top.slice(0, 15)) {
         const tr = t.tBodies[0].insertRow();
         const th = document.createElement("th"); th.textContent = (INDEX.parties[pid] || {}).n || pid; tr.appendChild(th);
         tr.insertCell().textContent = fmtInt(count);
         tr.insertCell().textContent = pct(count, withParty.length);
         tr.insertCell().textContent = fmtInt(withParty.filter(e => e.p === pid && e.w === true).length);
       }
-      if (top.length > 15) {
+      if (!showAllParties && top.length > 15) {
         // The remainder row's Išrinkta cell used to be the empty string
         // while its count and share were filled — and an empty cell in a
         // column of numbers reads as a zero. The column then disagreed with
@@ -1842,6 +1976,14 @@ function showAggregates() {
       const wrap = document.createElement("div"); wrap.className = "tablewrap";
       wrap.appendChild(t);
       partyWrap.appendChild(wrap);
+      if (top.length > 15) {
+        const toggle = document.createElement("button");
+        toggle.type = "button";
+        toggle.textContent = showAllParties ? "rodyti 15 didžiausių" : `rodyti visus ${fmtInt(top.length)}`;
+        toggle.style.cssText = "margin-top:6px;font:inherit;font-size:13px;color:var(--accent);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline";
+        toggle.addEventListener("click", () => { showAllParties = !showAllParties; render(); });
+        partyWrap.appendChild(toggle);
+      }
     }
 
     // Votes (issue #133): the preference votes on the list and the votes of
@@ -1885,6 +2027,93 @@ function showAggregates() {
     };
     ranking("Daugiausiai pirmumo balsų", "v", "Pirmumo balsai");
     ranking("Daugiausiai balsų apygardoje (paskutinis turas)", "cv", "Balsai apygardoje");
+
+    // Campaign finance (issue #162). Counted per campaign, never per
+    // candidacy: one party campaign covers its whole list, and summing its
+    // total once per candidate is how €25.7 M of donations read as €2.68 bn.
+    const campaignIds = [...new Set(candidacies.filter(e => e.ck != null).map(e => e.ck))];
+    const withCampaign = candidacies.filter(e => e.ck != null).length;
+    const campaignsHere = campaignIds.map(i => [i, (INDEX.campaigns || [])[i]]).filter(([, c]) => c);
+    const funded = campaignsHere.filter(([, c]) => c.d != null);
+    const campaignWrap = section(
+      "Kampanijų finansavimas",
+      withCampaign
+        ? `Kampanijos dalyvis žinomas ${fmtInt(withCampaign)} iš ${fmtInt(total)} kandidatavimų (${pct(withCampaign, total)}): ` +
+          `${fmtInt(campaignsHere.length)} ${plural(campaignsHere.length, "kampanija", "kampanijos", "kampanijų")}, ` +
+          `${fmtInt(funded.length)} iš jų paskelbė gautų aukų sumą.`
+        : "Šių kandidatavimų įrašuose kampanijų dalyvių nėra: VRK kampanijų finansavimo puslapius skelbia nuo 2007 m. spalio ir ne visiems rinkimams."
+    );
+    if (funded.length) {
+      const sum = funded.reduce((n, [, c]) => n + c.d, 0);
+      const line = document.createElement("div");
+      line.style.margin = "0 0 8px";
+      line.textContent = `Gautų aukų iš viso ${fmtEUR(sum)}, kampanijos mediana ${fmtEUR(median(funded.map(([, c]) => c.d)))}. ` +
+        "Partijos kampanija yra vienas dalyvis visam jos sąrašui, todėl sumos skaičiuojamos kampanijoms, ne kandidatams.";
+      campaignWrap.appendChild(line);
+      // A single candidacy's campaign is named by that person; a shared one
+      // by the nominators of its candidacies here.
+      const byCampaign = new Map();
+      for (const [p, e] of pairs) {
+        if (e.ck == null) continue;
+        if (!byCampaign.has(e.ck)) byCampaign.set(e.ck, []);
+        byCampaign.get(e.ck).push([p, e]);
+      }
+      const ct = document.createElement("table"); ct.className = "cmp";
+      ct.innerHTML = "<thead><tr><th>#</th><th>Kampanija</th><th>Kandidatavimų kampanijoje</th><th>Gautos aukos</th><th>Išrinkta (iš čia rodomų)</th></tr></thead><tbody></tbody>";
+      funded.sort((a, b) => b[1].d - a[1].d).slice(0, 10).forEach(([i, c], rank) => {
+        const members = byCampaign.get(i) || [];
+        const tr = ct.tBodies[0].insertRow();
+        tr.insertCell().textContent = String(rank + 1);
+        const who = tr.insertCell();
+        if (c.n === 1 && members.length === 1) {
+          const [p] = members[0];
+          const a = document.createElement("a");
+          a.href = "#" + p.pid;
+          a.textContent = p.n;
+          a.addEventListener("click", (ev) => { ev.preventDefault(); showPerson(p); });
+          who.appendChild(a);
+        } else {
+          who.textContent = [...new Set(members.map(([, e]) => partyNameOf(e)).filter(Boolean))].join(", ") || "bendra kampanija";
+        }
+        tr.insertCell().textContent = fmtInt(c.n);
+        const money = tr.insertCell();
+        money.textContent = fmtEUR(c.d);
+        money.style.fontVariantNumeric = "tabular-nums";
+        tr.insertCell().textContent = fmtInt(members.filter(([, e]) => e.w === true).length);
+      });
+      const cwrap = document.createElement("div"); cwrap.className = "tablewrap";
+      cwrap.appendChild(ct);
+      campaignWrap.appendChild(cwrap);
+    }
+
+    // Declared nationality (issue #162): the census's group names and the
+    // share of the candidacies that answered -- a form that never asks says
+    // so rather than showing a zero.
+    const withNationality = candidacies.filter(e => e.tb != null);
+    const nationalityWrap = section(
+      "Tautybė",
+      withNationality.length
+        ? `Tautybę nurodė ${fmtInt(withNationality.length)} iš ${fmtInt(total)} kandidatavimų (${pct(withNationality.length, total)}).`
+        : "Šių kandidatavimų anketose tautybė neklausta arba neatsakyta."
+    );
+    if (withNationality.length) {
+      const counts = new Map();
+      for (const e of withNationality) counts.set(e.tb, (counts.get(e.tb) || 0) + 1);
+      const nt = document.createElement("table"); nt.className = "cmp";
+      nt.innerHTML = "<thead><tr><th>Tautybė</th><th>Kandidatavimų</th><th>Dalis (iš nurodžiusiųjų)</th><th>Išrinkta</th></tr></thead><tbody></tbody>";
+      for (const [i, count] of [...counts.entries()].sort((a, b) => b[1] - a[1])) {
+        const tr = nt.tBodies[0].insertRow();
+        const th = document.createElement("th");
+        th.textContent = capitalize(((INDEX.nationalities || [])[i] || {}).label || String(i));
+        tr.appendChild(th);
+        tr.insertCell().textContent = fmtInt(count);
+        tr.insertCell().textContent = pct(count, withNationality.length);
+        tr.insertCell().textContent = fmtInt(withNationality.filter(e => e.tb === i && e.w === true).length);
+      }
+      const nwrap = document.createElement("div"); nwrap.className = "tablewrap";
+      nwrap.appendChild(nt);
+      nationalityWrap.appendChild(nwrap);
+    }
 
     // Education mix
     const withEducation = candidacies.filter(e => e.ed != null);
@@ -1945,6 +2174,230 @@ function showAggregates() {
   }
   select.addEventListener("change", render);
   render();
+}
+
+// ---------------------------------------------------------------------------
+// One nominator across every election (issue #162): the election summary
+// with the grouping key swapped. The summary's party table lists fifteen
+// nominators per election, and 227 of the 312 in the registry appeared in no
+// aggregate anywhere; 10,791 candidacies were only ever counted in "kiti".
+// ---------------------------------------------------------------------------
+
+function showNominator() {
+  renderToken += 1;
+  clearHash();
+  clearActiveRows();
+  const root = document.getElementById("person");
+  root.innerHTML = "";
+
+  const bar = document.createElement("div");
+  bar.style.cssText = "display:flex;gap:12px;align-items:center;margin-bottom:4px;flex-wrap:wrap";
+  const h2 = document.createElement("h2");
+  h2.style.cssText = "margin:0;font-size:20px";
+  h2.textContent = "Iškėlėjo suvestinė";
+  const select = document.createElement("select");
+  select.id = "nominatorPick";
+  select.style.cssText = "padding:6px 8px;border:1px solid var(--line);border-radius:6px;max-width:100%";
+  // The sidebar facet's own rows, lineage groups included, less its
+  // "all nominators" row, which is no nominator.
+  select.innerHTML = document.getElementById("fParty").innerHTML;
+  if (select.options.length && !select.options[0].value) select.options[0].remove();
+  const chosen = document.getElementById("fParty").value;
+  if (chosen) select.value = chosen;
+  bar.append(h2, select);
+  root.appendChild(bar);
+  const note = document.createElement("div");
+  note.className = "aggnote";
+  note.textContent = "Kiekvieni rinkimai — atskira eilutė; dalis skaičiuojama nuo visų tų rinkimų kandidatavimų.";
+  root.appendChild(note);
+  const facetLine = document.createElement("div");
+  root.appendChild(facetLine);
+  const holder = document.createElement("div");
+  root.appendChild(holder);
+
+  const electionTotals = new Map();
+  for (const p of INDEX.people) for (const e of p.e) electionTotals.set(e.id, (electionTotals.get(e.id) || 0) + 1);
+
+  function clearFacets() {
+    for (const [key, selectId] of FACET_LABELS) if (key !== "party") document.getElementById(selectId).value = "";
+    renderList();
+    render();
+  }
+
+  function render() {
+    const value = select.value;
+    // The sidebar's other facets still apply; its election and nominator do
+    // not -- this view is one nominator across every election.
+    const f = { ...activeFilters(), party: value, election: "", any: true };
+    facetLine.replaceChildren();
+    appendFacetNote(facetLine, facetNote({ ...f, party: "" }), clearFacets);
+    const pairs = [];
+    for (const p of INDEX.people) for (const e of p.e) if (candidacyMatches(e, f)) pairs.push([p, e]);
+    holder.replaceChildren();
+    const label = select.selectedOptions[0] ? select.selectedOptions[0].textContent : value;
+    const won = pairs.filter(([, e]) => e.w === true).length;
+    const persons = new Set(pairs.map(([p]) => p.pid)).size;
+    const elections = new Set(pairs.map(([, e]) => e.id)).size;
+    const summary = document.createElement("div"); summary.className = "ecard";
+    summary.style.padding = "14px 16px";
+    summary.textContent = `${label} — kandidatavimų: ${fmtInt(pairs.length)} ` +
+      `(${fmtInt(persons)} ${plural(persons, "asmuo", "asmenys", "asmenų")}), išrinkta: ${fmtInt(won)}, ` +
+      `rinkimų: ${fmtInt(elections)}`;
+    holder.appendChild(summary);
+    if (!pairs.length) return;
+
+    const byElection = new Map();
+    for (const pair of pairs) {
+      if (!byElection.has(pair[1].id)) byElection.set(pair[1].id, []);
+      byElection.get(pair[1].id).push(pair[1]);
+    }
+    const levels = INDEX.educationLevels || [];
+    const higherRank = levels.findIndex(l => l.id === "aukstasis-nedetalizuotas") + 1;
+    const t = document.createElement("table"); t.className = "cmp";
+    t.innerHTML = "<thead><tr><th>Rinkimai</th><th>Kandidatavimų</th><th>Dalis rinkimuose</th><th>Išrinkta</th>" +
+      "<th>Aukštasis (iš nurodžiusiųjų)</th><th>Pajamų mediana</th><th>Kampanijų aukos</th></tr></thead><tbody></tbody>";
+    // Newest first, like the election pickers.
+    for (const id of (INDEX.elections || []).map(e => e.id).reverse().filter(id => byElection.has(id))) {
+      const es = byElection.get(id);
+      const tr = t.tBodies[0].insertRow();
+      const th = document.createElement("th");
+      th.textContent = electionShortName(id);
+      th.title = electionName(id);
+      tr.appendChild(th);
+      tr.insertCell().textContent = fmtInt(es.length);
+      tr.insertCell().textContent = pct(es.length, electionTotals.get(id) || 0);
+      tr.insertCell().textContent = fmtInt(es.filter(e => e.w === true).length);
+      const withEd = es.filter(e => e.ed != null);
+      tr.insertCell().textContent = withEd.length && higherRank
+        ? `${pct(withEd.filter(e => e.ed >= higherRank).length, withEd.length)} (${fmtInt(withEd.length)})`
+        : "—";
+      const mid = median(es.map(e => e.m && e.m[2]).filter(v => v != null));
+      const income = tr.insertCell();
+      income.textContent = mid == null ? "—" : fmtEUR(mid);
+      income.style.fontVariantNumeric = "tabular-nums";
+      const funded = [...new Set(es.filter(e => e.ck != null).map(e => e.ck))]
+        .map(i => (INDEX.campaigns || [])[i])
+        .filter(c => c && c.d != null);
+      const donations = tr.insertCell();
+      donations.textContent = funded.length
+        ? `${fmtEUR(funded.reduce((n, c) => n + c.d, 0))} (${fmtInt(funded.length)} ${plural(funded.length, "kampanija", "kampanijos", "kampanijų")})`
+        : "—";
+      donations.style.fontVariantNumeric = "tabular-nums";
+    }
+    const wrap = document.createElement("div"); wrap.className = "tablewrap";
+    wrap.appendChild(t);
+    holder.appendChild(wrap);
+
+    // The people it fielded most often.
+    const perPerson = new Map();
+    for (const [p, e] of pairs) {
+      if (!perPerson.has(p.pid)) perPerson.set(p.pid, { p, n: 0, won: 0 });
+      const entry = perPerson.get(p.pid);
+      entry.n += 1;
+      if (e.w === true) entry.won += 1;
+    }
+    const h = document.createElement("h4");
+    h.textContent = "Dažniausiai kelti asmenys";
+    h.style.cssText = "margin:16px 0 6px;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)";
+    holder.appendChild(h);
+    const pt = document.createElement("table"); pt.className = "cmp";
+    pt.innerHTML = "<thead><tr><th>Asmuo</th><th>Kandidatavimų</th><th>Išrinkta</th></tr></thead><tbody></tbody>";
+    const top = [...perPerson.values()]
+      .sort((a, b) => b.n - a.n || b.won - a.won || a.p.n.localeCompare(b.p.n, "lt"))
+      .slice(0, 15);
+    for (const { p, n, won: w } of top) {
+      const tr = pt.tBodies[0].insertRow();
+      const cell = tr.insertCell();
+      const a = document.createElement("a");
+      a.href = "#" + p.pid;
+      a.textContent = p.n;
+      a.addEventListener("click", (ev) => { ev.preventDefault(); showPerson(p); });
+      cell.appendChild(a);
+      tr.insertCell().textContent = fmtInt(n);
+      tr.insertCell().textContent = fmtInt(w);
+    }
+    const pwrap = document.createElement("div"); pwrap.className = "tablewrap";
+    pwrap.appendChild(pt);
+    holder.appendChild(pwrap);
+  }
+  select.addEventListener("change", render);
+  render();
+}
+
+// ---------------------------------------------------------------------------
+// What each election's form asks (issue #162): concept x election, each cell
+// shaded by how many of the election's records answer. An election missing
+// from a concept's paths does not publish it (docs/concept-map.json), and
+// that "never asked" is the fact a reader of a 55-schema corpus needs first.
+// ---------------------------------------------------------------------------
+
+function showCoverage() {
+  renderToken += 1;
+  clearHash();
+  clearActiveRows();
+  const root = document.getElementById("person");
+  root.innerHTML = "";
+  const h2 = document.createElement("h2");
+  h2.style.cssText = "margin:0 0 4px;font-size:20px";
+  h2.textContent = "Ką klausė kiekvienų rinkimų anketa";
+  root.appendChild(h2);
+  const coverage = INDEX.coverage;
+  if (!coverage) {
+    const missing = document.createElement("div");
+    missing.className = "loading";
+    missing.textContent = "Šiame people.json aprėpties duomenų nėra — perkurkite indeksą: python scripts/build_person_index.py";
+    root.appendChild(missing);
+    return;
+  }
+  const note = document.createElement("div");
+  note.className = "aggnote";
+  note.textContent = "Langelyje — kiek procentų tų rinkimų įrašų atsakė į klausimą; brūkšnys — tų rinkimų anketa šio klausimo neturėjo. Neklausta nėra neatsakyta.";
+  root.appendChild(note);
+  const elections = (INDEX.elections || []).filter(e => coverage.filled[e.id]);
+  const t = document.createElement("table");
+  t.className = "covgrid";
+  const head = t.createTHead().insertRow();
+  const corner = document.createElement("th");
+  corner.className = "concept";
+  corner.textContent = "Laukas";
+  head.appendChild(corner);
+  for (const e of elections) {
+    const th = document.createElement("th");
+    th.className = "vert";
+    th.textContent = electionShortName(e.id);
+    th.title = electionName(e.id);
+    head.appendChild(th);
+  }
+  const body = t.createTBody();
+  coverage.concepts.forEach((concept, index) => {
+    const tr = body.insertRow();
+    const th = document.createElement("th");
+    th.className = "concept";
+    th.textContent = CONCEPT_LABELS[concept] || deslug(concept);
+    th.title = concept;
+    tr.appendChild(th);
+    for (const e of elections) {
+      const td = tr.insertCell();
+      const filled = coverage.filled[e.id][index];
+      const records = coverage.records[e.id] || 0;
+      if (filled == null) {
+        td.className = "never";
+        td.textContent = "—";
+        td.title = `${th.textContent} — ${electionName(e.id)}: anketa šio klausimo neturėjo`;
+        continue;
+      }
+      const share = records ? (100 * filled) / records : 0;
+      td.textContent = String(Math.round(share));
+      // From 97 % lightness (nobody answered) to 40 % (everybody did).
+      td.style.background = `hsl(215, 55%, ${(97 - 0.57 * share).toFixed(1)}%)`;
+      if (share > 55) td.style.color = "#fff";
+      td.title = `${th.textContent} — ${electionName(e.id)}: ${fmtInt(filled)} iš ${fmtInt(records)} (${share.toFixed(1).replace(".", ",")} %)`;
+    }
+  });
+  const wrap = document.createElement("div");
+  wrap.className = "tablewrap";
+  wrap.appendChild(t);
+  root.appendChild(wrap);
 }
 
 function showMovers() {

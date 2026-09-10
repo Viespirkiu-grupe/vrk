@@ -872,6 +872,8 @@ class ArchiveComparisonRowTests(unittest.TestCase):
                 "nameCell", "convictionCell", "convictionLines", "deslug", "labelFor",
                 "isFilledValue", "walkValue", "resolveConcept", "resolveRow", "rowLabel",
                 "votesCell", "constituencyRounds", "constituencyVotesCell",
+                "priorOfficeCell", "declarationScopeCell", "campaignCell", "declarationsCell",
+                "declarationAnswerClass",
             )
         )
         consts = "\n".join(
@@ -882,6 +884,7 @@ class ArchiveComparisonRowTests(unittest.TestCase):
                 r"^const CONCEPT_ROWS = \[.*?^\];",
                 r"^const fmtInt = .*?;$",
                 r"^const ROUND_NUMERALS = .*?;$",
+                r"^const DECLARATION_SCOPES = \{.*?^\};",
             )
         )
         script = (
@@ -1020,8 +1023,11 @@ class ThreeFalsehoods(unittest.TestCase):
         self.assertIn("function scopedFilters(electionId)", SOURCE)
         self.assertIn("if (candidacyMatches(e, f)) pairs.push([p, e]);", SOURCE)
         self.assertIn("if (f.any && !p.e.some(e => candidacyMatches(e, f))) continue;", SOURCE)
-        # Both views name what they are scoped by, and offer a way out.
-        self.assertEqual(SOURCE.count("appendFacetNote(facetLine,"), 2)
+        # The three facet-scoped views -- the election summary, the movers
+        # and one nominator's summary (issue #162) -- name what they are
+        # scoped by, and offer a way out. The coverage grid takes no facets:
+        # it describes the forms, not the candidacies.
+        self.assertEqual(SOURCE.count("appendFacetNote(facetLine,"), 3)
         self.assertIn("Taikomi šoniniai filtrai", UNCOMMENTED)
         self.assertIn('clear.textContent = "rodyti visus";', SOURCE)
 
@@ -1243,10 +1249,12 @@ class RoutingTests(unittest.TestCase):
         self.assertIn("function showPlaceholder(message) {", SOURCE)
         self.assertIn("Nuoroda „${key}“ nieko neatitinka.", SOURCE)
 
-    def test_the_three_header_views_do_not_claim_a_person(self):
+    def test_the_header_views_do_not_claim_a_person(self):
         # `location.hash = ""` pushes an entry and re-enters the router.
+        # Five views: the election summary, the movers, the comparison, and
+        # issue #162's nominator summary and coverage grid.
         self.assertNotIn('location.hash = ""', SOURCE)
-        self.assertEqual(SOURCE.count("clearHash();"), 3)
+        self.assertEqual(SOURCE.count("clearHash();"), 5)
         self.assertIn(
             'history.replaceState(null, "", location.pathname + location.search);', SOURCE
         )
@@ -1260,8 +1268,10 @@ class RoutingTests(unittest.TestCase):
         self.assertIn("let renderToken = 0;", SOURCE)
         self.assertEqual(SOURCE.count("const token = ++renderToken;"), 2)
         self.assertEqual(SOURCE.count("if (token !== renderToken) return;"), 2)
-        # And the three synchronous views end whatever is in flight.
-        self.assertEqual(SOURCE.count("renderToken += 1;"), 3)
+        # And the synchronous views end whatever is in flight: the
+        # placeholder, the election summary, the movers, and the nominator
+        # summary and coverage grid of issue #162.
+        self.assertEqual(SOURCE.count("renderToken += 1;"), 5)
 
 
 class ScreenReaderTests(unittest.TestCase):
