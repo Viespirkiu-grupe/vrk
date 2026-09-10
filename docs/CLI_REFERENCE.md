@@ -183,8 +183,11 @@ Options:
 - `--anomalies-path <path>`: Optional, and there is no default. The fetch
   stage's events (`TabDownloadFailed`, `MissingExpectedTab`,
   `CampaignRootFetchFailed`, ...) are written there as JSONL. Without it they
-  are named on stdout and dropped, which is why the corpus holds 8,949 anomaly
-  events and not one of them says `stage: "fetch"` (issue #85). No default,
+  are named on stdout and dropped, which is why 8,980 of the corpus's 9,027
+  anomaly events say `stage: "parse"` (issue #85). The 47 that say `"fetch"`
+  were written by the two commands that pass the flag: 38
+  `PortraitFetchFailed` from the portrait backfill and 9
+  `CandidateFetchFailed` from the batch runner. No default,
   because this command writes the file it is given whole — the portrait
   backfill's fetch events for the same candidate are not its to replace — so
   a default of `data/<election-id>/anomalies.jsonl` would truncate that file;

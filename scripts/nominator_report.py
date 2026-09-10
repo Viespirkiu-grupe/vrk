@@ -1,6 +1,6 @@
 """Resolve every record's nominator, join it to the party registry, and gate both.
 
-Issue #82: party affiliation was spread over eleven paths and 427 surface
+Issue #82: party affiliation was spread over eleven paths and 393 surface
 forms with no canonical id. The resolver (`scraper/shared/nominator.py`) and
 the registry (`scraper/parties.json`, matched by `scraper/shared/parties.py`)
 fixed that for the corpus as it is -- this script keeps it fixed as the corpus

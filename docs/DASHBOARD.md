@@ -451,8 +451,9 @@ three separate footnotes was noise rather than information.
 The comparison table did not always convert. It read the stored number
 straight through `compactValue`, so a litas figure printed raw, unlabelled,
 and 3.4528× too large beside the euro columns next to it — the same field
-disagreeing between two tabs of the same person, across the 36,362 of 76,776
-records that declare in litas. `CONCEPT_ROWS` entries may carry an optional
+disagreeing between two tabs of the same person, across the 79,098 of 112,218
+records with a declaration block that declare in litas (issue #150: the
+figures here were 36,362 of 76,776, which corresponded to nothing measured). `CONCEPT_ROWS` entries may carry an optional
 `(value, record) => string` formatter; the asset rows use `moneyCell` and the
 income row `incomeCell`, which converts the same way after resolving the
 `deklaruotos-pajamos` concept (below).

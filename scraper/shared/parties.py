@@ -1,10 +1,10 @@
-"""The canonical party join: 427 measured surface forms, one id per organisation.
+"""The canonical party join: 393 measured surface forms, one id per organisation.
 
 The corpus has no cross-election party identifier -- issue #82 measured every
 candidate id VRK publishes and none is shared between two elections -- so
 party identity is created here rather than recovered. `scraper/parties.json`
 holds one entry per organisation (parties, coalitions, electoral committees,
-self-nomination), bootstrapped from the 427 distinct nominator strings the
+self-nomination), bootstrapped from the 393 distinct nominator strings the
 corpus records, each of which is an exact alias of exactly one entry. The
 registry, not the corpus, carries renames (one entry, the old name an alias:
 LVŽS spans its 2001 and 2006 names) and lineage (`predecessors`: the

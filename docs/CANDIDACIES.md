@@ -132,8 +132,8 @@ fields (`nera` < `bakalauras` < `magistras` < `daktaras` <
 `habilituotas-daktaras`), including the eight elections whose page fused the
 degree and title questions into one row, and `education_entries` is the
 entry list as JSON with `2004-ep`'s institution-key spelling folded in.
-Fill: 82.4 % of all records carry a mapped level; 59.9 % of all records are
-higher-educated on the all-records denominator, 72.7 % on the answered-only
+Fill: 82.4 % of all records carry a mapped level; 59.8 % of all records are
+higher-educated on the all-records denominator, 72.6 % on the answered-only
 one — always print the denominator, the three municipal generals change
 *direction* between the two conventions.
 
@@ -141,9 +141,9 @@ one — always print the denominator, the three municipal generals change
 `declared_currency` is `Lt` or `EUR` (`EUR` made explicit — in the records
 the euro era is marked only by the *absence* of `valiuta`), and
 `currency_rate` the divisor applied (3.4528, the irrevocable changeover
-rate, or 1.0). `declaration_status` types the missing section: `yra` /
-`archyvo-skenai` (`2002-prezidento`, published only as page scans) / `nera`
-(855 records). The eleven declaration keys become
+rate, or 1.0). `declaration_status` types the missing section: `yra` (112,218 records) /
+`archyvo-skenai` (17 — `2002-prezidento`, published only as page scans) /
+`nera` (838). The eleven declaration keys become
 `assets_registered_eur`, `securities_eur`, `cash_eur`, `loans_given_eur`,
 `loans_received_eur`, `income_eur`, `income_tax_eur`,
 `self_employment_income_eur`, `self_employment_deductions_eur`,
@@ -155,8 +155,8 @@ measures different things across eras:
 
 | column | values | the trap it names |
 |---|---|---|
-| `assets_measure` | `skaidytas` \| `turtas-plius-lesos` \| `turtas-plius-vp` | `assets_total_eur` is property+securities+cash summed from split rows (2004 on), the 1996–2000 form's single combined row, or 2002's property-and-securities row plus its cash row. The archive eras leave the modern keys as null placeholders — summing the documented seven keys reads €0 for 17,654 declarations that do state their wealth |
-| `income_measure` | `neto-archyvas` \| `fr0462` \| `gpm-bruto` \| `deklaruota-apmokestinamos` | 1996–2002 income is **net of tax** (provable from the numbers: the modal tax/income ratio there exceeds the era's statutory rate); everything from 2004 on is gross. 23,141 populated records are net |
+| `assets_measure` | `skaidytas` \| `turtas-plius-lesos` \| `turtas-plius-vp` | `assets_total_eur` is property+securities+cash summed from split rows (2004 on), the 1996–2000 form's single combined row, or 2002's property-and-securities row plus its cash row. The archive eras leave the modern keys as null placeholders — summing the documented seven keys reads €0 for 17,799 declarations that do state their wealth |
+| `income_measure` | `neto-archyvas` \| `fr0462` \| `gpm-bruto` \| `deklaruota-apmokestinamos` | 1996–2002 income is **net of tax** (provable from the numbers: the modal tax/income ratio there exceeds the era's statutory rate); everything from 2004 on is gross. 27,795 records carry a net figure (27,816 rows are typed `neto-archyvas`) |
 | `tax_measure` | `sumoketas` \| `moketinas` | the tax row flips from tax *paid* to tax *payable* with the 2018 rewording |
 
 `income_gross_eur` is the comparable series: the declared figure where the

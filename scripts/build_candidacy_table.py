@@ -45,7 +45,8 @@ the *measure* alongside the figure — `income_measure` distinguishes the
 `income_gross_eur` is the re-grossed comparable series. `campaign_key` is
 the one correct donation-grouping key (`campaignKey`, present on every
 campaign entry; grouping donation lists any other way double-counts by up to
-1,189×).
+1,182× — the 2015 municipal general, whose largest campaign is shared by
+2,414 candidacies).
 
 The `normalized` layer is not touched: this adds a derived layer and
 rewrites nothing.

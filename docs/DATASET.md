@@ -183,8 +183,9 @@ neighbouring question (a grave conviction on Q9.3, say) rather than on the
 one `ar-buvote-pripazintas-kaltu` carries. See
 [Conviction data](#conviction-data-one-concept-three-published-shapes).
 
-Records live under `data/<election-id>/` (~0.66 GB of JSON plus 5.5 GB of
-photo sidecar files under `data/<election-id>/photos/` — 27,493 portraits:
+Records live under `data/<election-id>/` (3.41 GB of JSON over the 113,073
+files, plus 5.54 GB of photo sidecars under `data/<election-id>/photos/` —
+27,493 portraits:
 the 2,199 from the embedded-photo eras, externalized 2026-08-19 and verified
 byte-identical to a pre-migration sha256 manifest, file for file, and the
 25,294 every other era's pages linked on vrk.lt, fetched 2026-09-02) and are **not** version
@@ -342,7 +343,9 @@ What the 20,534 records gained, all of it measured before it was applied:
 
 Nothing was lost: the record count is 113,073 before and after, and every
 `removed` path in the diff is one of the empty columns or the duplicated block
-above. The corpus is **370 MB smaller** (3,447.6 → 3,077.4 MB).
+above. That pass left the corpus **370 MB smaller** (3,447.6 → 3,077.4 MB as
+it stood then; the current size is at the top of this page, and every
+re-parse since has moved it).
 
 Six elections' `anomalies.jsonl` were regenerated as well, since a complete
 re-parse reproduces the whole file and every anomaly in the corpus is a
@@ -1526,9 +1529,12 @@ Both municipal general elections were re-scraped overnight with
 `KEEP_SAMPLES=1` — 2023 in 3h33m, 2019 in 3h29m, zero fetch failures, zero
 failed candidates, zero anomalies in either. This was the corpus's last
 planned scrape: with it, **every election's full raw HTML is retained**
-(`samples-full/` for the seven large elections, the fixture tree for the
-twelve small ones — 3.6 GB total), so any future parser fix lands by offline
-re-parse.
+(`samples-full/` for the 27 elections whose field is too large for the
+fixture tree, the fixture tree itself for the rest — 13.5 GB over 27 and 55
+trees respectively, measured 2026-09-10), so any future parser fix lands by
+offline re-parse. A full reproduction therefore needs about **23 GB**: 8.95
+in `data/`, 13.04 in `samples-full/`, 0.48 in `samples/` and 0.09 in
+`sitemaps/`.
 
 Measured against the archived pre-scrape copies:
 
@@ -1831,13 +1837,14 @@ All of these are verbatim from VRK's own pages (verified present in
   employer `If P&amp;C Insurance AS` in `biografija.darbo-patirtis` — the
   source HTML carried `&amp;amp;`, an upstream double-encoding, not a parser
   unescape miss.
-- 20,651 values contain a lowercase letter immediately followed by an
+- 20,711 values contain a lowercase letter immediately followed by an
   uppercase one, and **none of them is a lost line break**. Issue #101 read
   that pattern as 20,704 "glued run-ons" a whitespace repair would fix;
   checking 835 of the junctions against the retained HTML found 797 present
   verbatim, with no tag boundary between the two letters (the misses were a
-  parser-authored enum value and one biography split across files). 13,158 of
-  them are `VšĮ`, the legal-form abbreviation; the rest are company names
+  parser-authored enum value and one biography split across files). 12,950 of
+  them carry `VšĮ`, the legal-form abbreviation (13,224 occurrences of it, a
+  handful of values holding two); the rest are company names
   (`UAB "inChase"`, `DnB`, `GmbH`, `StepArc`) and VRK's own typing (`kAUNO`,
   `šIAULIŲ`, `Partija tTvarka ir teisingumas`). Inserting spaces there would
   corrupt 13,000 institution names to fix nothing.
@@ -1976,28 +1983,39 @@ somebody has to remember:
   cells between them, validated against every record.
 - **`python -m scraper anomalies-report`** reads `data/*/anomalies.jsonl` back
   and diffs it against `docs/anomaly-baseline.tsv`. Before this the fetch
-  stage's events were computed, counted and dropped: 8,949 events in the corpus
-  and not one saying `stage: "fetch"`, against the 147 fetch-stage call sites that
-  can raise them. `fetch-candidate-samples` now takes `--anomalies-path` and the
-  batch runner appends it, so a failed tab download will surface in the same
-  file the parse stage's findings do.
+  stage's events were computed, counted and dropped: every event in the corpus
+  said `stage: "parse"`, against the 147 fetch-stage call sites that can raise
+  them. `fetch-candidate-samples` now takes `--anomalies-path` and the batch
+  runner appends it, so a failed tab download surfaces in the same file the
+  parse stage's findings do — 47 of the corpus's 9,027 events now say
+  `"fetch"` (38 `PortraitFetchFailed`, 9 `CandidateFetchFailed`).
+
+A fourth is `tests/test_doc_numbers.py`, which re-measures the figures *this
+page and six others* state — the storage sizes, the litas count, the anomaly
+totals and severity table, the `candidateId` shapes, the two date shapes, the
+archive appendix's coverage and the candidacy table's measures — because
+issue #84 fixed one generation of headline counts and issue #150 found the
+next generation had rotted the same way, about thirty figures across seven
+documents. Whatever a document says a measurement is, that test measures it.
 
 A third detector joined them for issue #101, and it is a test rather than a
 script because what it guards is not a rate but an invariant:
 **`tests/test_corpus_value_hygiene.py`** walks every record and asserts that
 no value ends in a bare separator, no money column is a string, no column
 holds both an `int` and a `float`, and no value is nothing but a replacement
-character — plus two pinned counts (the 20 surviving `U+FFFD` and the 20,651
-lowercase-uppercase junctions) so that a *rise* in either is a finding. It
+character — plus two pinned counts (the 6 surviving `U+FFFD` and the 20,711
+lowercase-uppercase junctions) so that a *rise* in either is a finding. The
+test owns both numbers and this page quotes them; issue #150 found it quoting
+a third and a fourth. It
 exists because each election owns its parser: a value rule wired into six
 normalizers and not the seventh is invisible until somebody counts, which is
 how the seventh election's records came to look exactly like everybody
 else's. It skips on a checkout with no `data/`, which is every CI run.
 
-The same pass reclassified the corpus's loudest event. 8,598 of the 8,949 are
+The same pass reclassified the corpus's loudest event. 8,598 of the 9,027 are
 one archive declaration page contradicting its own totals *below VRK's own
 "Klaida užklausoje" banner* — the source saying its query failed. Those are now
-`info` rather than `warning`, which leaves 351 events somebody should look at
+`info` rather than `warning`, which leaves 429 events somebody should look at
 and makes `STOP_ON_ANOMALY=1` usable on an archive election for the first time.
 The five affected elections were re-parsed from their retained HTML to
 regenerate their anomaly files; all 18,415 records came back byte-identical.

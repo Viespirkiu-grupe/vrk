@@ -154,7 +154,12 @@ CURRENCIES = {
     "lt": "Lt",
 }
 
-#: An ISO date, which is the only form these columns print.
+#: A date as these columns print it: ISO, or a bare year. The year is not the
+#: exception the old comment here called it ("the only form these columns
+#: print" was ISO): measured over the corpus, `nuosprendzio-data` is
+#: year-only on 325 of its 1,016 values and ISO on 690 (one is a year and
+#: month), and `isipareigojimo-data` is year-only on 2,292 of 7,287 — 31.5 %
+#: (issue #150).
 _DATE = re.compile(r"\d{4}-\d{2}-\d{2}|\d{4}")
 
 # "Kaimo sodyba su žeme, 2006-11-01" — the object and its date in the one cell

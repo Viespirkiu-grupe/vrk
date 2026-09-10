@@ -138,29 +138,32 @@ events from the re-parse and keeps every other stage's as they are.
 
 | severity | meaning | in the corpus |
 | --- | --- | --- |
-| `critical` | the page's structure was not found at all | 0 (44 call sites) |
-| `error` | a page was lost — unreadable, or never fetched | 3 |
-| `warning` | a page was doubted — present, and contradicting itself or missing a field | 348 |
+| `critical` | the page's structure was not found at all | 0 (41 call sites) |
+| `error` | a page was lost — unreadable, or never fetched | 12 |
+| `warning` | a page was doubted — present, and contradicting itself or missing a field | 417 |
 | `info` | the source has already said this is its own fault | 8,598 |
 
 `info` exists so that `STOP_ON_ANOMALY=1` is usable. 8,598 of the corpus's
-8,949 events are one archive declaration page type whose totals contradict its
+9,027 events are one archive declaration page type whose totals contradict its
 own rows *below VRK's own "Klaida užklausoje" banner* — the source printed, in
-so many words, that its query failed. At `warning` those drowned the other 351
+so many words, that its query failed. At `warning` those drowned the other 429
 events completely and stopped every archive run on its first batch.
 `scripts/run_election_batches.sh` counts only events above `info`.
 
-## The eight types that fire
+## The eleven types that fire
 
-Measured over all 55 elections on 2026-08-29 (the `ElectedCandidacyMismatch`
-row added 2026-08-31 with issue #92's join, the `PortraitFetchFailed` row
-2026-09-03 with issue #118's portrait archive). Forty-three event types are
-declared in the code; these ten are the ones the corpus has ever recorded.
+Measured over all 55 elections on 2026-09-10 (the `ElectedCandidacyMismatch`
+row 2026-08-31 with issue #92's join, `PortraitFetchFailed` 2026-09-03 with
+issue #118's portrait archive, `CandidateFetchFailed` 2026-09-09 with issue
+#158's sitemap reconciliation). Twenty-three event types are emitted from
+`build_anomaly_event` call sites in the parsers; these eleven are the ones the
+corpus has ever recorded, and the counts below sum to its 9,027 events.
 
 | count | type | severity | what it means |
 | --- | --- | --- | --- |
 | 8,598 | `DeclarationTotalBelowItsOwnRow` | `info` | An archive declaration whose row-20 total is below its own row 1, on a page carrying VRK's query-error banner. The total is refused rather than published, so the record has `null` and not a false zero. |
 | 327 | `DeclarationTotalBelowItsOwnRow` | `warning` | The same contradiction on a page that printed no banner. A readable page contradicting itself is a finding. |
+| 9 | `CandidateFetchFailed` | `error` | A candidate the election's sitemap lists and the corpus holds no record for: nine across four elections, every one a page VRK never published (issue #158 reconciled them, and `scraper/shared/anomaly_report.py` fails the report for any gap without one of these against it). |
 | 38 | `PortraitFetchFailed` | `warning` | A candidate's portrait URL that answered anything but an image when `scripts/backfill_url_portraits.py` fetched it — the corpus's only `fetch`-stage events. 32 (2000 Seimas) and 5 (2005 Kėdainiai) point at lrs.lt hosts that answer 520 and 503; one 2020 Seimas image is a 404 on vrk.lt itself. The record keeps the URL with a `photoMeta` naming the error. |
 | 31 | `ElectedCandidacyMismatch` | `warning` | A 1997 municipal winner whose elected-page list position disagrees with the card's own (a renumbering after withdrawals; the join keys on VRK's candidate id, so electedness is unaffected). |
 | 11 | `ResidenceMissing` | `warning` | A 1996–2000 card with no residence line. |
@@ -171,10 +174,10 @@ declared in the code; these ten are the ones the corpus has ever recorded.
 | 2 | `CampaignRootMissing` | `warning` | A campaign the candidate page linked whose root never fetched. The record simply has no campaign section. |
 | 1 | `BirthDateMissing` | `warning` | A 2002 municipal card with no birth date. |
 
-The other 33 are the structural checks — `TabnavSelectorNotFound`,
+The other twelve are the structural checks — `TabnavSelectorNotFound`,
 `AnketaTableNotFound`, `AnketaTableEmpty`, `TabDownloadFailed`,
 `CampaignTabSampleMissing` and the rest. They have never fired against a real
-page, and four of them are what the previous version of this file named as its
+page, and four of them are what an earlier version of this file named as its
 examples. A check that has only ever fired against a synthetic fixture is worth
 keeping and is worth knowing about: it is a tripwire, not a finding.
 

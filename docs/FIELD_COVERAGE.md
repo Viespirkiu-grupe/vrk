@@ -26,9 +26,14 @@ table:
 
 ```
 concept          election                   records  keyPresent  nonNull  pct   status  note
-gautos-pajamos   2020-seimo                    1754        1753     1719  98.0  ok
+gautos-pajamos   2020-seimo                    1754        1753     1753  99.9  ok
 gimimo-vieta     2000-kovo-19-savivaldybiu…    9879        9879        0   0.0  upstream-absent  The 2000 municipal card…
 ```
+
+(Those are the gate's own rows for those two cells today. The income one read
+`1719 / 98.0` when this page was written, before issue #81 recovered the
+label-prefix rows — and it went on reading that here for two corpora after,
+which is issue #150.)
 
 The `keyPresent` / `nonNull` split is the point. A key the parser never wrote
 and a key it wrote as `null` are different failures, and the 2020-seimo defect

@@ -76,10 +76,14 @@ from vrk.lt on the laptop and passed, then met a 403 on the runner — it skips
 on the absent cache now, and any other test that would fetch fails locally
 first. `VRK_TESTS_ALLOW_NETWORK=1` lifts the refusal for a deliberate live run.
 
-On a clone the suite is about 1,685 passed and 408 skipped
-(from 1,484 / 516 before the sitemaps were tracked), 2,140
-subtests passed (`verbosity_subtests` in `pyproject.toml` makes the summary
-line count them); here, with everything scraped, 1,919 passed.
+On a clone the suite is 1,993 passed and 426 skipped, 16,393 subtests passed
+in about a minute (`verbosity_subtests` in `pyproject.toml` makes the summary
+line count them); here, with everything scraped, 2,263 passed, nothing
+skipped, 16,655 subtests, six minutes — the whole-corpus walks are most of
+the difference. Both figures were measured on 2026-09-10, the
+clone one by cloning the branch and running `CI=1 pytest` in it, which is
+also how issue #150 found CI red on a fixture the 1 MiB rule keeps out of
+git.
 
 A skip is a test that did not run, and a test that only ever runs on the
 scraping laptop can sit asserting a shape two refactors old while CI stays
@@ -1053,7 +1057,7 @@ covers the same one.
 ## Recommended baseline checks
 
 ```bash
-pytest                                        # the suite, about 100 s
+pytest                                        # the suite: ~1 min on a clone, ~5.5 with the corpus
 pytest tests/test_tracked_fixtures.py         # git and the 1 MiB rule agree
 python scripts/fixture_record_hashes.py       # the fixtures still parse to the recorded records
 pytest tests/test_seimo_2016_sample_allowlist.py

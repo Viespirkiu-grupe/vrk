@@ -348,10 +348,13 @@ by law (see the next section for the canonical party join).
 ## Joining people across elections
 
 There is **no cross-election person id**. The `rkndId` in candidate URLs is
-a per-election registration id, and `candidateId` comes in two formats: a
-name slug with positional `-2`/`-3` suffixes for namesakes (18 elections)
-vs name-slug-plus-VRK-candidate-id (`ada-grakauskiene-2420696`) in the two
-municipal generals. Never join on it.
+a per-election registration id, and `candidateId` comes in two formats. A
+name slug plus VRK's own candidate id (`ada-grakauskiene-2420696`) is the
+form on **92,357 records of seven elections** — every municipal general from
+2000 on. Everywhere else it is the name slug alone, with a positional
+`-2`/`-3` suffix where two candidates of one election slug the same way:
+**64 records over nine elections**, 47 of them in the 1997 municipal general.
+Never join on it.
 
 The tested recipe (measured in [DASHBOARD.md](DASHBOARD.md)): **normalized
 name + birth key** — NFC-normalize, uppercase and whitespace-collapse the
@@ -516,8 +519,9 @@ and none of it is canonicalised by the registry.
   having declared nothing.
 - **Pre-2016 money is in litas, and the rule is data-driven: divide by
   3.4528 whenever `valiuta == "Lt"`.** That key is `"Lt"` on every record
-  that carries a declaration block from 1996 through 2015 — all 79,071 of
-  them, not just the 2004–2015 slice an earlier revision of this page named
+  that carries a declaration block from 1996 through 2015 — all 79,098 of
+  them over 34 elections, not just the 2004–2015 slice an earlier revision of
+  this page named
   — and absent from 2016 on. **No record anywhere says `"EUR"`**: in the
   stored corpus the euro era is marked by the key's absence, so a consumer
   who checks for `"EUR"` converts nothing.
@@ -564,10 +568,11 @@ and none of it is canonicalised by the registry.
   **left as published**, and `tests/test_corpus_value_hygiene.py` pins the 6
   so the class cannot grow. (The old account called all 20 survivors quotes
   with no closing partner, which was false for every one — issue #164.)
-- **`VšĮ` is not a parsing bug.** 20,651 normalized values contain a
+- **`VšĮ` is not a parsing bug.** 20,711 normalized values contain a
   lowercase letter immediately followed by an uppercase one, which reads like
-  a lost line break. It is not: 13,158 of them are the legal-form
-  abbreviation `VšĮ`, and the rest are company names (`UAB "inChase"`, `DnB`,
+  a lost line break. It is not: 12,950 of them carry the legal-form
+  abbreviation `VšĮ` (13,224 occurrences of it), and the rest are company
+  names (`UAB "inChase"`, `DnB`,
   `GmbH`, `StepArc`) and VRK's own typing (`kAUNO`, `Partija tTvarka`). A
   sample of 835 such junctions checked against the retained HTML found 797
   present verbatim, with no tag boundary between the two letters, and the
