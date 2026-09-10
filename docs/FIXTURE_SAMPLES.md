@@ -78,8 +78,8 @@ first. `VRK_TESTS_ALLOW_NETWORK=1` lifts the refusal for a deliberate live run.
 
 On a clone the suite is 1,993 passed and 426 skipped, 16,393 subtests passed
 in about a minute (`verbosity_subtests` in `pyproject.toml` makes the summary
-line count them); here, with everything scraped, 2,263 passed, nothing
-skipped, 16,655 subtests, six minutes — the whole-corpus walks are most of
+line count them); here, with everything scraped, 2,313 passed, nothing
+skipped, 16,858 subtests, six minutes — the whole-corpus walks are most of
 the difference. Both figures were measured on 2026-09-10, the
 clone one by cloning the branch and running `CI=1 pytest` in it, which is
 also how issue #150 found CI red on a fixture the 1 MiB rule keeps out of
