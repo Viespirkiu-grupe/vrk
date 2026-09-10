@@ -319,8 +319,10 @@ deletes as it parses, prints a warning (issue #95). The runner also builds
 "complete" until every sitemap id has a record on disk.
 
 The portraits the pages *link* (every era but 2016-2019, which embed them)
-are not part of that retention until you fetch them. Once the scrape is
-complete:
+are not part of that retention until you fetch them.
+`scripts/run_all_elections.sh` runs these two steps itself for every election
+it scrapes (issue #143); after a single-election run, or after
+`FETCH_PORTRAITS=0`, run them by hand once the scrape is complete:
 
 ```bash
 python scripts/backfill_url_portraits.py <election-id>

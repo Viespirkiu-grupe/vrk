@@ -191,12 +191,21 @@ byte-identical to a pre-migration sha256 manifest, file for file, and the
 controlled — `data/`, `sitemaps/` and `samples/` are gitignored, so the corpus is
 reproduced by running the scrapers rather than by cloning — or downloaded
 from a `corpus-YYYY-MM-DD` release (see the top of this page). The
-reproduction entry point is `scripts/run_all_elections.sh`: it drives every
-election the CLI can fetch, and per election the batch runner builds the
-`isrinktas` results join first, retains the fetched HTML by default, writes a
+reproduction entry point is `scripts/run_all_elections.sh`, which is **three
+steps per election**: the batch runner builds the `isrinktas` results join
+first, retains the fetched HTML by default, writes a
 `CandidateFetchFailed`/`CandidateParseFailed` anomaly for any candidate it
 cannot land, and refuses to report an election complete until every sitemap
-id has a record on disk (issue #95).
+id has a record on disk (issue #95); then
+`scripts/backfill_url_portraits.py` archives every portrait the pages
+*linked*, which it can only do once the scrape has finished, because it reads
+the records to find the URLs; then `scripts/reparse_diff.py --full --apply`
+turns those URLs into `photos/` sidecars. The second and third steps used to
+be documented only per election, in `docs/ADDING_AN_ELECTION.md`, and running
+step 1 alone leaves 25,332 records differing from the shipped ones in three
+paths each and 25,294 of the 27,493 sidecar files absent — 92 % of them, 5.2
+of the 5.5 GB (issue #143). `FETCH_PORTRAITS=0` stops after step 1 for an
+offline run, and says at the end what is missing.
 
 ### The 2026-09-02 portrait archive (issue #118)
 

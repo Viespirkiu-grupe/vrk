@@ -226,6 +226,35 @@ class RunScripts(unittest.TestCase):
         self.assertIn("build-results", text)
         self.assertIn("CandidateFetchFailed", text)
 
+    def test_the_full_run_archives_the_portraits_it_claims_to(self):
+        """docs/DATASET.md calls this the reproduction entry point.
+
+        It ran the scrape and stopped (issue #143). The portraits every era
+        but 2016-2019 *links* are archived by a second pass, and only
+        `scripts/backfill_url_portraits.py` writes the `portrait.json` a
+        `photos/` sidecar comes from: measured over the shipped corpus,
+        25,332 records carry a photoMeta naming a fetched URL and 25,294 of
+        the 27,493 sidecar files exist only because that script ran. Step 1
+        alone reproduces neither.
+        """
+        text = self._script("run_all_elections.sh").read_text(encoding="utf-8")
+        self.assertIn("backfill_url_portraits.py", text)
+        self.assertIn("reparse_diff.py", text)
+        self.assertIn('--full --jobs "$REPARSE_JOBS" --apply', text)
+        # Only over an election the runner finished, and its exit code counts.
+        self.assertIn('if [[ $status -eq 0 && "$FETCH_PORTRAITS" != "0" ]]; then', text)
+        self.assertIn("portraits=$portrait_status reparse=$reparse_status", text)
+        # The offline escape hatch, and the warning that it leaves a gap.
+        self.assertIn('FETCH_PORTRAITS="${FETCH_PORTRAITS:-1}"', text)
+        self.assertIn("linked portraits not archived", text)
+
+    def test_the_docs_do_not_promise_portraits_from_the_scrape_alone(self):
+        dataset = (REPO_ROOT / "docs" / "DATASET.md").read_text(encoding="utf-8")
+        readme = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertIn("three\nsteps per election", dataset)
+        self.assertIn("backfill_url_portraits.py", dataset)
+        self.assertIn("archived by a second pass over\nthe finished scrape", readme)
+
     def test_the_fetchable_ids_match_the_election_registry(self):
         registry = json.loads(
             (REPO_ROOT / "scraper" / "elections.json").read_text(encoding="utf-8")

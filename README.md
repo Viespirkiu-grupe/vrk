@@ -13,9 +13,10 @@ a fixture subset of `samples/` are gitignored); it ships as [release
 assets](https://github.com/Viespirkiu-grupe/vrk/releases) tagged
 `corpus-YYYY-MM-DD` — the flat comparison table and the full corpus as one
 SQLite database, with a manifest naming the parser commit — or is reproduced
-by running the scrapers, and
-every election's raw HTML, and every portrait it links, is retained so
-parser fixes land by offline re-parse.
+by running the scrapers. Every election's raw HTML is retained as it is
+fetched, and every portrait its pages link is archived by a second pass over
+the finished scrape (`scripts/run_all_elections.sh` runs both), so parser
+fixes land by offline re-parse.
 
 Three commands check that a change left the corpus in one piece, and each
 answers a question the other two cannot:
