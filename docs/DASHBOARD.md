@@ -144,6 +144,34 @@ medians — with the denominator printed beside every figure, because the
 higher-education share alone swings up to 28.9 points on that choice.
 **📈 Didžiausi pokyčiai** ranks first-to-last declared money deltas.
 
+**A view never states what it does not know** (issue #148). Three of them
+did:
+
+- The party-mix table folds everything past the top 15 nominators into a
+  `kiti (N)` row whose *Išrinkta* cell was the empty string while its count
+  and share were filled — and an empty cell in a column of numbers reads as
+  a zero. 2019 municipal printed `išrinkta 1 505` above a column summing to
+  1 184, with **321 winners hidden in the blank**; 17 of the 55 terms hid at
+  least one, 1,101 elected candidacies in all. The cell is filled, and the
+  column now sums to the summary line.
+- The comparison view discarded failed record loads
+  (`records.filter(([, r]) => !r._error)`) and rendered its 16 concept rows
+  as em dashes over them, with the two index-derived rows above still looking
+  authoritative — so a reader concluded those people had answered nothing.
+  Both it and the person view now show one banner, which says that the empty
+  cells below it are not answers. Neither the missing trailing slash nor a
+  data-less checkout is hypothetical; both produce exactly that page. The
+  asset pane's empty state used to say "nothing was declared in any of this
+  person's elections", a claim about the data, where the truth was that
+  nothing had loaded.
+- **Rinkimų suvestinė** copied one facet across — the election — and then
+  walked every person, and **Didžiausi pokyčiai** read none at all: with an
+  election, a nominator and *tik išrinkti* chosen, the list said one number
+  and the summary reported the whole election, with the three selects still
+  showing the filters and nothing saying two had been dropped. Both apply
+  every facet now, name them above the figures, and offer *rodyti visus* to
+  clear them.
+
 ## The comparison table
 
 The per-person comparison rows (`CONCEPT_ROWS` in the page) name **concepts

@@ -413,8 +413,12 @@ class ElectionTermGroupingSourceTests(unittest.TestCase):
         self.assertNotIn(".reverse()) addOption(", SOURCE)
 
     def test_the_filter_and_the_stats_view_match_through_the_parent(self):
+        # The stats view scopes through `candidacyMatches` now, which starts
+        # with the same `inElection` test — and applies the other five facets
+        # too, which it used to drop (issue #148).
         self.assertIn("if (f.election && !inElection(e, f.election)) return false;", SOURCE)
-        self.assertIn("if (inElection(e, id)) pairs.push([p, e]);", SOURCE)
+        self.assertIn("if (candidacyMatches(e, f)) pairs.push([p, e]);", SOURCE)
+        self.assertIn("function scopedFilters(electionId)", SOURCE)
         self.assertNotIn("e.id !== f.election", SOURCE)
 
     def test_a_term_row_says_what_it_covers(self):
@@ -932,3 +936,67 @@ class ArchiveComparisonRowTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ThreeFalsehoods(unittest.TestCase):
+    """Three views stated something false rather than showing a gap (#148).
+
+    Each of the three was reproduced against the running dashboard before it
+    was fixed, and again after; these hold the shipped code to what those
+    runs showed.
+    """
+
+    def test_the_remainder_row_fills_its_winner_cell(self):
+        # It was set to the empty string while the count and share were
+        # filled, and an empty cell in a column of numbers reads as a zero:
+        # 2019 municipal's summary said "išrinkta 1 505" over a column
+        # summing to 1 184, hiding 321 winners. Verified live after the fix:
+        # the column sums to 1,505 and the "kiti (99)" row reads 321.
+        self.assertIn("const restIds = new Set(top.slice(15).map(([pid]) => pid));", SOURCE)
+        self.assertIn(
+            "const restWon = withParty.filter(e => restIds.has(e.p) && e.w === true).length;",
+            SOURCE,
+        )
+        self.assertIn("tr.insertCell().textContent = fmtInt(restWon);", SOURCE)
+        self.assertNotIn('tr.insertCell().textContent = "";', SOURCE)
+
+    def test_a_failed_record_load_is_said_out_loud_in_every_view(self):
+        # The comparison view ended its fan-out in
+        # `records.filter(([, r]) => !r._error)` and rendered 16 rows of em
+        # dashes over the failures, with two index-derived rows above still
+        # looking authoritative. One banner, both views.
+        self.assertIn("function failureBanner(failed) {", SOURCE)
+        self.assertIn('warn.setAttribute("role", "alert");', SOURCE)
+        self.assertIn("const banner = failureBanner(failed);", SOURCE)
+        self.assertIn("const compareBanner = failureBanner(failed);", SOURCE)
+        self.assertIn(
+            "return [p, records.filter(([, r]) => !r._error), records.filter(([, r]) => r._error)];",
+            SOURCE,
+        )
+        # And it says what the empty cells below it do not mean.
+        self.assertIn("tušti langeliai nereiškia, kad nebuvo atsakyta", UNCOMMENTED)
+
+    def test_the_asset_pane_does_not_claim_nothing_was_declared(self):
+        # "Nė vienuose šio asmens rinkimuose turto ar pajamų nedeklaruota" is
+        # a claim about the data; with every record failing to load it is a
+        # claim about nothing.
+        self.assertIn("function buildAssetPane(loaded, failedCount = 0) {", SOURCE)
+        self.assertIn("buildAssetPane(loaded, failed.length)", SOURCE)
+        self.assertIn("Nėra ką rodyti:", UNCOMMENTED)
+
+    def test_the_header_views_honour_the_sidebar_facets(self):
+        # `showAggregates` copied one facet across (the election) and then
+        # walked every person; `showMovers` read none. With 2024 Seimas +
+        # a party + "tik išrinkti" the list said one number and the summary
+        # another, with the selects still showing the filters.
+        self.assertIn("function scopedFilters(electionId)", SOURCE)
+        self.assertIn("if (candidacyMatches(e, f)) pairs.push([p, e]);", SOURCE)
+        self.assertIn("if (f.any && !p.e.some(e => candidacyMatches(e, f))) continue;", SOURCE)
+        # Both views name what they are scoped by, and offer a way out.
+        self.assertEqual(SOURCE.count("appendFacetNote(facetLine,"), 2)
+        self.assertIn("Taikomi šoniniai filtrai", UNCOMMENTED)
+        self.assertIn('clear.textContent = "rodyti visus";', SOURCE)
+
+    def test_the_facet_note_is_silent_when_nothing_is_filtered(self):
+        # The absence of the line is the default and is not a claim.
+        self.assertIn("if (!named.length) return;", SOURCE)

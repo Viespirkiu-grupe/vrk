@@ -1119,6 +1119,26 @@ function renderValue(v) {
   return dl;
 }
 
+// A record that would not load, said out loud. Every view that fetches
+// records uses this one: the comparison view used to drop failures on the
+// floor (`records.filter(([, r]) => !r._error)`) and render 16 rows of em
+// dashes over them, so a reader concluded those people had answered nothing
+// — and the two index-derived rows above still looked authoritative. Neither
+// the trailing-slash bug nor a data-less checkout is hypothetical; both
+// produce exactly that page (issue #148).
+function failureBanner(failed) {
+  if (!failed.length) return null;
+  const warn = document.createElement("div");
+  warn.setAttribute("role", "alert");
+  warn.style.cssText = "background:#fdf0ee;border:1px solid #e5b8b0;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13.5px;";
+  warn.textContent =
+    `Nepavyko įkelti ${failed.length} ${plural(failed.length, "įrašo", "įrašų", "įrašų")} — ` +
+    "ar serveris paleistas iš saugyklos šaknies, šalia data/? " +
+    "Žemiau rodomi tik įkelti įrašai, o tušti langeliai nereiškia, kad nebuvo atsakyta. " +
+    failed.map(([, r]) => r._error).join(" · ");
+  return warn;
+}
+
 function partyNameOf(e) {
   if (!e.p) return null;
   return (INDEX.parties[e.p] || {}).n || e.p;
@@ -1138,15 +1158,8 @@ async function showPerson(p) {
   const failed = records.filter(([, r]) => r._error);
 
   root.innerHTML = "";
-  if (failed.length) {
-    const warn = document.createElement("div");
-    warn.style.cssText = "background:#fdf0ee;border:1px solid #e5b8b0;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13.5px;";
-    warn.textContent =
-      `Nepavyko įkelti ${failed.length} ${plural(failed.length, "įrašo", "įrašų", "įrašų")} — ` +
-      "ar serveris paleistas iš saugyklos šaknies, šalia data/? " +
-      failed.map(([, r]) => r._error).join(" · ");
-    root.appendChild(warn);
-  }
+  const banner = failureBanner(failed);
+  if (banner) root.appendChild(banner);
   const head = document.createElement("div"); head.className = "phead";
   // The newest election's portrait, not the oldest: people age, and the
   // recent photo is the one a reader recognises. Three shapes are accepted:
@@ -1278,7 +1291,7 @@ async function showPerson(p) {
   cmpWrap.appendChild(cmp);
   paneC.appendChild(cmpWrap);
 
-  const paneA = buildAssetPane(loaded);
+  const paneA = buildAssetPane(loaded, failed.length);
 
   const panes = [
     ["Rinkimai ir atsakymai", paneE],
@@ -1317,14 +1330,17 @@ async function showCompare() {
   root.innerHTML = `<div class="loading">Kraunami įrašai (${total})…</div>`;
   const perPerson = await Promise.all(persons.map(async p => {
     const records = await Promise.all(p.e.map(e => fetchRecord(e).then(r => [e, r])));
-    return [p, records.filter(([, r]) => !r._error)];
+    return [p, records.filter(([, r]) => !r._error), records.filter(([, r]) => r._error)];
   }));
+  const failed = perPerson.flatMap(([, , bad]) => bad);
 
   root.innerHTML = "";
   const h2 = document.createElement("h2");
   h2.style.cssText = "margin:0 0 4px;font-size:20px";
   h2.textContent = "Asmenų palyginimas";
   root.appendChild(h2);
+  const compareBanner = failureBanner(failed);
+  if (compareBanner) root.appendChild(compareBanner);
   const note = document.createElement("div");
   note.className = "aggnote";
   note.textContent = "Kiekviename langelyje — naujausias to asmens atsakymas ir rinkimai, kuriuose jis pateiktas.";
@@ -1399,6 +1415,63 @@ function median(values) {
 
 const pct = (part, whole) => whole ? `${(100 * part / whole).toFixed(1).replace(".", ",")} %` : "—";
 
+// Which sidebar facets a header view is honouring, in words (issue #148).
+// `showAggregates` used to copy exactly one facet across — the election — and
+// then walk every person unconditionally, while `showMovers` read none at
+// all: with 2024 Seimas + LSDP + "tik išrinkti" the list said "rasta 52" and
+// the summary reported the whole election's 1,740 / 141, with the three
+// selects still showing the filters and nothing saying two had been dropped.
+// Both views apply them now, and both name them.
+const FACET_LABELS = [
+  ["party", "fParty", "iškėlėjas"],
+  ["municipality", "fMunicipality", "savivaldybė"],
+  ["constituency", "fConstituency", "apygarda"],
+  ["role", "fRole", "pareigos"],
+  ["won", "fWon", "rezultatas"],
+];
+
+function facetNote(f, { withElection = false } = {}) {
+  const named = [];
+  if (withElection && f.election) {
+    named.push(`rinkimai: ${electionShortName(f.election)}`);
+  }
+  for (const [key, selectId, label] of FACET_LABELS) {
+    const value = f[key];
+    if (!value) continue;
+    const select = document.getElementById(selectId);
+    const text = select && select.selectedOptions[0] ? select.selectedOptions[0].textContent : value;
+    named.push(`${label}: ${text}`);
+  }
+  return named;
+}
+
+// The facet set a header view scopes by: everything the sidebar has, with
+// the election taken from the view's own picker.
+function scopedFilters(electionId) {
+  const f = activeFilters();
+  return { ...f, election: electionId, any: true };
+}
+
+function appendFacetNote(root, named, onClear) {
+  // Nothing when nothing is filtered: the absence of this line is the
+  // default and is not a claim, and repeating "no filters applied" on every
+  // render is noise. It appears exactly when the numbers are narrower than
+  // the heading suggests.
+  if (!named.length) return;
+  const line = document.createElement("div");
+  line.className = "aggnote";
+  line.append(document.createTextNode(
+    `Taikomi šoniniai filtrai (${named.join("; ")}) — skaičiai apskaičiuoti tik iš jų atitinkančių kandidatavimų. `
+  ));
+  const clear = document.createElement("button");
+  clear.type = "button";
+  clear.textContent = "rodyti visus";
+  clear.style.cssText = "font:inherit;color:var(--link,#1256a0);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline";
+  clear.addEventListener("click", onClear);
+  line.appendChild(clear);
+  root.appendChild(line);
+}
+
 function showAggregates() {
   location.hash = "";
   clearActiveRows();
@@ -1422,13 +1495,24 @@ function showAggregates() {
   note.className = "aggnote";
   note.textContent = "Prie kiekvieno rodiklio nurodyta, iš kelių kandidatavimų jis apskaičiuotas — aprėptis keičia išvadas.";
   root.appendChild(note);
+  const facetLine = document.createElement("div");
+  root.appendChild(facetLine);
   const holder = document.createElement("div");
   root.appendChild(holder);
 
+  function clearFacets() {
+    for (const [, selectId] of FACET_LABELS) document.getElementById(selectId).value = "";
+    renderList();
+    render();
+  }
+
   function render() {
     const id = select.value;
+    const f = scopedFilters(id);
+    facetLine.replaceChildren();
+    appendFacetNote(facetLine, facetNote(f), clearFacets);
     const pairs = [];
-    for (const p of INDEX.people) for (const e of p.e) if (inElection(e, id)) pairs.push([p, e]);
+    for (const p of INDEX.people) for (const e of p.e) if (candidacyMatches(e, f)) pairs.push([p, e]);
     const candidacies = pairs.map(([, e]) => e);
     const total = candidacies.length;
     holder.replaceChildren();
@@ -1487,12 +1571,21 @@ function showAggregates() {
         tr.insertCell().textContent = fmtInt(withParty.filter(e => e.p === pid && e.w === true).length);
       }
       if (top.length > 15) {
+        // The remainder row's Išrinkta cell used to be the empty string
+        // while its count and share were filled — and an empty cell in a
+        // column of numbers reads as a zero. The column then disagreed with
+        // the summary line above it: 2019 municipal said "išrinkta 1 505"
+        // over a column summing to 1 184, with 321 winners (21.3 % of the
+        // remainder) hidden in the blank. 17 of the 55 terms hid at least
+        // one, 1,101 elected candidacies in all (issue #148).
+        const restIds = new Set(top.slice(15).map(([pid]) => pid));
         const rest = top.slice(15).reduce((n, [, c]) => n + c, 0);
+        const restWon = withParty.filter(e => restIds.has(e.p) && e.w === true).length;
         const tr = t.tBodies[0].insertRow();
         const th = document.createElement("th"); th.textContent = `kiti (${top.length - 15})`; tr.appendChild(th);
         tr.insertCell().textContent = fmtInt(rest);
         tr.insertCell().textContent = pct(rest, withParty.length);
-        tr.insertCell().textContent = "";
+        tr.insertCell().textContent = fmtInt(restWon);
       }
       const wrap = document.createElement("div"); wrap.className = "tablewrap";
       wrap.appendChild(t);
@@ -1620,14 +1713,32 @@ function showMovers() {
     </select>
     <span class="stats" style="color:var(--muted);font-size:13px">pirma ir paskutinė deklaruota reikšmė; asmenys, ją deklaravę 2+ rinkimuose</span>`;
   root.appendChild(bar);
+  const facetLine = document.createElement("div");
+  root.appendChild(facetLine);
   const holder = document.createElement("div");
   root.appendChild(holder);
+
+  function clearFacets() {
+    for (const id of ["fElection", ...FACET_LABELS.map(([, s]) => s)]) {
+      document.getElementById(id).value = "";
+    }
+    renderList();
+    render();
+  }
 
   function render() {
     const s = +document.getElementById("mvSeries").value;
     const dir = document.getElementById("mvDir").value;
+    const f = activeFilters();
+    facetLine.replaceChildren();
+    appendFacetNote(facetLine, facetNote(f, { withElection: true }), clearFacets);
     const rows = [];
     for (const p of INDEX.people) {
+      // The ranking is over a person's whole money series, so the facets
+      // scope which *people* are ranked rather than which of their
+      // candidacies count — a filtered person's own first and last figure
+      // is still what the row compares (issue #148).
+      if (f.any && !p.e.some(e => candidacyMatches(e, f))) continue;
       const vals = p.e.filter(e => e.m && e.m[s] != null);
       if (vals.length < 2) continue;
       const first = vals[0], last = vals[vals.length - 1];
@@ -1722,7 +1833,7 @@ function moneyEUR(record, path) {
 
 const fmtEUR = (n) => n.toLocaleString("lt-LT", { maximumFractionDigits: 0 }) + " €";
 
-function buildAssetPane(loaded) {
+function buildAssetPane(loaded, failedCount = 0) {
   const pane = document.createElement("div");
   const cols = loaded.map(([e, r]) => ({
     label: electionShortName(e.id),
@@ -1731,7 +1842,12 @@ function buildAssetPane(loaded) {
   }));
   const allValues = cols.flatMap(c => c.values.filter(v => v != null));
   if (!allValues.length) {
-    pane.innerHTML = `<div class="loading">Nė vienuose šio asmens rinkimuose turto ar pajamų nedeklaruota.</div>`;
+    // "Nothing was declared" is a claim about the data. With every record
+    // failing to load it is a claim about nothing, and the pane made it
+    // anyway (issue #148); say which of the two this is.
+    pane.innerHTML = failedCount
+      ? `<div class="loading">Nėra ką rodyti: ${failedCount} ${plural(failedCount, "įrašas", "įrašai", "įrašų")} neįkelti, o iš įkeltų nė vienas neturi turto ar pajamų duomenų.</div>`
+      : `<div class="loading">Nė vienuose šio asmens rinkimuose turto ar pajamų nedeklaruota.</div>`;
     return pane;
   }
 
