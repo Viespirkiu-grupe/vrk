@@ -14,35 +14,35 @@ from scraper.elections.meru_2017.sitemap import ELECTION_ID
 # 2019 EP shape, so its profile and anketa parsers apply here.
 from scraper.elections.ep_2019.anketa_parser import (
     parse_office_heading,
-    _normalize_privaciu_interesu_data,
     _parse_anketa_content,
     _parse_privaciu_interesu_html,
     _parse_profile_table,
     _select_profile_table,
 )
-from scraper.elections.seimo_2016.anketa_parser import (
-    _find_main_content_after_tabnav,
-    _find_row_by_prompt_prefix,
-    _find_row_by_question_number,
-    _question_record_rows,
-    _load_candidate_meta,
-    _normalize_biografija_data,
-    _normalize_campaigns,
-    _normalize_kita_data,
-    _normalize_missing_values,
-    _normalize_profile_data,
-    _normalize_table_records,
-    _normalize_text_value,
-    _order_dict_keys,
-    _parse_biografija_html,
-    _parse_eur_amount,
-    _parse_kita_html,
-    _parse_nested_campaign_samples,
-    _parse_politines_kampanijos_html,
-    _parse_tabnav,
-    _parse_turto_ir_pajamu_html,
-    _row_answer_text,
-    _split_list_value,
+from scraper.shared.anketa_tabs import (
+    find_main_content_after_tabnav,
+    find_row_by_prompt_prefix,
+    find_row_by_question_number,
+    load_candidate_meta,
+    normalize_biografija_data,
+    normalize_campaigns,
+    normalize_kita_data,
+    normalize_missing_values,
+    normalize_privaciu_interesu_data,
+    normalize_profile_data,
+    normalize_table_records,
+    normalize_text_value,
+    order_dict_keys,
+    parse_biografija_html,
+    parse_eur_amount,
+    parse_kita_html,
+    parse_nested_campaign_samples,
+    parse_politines_kampanijos_html,
+    parse_tabnav,
+    parse_turto_ir_pajamu_html,
+    question_record_rows,
+    row_answer_text,
+    split_list_value,
 )
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.election_results import candidacy_from_elected_note
@@ -68,23 +68,23 @@ Q9_CONTINUATION_PREFIX = "36 str."
 
 
 def _q9_answer(rows: list[dict[str, Any]]) -> str | None:
-    row = _find_row_by_question_number(rows, "9")
-    answer = _normalize_text_value(_row_answer_text(row))
+    row = find_row_by_question_number(rows, "9")
+    answer = normalize_text_value(row_answer_text(row))
     if answer is not None:
         return answer
 
-    continuation = _find_row_by_prompt_prefix(rows, Q9_CONTINUATION_PREFIX)
-    return _normalize_text_value(_row_answer_text(continuation))
+    continuation = find_row_by_prompt_prefix(rows, Q9_CONTINUATION_PREFIX)
+    return normalize_text_value(row_answer_text(continuation))
 
 
 def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     def _answer(question_number: str) -> str | None:
-        return _normalize_text_value(
-            _row_answer_text(_find_row_by_question_number(rows, question_number))
+        return normalize_text_value(
+            row_answer_text(find_row_by_question_number(rows, question_number))
         )
 
     def _prompt_answer(prefix: str) -> str | None:
-        return _normalize_text_value(_row_answer_text(_find_row_by_prompt_prefix(rows, prefix)))
+        return normalize_text_value(row_answer_text(find_row_by_prompt_prefix(rows, prefix)))
 
 
     return {
@@ -107,14 +107,14 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "tautybe": _answer("11"),
         "issilavinimas": {
             "aprasas": _answer("12"),
-            "irasai": _normalize_table_records(_question_record_rows(rows, "12")),
+            "irasai": normalize_table_records(question_record_rows(rows, "12")),
         },
         "pedagoginis-vardas": _prompt_answer("jei turite, nurodykite pedagogin"),
-        "uzsienio-kalbos": _split_list_value(_row_answer_text(_find_row_by_question_number(rows, "13"))),
+        "uzsienio-kalbos": split_list_value(row_answer_text(find_row_by_question_number(rows, "13"))),
         "politine-organizacija": _answer("14"),
         "anksciau-isrinktas": {
             "aprasas": _answer("15"),
-            "irasai": _normalize_table_records(_question_record_rows(rows, "15")),
+            "irasai": normalize_table_records(question_record_rows(rows, "15")),
         },
         "pagrindine-darboviete": _answer("16"),
         "visuomenine-veikla": _answer("17"),
@@ -133,11 +133,11 @@ def parse_anketa_html(html: str) -> dict[str, Any]:
 
     tabnav = soup.select_one("ul#tabnav")
     profile_table = _select_profile_table(soup, tabnav)
-    content = _find_main_content_after_tabnav(soup)
+    content = find_main_content_after_tabnav(soup)
 
     profile = _parse_profile_table(profile_table)
     profile["officeHeading"] = parse_office_heading(soup)
-    tabs = _parse_tabnav(tabnav)
+    tabs = parse_tabnav(tabnav)
     anketa = _parse_anketa_content(content)
     anketa["normalized"] = _normalize_anketa_rows(anketa["rows"])
 
@@ -159,7 +159,7 @@ def parse_anketa_html(html: str) -> dict[str, Any]:
 
 
 def _normalize_turto_ir_pajamu_data(payload: dict[str, Any]) -> dict[str, Any]:
-    return normalize_declaration(payload, _parse_eur_amount)
+    return normalize_declaration(payload, parse_eur_amount)
 
 
 # ---------------------------------------------------------------------------
@@ -175,13 +175,13 @@ def _parse_optional_subpages(
 ) -> dict[str, Any]:
     pages: dict[str, Any] = {}
     parser_map: dict[str, Any] = {
-        "biografija": ("biografija.html", _parse_biografija_html),
+        "biografija": ("biografija.html", parse_biografija_html),
         "privaciuInteresuDeklaracija": ("privaciu-interesu-deklaracijos.html", _parse_privaciu_interesu_html),
-        "turtoIrPajamuDeklaracijos": ("turto-ir-pajamu-deklaracijos.html", _parse_turto_ir_pajamu_html),
-        "kita": ("kita.html", _parse_kita_html),
+        "turtoIrPajamuDeklaracijos": ("turto-ir-pajamu-deklaracijos.html", parse_turto_ir_pajamu_html),
+        "kita": ("kita.html", parse_kita_html),
         "politinesKampanijosDalyvioDuomenys": (
             "politines-kampanijos-dalyvio-duomenys.html",
-            _parse_politines_kampanijos_html,
+            parse_politines_kampanijos_html,
         ),
     }
 
@@ -232,7 +232,7 @@ def parse_anketa_sample(
 
     html = anketa_path.read_text(encoding="utf-8")
     parsed = parse_anketa_html(html)
-    meta = _load_candidate_meta(candidate_dir)
+    meta = load_candidate_meta(candidate_dir)
     candidate_meta = meta.get("candidate", {}) if isinstance(meta, dict) else {}
     candidate_source_url = candidate_meta.get("url") if isinstance(candidate_meta, dict) else None
 
@@ -293,7 +293,7 @@ def parse_anketa_sample(
     )
     root_campaign_data = subpages.get("politinesKampanijosDalyvioDuomenys", {}).get("data")
     try:
-        nested_campaigns = _parse_nested_campaign_samples(
+        nested_campaigns = parse_nested_campaign_samples(
             meta if isinstance(meta, dict) else None,
             root_campaign_data if isinstance(root_campaign_data, dict) else None,
             candidate_dir=candidate_dir,
@@ -330,7 +330,7 @@ def parse_anketa_sample(
     }
 
     normalized: dict[str, Any] = {
-        "profilis": _normalize_profile_data(parsed["profile"]),
+        "profilis": normalize_profile_data(parsed["profile"]),
         "anketa": parsed["anketa"]["normalized"],
     }
 
@@ -343,13 +343,13 @@ def parse_anketa_sample(
         if key != "politinesKampanijosDalyvioDuomenys":
             raw_data[key] = data
         if key == "biografija" and isinstance(data, dict):
-            normalized["biografija"] = _normalize_biografija_data(data)
+            normalized["biografija"] = normalize_biografija_data(data)
         if key == "privaciuInteresuDeklaracija" and isinstance(data, dict):
-            normalized["privaciu-interesu-deklaracija"] = _normalize_privaciu_interesu_data(data)
+            normalized["privaciu-interesu-deklaracija"] = normalize_privaciu_interesu_data(data)
         if key == "turtoIrPajamuDeklaracijos" and isinstance(data, dict):
             normalized["turto-ir-pajamu-deklaracijos"] = _normalize_turto_ir_pajamu_data(data)
         if key == "kita" and isinstance(data, dict):
-            normalized["kita"] = _normalize_kita_data(data)
+            normalized["kita"] = normalize_kita_data(data)
 
     if nested_campaigns:
         campaign_key = "politinesKampanijosDalyvioDuomenys"
@@ -361,12 +361,12 @@ def parse_anketa_sample(
             "sectionDescription": section_description,
             "campaigns": nested_campaigns,
         }
-        normalized["politines-kampanijos-dalyvio-duomenys"] = _normalize_campaigns(raw_data[campaign_key])
+        normalized["politines-kampanijos-dalyvio-duomenys"] = normalize_campaigns(raw_data[campaign_key])
     elif isinstance(root_campaign_data, dict):
         campaign_key = "politinesKampanijosDalyvioDuomenys"
         raw_data[campaign_key] = root_campaign_data
 
-    raw_data = _order_dict_keys(
+    raw_data = order_dict_keys(
         raw_data,
         [
             "profile",
@@ -378,7 +378,7 @@ def parse_anketa_sample(
             "kita",
         ],
     )
-    normalized = _order_dict_keys(
+    normalized = order_dict_keys(
         normalized,
         [
             "profilis",
@@ -402,7 +402,7 @@ def parse_anketa_sample(
             "candidateSourceUrl": candidate_source_url,
         },
         "rawData": raw_data,
-        "normalized": _normalize_missing_values(normalized),
+        "normalized": normalize_missing_values(normalized),
     }
 
     output_path = output_root / f"{candidate_id}-{ELECTION_ID}.json"

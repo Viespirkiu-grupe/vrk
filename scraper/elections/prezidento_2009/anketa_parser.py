@@ -28,13 +28,13 @@ from scraper.elections.seimo_zirmunu_2015.anketa_parser import (
     parse_anketa_sample as _parse_anketa_sample,
     parse_anketa_samples as _parse_anketa_samples,
 )
-from scraper.elections.seimo_2016.anketa_parser import (
-    _find_row_by_prompt_prefix,
-    _find_row_by_question_number,
-    _normalize_table_records,
-    _question_record_rows,
-    _row_answer_text,
-    _split_list_value,
+from scraper.shared.anketa_tabs import (
+    find_row_by_prompt_prefix,
+    find_row_by_question_number,
+    normalize_table_records,
+    question_record_rows,
+    row_answer_text,
+    split_list_value,
 )
 
 DEFAULT_SAMPLES_ROOT = Path(f"samples/html/{ELECTION_ID}")
@@ -46,11 +46,11 @@ DEFAULT_RESULTS_PATH = Path(f"sitemaps/{ELECTION_ID}.results.json")
 def normalize_presidential_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     def _answer(question_number: str) -> str | None:
         return _normalize_answer_value(
-            _row_answer_text(_find_row_by_question_number(rows, question_number))
+            row_answer_text(find_row_by_question_number(rows, question_number))
         )
 
     def _prompt_answer(prefix: str) -> str | None:
-        return _normalize_answer_value(_row_answer_text(_find_row_by_prompt_prefix(rows, prefix)))
+        return _normalize_answer_value(row_answer_text(find_row_by_prompt_prefix(rows, prefix)))
 
     return {
         "gimimo-data": _answer("5"),
@@ -66,17 +66,17 @@ def normalize_presidential_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, 
         "tautybe": _answer("11"),
         "issilavinimas": {
             "aprasas": _answer("12"),
-            "irasai": _normalize_table_records(_question_record_rows(rows, "12")),
+            "irasai": normalize_table_records(question_record_rows(rows, "12")),
         },
         "mokslo-laipsnis": _prompt_answer("jei turite, nurodykite mokslo laipsn"),
         "pedagoginis-vardas": _prompt_answer(", vard") or _prompt_answer("jei turite, nurodykite mokslo vard"),
-        "uzsienio-kalbos": _split_list_value(
-            _row_answer_text(_find_row_by_question_number(rows, "13"))
+        "uzsienio-kalbos": split_list_value(
+            row_answer_text(find_row_by_question_number(rows, "13"))
         ),
         "politine-organizacija": _answer("14"),
         "anksciau-isrinktas": {
             "aprasas": _answer("15"),
-            "irasai": _normalize_table_records(_question_record_rows(rows, "15")),
+            "irasai": normalize_table_records(question_record_rows(rows, "15")),
         },
         "pagrindine-darboviete": _answer("16"),
         "visuomenine-veikla": _answer("17"),

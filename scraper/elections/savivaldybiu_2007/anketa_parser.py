@@ -17,17 +17,17 @@ from scraper.elections.savivaldybiu_2007.sitemap import ELECTION_ID
 from scraper.elections.pakartotiniai_sirvintu_traku_2015.anketa_parser import (
     build_candidacy,
 )
-from scraper.elections.seimo_2016.anketa_parser import (
-    _find_row_by_prompt_prefix,
-    _normalize_table_records,
-    _row_answer_text,
-    _split_list_value,
-)
 from scraper.elections.seimo_zirmunu_2015.anketa_parser import (
     _normalize_answer_value,
     load_results,
     parse_anketa_sample as _parse_anketa_sample,
     parse_anketa_samples as _parse_anketa_samples,
+)
+from scraper.shared.anketa_tabs import (
+    find_row_by_prompt_prefix,
+    normalize_table_records,
+    row_answer_text,
+    split_list_value,
 )
 
 DEFAULT_SAMPLES_ROOT = Path(f"samples/html/{ELECTION_ID}")
@@ -150,8 +150,8 @@ def conviction_explanation(rows: list[dict[str, Any]]) -> str | None:
 
 def _prompt_record_rows(rows: list[dict[str, Any]], prompt_prefix: str) -> list[Any]:
     """The records of the inline table whose label starts with the prefix
-    (the unnumbered equivalent of the era's `_question_record_rows`)."""
-    row = _find_row_by_prompt_prefix(rows, prompt_prefix)
+    (the unnumbered equivalent of the era's `question_record_rows`)."""
+    row = find_row_by_prompt_prefix(rows, prompt_prefix)
     if row is None or not isinstance(row.get("answer"), list):
         return []
     return list(row["answer"])
@@ -181,7 +181,7 @@ def normalize_municipal_2007_anketa_rows(rows: list[dict[str, Any]]) -> dict[str
     rows = split_merged_rows(rows)
 
     def _prompt_answer(prefix: str) -> str | None:
-        return _normalize_answer_value(_row_answer_text(_find_row_by_prompt_prefix(rows, prefix)))
+        return _normalize_answer_value(row_answer_text(find_row_by_prompt_prefix(rows, prefix)))
 
     family = _prompt_answer("šeimos nariai")
     spouse, children = split_family_members(family)
@@ -215,19 +215,19 @@ def normalize_municipal_2007_anketa_rows(rows: list[dict[str, Any]]) -> dict[str
         "tautybe": _prompt_answer("tautybė"),
         "issilavinimas": {
             "aprasas": None,
-            "irasai": _normalize_table_records(_prompt_record_rows(rows, "išsilavinimas")),
+            "irasai": normalize_table_records(_prompt_record_rows(rows, "išsilavinimas")),
         },
         # "Moksliniai laipsniai:" and "Moksliniai vardai:" — each printed
         # only on the pages that have one.
         "mokslo-laipsnis": _prompt_answer("moksliniai laipsniai"),
         "pedagoginis-vardas": _prompt_answer("moksliniai vardai"),
-        "uzsienio-kalbos": _split_list_value(
-            _row_answer_text(_find_row_by_prompt_prefix(rows, "kokias kalbas moka"))
+        "uzsienio-kalbos": split_list_value(
+            row_answer_text(find_row_by_prompt_prefix(rows, "kokias kalbas moka"))
         ),
         "politine-organizacija": _prompt_answer("kokios partijos, politinės organizacijos"),
         "anksciau-isrinktas": {
             "aprasas": None,
-            "irasai": _normalize_table_records(_prompt_record_rows(rows, "buvo išrinktas į")),
+            "irasai": normalize_table_records(_prompt_record_rows(rows, "buvo išrinktas į")),
         },
         "pagrindine-darboviete": _prompt_answer("pagrindinė darbovietė"),
         "visuomenine-veikla": _prompt_answer("visuomeninė veikla"),

@@ -55,19 +55,19 @@ from bs4 import BeautifulSoup, NavigableString, Tag
 from scraper.elections.ep_2004.results import load_ranking
 from scraper.elections.seimo_2000.candidate_samples import CANDIDATE_PAGE_NAME, DEFAULT_SAMPLES_ROOT
 from scraper.elections.seimo_2000.sitemap import ELECTION_ID, resolve_site_url
-from scraper.elections.seimo_2016.anketa_parser import (
-    _normalize_biografija_data,
-    _normalize_missing_values,
-    _normalize_profile_data,
-    _normalize_text_value,
-    _order_dict_keys,
-    normalize_space,
-)
 from scraper.elections.seimo_birzu_zarasu_ukmerges_2013.anketa_parser import build_candidacy
 from scraper.elections.seimo_zirmunu_2015.anketa_parser import (
     _apply_results,
     _normalize_answer_value,
     load_results,
+)
+from scraper.shared.anketa_tabs import (
+    normalize_biografija_data,
+    normalize_missing_values,
+    normalize_profile_data,
+    normalize_space,
+    normalize_text_value,
+    order_dict_keys,
 )
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.deklaracija_archive_1990s import parse_declaration
@@ -383,7 +383,7 @@ def _split_school(value: str) -> dict[str, Any]:
 
 def _place(value: str | None) -> str | None:
     # "Jusiškio k. , Anykščių raj." — the page pads its commas.
-    text = _normalize_text_value(value)
+    text = normalize_text_value(value)
     return re.sub(r"\s+,", ",", text) if text else None
 
 
@@ -408,7 +408,7 @@ def normalize_anketa(parsed: dict[str, Any]) -> tuple[dict[str, Any], list[str]]
 
     def _explanation(number: str) -> str | None:
         row = answers.get(number)
-        return _normalize_text_value(row.get("explanation")) if row else None
+        return normalize_text_value(row.get("explanation")) if row else None
 
     def _renunciation(value: str | None) -> str | None:
         # The slot prints as "<STATE> - <answer>" per declared citizenship,
@@ -432,7 +432,7 @@ def normalize_anketa(parsed: dict[str, Any]) -> tuple[dict[str, Any], list[str]]
 
     def _single(key: str) -> str | None:
         values = _values(key)
-        return _normalize_text_value(", ".join(values)) if values else None
+        return normalize_text_value(", ".join(values)) if values else None
 
     family = fields.get("seimos-nariai", [])
     spouse = [m["value"] for m in family if (m["note"] or "").lower() in SPOUSE_RELATIONS]
@@ -465,7 +465,7 @@ def normalize_anketa(parsed: dict[str, Any]) -> tuple[dict[str, Any], list[str]]
             "ar-bendradarbiavote-su-uzsienio-tarnybomis": _answer("9.1"),
             "ar-buvote-pripazintas-kaltu": _answer("9.2"),
             "ar-buvote-pripazintas-kaltu-del-sunkaus-nusikaltimo": _answer("9.3"),
-            "teisiniai-argumentai": _normalize_text_value(explanation),
+            "teisiniai-argumentai": normalize_text_value(explanation),
         },
         "gimimo-vieta": _place(parsed["birthPlace"]),
         "issilavinimas": {
@@ -486,8 +486,8 @@ def normalize_anketa(parsed: dict[str, Any]) -> tuple[dict[str, Any], list[str]]
         "visuomenine-veikla": _single("visuomenine-veikla"),
         "pomegiai": _single("pomegiai"),
         "seimine-padetis": _single("seimine-padetis"),
-        "sutuoktinio-vardas-pavarde": _normalize_text_value(", ".join(spouse)) if spouse else None,
-        "vaiku-vardai-pavardes": _normalize_text_value(", ".join(children)) if children else None,
+        "sutuoktinio-vardas-pavarde": normalize_text_value(", ".join(spouse)) if spouse else None,
+        "vaiku-vardai-pavardes": normalize_text_value(", ".join(children)) if children else None,
         "seimos-nariai": [{"vardas": m["value"], "rysys": m["note"]} for m in family],
     }
     return anketa, unknown
@@ -674,16 +674,16 @@ def parse_anketa_sample(
         "declaration": declaration,
     }
     normalized: dict[str, Any] = {
-        "profilis": _normalize_profile_data(parsed["profile"]),
+        "profilis": normalize_profile_data(parsed["profile"]),
         "anketa": anketa,
-        "biografija": _normalize_biografija_data(parsed["biography"]) if parsed["biography"] else None,
+        "biografija": normalize_biografija_data(parsed["biography"]) if parsed["biography"] else None,
         **({"turto-ir-pajamu-deklaracijos": declaration} if declaration else {}),
     }
     output_payload |= {
         "source": {"candidateSourceUrl": source_url},
         "rawData": raw_data,
-        "normalized": _normalize_missing_values(
-            _order_dict_keys(normalized, ["profilis", "anketa", "biografija", "turto-ir-pajamu-deklaracijos"])
+        "normalized": normalize_missing_values(
+            order_dict_keys(normalized, ["profilis", "anketa", "biografija", "turto-ir-pajamu-deklaracijos"])
         ),
     }
 

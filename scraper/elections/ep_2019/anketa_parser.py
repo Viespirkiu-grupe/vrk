@@ -8,34 +8,34 @@ from typing import Any
 from bs4 import BeautifulSoup, Tag
 
 from scraper.elections.ep_2019.sitemap import ELECTION_ID
-from scraper.elections.seimo_2016.anketa_parser import (
-    _extract_answer_text,
-    _extract_links,
-    _extract_table_headers,
-    _find_main_content_after_tabnav,
-    _find_row_by_question_number,
-    _question_record_rows,
-    _load_candidate_meta,
-    _normalize_biografija_data,
-    _normalize_campaigns,
-    _normalize_kita_data,
-    _normalize_missing_values,
-    _normalize_privaciu_interesu_data,
-    _normalize_profile_data,
-    _normalize_table_records,
-    _normalize_text_value,
-    _order_dict_keys,
-    _parse_biografija_html,
-    _parse_eur_amount,
-    _parse_kita_html,
-    _parse_nested_campaign_samples,
-    _parse_politines_kampanijos_html,
-    _parse_tabnav,
-    _parse_turto_ir_pajamu_html,
-    _row_answer_text,
-    _source_key,
-    _tag_text,
+from scraper.shared.anketa_tabs import (
+    extract_answer_text,
+    extract_links,
+    extract_table_headers,
+    find_main_content_after_tabnav,
+    find_row_by_question_number,
+    load_candidate_meta,
+    normalize_biografija_data,
+    normalize_campaigns,
+    normalize_kita_data,
+    normalize_missing_values,
+    normalize_privaciu_interesu_data,
+    normalize_profile_data,
     normalize_space,
+    normalize_table_records,
+    normalize_text_value,
+    order_dict_keys,
+    parse_biografija_html,
+    parse_eur_amount,
+    parse_kita_html,
+    parse_nested_campaign_samples,
+    parse_politines_kampanijos_html,
+    parse_tabnav,
+    parse_turto_ir_pajamu_html,
+    question_record_rows,
+    row_answer_text,
+    source_key,
+    tag_text,
 )
 from scraper.shared.anketa_cells import prompt_text as _build_prompt_text
 from scraper.shared.anomalies import build_anomaly_event
@@ -90,7 +90,7 @@ def _parse_profile_table(table: Tag | None) -> dict[str, Any]:
         if first_cells:
             name_cell = first_cells[-1]
             if name_cell.find("img") is None:
-                candidate_display_name = _tag_text(name_cell)
+                candidate_display_name = tag_text(name_cell)
 
     for row in rows[1:]:
         cells = row.find_all("td", recursive=False)
@@ -100,7 +100,7 @@ def _parse_profile_table(table: Tag | None) -> dict[str, Any]:
         # A single-cell row spanning the table width is either the "elected"
         # note (only present for elected MEPs) or a stray spacer row.
         if len(cells) == 1:
-            text = _tag_text(cells[0])
+            text = tag_text(cells[0])
             if text and "išrink" in text.lower() and not elected_note:
                 elected_note = text
             continue
@@ -108,8 +108,8 @@ def _parse_profile_table(table: Tag | None) -> dict[str, Any]:
         key_cell = cells[0]
         value_cell = cells[-1]
 
-        key_text = _tag_text(key_cell).rstrip(":")
-        value_text = _tag_text(value_cell)
+        key_text = tag_text(key_cell).rstrip(":")
+        value_text = tag_text(value_cell)
         if not key_text and not value_text:
             continue
 
@@ -121,7 +121,7 @@ def _parse_profile_table(table: Tag | None) -> dict[str, Any]:
                 part for part in (previous["displayValue"], value_text) if part
             )
             previous["urls"] = previous["urls"] + [
-                url for url in _extract_links(value_cell) if url not in previous["urls"]
+                url for url in extract_links(value_cell) if url not in previous["urls"]
             ]
             continue
 
@@ -129,7 +129,7 @@ def _parse_profile_table(table: Tag | None) -> dict[str, Any]:
             {
                 "key": key_text,
                 "displayValue": value_text,
-                "urls": _extract_links(value_cell),
+                "urls": extract_links(value_cell),
             }
         )
 
@@ -149,7 +149,7 @@ def parse_office_heading(soup: BeautifulSoup) -> str:
     It is the one place the page says which office the candidate seeks
     and, on the 2024 Seimo pages, when the documents were submitted."""
     heading = soup.find("h4", class_="h4apgKom")
-    return _tag_text(heading) if heading is not None else ""
+    return tag_text(heading) if heading is not None else ""
 
 
 def _select_profile_table(soup: BeautifulSoup, tabnav: Tag | None) -> Tag | None:
@@ -194,7 +194,7 @@ def _is_records_table(table: Tag) -> bool:
 
 
 def _parse_records_table(table: Tag) -> list[dict[str, Any]]:
-    headers = _extract_table_headers(table)
+    headers = extract_table_headers(table)
     records: list[dict[str, Any]] = []
 
     body = table.find("tbody", recursive=False)
@@ -204,14 +204,14 @@ def _parse_records_table(table: Tag) -> list[dict[str, Any]]:
         cells = tr.find_all("td", recursive=False)
         if not cells:
             continue
-        values = [_tag_text(cell) for cell in cells]
+        values = [tag_text(cell) for cell in cells]
         if not any(values):
             continue
 
         if headers and len(values) == len(headers):
             record: dict[str, Any] = {}
             for index, value in enumerate(values):
-                key = _source_key(headers[index]) or f"stulpelis-{index + 1}"
+                key = source_key(headers[index]) or f"stulpelis-{index + 1}"
                 record[key] = value
             records.append(record)
         else:
@@ -264,7 +264,7 @@ def _parse_anketa_content(content: Tag | None) -> dict[str, Any]:
                 # reached rawData.
                 answer: Any = _parse_records_table(nested_tables[0])
             else:
-                answer = _extract_answer_text(cell, nested_tables)
+                answer = extract_answer_text(cell, nested_tables)
             if not prompt and not answer:
                 continue
             parsed_rows.append(
@@ -294,50 +294,50 @@ def _split_marital_and_spouse(answer: str | None) -> tuple[str | None, str | Non
     parts = [part for part in parts if part]
     marital = parts[0] if parts else None
     spouse = parts[1] if len(parts) > 1 else None
-    return _normalize_text_value(marital), _normalize_text_value(spouse)
+    return normalize_text_value(marital), normalize_text_value(spouse)
 
 
 def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
-    q5 = _find_row_by_question_number(rows, "5")
-    q6 = _find_row_by_question_number(rows, "6")
-    q8_1 = _find_row_by_question_number(rows, "8.1")
-    q8_2 = _find_row_by_question_number(rows, "8.2")
-    q8_3 = _find_row_by_question_number(rows, "8.3")
-    q9_1 = _find_row_by_question_number(rows, "9.1")
-    q9_2 = _find_row_by_question_number(rows, "9.2")
-    q9_3 = _find_row_by_question_number(rows, "9.3")
-    q9_4 = _find_row_by_question_number(rows, "9.4")
-    q9_5 = _find_row_by_question_number(rows, "9.5")
-    q10 = _find_row_by_question_number(rows, "10")
-    q11 = _find_row_by_question_number(rows, "11")
-    q12 = _find_row_by_question_number(rows, "12")
-    q12_1 = _find_row_by_question_number(rows, "12.1")
-    q12_2 = _find_row_by_question_number(rows, "12.2")
-    q13 = _find_row_by_question_number(rows, "13")
-    q14 = _find_row_by_question_number(rows, "14")
-    q15 = _find_row_by_question_number(rows, "15")
-    q16 = _find_row_by_question_number(rows, "16")
-    q17 = _find_row_by_question_number(rows, "17")
-    q18 = _find_row_by_question_number(rows, "18")
-    q19 = _find_row_by_question_number(rows, "19")
-    q20 = _find_row_by_question_number(rows, "20")
-    q21 = _find_row_by_question_number(rows, "21")
+    q5 = find_row_by_question_number(rows, "5")
+    q6 = find_row_by_question_number(rows, "6")
+    q8_1 = find_row_by_question_number(rows, "8.1")
+    q8_2 = find_row_by_question_number(rows, "8.2")
+    q8_3 = find_row_by_question_number(rows, "8.3")
+    q9_1 = find_row_by_question_number(rows, "9.1")
+    q9_2 = find_row_by_question_number(rows, "9.2")
+    q9_3 = find_row_by_question_number(rows, "9.3")
+    q9_4 = find_row_by_question_number(rows, "9.4")
+    q9_5 = find_row_by_question_number(rows, "9.5")
+    q10 = find_row_by_question_number(rows, "10")
+    q11 = find_row_by_question_number(rows, "11")
+    q12 = find_row_by_question_number(rows, "12")
+    q12_1 = find_row_by_question_number(rows, "12.1")
+    q12_2 = find_row_by_question_number(rows, "12.2")
+    q13 = find_row_by_question_number(rows, "13")
+    q14 = find_row_by_question_number(rows, "14")
+    q15 = find_row_by_question_number(rows, "15")
+    q16 = find_row_by_question_number(rows, "16")
+    q17 = find_row_by_question_number(rows, "17")
+    q18 = find_row_by_question_number(rows, "18")
+    q19 = find_row_by_question_number(rows, "19")
+    q20 = find_row_by_question_number(rows, "20")
+    q21 = find_row_by_question_number(rows, "21")
 
-    marital_status, spouse_name = _split_marital_and_spouse(_row_answer_text(q19))
+    marital_status, spouse_name = _split_marital_and_spouse(row_answer_text(q19))
 
     return {
-        "gimimo-data": _normalize_text_value(_row_answer_text(q5)),
-        "adresas": _normalize_text_value(_row_answer_text(q6)),
+        "gimimo-data": normalize_text_value(row_answer_text(q5)),
+        "adresas": normalize_text_value(row_answer_text(q6)),
         "pareiskimai": {
-            "ar-nebaigta-teismo-paskirta-bausme": _normalize_text_value(_row_answer_text(q8_1)),
-            "ar-atliekate-karo-tarnyba": _normalize_text_value(_row_answer_text(q8_2)),
-            "ar-turite-kitos-valstybes-pilietybe": _normalize_text_value(_row_answer_text(q8_3)),
-            "ar-bendradarbiavote-su-uzsienio-tarnybomis": _normalize_text_value(_row_answer_text(q9_1)),
-            "ar-buvote-pripazintas-kaltu": _normalize_text_value(_row_answer_text(q9_2)),
-            "ar-veika-dekriminalizuota": _normalize_text_value(_row_answer_text(q9_3)),
-            "ar-buvote-pripazintas-kaltu-uzsienyje": _normalize_text_value(_row_answer_text(q9_4)),
-            "ar-buvote-pripazintas-kaltu-del-politinio-persekiojimo": _normalize_text_value(
-                _row_answer_text(q9_5)
+            "ar-nebaigta-teismo-paskirta-bausme": normalize_text_value(row_answer_text(q8_1)),
+            "ar-atliekate-karo-tarnyba": normalize_text_value(row_answer_text(q8_2)),
+            "ar-turite-kitos-valstybes-pilietybe": normalize_text_value(row_answer_text(q8_3)),
+            "ar-bendradarbiavote-su-uzsienio-tarnybomis": normalize_text_value(row_answer_text(q9_1)),
+            "ar-buvote-pripazintas-kaltu": normalize_text_value(row_answer_text(q9_2)),
+            "ar-veika-dekriminalizuota": normalize_text_value(row_answer_text(q9_3)),
+            "ar-buvote-pripazintas-kaltu-uzsienyje": normalize_text_value(row_answer_text(q9_4)),
+            "ar-buvote-pripazintas-kaltu-del-politinio-persekiojimo": normalize_text_value(
+                row_answer_text(q9_5)
             ),
         },
         # One entry per conviction, in the shape every other era publishes;
@@ -347,38 +347,38 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
                 rows, CONVICTION_QUESTION, conviction_field_keys(CONVICTION_QUESTION)
             ),
         },
-        "gimimo-vieta": _normalize_text_value(_row_answer_text(q10)),
-        "tautybe": _normalize_text_value(_row_answer_text(q11)),
+        "gimimo-vieta": normalize_text_value(row_answer_text(q10)),
+        "tautybe": normalize_text_value(row_answer_text(q11)),
         "issilavinimas": {
-            "aprasas": _normalize_text_value(_row_answer_text(q12)),
-            "irasai": _normalize_table_records(_question_record_rows(rows, "12")),
+            "aprasas": normalize_text_value(row_answer_text(q12)),
+            "irasai": normalize_table_records(question_record_rows(rows, "12")),
         },
-        "mokslo-laipsnis": _normalize_text_value(_row_answer_text(q12_1)),
-        "pedagoginis-vardas": _normalize_text_value(_row_answer_text(q12_2)),
-        "uzsienio-kalbos": _split_list_value(_row_answer_text(q13)),
-        "politine-organizacija": _normalize_text_value(_row_answer_text(q14)),
+        "mokslo-laipsnis": normalize_text_value(row_answer_text(q12_1)),
+        "pedagoginis-vardas": normalize_text_value(row_answer_text(q12_2)),
+        "uzsienio-kalbos": _split_list_value(row_answer_text(q13)),
+        "politine-organizacija": normalize_text_value(row_answer_text(q14)),
         "anksciau-isrinktas": {
-            "aprasas": _normalize_text_value(_row_answer_text(q15)),
-            "irasai": _normalize_table_records(_question_record_rows(rows, "15")),
+            "aprasas": normalize_text_value(row_answer_text(q15)),
+            "irasai": normalize_table_records(question_record_rows(rows, "15")),
         },
-        "pagrindine-darboviete": _normalize_text_value(_row_answer_text(q16)),
-        "visuomenine-veikla": _normalize_text_value(_row_answer_text(q17)),
-        "pomegiai": _normalize_text_value(_row_answer_text(q18)),
+        "pagrindine-darboviete": normalize_text_value(row_answer_text(q16)),
+        "visuomenine-veikla": normalize_text_value(row_answer_text(q17)),
+        "pomegiai": normalize_text_value(row_answer_text(q18)),
         "seimine-padetis": marital_status,
         "sutuoktinio-vardas-pavarde": spouse_name,
-        "vaiku-vardai-pavardes": _normalize_text_value(_row_answer_text(q20)),
-        "kita-apie-save": _normalize_text_value(_row_answer_text(q21)),
+        "vaiku-vardai-pavardes": normalize_text_value(row_answer_text(q20)),
+        "kita-apie-save": normalize_text_value(row_answer_text(q21)),
     }
 
 
 def _split_list_value(value: Any) -> list[str]:
-    normalized_value = _normalize_text_value(value)
+    normalized_value = normalize_text_value(value)
     if normalized_value is None:
         return []
     parts = [normalize_space(item) for item in normalized_value.split(",")]
     normalized_parts: list[str] = []
     for item in parts:
-        candidate = _normalize_text_value(item)
+        candidate = normalize_text_value(item)
         if candidate is None:
             continue
         normalized_parts.append(candidate)
@@ -390,11 +390,11 @@ def parse_anketa_html(html: str) -> dict[str, Any]:
 
     tabnav = soup.select_one("ul#tabnav")
     profile_table = _select_profile_table(soup, tabnav)
-    content = _find_main_content_after_tabnav(soup)
+    content = find_main_content_after_tabnav(soup)
 
     profile = _parse_profile_table(profile_table)
     profile["officeHeading"] = parse_office_heading(soup)
-    tabs = _parse_tabnav(tabnav)
+    tabs = parse_tabnav(tabnav)
     anketa = _parse_anketa_content(content)
 
     return {
@@ -415,7 +415,7 @@ def parse_anketa_html(html: str) -> dict[str, Any]:
 
 
 def _normalize_turto_ir_pajamu_data(payload: dict[str, Any]) -> dict[str, Any]:
-    return normalize_declaration(payload, _parse_eur_amount)
+    return normalize_declaration(payload, parse_eur_amount)
 
 
 # ---------------------------------------------------------------------------
@@ -425,7 +425,7 @@ def _normalize_turto_ir_pajamu_data(payload: dict[str, Any]) -> dict[str, Any]:
 
 def _parse_privaciu_interesu_html(html: str) -> dict[str, Any]:
     soup = BeautifulSoup(html, "lxml")
-    content = _find_main_content_after_tabnav(soup) or soup
+    content = find_main_content_after_tabnav(soup) or soup
 
     sections: list[dict[str, Any]] = []
     pending_title = ""
@@ -436,13 +436,13 @@ def _parse_privaciu_interesu_html(html: str) -> dict[str, Any]:
         is_data_table = "partydata" in classes and table.find("th") is not None
 
         if is_data_table:
-            headers = _extract_table_headers(table)
+            headers = extract_table_headers(table)
             rows: list[list[str]] = []
             for tr in table.find_all("tr"):
                 cells = tr.find_all("td", recursive=False)
                 if not cells:
                     continue
-                values = [_tag_text(cell) for cell in cells]
+                values = [tag_text(cell) for cell in cells]
                 if not any(values):
                     continue
                 rows.append(values)
@@ -469,7 +469,7 @@ def _parse_privaciu_interesu_html(html: str) -> dict[str, Any]:
             if cell is None:
                 continue
             label = _build_prompt_text(cell)
-            value = _extract_answer_text(cell, [])
+            value = extract_answer_text(cell, [])
 
             if not label:
                 # Bold-only row: section heading or descriptive note.
@@ -527,13 +527,13 @@ def _parse_optional_subpages(
 ) -> dict[str, Any]:
     pages: dict[str, Any] = {}
     parser_map: dict[str, Any] = {
-        "biografija": ("biografija.html", _parse_biografija_html),
+        "biografija": ("biografija.html", parse_biografija_html),
         "privaciuInteresuDeklaracija": ("privaciu-interesu-deklaracijos.html", _parse_privaciu_interesu_html),
-        "turtoIrPajamuDeklaracijos": ("turto-ir-pajamu-deklaracijos.html", _parse_turto_ir_pajamu_html),
-        "kita": ("kita.html", _parse_kita_html),
+        "turtoIrPajamuDeklaracijos": ("turto-ir-pajamu-deklaracijos.html", parse_turto_ir_pajamu_html),
+        "kita": ("kita.html", parse_kita_html),
         "politinesKampanijosDalyvioDuomenys": (
             "politines-kampanijos-dalyvio-duomenys.html",
-            _parse_politines_kampanijos_html,
+            parse_politines_kampanijos_html,
         ),
     }
 
@@ -584,7 +584,7 @@ def parse_anketa_sample(
 
     html = anketa_path.read_text(encoding="utf-8")
     parsed = parse_anketa_html(html)
-    meta = _load_candidate_meta(candidate_dir)
+    meta = load_candidate_meta(candidate_dir)
     candidate_meta = meta.get("candidate", {}) if isinstance(meta, dict) else {}
     candidate_source_url = candidate_meta.get("url") if isinstance(candidate_meta, dict) else None
 
@@ -645,7 +645,7 @@ def parse_anketa_sample(
     )
     root_campaign_data = subpages.get("politinesKampanijosDalyvioDuomenys", {}).get("data")
     try:
-        nested_campaigns = _parse_nested_campaign_samples(
+        nested_campaigns = parse_nested_campaign_samples(
             meta if isinstance(meta, dict) else None,
             root_campaign_data if isinstance(root_campaign_data, dict) else None,
             candidate_dir=candidate_dir,
@@ -682,7 +682,7 @@ def parse_anketa_sample(
     }
 
     normalized: dict[str, Any] = {
-        "profilis": _normalize_profile_data(parsed["profile"]),
+        "profilis": normalize_profile_data(parsed["profile"]),
         "anketa": parsed["anketa"]["normalized"],
     }
 
@@ -695,13 +695,13 @@ def parse_anketa_sample(
         if key != "politinesKampanijosDalyvioDuomenys":
             raw_data[key] = data
         if key == "biografija" and isinstance(data, dict):
-            normalized["biografija"] = _normalize_biografija_data(data)
+            normalized["biografija"] = normalize_biografija_data(data)
         if key == "privaciuInteresuDeklaracija" and isinstance(data, dict):
-            normalized["privaciu-interesu-deklaracija"] = _normalize_privaciu_interesu_data(data)
+            normalized["privaciu-interesu-deklaracija"] = normalize_privaciu_interesu_data(data)
         if key == "turtoIrPajamuDeklaracijos" and isinstance(data, dict):
             normalized["turto-ir-pajamu-deklaracijos"] = _normalize_turto_ir_pajamu_data(data)
         if key == "kita" and isinstance(data, dict):
-            normalized["kita"] = _normalize_kita_data(data)
+            normalized["kita"] = normalize_kita_data(data)
 
     if nested_campaigns:
         campaign_key = "politinesKampanijosDalyvioDuomenys"
@@ -713,12 +713,12 @@ def parse_anketa_sample(
             "sectionDescription": section_description,
             "campaigns": nested_campaigns,
         }
-        normalized["politines-kampanijos-dalyvio-duomenys"] = _normalize_campaigns(raw_data[campaign_key])
+        normalized["politines-kampanijos-dalyvio-duomenys"] = normalize_campaigns(raw_data[campaign_key])
     elif isinstance(root_campaign_data, dict):
         campaign_key = "politinesKampanijosDalyvioDuomenys"
         raw_data[campaign_key] = root_campaign_data
 
-    raw_data = _order_dict_keys(
+    raw_data = order_dict_keys(
         raw_data,
         [
             "profile",
@@ -730,7 +730,7 @@ def parse_anketa_sample(
             "kita",
         ],
     )
-    normalized = _order_dict_keys(
+    normalized = order_dict_keys(
         normalized,
         [
             "profilis",
@@ -754,7 +754,7 @@ def parse_anketa_sample(
             "candidateSourceUrl": candidate_source_url,
         },
         "rawData": raw_data,
-        "normalized": _normalize_missing_values(normalized),
+        "normalized": normalize_missing_values(normalized),
     }
 
     output_path = output_root / f"{candidate_id}-{ELECTION_ID}.json"

@@ -46,8 +46,8 @@ CONVICTION_FIELD_NAMES = (
 )
 
 # The "not stated" tokens the election modules fold to null, kept identical to
-# `seimo_2016._normalize_text_value` so a value normalized here matches the one
-# the rest of the record went through.
+# `normalize_text_value` in scraper/shared/anketa_tabs.py so a value normalized
+# here matches the one the rest of the record went through.
 MISSING_TEXT_VALUES = {
     "",
     "-",

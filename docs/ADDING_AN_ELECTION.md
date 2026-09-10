@@ -108,6 +108,23 @@ Import the matching module's parsers rather than restating them. Several modules
 are thin wiring over another era's parsers — `marijampoles_mero_2017` over
 `meru_2017`, `radviliskio_mero_2021` over `meru_2021`.
 
+**Where a shared helper lives.** Layout logic that belongs to one election —
+its question-to-key mapping, a reader for a layout only its pages have — stays
+in that election's module. A helper a page family shares lives in
+`scraper/shared/` under a public name, and is changed there, once. For the
+2016-on tabbed pages that is `scraper/shared/anketa_tabs.py`: the profile card,
+the anketa table and its row lookups, every tab's reader and normalizer, the
+campaign samples and the value rules. Until issue #90 they sat in
+`seimo_2016/anketa_parser.py`, and 35 other modules imported them by their
+private names — three of them through `ep_2019` — so a fix made in one
+election's file changed all of them. Import them from `scraper/shared/`, not
+from an election module that happens to use them too:
+`tests/test_anketa_tabs.py` fails when an election module imports from
+`seimo_2016`'s parser again, or reaches one of these helpers through another
+election's. The private helpers election modules still take from each other —
+most of them `ep_2024`'s, `seimo_zirmunu_2015`'s, `kupiskio_mero_2023`'s and
+`ep_2019`'s — are the same debt, and move the same way.
+
 ## 3. Build the module
 
 Three files, mirroring the closest existing election:

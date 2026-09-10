@@ -1,8 +1,9 @@
 """Regression tests for issue #100's private-interest section drops.
 
-`_normalize_privaciu_interesu_data` (the seimo_2016 copy every 2007-2019-era
-module normalizes through) drops any section it cannot key — the sekcija-N
-fallback. Two real blocks used to fall into it:
+`normalize_privaciu_interesu_data` (scraper/shared/anketa_tabs.py, the copy
+every 2007-2019-era module normalizes through; seimo_2016's until issue #90)
+drops any section it cannot key — the sekcija-N fallback. Two real blocks used
+to fall into it:
 
 - the 2016-era spouse block: the page prints "Deklaruojančio asmens
   sutuoktinis, sugyventinis, partneris" as the table's first *row*, not a
@@ -24,9 +25,9 @@ from pathlib import Path
 from scraper.elections.seimo_2008.anketa_parser import (
     parse_anketa_sample as parse_seimo_2008_sample,
 )
-from scraper.elections.seimo_2016.anketa_parser import (
-    _normalize_privaciu_interesu_data as normalize_privaciu,
-    _parse_privaciu_interesu_html as parse_privaciu_html,
+from scraper.shared.anketa_tabs import (
+    normalize_privaciu_interesu_data as normalize_privaciu,
+    parse_privaciu_interesu_html as parse_privaciu_html,
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[1]

@@ -83,9 +83,6 @@ from scraper.elections.prezidento_2024.anketa_parser import (  # noqa: E402
 from scraper.elections.savivaldybiu_2019.anketa_parser import (  # noqa: E402
     parse_anketa_html as _parse_savivaldybiu_2019,
 )
-from scraper.elections.seimo_2016.anketa_parser import (  # noqa: E402
-    _normalize_anketa_rows as _normalize_seimo_2016,
-)
 from scraper.elections.seimo_2020.anketa_parser import (  # noqa: E402
     _normalize_anketa_rows as _normalize_seimo_2020,
 )
@@ -97,6 +94,11 @@ from scraper.elections.seimo_raseiniu_kedainiu_2023.anketa_parser import (  # no
 )
 from scraper.elections.seimo_anyksciu_panevezio_2017.anketa_parser import (  # noqa: E402
     _normalize_anketa_rows as _normalize_seimo_2017,
+)
+# The 2016 form's mapping, which `parse_anketa_table` applies for `seimo_2016`;
+# it moved with the table reader in issue #90.
+from scraper.shared.anketa_tabs import (  # noqa: E402
+    _normalize_anketa_rows as _normalize_seimo_2016,
 )
 from scraper.shared.files import write_json  # noqa: E402
 

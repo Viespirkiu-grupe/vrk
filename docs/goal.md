@@ -70,6 +70,12 @@ Each election scraper is also maintained independently.
 When editing one election parser (for example `2020-seimo`), do not change another election parser (for example `2016-seimo`) unless the task explicitly requires cross-election work.
 This is required because VRK HTML structure and field layout differ by election.
 
+(Independent per layout, not per helper: the code a page family shares lives
+once in `scraper/shared/`. The 2016-on tabbed pages' readers and normalizers
+are `scraper/shared/anketa_tabs.py`, which 35 election modules imported from
+`seimo_2016`'s parser by private names until issue #90 moved it;
+[ADDING_AN_ELECTION.md](ADDING_AN_ELECTION.md) states the rule.)
+
 ## JSON Schema
 
 The current 2016 Seimo output keeps both raw and normalized sections.

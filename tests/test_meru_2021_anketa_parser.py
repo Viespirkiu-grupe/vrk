@@ -6,7 +6,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 
 from scraper.elections.meru_2021.anketa_parser import parse_anketa_sample
-from scraper.elections.seimo_2016.anketa_parser import _parse_anketa_table
+from scraper.shared.anketa_tabs import parse_anketa_table
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -45,7 +45,7 @@ NESTED_DETAIL_TABLE = """
 class AnketaTableNestedBodyTests(unittest.TestCase):
     def test_nested_table_body_does_not_replace_the_anketa(self) -> None:
         table = BeautifulSoup(NESTED_DETAIL_TABLE, "lxml").find("table")
-        parsed = _parse_anketa_table(table)
+        parsed = parse_anketa_table(table)
 
         numbers = [row["questionNumber"] for row in parsed["rows"] if row["questionNumber"]]
         self.assertEqual(numbers, ["6", "9", "9.1", "10"])

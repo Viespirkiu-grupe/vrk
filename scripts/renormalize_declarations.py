@@ -69,9 +69,13 @@ RAW_DECLARATION_KEYS = ("turtoIrPajamuDeklaracijos", "deklaracija")
 
 #: The normalizer names the eras give the same job, newest first. Every module
 #: from 2003 on has one of them, or reaches one through the module whose page
-#: reading it reuses.
+#: reading it reuses. The public one is the 2016 family's, which the modules
+#: importing it from scraper/shared/anketa_tabs.py bind by that name (issue
+#: #90); it stands where the private name it had did, so no election resolves
+#: differently.
 NORMALIZER_NAMES = (
     "_normalize_turto_ir_pajamu_data",
+    "normalize_turto_ir_pajamu_data",
     "_normalize_deklaracijos_data",
     "_normalize_deklaracija_data",
 )
@@ -136,9 +140,9 @@ def election_normalizers() -> dict[str, Callable]:
         ELECTION_ID as SAVIVALDYBIU_2002_ELECTION_ID,
         normalize_deklaracija,
     )
-    from scraper.elections.seimo_2016.anketa_parser import _order_dict_keys  # noqa: E402
+    from scraper.shared.anketa_tabs import order_dict_keys  # noqa: E402
 
-    normalizers[SAVIVALDYBIU_2002_ELECTION_ID] = lambda raw: _order_dict_keys(
+    normalizers[SAVIVALDYBIU_2002_ELECTION_ID] = lambda raw: order_dict_keys(
         normalize_deklaracija(raw)[0], DEKLARACIJA_OUTPUT_ORDER
     )
     return normalizers

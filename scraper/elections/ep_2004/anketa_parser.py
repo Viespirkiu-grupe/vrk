@@ -46,26 +46,26 @@ from scraper.elections.ep_2004.candidate_samples import SUBPAGE_LINK_PATTERN
 from scraper.elections.ep_2004.results import load_ranking
 from scraper.elections.ep_2004.sitemap import ELECTION_ID, resolve_candidate_url
 from scraper.elections.seimo_birzu_zarasu_ukmerges_2013.anketa_parser import build_candidacy
-from scraper.elections.seimo_2016.anketa_parser import (
-    _find_row_by_prompt_prefix,
-    _find_row_by_question_number,
-    _normalize_biografija_data,
-    _normalize_missing_values,
-    _normalize_profile_data,
-    _normalize_table_records,
-    _normalize_text_value,
-    _order_dict_keys,
-    _question_record_rows,
-    _row_answer_text,
-    _split_list_value,
-    _tag_text,
-    normalize_space,
-)
 from scraper.elections.seimo_zirmunu_2015.anketa_parser import (
     _apply_results,
     _normalize_answer_value,
     _parse_lt_amount,
     load_results,
+)
+from scraper.shared.anketa_tabs import (
+    find_row_by_prompt_prefix,
+    find_row_by_question_number,
+    normalize_biografija_data,
+    normalize_missing_values,
+    normalize_profile_data,
+    normalize_space,
+    normalize_table_records,
+    normalize_text_value,
+    order_dict_keys,
+    question_record_rows,
+    row_answer_text,
+    split_list_value,
+    tag_text,
 )
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.deklaracijos import normalize_declaration
@@ -111,7 +111,7 @@ def _parse_profile_html(soup: BeautifulSoup) -> tuple[dict[str, Any], Tag | None
 
     # The first <h4> is the page title ("Kandidato į Europos parlamento
     # narius anketa"), the second the candidate's name.
-    headings = [_tag_text(h4) for h4 in content.find_all("h4")]
+    headings = [tag_text(h4) for h4 in content.find_all("h4")]
     if len(headings) >= 2:
         profile["candidateDisplayName"] = headings[1]
     elif headings:
@@ -147,7 +147,7 @@ def _parse_profile_html(soup: BeautifulSoup) -> tuple[dict[str, Any], Tag | None
         if not isinstance(node, Tag):
             continue
         if node.name == "b":
-            value = _tag_text(node)
+            value = tag_text(node)
             urls = [
                 resolve_candidate_url(normalize_space(anchor["href"]))
                 for anchor in node.find_all("a", href=True)
@@ -163,7 +163,7 @@ def _parse_profile_html(soup: BeautifulSoup) -> tuple[dict[str, Any], Tag | None
                 # as sub-pages; they are not facts of the card.
                 pending_label = ""
                 continue
-            label = _tag_text(node)
+            label = tag_text(node)
             urls = [resolve_candidate_url(href)] if href else []
             if pending_label and label:
                 # A labelled link — the Seimas card's campaign registration
@@ -204,7 +204,7 @@ def _parse_record_table(table: Tag) -> list[dict[str, str]]:
         cells = tr.find_all("td")
         if not cells:
             continue
-        values = [_tag_text(cell) for cell in cells]
+        values = [tag_text(cell) for cell in cells]
         if not headers:
             headers = values
             continue
@@ -301,7 +301,7 @@ def _parse_anketa_row_cell(cell: Tag, record_table_reader: Any = None) -> list[d
         if node.name == "b":
             if current is None:
                 _start(None, "")
-            text = _tag_text(node)
+            text = tag_text(node)
             if text:
                 current["values"].append(text)
             # An empty <b> is the page's way of printing no answer; the
@@ -309,7 +309,7 @@ def _parse_anketa_row_cell(cell: Tag, record_table_reader: Any = None) -> list[d
             # starts a row of its own.
             current["answered"] = True
             continue
-        text = _tag_text(node)
+        text = tag_text(node)
         if text and current is not None and not current["answered"]:
             current["prompt"] = f"{current['prompt']} {text}".strip()
 
@@ -353,7 +353,7 @@ def _parse_anketa_rows(content: Tag | None) -> dict[str, Any]:
 def _row_after(rows: list[dict[str, Any]], question_number: str) -> dict[str, Any] | None:
     """The unnumbered, unprompted row that directly follows a question —
     an answer the page prints without a label of its own."""
-    row = _find_row_by_question_number(rows, question_number)
+    row = find_row_by_question_number(rows, question_number)
     if row is None:
         return None
     index = rows.index(row)
@@ -368,11 +368,11 @@ def _row_after(rows: list[dict[str, Any]], question_number: str) -> dict[str, An
 def normalize_ep_2004_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     def _answer(question_number: str) -> str | None:
         return _normalize_answer_value(
-            _row_answer_text(_find_row_by_question_number(rows, question_number))
+            row_answer_text(find_row_by_question_number(rows, question_number))
         )
 
     def _prompt_answer(prefix: str) -> str | None:
-        return _normalize_answer_value(_row_answer_text(_find_row_by_prompt_prefix(rows, prefix)))
+        return _normalize_answer_value(row_answer_text(find_row_by_prompt_prefix(rows, prefix)))
 
     birth_date = _answer("3")
     return {
@@ -396,23 +396,23 @@ def normalize_ep_2004_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
             # punkto klausimą atsakėte Taip …") is printed here as an
             # unlabelled emphasised row right after 9.3, on the five pages
             # that have one; the corpus key for the slot.
-            "teisiniai-argumentai": _normalize_answer_value(_row_answer_text(_row_after(rows, "9.3"))),
+            "teisiniai-argumentai": _normalize_answer_value(row_answer_text(_row_after(rows, "9.3"))),
         },
         "gimimo-vieta": _answer("10"),
         "tautybe": _answer("11"),
         "issilavinimas": {
             "aprasas": _answer("12"),
-            "irasai": _normalize_table_records(_question_record_rows(rows, "12")),
+            "irasai": normalize_table_records(question_record_rows(rows, "12")),
         },
         "mokslo-laipsnis": _prompt_answer("moksliniai laipsniai"),
         "pedagoginis-vardas": _prompt_answer("moksliniai vardai"),
-        "uzsienio-kalbos": _split_list_value(
-            _row_answer_text(_find_row_by_question_number(rows, "13"))
+        "uzsienio-kalbos": split_list_value(
+            row_answer_text(find_row_by_question_number(rows, "13"))
         ),
         "politine-organizacija": _answer("14"),
         "anksciau-isrinktas": {
             "aprasas": _answer("15"),
-            "irasai": _normalize_table_records(_question_record_rows(rows, "15")),
+            "irasai": normalize_table_records(question_record_rows(rows, "15")),
         },
         "pagrindine-darboviete": _answer("16"),
         "visuomenine-veikla": _answer("17"),
@@ -478,7 +478,7 @@ def _parse_deklaracijos_html(html: str) -> dict[str, Any]:
         return {"sections": sections, "note": ""}
 
     for heading in content.find_all("h5"):
-        title = _tag_text(heading)
+        title = tag_text(heading)
         # The two extracts' headings stand in the page body; the roman
         # section headings inside the asset table are also <h5>, in a cell.
         if not title or (heading.parent is not None and heading.parent.name == "td"):
@@ -489,7 +489,7 @@ def _parse_deklaracijos_html(html: str) -> dict[str, Any]:
             sections.append(section)
             continue
         lead = normalize_space(" ".join(holder.find_all(string=True, recursive=False)))
-        lead_bold = [_tag_text(b) for b in holder.find_all("b", recursive=False)]
+        lead_bold = [tag_text(b) for b in holder.find_all("b", recursive=False)]
         if "išrašą išdavė" in lead and len(lead_bold) >= 2:
             section["issuer"] = lead_bold[0]
             section["receivedDate"] = lead_bold[1]
@@ -505,21 +505,21 @@ def _parse_deklaracijos_html(html: str) -> dict[str, Any]:
                 inner_heading = cell.find("h5")
                 if inner_heading is not None:
                     pending_form = None
-                    items.append({"key": _tag_text(inner_heading), "value": ""})
+                    items.append({"key": tag_text(inner_heading), "value": ""})
                     continue
-                text = _tag_text(cell)
+                text = tag_text(cell)
                 form = INCOME_FORM_PATTERN.match(text)
                 if form is not None:
                     pending_form = {"key": text.rstrip(":"), "form": form.group("form"), "value": ""}
                     items.append(pending_form)
                     continue
                 bold = cell.find("b")
-                label = normalize_space(text.replace(_tag_text(bold), "", 1)) if bold is not None else text
-                items.append({"key": label.rstrip(":"), "value": _tag_text(bold) if bold is not None else ""})
+                label = normalize_space(text.replace(tag_text(bold), "", 1)) if bold is not None else text
+                items.append({"key": label.rstrip(":"), "value": tag_text(bold) if bold is not None else ""})
                 pending_form = None
                 continue
-            key = _tag_text(cells[0]).rstrip(":")
-            value = _tag_text(cells[1])
+            key = tag_text(cells[0]).rstrip(":")
+            value = tag_text(cells[1])
             if pending_form is not None:
                 if key.lower().startswith("gautų pajamų"):
                     pending_form["income"] = value
@@ -571,8 +571,8 @@ def _normalize_deklaracijos_data(payload: dict[str, Any]) -> dict[str, Any]:
         if kind is None:
             continue
         meta: dict[str, Any] = {
-            "pavadinimas": _normalize_text_value(title),
-            "israsa-isdave": _normalize_text_value(section.get("issuer")),
+            "pavadinimas": normalize_text_value(title),
+            "israsa-isdave": normalize_text_value(section.get("issuer")),
             "gavimo-data": _normalize_iso_date(section.get("receivedDate")),
             "darboviete": None,
             "pildymo-data": None,
@@ -582,13 +582,13 @@ def _normalize_deklaracijos_data(payload: dict[str, Any]) -> dict[str, Any]:
                 continue
             key_lower = normalize_space(str(item.get("key", ""))).lower()
             if key_lower.startswith("3. darbovietė") or key_lower == "darbovietė":
-                meta["darboviete"] = _normalize_text_value(item.get("value"))
+                meta["darboviete"] = normalize_text_value(item.get("value"))
             elif key_lower.startswith("pildymo data"):
                 meta["pildymo-data"] = _normalize_iso_date(item.get("value"))
         extracts[kind] = meta
 
     normalized["valiuta"] = "Lt"
-    normalized["pastaba"] = _normalize_text_value(payload.get("note"))
+    normalized["pastaba"] = normalize_text_value(payload.get("note"))
     # Who issued each extract, when they received it and what the candidate
     # gave as their workplace -- facts of the 2004 pages that no later era
     # prints, so they keep a block of their own rather than a shared key.
@@ -600,7 +600,7 @@ def _normalize_deklaracijos_data(payload: dict[str, Any]) -> dict[str, Any]:
 
 
 def _normalize_iso_date(value: Any) -> str | None:
-    text = _normalize_text_value(value)
+    text = normalize_text_value(value)
     if text is None:
         return None
     return normalize_birth_date(text)
@@ -680,7 +680,7 @@ def parse_anketa_sample(
         "anketa": {"rows": parsed["anketa"]["rows"]},
     }
     normalized: dict[str, Any] = {
-        "profilis": _normalize_profile_data(parsed["profile"]),
+        "profilis": normalize_profile_data(parsed["profile"]),
         "anketa": parsed["anketa"]["normalized"],
     }
 
@@ -705,7 +705,7 @@ def parse_anketa_sample(
             continue
         raw_data[key] = data
         if key == "biografija":
-            normalized["biografija"] = _normalize_biografija_data(data)
+            normalized["biografija"] = normalize_biografija_data(data)
         elif key == "turtoIrPajamuDeklaracijos":
             normalized["turto-ir-pajamu-deklaracijos"] = _normalize_deklaracijos_data(data)
 
@@ -725,9 +725,9 @@ def parse_anketa_sample(
         candidacy_finisher(output_payload, parsed)
     output_payload |= {
         "source": {"candidateSourceUrl": source_url},
-        "rawData": _order_dict_keys(raw_data, ["profile", "anketa", "biografija", "turtoIrPajamuDeklaracijos"]),
-        "normalized": _normalize_missing_values(
-            _order_dict_keys(normalized, ["profilis", "anketa", "biografija", "turto-ir-pajamu-deklaracijos"])
+        "rawData": order_dict_keys(raw_data, ["profile", "anketa", "biografija", "turtoIrPajamuDeklaracijos"]),
+        "normalized": normalize_missing_values(
+            order_dict_keys(normalized, ["profilis", "anketa", "biografija", "turto-ir-pajamu-deklaracijos"])
         ),
     }
 
