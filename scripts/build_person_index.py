@@ -2,18 +2,39 @@
 
 One person appears in many elections under no shared VRK identifier — the
 per-election rkndId is a registration id, not a person id — so identity is
-resolved by normalized name + birth date. Measured over the 33,119-record
-corpus: birth date is present on 33,118 records, the pair collides for zero
-same-election record pairs, and 305 names are shared by people with distinct
-birth dates, which name-only matching would have wrongly merged. A record
-without a birth date groups by name alone and is flagged; there were two
-before the 1996-1998 Seimas archive family was added, and the second is a
-known duplicate rather than a second person. VRK issued Marija Puč two
-candidate ids in the 2015 Trakai repeat election and published the council
-one as an unfilled "Rengiama" page, so that record has a name and no birth
-date and splits off from her real entry. Merging it on name alone is exactly
-what the birth-date key exists to prevent, so it is left split and recorded
-here instead — see docs/DATASET.md.
+resolved by normalized name + birth date. What the run prints is the current
+measurement and this paragraph does not repeat it: it used to state the
+figures from a 33,119-record corpus ("birth date present on 33,118 records…
+there were two" without one) against a corpus three times the size, and
+contradicted itself twenty lines later (issue #141).
+
+Today, over 113,073 records: 64 carry no birth date and group by name alone,
+170 carry a birth *year* only and group by name + `~year`, and the pair
+collides for zero same-election record pairs — which is the property the key
+rests on, and the one the review below uses as a discriminator in the other
+direction. VRK issued Marija Puč two candidate ids in the 2015 Trakai repeat
+election and published the council one as an unfilled "Rengiama" page, so
+that record has a name and no birth date and splits off from her real entry.
+Merging it on name alone is exactly what the birth-date key exists to
+prevent, so it is left split and recorded in the override file as `distinct`
+— see docs/DATASET.md.
+
+A short key is not a second person, though, and 147 of them were being read
+as one: a person whose 1996-1999 archive pages publish no birth date and
+whose later pages do had a `NAME|?` or `NAME|~YYYY` entry beside their real
+one, with 154 candidacies on the wrong side of it (issue #141). 145 of those
+are merged now, on the evidence that the name has exactly one full-date
+bearer, the year agrees where the fragment states one, the birthplace or
+education entries corroborate on 120 of them, and no pair stands in one
+election; two are recorded `distinct`, one because both halves stand in the
+2015 Trakai repeat and one because the full-date half would have been 14 at
+the 1996 election its namesake contested. Twelve more merges came from the
+same review's other new pass — one birth date, one surname and two spellings
+of one given name (VIKTOR/VIKTORAS USPASKICH, EDUARD/EDVARD TRUSEVIČ) — and
+21 pairs of that shape are recorded `distinct` because both halves stand in
+one election, which nobody does twice.
+`scripts/find_identity_merge_candidates.py` is the review that finds all of
+them, and until #141 it could not form a single such pair.
 
 The 1996-1998 Seimas archive family (`1996-spalio-20-seimo`,
 `1997-kovo-23-seimo-pakartotiniai`, `1997-gruodzio-21-seimo-pakartotiniai`;
@@ -341,11 +362,18 @@ def apply_merges(
     former: dict[str, list[str]] = defaultdict(list)
     unmatched: list[str] = []
     for decision in overrides.get("decisions", []):
+        keys = [canonical_of.get(k, k) for k in decision["keys"]]
+        # Key presence is checked for *every* decision, before the merge
+        # guard (issue #141). It used to sit after it, so a `distinct` whose
+        # key had gone stale -- a name corrected upstream, a birth date
+        # recovered -- failed nothing, although the override file says a key
+        # matching no person fails the build. A stale `distinct` is worse
+        # than a stale `merge`: it silently stops being a decision at all,
+        # and the pair goes back to being an unreviewed finding.
+        unmatched.extend(k for k in keys if k not in grouped)
         if decision.get("decision") != "merge":
             continue
-        keys = [canonical_of.get(k, k) for k in decision["keys"]]
         present = sorted({k for k in keys if k in grouped})
-        unmatched.extend(k for k in keys if k not in grouped)
         if len(present) < 2:
             continue
 

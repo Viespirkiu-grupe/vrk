@@ -339,6 +339,48 @@ class GroupingTests(unittest.TestCase):
         self.assertEqual(index["unmatchedOverrideKeys"], ["GONE PERSON|1900-01-01"])
         self.assertEqual(index["stats"]["persons"], 1)
 
+    def test_a_stale_distinct_key_is_reported_too(self):
+        # The presence check sat *after* the `!= "merge"` guard, so a
+        # `distinct` whose key had gone stale failed nothing — although the
+        # override file says a key matching no person fails the build. A
+        # stale `distinct` is the worse of the two: it silently stops being a
+        # decision at all, and the pair goes back to being an unreviewed
+        # finding (issue #141).
+        distinct = {
+            "decisions": [
+                {
+                    "decision": "distinct",
+                    "keys": ["A B|1970-01-01", "GONE PERSON|1900-01-01"],
+                    "why": "test",
+                }
+            ]
+        }
+        index = self._build(
+            [("2016-seimo", "a-b", _record("A B", "1970-01-01"))], overrides=distinct
+        )
+        self.assertEqual(index["unmatchedOverrideKeys"], ["GONE PERSON|1900-01-01"])
+        self.assertEqual(index["stats"]["persons"], 1, "a distinct decision merges nothing")
+
+    def test_a_distinct_whose_keys_all_match_reports_nothing(self):
+        distinct = {
+            "decisions": [
+                {
+                    "decision": "distinct",
+                    "keys": ["A B|1970-01-01", "A B|1980-02-02"],
+                    "why": "test",
+                }
+            ]
+        }
+        index = self._build(
+            [
+                ("2016-seimo", "a-b", _record("A B", "1970-01-01")),
+                ("2020-seimo", "a-b-2", _record("A B", "1980-02-02")),
+            ],
+            overrides=distinct,
+        )
+        self.assertEqual(index["unmatchedOverrideKeys"], [])
+        self.assertEqual(index["stats"]["persons"], 2)
+
     def test_the_win_flag_is_the_candidacy_resolvers_tri_state(self):
         # Elected status resolves through scraper/shared/kandidatura.py alone.
         # The prose-note pathway lives in the parsers now

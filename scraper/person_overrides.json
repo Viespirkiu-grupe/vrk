@@ -22,6 +22,14 @@
     {
       "decision": "merge",
       "keys": [
+        "ADELĖ ILGINIENĖ|1955-10-02",
+        "ADELĖ ILGINIENĖ|~1955"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1955 vs 1955-10-02); exactly one person of this name carries a full date; gimimo-vieta agrees (alytaus, cibilieku); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "AGNĖ JAKAVIČIUTĖ-MILIAUSKIENĖ|1987-07-24",
         "AGNĖ JAKAVIČIUTĖ|1987-07-24"
       ],
@@ -38,6 +46,158 @@
     {
       "decision": "merge",
       "keys": [
+        "AIVARAS VYŠNIAUSKAS|1957-05-05",
+        "AIVARAS VYŠNIAUSKAS|~1957"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1957 vs 1957-05-05); exactly one person of this name carries a full date; gimimo-vieta agrees (lazdiju); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ALBINAS BUZŪNAS|1945-11-20",
+        "ALBINAS BUZŪNAS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1945-11-20); exactly one person of this name carries a full date; gimimo-vieta agrees (alytaus, radastu); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ALBINAS MINKEVIČIUS|1949-01-14",
+        "ALBINAS MINKEVIČIUS|~1949"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1949 vs 1949-01-14); exactly one person of this name carries a full date; gimimo-vieta agrees (lazdiju, sestoku); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ALDONA JAŠINSKIENĖ|1945-10-17",
+        "ALDONA JAŠINSKIENĖ|~1945"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1945 vs 1945-10-17); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ALEKSANDRAS MOLIBOGA|1956-09-12",
+        "ALEKSANDRAS MOLIBOGA|~1956"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1956 vs 1956-09-12); exactly one person of this name carries a full date; gimimo-vieta agrees (vilnius); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "ALEKSAS GRIGAS|1956-02-02",
+        "VYTAUTAS GRIGAS|1956-02-02"
+      ],
+      "why": "one birth date (1956-02-02) and one surname, and both stand in 2007-vasario-25-savivaldybiu: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ALFREDAS PEKELIŪNAS|1948-03-09",
+        "ALFREDAS PEKELIŪNAS|~1948"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1948 vs 1948-03-09); exactly one person of this name carries a full date; gimimo-vieta agrees (rokiskio, rokiskis); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ALGIMANTAS BUDA|1942-10-23",
+        "ALGIMANTAS BUDA|~1942"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1942 vs 1942-10-23); exactly one person of this name carries a full date; gimimo-vieta agrees (juodupiu, radviliskio); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ALGIMANTAS DAGYS|1943-09-04",
+        "ALGIMANTAS DAGYS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1943-09-04); exactly one person of this name carries a full date; gimimo-vieta agrees (antupes, birzu); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ALGIMANTAS REIČIŪNAS|1948-04-28",
+        "ALGIMANTAS REIČIŪNAS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1948-04-28); exactly one person of this name carries a full date; gimimo-vieta agrees (antkalniskiu, jurbarko); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ALGIRDAS BLAŽYS|1935-03-20",
+        "ALGIRDAS BLAŽYS|~1935"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1935 vs 1935-03-20); exactly one person of this name carries a full date; gimimo-vieta agrees (anyksciu, vysniakalnio); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ALGIRDAS BUTKEVIČIUS|1958-11-19",
+        "ALGIRDAS BUTKEVIČIUS|~1958"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1958 vs 1958-11-19); exactly one person of this name carries a full date; gimimo-vieta agrees (paezeriu, radviliskio); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ALGIRDAS KARALIUS|1947-11-08",
+        "ALGIRDAS KARALIUS|~1947"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1947 vs 1947-11-08); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ALGIRDAS REIPAS|1962-05-03",
+        "ALGIRDAS REIPAS|~1962"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1962 vs 1962-05-03); exactly one person of this name carries a full date; gimimo-vieta agrees (armaniskiu, dalis, kauno); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "ALGIRDAS ULČICKAS|1990-10-23",
+        "KĘSTUTIS ULČICKAS|1990-10-23"
+      ],
+      "why": "one birth date (1990-10-23) and one surname, and both stand in 2016-seimo: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ALGIRDAS VACLOVAS PATACKAS|1943-09-28",
+        "ALGIRDAS VACLOVAS PATACKAS|~1943"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1943 vs 1943-09-28); exactly one person of this name carries a full date; gimimo-vieta agrees (trakai, traku); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ALGIS KAŠĖTA|1962-12-20",
+        "ALGIS KAŠĖTA|~1962"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1962 vs 1962-12-20); exactly one person of this name carries a full date; gimimo-vieta agrees (mergezerio, varenos); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ALVYDAS MEDALINSKAS|1963-11-30",
+        "ALVYDAS MEDALINSKAS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1963-11-30); exactly one person of this name carries a full date; gimimo-vieta agrees (vilnius); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ANDREJUS GOTTO|1944-11-30",
+        "ANDREJUS GOTTO|~1944"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1944 vs 1944-11-30); exactly one person of this name carries a full date; gimimo-vieta agrees (traku); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "ANTANAS BASKAS|1936-02-22",
         "ANTANAS BASKAS|?",
         "ANTANAS BASKAS|~1936"
@@ -47,10 +207,98 @@
     {
       "decision": "merge",
       "keys": [
+        "ANTANAS DANIELIUS|1948-06-27",
+        "ANTANAS DANIELIUS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1948-06-27); exactly one person of this name carries a full date; gimimo-vieta agrees (girininku, kauno); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "ANTANAS JUOZAS PETUŠKA|1947-01-04",
         "ANTANAS PETUŠKA|1947-01-04"
       ],
       "why": "one name is the other plus appended tokens"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ANTANAS KAROBLIS|1940-08-17",
+        "ANTANAS KAROBLIS|~1940"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1940 vs 1940-08-17); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ANTANAS MICKEVIČIUS|1935-05-19",
+        "ANTANAS MICKEVIČIUS|~1935"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1935 vs 1935-05-19); exactly one person of this name carries a full date; gimimo-vieta agrees (baisiogalos, radviliskio); workplace in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ANTANAS NAPOLEONAS STASIŠKIS|1933-09-21",
+        "ANTANAS NAPOLEONAS STASIŠKIS|~1933"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1933 vs 1933-09-21); exactly one person of this name carries a full date; gimimo-vieta agrees (kaniuku, utenos); never on one ballot"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "ANTANAS NAVICKAS|1947-07-15",
+        "HENRIKAS NAVICKAS|1947-07-15"
+      ],
+      "why": "one birth date (1947-07-15) and one surname, and both stand in 2002-gruodzio-22-savivaldybiu-tarybu: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ANTANAS SVETIKAS|1934-04-15",
+        "ANTANAS SVETIKAS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1934-04-15); exactly one person of this name carries a full date; gimimo-vieta agrees (burveliu, panevezio); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ANTANAS TIREVIČIUS|1951-01-07",
+        "ANTANAS TIREVIČIUS|~1951"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1951 vs 1951-01-07); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ARMINAS JONAS VAIŠVILA|1943-04-04",
+        "ARMINAS JONAS VAIŠVILA|~1943"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1943 vs 1943-04-04); exactly one person of this name carries a full date; gimimo-vieta agrees (kandreneliu, kupiskio); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ARTŪRAS MELIANAS|1964-02-25",
+        "ARTŪRAS MELIANAS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1964-02-25); exactly one person of this name carries a full date; gimimo-vieta agrees (panevezys); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "ARŪNAS VALIULIS|1988-07-29",
+        "AURIMAS VALIULIS|1988-07-29"
+      ],
+      "why": "one birth date (1988-07-29) and one surname, and both stand in 2011-vasario-27-savivaldybiu: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ASTA MARYTĖ LAPINSKIENĖ|1946-04-28",
+        "ASTA MARYTĖ LAPINSKIENĖ|~1946"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1946 vs 1946-04-28); exactly one person of this name carries a full date; gimimo-vieta agrees (kaisiadoriu, kertauninku); 1 education entry in common; never on one ballot"
     },
     {
       "decision": "merge",
@@ -67,6 +315,14 @@
         "AUDRONĖ PRANSKEVIČIENĖ|1966-04-23"
       ],
       "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Kybartai / Vilkaviškio raj.); same school entry (siauliu universitetas, 2002)"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "AUGUSTĖ ŽIKAITĖ|2001-06-02",
+        "ROBERTA ŽIKAITĖ|2001-06-02"
+      ],
+      "why": "one birth date (2001-06-02) and one surname, and both stand in 2023-kovo-5-savivaldybiu-tarybu-ir-meru: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
     },
     {
       "decision": "merge",
@@ -95,10 +351,66 @@
     {
       "decision": "distinct",
       "keys": [
+        "AURIMAS GIRŽADAS|1982-11-06",
+        "DONATAS GIRŽADAS|1982-11-06"
+      ],
+      "why": "one birth date (1982-11-06) and one surname, and both stand in 2023-kovo-5-savivaldybiu-tarybu-ir-meru: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "BALYS GAJAUSKAS|1926-02-24",
+        "BALYS GAJAUSKAS|~1926"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1926 vs 1926-02-24); exactly one person of this name carries a full date; gimimo-vieta agrees (vilkaviskio); never on one ballot"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
         "BENEDIKTAS ALGIRDAS GRAŽYS|1963-03-21",
         "BENEDIKTAS ALGIRDAS ČIUKŠYS|1963-03-21"
       ],
       "why": "only the shared middle given name Algirdas links them — the surnames are unrelated, the 2024 side publishes no spouse or children to compare, and no source documents a Čiukšys→Gražys change; left unmerged for lack of evidence, not proven different"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "BENEDIKTAS BALKAUSKAS|1958-12-26",
+        "EUGENIJUS BALKAUSKAS|1958-12-26"
+      ],
+      "why": "one birth date (1958-12-26) and one surname, and both stand in 2011-vasario-27-savivaldybiu: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "BIRUTĖ TEODORA VISOKAVIČIENĖ|1946-01-07",
+        "BIRUTĖ TEODORA VISOKAVIČIENĖ|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1946-01-07); exactly one person of this name carries a full date; gimimo-vieta agrees (naujenu, radviliskio); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "BIRUTĖ VĖSAITĖ|1951-08-19",
+        "BIRUTĖ VĖSAITĖ|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1951-08-19); exactly one person of this name carries a full date; gimimo-vieta agrees (kaunas); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "BOLESLOVAS BILOTAS|1933-04-25",
+        "BOLESLOVAS BILOTAS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1933-04-25); exactly one person of this name carries a full date; gimimo-vieta agrees (kiemeliu, sirvintu); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "BRONISLOVAS KUČINSKAS|1938-12-10",
+        "BRONISLOVAS KUČINSKAS|~1938"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1938 vs 1938-12-10); exactly one person of this name carries a full date; gimimo-vieta agrees (birzu, pauperiu); 1 education entry in common; never on one ballot"
     },
     {
       "decision": "merge",
@@ -107,6 +419,22 @@
         "DAINA SVIRSKYTĖ|1965-07-01"
       ],
       "why": "one name is the other plus appended tokens"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "DAINIUS PETRAS PAUKŠTĖ|1953-06-10",
+        "DAINIUS PETRAS PAUKŠTĖ|~1953"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1953 vs 1953-06-10); exactly one person of this name carries a full date; gimimo-vieta agrees (vilnius); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "DAIVA KVEDARAITĖ|1965-02-26",
+        "DAIVA KVEDARAITĖ|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1965-02-26); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
     },
     {
       "decision": "merge",
@@ -127,10 +455,26 @@
     {
       "decision": "merge",
       "keys": [
+        "DANUTĖ ALEKSIŪNIENĖ|1952-11-12",
+        "DANUTĖ ALEKSIŪNIENĖ|~1952"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1952 vs 1952-11-12); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "DANUTĖ BARDAUSKIENĖ-BAUŽIENĖ|1960-02-23",
         "DANUTĖ BARDAUSKIENĖ|1960-02-23"
       ],
       "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Plaškių k., Stoniškių apyl. Šilutės raj. / Plaškių kaimas, Stoniškių seniūnija, Pagėgių sav.)"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "DARJUŠ LAVRINOVIČ|1979-11-01",
+        "KŠIŠTOF LAVRINOVIČ|1979-11-01"
+      ],
+      "why": "one birth date (1979-11-01) and one surname, and both stand in 2012-seimo: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
     },
     {
       "decision": "merge",
@@ -184,10 +528,50 @@
     {
       "decision": "merge",
       "keys": [
+        "EDMUNDAS ZENONAS MALŪKAS|1945-04-15",
+        "EDMUNDAS ZENONAS MALŪKAS|~1945"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1945 vs 1945-04-15); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; workplace in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "EDUARD TRUSEVIČ|1979-05-10",
+        "EDVARD TRUSEVIČ|1979-05-10"
+      ],
+      "why": "one birth date (1979-05-10) and one surname; the given names are the same name (Eduard / Edvard); gimimo-vieta agrees (trakai); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "EDUARDAS ŠABLINSKAS|1957-10-19",
+        "EDUARDAS ŠABLINSKAS|~1957"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1957 vs 1957-10-19); exactly one person of this name carries a full date; gimimo-vieta agrees (vilnius); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "EDVARDAS BRONISLOVAS KERŠIS|1936-06-27",
         "EDVARDAS BRONISLOVAS KERŠYS|1936-06-27"
       ],
       "why": "same spouse (Aldona); children's names agree; same school entry (kauno politechnikos institutas, 1966)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "EDVARDAS KRIŠČIŪNAS|1954-08-07",
+        "EDVARDAS KRIŠČIŪNAS|~1954"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1954 vs 1954-08-07); exactly one person of this name carries a full date; gimimo-vieta agrees (naujamiestis, panevezio); 1 education entry in common; workplace in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "EGIDIJUS SKARBALIUS|1967-04-29",
+        "EGIDIJUS SKARBALIUS|~1967"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1967 vs 1967-04-29); exactly one person of this name carries a full date; gimimo-vieta agrees (klaipeda); 1 education entry in common; never on one ballot"
     },
     {
       "decision": "merge",
@@ -204,6 +588,22 @@
         "EGLĖ VEGYTĖ|1987-12-27"
       ],
       "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Pasvalys)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ELENA GRADAUSKIENĖ|1943-05-14",
+        "ELENA GRADAUSKIENĖ|~1943"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1943 vs 1943-05-14); exactly one person of this name carries a full date; gimimo-vieta agrees (pavyzincio, utenos); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ELVIRA MAŽEIKAITĖ|1953-05-27",
+        "ELVYRA MAŽEIKAITĖ|1953-05-27"
+      ],
+      "why": "one birth date (1953-05-27) and one surname; the given names are the same name (Elvyra / Elvira); one side publishes no birthplace, so nothing contradicts; never on one ballot"
     },
     {
       "decision": "merge",
@@ -232,6 +632,22 @@
     {
       "decision": "merge",
       "keys": [
+        "EUGENIJUS GENTVILAS|1960-03-14",
+        "EUGENIJUS GENTVILAS|~1960"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1960 vs 1960-03-14); exactly one person of this name carries a full date; gimimo-vieta agrees (telsiu, zelvaiciu); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "FILOMENA PAŠKONIENĖ|1925-04-11",
+        "FILOMENA PAŠKONIENĖ|~1925"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1925 vs 1925-04-11); exactly one person of this name carries a full date; gimimo-vieta agrees (radviliskio, vantaineliu); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "GABRIELĖ GRIAUZDAITĖ-PATUMSIENĖ|1990-12-22",
         "GABRIELĖ GRIAUZDAITĖ|1990-12-22"
       ],
@@ -244,6 +660,94 @@
         "GAILUTĖ TAMAŠIŪNIENĖ|1970-08-26"
       ],
       "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Alizava, Kupiškio r.); children's names agree; same school entry (vilniaus kooperacijos technikumas, 1991)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "GEDEMINAS KUNCAITIS|1954-09-03",
+        "GEDEMINAS KUNCAITIS|~1954"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1954 vs 1954-09-03); exactly one person of this name carries a full date; gimimo-vieta agrees (sakiu, sileravos); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "GEDIMINAS AKELAITIS|1953-12-14",
+        "GEDIMINAS AKELAITIS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1953-12-14); exactly one person of this name carries a full date; gimimo-vieta agrees (kazlu, marijampoles, ruda); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "GEDIMINAS DUBAUSKAS|1957-03-04",
+        "GEDIMINAS DUBAUSKAS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1957-03-04); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "GEDIMINAS JANKUS|1951-05-21",
+        "GEDIMINAS JANKUS|~1951"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1951 vs 1951-05-21); exactly one person of this name carries a full date; gimimo-vieta agrees (kaunas); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "GEDIMINAS LEDAUSKAS|1987-06-09",
+        "MINDAUGAS LEDAUSKAS|1987-06-09"
+      ],
+      "why": "one birth date (1987-06-09) and one surname, and both stand in 2011-vasario-27-savivaldybiu: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "GEDIMINAS NAVAITIS|1948-10-19",
+        "GEDIMINAS NAVAITIS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1948-10-19); exactly one person of this name carries a full date; gimimo-vieta agrees (vilnius); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "GEDIMINAS PAŽĖRA|1928-08-19",
+        "GEDIMINAS PAŽĖRA|~1928"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1928 vs 1928-08-19); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "GEDIMINAS VNARAUSKAS|1979-07-31",
+        "VYTENIS VNARAUSKAS|1979-07-31"
+      ],
+      "why": "one birth date (1979-07-31) and one surname, and both stand in 2011-vasario-27-savivaldybiu: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "GIEDRĖ KUZMICKIENĖ|1962-12-18",
+        "GIEDRĖ KUZMICKIENĖ|~1962"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1962 vs 1962-12-18); exactly one person of this name carries a full date; gimimo-vieta agrees (kaunas); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "GIEDRĖ PURVANECKIENĖ|1945-03-08",
+        "GIEDRĖ PURVANECKIENĖ|~1945"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1945 vs 1945-03-08); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "GINTARAS SKAMAROČIUS|1969-11-27",
+        "GINTARAS SKAMAROČIUS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1969-11-27); exactly one person of this name carries a full date; gimimo-vieta agrees (gulbiniskiu, marijampoles); 1 education entry in common; never on one ballot"
     },
     {
       "decision": "merge",
@@ -264,10 +768,50 @@
     {
       "decision": "merge",
       "keys": [
+        "GINTAS JASIULIONIS|1970-08-14",
+        "GINTAS JASIULIONIS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1970-08-14); exactly one person of this name carries a full date; gimimo-vieta agrees (jonava, jonavos); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "GOTFRIDAS EKTIS|1938-04-30",
+        "GOTFRIDAS EKTIS|~1938"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1938 vs 1938-04-30); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "GRAŽINA KAVALIAUSKIENĖ|1948-08-30",
+        "GRAŽINA KAVALIAUSKIENĖ|~1948"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1948 vs 1948-08-30); exactly one person of this name carries a full date; gimimo-vieta agrees (kaunas); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "GRAŽINA PALIOKIENĖ|1951-04-18",
+        "GRAŽINA PALIOKIENĖ|~1951"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1951 vs 1951-04-18); exactly one person of this name carries a full date; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "IEVA KAČINSKAITĖ-URBONIENĖ|1990-08-25",
         "IEVA KAČINSKAITĖ|1990-08-25"
       ],
       "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Kėdainiai / Kėdainių rajonas, Lietuva)"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "IGNAS JACKEVIČIUS|1993-10-02",
+        "VILIUS JACKEVIČIUS|1993-10-02"
+      ],
+      "why": "one birth date (1993-10-02) and one surname, and both stand in 2019-kovo-3-savivaldybiu-tarybu: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
     },
     {
       "decision": "merge",
@@ -320,6 +864,22 @@
     {
       "decision": "merge",
       "keys": [
+        "IRENA KEBLERIENĖ|1948-08-01",
+        "IRENA KEBLERIENĖ|~1948"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1948 vs 1948-08-01); exactly one person of this name carries a full date; gimimo-vieta agrees (kaunas); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "IRENA NIJOLĖ VITKIENĖ|1938-06-02",
+        "IRENA NIJOLĖ VITKIENĖ|~1938"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1938 vs 1938-06-02); exactly one person of this name carries a full date; gimimo-vieta agrees (prienu, silavoto); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "IRENA STRAŽINSKAITĖ-GLINSKIENĖ|1963-08-06",
         "IRENA STRAŽINSKAITĖ|1963-08-06"
       ],
@@ -332,6 +892,174 @@
         "MEDART JACEVIČ|1947-05-20"
       ],
       "why": "gimimo-vieta compatible (Magūnų k. , Švenčionių raj. / Magūnų km,Švenčionių rajonas); same spouse (Janina); children's names agree"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JAROSLAV VOLKONOVSKI|1956-05-19",
+        "JAROSLAV VOLKONOVSKI|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1956-05-19); exactly one person of this name carries a full date; gimimo-vieta agrees (gudeliu, vilniaus); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JAROSLAVAS BANEVIČIUS|1937-06-12",
+        "JAROSLAVAS BANEVIČIUS|~1937"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1937 vs 1937-06-12); exactly one person of this name carries a full date; gimimo-vieta agrees (kedainiu); never on one ballot"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "JOANA TAMKEVIČIŪTĖ|1987-03-23",
+        "MARIJA TAMKEVIČIŪTĖ|1987-03-23"
+      ],
+      "why": "one birth date (1987-03-23) and one surname, and both stand in 2012-seimo: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JOLANTA BARTKUNIENĖ|1968-07-25",
+        "JOLANTA BARTKŪNIENĖ|1968-07-25"
+      ],
+      "why": "one birth date (1968-07-25) and one surname; the given names are the same name (Jolanta / Jolanta); one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "JONAS GRYBAUSKAS|1954-03-05",
+        "KAZYS GRYBAUSKAS|1954-03-05"
+      ],
+      "why": "one birth date (1954-03-05) and one surname, and both stand in 2007-vasario-25-savivaldybiu: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JONAS JURAVIČIUS|1948-01-18",
+        "JONAS JURAVIČIUS|~1948"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1948 vs 1948-01-18); exactly one person of this name carries a full date; gimimo-vieta agrees (alytaus, lacioniu); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JONAS SIUDIKAS|1934-07-26",
+        "JONAS SIUDIKAS|~1934"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1934 vs 1934-07-26); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JONAS VALATKA|1949-04-01",
+        "JONAS VALATKA|~1949"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1949 vs 1949-04-01); exactly one person of this name carries a full date; gimimo-vieta agrees (prienu); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JONAS VIŠČIUS|1944-02-13",
+        "JONAS VIŠČIUS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1944-02-13); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "JOTAUTAS KAKTYS|1990-09-30",
+        "TAUTVILAS KAKTYS|1990-09-30"
+      ],
+      "why": "one birth date (1990-09-30) and one surname, and both stand in 2011-vasario-27-savivaldybiu: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JUDITA SIMONAVIČIŪTĖ|1956-01-04",
+        "JUDITA SIMONAVIČIŪTĖ|~1956"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1956 vs 1956-01-04); exactly one person of this name carries a full date; gimimo-vieta agrees (klaipeda); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JULIUS BEINORTAS|1943-02-11",
+        "JULIUS BEINORTAS|~1943"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1943 vs 1943-02-11); exactly one person of this name carries a full date; gimimo-vieta agrees (radviliskio); never on one ballot"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "JULIUS OPTAS|1995-03-21",
+        "JUSTAS OPTAS|1995-03-21"
+      ],
+      "why": "one birth date (1995-03-21) and one surname, and both stand in 2019-kovo-3-savivaldybiu-tarybu: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "JULIUS VEDECKIS|1950-01-08",
+        "LIUDAS VEDECKIS|1950-01-08"
+      ],
+      "why": "one birth date (1950-01-08) and one surname, and both stand in 2007-vasario-25-savivaldybiu: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JUOZAPAS PETKEVIČIUS|1941-12-01",
+        "JUOZAPAS PETKEVIČIUS|~1941"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1941 vs 1941-12-01); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JUOZAS ALGIMANTAS TUZIKAS|1936-05-12",
+        "JUOZAS ALGIMANTAS TUZIKAS|~1936"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1936 vs 1936-05-12); exactly one person of this name carries a full date; gimimo-vieta agrees (klaipeda); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JUOZAS BAGDONAS|1936-02-27",
+        "JUOZAS BAGDONAS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1936-02-27); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JUOZAS GAIDAMAVIČIUS|1954-05-01",
+        "JUOZAS GAIDAMAVIČIUS|~1954"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1954 vs 1954-05-01); exactly one person of this name carries a full date; gimimo-vieta agrees (luokes, mstl, telsiu); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JUOZAS LISTAVIČIUS|1929-09-04",
+        "JUOZAS LISTAVIČIUS|~1929"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1929 vs 1929-09-04); exactly one person of this name carries a full date; gimimo-vieta agrees (alytaus, liesioniu); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JUOZAS MOZERIS|1959-01-29",
+        "JUOZAS MOZERIS|~1959"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1959 vs 1959-01-29); exactly one person of this name carries a full date; gimimo-vieta agrees (radviliskio); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JUOZAS ŠARKUS|1947-06-12",
+        "JUOZAS ŠARKUS|~1947"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1947 vs 1947-06-12); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
     },
     {
       "decision": "merge",
@@ -365,6 +1093,14 @@
         "JURIJUS STRIŽĖNAS|~1960"
       ],
       "why": "the 1996-1997 archive pages publish no full birth date; same spouse (Tatjana), son Eugenijus/Jevgenijus, Vilnius on every fragment"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "JURIJUS SUBOTINAS|1950-08-02",
+        "JURIJUS SUBOTINAS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1950-08-02); exactly one person of this name carries a full date; gimimo-vieta agrees (kaunas); never on one ballot"
     },
     {
       "decision": "merge",
@@ -425,10 +1161,34 @@
     {
       "decision": "merge",
       "keys": [
+        "KAZIMIERAS KAVALIAUSKAS|1945-08-10",
+        "KAZIMIERAS KAVALIAUSKAS|~1945"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1945 vs 1945-08-10); exactly one person of this name carries a full date; gimimo-vieta agrees (kebliskiu, prienu); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "KAZYS BOBELIS|1923-03-04",
+        "KAZYS BOBELIS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1923-03-04); exactly one person of this name carries a full date; gimimo-vieta agrees (kaunas); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "KLAUDIJA JAGMINAITĖ-ŠČUKINA|1995-02-26",
         "KLAUDIJA JAGMINAITĖ|1995-02-26"
       ],
       "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Šiauliai); same school entry (lietuvos verslo kolegija, 2020)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "KLEMENSAS RIMŠELIS|1958-08-04",
+        "KLEMENSAS RIMŠELIS|~1958"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1958 vs 1958-08-04); exactly one person of this name carries a full date; gimimo-vieta agrees (kaunas); 1 education entry in common; never on one ballot"
     },
     {
       "decision": "merge",
@@ -457,10 +1217,50 @@
     {
       "decision": "merge",
       "keys": [
+        "KĘSTUTIS GLAVECKAS|1949-04-30",
+        "KĘSTUTIS GLAVECKAS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1949-04-30); exactly one person of this name carries a full date; gimimo-vieta agrees (vilnius); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "KĘSTUTIS GUDAS|1959-03-03",
+        "KĘSTUTIS GUDAS|~1959"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1959 vs 1959-03-03); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; 1 education entry in common; workplace in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "KĘSTUTIS KUBERTAVIČIUS|1956-02-12",
+        "KĘSTUTIS KUBERTAVIČIUS|~1956"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1956 vs 1956-02-12); exactly one person of this name carries a full date; gimimo-vieta agrees (paezeriu, vilkaviskio); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "KĘSTUTIS MAČIULAITIS|1961-11-24",
+        "RIMANTAS MAČIULAITIS|1961-11-24"
+      ],
+      "why": "one birth date (1961-11-24) and one surname, and both stand in 2011-vasario-27-savivaldybiu: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "LAIMA MOGENIENĖ|1959-10-07",
         "LAIMA VYSKUPAITYTĖ-MOGENIENĖ|1959-10-07"
       ],
       "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Krasnojarskas, Rusija / Sibiras, Krasnojarsko m.)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "LAIMONAS ABARIUS|1968-03-22",
+        "LAIMONDAS ABARIUS|1968-03-22"
+      ],
+      "why": "one birth date (1968-03-22) and one surname; the given names are the same name (Laimonas / Laimondas); gimimo-vieta agrees (antazaves, bakuciu, sen); never on one ballot"
     },
     {
       "decision": "merge",
@@ -497,10 +1297,42 @@
     {
       "decision": "merge",
       "keys": [
+        "LEONARDAS KĘSTUTIS JASKELEVIČIUS|1945-07-07",
+        "LEONARDAS KĘSTUTIS JASKELEVIČIUS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1945-07-07); exactly one person of this name carries a full date; gimimo-vieta agrees (varenos); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "LEONAS KAČINSKAS|1962-10-03",
+        "LEONAS KAČINSKAS|~1962"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1962 vs 1962-10-03); exactly one person of this name carries a full date; gimimo-vieta agrees (darguziu, varenos); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "LEONAS MILČIUS|1942-12-11",
+        "LEONAS MILČIUS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1942-12-11); exactly one person of this name carries a full date; gimimo-vieta agrees (kauno, kluoniskiu); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "LIJANA SIMONAITYTĖ-SINUŠIENĖ|1963-03-06",
         "LIJANA SIMONAITYTĖ|1963-03-06"
       ],
       "why": "one name is the other plus appended tokens; gimimo-vieta compatible (JAKŲ KM., KLAIPĖDOS RAJ. / Klaipėdos r.)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "LILIJA PETRAITIENĖ|1958-02-08",
+        "LILIJA PETRAITIENĖ|~1958"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1958 vs 1958-02-08); exactly one person of this name carries a full date; gimimo-vieta agrees (ramuvos, silutes); 1 education entry in common; never on one ballot"
     },
     {
       "decision": "merge",
@@ -537,10 +1369,42 @@
     {
       "decision": "merge",
       "keys": [
+        "LINA RASIKEVIČIENĖ|1957-05-22",
+        "LINA RASIKEVIČIENĖ|~1957"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1957 vs 1957-05-22); exactly one person of this name carries a full date; gimimo-vieta agrees (kupiskio, snipeliskio); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "LINA ŠUKYTĖ-KORSAKĖ|1970-11-17",
         "LINA ŠUKYTĖ|1970-11-17"
       ],
       "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Šilalės raj.); same school entry (kauno aukstesnioji medicinos mokykla, 1993)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "LIUDAS MAŽYLIS|1954-05-19",
+        "LIUDAS MAŽYLIS|~1954"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1954 vs 1954-05-19); exactly one person of this name carries a full date; gimimo-vieta agrees (kaunas); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "LIUDVIKAS SAULIUS RAZMA|1938-02-07",
+        "LIUDVIKAS SAULIUS RAZMA|~1938"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1938 vs 1938-02-07); exactly one person of this name carries a full date; gimimo-vieta agrees (plateliu, plunges); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "LIUTAURAS VARANAVIČIUS|1970-03-17",
+        "LIUTAURAS VARANAVIČIUS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1970-03-17); exactly one person of this name carries a full date; gimimo-vieta agrees (kaunas); 1 education entry in common; never on one ballot"
     },
     {
       "decision": "merge",
@@ -569,10 +1433,106 @@
     {
       "decision": "merge",
       "keys": [
+        "MARGARITA ZONIENĖ|1947-07-20",
+        "MARGARITA ZONIENĖ|~1947"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1947 vs 1947-07-20); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "MARIJA PUČ|1964-08-13",
+        "MARIJA PUČ|?"
+      ],
+      "why": "both stand in 2015-birzelio-7-pakartotiniai-sirvintos-trakai, and nobody is on one ballot twice: VRK issued two candidate ids and published one as a page with no birth date, which is what the birth-date key exists to keep apart"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "MEČISLAV VAŠKOVIČ|1958-01-10",
+        "MEČISLAV VAŠKOVIČ|~1958"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1958 vs 1958-01-10); exactly one person of this name carries a full date; gimimo-vieta agrees (vilnius); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "MEČYS LAURINKUS|1951-05-22",
+        "MEČYS LAURINKUS|~1951"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1951 vs 1951-05-22); exactly one person of this name carries a full date; gimimo-vieta agrees (klaipeda); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "MINDAUGAS TAMOŠAUSKAS|1963-10-23",
+        "MINDAUGAS TAMOŠAUSKAS|~1963"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1963 vs 1963-10-23); exactly one person of this name carries a full date; gimimo-vieta agrees (klaipeda); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "MYKOLAS PRONCKUS|1936-03-24",
+        "MYKOLAS PRONCKUS|~1936"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1936 vs 1936-03-24); exactly one person of this name carries a full date; gimimo-vieta agrees (rietavas); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "NAGLIS PUTEIKIS|1964-09-02",
+        "NAGLIS PUTEIKIS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1964-09-02); exactly one person of this name carries a full date; gimimo-vieta agrees (vilnius); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "NARSUTIS DUMBAUSKAS|1938-06-21",
+        "NARSUTIS DUMBAUSKAS|~1938"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1938 vs 1938-06-21); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "NINA LILIA GALICKĖ|1964-02-21",
         "NINA LILIA ZAKARKIENĖ|1964-02-21"
       ],
       "why": "gimimo-vieta compatible (SANKT PETERBURGAS, RUSIJA / Leningradas, Rusija); children's names agree"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "PETRAS JONAITIS|1947-10-26",
+        "PETRAS JONAITIS|~1947"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1947 vs 1947-10-26); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "PETRAS MACKELA|1943-08-20",
+        "PETRAS MACKELA|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1943-08-20); exactly one person of this name carries a full date; gimimo-vieta agrees (ukmerges); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "POVILAS VEŽBAVIČIUS|1957-09-05",
+        "VIKTORAS VEŽBAVIČIUS|1957-09-05"
+      ],
+      "why": "one birth date (1957-09-05) and one surname, and both stand in 2015-kovo-1-savivaldybiu: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "PRANAS DĖDINAS|1930-01-02",
+        "PRANAS DĖDINAS|~1930"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1930 vs 1930-01-02); exactly one person of this name carries a full date; gimimo-vieta agrees (ritiniu, sakiu); 1 education entry in common; never on one ballot"
     },
     {
       "decision": "merge",
@@ -589,6 +1549,14 @@
         "RAIMONDA MARIJA GERASIMOVIČIENĖ|1947-09-06"
       ],
       "why": "two marriages, one career: children (Artūras, Ingrida) and the workplace (Žeimelio vidurinė mokykla, direktoriaus pavaduotoja) agree across the Gerasimovičienė→Gasperavičienė change"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "RAIMUNDAS LEKAS|1941-08-30",
+        "RAIMUNDAS LEKAS|~1941"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1941 vs 1941-08-30); exactly one person of this name carries a full date; gimimo-vieta agrees (joniskaiciu, pakruojo); 1 education entry in common; never on one ballot"
     },
     {
       "decision": "merge",
@@ -617,6 +1585,14 @@
     {
       "decision": "merge",
       "keys": [
+        "REGIMANTAS ČIUPAILA|1956-08-20",
+        "REGIMANTAS ČIUPAILA|~1956"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1956 vs 1956-08-20); exactly one person of this name carries a full date; gimimo-vieta agrees (kaunas); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "REGINA KULPIENĖ-JAUNIENĖ|1952-08-15",
         "REGINA KULPIENĖ|1952-08-15"
       ],
@@ -641,10 +1617,50 @@
     {
       "decision": "merge",
       "keys": [
+        "RENĖ VINGRIENĖ|1947-01-25",
+        "RENĖ VINGRIENĖ|~1947"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1947 vs 1947-01-25); exactly one person of this name carries a full date; gimimo-vieta agrees (pasvalio, pasvalys); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "RIMA RAZNAUSKIENĖ|1962-08-12",
+        "RIMA RAZNAUSKIENĖ|~1962"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1962 vs 1962-08-12); exactly one person of this name carries a full date; gimimo-vieta agrees (jonava, jonavos); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "RIMA ŠPAKAUSKAITĖ-KUČINSKIENĖ|1979-05-23",
         "RIMA ŠPAKAUSKAITĖ|1979-05-23"
       ],
       "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Kauno r.); same school entry (vdu, 2006)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "RIMANTAS PLEIKYS|1957-11-25",
+        "RIMANTAS PLEIKYS|~1957"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1957 vs 1957-11-25); exactly one person of this name carries a full date; gimimo-vieta agrees (vilnius); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "RIMANTAS SINKEVIČIUS|1952-04-03",
+        "RIMANTAS SINKEVIČIUS|~1952"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1952 vs 1952-04-03); exactly one person of this name carries a full date; gimimo-vieta agrees (anyksciu, jusiskio); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "RIMANTAS VAITKUS|1957-10-01",
+        "RIMANTAS VAITKUS|~1957"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1957 vs 1957-10-01); exactly one person of this name carries a full date; gimimo-vieta agrees (plunge); never on one ballot"
     },
     {
       "decision": "merge",
@@ -673,10 +1689,74 @@
     {
       "decision": "merge",
       "keys": [
+        "RITA MIKUTIENĖ|1960-12-12",
+        "RITA MIKUTIENĖ|~1960"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1960 vs 1960-12-12); exactly one person of this name carries a full date; gimimo-vieta agrees (ukmerges, zemaitkiemio); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "RIČARDAS JOKIMČIUS|1962-12-12",
+        "RIČARDAS JOKIMČIUS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1962-12-12); exactly one person of this name carries a full date; gimimo-vieta agrees (kelmes); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "RIČARDAS PAKARKLIS|1962-03-07",
+        "VIRGINIJUS PAKARKLIS|1962-03-07"
+      ],
+      "why": "one birth date (1962-03-07) and one surname, and both stand in 2007-vasario-25-savivaldybiu: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "ROBERTA DUBOSAITĖ-LEPEŠKEVIČĖ|1985-04-17",
         "ROBERTA DUBOSAITĖ|1985-04-17"
       ],
       "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Šiauliai)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ROMANAS ALGIMANTAS SEDLICKAS|1942-07-23",
+        "ROMANAS ALGIMANTAS SEDLICKAS|~1942"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1942 vs 1942-07-23); exactly one person of this name carries a full date; gimimo-vieta agrees (traku, vievis); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ROMAS MIKŠYS|1960-02-27",
+        "ROMAS MIKŠYS|~1960"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1960 vs 1960-02-27); exactly one person of this name carries a full date; gimimo-vieta agrees (siauliai); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ROMUALDAS RUDZYS|1947-06-05",
+        "ROMUALDAS RUDZYS|~1947"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1947 vs 1947-06-05); exactly one person of this name carries a full date; gimimo-vieta agrees (traku); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ROZALIJA VALIŪNIENĖ|1930-01-01",
+        "ROZALIJA VALIŪNIENĖ|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1930-01-01); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; workplace in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "RUSLANAS KOLOMAKAS|1959-07-18",
+        "RUSLANAS KOLOMAKAS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1959-07-18); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
     },
     {
       "decision": "merge",
@@ -689,10 +1769,34 @@
     {
       "decision": "merge",
       "keys": [
+        "RŪTA RUTKELYTĖ|1960-06-10",
+        "RŪTA RUTKELYTĖ|~1960"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1960 vs 1960-06-10); exactly one person of this name carries a full date; gimimo-vieta agrees (marijampole); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "SANTA PAKENYTĖ-ČEPULĖ|1990-12-11",
         "SANTA PAKENYTĖ|1990-12-11"
       ],
       "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Šiauliai); same school entry (lietuvos sporto universitetas, 2016)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "SIGITA BURBIENĖ|1954-05-17",
+        "SIGITA BURBIENĖ|~1954"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1954 vs 1954-05-17); exactly one person of this name carries a full date; gimimo-vieta agrees (vilnius); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "SIGITAS BANKAUSKAS|1973-01-12",
+        "SIGITAS BANKAUSKAS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1973-01-12); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
     },
     {
       "decision": "merge",
@@ -713,6 +1817,62 @@
     {
       "decision": "merge",
       "keys": [
+        "SOFIJA DAUBARAITĖ|1951-01-29",
+        "SOFIJA DAUBARAITĖ|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1951-01-29); exactly one person of this name carries a full date; gimimo-vieta agrees (telsiai, telsiu); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "STANISLOVAS KALVAITIS|1949-03-22",
+        "STANISLOVAS KALVAITIS|~1949"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1949 vs 1949-03-22); exactly one person of this name carries a full date; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "STANISLOVAS ŠIUKŠTA|1936-09-08",
+        "STANISLOVAS ŠIUKŠTA|~1936"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1936 vs 1936-09-08); exactly one person of this name carries a full date; gimimo-vieta agrees (utena, utenos); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "STASYS ALBINAS GIRDZIJAUSKAS|1941-02-16",
+        "STASYS ALBINAS GIRDZIJAUSKAS|~1941"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1941 vs 1941-02-16); exactly one person of this name carries a full date; gimimo-vieta agrees (raseiniu); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "STASYS GRIGALIŪNAS|1947-01-10",
+        "STASYS GRIGALIŪNAS|~1947"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1947 vs 1947-01-10); exactly one person of this name carries a full date; gimimo-vieta agrees (pakruojo, vismantu); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "STASYS KAUŠINIS|1959-05-07",
+        "STASYS KAUŠINIS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1959-05-07); exactly one person of this name carries a full date; gimimo-vieta agrees (laukininku, moletu); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "TADAS SARNAČINSKAS|1982-07-17",
+        "TOMAS SARNAČINSKAS|1982-07-17"
+      ],
+      "why": "one birth date (1982-07-17) and one surname, and both stand in 2019-kovo-3-savivaldybiu-tarybu: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "TOMA KARVELYTĖ-JANULIONIENĖ|1996-12-15",
         "TOMA KARVELYTĖ|1996-12-15"
       ],
@@ -721,10 +1881,34 @@
     {
       "decision": "merge",
       "keys": [
+        "TOMAS JOSAS|1940-03-07",
+        "TOMAS JOSAS|~1940"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1940 vs 1940-03-07); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; workplace in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "UGNĖ MEŠKUTYTĖ-TUNČIKIENĖ|1985-05-21",
         "UGNĖ MEŠKUTYTĖ|1985-05-21"
       ],
       "why": "one name is the other plus appended tokens; gimimo-vieta compatible (Trakai / Senieji Trakai , Trakų raj.)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VACLAV STANKEVIČ|1954-08-06",
+        "VACLOV STANKEVIČ|1954-08-06"
+      ],
+      "why": "one birth date (1954-08-06) and one surname; the given names are the same name (Vaclov / Vaclav); gimimo-vieta agrees (baltarusija, gardino); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VACLOVAS LAPĖ|1934-09-10",
+        "VACLOVAS LAPĖ|~1934"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1934 vs 1934-09-10); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
     },
     {
       "decision": "merge",
@@ -753,6 +1937,38 @@
     {
       "decision": "merge",
       "keys": [
+        "VAIDAS BAUBLYS|1973-07-07",
+        "VIDAS BAUBLYS|1973-07-07"
+      ],
+      "why": "one birth date (1973-07-07) and one surname; the given names are the same name (Vaidas / Vidas); gimimo-vieta agrees (trakai); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VALDEMAR URBAN|1987-04-28",
+        "WALDEMAR URBAN|1987-04-28"
+      ],
+      "why": "one birth date (1987-04-28) and one surname; the given names are the same name (Waldemar / Valdemar); gimimo-vieta agrees (vilnius); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VALENTIN JEFIMOV|1944-11-25",
+        "VALENTIN JEFIMOV|~1944"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1944 vs 1944-11-25); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "VALERIJA ASTRAUSKIENĖ|1959-04-11",
+        "VANDA ASTRAUSKIENĖ|1959-04-11"
+      ],
+      "why": "one birth date (1959-04-11) and one surname, and both stand in 2011-vasario-27-savivaldybiu: nobody is on one ballot twice, so these are namesakes born the same day (siblings) and not one person under two given names"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "VALERIJA BRAZIENĖ GITELMAN|1958-09-22",
         "VALERIJA BRAZIENĖ|1958-09-22"
       ],
@@ -761,10 +1977,34 @@
     {
       "decision": "merge",
       "keys": [
+        "VANDA VERTELKIENĖ|1941-04-14",
+        "VANDA VERTELKIENĖ|~1941"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1941 vs 1941-04-14); exactly one person of this name carries a full date; gimimo-vieta agrees (rokiskio); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "VESLAVA KODZ-BEREZINA|1985-07-05",
         "VESLAVA KODZ|1985-07-05"
       ],
       "why": "one name is the other plus appended tokens; gimimo-vieta agrees (Vilnius)"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VIDA BORTELIENĖ|1957-11-21",
+        "VIDA BORTELIENĖ|~1957"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1957 vs 1957-11-21); exactly one person of this name carries a full date; gimimo-vieta agrees (vilkaviskio, vilkaviskis); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VIKTOR USPASKICH|1959-07-24",
+        "VIKTORAS USPASKICH|1959-07-24"
+      ],
+      "why": "one birth date (1959-07-24) and one surname; the given names are the same name (Viktor / Viktoras); gimimo-vieta agrees (archangelsko); 2 education entries in common; never on one ballot"
     },
     {
       "decision": "merge",
@@ -825,6 +2065,14 @@
     {
       "decision": "merge",
       "keys": [
+        "VIRGILIJUS GEDMINAS|1956-11-28",
+        "VIRGILIJUS GEDMINAS|~1956"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1956 vs 1956-11-28); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "VIRGINIJA TUPIKAITĖ-JASUTIENĖ|1977-06-24",
         "VIRGINIJA TUPIKAITĖ|1977-06-24"
       ],
@@ -833,10 +2081,202 @@
     {
       "decision": "merge",
       "keys": [
+        "VIRGINIJUS ŠMIGELSKAS|1961-01-02",
+        "VIRGINIJUS ŠMIGELSKAS|~1961"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1961 vs 1961-01-02); exactly one person of this name carries a full date; gimimo-vieta agrees (maisiagalos, vilniaus); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VISVALDAS MATKEVIČIUS|1963-12-04",
+        "VISVALDAS MATKEVIČIUS|~1963"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1963 vs 1963-12-04); exactly one person of this name carries a full date; gimimo-vieta agrees (siauliai); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VITAS GREBLIAUSKAS|1954-06-06",
+        "VITAS GRĖBLIAUSKAS|1954-06-06"
+      ],
+      "why": "one birth date (1954-06-06) and one surname; the given names are the same name (Vitas / Vitas); one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VLADIMIR VEIKŠA|1963-01-30",
+        "VLADIMIRAS VEIKŠA|1963-01-30"
+      ],
+      "why": "one birth date (1963-01-30) and one surname; the given names are the same name (Vladimir / Vladimiras); one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VYGINTAS GONTIS|1954-08-27",
+        "VYGINTAS GONTIS|~1954"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1954 vs 1954-08-27); exactly one person of this name carries a full date; gimimo-vieta agrees (plunges, rietavas); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
         "VYTAUTAS ALEKSAS LAZINKA|1962-11-12",
         "VYTAUTAS ALEKSAS LAZINKO|1962-11-12"
       ],
       "why": "surname respelt Lazinko (1996-1997) → Lazinka; same spouse (Jurgita), same children (Vita, Laura), Vilnius, the same Liaudies party line throughout"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VYTAUTAS ARBAČIAUSKAS|1951-05-13",
+        "VYTAUTAS ARBAČIAUSKAS|~1951"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1951 vs 1951-05-13); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "distinct",
+      "keys": [
+        "VYTAUTAS ASTRAUSKAS|1982-09-11",
+        "VYTAUTAS ASTRAUSKAS|?"
+      ],
+      "why": "the full-date half was born 1982-09-11, which makes them a minor at 1996-spalio-20-seimo — an election the other half contested; their birthplaces disagree too"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VYTAUTAS BARTKUS|1957-06-02",
+        "VYTAUTAS BARTKUS|~1957"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1957 vs 1957-06-02); exactly one person of this name carries a full date; gimimo-vieta agrees (ukmerge, ukmerges); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VYTAUTAS BERNATONIS|1940-11-19",
+        "VYTAUTAS BERNATONIS|~1940"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1940 vs 1940-11-19); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VYTAUTAS GIEDRAITIS|1955-11-30",
+        "VYTAUTAS GIEDRAITIS|~1955"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1955 vs 1955-11-30); exactly one person of this name carries a full date; gimimo-vieta agrees (akmene, akmenes); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VYTAUTAS GYLYS|1945-03-31",
+        "VYTAUTAS GYLYS|~1945"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1945 vs 1945-03-31); exactly one person of this name carries a full date; gimimo-vieta agrees (alytus); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VYTAUTAS JUODAGALVIS|1961-01-06",
+        "VYTAUTAS JUODAGALVIS|~1961"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1961 vs 1961-01-06); exactly one person of this name carries a full date; gimimo-vieta agrees (kauno, raudondvario); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VYTAUTAS JURGIS KADŽYS|1942-04-10",
+        "VYTAUTAS JURGIS KADŽYS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1942-04-10); exactly one person of this name carries a full date; gimimo-vieta agrees (radviliskio); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VYTAUTAS KAZAKEVIČIUS|1930-09-28",
+        "VYTAUTAS KAZAKEVIČIUS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1930-09-28); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VYTAUTAS LANDSBERGIS|1932-10-18",
+        "VYTAUTAS LANDSBERGIS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1932-10-18); exactly one person of this name carries a full date; gimimo-vieta agrees (kaunas); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VYTAUTAS PETRAS KNAŠYS|1937-05-13",
+        "VYTAUTAS PETRAS KNAŠYS|~1937"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1937 vs 1937-05-13); exactly one person of this name carries a full date; gimimo-vieta agrees (garliava, kauno); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VYTAUTAS RUBAVIČIUS|1952-07-15",
+        "VYTAUTAS RUBAVIČIUS|?"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (? vs 1952-07-15); exactly one person of this name carries a full date; gimimo-vieta agrees (klaipeda); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VYTAUTAS URBANAVIČIUS|1953-04-02",
+        "VYTAUTAS URBANAVIČIUS|~1953"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1953 vs 1953-04-02); exactly one person of this name carries a full date; gimimo-vieta agrees (dvaryksciu, svencioniu); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "VYTAUTAS ŠUNSKIS|1959-11-08",
+        "VYTAUTAS ŠUNSKIS|~1959"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1959 vs 1959-11-08); exactly one person of this name carries a full date; gimimo-vieta agrees (vilkaviskio, vilkaviskis); never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ZDISLAV TRYK|1953-10-28",
+        "ZDISLAV TRYK|~1953"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1953 vs 1953-10-28); exactly one person of this name carries a full date; one side publishes no birthplace, so nothing contradicts; workplace in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ZINAIDA ŽEGUNIENĖ|1939-04-08",
+        "ZINAIDA ŽEGUNIENĖ|~1939"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1939 vs 1939-04-08); exactly one person of this name carries a full date; gimimo-vieta agrees (anyksciu, gudeliu); 1 education entry in common; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ČESLAVA BLUSEVIČIENĖ|1958-02-04",
+        "ČESLOVA BLUSEVIČIENĖ|1958-02-04"
+      ],
+      "why": "one birth date (1958-02-04) and one surname; the given names are the same name (Česlova / Česlava); one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ČESLAVAS BANEVIČIUS|1954-07-30",
+        "ČESLOVAS BANEVIČIUS|1954-07-30"
+      ],
+      "why": "one birth date (1954-07-30) and one surname; the given names are the same name (Česlovas / Česlavas); one side publishes no birthplace, so nothing contradicts; never on one ballot"
+    },
+    {
+      "decision": "merge",
+      "keys": [
+        "ŽILVINAS RAZMINAS|1958-07-19",
+        "ŽILVINAS RAZMINAS|~1958"
+      ],
+      "why": "the same name, and the key's only difference is the birth date the 1996-1999 archive pages do not publish (~1958 vs 1958-07-19); exactly one person of this name carries a full date; gimimo-vieta agrees (siauliai); never on one ballot"
     }
   ]
 }

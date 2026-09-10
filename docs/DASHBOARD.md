@@ -37,10 +37,17 @@ URLs is a per-election registration id — so identity is resolved by
 - birth date is present on all but 234 records; 170 of those (the 1996-1998
   Seimas archive, which publishes no birth date) carry a birth *year* and
   group by name + `~year`, and the 64 left group by name alone,
-- the pair collides for **zero** same-election record pairs,
-- **1,989 names** are shared by people with distinct birth keys — real
-  namesakes that name-only grouping would have merged wrongly,
-- the join yields **60,725 persons**, 23,163 of them in more than one
+- the pair collides for **zero** same-election record pairs — nobody stands
+  twice on one ballot, which makes a shared election the discriminator the
+  identity review reaches for when the names and dates agree,
+- **1,849 names** are shared by people with distinct birth keys — real
+  namesakes that name-only grouping would have merged wrongly. It read 1,989
+  until issue #141: 140 of those "namesakes" were one person, split by a
+  short key rather than by a different one, with 154 candidacies on the wrong
+  side (`VYTAUTAS LANDSBERGIS|?` beside `|1932-10-18`). 157 merges and 23
+  `distinct` decisions are in `scraper/person_overrides.json`, each with its
+  evidence,
+- the join yields **60,568 persons**, 23,204 of them in more than one
   election.
 
 Names are NFC-normalized, uppercased and whitespace-collapsed; diacritics are
@@ -56,23 +63,46 @@ historical sweep is done. The old `name|birth` deep links keep resolving —
 the page accepts a pid, a natural key, or a merged-away fragment's key (from
 `"ak"`) and rewrites the hash to the pid.
 
-**Surname changes are healed by hand, not by rule.** The natural key splits
-anyone who changed surname between elections — marriage, mostly — into two
-persons. `scripts/find_identity_merge_candidates.py` finds the plausible
-splits: within each birth key it pairs persons sharing a first name and
-scores each pair `strong` (a surname token or the maiden→married stem links
-them), `given-name` (only a shared middle given name — the scorer's known
-false-positive shape) or `weak`, marks the pairs where one name is the other
-plus appended tokens, and prints whatever is still undecided. Decisions live
-in `scraper/person_overrides.json` — checked in, one entry per reviewed pair
-with the evidence written down: `merge` folds the fragments into one person
-(the former keys land in `"ak"`, so old links and maiden-name searches still
-work), `distinct` records that the pair is genuinely two people. The
-2026-08-30 review worked through all 99 strong pairs of the corpus plus the
-token-order, transliteration and no-birth-date splits: 102 merges, 1 pair
-left distinct for lack of evidence. Merging another pair is a one-line edit
-of the override file, not a code change; the builder fails if an override
-key stops matching, so the file cannot rot silently.
+**A split person is healed by hand, not by rule.**
+`scripts/find_identity_merge_candidates.py` finds the plausible splits in
+four passes, and the key splits a person three ways:
+
+- **a changed surname** — marriage, mostly. Within each birth key, persons
+  sharing a first name are paired and scored `strong` (a surname token or the
+  maiden→married stem links them), `given-name` (only a shared middle given
+  name — the scorer's known false-positive shape) or `weak`, with the pairs
+  where one name is the other plus appended tokens marked;
+- **a key shorter than a birth date** (issue #141) — the 1996-1999 Seimas
+  archive publishes none, so a person who stood then and later has a
+  `NAME|?` or `NAME|~YYYY` entry beside their real one. 147 such pairs sat in
+  the index, holding 154 candidacies, and this review could not form one of
+  them: it bucketed on the exact birth string, so a `~YYYY` bucket could
+  never contain a full-date person and a dateless one was skipped outright.
+  It printed `1,370 pairs, 0 strong, 0 undecided`, which reads as a reviewed
+  corpus;
+- **two spellings of one given name** on one birth date and surname
+  (issue #141) — VIKTOR/VIKTORAS USPASKICH, EDUARD/EDVARD TRUSEVIČ. 64 pairs
+  the first-name bucketing could not form either.
+
+Two discriminators settle a pair the other way, and both are hard: a pair
+whose halves stand in **one election** is two people, because nobody is on a
+ballot twice (this is what separates VIKTOR/VIKTORAS from 21 same-birthday
+sibling pairs); and a half whose birth date makes them **a minor** at an
+election the other half contested is somebody else (`VYTAUTAS ASTRAUSKAS`,
+born 1982 and 14 at the 1996 Seimas election). The run also prints how many
+fragment keys it could pair with *nothing*, so "0 undecided" stops reading as
+"clean".
+
+Decisions live in `scraper/person_overrides.json` — checked in, one entry per
+reviewed pair with the evidence written down: `merge` folds the fragments into
+one person (the former keys land in `"ak"`, so old links and maiden-name
+searches still work), `distinct` records that the pair is genuinely two
+people. The file now holds **259 merges and 24 `distinct`** decisions — the
+2026-08-30 review's 102 merges plus issue #141's 157, whose evidence is a
+shared birthplace token, education entry or workplace on 120 of them and an
+absence of any contradiction on the rest. Merging another pair is a one-line
+edit of the override file, not a code change; the builder fails if any
+override key stops matching — `distinct` included, which it used to skip.
 
 ## What the page offers
 
