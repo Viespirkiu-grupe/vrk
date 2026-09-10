@@ -1797,6 +1797,24 @@ All of these are verbatim from VRK's own pages (verified present in
   `nėra`, `ND`, `b/n`).
 - `nuosprendzio-data` (conviction date) is year-only for 272 values against
   642 full ISO dates — year-only is what VRK publishes.
+- **42 values are impossible rather than merely odd**, and all 42 are VRK's
+  own typing — each traced verbatim to its own record's `rawData`. 39 are
+  dates outside 1900–2100 (`1111-11-11` five times, `9999-12-31` six, a run
+  of 2004 declarations whose `Pildymo data` reads `0204.05.04`, one
+  `3003-05-20`); two are declaration totals exceeding their own
+  employment-income row by 29,603× and 12,383×, already flagged
+  `quality_flags: saltinio-klaida`; and one is a birth date.
+  `damanskis-adolfas` (`1996-spalio-20-seimo`) carries `gimimo-data`
+  1995-05-22, which made him **1.4 years old** at the election — and the
+  biography on the same page names parents born 1908 and 1917, so the year is
+  wrong by one digit. It matters more than the rest because the person index
+  keys identity on that field, and because it is the sole outlier in an
+  otherwise exact distribution: the youngest candidate of every large
+  election sits on its statutory floor to within a tenth of a year. None is
+  corrected — a guessed birth date would invent an identity — and
+  `scripts/value_plausibility.py` gates the set against
+  `docs/plausibility-register.tsv`, where each carries its reason (issue
+  #152).
 - One control character: the fourth campaign contract subject of
   `kestutis-masiulis-2016-seimo` carries `\x06` where `Ė` belongs
   (`PIRK\x06JO ir PARDAV\x06JO`) — mangled in VRK's contract registry itself.

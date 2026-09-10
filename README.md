@@ -21,9 +21,10 @@ Three commands check that a change left the corpus in one piece, and each
 answers a question the other two cannot:
 
 ```bash
-python scripts/reparse_diff.py       # is the corpus what the parsers produce?
-python scripts/field_coverage.py     # did a field stop arriving?
-python -m scraper anomalies-report   # did a page go wrong?
+python scripts/reparse_diff.py         # is the corpus what the parsers produce?
+python scripts/field_coverage.py       # did a field stop arriving?
+python -m scraper anomalies-report     # did a page go wrong?
+python scripts/value_plausibility.py   # is a value possible at all?
 ```
 
 `reparse_diff.py` re-parses every election and diffs the result against
@@ -33,8 +34,14 @@ against every record and gates the fill rates against a checked-in baseline —
 suite ([docs/FIELD_COVERAGE.md](docs/FIELD_COVERAGE.md)).
 `anomalies-report` reads back what the scrapers recorded going wrong and diffs
 that against its own baseline
-([docs/ANOMALY_DETECTION.md](docs/ANOMALY_DETECTION.md)). All three exit
-non-zero on a finding.
+([docs/ANOMALY_DETECTION.md](docs/ANOMALY_DETECTION.md)).
+`value_plausibility.py` asks the one thing the other three cannot — whether a
+value is *possible*: a faithfully parsed `9999-12-31` is still not a date, and
+a birth date arriving on 99.8 % of records included one that made a candidate
+1.4 years old (issue #152). Its 42 findings are all VRK's own typing, each
+traced verbatim to the record's `rawData` and registered in
+`docs/plausibility-register.tsv` with a reason. All four exit non-zero on a
+finding.
 
 Getting the tests to run takes a clone and three dependencies:
 
