@@ -31,6 +31,25 @@ cannot give.
     python scripts/fixture_record_hashes.py            # measure and check
     python scripts/fixture_record_hashes.py --update   # after a deliberate change
     python scripts/fixture_record_hashes.py 2019-ep    # one election
+
+**Not every election is measurable on a clone**, and the manifest says which
+(issue #150). A fixture parse reads more than `samples/html/<id>/`: it reads
+the election's crawl plan and, where the election has one, its results join —
+and two of those are over the 1 MiB limit on a tracked unit, so
+`scripts/tracked_fixtures.py` leaves them out of git.
+`sitemaps/1997-kovo-23-savivaldybiu-tarybu.json` (2.9 MB) is one, and its
+absence *raised*: the whole manifest test failed on every CI run until this
+was fixed. `sitemaps/2000-kovo-19-savivaldybiu-tarybu.results.json` (3.5 MB)
+is the other, and its absence was worse than a failure — the parse simply
+produced `isrinktas: null` and ten fixtures hashed differently, with nothing
+saying why.
+
+So `--update` records, per election, the auxiliary inputs its parse could
+read and that were present when the manifest was written (`# needs` lines at
+the top of the file). A checkout that lacks one of them cannot reproduce that
+election's records, and the election is reported "not measurable here" rather
+than checked. On the scraping machine every election is measured; on a clone
+the two above are skipped and the other 53 are checked.
 """
 
 from __future__ import annotations
@@ -38,6 +57,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -50,6 +70,60 @@ from scraper.cli import PARSABLE_ELECTION_IDS, _parse_anketa_samples_for_electio
 REPO_ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = Path("tests/fixture-record-hashes.tsv")
 COLUMNS = ("fixture", "sha256")
+
+#: `# needs <election> <path>[,<path>…]` — one per election whose parse read
+#: an auxiliary local-data input.
+NEEDS_PREFIX = "# needs\t"
+
+
+#: Where an auxiliary input can live. `samples/html/<id>/` is the fixture tree
+#: itself and is always present, by definition of a tracked fixture.
+AUXILIARY_ROOTS = ("sitemaps", "samples/results")
+
+#: Files opened during the current parse, filled by the audit hook below.
+_OPENED: set[str] = set()
+_HOOK_INSTALLED = False
+
+
+def _watch_opens(repo_root: Path) -> None:
+    """Record every file the parse opens, so `--update` can say what it read.
+
+    Guessing from what *exists* over-skips: an election whose results tree
+    happens to be on disk would be declared to need it even where the parser
+    never looks. An audit hook is exact, and `open` is the only event that
+    matters here.
+    """
+    global _HOOK_INSTALLED
+    if _HOOK_INSTALLED:
+        return
+    base = str(repo_root.resolve())
+
+    def hook(event: str, args: tuple) -> None:
+        if event != "open" or not args:
+            return
+        name = args[0]
+        if not isinstance(name, (str, bytes)):
+            name = getattr(name, "__fspath__", lambda: None)()
+        if not isinstance(name, (str, bytes)):
+            return
+        text = name.decode() if isinstance(name, bytes) else name
+        # Not `resolve()`: `sitemaps/` and `data/` are symlink sets in a
+        # worktree, and resolving takes every one of them outside the root.
+        try:
+            relative = str(Path(text).relative_to(base)) if Path(text).is_absolute() else text
+        except ValueError:
+            return
+        relative = os.path.normpath(relative)
+        if relative.split("/", 1)[0] in ("sitemaps",) or relative.startswith("samples/results/"):
+            _OPENED.add(relative)
+
+    sys.addaudithook(hook)
+    _HOOK_INSTALLED = True
+
+
+def read_inputs(election_id: str) -> list[str]:
+    """The auxiliary inputs the last parse of `election_id` actually opened."""
+    return sorted(path for path in _OPENED if election_id in path)
 
 
 def tracked_candidates(repo_root: Path = REPO_ROOT) -> dict[str, list[str]]:
@@ -99,17 +173,63 @@ def record_digest(record: dict) -> str:
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
+#: The gitignored trees a clone does not carry (`tests/local_data.py` holds
+#: the same list). A parse that cannot find one of these is not measurable
+#: *here*, which is a different thing from a parse that failed.
+LOCAL_DATA_ROOTS = ("data", "samples", "samples-full", "sitemaps")
+
+
+def _absent_local_data(error: BaseException) -> str | None:
+    """The local-data path this error is about, or None if it is a real error.
+
+    The 1997 municipal general's sitemap is 2.9 MB — over the 1 MiB limit on a
+    tracked unit — so `scripts/tracked_fixtures.py` leaves it out of git and
+    its fixtures cannot be parsed on a clone. That used to come back as an
+    error and fail this manifest on every CI run (issue #150); it is an
+    absence, and it is reported as one.
+    """
+    if not isinstance(error, (FileNotFoundError, NotADirectoryError)):
+        return None
+    name = getattr(error, "filename", None) or (error.args[1] if len(error.args) > 1 else "")
+    text = str(name)
+    first = Path(text).parts[0] if text and not Path(text).is_absolute() else ""
+    if first in LOCAL_DATA_ROOTS:
+        return text
+    for root in LOCAL_DATA_ROOTS:
+        if f"/{root}/" in text:
+            return text
+    return None
+
+
 def measure(
-    election_ids: list[str], repo_root: Path = REPO_ROOT
-) -> tuple[dict[str, str], list[str]]:
-    """(fixture path -> digest, errors). One parse per election, into a temp
-    tree, exactly as `python -m scraper parse-anketa` would."""
+    election_ids: list[str],
+    repo_root: Path = REPO_ROOT,
+    needs: dict[str, list[str]] | None = None,
+) -> tuple[dict[str, str], list[str], list[str]]:
+    """(fixture path -> digest, errors, absences).
+
+    One parse per election, into a temp tree, exactly as
+    `python -m scraper parse-anketa` would. An election whose parse wants a
+    gitignored tree this checkout does not carry is an *absence*: not
+    measurable here, and not a finding.
+    """
     tracked = tracked_candidates(repo_root)
+    _watch_opens(repo_root)
     digests: dict[str, str] = {}
     errors: list[str] = []
+    absent: list[str] = []
     for election_id in election_ids:
         candidates = tracked.get(election_id)
         if not candidates:
+            continue
+        missing_inputs = [
+            path for path in (needs or {}).get(election_id, []) if not (repo_root / path).exists()
+        ]
+        if missing_inputs:
+            # Declared by --update as an input this election's parse read.
+            # Without it the parse does not fail — it silently drops the
+            # results join — so the election is skipped, not compared.
+            absent.append(f"{election_id}: needs {', '.join(missing_inputs)}, absent here")
             continue
         samples_root = repo_root / "samples" / "html" / election_id
         with tempfile.TemporaryDirectory() as tmp:
@@ -121,13 +241,30 @@ def measure(
                     output_root=Path(tmp),
                 )
             except Exception as error:  # noqa: BLE001 -- reported, not raised
-                errors.append(f"{election_id}: {type(error).__name__}: {error}")
+                missing = _absent_local_data(error)
+                if missing is not None:
+                    absent.append(f"{election_id}: needs {missing}, which this checkout does not carry")
+                else:
+                    errors.append(f"{election_id}: {type(error).__name__}: {error}")
                 continue
             for path in sorted(Path(tmp).rglob("*.json")):
                 record = json.loads(path.read_text(encoding="utf-8"))
                 candidate_id = record.get("candidateId") or path.stem
                 digests[f"{election_id}/{candidate_id}"] = record_digest(record)
-    return digests, errors
+    return digests, errors, absent
+
+
+def read_needs(path: Path) -> dict[str, list[str]]:
+    """The `# needs` declarations at the top of the manifest."""
+    if not path.exists():
+        return {}
+    needs: dict[str, list[str]] = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.startswith(NEEDS_PREFIX):
+            continue
+        election, _, paths = line[len(NEEDS_PREFIX) :].partition("\t")
+        needs[election] = [p for p in paths.split(",") if p]
+    return needs
 
 
 def read_manifest(path: Path) -> dict[str, str]:
@@ -144,17 +281,39 @@ def read_manifest(path: Path) -> dict[str, str]:
     return manifest
 
 
-def write_manifest(path: Path, digests: dict[str, str]) -> None:
-    lines = ["\t".join(COLUMNS)]
+def write_manifest(path: Path, digests: dict[str, str], needs: dict[str, list[str]]) -> None:
+    lines = [
+        "# One sha256 per tracked candidate fixture, over the parse content with",
+        "# `provenance` dropped. scripts/fixture_record_hashes.py writes it.",
+        "# The `needs` lines name the auxiliary local-data inputs each election's",
+        "# parse read: a checkout without one of them cannot reproduce that",
+        "# election's records and is told so rather than checked (issue #150).",
+    ]
+    lines += [
+        f"{NEEDS_PREFIX}{election}\t{','.join(paths)}"
+        for election, paths in sorted(needs.items())
+        if paths
+    ]
+    lines.append("\t".join(COLUMNS))
     lines += [f"{fixture}\t{digests[fixture]}" for fixture in sorted(digests)]
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def compare(measured: dict[str, str], manifest: dict[str, str]) -> list[str]:
-    """One line per finding: a record that changed, appeared or went."""
+def compare(
+    measured: dict[str, str], manifest: dict[str, str], absent: list[str] | None = None
+) -> list[str]:
+    """One line per finding: a record that changed, appeared or went.
+
+    An election named in `absent` is skipped on both sides: its fixtures were
+    not parsed because this checkout lacks a gitignored tree they need, and
+    "in the manifest and not parsed" would be a false finding.
+    """
+    unmeasurable = {line.split(":", 1)[0] for line in (absent or [])}
     findings = []
     for fixture in sorted(set(manifest) | set(measured)):
+        if fixture.split("/", 1)[0] in unmeasurable:
+            continue
         was, now = manifest.get(fixture), measured.get(fixture)
         if was == now:
             continue
@@ -183,9 +342,12 @@ def main() -> int:
     subset = bool(args.election_id)
 
     path = args.repo_root / MANIFEST
-    measured, errors = measure(election_ids, args.repo_root)
+    needs = read_needs(args.repo_root / MANIFEST)
+    measured, errors, absent = measure(election_ids, args.repo_root, needs)
     for error in errors:
         print(error, file=sys.stderr)
+    for line in absent:
+        print(f"not measurable here — {line}", file=sys.stderr)
     print(f"{len(measured)} tracked candidate fixture(s) parsed across {len(election_ids)} election(s)")
 
     if args.update:
@@ -194,14 +356,23 @@ def main() -> int:
         if errors:
             print("not written: the parse did not complete", file=sys.stderr)
             return 2
-        write_manifest(path, measured)
+        if absent:
+            # Rewriting the manifest here would delete the rows for an
+            # election this checkout cannot parse.
+            print(
+                "not written: " + str(len(absent)) + " election(s) are not measurable here;"
+                " run --update on a checkout that carries them",
+                file=sys.stderr,
+            )
+            return 2
+        write_manifest(path, measured, {eid: read_inputs(eid) for eid in election_ids})
         print(f"wrote {MANIFEST}")
         return 0
 
     manifest = read_manifest(path)
     if subset:
         manifest = {k: v for k, v in manifest.items() if k.split("/", 1)[0] in set(election_ids)}
-    findings = compare(measured, manifest)
+    findings = compare(measured, manifest, absent)
     if errors:
         return 2
     if not findings:

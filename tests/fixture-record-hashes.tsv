@@ -1,3 +1,63 @@
+# One sha256 per tracked candidate fixture, over the parse content with
+# `provenance` dropped. scripts/fixture_record_hashes.py writes it.
+# The `needs` lines name the auxiliary local-data inputs each election's
+# parse read: a checkout without one of them cannot reproduce that
+# election's records and is told so rather than checked (issue #150).
+# needs	1996-spalio-20-seimo	sitemaps/1996-spalio-20-seimo.json,sitemaps/1996-spalio-20-seimo.results.json
+# needs	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	sitemaps/1997-birzelio-29-svenciniu-tarybos-pakartotiniai.json,sitemaps/1997-birzelio-29-svenciniu-tarybos-pakartotiniai.results.json
+# needs	1997-gruodzio-21-seimo-pakartotiniai	sitemaps/1997-gruodzio-21-seimo-pakartotiniai.json,sitemaps/1997-gruodzio-21-seimo-pakartotiniai.results.json
+# needs	1997-kovo-23-savivaldybiu-tarybu	sitemaps/1997-kovo-23-savivaldybiu-tarybu.json,sitemaps/1997-kovo-23-savivaldybiu-tarybu.results.json
+# needs	1997-kovo-23-seimo-pakartotiniai	sitemaps/1997-kovo-23-seimo-pakartotiniai.json,sitemaps/1997-kovo-23-seimo-pakartotiniai.results.json
+# needs	1998-kovo-22-seimo-pakartotiniai	sitemaps/1998-kovo-22-seimo-pakartotiniai.json,sitemaps/1998-kovo-22-seimo-pakartotiniai.results.json
+# needs	1998-lapkricio-15-seimo-pakartotiniai	sitemaps/1998-lapkricio-15-seimo-pakartotiniai.json,sitemaps/1998-lapkricio-15-seimo-pakartotiniai.results.json
+# needs	1999-kovo-21-seimo-pakartotiniai	sitemaps/1999-kovo-21-seimo-pakartotiniai.json,sitemaps/1999-kovo-21-seimo-pakartotiniai.results.json
+# needs	2000-kovo-19-savivaldybiu-tarybu	sitemaps/2000-kovo-19-savivaldybiu-tarybu.json,sitemaps/2000-kovo-19-savivaldybiu-tarybu.results.json
+# needs	2000-seimo	sitemaps/2000-seimo.json,sitemaps/2000-seimo.results.json
+# needs	2002-gruodzio-22-savivaldybiu-tarybu	sitemaps/2002-gruodzio-22-savivaldybiu-tarybu.json,sitemaps/2002-gruodzio-22-savivaldybiu-tarybu.results.json
+# needs	2002-prezidento	sitemaps/2002-prezidento.json,sitemaps/2002-prezidento.results.json
+# needs	2003-birzelio-15-seimo-nauji	sitemaps/2003-birzelio-15-seimo-nauji.json,sitemaps/2003-birzelio-15-seimo-nauji.results.json
+# needs	2004-ep	sitemaps/2004-ep.json,sitemaps/2004-ep.results.json
+# needs	2004-prezidento	sitemaps/2004-prezidento.json,sitemaps/2004-prezidento.results.json
+# needs	2004-seimo	sitemaps/2004-seimo.json,sitemaps/2004-seimo.results.json
+# needs	2005-lapkricio-20-seimo-kedainiai	sitemaps/2005-lapkricio-20-seimo-kedainiai.json,sitemaps/2005-lapkricio-20-seimo-kedainiai.results.json
+# needs	2007-spalio-7-seimo-dzukija	sitemaps/2007-spalio-7-seimo-dzukija.json,sitemaps/2007-spalio-7-seimo-dzukija.results.json
+# needs	2007-vasario-25-savivaldybiu	sitemaps/2007-vasario-25-savivaldybiu.json,sitemaps/2007-vasario-25-savivaldybiu.results.json
+# needs	2008-seimo	sitemaps/2008-seimo.json,sitemaps/2008-seimo.results.json
+# needs	2009-ep	sitemaps/2009-ep.json,sitemaps/2009-ep.results.json
+# needs	2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai	sitemaps/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai.json,sitemaps/2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai.results.json
+# needs	2009-prezidento	sitemaps/2009-prezidento.json,sitemaps/2009-prezidento.results.json
+# needs	2011-vasario-13-seimo-marijampole	sitemaps/2011-vasario-13-seimo-marijampole.json,sitemaps/2011-vasario-13-seimo-marijampole.results.json
+# needs	2011-vasario-27-savivaldybiu	sitemaps/2011-vasario-27-savivaldybiu.json,sitemaps/2011-vasario-27-savivaldybiu.results.json
+# needs	2012-seimo	sitemaps/2012-seimo.json,sitemaps/2012-seimo.results.json
+# needs	2013-kovo-3-seimo-birzai-zarasai-ukmerge	sitemaps/2013-kovo-3-seimo-birzai-zarasai-ukmerge.json,sitemaps/2013-kovo-3-seimo-birzai-zarasai-ukmerge.results.json
+# needs	2014-ep	sitemaps/2014-ep.json,sitemaps/2014-ep.results.json
+# needs	2014-prezidento	sitemaps/2014-prezidento.json,sitemaps/2014-prezidento.results.json
+# needs	2015-birzelio-21-pakartotiniai-silutes	sitemaps/2015-birzelio-21-pakartotiniai-silutes.json,sitemaps/2015-birzelio-21-pakartotiniai-silutes.results.json
+# needs	2015-birzelio-7-pakartotiniai-sirvintos-trakai	sitemaps/2015-birzelio-7-pakartotiniai-sirvintos-trakai.json,sitemaps/2015-birzelio-7-pakartotiniai-sirvintos-trakai.results.json
+# needs	2015-birzelio-7-seimo-varena-eisiskes	sitemaps/2015-birzelio-7-seimo-varena-eisiskes.json,sitemaps/2015-birzelio-7-seimo-varena-eisiskes.results.json
+# needs	2015-kovo-1-savivaldybiu	sitemaps/2015-kovo-1-savivaldybiu.json,sitemaps/2015-kovo-1-savivaldybiu.results.json
+# needs	2015-kovo-1-seimo-zirmunai	sitemaps/2015-kovo-1-seimo-zirmunai.json,sitemaps/2015-kovo-1-seimo-zirmunai.results.json
+# needs	2015-lapkricio-8-telsiu-mero	sitemaps/2015-lapkricio-8-telsiu-mero.json,sitemaps/2015-lapkricio-8-telsiu-mero.results.json
+# needs	2016-seimo	sitemaps/2016-seimo.json
+# needs	2017-balandzio-23-meru	sitemaps/2017-balandzio-23-meru.json
+# needs	2017-balandzio-23-seimo-anyksciai-panevezys	sitemaps/2017-balandzio-23-seimo-anyksciai-panevezys.json
+# needs	2017-rugsejo-10-marijampoles-mero	sitemaps/2017-rugsejo-10-marijampoles-mero.json
+# needs	2018-rugsejo-16-seimo-zanavykai	sitemaps/2018-rugsejo-16-seimo-zanavykai.json
+# needs	2019-ep	sitemaps/2019-ep.json
+# needs	2019-kovo-3-savivaldybiu-tarybu	sitemaps/2019-kovo-3-savivaldybiu-tarybu.json
+# needs	2019-prezidento	sitemaps/2019-prezidento.json
+# needs	2019-rugsejo-8-seimo	sitemaps/2019-rugsejo-8-seimo.json
+# needs	2020-seimo	sitemaps/2020-seimo.json
+# needs	2021-balandzio-11-radviliskio-mero	sitemaps/2021-balandzio-11-radviliskio-mero.json
+# needs	2021-spalio-10-meru	sitemaps/2021-spalio-10-meru.json
+# needs	2023-geguzes-7-visagino-mero	sitemaps/2023-geguzes-7-visagino-mero.json
+# needs	2023-kovo-5-savivaldybiu-tarybu-ir-meru	sitemaps/2023-kovo-5-savivaldybiu-tarybu-ir-meru.json
+# needs	2023-rugsejo-3-seimo-raseiniai-kedainiai	sitemaps/2023-rugsejo-3-seimo-raseiniai-kedainiai.json
+# needs	2023-spalio-8-kupiskio-mero	sitemaps/2023-spalio-8-kupiskio-mero.json
+# needs	2024-ep	sitemaps/2024-ep.json
+# needs	2024-prezidento	sitemaps/2024-prezidento.json
+# needs	2024-seimo	sitemaps/2024-seimo.json
+# needs	2025-kovo-16-meru	sitemaps/2025-kovo-16-meru.json
 fixture	sha256
 1996-spalio-20-seimo/andriukaitis-vytenis-povilas	df02950fb38b0d43d7b19a98911d42314872754aaa8f721e704b85747582dcfb
 1996-spalio-20-seimo/asmolkov-vasilij	6818933f11885e1a72d7eb979e9c8088b5399fe805504eb5f956c8bb255580df

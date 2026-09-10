@@ -167,14 +167,43 @@ class FixtureRecordHashes(unittest.TestCase):
     than about the record as a whole. `tests/fixture-record-hashes.tsv` is
     73 KiB that closes it — one sha256 per tracked candidate, over the parse
     content with `provenance` dropped.
+
+    Nine elections are outside it on a clone, and the manifest says so in its
+    own `# needs` lines: their crawl plan or results file is over the 1 MiB
+    limit on a tracked unit, so a clone parses their fixtures without the
+    elected join and gets different records. Until issue #150 one of those
+    absences raised and failed this test on every CI run, while another passed
+    silently as ten changed hashes. 569 of the 649 fixtures are checked on a
+    clone, all 649 where the corpus was scraped.
     """
 
     def test_the_manifest_is_what_the_parsers_produce(self):
-        measured, errors = hashes.measure(list(hashes.PARSABLE_ELECTION_IDS), REPO_ROOT)
+        # An election whose parse reads a local-data input this checkout does
+        # not carry cannot reproduce its records here, so it is skipped rather
+        # than compared — the manifest's `# needs` lines say which inputs each
+        # election read when it was written. Two are over the 1 MiB limit on a
+        # tracked unit and so absent from every clone:
+        # `sitemaps/1997-kovo-23-savivaldybiu-tarybu.json` (2.9 MB), whose
+        # absence *raised* and failed this test on every CI run, and
+        # `sitemaps/2000-kovo-19-savivaldybiu-tarybu.results.json` (3.5 MB),
+        # whose absence was quieter and worse — the parse dropped the elected
+        # join and ten fixtures hashed differently (issue #150).
+        needs = hashes.read_needs(REPO_ROOT / hashes.MANIFEST)
+        self.assertEqual(len(needs), len(hashes.PARSABLE_ELECTION_IDS))
+        measured, errors, absent = hashes.measure(
+            list(hashes.PARSABLE_ELECTION_IDS), REPO_ROOT, needs
+        )
         self.assertEqual(errors, [])
+        # Nine elections' crawl plans (and for five of them their results
+        # files) are over the 1 MiB limit on a tracked unit, so no clone can
+        # reproduce their records: the five municipal generals from 2007 on,
+        # the 1997, 2000 and 2002 municipal ones, and 2012-seimo. Everything
+        # else is checked wherever the suite runs — 569 of the 649 fixtures on
+        # a clone, all 649 on the scraping machine.
+        self.assertLessEqual(len(absent), 9, absent)
         manifest = hashes.read_manifest(REPO_ROOT / hashes.MANIFEST)
         self.assertTrue(manifest, f"{hashes.MANIFEST} is missing or empty")
-        findings = hashes.compare(measured, manifest)
+        findings = hashes.compare(measured, manifest, absent)
         self.assertEqual(
             findings,
             [],
