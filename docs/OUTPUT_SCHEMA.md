@@ -22,7 +22,7 @@ Records are written as:
 
 ## Top-Level Record
 
-Each record contains:
+Every record contains these seven:
 
 - `electionId`
 - `candidateId`
@@ -31,6 +31,20 @@ Each record contains:
 - `rawData`
 - `normalized`
 - `provenance`
+
+and most carry one or both of these two. A full-corpus root-key census finds
+exactly three key-sets — the seven (7,336 records, 8 elections), the seven
+plus `kandidatavimas` (78,259, 44), and the seven plus `kandidatavimas` and
+`candidateNote` (27,478, 4) — and `tests/test_record_shape.py` holds this
+list against `data/`:
+
+- `kandidatavimas` — the candidacy block (appendix below): a **root** field on
+  105,737 records across 47 of the 55 elections. The exceptions are the
+  1996–1999 archive family, whose eight elections carry the same block
+  *inside* `normalized`; see the section list below.
+- `candidateNote` — VRK's note beside the candidate, on 27,478 records of
+  `2016-seimo`, `2019-kovo-3-savivaldybiu-tarybu`,
+  `2023-kovo-5-savivaldybiu-tarybu-ir-meru` and `2025-kovo-16-meru`.
 
 `source` currently includes:
 
@@ -63,8 +77,12 @@ corpus by `scripts/backfill_provenance.py`:
   runs).
 - `schemaVersion` — `1`.
 
-About 0.4 % of records have no retained primary page anywhere; they carry no
-`provenance` block rather than a fabricated one.
+Every one of the 113,073 records carries the block, with exactly these five
+keys and `schemaVersion` 1 throughout. A record whose primary page is not
+retained anywhere would carry no block rather than a fabricated one — that is
+the policy, and as of the 2026-09 corpus no record is in that state. The
+field that *is* routinely absent is `parserCommit`: `null` on 55,972 records
+(49.5 %), which were written before provenance existed.
 
 ## `rawData`
 
@@ -131,25 +149,50 @@ Expected section order in current implementation:
 
 `normalized` stores analysis-ready structures.
 
-Expected section order in current implementation:
+Section order, over all 113,073 records: eleven names in one order, of which
+each record carries a subset. Nineteen distinct sequences exist and every one
+of them is this list with names left out (issue #144, which also found the
+four sections below that the list used to omit):
 
 1. `profilis`
 2. `anketa`
-3. `biografija`
-4. `turto-ir-pajamu-deklaracijos`
-5. `privaciu-interesu-deklaracija`
-6. `politines-kampanijos-dalyvio-duomenys` (optional)
-7. `kita`
+3. `kandidatavimas` — the 1996–1999 archive family only, 7,336 records of
+   eight elections. Every other election carries this block at the *root*
+   instead; see "Top-Level Record" above.
+4. `gyvenamoji-vieta` — the six 1996–1999 Seimas elections, 950 records.
+5. `biografija`
+6. `programa` — `2002-prezidento` and `2004-prezidento`, 21 records.
+7. `turto-ir-pajamu-deklaracijos`
+8. `privaciu-interesu-deklaracija`
+9. `patiketiniai` — `2014-prezidento` and `2019-prezidento`, 16 records
+   (a presidential candidate's trustees).
+10. `politines-kampanijos-dalyvio-duomenys` (optional)
+11. `kita`
 
 Notes:
 
 - Keys are source-close and often Lithuanian.
-- Section order is fixed, but a section can be absent when the source page
-  never published its tab: `gintaras-binkauskas-2016-seimo` has no
-  `biografija`, and `jonas-korsakas-2020-seimo` has neither `biografija` nor
-  `turto-ir-pajamu-deklaracijos`. Those are the only two such records in the
-  corpus, but a consumer parser should treat every section as optional rather
-  than crash on the promised order.
+- Section order is fixed, in the order listed above. Until issue #144 the two
+  modules of the 1996–1999 family disagreed about where their own
+  `kandidatavimas` goes: `scraper/shared/savivaldybiu_archive_1997.py`
+  emitted `profilis|kandidatavimas|anketa` for 6,386 records while
+  `scraper/shared/seimo_archive_1990s.py` emitted
+  `profilis|anketa|kandidatavimas` for 950. They agree now, and
+  `tests/test_record_shape.py` holds the order over every record in the
+  corpus.
+- **A section can be absent** when the source page never published its tab, so
+  a consumer parser should treat every section as optional rather than crash
+  on the promised order. Counting only the elections that publish a section on
+  more than 99 % of their records — elsewhere its absence is the era, not a
+  gap — eleven records lose one: `biografija` on
+  `gintaras-binkauskas-2012-seimo`, `gintaras-binkauskas-2016-seimo` and
+  `jonas-korsakas-2020-seimo`; `turto-ir-pajamu-deklaracijos` on
+  `stasys-stankus-205466`, `saulius-jancys-205870` and
+  `mindaugas-kucinskas-205871` of `2002-gruodzio-22`, on
+  `genovaite-ziobakiene-2004-seimo`, on
+  `darius-juodeska-72579-2015-kovo-1-savivaldybiu` and again on
+  `jonas-korsakas-2020-seimo`; and `politines-kampanijos-dalyvio-duomenys` on
+  `algimantas-matulevicius-2009-ep` and `valdemar-tomasevski-2009-ep`.
 - Exactly three placeholder strings normalize to null: `Nenurodė`, `-` and the
   empty string. Candidate-typed "none" variants survive verbatim by design —
   an answered "none" is an answer, not an unanswered field. The variants that
