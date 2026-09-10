@@ -509,17 +509,28 @@ and none of it is canonicalised by the registry.
   "photo" is a ZIP archive, stored as `.zip`, and a handful of portraits VRK
   serves as PNG bytes under a `.jpg` URL are stored as `.png`, because the
   extension follows the bytes.
-- **20 values still hold a replacement character, and that is VRK's.**
-  `U+FFFD` reached the corpus in 203 values. Fetching one of those pages live
-  returns the replacement character in VRK's own bytes, so the original was
-  destroyed upstream and no re-decode recovers it. 30 of them were the whole
-  value (a NUL byte where a biography should be) and normalize to `null`; 153
-  stood where a Lithuanian opening quote belongs, closed by a `"` that proves
-  the pair, and are restored to `„` (`AB „Lietuvos geležinkeliai"`). The
-  remaining **20 have nothing to prove what they were and are left as
-  published** rather than guessed at — 9 in `2000-seimo`, 9 in `2004-seimo`,
-  2 in `2004-ep`. `tests/test_corpus_value_hygiene.py` pins that 20 so it
-  cannot grow.
+- **6 values still hold a replacement character, and it is never a
+  recoverable quote.** `U+FFFD` reached the corpus in 203 values. Fetching one of those
+  pages live returns the character in VRK's own bytes, so the original was
+  destroyed upstream and no re-decode recovers it — but the *character it
+  stood for* is often recoverable from the surviving half of a pair, and 194
+  of the 203 now are: 30 were the whole value (a NUL byte where a biography
+  should be) and normalize to `null`; 153 opened a phrase a closing quote
+  ends and are restored to `„` (`AB „Lietuvos geležinkeliai"`); 8 *closed*
+  one an opening glyph begins; 2 opened one VRK followed with a space; 1 was
+  a bracket.
+  What is left is two classes. Five `2000-seimo` biographies hold a
+  destroyed *letter* — a `š` or `Š` inside a Lithuanian word (`i�rinktas`,
+  `Roki�kio`, `vir�ininku`), on pages where the same words appear correctly
+  elsewhere; a rule that turned an in-word replacement into `š` would be
+  right on all five and wrong the first time the lost byte was a `ž`. And
+  one `2004-seimo` biography holds four closing quotes whose *opening*
+  partner VRK also lost, to a hyphen (`-Termoizoliacija�`, `-Lietuvos
+  rytas�`) — there is no surviving quote glyph to pair against, and "a
+  hyphen opens a quotation" is not a rule this corpus can afford. Both are
+  **left as published**, and `tests/test_corpus_value_hygiene.py` pins the 6
+  so the class cannot grow. (The old account called all 20 survivors quotes
+  with no closing partner, which was false for every one — issue #164.)
 - **`VšĮ` is not a parsing bug.** 20,651 normalized values contain a
   lowercase letter immediately followed by an uppercase one, which reads like
   a lost line break. It is not: 13,158 of them are the legal-form

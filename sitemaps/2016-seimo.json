@@ -1,7 +1,7 @@
 {
   "electionId": "2016-seimo",
   "sourceUrl": "https://www.vrk.lt/2016-seimo/kandidatai?srcUrl=/rinkimai/102/rnk426/kandidatai/lrsKandidataiPilnasSarasas.html",
-  "generatedAt": "2026-08-18T10:15:58+00:00",
+  "generatedAt": "2026-09-10T01:44:48+00:00",
   "stats": {
     "rows": 1415,
     "extracted": 1415,
@@ -2826,6 +2826,7 @@
     },
     {
       "candidateName": "Kęstas KOMSKIS",
+      "candidateNote": "panaikinta kandidato registracija",
       "candidateId": "kestas-komskis",
       "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/102/rnk426/kandidatai/lrsKandidatasAnketa_rkndId-1102192.html"
     },
@@ -4711,6 +4712,7 @@
     },
     {
       "candidateName": "Juras POŽELA",
+      "candidateNote": "mirė",
       "candidateId": "juras-pozela",
       "url": "https://www.vrk.lt/statiniai/puslapiai/rinkimai/102/rnk426/kandidatai/lrsKandidatasAnketa_rkndId-1103780.html"
     },

@@ -1814,13 +1814,20 @@ All of these are verbatim from VRK's own pages (verified present in
   (`UAB "inChase"`, `DnB`, `GmbH`, `StepArc`) and VRK's own typing (`kAUNO`,
   `šIAULIŲ`, `Partija tTvarka ir teisingumas`). Inserting spaces there would
   corrupt 13,000 institution names to fix nothing.
-- 20 values keep a `U+FFFD` replacement character. VRK serves it: fetching a
+- 6 values keep a `U+FFFD` replacement character. VRK serves it: fetching a
   2004 page live on 2026-08-29 returns the character in its own bytes, so the
-  original was destroyed upstream and no re-decode recovers it. These 20 are
-  the ones with no closing quote to say what the character stood for; the 153
-  that have one are restored to the Lithuanian opening quote `„`, and the 30
-  values that were *only* the character (a NUL byte where a biography should
-  be, 28 of them in `2008-seimo`) normalize to `null`.
+  original was destroyed upstream and no re-decode recovers it. What the
+  character *stood for* is recoverable wherever the surviving half of a pair
+  proves it, and 194 of the 203 now are: 153 opening quotes restored to `„`,
+  8 closing ones, 2 openings VRK followed with a space, 1 bracket, and the 30
+  that were *only* the character (a NUL byte where a biography should be, 28
+  of them in `2008-seimo`) normalizing to `null`. The 6 that remain are five
+  `2000-seimo` biographies holding a destroyed *letter* — a `š` or `Š` inside
+  a Lithuanian word — and one `2004-seimo` biography whose four closing
+  quotes lost their opening partner to a hyphen as well, so nothing survives
+  to pair against. Both left as published rather than guessed at (issue #164,
+  which found the previous "no closing quote" account false for all 20 of its
+  survivors).
 
 ### Per-election schemas are deliberately not identical
 

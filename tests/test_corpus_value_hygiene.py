@@ -45,11 +45,27 @@ MONEY_COLUMNS = ("sandorio-suma", "sandorio-suma-lt", "suma-skaiciais")
 #: The comma-headed columns, which are two values and must not come back as one.
 PAIRED_COLUMNS = ("dovana-data", "paslauga-data")
 
-#: Values still carrying the replacement character, measured 2026-08-29. VRK
-#: serves it: fetching a 2004 page live returns U+FFFD in its own bytes. These
-#: are the ones with no closing quote to prove what the character stood for --
-#: 9 in 2000-seimo, 9 in 2004-seimo, 2 in 2004-ep.
-REPLACEMENT_CHARACTER_VALUES = 20
+#: Values still carrying the replacement character, re-measured after issue
+#: #164: 6 values holding 9 characters, in two classes and neither of them a
+#: recoverable quote.
+#:
+#: Five are a destroyed *letter* -- `š` or `Š` inside a Lithuanian word, on
+#: five 2000-seimo biographies (`i<FFFD>rinktas`, `Auk<FFFD>ciausiosios`,
+#: `<FFFD>iauliuose`, `Roki<FFFD>kio`, `vir<FFFD>ininku`), pages where the
+#: same words appear correctly elsewhere. A rule that turned an in-word
+#: replacement into `š` would be right on all five and wrong the first time
+#: the lost byte was a `ž`.
+#:
+#: The sixth is one 2004-seimo biography whose four closing quotes lost their
+#: *opening* partner too -- VRK rendered that one as a hyphen
+#: (`-Termoizoliacija<FFFD>`, `-Lietuvos rytas<FFFD>`), so there is no
+#: surviving quote glyph to pair against, and "a hyphen opens a quotation"
+#: is not a rule this corpus can afford.
+#:
+#: The pin was 20, and the four places that described those 20 all called
+#: them quotes with no closing partner -- false for every one: 11 were
+#: repairable and the rest were never quotes.
+REPLACEMENT_CHARACTER_VALUES = 6
 
 #: Values with a lowercase-uppercase junction, measured 2026-08-29. 13,158 of
 #: them are the legal-form abbreviation `VšĮ`; the rest are company names and

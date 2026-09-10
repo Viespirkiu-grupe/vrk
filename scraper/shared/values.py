@@ -32,23 +32,46 @@ The four rules, and what each was measured against on 2026-08-29:
   a NUL byte in VRK's own page, which the HTML parser renders as a replacement
   character; there is no biography behind it. `is_missing_marker`.
 
-And one repair. 173 further values held an embedded `U+FFFD` where a
-Lithuanian opening quote belongs — `AB �Lietuvos geležinkeliai"`, 152 of them
-in `2004-seimo`. That one is **not** ours to re-decode: fetching the page
-live on 2026-08-29 returns the replacement character in VRK's own bytes, so
-the original was destroyed upstream and no encoding recovers it. Where the
-character opens a phrase that a `"` closes, the pair is unambiguous and
-`repair_lost_open_quote` restores the opening `„` — 153 of the 173. The other
-20 have no closing quote to prove what they were and are left exactly as VRK
-published them; `rawData` keeps the replacement character either way.
+And one repair. 173 further values held an embedded `U+FFFD` where
+punctuation belongs — `AB �Lietuvos geležinkeliai"`, 152 of them in
+`2004-seimo`. The character itself is **not** ours to re-decode: fetching the
+page live on 2026-08-29 returns it in VRK's own bytes, so the original was
+destroyed upstream and no encoding recovers it. What *can* be recovered is
+the character the surviving half of a pair proves, and
+`repair_lost_punctuation` does four such repairs (issue #164 measured the
+survivors and found the old "no closing quote to prove what it stood for"
+account false for all 20 of them):
+
+* an **opening** quote before a phrase a closing one ends — 153 of the 173;
+* a **closing** quote after a phrase an opening one begins — 15 more, whose
+  surviving glyph decides whether `“` or `"` is written back;
+* an opening quote VRK followed with a space — 2, skipped by the old rule's
+  `\S` lookahead;
+* an opening **bracket** whose closing one is a few characters away — 1.
+
+That leaves **6 values holding 9 characters**, and not one of them is a
+recoverable quote. Five are a destroyed *letter*, `š` or `Š` inside a
+Lithuanian word (`i�rinktas`, `Roki�kio`, `vir�ininku`), on 2000-seimo pages
+where the same words appear correctly elsewhere — a rule that turned an
+in-word replacement into `š` would be right on all five and wrong the first
+time the lost byte was a `ž`. The sixth is one 2004-seimo biography whose
+four closing quotes lost their *opening* partner too, to a hyphen
+(`-Termoizoliacija�`, `-Lietuvos rytas�`): nothing survives to pair against,
+and "a hyphen opens a quotation" is not a rule this corpus can afford.
+`rawData` keeps the replacement character either way.
 
 `clean_value` composes the string rules in the order a normalizer wants them,
-and is what the era `_normalize_text_value` functions call.
+and is what the era `_normalize_text_value` functions call. Two rules sit
+*outside* it on purpose — `is_refusal` and `candidate_status_note` — because
+`clean_value`'s output also lands in `rawData`, which the docs promise keeps
+the text VRK published; a refusal is a word and a status marker is a name's
+suffix, and both are filtered where a normalizer decides meaning.
 """
 
 from __future__ import annotations
 
 import re
+import unicodedata
 from typing import Any
 
 #: Separators a value may end with and mean nothing by.
@@ -57,20 +80,59 @@ TRAILING_SEPARATORS = ",;"
 REPLACEMENT_CHARACTER = "�"
 
 #: A value made only of these says "nothing here" — the empty string, the
-#: dash VRK prints for an unanswered field, and the replacement character a
-#: NUL byte in the page decodes to.
-_EMPTY_MARKS = f" \t\r\n-{REPLACEMENT_CHARACTER}"
+#: dash or dashes VRK prints for an unanswered field, the full stop or comma a
+#: candidate typed instead of an answer, and the replacement character a NUL
+#: byte in the page decodes to.
+#:
+#: The set was `" \t\r\n-�"`, which is why `"-"` nulled out and `"-,-"`
+#: did not: 207 punctuation-only values survived in 194 records across 14
+#: elections and 39 (election, key) pairs — `"."` 89, `"-,-"` 73, `"-, -"` 28,
+#: `"–"` 7, plus `".."`, `"..."`, `"...."`, `",-"`, `"., ."`, `". ."`. Dash one
+#: half of question 16 and you got null; dash both and the template joined
+#: them with a comma and you got the string (issue #164,
+#: `jurij-avdejev-2012-seimo`). `is_missing_marker` only asks whether a value
+#: is *entirely* marks, so `"Vilnius, LT"` is untouched.
+_EMPTY_MARKS = f" \t\r\n-,.;–—{REPLACEMENT_CHARACTER}"
+
+#: VRK's own refusal token, byte-identical on 185,939 occurrences across 43
+#: elections. Every era's normalizer folds it to null except the 1996 Seimas
+#: archive card, whose 20 survivors reached `normalized` — 18 as a marital
+#: status and, worse, 2 as an entry of `anksciau-isrinktas`, so the corpus
+#: asserted a prior mandate for two candidates who declined to answer
+#: (issue #164). Not in `_EMPTY_MARKS`, deliberately: `clean_value`'s job is
+#: whitespace and punctuation, and a refusal is a *word* — the distinction
+#: is what keeps `rawData` holding the published text.
+REFUSAL_TOKENS = frozenset({"nenurode", "nenurodė", "nenurodyta", "nenurodo"})
 
 # The replacement character stands in for an opening quote only when it opens
-# something: a non-space follows it, and a closing quote comes later in the
-# value. `AB <FFFD>Lietuvos geležinkeliai"` matches; a lone `<FFFD>` does not,
-# and neither does one with nothing quoted after it.
-_LOST_OPEN_QUOTE = re.compile(rf"{REPLACEMENT_CHARACTER}(?=\S[^\"“”]*[\"“”])")
+# something: a closing quote comes later in the value, and at most one space
+# separates the two. `AB <FFFD>Lietuvos geležinkeliai"` matches, and so does
+# `AB <FFFD> Vakarų skirstomieji tinklai"` — VRK left a space after the quote
+# on two 2004-seimo values and the `\S` this used to require skipped both
+# (issue #164). A lone `<FFFD>` does not match, nor one with nothing quoted
+# after it.
+_LOST_OPEN_QUOTE = re.compile(rf"{REPLACEMENT_CHARACTER}(?= ?\S[^\"“”]*[\"“”])")
 
-#: Lithuanian opens a quotation low and closes it high. VRK's surviving
-#: closing character is a plain `"`, which is what it published; only the
-#: destroyed opening one is restored.
+# And the mirror: the replacement character *closes* a quotation whose
+# opening glyph is earlier in the same value. `"La-Nika Baltic Ltd<FFFD>`,
+# `„Vilniaus pirmoji autotransporto įmonė<FFFD>` — 15 of the corpus's 30
+# broken characters, every one of them the closing half of a pair the value
+# itself proves (issue #164). The opening glyph decides which closing one to
+# write, so the two forms are matched separately.
+_LOST_CLOSE_AFTER_LOW = re.compile(rf"(?<=„)([^„“\"]+){REPLACEMENT_CHARACTER}")
+_LOST_CLOSE_AFTER_STRAIGHT = re.compile(rf"(?<=\")([^\"„“]+){REPLACEMENT_CHARACTER}")
+
+# `Tėvynės liaudies partija <FFFD>TLP)` — an opening bracket whose closing
+# one is right there. One value in the corpus.
+_LOST_OPEN_BRACKET = re.compile(rf"{REPLACEMENT_CHARACTER}(?=[^()]{{1,40}}\))")
+
+#: Lithuanian opens a quotation low and closes it high. Where VRK's surviving
+#: partner is a plain `"` the pair is written straight, and where it is `„`
+#: the Lithuanian pair is completed — in both directions the *published*
+#: glyph is kept and only the destroyed one is supplied.
 OPENING_QUOTE = "„"
+CLOSING_QUOTE = "“"
+STRAIGHT_QUOTE = '"'
 
 # A printed amount, with the currency where the value carries one: "22000
 # EUR", "75000 Eur", "15000 Ltl", and the bare "13000" of the columns that
@@ -113,20 +175,105 @@ def strip_trailing_separator(value: str) -> str:
     return stripped
 
 
-def repair_lost_open_quote(value: str) -> str:
-    """Restore the opening quote VRK's own encoding lost.
+def repair_lost_punctuation(value: str) -> str:
+    """Restore the punctuation VRK's own encoding lost, where the value proves
+    what it was.
 
-    Only where the replacement character opens a phrase that a closing quote
-    ends — see this module's docstring for why the rest are left alone.
+    Four shapes, all of them a replacement character whose partner survives in
+    the same value, so nothing is guessed:
+
+    * an **opening** quote before a phrase a closing quote ends —
+      `AB <FFFD>Lietuvos geležinkeliai"`, 153 of the corpus's original 173;
+    * a **closing** quote after a phrase an opening one begins —
+      `"La-Nika Baltic Ltd<FFFD>`, whose opening glyph decides whether the
+      Lithuanian `“` or the straight `"` is written back;
+    * an opening quote VRK followed with a **space**, which the old
+      `\\S` lookahead skipped;
+    * an opening **bracket** whose closing one is a few characters away.
+
+    What is left after this is the destroyed *letter* class — 12 characters on
+    nine 2000-seimo biographies, every one of them `š` or `Š` on the evidence
+    of the word it sits inside (`i<FFFD>rinktas`, `Roki<FFFD>kio`,
+    `vir<FFFD>ininku`). Those are not repaired: a rule that turned an in-word
+    replacement into `š` would be right on all twelve and wrong the first time
+    the lost byte was a `ž`. They are described for what they are instead —
+    the four places that used to call every survivor an unrecoverable *quote*
+    were wrong about all 20 (issue #164).
     """
     if REPLACEMENT_CHARACTER not in value:
         return value
-    return _LOST_OPEN_QUOTE.sub(OPENING_QUOTE, value)
+    value = _LOST_OPEN_QUOTE.sub(OPENING_QUOTE, value)
+    value = _LOST_CLOSE_AFTER_LOW.sub(rf"\1{CLOSING_QUOTE}", value)
+    value = _LOST_CLOSE_AFTER_STRAIGHT.sub(rf"\1{STRAIGHT_QUOTE}", value)
+    return _LOST_OPEN_BRACKET.sub("(", value)
+
+
+#: The name this repair had when it only did the opening quote.
+repair_lost_open_quote = repair_lost_punctuation
 
 
 def is_missing_marker(value: str) -> bool:
     """Is this value nothing but the marks a page leaves where a value isn't?"""
     return not value.strip(_EMPTY_MARKS)
+
+
+#: What a trailing parenthetical on a *listing* name means, when it means
+#: something about the candidate rather than about the ballot.
+#:
+#: Measured across every retained listing page of all 55 elections
+#: (issue #164): 25 distinct trailing parentheticals, and exactly six
+#: occurrences are candidate status markers — "išbrauktas - Seimo nutarimu"
+#: ×2, "išbraukta - Seimo nutarimu" ×2, "panaikinta kandidato registracija",
+#: "mirė". The other 24 forms are about the ballot, not the person: the
+#: 2016 constituency flags `(D)` and `(V)`, party and coalition names
+#: ("liberalai", "socialliberalai"), the mayoral role marker
+#: ("kandidatas į savivaldybės merus"), list numbers ("Nr.6") and page
+#: furniture. A broad "keep any trailing parenthetical" rule reads 143 notes
+#: out of the 2016 listing where there are two.
+CANDIDATE_STATUS_MARKERS = (
+    "isbrauktas",
+    "isbraukta",
+    "panaikinta kandidato registracija",
+    "mire",
+)
+
+_TRAILING_PARENTHETICAL = re.compile(r"\(([^()]{1,64})\)\s*$")
+
+
+def candidate_status_note(raw_name: str) -> str:
+    """The status a listing name's trailing parenthetical states, or "".
+
+    The candidate page leaves this line blank on every election that prints
+    it, so the listing is the only place it exists — and the name cleaners
+    strip it. Two 2016-seimo candidates lost theirs entirely: the corpus said
+    a candidate who died before polling day and one whose registration was
+    revoked were ordinary losing candidates (issue #164).
+    """
+    match = _TRAILING_PARENTHETICAL.search(" ".join(str(raw_name).split()))
+    if match is None:
+        return ""
+    note = match.group(1).strip()
+    folded = _fold_marker(note)
+    return note if any(folded.startswith(m) for m in CANDIDATE_STATUS_MARKERS) else ""
+
+
+def _fold_marker(text: str) -> str:
+    """Lower-cased and diacritic-free, for matching a marker as a phrase."""
+    return "".join(
+        c
+        for c in unicodedata.normalize("NFD", text.lower())
+        if not unicodedata.combining(c)
+    )
+
+
+def is_refusal(value: Any) -> bool:
+    """Is this value VRK's own "I decline to answer" token?
+
+    Applied at the normalizer boundary, not inside `clean_value`: a refusal is
+    a word rather than punctuation, and `clean_value`'s output is also what
+    lands in `rawData`, which the docs promise keeps the text VRK published.
+    """
+    return isinstance(value, str) and value.strip().lower() in REFUSAL_TOKENS
 
 
 def clean_value(value: str) -> str | None:

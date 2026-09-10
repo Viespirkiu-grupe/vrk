@@ -93,6 +93,7 @@ from scraper.shared.seimo_archive_1990s_results import (
     candidate_id_from_url,
     load_results_details,
 )
+from scraper.shared.values import is_refusal
 
 VRK_STATINIAI_BASE = "https://www.vrk.lt/statiniai/puslapiai/n/rinkimai/"
 
@@ -912,7 +913,11 @@ def build_candidate_record(
         "pagrindine-darboviete": personal["mainWorkplace"] or None,
         "visuomenine-veikla": personal["publicActivity"] or None,
         "kita-apie-save": personal["aboutSelf"] or None,
-        "seimine-padetis": personal["familyStatus"] or None,
+        # VRK's refusal token is a word, not punctuation, so `clean_value`
+        # leaves it alone by design (`rawData` keeps the published text). It
+        # reached `normalized` on 18 of this election's records as a marital
+        # status the candidate declined to state (issue #164).
+        "seimine-padetis": None if is_refusal(personal["familyStatus"]) else (personal["familyStatus"] or None),
         "sutuoktinio-vardas-pavarde": spouse,
         "vaiku-vardai-pavardes": children,
         "seimos-nariai": personal["familyMembers"],

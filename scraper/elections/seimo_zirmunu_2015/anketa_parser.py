@@ -424,9 +424,11 @@ def _parse_anketa_cell(cell: Tag | None) -> dict[str, Any]:
 
 def _normalize_answer_value(value: str) -> str | None:
     # The page template joins workplace and position with a comma, so an
-    # empty pair renders as a bare "," — an artifact, not an answer.
-    if isinstance(value, str) and not value.strip(" ,"):
-        return None
+    # empty pair renders as a bare "," — an artifact, not an answer. This is
+    # `is_missing_marker`'s job since issue #164 widened `_EMPTY_MARKS` to
+    # cover it: the local rule here tested `value.strip(" ,")`, which caught
+    # the bare comma and not the `-,-` a candidate who dashed *both* halves
+    # produced, and the other 41 modules never had even that.
     return _normalize_text_value(value)
 
 

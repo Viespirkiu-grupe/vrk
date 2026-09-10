@@ -59,9 +59,15 @@ def _load_sitemap_entries(sitemap_path: Path) -> list[dict[str, str]]:
         if not candidate_name or not candidate_id or not url:
             continue
 
+        candidate_note = str(raw_entry.get("candidateNote", "")).strip()
         normalized_entries.append(
             {
                 "candidateName": candidate_name,
+                # The listing's status note, which only the listing carries
+                # (issue #164), and only where there is one -- the sitemap
+                # entry and this index block are held equal by
+                # tests/test_fixture_sitemap_agreement.py.
+                **({"candidateNote": candidate_note} if candidate_note else {}),
                 "candidateId": candidate_id,
                 "url": url,
             }
