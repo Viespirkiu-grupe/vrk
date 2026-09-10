@@ -128,6 +128,8 @@ Implemented commands:
 - `fetch-first-candidate-samples <election_id> [--sitemap ...] [--samples-root ...] [--allow-new-samples]`
 - `fetch-candidate-samples <election_id> --candidate-id <id> ... [--allow-new-samples]`
 - `parse-anketa-samples <election_id> [--candidate-id <id> ...] [--samples-root ...] [--output-root ...] [--anomalies-path ...]`
+- `build-results <election_id> [--samples-root ...]`
+- `anomalies-report [<election_id> ...] [--errors-only] [--update-baseline]`
 
 Full CLI usage and examples are documented in `docs/CLI_REFERENCE.md`.
 

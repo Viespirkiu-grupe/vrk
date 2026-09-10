@@ -370,7 +370,7 @@ python scripts/reparse_diff.py --full --jobs 8 --apply <id>
 
 It exits non-zero when any record differs, so "a parser change is not done
 until the gate is green" is checkable — see
-[ADDING_AN_ELECTION.md](ADDING_AN_ELECTION.md#7-changing-a-parser-that-already-has-a-corpus).
+[ADDING_AN_ELECTION.md](ADDING_AN_ELECTION.md#8-changing-a-parser-that-already-has-a-corpus).
 Without `--full` it re-parses each election's fixtures, which is fast enough to
 run on every change; `--full` re-parses all 113,073 records from
 `samples-full/` in about an hour on eight processes, offline. Its fixture mode
