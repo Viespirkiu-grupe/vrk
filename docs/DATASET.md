@@ -2085,22 +2085,21 @@ parser changed" — the distinction issue #89 was filed for.
   votes), Gerda Ivaškevičiūtė (61654, Vilnius, Jaunoji Lietuva position 31,
   92 votes) and Aleksandras Bukinas (53039, Vilnius, LLRA–Rusų aljansas
   coalition position 34, 239 votes). None was elected. They are in the
-  sitemap (16,403 entries) and in `.run-state/…/failed_ids.txt`, and have no
-  record (16,400); a record cannot be written without a candidate page.
+  sitemap (16,403 entries) and have no record (16,400); a record cannot be
+  written without a candidate page.
 - Likewise two 2000 municipal candidates: the March 2000 list pages carry
   their rows and the preference pages their votes, but `kandvl.htm-84814.htm`
   (Gintaras Binkauskas, Vilnius, Lietuvių nacionalinės partijos ir "Jaunosios
   Lietuvos" sąjungos list position 2, 1,198 preference votes) and
   `kandvl.htm-86936.htm` (Vilma Kalendauskaitė, Alytaus rajonas, TS list
   position 10, 42 votes) are 404s in VRK's archive. Neither was elected.
-  They are in the sitemap (9,881 entries) and `.run-state/…/failed_ids.txt`,
-  and have no record (9,879).
+  They are in the sitemap (9,881 entries) and have no record (9,879).
 - Likewise one 2002 municipal candidate: the Kauno miesto constituency page
   links Zita Vincentina Liubarskienė (asm_kod 158225, list 8 position 4) and
   the preference page carries her 1,019 votes and rank 4, but both her
   anketa and declaration pages are 404s on vrk.lt. She was not elected. She
-  is in the sitemap (10,139 entries) and `.run-state/…/failed_ids.txt`, and
-  has no record (10,138). Four parse warnings in the same election are
+  is in the sitemap (10,139 entries) and has no record (10,138). Four parse
+  warnings in the same election are
   source blanks, verified in the retained HTML: three declaration pages VRK
   published with an empty table cell and one anketa whose birth-date bold is
   empty; one of the 27 conviction disclosures carries an empty explanation
@@ -2116,8 +2115,17 @@ parser changed" — the distinction issue #89 was filed for.
   every tab of `Kandidatas<ID>/` is a 404 on vrk.lt — Antanas Katinas
   (1835, Skuodas, LVLS position 14), Genrika Rynkun (6582, Švenčionys,
   Lietuvos lenkų liaudies partija position 3) and Juzefa Bagdonienė (1336,
-  Varėna, LRLS position 15). None was elected. In the sitemap (13,422) and
-  `failed_ids.txt`, no record (13,419).
+  Varėna, LRLS position 15). None was elected. In the sitemap (13,422), no
+  record (13,419).
+
+**All nine now carry a `CandidateFetchFailed` event in their election's
+`anomalies.jsonl`** (issue #158). The `.run-state/…/failed_ids.txt` files
+this section used to point at were gitignored and died with the worktrees
+those scrapes ran in — only one of the four survived on the scraping
+machine, covering 3 of the 9 — so the corpus's own record of what it does
+not hold was a path to a file that no longer exists. `anomalies-report`
+reconciles every sitemap against `data/` on each run: a gap with an event
+against it is recorded and explained, and a gap with none exits 1.
 - ~~Three 2015 elections have not had their full scrapes yet~~ — completed
   2026-08-21 with `KEEP_SAMPLES=1`: 327 (Širvintos–Trakai), 366 (Šilutė)
   and 15,149 (the March municipal general, the corpus's third-largest

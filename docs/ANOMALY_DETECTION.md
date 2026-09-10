@@ -36,6 +36,39 @@ The baseline keys on `(election, event type, severity)`. Reclassifying an event
 is a real change to what stops an unattended run, so it shows up as a resolved
 row and a new one rather than passing as "the same 8,597 events".
 
+## What the corpus does not hold
+
+The report also reconciles every `sitemaps/<id>.json` against `data/<id>/`,
+because a candidate the corpus never got leaves no event of its own to read
+(issue #158). Nine candidates across four elections have no record —
+2000-kovo-19 2 of 9,881, 2002-gruodzio-22 1 of 10,139, 2007-vasario-25 3 of
+13,422, 2011-vasario-27 3 of 16,403 — every one a VRK 404, and all four
+gates passed with them absent.
+
+`scripts/run_election_batches.sh`'s `final_report` does diff the two, but
+only during a scrape and into a `.run-state/` directory that is gitignored;
+`docs/DATASET.md` pointed at those files for the explanation of each group,
+and only one of the four survived on the scraping machine — the rest died
+with the worktrees those scrapes ran in. So the nine now carry a
+`CandidateFetchFailed` event in their election's own `anomalies.jsonl`, which
+is what the runner writes for a candidate it could not get, and the
+reconciliation is a standing check: **a gap with such an event against it is
+recorded and explained; a gap with none exits 1**, whether or not there is a
+baseline, because it is about what the corpus holds rather than about what
+changed.
+
+Two things made those gaps easy to miss, and both are closed.
+`fetch-candidate-samples` returned 0 whatever it recorded — driven with every
+tab answering 503 it produced six `TabDownloadFailed` and one
+`TabDownloadPartial`, all `severity: error`, and exited 0, so the batch
+runner's `if ! fetch_candidate` never fired, the id went into `done_ids.txt`
+and the run reported "complete". It exits 1 on an error-severity event now,
+which is what a transient outage should mean: the candidate stays pending. And
+`final_report` no longer prints "complete" while an error-severity `fetch`
+event stands against the election, because a record on disk is not the same
+as a complete fetch — a candidate whose anketa landed and whose tabs all
+failed has one.
+
 ## Who writes the file
 
 `data/<election-id>/anomalies.jsonl` has several writers, and one rule holds

@@ -2560,6 +2560,23 @@ def main() -> int:
                 + ", ".join(f"{name}={count}" for name, count in sorted(by_type.items()))
                 + " (pass --anomalies-path to keep them)"
             )
+        # A fetch that recorded an error did not get the candidate, and the
+        # exit status has to say so (issue #158). It returned 0 whatever
+        # happened: driving this branch with every tab answering 503 produced
+        # six TabDownloadFailed plus one TabDownloadPartial, all
+        # severity=error, and still exited 0 — so
+        # `scripts/run_election_batches.sh`'s `if ! fetch_candidate` never
+        # fired, the id was appended to `done_ids.txt`, and the run reported
+        # "complete". What a transient outage should mean is that the
+        # candidate stays pending.
+        errors = [a for a in all_anomalies if a.get("severity") == "error"]
+        if errors:
+            print(
+                f"{len(errors)} fetch error(s): this candidate was not fetched."
+                " Exiting non-zero so the runner keeps it pending.",
+                file=sys.stderr,
+            )
+            return 1
         return 0
 
     if args.command == "parse-anketa-samples":
@@ -2663,6 +2680,22 @@ def _anomalies_report(
         + (": " + ", ".join(f"{name}={count}" for name, count in totals.items()) if totals else "")
     )
 
+    # What the corpus does *not* hold, which no gate asked about (issue
+    # #158): a candidate VRK's sitemap lists and `data/` has no record for.
+    # `final_report` in the batch runner diffs the two, but only during a
+    # scrape and into a gitignored `.run-state/` directory that died with the
+    # worktrees those scrapes ran in. A gap with a CandidateFetchFailed event
+    # against it is recorded and explained; a gap with none is a finding.
+    gaps = anomaly_report.sitemap_gaps(data_root.parent, election_ids)
+    unrecorded = anomaly_report.unrecorded_gaps(gaps, events)
+    if gaps:
+        held = sum(len(v) for v in gaps.values())
+        print(
+            f"{held} sitemap candidate(s) across {len(gaps)} election(s) have no record"
+            f"; {held - sum(len(v) for v in unrecorded.values())} recorded as"
+            f" {anomaly_report.FETCH_FAILED}"
+        )
+
     if update_baseline:
         if election_ids or errors_only:
             print(
@@ -2675,6 +2708,23 @@ def _anomalies_report(
         print(f"Baseline rewritten: {baseline_path} ({len(counts)} row(s))")
         return 0
 
+    if unrecorded:
+        print(
+            f"\n{sum(len(v) for v in unrecorded.values())} sitemap candidate(s) have no"
+            f" record and no {anomaly_report.FETCH_FAILED} event saying why:",
+            file=sys.stderr,
+        )
+        for election_id, candidates in sorted(unrecorded.items()):
+            for candidate_id in candidates[:20]:
+                print(f"    {election_id}  {candidate_id}", file=sys.stderr)
+            if len(candidates) > 20:
+                print(f"    ... and {len(candidates) - 20} more in {election_id}", file=sys.stderr)
+        print(
+            "    Fetch them, or record why they cannot be fetched:"
+            " `python -m scraper fetch-candidate-samples <election> --candidate-id <id>`",
+            file=sys.stderr,
+        )
+
     baseline = anomaly_report.read_baseline(baseline_path)
     if not baseline:
         print(
@@ -2682,7 +2732,9 @@ def _anomalies_report(
             " Write one with --update-baseline.",
             file=sys.stderr,
         )
-        return 0
+        # A gap is a finding whether or not there is a baseline: it is about
+        # what the corpus does not hold, not about what changed.
+        return 1 if unrecorded else 0
 
     # A narrowed run only ever sees part of the baseline, so it compares
     # against that part rather than reporting every unvisited row as resolved.
@@ -2709,7 +2761,7 @@ def _anomalies_report(
         for election, count, was in collapsed:
             print(f"    {election}  {was} -> {count}", file=sys.stderr)
 
-    if not new and not regressed and not collapsed:
+    if not new and not regressed and not collapsed and not unrecorded:
         print("\nNothing new against the baseline.")
         return 0
 
