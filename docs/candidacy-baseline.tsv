@@ -329,7 +329,7 @@ birth_date	2024-ep	100.0	ok
 birth_date	2024-prezidento	100.0	ok	
 birth_date	2024-seimo	100.0	ok	
 birth_date	2025-kovo-16-meru	100.0	ok	
-birth_place	1996-spalio-20-seimo	95.2	ok	
+birth_place	1996-spalio-20-seimo	95.3	ok	
 birth_place	1997-birzelio-29-svenciniu-tarybos-pakartotiniai	76.4	ok	
 birth_place	1997-gruodzio-21-seimo-pakartotiniai	75.0	ok	
 birth_place	1997-kovo-23-savivaldybiu-tarybu	9.3	partly-answered	as the gimimo-vieta concept: the 1997 municipal card prints the Gimimo vieta field on every record and it is empty on 5694 of 6276 (rawData.personal.birthPlace is "")

@@ -485,10 +485,18 @@ BIOGRAPHY_BIRTH_PLACE = re.compile(
 def extract_biography_birth_place(text: str) -> str | None:
     """Birthplace from the biography's opening sentence, nominative.
 
-    Measured over the family's 881 biographies: 571 name a place and 453 of
-    those resolve against the vocabulary (79%). The rest are villages,
-    parishes and regions the corpus has no nominative for, and are left out
+    A *fallback*, and a small one. When this was written the card's own
+    "Gimimo vieta" was not being read and the biography was these records'
+    only birthplace; issue #69 recovered the card field, and 873 of the 950
+    archive records take it from there. What is left for this is the 39 with
+    no card birthplace whose biography names a place, of which 19 resolve
+    against the vocabulary. The other 20 are villages, parishes and
+    Soviet-era regions the corpus has no nominative for ("Adutiškio
+    parapijoje", "Vakarų Kazachstane", "Nosotkos kaime"), and are left out
     rather than guessed at.
+
+    The docstring here used to say "571 name a place and 453 of those
+    resolve (79%)", which described the corpus before #69 (issue #155).
     """
     match = BIOGRAPHY_BIRTH_PLACE.search(text or "")
     if not match:
