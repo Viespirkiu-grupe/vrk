@@ -114,11 +114,13 @@ from scraper.shared.deklaracijos import (  # noqa: E402
 )
 from scraper.shared.education import LEVELS as EDUCATION_LEVELS  # noqa: E402
 from scraper.shared.education import issilavinimas  # noqa: E402
+from scraper.shared.kampanija import campaign_entry, donation_total_eur  # noqa: E402
 from scraper.shared.kandidatura import ROLE_COUNCIL, ROLE_MAYOR, kandidatura  # noqa: E402
 from scraper.shared.parties import entry as party_entry  # noqa: E402
 from scraper.shared.parties import partija  # noqa: E402
 from scraper.shared.provenance import parser_commit, utc_now_iso  # noqa: E402
 from scraper.shared.files import write_json  # noqa: E402
+from scraper.shared.tautybe import tautybe  # noqa: E402
 
 import field_coverage  # noqa: E402
 
@@ -415,6 +417,16 @@ def build_index(
     workplace_paths = [
         concept_map["concepts"][name]["paths"] for name in WORKPLACE_CONCEPTS
     ]
+    nationality_paths = (concept_map["concepts"].get("tautybe") or {}).get("paths", {})
+    # The concept x election availability matrix the coverage view draws
+    # (issue #162): per election, how many records answer each concept its
+    # form asks. Counted here because this pass reads every record anyway.
+    concept_names = list(concept_map["concepts"])
+    concept_filled: dict[tuple[str, str], int] = defaultdict(int)
+    records_per_election: dict[str, int] = defaultdict(int)
+    campaigns: dict[str, dict] = {}
+    nationality_labels: dict[str, str] = {}
+    unresolved_nationalities: set[str] = set()
     kind_of = {e["id"]: e.get("kind") for e in registry}
     people: dict[str, dict] = {}
     grouped: dict[str, list[dict]] = defaultdict(list)
@@ -473,6 +485,38 @@ def build_index(
                 if isinstance(value, str) and value.strip():
                     workplace = value.strip()
                     break
+            records_per_election[election_id] += 1
+            for concept_name, spec in concept_map["concepts"].items():
+                concept_path = spec["paths"].get(election_id)
+                if concept_path is not None and field_coverage.resolve_any(record, concept_path)[1]:
+                    concept_filled[(concept_name, election_id)] += 1
+            # The candidacy's campaign (issue #162): the participant key and
+            # its declared donations, shared by every candidacy of a party's
+            # list -- so the index carries the campaign once, with its
+            # candidacy count, and each candidacy points at it.
+            campaign_key, _, _, campaign = campaign_entry(record)
+            if campaign_key is not None:
+                shared = campaigns.setdefault(campaign_key, {"donations": None, "candidacies": 0})
+                shared["candidacies"] += 1
+                donations = donation_total_eur(campaign)
+                if donations is not None:
+                    shared["donations"] = donations
+            nationality_path = nationality_paths.get(election_id)
+            nationality = (
+                tautybe(field_coverage.concept_value(record, nationality_path))
+                if nationality_path is not None
+                else None
+            )
+            nationality_id = None
+            if nationality is not None:
+                # A spelling no group claims keeps a facet row of its own,
+                # keyed by the folded spelling, and fails the build below --
+                # like a municipality wording scraper/municipalities.json
+                # does not know.
+                nationality_id = nationality["id"] or f"?{nationality['label']}"
+                nationality_labels[nationality_id] = nationality["label"]
+                if nationality["id"] is None:
+                    unresolved_nationalities.add(nationality["label"])
             grouped[key].append(
                 {
                     "election": election_id,
@@ -509,6 +553,8 @@ def build_index(
                     "preferenceVotes": candidacy["pirmumo-balsai"],
                     "constituencyVotes": candidacy["apygardos-balsai"],
                     "constituency": candidacy["apygarda"],
+                    "campaign": campaign_key,
+                    "nationality": nationality_id,
                 }
             )
 
@@ -524,6 +570,19 @@ def build_index(
     municipality_index = {name: i for i, name in enumerate(municipality_list)}
     constituency_list = sorted(constituencies)
     constituency_index = {name: i for i, name in enumerate(constituency_list)}
+    # Campaigns and nationalities are interned the same way (issue #162). A
+    # campaign row carries its donations total and the number of candidacies
+    # sharing it, so no consumer can read a party's money as one candidate's;
+    # the nationalities are the census's group names, the largest first.
+    campaign_list = sorted(campaigns)
+    campaign_index = {key: i for i, key in enumerate(campaign_list)}
+    nationality_counts: dict[str, int] = defaultdict(int)
+    for fragments in grouped.values():
+        for fragment in fragments:
+            if fragment["nationality"]:
+                nationality_counts[fragment["nationality"]] += 1
+    nationality_list = sorted(nationality_counts, key=lambda n: (-nationality_counts[n], n))
+    nationality_index = {n: i for i, n in enumerate(nationality_list)}
 
     def best_birth(records: list[dict]) -> str | None:
         # Like the display name, the shown birth follows the latest word:
@@ -577,7 +636,9 @@ def build_index(
             # 13-tier ordinal (the top-level educationLevels list), "v" the
             # preference votes, "cv" the last-round votes of a single-winner
             # race and "ap" an index into the top-level constituencies list
-            # (issue #133: 29.5 million preference votes reached no consumer).
+            # (issue #133: 29.5 million preference votes reached no consumer),
+            # "ck" an index into the top-level campaigns list and "tb" into
+            # the nationalities list (issue #162).
             "e": [
                 {
                     "id": r["election"],
@@ -605,6 +666,8 @@ def build_index(
                     **({"v": r["preferenceVotes"]} if r["preferenceVotes"] is not None else {}),
                     **({"cv": r["constituencyVotes"]} if r["constituencyVotes"] is not None else {}),
                     **({"ap": constituency_index[r["constituency"]]} if r["constituency"] else {}),
+                    **({"ck": campaign_index[r["campaign"]]} if r["campaign"] else {}),
+                    **({"tb": nationality_index[r["nationality"]]} if r["nationality"] else {}),
                 }
                 for r in records
             ],
@@ -662,6 +725,38 @@ def build_index(
         # The single-mandate constituencies by name -- one name per district
         # across the four label eras, not one boundary: "ap" indexes here.
         "constituencies": constituency_list,
+        # One row per campaign-finance participant (issue #162): "k" the
+        # campaignKey, "d" the declared donations in euro (absent where the
+        # campaign publishes none), "n" the candidacies sharing it -- a
+        # party's whole list for a party campaign. "ck" indexes here.
+        "campaigns": [
+            {
+                "k": key,
+                **({"d": campaigns[key]["donations"]} if campaigns[key]["donations"] is not None else {}),
+                "n": campaigns[key]["candidacies"],
+            }
+            for key in campaign_list
+        ],
+        # Declared nationality by group (scraper/shared/tautybe.py), the
+        # largest first; "tb" indexes here.
+        "nationalities": [{"id": n, "label": nationality_labels[n]} for n in nationality_list],
+        "unresolvedNationalities": sorted(unresolved_nationalities),
+        # What each election's form asks and how much of it is answered
+        # (issue #162): per election, the filled count of every concept in
+        # docs/concept-map.json's order, null where the form never asks.
+        "coverage": {
+            "concepts": concept_names,
+            "records": dict(records_per_election),
+            "filled": {
+                election_id: [
+                    concept_filled.get((name, election_id), 0)
+                    if election_id in concept_map["concepts"][name]["paths"]
+                    else None
+                    for name in concept_names
+                ]
+                for election_id in sorted(records_per_election)
+            },
+        },
         # The 13-tier education ordinal, rank order ("ed" is a 1-based index
         # into it); labels ride here because the slugs are ASCII-folded and
         # would de-slug without their diacritics.
@@ -685,6 +780,9 @@ def build_index(
             "candidaciesLost": lost,
             "candidaciesWithoutResultsData": total - won - lost,
             "candidaciesWithVotes": with_votes,
+            "campaigns": len(campaign_list),
+            "candidaciesWithCampaign": sum(c["candidacies"] for c in campaigns.values()),
+            "nationalityAnswers": sum(nationality_counts.values()),
         },
         "people": entries,
     }
@@ -738,6 +836,8 @@ def main() -> int:
     )
     print(f"municipalities:           {len(index['municipalities'])} (scraper/municipalities.json bodies)")
     print(f"constituencies:           {len(index['constituencies'])} district names; {stats['candidaciesWithVotes']} candidacies carry a vote figure")
+    print(f"campaigns:                {stats['campaigns']} participants over {stats['candidaciesWithCampaign']} candidacies")
+    print(f"nationality:              {stats['nationalityAnswers']} answers in {len(index['nationalities'])} groups")
     generals = sum(1 for e in index["elections"] if "parent" not in e)
     print(
         f"elections:                {len(index['elections'])} of {len(load_registry())} registered "
@@ -772,6 +872,14 @@ def index_problems(index: dict) -> list[str]:
             " until the registry gets the alias:"
         )
         lines += [f"  {form}" for form in unresolved]
+    nationalities = index.get("unresolvedNationalities") or []
+    if nationalities:
+        lines.append(
+            f"\n{len(nationalities)} nationality spelling(s) no group of"
+            " scraper/shared/tautybe.py claims —\neach would be a facet row of its own"
+            " until the table there gets the spelling:"
+        )
+        lines += [f"  {form}" for form in nationalities]
     stale = index["unmatchedOverrideKeys"]
     if stale:
         lines.append(

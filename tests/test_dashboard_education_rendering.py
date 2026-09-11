@@ -37,7 +37,7 @@ def run(value: dict | list) -> object:
         f"console.log(JSON.stringify(educationCell({json.dumps(value, ensure_ascii=False)})));"
     )
     out = subprocess.run(
-        [NODE, "--input-type=module", "-e", script],
+        [NODE, "--input-type=module", "-"], input=script,
         capture_output=True, text=True, timeout=30,
     )
     if out.returncode != 0:

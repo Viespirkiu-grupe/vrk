@@ -426,6 +426,25 @@ def render_document(rows: list[Row], total_records: int, measured_on: str) -> st
     for row in conditional:
         out.append(f"| `{row.path}` (where it repeats a dropped value) | {_fmt(row.records)} | {row.note} |")
     out.append("")
+    out.append("## What the derived layers surface\n")
+    out.append(
+        "The release carries every record whole; what the candidacy table, the person\n"
+        "index and the dashboard lift *out* of the records is a narrower, deliberate\n"
+        "set (issue #162). Declared nationality (`ethnic` above, a special category\n"
+        "of personal data) is the candidacy table's `nationality` and the dashboard's\n"
+        "nationality facet, comparison row and summary section, folded from 117\n"
+        "spellings into 45 census groups by `scraper/shared/tautybe.py` -- the\n"
+        "corpus's one minority-representation series, 89,154 answers over 30 years.\n"
+        "The statutory declarations (`eligibility`: another citizenship, an oath to a\n"
+        "foreign state, military service, collaboration with foreign or Soviet\n"
+        "special services, a lost mandate) are concepts in `docs/concept-map.json`,\n"
+        "the table's `declarations_status` and `declarations_flagged`, and one\n"
+        "dashboard row that lists only the answers departing from the usual one.\n"
+        "Deliberately *not* surfaced: the spouse's and children's names are measured\n"
+        "by the fill gate and read by no column, row or index field, and the home\n"
+        "address is mapped nowhere -- VRK prints them for the voter reading one page,\n"
+        "not for a register.\n"
+    )
     out.append("## Portraits\n")
     out.append(
         "Every portrait is stored once in the `photos` table under the sha256 of the\n"

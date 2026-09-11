@@ -62,12 +62,12 @@ from __future__ import annotations
 
 import argparse
 import csv
+import functools
 import gzip
 import io
 import json
 import sqlite3
 import sys
-import unicodedata
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any, Iterable, Iterator
@@ -88,9 +88,13 @@ from scraper.shared.deklaracijos import (  # noqa: E402
     mokescio_matas,
     pajamu_matas,
 )
+from scraper.shared import pareiskimai  # noqa: E402
+from scraper.shared.kampanija import campaign_entry as _campaign_entry  # noqa: E402
+from scraper.shared.kampanija import donation_total_eur as campaign_donation_total_eur  # noqa: E402
 from scraper.shared.kandidatura import kandidatura  # noqa: E402
 from scraper.shared.municipalities import entries as municipality_entries  # noqa: E402
 from scraper.shared.parties import partija  # noqa: E402
+from scraper.shared.tautybe import tautybe  # noqa: E402
 
 import build_person_index as identity  # noqa: E402
 import field_coverage  # noqa: E402
@@ -141,6 +145,9 @@ COLUMNS = (
     "source_url",
     "birth_date",
     "birth_place",
+    # Declared nationality, folded from its 117 spellings to the census's
+    # group names (scraper/shared/tautybe.py, issue #162).
+    "nationality",
     "role",
     "constituency",
     "municipality",
@@ -172,6 +179,11 @@ COLUMNS = (
     "education_degree",
     "education_entries",
     "declaration_status",
+    # What the declaration is: the tax form it was filed on (FR0462, then
+    # GPM305, GPM308, GPM311) and whose wealth it covers -- the resident's
+    # alone, or with the family's (issue #162).
+    "declaration_form",
+    "declaration_scope",
     "declared_currency",
     "currency_rate",
     "declaration_year",
@@ -197,13 +209,25 @@ COLUMNS = (
     "campaign_status",
     "conviction_status",
     "conviction_details",
+    # The declarations block beside the conviction question (issue #162):
+    # `neklausta` where the form asks none of it, `iprasti` where every
+    # answer is the usual one, `nukrypstantys` with the departing answers in
+    # `declarations_flagged` as {concept: answer} (scraper/shared/pareiskimai.py).
+    "declarations_status",
+    "declarations_flagged",
+    # The offices the candidate says they were elected to before -- the
+    # anksciau-isrinktas block, "institution (period)" joined by "; ".
+    "prior_office",
 )
 
 #: Not gated: columns that are empty by design on nearly every row, so a
 #: zero on a small election means nothing. `conviction_details` fills on
 #: ~1.4 % of the corpus (the declarers); its recovery is pinned by the
 #: `teistumas` tests and the conviction_status column instead.
-UNGATED_COLUMNS = frozenset({"quality_flags", "conviction_details"})
+#: `declarations_flagged` and `prior_office` are the same shape -- filled for
+#: the minority with something to declare or a previous seat -- and are
+#: answered for by `declarations_status` and the anksciau-isrinktas concept.
+UNGATED_COLUMNS = frozenset({"quality_flags", "conviction_details", "declarations_flagged", "prior_office"})
 
 #: The 26 elections whose records carry a vote or rating figure (issue
 #: #133, measured 2026-09-08): the 2000-2004 static sites print them on the
@@ -398,13 +422,6 @@ concept_value = field_coverage.concept_value
 # ---------------------------------------------------------------------------
 
 
-def _fold_token(text: Any) -> str | None:
-    if not isinstance(text, str) or not text.strip():
-        return None
-    decomposed = unicodedata.normalize("NFD", text.strip().casefold())
-    return "".join(ch for ch in decomposed if unicodedata.category(ch) != "Mn")
-
-
 def _source_url(record: dict[str, Any]) -> str | None:
     source = record.get("source")
     if isinstance(source, str):
@@ -422,66 +439,24 @@ def _eur(value: Any, rate: float | None) -> float | None:
     return round(float(value) / (rate or 1.0), 2)
 
 
-def _campaign_entry(record: dict[str, Any]) -> tuple[str | None, str | None, str | None, dict | None]:
-    """(campaign_key, status, label, normalized entry) for the record's own
-    campaign participant. Every record with the section carries exactly one
-    campaign entry, and `campaignKey` is present on all of them (measured:
-    20,199 of 20,199)."""
-    raw = (record.get("rawData") or {}).get("politinesKampanijosDalyvioDuomenys")
-    campaigns = raw.get("campaigns") if isinstance(raw, dict) else None
-    key = label = None
-    if isinstance(campaigns, list) and campaigns and isinstance(campaigns[0], dict):
-        key = campaigns[0].get("campaignKey")
-        label = campaigns[0].get("campaignLabel")
-    normalized = (record.get("normalized") or {}).get(
-        "politines-kampanijos-dalyvio-duomenys"
-    )
-    status = entry = None
-    if isinstance(normalized, list) and normalized and isinstance(normalized[0], dict):
-        entry = normalized[0]
-        status = _fold_token(entry.get("statusas"))
-    return key, status, label, entry
-
-
-def campaign_donation_total_eur(entry: dict[str, Any] | None) -> float | None:
-    """The campaign's accepted-donations total ("Iš viso" of the accepted
-    section — `gautos-ir-priimtos-aukos` from 2012 on, the 2009–2011 era's
-    one `aukotoju-sarasas`), EUR-converted. VRK's own sum, read from
-    whichever of the era shapes the block has; None where the campaign
-    publishes no donation data (the Atstovaujamasis participants — financed
-    through the party's campaign, not "no money")."""
-    if not isinstance(entry, dict):
-        return None
-    sections = entry.get("aukos-pagal-sekcija")
-    sections = sections if isinstance(sections, dict) else {}
-    section = next(
-        (
-            sections[key]
-            for key in ("gautos-ir-priimtos-aukos", "aukotoju-sarasas")
-            if isinstance(sections.get(key), dict)
-        ),
-        None,
-    )
-    if section is None:
-        return None
-    totals = section.get("totals")
-    if isinstance(totals, dict) and isinstance(totals.get("is-viso"), (int, float)):
-        return round(float(totals["is-viso"]), 2)
-    for row in section.get("suvestine") or []:
-        if isinstance(row, dict) and row.get("label") == "Iš viso":
-            if isinstance(row.get("amountEur"), (int, float)):
-                return round(float(row["amountEur"]), 2)
-            if isinstance(row.get("amountLt"), (int, float)):
-                return round(float(row["amountLt"]) / LITAS_PER_EURO, 2)
-    return None
+# The campaign participant and its donations total are read in
+# scraper/shared/kampanija.py since issue #162 -- the person index needs
+# them too, and it is imported by this script. The two names are kept here
+# for the callers that knew them.
 
 
 def project_record(
     record: dict[str, Any],
     election: dict[str, Any],
     paths_by_concept: dict[str, dict[str, str | list[str]]],
+    declarations: list[tuple[str, dict[str, Any]]] | None = None,
 ) -> dict[str, Any]:
-    """One candidacy row (COLUMNS minus person_id, which needs the corpus)."""
+    """One candidacy row (COLUMNS minus person_id, which needs the corpus).
+
+    `declarations` is `pareiskimai.declaration_concepts(concept_map)`; without
+    it the two declaration columns stay empty (a caller holding only the
+    paths cannot know which concepts are declarations).
+    """
     election_id = election["id"]
 
     def concept(name: str) -> Any:
@@ -501,6 +476,8 @@ def project_record(
     row["source_url"] = _source_url(record)
     row["birth_date"] = concept("gimimo-data")
     row["birth_place"] = concept("gimimo-vieta")
+    nationality = tautybe(concept("tautybe"))
+    row["nationality"] = nationality["label"] if nationality else None
 
     candidacy = kandidatura(record, election["kind"])
     row["role"] = candidacy["vaidmuo"]
@@ -589,6 +566,8 @@ def project_record(
         row["declaration_status"] = (
             "archyvo-skenai" if election_id in SCANNED_DECLARATIONS else "nera"
         )
+    row["declaration_form"] = concept("deklaracijos-forma")
+    row["declaration_scope"] = concept("deklaracijos-apimtis")
 
     flags = []
     error = SOURCE_ERRORS.get((election_id, record.get("candidateId")))
@@ -607,7 +586,33 @@ def project_record(
             "irasai": conviction["irasai"],
             "aprasas": conviction["aprasas"],
         }
+
+    if declarations is not None:
+        flags = pareiskimai.flagged(record, election_id, declarations, concept_value)
+        row["declarations_status"] = pareiskimai.status(flags)
+        row["declarations_flagged"] = flags or None
+    row["prior_office"] = prior_office(concept("anksciau-isrinktas"))
     return row
+
+
+def prior_office(block: Any) -> str | None:
+    """The anksciau-isrinktas block's offices as one line: "institution
+    (period)" joined by "; ", the institution as the candidate wrote it. None
+    for "Nebuvo" (never elected before) and for a form that does not ask; the
+    concept's coverage cell says which of the two an election is."""
+    if not isinstance(block, dict):
+        return None
+    offices = []
+    for entry in block.get("irasai") or []:
+        if not isinstance(entry, dict):
+            continue
+        name = entry.get("institucijos-pavadinimas-pareigos")
+        if not isinstance(name, str) or not name.strip():
+            continue
+        period = entry.get("laikotarpis")
+        period = period.strip() if isinstance(period, str) else ""
+        offices.append(f"{name.strip()} ({period})" if period else name.strip())
+    return "; ".join(offices) or None
 
 
 # ---------------------------------------------------------------------------
@@ -629,6 +634,7 @@ def build(
     data_root = repo_root / "data"
     concept_map = json.loads((repo_root / CONCEPT_MAP).read_text(encoding="utf-8"))
     paths_by_concept = field_coverage.concept_paths(concept_map)
+    declarations = pareiskimai.declaration_concepts(concept_map)
     registry = identity.load_registry(repo_root / "scraper" / "elections.json")
     registry_by_id = {entry["id"]: entry for entry in registry}
     overrides = identity.load_overrides(repo_root / "scraper" / "person_overrides.json")
@@ -650,10 +656,23 @@ def build(
     donation_naive = Counter()
     donation_campaigns: dict[str, float] = {}
 
+    # The concept x election availability matrix (issue #162), measured on
+    # the records this pass reads anyway: which concepts each election's
+    # form asks, and how many of its records answer.
+    concept_present: Counter = Counter()
+    concept_filled: Counter = Counter()
+    records_per_election: Counter = Counter()
+
     for eid in present:
         election = registry_by_id[eid]
+        concepts_here = [(name, paths[eid]) for name, paths in paths_by_concept.items() if eid in paths]
         for record in election_records(data_root, eid):
-            row = project_record(record, election, paths_by_concept)
+            records_per_election[eid] += 1
+            for name, path in concepts_here:
+                key_present, value_filled = field_coverage.resolve_any(record, path)
+                concept_present[(name, eid)] += key_present
+                concept_filled[(name, eid)] += value_filled
+            row = project_record(record, election, paths_by_concept, declarations)
             index = len(rows)
             rows.append(row)
             name = identity.normalize_name(record.get("candidateName"))
@@ -724,6 +743,15 @@ def build(
         "donations_naive_eur": {e: round(v, 2) for e, v in donation_naive.items()},
         "donations_deduplicated_eur": round(sum(donation_campaigns.values()), 2),
         "elections_present": present,
+        "concept_cells": [
+            field_coverage.Cell(
+                name, eid, records_per_election[eid], concept_present[(name, eid)], concept_filled[(name, eid)]
+            )
+            for eid in present
+            for name, paths in paths_by_concept.items()
+            if eid in paths
+        ],
+        "concepts": list(paths_by_concept),
     }
     elections_table = [
         {**registry_by_id[eid], "records": sum(1 for r in rows if r["election_id"] == eid)}
@@ -767,6 +795,70 @@ def write_csv_gz(path: Path, columns: tuple[str, ...], rows: list[dict[str, Any]
                     writer.writerow([_cell(row.get(column)) for column in columns])
 
 
+#: The coverage table (issue #162): one row per (concept, election) the
+#: concept map and the corpus pair, and one per (column, election) of this
+#: table. `mapped` 0 is "the form never asks" -- the fact a reader of a
+#: 55-schema corpus needs first, and one a fill rate of 0 would blur into
+#: "asked, and nobody answered".
+COVERAGE_COLUMNS = ("kind", "name", "election_id", "records", "filled", "filled_pct", "mapped")
+
+
+def coverage_rows(
+    concept_cells: list[field_coverage.Cell],
+    concepts: list[str],
+    rows: list[dict[str, Any]],
+    election_ids: list[str],
+) -> list[dict[str, Any]]:
+    """The coverage table's rows: every concept against every election, then
+    every column of this table against every election."""
+    measured = {(cell.concept, cell.election): cell for cell in concept_cells}
+    records = Counter(row["election_id"] for row in rows)
+    out: list[dict[str, Any]] = []
+    for name in concepts:
+        for eid in election_ids:
+            cell = measured.get((name, eid))
+            out.append(
+                {
+                    "kind": "concept",
+                    "name": name,
+                    "election_id": eid,
+                    "records": records[eid],
+                    "filled": cell.non_null if cell else None,
+                    "filled_pct": cell.pct if cell else None,
+                    "mapped": cell is not None,
+                }
+            )
+    filled: Counter = Counter()
+    for row in rows:
+        for column in COLUMNS:
+            if field_coverage.is_filled(row.get(column)):
+                filled[(column, row["election_id"])] += 1
+    for column in COLUMNS:
+        for eid in election_ids:
+            count = records[eid]
+            out.append(
+                {
+                    "kind": "column",
+                    "name": column,
+                    "election_id": eid,
+                    "records": count,
+                    "filled": filled[(column, eid)],
+                    "filled_pct": round(100.0 * filled[(column, eid)] / count, 1) if count else 0.0,
+                    "mapped": True,
+                }
+            )
+    return out
+
+
+def write_tsv(path: Path, columns: tuple[str, ...], rows: list[dict[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w", encoding="utf-8", newline="") as handle:
+        writer = csv.writer(handle, delimiter="\t", lineterminator="\n")
+        writer.writerow(columns)
+        for row in rows:
+            writer.writerow([_cell(row.get(column)) for column in columns])
+
+
 def _sqlite_type(column: str) -> str:
     if column.endswith(("_eur", "_rate", "_pct")):
         return "REAL"
@@ -781,6 +873,8 @@ def _sqlite_type(column: str) -> str:
         "elections",
         "records",
         "merged_keys",
+        "filled",
+        "mapped",
     }:
         return "INTEGER"
     return "TEXT"
@@ -802,6 +896,7 @@ def write_sqlite(
     persons: list[dict[str, Any]],
     parties_path: Path,
     meta: dict[str, str] | None = None,
+    coverage: list[dict[str, Any]] | None = None,
 ) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.unlink(missing_ok=True)
@@ -871,6 +966,11 @@ def write_sqlite(
                 for predecessor in data.get("predecessors", [])
             ],
         )
+        if coverage is not None:
+            # What each election's form asks and how much of it is answered
+            # (issue #162): the concept x election matrix and its twin over
+            # this table's own columns. See COVERAGE_COLUMNS.
+            create("coverage", COVERAGE_COLUMNS, coverage)
         for index in (
             "candidacies(person_id)",
             "candidacies(election_id)",
@@ -980,7 +1080,12 @@ def _known_zero_note(column: str, election: dict[str, Any]) -> field_coverage.Ba
             "asked; no candidate of this small election states a degree",
         ),
         (column.endswith("_eur") and eid == "2002-prezidento", "declarations published only as archive scans (declaration_status: archyvo-skenai)"),
-        (column in {"declared_currency", "currency_rate", "declaration_year", "assets_measure", "income_measure", "tax_measure", "income_floor_only"} and eid == "2002-prezidento", "declarations published only as archive scans"),
+        (column in {"declared_currency", "currency_rate", "declaration_year", "assets_measure", "income_measure", "tax_measure", "income_floor_only", "declaration_form", "declaration_scope"} and eid == "2002-prezidento", "declarations published only as archive scans"),
+        # The three concept projections of issue #162, each checked against
+        # the retained pages of every election it leaves unmapped.
+        (column == "nationality" and eid not in _mapped_elections("tautybe"), "the form asks no nationality: the 2000 municipal and Seimas cards, the 2002 and 2004 presidential pages and every form from 2024 on (a handful of 2000-seimo biographies name it in prose)"),
+        (column == "declaration_form" and eid not in _mapped_elections("deklaracijos-forma"), "no form code (FR0462, GPM305/308/311) is printed before the 2004 extracts"),
+        (column == "declaration_scope" and eid not in _mapped_elections("deklaracijos-apimtis"), "the 1996-2000 extract names the declaration type without the resident-or-family scope the 2002-on headings state"),
         (column == "declaration_year" and eid in DECLARATION_YEAR_ABSENT, "the page's declaration headings state no (YYYY m.) year and its closing note no period"),
         (column == "declaration_year" and date < "2004", "the archive forms state an extract date, never a tax year"),
         (column in {"assets_registered_eur", "cash_eur"} and date < "2002", "the 1996-2000 form holds wealth in one combined row (assets_total_eur, measure turtas-plius-lesos); this key is a null placeholder there"),
@@ -1015,7 +1120,24 @@ def _known_zero_note(column: str, election: dict[str, Any]) -> field_coverage.Ba
 #: classification rather than asking a human twice. The declaration-wide
 #: columns (currency, measures, the derived totals) follow `gautos-pajamos`,
 #: which every declaration block carries.
+#: The columns that project one concept whole (issue #162): each is empty
+#: exactly where its concept is unmapped or unanswered, and inherits the
+#: concept's classification like the rest.
+CONCEPT_PROJECTIONS = {
+    "nationality": "tautybe",
+    "declaration_form": "deklaracijos-forma",
+    "declaration_scope": "deklaracijos-apimtis",
+}
+
+
+@functools.lru_cache(maxsize=None)
+def _mapped_elections(concept: str) -> frozenset[str]:
+    concept_map = json.loads((Path(__file__).resolve().parents[1] / CONCEPT_MAP).read_text(encoding="utf-8"))
+    return frozenset(concept_map["concepts"][concept]["paths"])
+
+
 COLUMN_CONCEPTS = {
+    **CONCEPT_PROJECTIONS,
     "birth_date": "gimimo-data",
     "birth_place": "gimimo-vieta",
     "education_level": "issilavinimas",
@@ -1180,6 +1302,8 @@ def main() -> int:
         CAMPAIGN_COLUMNS,
         sorted(campaigns.values(), key=lambda c: (c["election_id"], c["campaign_key"])),
     )
+    coverage = coverage_rows(stats["concept_cells"], stats["concepts"], rows, stats["elections_present"])
+    write_tsv(dist / "coverage.tsv", COVERAGE_COLUMNS, coverage)
     write_sqlite(
         dist / "vrk.sqlite",
         rows,
@@ -1187,6 +1311,7 @@ def main() -> int:
         elections_table,
         persons,
         repo_root / "scraper" / "parties.json",
+        coverage=coverage,
     )
 
     naive = sum(stats["donations_naive_eur"].values())
@@ -1200,7 +1325,7 @@ def main() -> int:
         if stats["donations_deduplicated_eur"]
         else "donations:    none in this subset"
     )
-    for name in ("candidacies.csv.gz", "campaigns.csv.gz", "vrk.sqlite"):
+    for name in ("candidacies.csv.gz", "campaigns.csv.gz", "coverage.tsv", "vrk.sqlite"):
         size = (dist / name).stat().st_size
         print(f"wrote {dist / name} ({size / 1024 / 1024:.1f} MB)")
 

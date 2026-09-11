@@ -497,6 +497,50 @@ class GroupingTests(unittest.TestCase):
         self.assertNotIn("cv", entry)
         self.assertEqual(index["stats"]["candidaciesWithVotes"], 0)
 
+    def test_campaigns_nationality_and_coverage_ride_into_the_index(self):
+        # Issue #162: the campaign money, the declared nationality and the
+        # concept x election matrix the corpus held and no consumer read.
+        def with_campaign(record, key, total):
+            record = json.loads(json.dumps(record))
+            record["rawData"] = {"politinesKampanijosDalyvioDuomenys": {"campaigns": [{"campaignKey": key}]}}
+            record["normalized"]["politines-kampanijos-dalyvio-duomenys"] = [
+                {"statusas": "Savarankiškas", "aukos-pagal-sekcija": {"gautos-ir-priimtos-aukos": {"totals": {"is-viso": total}}}}
+            ]
+            return record
+
+        first = with_campaign(_record("A B", "1970-01-01"), "partija-1", 1000.0)
+        first["normalized"]["anketa"]["tautybe"] = "Lietuvis (-ė)"
+        second = with_campaign(_record("C D", "1980-01-01"), "partija-1", 1000.0)
+        second["normalized"]["anketa"]["tautybe"] = "LENKĖ"
+        index = self._build([("2016-seimo", "a-b", first), ("2016-seimo", "c-d", second)])
+
+        # One party campaign, carried once with the candidacies it covers --
+        # never a figure a reader could take for one candidate's money.
+        self.assertEqual(index["campaigns"], [{"k": "partija-1", "d": 1000.0, "n": 2}])
+        entries = {person["n"]: person["e"][0] for person in index["people"]}
+        self.assertEqual(entries["A B"]["ck"], 0)
+        self.assertEqual(entries["C D"]["ck"], 0)
+        self.assertEqual(index["stats"]["candidaciesWithCampaign"], 2)
+
+        # The two spellings fold to the census's group names.
+        self.assertEqual(index["nationalities"][entries["A B"]["tb"]], {"id": "lietuviai", "label": "lietuviai"})
+        self.assertEqual(index["nationalities"][entries["C D"]["tb"]], {"id": "lenkai", "label": "lenkai"})
+        self.assertEqual(index["unresolvedNationalities"], [])
+
+        coverage = index["coverage"]
+        self.assertEqual(coverage["records"], {"2016-seimo": 2})
+        filled = coverage["filled"]["2016-seimo"]
+        self.assertEqual(filled[coverage["concepts"].index("tautybe")], 2)
+        # A question the 2016 form never asks is null, not a zero.
+        self.assertIsNone(filled[coverage["concepts"].index("bendradarbiavimas-su-ssrs-tarnybomis")])
+
+    def test_an_unclaimed_nationality_spelling_blocks_the_build(self):
+        record = _record("A B", "1970-01-01")
+        record["normalized"]["anketa"]["tautybe"] = "Marsietis"
+        index = self._build([("2016-seimo", "a-b", record)])
+        self.assertEqual(index["unresolvedNationalities"], ["marsietis"])
+        self.assertTrue(any("scraper/shared/tautybe.py" in line for line in build_person_index.index_problems(index)))
+
     def test_two_wordings_of_one_municipality_are_one_facet_row(self):
         # 'Vilniaus miesto' (2019) and 'Vilniaus miesto savivaldybė' (2015)
         # were two adjacent rows in the select, each showing half the

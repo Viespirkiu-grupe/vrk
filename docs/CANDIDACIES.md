@@ -18,7 +18,7 @@ Reads `data/`, `docs/concept-map.json` and the registries; writes to
 
 | file | contents |
 |---|---|
-| `candidacies.csv.gz` | 113,073 rows × 67 columns, ~12 MB gzipped |
+| `candidacies.csv.gz` | 113,073 rows × 73 columns, ~13 MB gzipped |
 | `campaigns.csv.gz` | one row per campaign-finance participant (4,729) |
 | `vrk.sqlite` | the same two as tables, plus `elections`, `persons`, `parties`, `party_predecessors`, `municipalities`, with indexes |
 
@@ -43,7 +43,13 @@ sqlite3 dist/vrk.sqlite "SELECT election_id, AVG(education_higher)
 `election_id` / `election_date` / `election_kind` (from
 `scraper/elections.json`; kind ∈ `seimo` | `savivaldybiu` | `prezidento` |
 `ep` | `mero`), `candidate_id`, `candidate_name`, `source_url`,
-`birth_date`, `birth_place`.
+`birth_date`, `birth_place`, and `nationality` — the declared nationality
+folded from its 117 spellings into 45 groups named as the census names them
+(`lietuviai`, `lenkai`, `rusai`, …; `scraper/shared/tautybe.py`, issue #162).
+89,154 candidacies carry one; the 2000 municipal and Seimas cards, the 2002
+and 2004 presidential pages and every form from 2024 on do not ask, and
+their baseline rows say so. It is ethnic-origin data — a special category —
+and [PERSONAL_DATA.md](PERSONAL_DATA.md) records why it is surfaced.
 
 **Candidacy** (resolved by `scraper/shared/kandidatura.py` across the five
 `kandidatavimas` shapes). `role` — `seimo-narys` | `tarybos-narys` | `meras`
@@ -148,7 +154,12 @@ rate, or 1.0). `declaration_status` types the missing section: `yra` (112,218 re
 `loans_received_eur`, `income_eur`, `income_tax_eur`,
 `self_employment_income_eur`, `self_employment_deductions_eur`,
 `asset_sale_income_eur`, `asset_acquisition_cost_eur`, plus
-`declaration_year` where the page states one.
+`declaration_year` where the page states one. Beside `declaration_status`,
+`declaration_form` is the tax form the declaration was filed on (`FR0462`
+to 2007, then `GPM305`, `GPM308`, `GPM311`; no extract before 2004 prints
+one) and `declaration_scope` whose wealth it covers — `gyventojo` (the
+candidate's alone), `gyventojo-seimos` (with the family's) or `seimos` —
+which is the first thing to check before comparing two figures (issue #162).
 
 Comparability is carried by the **measure columns**, because the same key
 measures different things across eras:
@@ -182,6 +193,27 @@ publishes no donation data).
 **Conviction.** `conviction_status` is the `teistumas` concept (`neklausta`
 / `ne` / `deklaruota-be-detaliu` / `deklaruota`), `conviction_details` the
 flattened entries and free-text explanation as JSON where declared.
+
+**Declarations** (issue #162; `scraper/shared/pareiskimai.py`). The block
+of statutory yes/no declarations beside the conviction question — another
+state's citizenship, an oath to a foreign state, military service, an office
+incompatible with the seat, membership of another state's elected body,
+secret collaboration with foreign or (from 2021) Soviet special services, a
+lost mandate — is sixteen concepts in `docs/concept-map.json`, each chaining
+its question's era-split keys. `declarations_status` is `neklausta` (the form
+asks none: 7,358 rows), `iprasti` (every answer the usual one: 100,230) or
+`nukrypstantys` (5,485), and `declarations_flagged` holds the departing
+answers as `{concept: answer}`, word for word. *Usual* is per question, not
+"Ne": the presidential eligibility questions expect "Taip", and the answer
+word echoes the question's verb (Esu/Nesu, Turiu/Neturiu, Einu/Neinu). The
+commonest departure is ordinary — 5,207 office-holders declaring the office
+they would have to leave.
+
+**Prior office.** `prior_office` is the `anksciau-isrinktas` block's offices,
+"institution (period)" joined by "; " in the candidate's own wording, on the
+39 elections that ask it (16,169 rows); empty for "Nebuvo" and for a form
+that does not ask. Like `conviction_details` and `declarations_flagged` it
+is not gated — it fills for the minority with a previous seat.
 
 ## The fill gate
 
@@ -234,7 +266,8 @@ python scripts/build_distribution.py --profile full     # the archive verbatim
 |---|---|
 | `candidacies.csv.gz` | the flat table above |
 | `campaigns.csv.gz` | one row per campaign-finance participant |
-| `vrk.sqlite.gz` | the analysis database above, gzipped |
+| `coverage.tsv` | what each election's form asks and how much of it is answered: every concept of `docs/concept-map.json` against every election (`mapped` 0 where the form never asks), and every column of this table against every election (issue #162) |
+| `vrk.sqlite.gz` | the analysis database above, gzipped, with `coverage.tsv` as its `coverage` table |
 | `vrk-corpus.sqlite.gz` | **everything but the image bytes**: the analysis tables plus `records`, `photos` (one row per portrait, naming the part that holds it), `anomalies` — under the public profile, less the third-party contacts (below) |
 | `vrk-photos-N.sqlite` | the portraits themselves, one row per unique image, in as many parts as keep each asset under GitHub's 2 GiB per-asset cap (issue #130); not gzipped, since JPEG and PNG do not shrink; under the public profile, without their metadata (below) |
 | `MANIFEST.json` | `schemaVersion`, per-election record counts, build date, `buildCommit` (dirty-aware), `corpusParserCommits`, `photoParts` (each part's image count, bytes and elections), sha256 + bytes per asset, and the terms (`license`, `dataLicense`, `attribution`, `terms`, `source` — [DATA_TERMS.md](../DATA_TERMS.md), issue #138) |
