@@ -142,7 +142,7 @@ class PageAgreesTests(unittest.TestCase):
             f"const cases = {json.dumps(cases, ensure_ascii=False)};\n"
             "console.log(JSON.stringify(cases.map(c => declarationsCell(null, c.record, { id: c.election }))));"
         )
-        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        out = subprocess.run([NODE, "-"], input=script, capture_output=True, text=True, timeout=30)
         if out.returncode != 0:
             raise AssertionError(out.stderr.strip())
         cells = json.loads(out.stdout)

@@ -91,7 +91,7 @@ class LithuanianPluralTests(unittest.TestCase):
             f'{json.dumps(numbers)}.map(n => plural(n, "asmuo", "asmenys", "asmenų"))));'
         )
         out = subprocess.run(
-            [NODE, "-e", script], capture_output=True, text=True, timeout=30
+            [NODE, "-"], input=script, capture_output=True, text=True, timeout=30
         )
         if out.returncode != 0:
             raise AssertionError(out.stderr.strip())
@@ -127,7 +127,7 @@ class EducationCellTests(unittest.TestCase):
     def _render(self, values):
         fn = re.search(r"^function educationCell\(.*?^}", SOURCE, re.S | re.M).group(0)
         script = f"{fn}\nconsole.log(JSON.stringify({json.dumps(values)}.map(educationCell)));"
-        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        out = subprocess.run([NODE, "-"], input=script, capture_output=True, text=True, timeout=30)
         if out.returncode != 0:
             raise AssertionError(out.stderr.strip())
         return json.loads(out.stdout)
@@ -203,7 +203,7 @@ class ConvictionCellTests(unittest.TestCase):
             f"{CONVICTION_CONSTANTS}\n{functions}\n"
             f"console.log(JSON.stringify(convictionCell(null, {record})));"
         )
-        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        out = subprocess.run([NODE, "-"], input=script, capture_output=True, text=True, timeout=30)
         if out.returncode != 0:
             raise AssertionError(out.stderr.strip())
         return json.loads(out.stdout)
@@ -468,7 +468,7 @@ class ElectionTermGroupingTests(unittest.TestCase):
             f"const ELECTIONS = new Map({json.dumps(elections or self.ELECTIONS)}.map(e => [e.id, e]));\n"
             f"{helpers}\nconsole.log(JSON.stringify({expression}));"
         )
-        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        out = subprocess.run([NODE, "-"], input=script, capture_output=True, text=True, timeout=30)
         if out.returncode != 0:
             raise AssertionError(out.stderr.strip())
         return json.loads(out.stdout)
@@ -560,7 +560,7 @@ class PartyLineageTests(unittest.TestCase):
             f"const PARTIES = {json.dumps(parties or self.PARTIES, ensure_ascii=False)};\n"
             f"{helpers}\nconsole.log(JSON.stringify({expression}));"
         )
-        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        out = subprocess.run([NODE, "-"], input=script, capture_output=True, text=True, timeout=30)
         if out.returncode != 0:
             raise AssertionError(out.stderr.strip())
         return json.loads(out.stdout)
@@ -692,7 +692,7 @@ class DualOfficeTests(unittest.TestCase):
             f"COUNCIL = {json.dumps(self.COUNCIL)}, SEIMAS = {json.dumps(self.SEIMAS)};\n"
             f"console.log(JSON.stringify({expression}));"
         )
-        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        out = subprocess.run([NODE, "-"], input=script, capture_output=True, text=True, timeout=30)
         if out.returncode != 0:
             raise AssertionError(out.stderr.strip())
         return json.loads(out.stdout)
@@ -764,7 +764,7 @@ class VotesAndConstituencyTests(unittest.TestCase):
             f"ARCHIVE = {json.dumps(self.ARCHIVE)}, MODERN = {json.dumps(self.MODERN)};\n"
             f"console.log(JSON.stringify({expression}));"
         )
-        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        out = subprocess.run([NODE, "-"], input=script, capture_output=True, text=True, timeout=30)
         if out.returncode != 0:
             raise AssertionError(out.stderr.strip())
         return json.loads(out.stdout)
@@ -904,7 +904,7 @@ class ArchiveComparisonRowTests(unittest.TestCase):
             "}\n"
             "console.log(JSON.stringify(out));"
         )
-        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        out = subprocess.run([NODE, "-"], input=script, capture_output=True, text=True, timeout=30)
         if out.returncode != 0:
             raise AssertionError(out.stderr.strip())
         return json.loads(out.stdout)
@@ -1053,7 +1053,7 @@ class ExportTests(unittest.TestCase):
             for name in names
         )
         out = subprocess.run(
-            [NODE, "-e", f"{helpers}\n{script}"], capture_output=True, text=True, timeout=30
+            [NODE, "-"], input=f"{helpers}\n{script}", capture_output=True, text=True, timeout=30
         )
         if out.returncode != 0:
             raise AssertionError(out.stderr.strip())
@@ -1126,7 +1126,7 @@ class AssetChartTests(unittest.TestCase):
           return [max <= axisMax, Math.abs(top - axisMax) < tick / 1000];
         })));
         """
-        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        out = subprocess.run([NODE, "-"], input=script, capture_output=True, text=True, timeout=30)
         if out.returncode != 0:
             raise AssertionError(out.stderr.strip())
         for fits, labelled in json.loads(out.stdout):
@@ -1382,7 +1382,7 @@ class FilterCompositionTests(unittest.TestCase):
             f"{helpers}\n"
             f"console.log(JSON.stringify(candidacyMatches({json.dumps(candidacy)}, {json.dumps(full)})));"
         )
-        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        out = subprocess.run([NODE, "-"], input=script, capture_output=True, text=True, timeout=30)
         if out.returncode != 0:
             raise AssertionError(out.stderr.strip())
         return json.loads(out.stdout)
@@ -1507,7 +1507,7 @@ class CsvRowTests(unittest.TestCase):
         globalThis.URL = { createObjectURL: () => "blob:x", revokeObjectURL() {} };
         """ % json.dumps(self.INDEX)
         script = f"{stubs}\n{helpers}\nexportCSV();\nconsole.log(JSON.stringify(captured));"
-        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        out = subprocess.run([NODE, "-"], input=script, capture_output=True, text=True, timeout=30)
         if out.returncode != 0:
             raise AssertionError(out.stderr.strip())
         return json.loads(out.stdout)

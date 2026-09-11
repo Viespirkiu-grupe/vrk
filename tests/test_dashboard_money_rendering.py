@@ -74,7 +74,7 @@ def run_in_node(expression: str) -> object:
     )
     script = f"{helpers}\nconsole.log(JSON.stringify({expression}));"
     out = subprocess.run(
-        [NODE, "--input-type=module", "-e", script],
+        [NODE, "--input-type=module", "-"], input=script,
         capture_output=True, text=True, timeout=30,
     )
     if out.returncode != 0:

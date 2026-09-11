@@ -175,7 +175,7 @@ class ResolverAgreementTests(unittest.TestCase):
             "});\n"
             "console.log(JSON.stringify(out));"
         )
-        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        out = subprocess.run([NODE, "-"], input=script, capture_output=True, text=True, timeout=30)
         if out.returncode != 0:
             raise AssertionError(out.stderr.strip())
         js_side = json.loads(out.stdout)
@@ -288,7 +288,7 @@ class EveryPathShapeRendersTests(unittest.TestCase):
             "});\n"
             "console.log(JSON.stringify(out));"
         )
-        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=60)
+        out = subprocess.run([NODE, "-"], input=script, capture_output=True, text=True, timeout=60)
         if out.returncode != 0:
             raise AssertionError(out.stderr.strip())
         return json.loads(out.stdout)
@@ -334,7 +334,7 @@ class EraFallbackTests(unittest.TestCase):
             f"const record = {json.dumps(record)};\n"
             f"console.log(JSON.stringify(resolveRow(row, record, {json.dumps(election_id)})));"
         )
-        out = subprocess.run([NODE, "-e", script], capture_output=True, text=True, timeout=30)
+        out = subprocess.run([NODE, "-"], input=script, capture_output=True, text=True, timeout=30)
         if out.returncode != 0:
             raise AssertionError(out.stderr.strip())
         return json.loads(out.stdout)
