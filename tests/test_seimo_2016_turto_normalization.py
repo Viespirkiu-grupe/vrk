@@ -99,9 +99,30 @@ class EurAmountParsingTests(unittest.TestCase):
         self.assertEqual(parse_eur_amount("0 Eur"), 0)
         self.assertEqual(parse_eur_amount("43202,09 Eur"), 43202.09)
         self.assertEqual(parse_eur_amount("1 325 940 Eur"), 1325940)
+        self.assertEqual(parse_eur_amount("EUR 1234"), 1234)
+
+    def test_a_unit_glued_to_the_figure_is_still_a_unit(self) -> None:
+        # A word-boundary strip leaves the unit on "25565Eur" and the figure
+        # normalizes to null: the key is present, the value is plausible, and
+        # nothing fails -- the shape of issues #81 and #98. No 2016-on page
+        # glues its unit today; the 2002 pages glued their litas (issue #90).
+        self.assertEqual(parse_eur_amount("25565Eur"), 25565)
+        self.assertEqual(parse_eur_amount("25565EUR"), 25565)
+        self.assertEqual(parse_eur_amount("1 234,56Eur"), 1234.56)
+        self.assertEqual(parse_eur_amount(",53Eur"), 0.53)
+
+    def test_a_unit_closed_with_a_full_stop_is_still_a_unit(self) -> None:
+        # The litas-era parsers accept "Lt." for the same reason.
+        self.assertEqual(parse_eur_amount("25565 Eur."), 25565)
+        self.assertEqual(parse_eur_amount("25565Eur."), 25565)
+
+    def test_the_letters_are_a_unit_only_where_a_unit_stands(self) -> None:
+        # Before the figure, after it or glued to its end -- never inside a
+        # run of digits, where taking them out would invent a number.
+        self.assertIsNone(parse_eur_amount("1eur2"))
 
     def test_non_amounts_stay_null(self) -> None:
-        for value in ("", ",", "Eur", "nenurodė", None):
+        for value in ("", ",", "Eur", "Eur.", "nenurodė", None):
             with self.subTest(value=value):
                 self.assertIsNone(parse_eur_amount(value))
 
