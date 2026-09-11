@@ -132,6 +132,20 @@ def empty_sqlite(path: Path) -> Path:
     return path
 
 
+def jpeg(index: int, scan_bytes: int = 600) -> bytes:
+    """A distinct, structurally valid JPEG: JPEG_CLEAN's headers, its own scan."""
+    return JPEG_CLEAN[:-4] + bytes([0x10 + index]) * scan_bytes + b"\xff\xd9"
+
+
+def load_unpack():
+    spec = importlib.util.spec_from_file_location(
+        "unpack_corpus", REPO_ROOT / "scripts" / "unpack_corpus.py"
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 class DistributionBuild(unittest.TestCase):
     """One subset build over three records; every artifact checked."""
 
@@ -209,6 +223,7 @@ class DistributionBuild(unittest.TestCase):
             "vrk.sqlite.gz",
             "vrk-corpus.sqlite",
             "vrk-corpus.sqlite.gz",
+            "vrk-photos-1.sqlite",
             "MANIFEST.json",
         ):
             self.assertTrue((self.dist / name).is_file(), name)
@@ -244,16 +259,23 @@ class DistributionBuild(unittest.TestCase):
 
     def test_photos_deduplicated_verified_and_stripped(self):
         connection = self.corpus_connection()
-        photos = connection.execute("SELECT sha256, mime, bytes, stripped, stripped_sha256, data FROM photos").fetchall()
+        photos = connection.execute("SELECT sha256, mime, bytes, stripped, stripped_sha256, part FROM photos").fetchall()
         self.assertEqual(len(photos), 1)
         # The archive's hash is the key, whatever was done to the bytes on
-        # the way out; the stored bytes are the picture without its Exif.
+        # the way out; the stored bytes are the picture without its Exif,
+        # and they sit in the part the row names, not in this database.
         self.assertEqual(photos[0]["sha256"], JPEG_SHA)
         self.assertEqual(photos[0]["mime"], "image/jpeg")
-        self.assertEqual(photos[0]["data"], JPEG_CLEAN)
         self.assertEqual(photos[0]["bytes"], len(JPEG_CLEAN))
         self.assertEqual(photos[0]["stripped"], 1)
         self.assertEqual(photos[0]["stripped_sha256"], hashlib.sha256(JPEG_CLEAN).hexdigest())
+        self.assertEqual(photos[0]["part"], "vrk-photos-1.sqlite")
+        part = sqlite3.connect(self.dist / photos[0]["part"])
+        self.addCleanup(part.close)
+        self.assertEqual(
+            part.execute("SELECT sha256, mime, bytes, stripped, stripped_sha256, data FROM photos").fetchall(),
+            [(JPEG_SHA, "image/jpeg", len(JPEG_CLEAN), 1, hashlib.sha256(JPEG_CLEAN).hexdigest(), JPEG_CLEAN)],
+        )
         by_candidate = dict(
             connection.execute("SELECT candidate_id, photo_sha256 FROM records")
         )
@@ -315,8 +337,14 @@ class DistributionBuild(unittest.TestCase):
         self.assertEqual(manifest["counts"]["photosMetadataUntouched"], 0)
         self.assertEqual(manifest["counts"]["photosMalformed"], 0)
         self.assertEqual(manifest["counts"]["photoBytes"], len(JPEG_CLEAN))
+        # The portraits' part is an asset like the others (issue #130).
+        self.assertEqual(manifest["counts"]["photoParts"], 1)
         self.assertEqual(
-            set(manifest["artifacts"]), set(dist_mod.RELEASE_ARTIFACTS)
+            manifest["photoParts"],
+            [{"name": "vrk-photos-1.sqlite", "photos": 1, "photoBytes": len(JPEG_CLEAN), "elections": [ELECTION]}],
+        )
+        self.assertEqual(
+            set(manifest["artifacts"]), set(dist_mod.RELEASE_ARTIFACTS) | {"vrk-photos-1.sqlite"}
         )
 
     def test_manifest_carries_the_terms(self):
@@ -458,6 +486,20 @@ class CorpusRoundTrip(unittest.TestCase):
                 self.assertEqual(meta["dataLicense"], dist_mod.DATA_LICENSE)
                 self.assertTrue(set(meta) & {"records", "candidacies"})
 
+    def test_a_photo_part_says_which_slice_it_is(self):
+        connection = sqlite3.connect(self.dist / "vrk-photos-1.sqlite")
+        try:
+            meta = dict(connection.execute("SELECT key, value FROM meta"))
+            version = connection.execute("PRAGMA user_version").fetchone()[0]
+        finally:
+            connection.close()
+        self.assertEqual(version, dist_mod.SCHEMA_VERSION)
+        self.assertEqual(
+            (meta["part"], meta["parts"], meta["photos"], meta["elections"]), ("1", "1", "1", ELECTION)
+        )
+        self.assertEqual(meta["profile"], "full")
+        self.assertEqual(meta["attribution"], dist_mod.ATTRIBUTION)
+
 
 class RealElectionRoundTrip(unittest.TestCase):
     """The same round trip over a real election, byte for byte.
@@ -534,7 +576,10 @@ class FullProfileBuild(unittest.TestCase):
         row = connection.execute("SELECT * FROM records").fetchone()
         self.assertEqual(dist_mod.reconstruct_record(row), self.record)
         photo = connection.execute("SELECT * FROM photos").fetchone()
-        self.assertEqual((photo["data"], photo["stripped"], photo["stripped_sha256"]), (JPEG, 0, JPEG_SHA))
+        self.assertEqual((photo["stripped"], photo["stripped_sha256"]), (0, JPEG_SHA))
+        part = sqlite3.connect(self.dist / photo["part"])
+        self.addCleanup(part.close)
+        self.assertEqual(part.execute("SELECT data FROM photos").fetchone()[0], JPEG)
         manifest = json.loads((self.dist / "MANIFEST.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["profile"], "full")
         self.assertEqual(manifest["redaction"], {"paths": [], "conditionalPaths": [], "valuesRemoved": 0})
@@ -834,6 +879,166 @@ class PortraitKeyTests(unittest.TestCase):
             "photoMeta": {"url": "https://www.vrk.lt/gone.jpg", "error": "HTTP 404"},
         }
         self.assertIsNone(dist_mod.record_photo(record, root / "alvydas.json"))
+
+
+class PhotoPartsTests(unittest.TestCase):
+    """The portraits ship in parts that each fit a release asset (issue #130).
+
+    GitHub refuses an asset over 2 GiB, and the portrait archive made the
+    corpus database a ~6 GB one. With the budget shrunk to two images'
+    worth, five portraits over two elections have to fill three parts in
+    build order -- and every record must still find, and unpack, its own.
+    """
+
+    ELECTIONS = ("2016-seimo", "2020-seimo")
+
+    @classmethod
+    def setUpClass(cls):
+        cls.root = make_repo_root()
+        cls.addClassCleanup(shutil.rmtree, cls.root, ignore_errors=True)
+        cls.images: dict[tuple[str, str], bytes] = {}
+        index = 0
+        for election, how_many in zip(cls.ELECTIONS, (3, 2)):
+            data_dir = cls.root / "data" / election
+            (data_dir / "photos").mkdir(parents=True, exist_ok=True)
+            for _ in range(how_many):
+                image = jpeg(index)
+                candidate_id = f"kandidatas-{index}"
+                (data_dir / "photos" / f"{candidate_id}.jpg").write_bytes(image)
+                record = make_record(candidate_id, f"Kandidatas {index}")
+                record["electionId"] = election
+                record["rawData"]["profile"]["photoSrc"] = f"photos/{candidate_id}.jpg"
+                record["rawData"]["profile"]["photoMeta"] = {
+                    "mime": "image/jpeg", "bytes": len(image), "sha256": hashlib.sha256(image).hexdigest(),
+                }
+                record["normalized"]["profilis"]["nuotrauka"] = f"photos/{candidate_id}.jpg"
+                write_record(data_dir, record)
+                cls.images[(election, candidate_id)] = image
+                index += 1
+        cls.dist = cls.root / "dist"
+        with unittest.mock.patch.object(dist_mod, "PHOTO_PART_BUDGET", 2 * len(jpeg(0))):
+            cls.exit_code = dist_mod.build_distribution(
+                cls.root, cls.dist, list(cls.ELECTIONS), profile="full"
+            )
+        cls.manifest = json.loads((cls.dist / "MANIFEST.json").read_text(encoding="utf-8"))
+
+    def test_the_images_fill_three_parts_in_build_order(self):
+        self.assertEqual(self.exit_code, 0)
+        self.assertEqual(
+            [(part["name"], part["photos"], part["elections"]) for part in self.manifest["photoParts"]],
+            [
+                ("vrk-photos-1.sqlite", 2, ["2016-seimo"]),
+                ("vrk-photos-2.sqlite", 2, ["2016-seimo", "2020-seimo"]),
+                ("vrk-photos-3.sqlite", 1, ["2020-seimo"]),
+            ],
+        )
+        self.assertEqual(self.manifest["counts"]["photoParts"], 3)
+        for part in self.manifest["photoParts"]:
+            with self.subTest(part["name"]):
+                self.assertIn(part["name"], self.manifest["artifacts"])
+                self.assertLessEqual(part["photoBytes"], 2 * len(jpeg(0)))
+
+    def test_every_image_is_in_exactly_the_part_its_row_names(self):
+        corpus = sqlite3.connect(self.dist / "vrk-corpus.sqlite")
+        self.addCleanup(corpus.close)
+        located = dict(corpus.execute("SELECT sha256, part FROM photos"))
+        self.assertEqual(len(located), 5)
+        held: dict[str, str] = {}
+        for part in self.manifest["photoParts"]:
+            connection = sqlite3.connect(self.dist / part["name"])
+            self.addCleanup(connection.close)
+            for (digest,) in connection.execute("SELECT sha256 FROM photos"):
+                self.assertNotIn(digest, held, "an image stored in two parts")
+                held[digest] = part["name"]
+        self.assertEqual(held, located)
+
+    def test_the_parts_unpack_to_every_portrait(self):
+        into = self.root / "unpacked"
+        counts, problems = load_unpack().unpack(self.dist / "vrk-corpus.sqlite", into)
+        self.assertEqual(problems, [])
+        self.assertEqual(counts["photos"], 5)
+        for (election, candidate_id), image in self.images.items():
+            with self.subTest(candidate_id):
+                self.assertEqual((into / election / "photos" / f"{candidate_id}.jpg").read_bytes(), image)
+
+    def test_a_missing_part_is_named_and_the_records_alone_can_still_be_had(self):
+        unpack = load_unpack()
+        download = self.root / "download"
+        download.mkdir(exist_ok=True)
+        shutil.copyfile(self.dist / "vrk-corpus.sqlite", download / "vrk-corpus.sqlite")
+        shutil.copyfile(self.dist / "vrk-photos-1.sqlite", download / "vrk-photos-1.sqlite")
+        with self.assertRaises(SystemExit) as raised:
+            unpack.unpack(download / "vrk-corpus.sqlite", self.root / "partial")
+        self.assertIn("vrk-photos-2.sqlite", str(raised.exception))
+        self.assertIn("vrk-photos-3.sqlite", str(raised.exception))
+        self.assertNotIn("vrk-photos-1.sqlite", str(raised.exception))
+
+        counts, problems = unpack.unpack(
+            download / "vrk-corpus.sqlite", self.root / "records-only", with_photos=False
+        )
+        self.assertEqual(problems, [])
+        self.assertEqual((counts["records"], counts["photos"], counts["photos_skipped"]), (5, 0, 5))
+        self.assertFalse((self.root / "records-only" / "2016-seimo" / "photos").exists())
+
+        counts, problems = unpack.unpack(
+            download / "vrk-corpus.sqlite", self.root / "pointed", photos_dir=self.dist
+        )
+        self.assertEqual((problems, counts["photos"]), ([], 5))
+
+    def test_a_release_from_before_the_parts_still_unpacks(self):
+        # corpus-2026-08-30 kept the bytes in the corpus database's own
+        # photos.data column (schema 1); that shape still reads.
+        old = self.root / "schema-1"
+        old.mkdir(exist_ok=True)
+        database = old / "vrk-corpus.sqlite"
+        shutil.copyfile(self.dist / "vrk-corpus.sqlite", database)
+        connection = sqlite3.connect(database)
+        try:
+            connection.execute("ALTER TABLE photos ADD COLUMN data BLOB")
+            for part in self.manifest["photoParts"]:
+                connection.execute("ATTACH DATABASE ? AS source", (str(self.dist / part["name"]),))
+                connection.execute(
+                    "UPDATE photos SET data = (SELECT d.data FROM source.photos AS d"
+                    " WHERE d.sha256 = main.photos.sha256) WHERE part = ?",
+                    (part["name"],),
+                )
+                connection.commit()
+                connection.execute("DETACH DATABASE source")
+        finally:
+            connection.close()
+        into = self.root / "from-schema-1"
+        counts, problems = load_unpack().unpack(database, into)
+        self.assertEqual((problems, counts["photos"]), ([], 5))
+        for (election, candidate_id), image in self.images.items():
+            with self.subTest(candidate_id):
+                self.assertEqual((into / election / "photos" / f"{candidate_id}.jpg").read_bytes(), image)
+
+    def test_an_asset_over_the_cap_is_refused_before_dist_changes(self):
+        root = make_repo_root()
+        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        data_dir = root / "data" / ELECTION
+        write_record(data_dir, make_record("kazys-x-9", "Kazys X"))
+        dist = root / "dist"
+        with unittest.mock.patch.object(dist_mod, "RELEASE_ASSET_LIMIT", 100):
+            with self.assertRaises(SystemExit) as raised:
+                dist_mod.build_distribution(root, dist, [ELECTION])
+        self.assertIn("limit GitHub puts on a release asset", str(raised.exception))
+        self.assertEqual([path.name for path in dist.iterdir()], [], "nothing may reach dist/")
+
+    def test_promote_drops_a_part_the_new_build_did_not_fill(self):
+        root = make_repo_root()
+        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        dist = root / "dist"
+        staging = dist / ".staging-test"
+        staging.mkdir(parents=True)
+        for name in dist_mod.BUILD_OUTPUTS + ("MANIFEST.json", "vrk-photos-1.sqlite"):
+            (staging / name).write_bytes(b"new")
+        (dist / "vrk-photos-1.sqlite").write_bytes(b"old")
+        (dist / "vrk-photos-2.sqlite").write_bytes(b"old")
+        dist_mod.promote(staging, dist)
+        self.assertEqual((dist / "vrk-photos-1.sqlite").read_bytes(), b"new")
+        self.assertFalse((dist / "vrk-photos-2.sqlite").exists())
+
 
 if __name__ == "__main__":
     unittest.main()

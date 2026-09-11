@@ -2213,7 +2213,10 @@ records across 15 elections that no longer re-parsed to what was stored.
 This is that something. It re-parses an election from its retained HTML into a
 scratch tree and structurally diffs the result against `data/`, classifying
 every differing JSON path as `added` / `removed` / `changed` / `type` /
-`length` with list indices collapsed to `[]`.
+`length` / `order` with list indices collapsed to `[]`. `order` is an object
+whose keys came out in another sequence — the same content in a different
+file, which `scripts/fixture_record_hashes.py` has always reported; since
+issue #169 this gate reports it too, and `--apply` rewrites it.
 
 ```bash
 python scripts/reparse_diff.py                      # all 55 elections, fixtures

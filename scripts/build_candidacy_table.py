@@ -748,16 +748,23 @@ def _cell(value: Any) -> str:
 
 
 def write_csv_gz(path: Path, columns: tuple[str, ...], rows: list[dict[str, Any]]) -> None:
+    """Write `rows` as a gzipped CSV, streamed into the compressor.
+
+    The table used to be built whole in a StringIO, then `getvalue()`, then
+    `encode()` -- three copies of an 80 MB CSV, 572 MB of this script's
+    1,056 MB peak, and the same spike in every release build, which calls
+    this while `rows` is still live (issue #154). Row order, the encoding
+    and the header's mtime are unchanged, so the output is too.
+    """
     path.parent.mkdir(parents=True, exist_ok=True)
-    buffer = io.StringIO()
-    writer = csv.writer(buffer, lineterminator="\n")
-    writer.writerow(columns)
-    for row in rows:
-        writer.writerow([_cell(row.get(column)) for column in columns])
     with open(path, "wb") as raw:
         # mtime=0 keeps the archive byte-reproducible across rebuilds.
-        with gzip.GzipFile(fileobj=raw, mode="wb", mtime=0) as handle:
-            handle.write(buffer.getvalue().encode("utf-8"))
+        with gzip.GzipFile(fileobj=raw, mode="wb", mtime=0) as compressed:
+            with io.TextIOWrapper(compressed, encoding="utf-8", newline="") as text:
+                writer = csv.writer(text, lineterminator="\n")
+                writer.writerow(columns)
+                for row in rows:
+                    writer.writerow([_cell(row.get(column)) for column in columns])
 
 
 def _sqlite_type(column: str) -> str:

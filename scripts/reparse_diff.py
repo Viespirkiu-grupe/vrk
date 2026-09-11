@@ -35,9 +35,12 @@ Two sample roots, and the difference matters:
 
 The comparison is structural, not textual: both records are walked in parallel
 and every differing JSON path is classified `added` / `removed` / `changed` /
-`type` / `length`, with list indices collapsed to `[]`. That is what turns "10
-records differ" into "77 records gained `rawData.profile.photoMeta`" -- the
-histogram is the finding, not the record count. The `provenance` block is not
+`type` / `length` / `order`, with list indices collapsed to `[]`. That is what
+turns "10 records differ" into "77 records gained `rawData.profile.photoMeta`"
+-- the histogram is the finding, not the record count. Structural does not
+mean order-blind: an object whose keys come out in another order is another
+file, and `scripts/fixture_record_hashes.py` has always said so, so until
+issue #169 the two gates disagreed about the same parser change. The `provenance` block is not
 diffed -- its run-stamps (`parsedAt`, `parserCommit`) differ between any two
 honest runs -- but its `sourceSha256` is read, so a drifted record is
 attributed to "the page changed" or "the parser changed" (issue #89).
@@ -208,6 +211,16 @@ def diff_paths(stored: Any, fresh: Any, prefix: str = "") -> list[tuple[str, str
     private-interest row gained a field" and "every row gained it" report the
     same path, which is what makes the histogram readable. A length change is
     reported once, at the list itself, rather than as N phantom additions.
+
+    Key order is a difference too, reported once at the object whose keys
+    moved (issue #169). JSON objects are unordered by specification and no
+    consumer here reads the order, but the corpus is files, and the other
+    gate hashes files: `scripts/fixture_record_hashes.py` serializes with
+    insertion order kept. Order-blind, this function let #144 move
+    `kandidatavimas` after `anketa` in 6,386 records and print `0 differ`,
+    so `--apply` copied none of them while the manifest failed on 117
+    fixtures of the same change. Only the keys both sides hold are ranked: a
+    key that was added or removed is its own finding wherever it landed.
     """
     if isinstance(stored, dict) and isinstance(fresh, dict):
         differences: list[tuple[str, str]] = []
@@ -215,6 +228,8 @@ def diff_paths(stored: Any, fresh: Any, prefix: str = "") -> list[tuple[str, str
             differences.append((f"{prefix}.{key}".lstrip("."), "added"))
         for key in sorted(stored.keys() - fresh.keys()):
             differences.append((f"{prefix}.{key}".lstrip("."), "removed"))
+        if [key for key in stored if key in fresh] != [key for key in fresh if key in stored]:
+            differences.append((prefix or ".", "order"))
         for key in sorted(stored.keys() & fresh.keys()):
             differences.extend(diff_paths(stored[key], fresh[key], f"{prefix}.{key}".lstrip(".")))
         return differences

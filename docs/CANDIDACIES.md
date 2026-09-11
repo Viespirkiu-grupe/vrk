@@ -235,21 +235,29 @@ python scripts/build_distribution.py --profile full     # the archive verbatim
 | `candidacies.csv.gz` | the flat table above |
 | `campaigns.csv.gz` | one row per campaign-finance participant |
 | `vrk.sqlite.gz` | the analysis database above, gzipped |
-| `vrk-corpus.sqlite.gz` | **everything**: the analysis tables plus `records`, `photos`, `anomalies` — under the public profile, less the third-party contacts and the portraits' metadata (below) |
-| `MANIFEST.json` | `schemaVersion`, per-election record counts, build date, `buildCommit` (dirty-aware), `corpusParserCommits`, sha256 + bytes per asset, and the terms (`license`, `dataLicense`, `attribution`, `terms`, `source` — [DATA_TERMS.md](../DATA_TERMS.md), issue #138) |
+| `vrk-corpus.sqlite.gz` | **everything but the image bytes**: the analysis tables plus `records`, `photos` (one row per portrait, naming the part that holds it), `anomalies` — under the public profile, less the third-party contacts (below) |
+| `vrk-photos-N.sqlite` | the portraits themselves, one row per unique image, in as many parts as keep each asset under GitHub's 2 GiB per-asset cap (issue #130); not gzipped, since JPEG and PNG do not shrink; under the public profile, without their metadata (below) |
+| `MANIFEST.json` | `schemaVersion`, per-election record counts, build date, `buildCommit` (dirty-aware), `corpusParserCommits`, `photoParts` (each part's image count, bytes and elections), sha256 + bytes per asset, and the terms (`license`, `dataLicense`, `attribution`, `terms`, `source` — [DATA_TERMS.md](../DATA_TERMS.md), issue #138) |
 
 **And back again.** `scripts/unpack_corpus.py` turns `vrk-corpus.sqlite`
 into a `data/` tree — one JSON file per record in the corpus's own key
 order, each election's `anomalies.jsonl`, and every portrait sidecar the
-records name — so a download is an alternative to the scrape and not just to
-reading it:
+records name, read from the photo parts beside the database — so a download
+is an alternative to the scrape and not just to reading it:
 
 ```bash
-gh release download corpus-2026-08-30 --pattern 'vrk-corpus.sqlite.gz'
+gh release download --pattern 'vrk-corpus.sqlite.gz' --pattern 'vrk-photos-*.sqlite'
 gunzip vrk-corpus.sqlite.gz
 python scripts/unpack_corpus.py vrk-corpus.sqlite            # -> ./data
 python scripts/unpack_corpus.py vrk-corpus.sqlite --into /tmp/corpus
+python scripts/unpack_corpus.py vrk-corpus.sqlite --no-photos # records only
 ```
+
+An election whose portraits sit in a part that is not at hand is refused,
+naming the part, rather than unpacked without them; `--photos DIR` says
+where the parts are when they are not beside the database. A release from
+before the parts (schema 1, `corpus-2026-08-30`) kept the bytes inside the
+corpus database and unpacks the same way.
 
 After it, `build_person_index.py` and `build_candidacy_table.py` run against
 the unpacked tree. Under `--profile full` the round trip is exact: same
@@ -300,8 +308,10 @@ SELECT party_id, COUNT(*) FROM candidacies WHERE party_id IN lineage GROUP BY 1;
 
 The build refuses a table that fails the fill gate, an envelope key it does
 not know, a photo sidecar that is missing or hashes differently from the
-record's own `photoMeta.sha256`, and an inline base64 portrait (zero remain
-since the 2026-08-29 re-parse; one reappearing means an election regressed).
+record's own `photoMeta.sha256`, an inline base64 portrait (zero remain
+since the 2026-08-29 re-parse; one reappearing means an election regressed),
+and any asset larger than the 2 GiB GitHub accepts (issue #130) — measured
+on the staged file, before anything reaches `dist/`.
 The candidacy-table pass and the records pass must agree on the record
 count.
 
@@ -362,12 +372,19 @@ In `vrk-corpus.sqlite` the three extra tables are:
   tell that from absent, and the round trip therefore dropped the key on
   every one of those records while three places called it lossless
   (issue #156).
-- `photos(sha256, mime, bytes, stripped, stripped_sha256, data)` — every
-  sidecar portrait, stored once by content hash; `records.photo_sha256` is
-  the join and `sha256` is always the archive's hash, whatever the profile
-  did to the bytes: under the public profile `data` is the picture with its
-  metadata segments removed, `stripped` says whether anything was, and
-  `stripped_sha256` hashes what is stored. The pre-2016 and
+- `photos(sha256, mime, bytes, stripped, stripped_sha256, part)` — every
+  sidecar portrait, once by content hash, and the `vrk-photos-N.sqlite`
+  part that holds its bytes; `records.photo_sha256` is the join and
+  `sha256` is always the archive's hash, whatever the profile did to the
+  bytes. Each part carries the same columns with `data` in place of
+  `part`: under the public profile `data` is the picture with its metadata
+  segments removed, `stripped` says whether anything was, and
+  `stripped_sha256` hashes what is stored. The parts fill in build order,
+  election by election, each closed before the next image would take it
+  past 1.9 GB, so an era's portraits mostly share a part and
+  `MANIFEST.json`'s `photoParts` says which elections each one holds
+  (issue #130: in one database the 27,493 portraits made a ~6 GB asset,
+  and GitHub takes 2 GiB). The pre-2016 and
   2020+ eras link their portraits rather than embedding them, and those are
   archived the same way since issue #118 (`scripts/backfill_url_portraits.py`);
   a record still carrying an `http(s)://` reference is one whose portrait
@@ -377,11 +394,21 @@ In `vrk-corpus.sqlite` the three extra tables are:
   `anomalies.jsonl` logs, so "what went wrong" travels with the data.
 
 ```sql
--- a candidacy, its full record and its portrait, in one query
-SELECT c.candidate_name, c.income_eur, r.norm_json, p.data
+-- a candidacy, its full record and its portrait: one ATTACH per part that
+-- MANIFEST.json's photoParts lists (three in the first build to have them),
+-- and one view over their photos tables
+ATTACH 'vrk-photos-1.sqlite' AS p1;
+ATTACH 'vrk-photos-2.sqlite' AS p2;
+ATTACH 'vrk-photos-3.sqlite' AS p3;
+CREATE TEMP VIEW photo_data AS
+  SELECT sha256, data FROM p1.photos UNION ALL
+  SELECT sha256, data FROM p2.photos UNION ALL
+  SELECT sha256, data FROM p3.photos;
+
+SELECT c.candidate_name, c.income_eur, r.norm_json, d.data
 FROM candidacies c
 JOIN records r USING (election_id, candidate_id)
-LEFT JOIN photos p ON p.sha256 = r.photo_sha256
+LEFT JOIN photo_data d ON d.sha256 = r.photo_sha256
 WHERE c.election_id = '2019-prezidento';
 ```
 

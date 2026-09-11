@@ -91,6 +91,73 @@ class DiffPathsTests(unittest.TestCase):
         self.assertEqual(script.diff_paths({"a": None}, {"a": 1}), [("a", "type")])
         self.assertEqual(script.diff_paths({}, {"a": None}), [("a", "added")])
 
+    def test_keys_that_moved_are_an_order_change(self) -> None:
+        # Issue #169: #144 moved one section in 6,386 records, this printed
+        # `0 differ` and --apply copied nothing, while the fixture manifest --
+        # which hashes what the record writer emits -- failed on 117 fixtures.
+        self.assertEqual(
+            script.diff_paths(
+                {"anketa": {"a": 1}, "kandidatavimas": {"b": 2}},
+                {"kandidatavimas": {"b": 2}, "anketa": {"a": 1}},
+            ),
+            [(".", "order")],
+        )
+
+    def test_an_order_change_is_named_at_the_object_whose_keys_moved(self) -> None:
+        stored = {"normalized": {"rysiai": [{"rysys": "sutuoktinis", "vardas": "A"}]}}
+        fresh = {"normalized": {"rysiai": [{"vardas": "A", "rysys": "sutuoktinis"}]}}
+        self.assertEqual(script.diff_paths(stored, fresh), [("normalized.rysiai[]", "order")])
+
+    def test_where_an_added_key_landed_is_not_also_an_order_change(self) -> None:
+        # Only the keys both sides hold are ranked; the new key is its own finding.
+        self.assertEqual(
+            script.diff_paths({"a": 1, "c": 3}, {"b": 2, "a": 1, "c": 3}),
+            [("b", "added")],
+        )
+        self.assertEqual(
+            script.diff_paths({"b": 2, "a": 1, "c": 3}, {"a": 1, "c": 3}),
+            [("b", "removed")],
+        )
+
+
+class GatesAgreeTests(unittest.TestCase):
+    """This gate and the fixture manifest judge the same bytes (issue #169).
+
+    Until #169 they did not: the manifest hashes a record as the writer
+    serializes it, insertion order kept, and this diff compared parsed
+    objects, so one parser change passed one gate and failed the other.
+    """
+
+    def test_a_record_differs_here_exactly_when_its_manifest_hash_does(self) -> None:
+        _spec = importlib.util.spec_from_file_location(
+            "fixture_record_hashes", REPO_ROOT / "scripts" / "fixture_record_hashes.py"
+        )
+        manifest = importlib.util.module_from_spec(_spec)
+        _spec.loader.exec_module(manifest)
+
+        base = {
+            "candidateId": "x",
+            "normalized": {"anketa": {"a": 1}, "kandidatavimas": {"b": 2}},
+            "provenance": {"parsedAt": "2026-09-10T00:00:00Z"},
+        }
+        variants = {
+            "identical": json.loads(json.dumps(base)),
+            "provenance only": {**base, "provenance": {"parsedAt": "2026-09-11T00:00:00Z"}},
+            "sections moved": {**base, "normalized": {"kandidatavimas": {"b": 2}, "anketa": {"a": 1}}},
+            "value changed": {**base, "normalized": {"anketa": {"a": 9}, "kandidatavimas": {"b": 2}}},
+            "int became float": {**base, "normalized": {"anketa": {"a": 1.0}, "kandidatavimas": {"b": 2}}},
+        }
+        for name, variant in variants.items():
+            with self.subTest(name):
+                # `compare` sets provenance aside before diffing, as the
+                # manifest leaves it out of the hash.
+                stored = {key: value for key, value in base.items() if key != "provenance"}
+                fresh = {key: value for key, value in variant.items() if key != "provenance"}
+                self.assertEqual(
+                    bool(script.diff_paths(stored, fresh)),
+                    manifest.record_digest(base) != manifest.record_digest(variant),
+                )
+
 
 class ChunkSizeTests(unittest.TestCase):
     def test_a_small_election_still_fills_every_worker(self) -> None:
@@ -157,6 +224,27 @@ class RoundTripTests(unittest.TestCase):
         self.assertTrue(ok)
         self.assertEqual(differing, 1)
         self.assertEqual(histogram[("normalized.profilis.nuotrauka", "changed")], 1)
+
+    def test_a_record_whose_keys_moved_is_found_and_rewritten(self) -> None:
+        # Issue #169: an order-blind gate called 6,386 re-ordered records
+        # equal, so --apply, which writes only what differs, wrote none.
+        target = self._records()[0]
+        record = json.loads(target.read_text(encoding="utf-8"))
+        parsed_order = list(record["normalized"])
+        self.assertGreater(len(parsed_order), 1)
+        record["normalized"] = dict(reversed(list(record["normalized"].items())))
+        target.write_text(json.dumps(record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+        ok, differing, histogram, _ = self._run()
+        self.assertTrue(ok)
+        self.assertEqual(differing, 1)
+        self.assertEqual(histogram, {("normalized", "order"): 1})
+
+        ok, differing, _, _ = self._run(full=True, apply=True)
+        self.assertTrue(ok)
+        self.assertEqual(differing, 1)
+        self.assertEqual(list(json.loads(target.read_text(encoding="utf-8"))["normalized"]), parsed_order)
+        self.assertEqual(self._run()[1], 0, "a second pass must be clean")
 
     def test_apply_repairs_only_the_record_that_drifted(self) -> None:
         records = self._records()

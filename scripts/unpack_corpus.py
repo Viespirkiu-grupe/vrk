@@ -9,11 +9,14 @@ download was a dead end — the assets existed, and the corpus they came from
 could not be reassembled from them.
 
 This is the return path. `vrk-corpus.sqlite` holds one row per record with
-the whole envelope in it, so:
+the whole envelope in it, and the `vrk-photos-N.sqlite` parts downloaded
+beside it hold the portraits (issue #130), so:
 
     python scripts/unpack_corpus.py vrk-corpus.sqlite            # -> ./data
     python scripts/unpack_corpus.py vrk-corpus.sqlite --into /tmp/corpus
     python scripts/unpack_corpus.py vrk-corpus.sqlite 2016-seimo # one election
+    python scripts/unpack_corpus.py vrk-corpus.sqlite --no-photos
+    python scripts/unpack_corpus.py vrk-corpus.sqlite --photos ~/Downloads
 
 writes `data/<election-id>/<record-file>.json`, the election's
 `anomalies.jsonl`, and every portrait sidecar the records name, in the same
@@ -34,10 +37,14 @@ Under the `public` profile the redacted paths are *absent*, not nulled, which
 is what `MANIFEST.json`'s `redaction` block lists; the tree is then a real
 corpus minus those values, and every gate but the re-parse one runs on it.
 
-A portrait's bytes come back only if the database carries them (the corpus
-database does; the candidacy one has no photos at all). A record whose
-portrait was a URL the fetch never reached has no sidecar to write, exactly
-as in the corpus it was built from.
+A portrait's bytes come from the part the corpus database's `photos` row
+names, looked for beside the database or under `--photos`; a release built
+before issue #130 (schema 1) carried them in the database itself, and reads
+the same. An election whose portraits sit in a part that is not at hand is
+refused, naming the part, rather than unpacked without them -- `--no-photos`
+is how to ask for the records alone. A record whose portrait was a URL the
+fetch never reached has no sidecar to write, exactly as in the corpus it was
+built from.
 """
 
 from __future__ import annotations
@@ -68,6 +75,59 @@ def read_meta(connection: sqlite3.Connection) -> dict[str, str]:
         return {}
 
 
+class PhotoSource:
+    """Where a portrait's bytes are.
+
+    In the `vrk-photos-N.sqlite` part the corpus database's `photos` row
+    names (schema 2, issue #130), or in that row's own `data` column for a
+    release built before the parts existed (schema 1, `corpus-2026-08-30`).
+    """
+
+    def __init__(self, connection: sqlite3.Connection, directory: Path) -> None:
+        self.connection = connection
+        self.directory = directory
+        columns = {row[1] for row in connection.execute("PRAGMA table_info(photos)")}
+        self.inline = "data" in columns
+        self._parts: dict[str, sqlite3.Connection] = {}
+
+    def missing_parts(self, election_ids: list[str]) -> list[str]:
+        """The parts these elections' portraits need that are not at hand."""
+        if self.inline or not election_ids:
+            return []
+        marks = ", ".join("?" * len(election_ids))
+        needed = [
+            row[0]
+            for row in self.connection.execute(
+                "SELECT DISTINCT p.part FROM records r JOIN photos p ON p.sha256 = r.photo_sha256"
+                f" WHERE r.election_id IN ({marks}) ORDER BY p.part",
+                election_ids,
+            )
+        ]
+        return [name for name in needed if not (self.directory / name).is_file()]
+
+    def fetch(self, digest: str) -> sqlite3.Row | None:
+        """(data, stripped, stripped_sha256) of one image, or None."""
+        query = "SELECT data, stripped, stripped_sha256 FROM photos WHERE sha256 = ?"
+        if self.inline:
+            return self.connection.execute(query, (digest,)).fetchone()
+        located = self.connection.execute("SELECT part FROM photos WHERE sha256 = ?", (digest,)).fetchone()
+        if located is None:
+            return None
+        return self._part(located[0]).execute(query, (digest,)).fetchone()
+
+    def _part(self, name: str) -> sqlite3.Connection:
+        if name not in self._parts:
+            part = sqlite3.connect(self.directory / name)
+            part.row_factory = sqlite3.Row
+            self._parts[name] = part
+        return self._parts[name]
+
+    def close(self) -> None:
+        for part in self._parts.values():
+            part.close()
+        self._parts = {}
+
+
 def photo_reference(record: dict) -> str | None:
     """The `photos/<name>` the record points at, or None.
 
@@ -87,13 +147,23 @@ def photo_reference(record: dict) -> str | None:
 
 
 def unpack(
-    database: Path, into: Path, election_ids: list[str] | None = None
+    database: Path,
+    into: Path,
+    election_ids: list[str] | None = None,
+    *,
+    photos_dir: Path | None = None,
+    with_photos: bool = True,
 ) -> tuple[Counter[str], list[str]]:
-    """Write the database's records under `into`. Returns (counts, problems)."""
+    """Write the database's records under `into`. Returns (counts, problems).
+
+    Portraits are read from the parts in `photos_dir`, by default the
+    database's own directory; `with_photos=False` writes the records alone.
+    """
     counts: Counter[str] = Counter()
     problems: list[str] = []
     connection = sqlite3.connect(database)
     connection.row_factory = sqlite3.Row
+    photos = PhotoSource(connection, photos_dir or database.parent)
     try:
         # Which elections had an `anomalies.jsonl` at build time, empty or
         # not: an empty one says "scraped, nothing to report" and no file at
@@ -117,6 +187,16 @@ def unpack(
                 f" It carries {len(available)} election(s)."
             )
 
+        if with_photos:
+            missing = photos.missing_parts(wanted)
+            if missing:
+                raise SystemExit(
+                    f"the portraits of these elections are in {', '.join(missing)},"
+                    f" which {'is' if len(missing) == 1 else 'are'} not in {photos.directory}."
+                    " Download the part(s) beside the database, name their directory with"
+                    " --photos, or pass --no-photos to unpack the records alone."
+                )
+
         for election_id in wanted:
             election_dir = into / election_id
             election_dir.mkdir(parents=True, exist_ok=True)
@@ -127,6 +207,9 @@ def unpack(
                 write_json(election_dir / row["record_file"], record)
                 counts["records"] += 1
 
+                if not with_photos:
+                    counts["photos_skipped"] += bool(row["photo_sha256"])
+                    continue
                 reference = photo_reference(record)
                 digest = row["photo_sha256"]
                 if reference is None:
@@ -142,9 +225,7 @@ def unpack(
                         " database holds no photo for it"
                     )
                     continue
-                blob = connection.execute(
-                    "SELECT data, stripped, stripped_sha256 FROM photos WHERE sha256 = ?", (digest,)
-                ).fetchone()
+                blob = photos.fetch(digest)
                 if blob is None:
                     problems.append(f"{election_id}/{row['candidate_id']}: photo {digest[:12]}… is not in the database")
                     continue
@@ -175,6 +256,7 @@ def unpack(
                 counts["anomaly_files"] += 1
             counts["elections"] += 1
     finally:
+        photos.close()
         connection.close()
     return counts, problems
 
@@ -192,6 +274,17 @@ def main() -> int:
         type=Path,
         default=Path("data"),
         help="Where the election directories go. Defaults to ./data.",
+    )
+    parser.add_argument(
+        "--photos",
+        type=Path,
+        default=None,
+        help="Directory holding the vrk-photos-N.sqlite parts. Defaults to the database's own.",
+    )
+    parser.add_argument(
+        "--no-photos",
+        action="store_true",
+        help="Unpack the records and anomaly logs only; write no portrait sidecars.",
     )
     args = parser.parse_args()
 
@@ -223,12 +316,19 @@ def main() -> int:
             " so this tree is the archive less those values (MANIFEST.json lists them)"
         )
 
-    counts, problems = unpack(args.database, args.into, args.election_id or None)
+    counts, problems = unpack(
+        args.database,
+        args.into,
+        args.election_id or None,
+        photos_dir=args.photos,
+        with_photos=not args.no_photos,
+    )
     print(
         f"wrote {counts['records']} record(s) across {counts['elections']} election(s)"
         f" into {args.into}/"
         + (f", {counts['photos']} portrait(s)" if counts["photos"] else "")
         + (f" ({counts['photos_stripped']} with metadata stripped)" if counts["photos_stripped"] else "")
+        + (f", {counts['photos_skipped']} portrait(s) not written (--no-photos)" if counts["photos_skipped"] else "")
         + (f", {counts['anomalies']} anomaly event(s)" if counts["anomalies"] else "")
     )
     for problem in problems[:20]:
