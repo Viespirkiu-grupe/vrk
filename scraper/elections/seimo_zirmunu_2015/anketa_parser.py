@@ -12,25 +12,25 @@ from scraper.elections.seimo_zirmunu_2015.sitemap import ELECTION_ID, resolve_ca
 # The 2015-era pages predate every parsed layout, so the page walkers below are
 # written against them; only the format-agnostic helpers — text/missing-value
 # normalization, row lookups, record and section normalizers — come from the
-# 2016 module.
-from scraper.elections.seimo_2016.anketa_parser import (
-    _find_row_by_prompt_prefix,
-    _find_row_by_question_number,
-    _normalize_biografija_data,
-    _normalize_kita_data,
-    _normalize_links,
-    _normalize_missing_values,
-    _normalize_privaciu_interesu_data,
-    _normalize_profile_data,
-    _normalize_table_records,
-    _normalize_text_value,
-    _order_dict_keys,
-    _question_record_rows,
-    _row_answer_text,
-    _source_key,
-    _split_list_value,
-    _tag_text,
+# 2016-on page family's shared module (the 2016 module's until issue #90).
+from scraper.shared.anketa_tabs import (
+    find_row_by_prompt_prefix,
+    find_row_by_question_number,
+    normalize_biografija_data,
+    normalize_kita_data,
+    normalize_links,
+    normalize_missing_values,
+    normalize_privaciu_interesu_data,
+    normalize_profile_data,
     normalize_space,
+    normalize_table_records,
+    normalize_text_value,
+    order_dict_keys,
+    question_record_rows,
+    row_answer_text,
+    source_key,
+    split_list_value,
+    tag_text,
 )
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.deklaracijos import normalize_declaration, section_form
@@ -166,7 +166,7 @@ def _parse_profile_html(soup: BeautifulSoup) -> dict[str, Any]:
     if name_paragraph is not None:
         name_node = name_paragraph.find("b")
         if name_node is not None:
-            profile["candidateDisplayName"] = _tag_text(name_node)
+            profile["candidateDisplayName"] = tag_text(name_node)
 
     for node in detail_cell.children:
         if isinstance(node, NavigableString):
@@ -179,7 +179,7 @@ def _parse_profile_html(soup: BeautifulSoup) -> dict[str, Any]:
         if node.name == "br":
             continue
         if node.name == "b":
-            value_text = _tag_text(node)
+            value_text = tag_text(node)
             if PROFILE_NOTICE_MARKER in value_text.lower():
                 # A label still pending here has no value of its own — the
                 # self-nomination flag ("Išsikėlęs kandidatas") is written
@@ -210,7 +210,7 @@ def _parse_profile_html(soup: BeautifulSoup) -> dict[str, Any]:
         if node.name == "a":
             # The campaign participant link (and, on the municipal pages, the
             # program PDF) stands on its own rather than following a label.
-            label = _tag_text(node)
+            label = tag_text(node)
             urls = _extract_links(node)
             if label or urls:
                 fields.append(
@@ -236,7 +236,7 @@ def _parse_legacy_profile_card(soup: BeautifulSoup, card: Tag, profile: dict[str
     cells = card.find_all("td")
     detail_cell = None
     for cell in cells:
-        if cell.find("img") is None and _tag_text(cell):
+        if cell.find("img") is None and tag_text(cell):
             detail_cell = cell
             break
     if detail_cell is None:
@@ -245,7 +245,7 @@ def _parse_legacy_profile_card(soup: BeautifulSoup, card: Tag, profile: dict[str
     fields: list[dict[str, Any]] = []
     header = card.find_previous("table")
     if header is not None:
-        strongs = [_tag_text(node) for node in header.find_all("strong")]
+        strongs = [tag_text(node) for node in header.find_all("strong")]
         if len(strongs) == 2:
             fields.append({"key": "Apygarda", "displayValue": strongs[0], "urls": []})
             fields.append({"key": "Iškėlė", "displayValue": strongs[1], "urls": []})
@@ -268,7 +268,7 @@ def _parse_legacy_profile_card(soup: BeautifulSoup, card: Tag, profile: dict[str
                 profile["candidateDisplayName"] = text
             continue
         if isinstance(node, Tag) and node.name == "a":
-            label = _tag_text(node)
+            label = tag_text(node)
             urls = _extract_links(node)
             if label or urls:
                 fields.append({"key": label, "displayValue": "", "urls": urls})
@@ -302,7 +302,7 @@ def _parse_inline_record_table(table: Tag) -> dict[str, Any]:
         cells = tr.find_all("td")
         if not cells:
             continue
-        values = [_tag_text(cell) for cell in cells]
+        values = [tag_text(cell) for cell in cells]
         if len(cells) == 1 and not headers:
             label = f"{label} {values[0]}".strip() if label else values[0]
             continue
@@ -388,7 +388,7 @@ def _parse_anketa_cell(cell: Tag | None) -> dict[str, Any]:
                 rows.append(table_row)
             continue
         if node.name == "b":
-            text = _tag_text(node)
+            text = tag_text(node)
             if not text:
                 # An empty emphasised answer still answers its prompt: the
                 # row closes, so the next label starts a row of its own
@@ -406,7 +406,7 @@ def _parse_anketa_cell(cell: Tag | None) -> dict[str, Any]:
             continue
 
         # Any other inline tag contributes to the prompt.
-        text = _tag_text(node)
+        text = tag_text(node)
         if text and current is not None and not current["answer"]:
             current["prompt"] = f"{current['prompt']} {text}".strip()
 
@@ -429,17 +429,17 @@ def _normalize_answer_value(value: str) -> str | None:
     # cover it: the local rule here tested `value.strip(" ,")`, which caught
     # the bare comma and not the `-,-` a candidate who dashed *both* halves
     # produced, and the other 41 modules never had even that.
-    return _normalize_text_value(value)
+    return normalize_text_value(value)
 
 
 def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     def _answer(question_number: str) -> str | None:
         return _normalize_answer_value(
-            _row_answer_text(_find_row_by_question_number(rows, question_number))
+            row_answer_text(find_row_by_question_number(rows, question_number))
         )
 
     def _prompt_answer(prefix: str) -> str | None:
-        return _normalize_answer_value(_row_answer_text(_find_row_by_prompt_prefix(rows, prefix)))
+        return _normalize_answer_value(row_answer_text(find_row_by_prompt_prefix(rows, prefix)))
 
     return {
         "gimimo-data": _answer("5"),
@@ -458,7 +458,7 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "tautybe": _answer("11"),
         "issilavinimas": {
             "aprasas": _answer("12"),
-            "irasai": _normalize_table_records(_question_record_rows(rows, "12")),
+            "irasai": normalize_table_records(question_record_rows(rows, "12")),
         },
         # The unnumbered line after the education table: "Jei turite,
         # nurodykite mokslo laipsnį <b>…</b>, vardą <b>…</b>" — degree and
@@ -468,13 +468,13 @@ def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         # keys the 2019+ eras use for the same two facts.
         "mokslo-laipsnis": _prompt_answer("jei turite, nurodykite mokslo laipsn"),
         "pedagoginis-vardas": _prompt_answer(", vard") or _prompt_answer("jei turite, nurodykite mokslo vard"),
-        "uzsienio-kalbos": _split_list_value(
-            _row_answer_text(_find_row_by_question_number(rows, "13"))
+        "uzsienio-kalbos": split_list_value(
+            row_answer_text(find_row_by_question_number(rows, "13"))
         ),
         "politine-organizacija": _answer("14"),
         "anksciau-isrinktas": {
             "aprasas": _answer("15"),
-            "irasai": _normalize_table_records(_question_record_rows(rows, "15")),
+            "irasai": normalize_table_records(question_record_rows(rows, "15")),
         },
         "pagrindine-darboviete": _answer("16"),
         "visuomenine-veikla": _answer("17"),
@@ -511,8 +511,8 @@ def parse_anketa_html(
     # other era publishes it under.
     if anketa["normalized"].get("gimimo-data") is None:
         for field in profile.get("fields", []):
-            if _source_key(str(field.get("key", ""))) == "gimimo-data" and field.get("displayValue"):
-                anketa["normalized"]["gimimo-data"] = _normalize_text_value(field["displayValue"])
+            if source_key(str(field.get("key", ""))) == "gimimo-data" and field.get("displayValue"):
+                anketa["normalized"]["gimimo-data"] = normalize_text_value(field["displayValue"])
                 break
 
     # An unpublished questionnaire is either VRK's "Rengiama" placeholder or
@@ -522,7 +522,7 @@ def parse_anketa_html(
     placeholder = (
         anketa_cell is None
         and content is not None
-        and _tag_text(content).strip().lower() in ANKETA_PLACEHOLDER_TEXTS | {""}
+        and tag_text(content).strip().lower() in ANKETA_PLACEHOLDER_TEXTS | {""}
     )
 
     return {
@@ -533,7 +533,7 @@ def parse_anketa_html(
             "contentDivFound": content is not None,
             "anketaTableFound": anketa_cell is not None,
             "anketaPlaceholder": placeholder,
-            "placeholderText": _tag_text(content) if placeholder else "",
+            "placeholderText": tag_text(content) if placeholder else "",
         },
     }
 
@@ -547,7 +547,7 @@ def _parse_biografija_html(html: str) -> dict[str, Any]:
     soup = BeautifulSoup(html, "lxml")
     content = _content_div(soup)
     return {
-        "text": _tag_text(content),
+        "text": tag_text(content),
         "html": str(content) if content is not None else "",
     }
 
@@ -568,7 +568,7 @@ def _parse_deklaracijos_html(html: str) -> dict[str, Any]:
                 cells = tr.find_all("td")
                 if not cells:
                     continue
-                values = [_tag_text(cell) for cell in cells]
+                values = [tag_text(cell) for cell in cells]
                 if len(cells) == 1 or (len(values) > 1 and not any(values[1:])):
                     if not title:
                         title = values[0]
@@ -587,7 +587,7 @@ def _parse_deklaracijos_html(html: str) -> dict[str, Any]:
     if content is not None:
         note_tag = content.find("p")
         if note_tag is not None:
-            note = _tag_text(note_tag)
+            note = tag_text(note_tag)
 
     return {
         "sections": sections,
@@ -596,7 +596,7 @@ def _parse_deklaracijos_html(html: str) -> dict[str, Any]:
 
 
 def _parse_lt_amount(value: Any) -> float | None:
-    normalized_value = _normalize_text_value(value)
+    normalized_value = normalize_text_value(value)
     if normalized_value is None:
         return None
 
@@ -654,7 +654,7 @@ def _normalize_turto_ir_pajamu_data(payload: dict[str, Any]) -> dict[str, Any]:
     # declaration period in its closing note; both carried explicitly so a
     # cross-era consumer cannot silently read Lt as Eur.
     block["valiuta"] = "Lt"
-    block["pastaba"] = _normalize_text_value(payload.get("note"))
+    block["pastaba"] = normalize_text_value(payload.get("note"))
     return block
 
 
@@ -669,7 +669,7 @@ def _parse_interesu_html(html: str) -> dict[str, Any]:
     for table in content.select("table.partydata"):
         title = ""
         description = ""
-        headers = [_tag_text(th) for th in table.find_all("th")]
+        headers = [tag_text(th) for th in table.find_all("th")]
         items: list[dict[str, str]] = []
         data_rows: list[list[str]] = []
 
@@ -677,7 +677,7 @@ def _parse_interesu_html(html: str) -> dict[str, Any]:
             cells = tr.find_all("td")
             if not cells:
                 continue
-            values = [_tag_text(cell) for cell in cells]
+            values = [tag_text(cell) for cell in cells]
             if len(cells) == 1:
                 # Single-cell leading rows are the section title and the form's
                 # own description, in that order.
@@ -732,7 +732,7 @@ def _is_bold_header_row(cells: list[Tag]) -> bool:
         bold = cell.find("b")
         if bold is None:
             return False
-        if _tag_text(bold) != _tag_text(cell):
+        if tag_text(bold) != tag_text(cell):
             return False
     return True
 
@@ -759,7 +759,7 @@ def _parse_patiketiniai_html(html: str) -> dict[str, Any]:
             cells = tr.find_all("td")
             if len(cells) < 2:
                 continue
-            values = [_tag_text(cell) for cell in cells]
+            values = [tag_text(cell) for cell in cells]
             if not values[1]:
                 continue
             records.append({"number": values[0], "name": values[1]})
@@ -773,11 +773,11 @@ def _normalize_patiketiniai_data(payload: dict[str, Any]) -> list[dict[str, Any]
     for record in records:
         if not isinstance(record, dict):
             continue
-        number = _normalize_text_value(record.get("number"))
+        number = normalize_text_value(record.get("number"))
         normalized.append(
             {
                 "numeris": int(number) if number is not None and number.isdigit() else number,
-                "vardas-pavarde": _normalize_text_value(record.get("name")),
+                "vardas-pavarde": normalize_text_value(record.get("name")),
             }
         )
     return normalized
@@ -866,7 +866,7 @@ def _table_header_cells(table: Tag) -> tuple[list[str], Tag | None]:
     write them as a first row of <td><strong> cells, so that row is returned
     too and callers skip it when walking the data rows.
     """
-    headers = [_tag_text(th) for th in table.find_all("th")]
+    headers = [tag_text(th) for th in table.find_all("th")]
     if headers:
         return headers, None
     for tr in table.find_all("tr"):
@@ -874,7 +874,7 @@ def _table_header_cells(table: Tag) -> tuple[list[str], Tag | None]:
         if len(cells) < 2:
             continue
         if all(cell.find("strong") is not None for cell in cells):
-            return [_tag_text(cell) for cell in cells], tr
+            return [tag_text(cell) for cell in cells], tr
         return [], None
     return [], None
 
@@ -885,7 +885,7 @@ def _kv_rows_from_table(table: Tag) -> list[tuple[str, str, Tag]]:
         cells = tr.find_all("td")
         if len(cells) < 2:
             continue
-        rows.append((_tag_text(cells[0]).rstrip(":"), _tag_text(cells[1]), cells[1]))
+        rows.append((tag_text(cells[0]).rstrip(":"), tag_text(cells[1]), cells[1]))
     return rows
 
 
@@ -906,28 +906,28 @@ def _parse_campaign_card(html: str) -> dict[str, Any]:
     if picklist is None:
         return card
 
-    card["title"] = _tag_text(picklist.find("h3"))
+    card["title"] = tag_text(picklist.find("h3"))
 
     table = picklist.find("table")
     if table is not None:
         for key_text, value_text, _ in _kv_rows_from_table(table):
-            key = _source_key(key_text)
+            key = source_key(key_text)
             if key == "statusas":
-                raw_status = str(_normalize_text_value(value_text) or "")
+                raw_status = str(normalize_text_value(value_text) or "")
                 card["statusas"] = CAMPAIGN_STATUS_VALUES.get(
                     raw_status.lower(), raw_status.capitalize() if raw_status else ""
                 )
                 continue
             alias = CAMPAIGN_CONTACT_KEY_ALIASES.get(key)
             if alias is not None:
-                card["kontaktai"][alias] = _normalize_text_value(value_text)
+                card["kontaktai"][alias] = normalize_text_value(value_text)
 
-    picklist_text = _tag_text(picklist)
+    picklist_text = tag_text(picklist)
     if "Dalyvį atstovauja" in picklist_text:
         for anchor in picklist.find_all("a", href=True):
             if "Dalyvi" in anchor["href"]:
                 card["atstovauja"] = {
-                    "pavadinimas": _tag_text(anchor),
+                    "pavadinimas": tag_text(anchor),
                     "nuoroda": resolve_candidate_url(normalize_space(anchor["href"])),
                 }
                 break
@@ -957,24 +957,24 @@ def _parse_campaign_person_html(html: str) -> dict[str, Any]:
                 cells = tr.find_all("td")
                 if len(cells) < 4:
                     continue
-                values = [_tag_text(cell) for cell in cells]
+                values = [tag_text(cell) for cell in cells]
                 urls: list[str] = []
                 for cell in cells:
                     urls.extend(_extract_links(cell))
                 reports.append(
                     {
-                        "rowNumber": _normalize_text_value(values[0]),
-                        "date": _normalize_text_value(values[1]),
-                        "status": _normalize_text_value(values[2]),
-                        "type": _normalize_text_value(values[3]),
+                        "rowNumber": normalize_text_value(values[0]),
+                        "date": normalize_text_value(values[1]),
+                        "status": normalize_text_value(values[2]),
+                        "type": normalize_text_value(values[3]),
                         "urls": urls,
                     }
                 )
             continue
         for key_text, value_text, _ in _kv_rows_from_table(table):
-            alias = CAMPAIGN_PERSON_KEY_ALIASES.get(_source_key(key_text))
+            alias = CAMPAIGN_PERSON_KEY_ALIASES.get(source_key(key_text))
             if alias is not None:
-                person[alias] = _normalize_text_value(value_text)
+                person[alias] = normalize_text_value(value_text)
         if kv_rows:
             continue
 
@@ -996,11 +996,11 @@ def _parse_aukos_html(html: str) -> dict[str, Any]:
         if not headers:
             continue
         heading = table.find_previous("h3")
-        title = _tag_text(heading).rstrip(":")
+        title = tag_text(heading).rstrip(":")
 
         header_keys: list[str] = []
         for index, header in enumerate(headers):
-            header_key = _source_key(header)
+            header_key = source_key(header)
             # The notes column's parenthetical varies per section
             # ("Nepiniginė auka…" vs "grąžinta aukotojui…"); either way it
             # is the notes column.
@@ -1022,7 +1022,7 @@ def _parse_aukos_html(html: str) -> dict[str, Any]:
             cells = tr.find_all("td")
             if not cells:
                 continue
-            values = [_tag_text(cell) for cell in cells]
+            values = [tag_text(cell) for cell in cells]
             # The 2009 totals row keeps the full cell count, with the label
             # in an inner cell and no row number.
             full_width_total = (
@@ -1042,7 +1042,7 @@ def _parse_aukos_html(html: str) -> dict[str, Any]:
                         value for value in values[label_index + 1 :] if value.strip()
                     ]
                 entry: dict[str, Any] = {
-                    "label": _normalize_text_value(values[0].rstrip(":")) if values else None,
+                    "label": normalize_text_value(values[0].rstrip(":")) if values else None,
                     "amountEur": None,
                     "amountLt": None,
                     "note": None,
@@ -1052,14 +1052,14 @@ def _parse_aukos_html(html: str) -> dict[str, Any]:
                         entry[key] = _parse_lt_amount(values[offset])
                 note_index = 1 + len(amount_keys)
                 if note_index < len(values):
-                    entry["note"] = _normalize_text_value(values[note_index])
+                    entry["note"] = normalize_text_value(values[note_index])
                 if entry["label"] is not None:
                     summary.append(entry)
                 continue
             record: dict[str, Any] = {}
             for index, cell in enumerate(cells):
                 key = header_keys[index] if index < len(header_keys) else f"stulpelis-{index + 1}"
-                value = _normalize_text_value(_tag_text(cell))
+                value = normalize_text_value(tag_text(cell))
                 if key in AUKOS_AMOUNT_KEYS:
                     record[key] = _parse_lt_amount(value)
                 else:
@@ -1090,7 +1090,7 @@ def _parse_finansavimo_ataskaitos_html(html: str) -> list[dict[str, Any]]:
         if not headers:
             continue
         column_keys = [
-            FINANSAVIMO_ATASKAITOS_COLUMN_KEYS.get(_source_key(header), "") for header in headers
+            FINANSAVIMO_ATASKAITOS_COLUMN_KEYS.get(source_key(header), "") for header in headers
         ]
         for tr in table.find_all("tr"):
             if tr is header_row:
@@ -1098,7 +1098,7 @@ def _parse_finansavimo_ataskaitos_html(html: str) -> list[dict[str, Any]]:
             cells = tr.find_all("td")
             if len(cells) < 4:
                 continue
-            values = [_tag_text(cell) for cell in cells]
+            values = [tag_text(cell) for cell in cells]
             entry: dict[str, Any] = {
                 "rowNumber": None,
                 "approvedDate": None,
@@ -1111,7 +1111,7 @@ def _parse_finansavimo_ataskaitos_html(html: str) -> list[dict[str, Any]]:
                 if key in ("reportUrls", "advertisingAppendixUrls"):
                     entry[key] = _extract_links(cell)
                 elif key:
-                    entry[key] = _normalize_text_value(values[index])
+                    entry[key] = normalize_text_value(values[index])
             entries.append(entry)
 
     return entries
@@ -1132,15 +1132,15 @@ def _parse_sutartys_html(html: str) -> list[dict[str, Any]]:
             cells = tr.find_all("td")
             if len(cells) < 5:
                 continue
-            values = [_tag_text(cell) for cell in cells]
+            values = [tag_text(cell) for cell in cells]
             entries.append(
                 {
-                    "rowNumber": _normalize_text_value(values[0]),
-                    "counterparty": _normalize_text_value(values[1]),
-                    "agreementDate": _normalize_text_value(values[2]),
-                    "agreementNumber": _normalize_text_value(values[3]),
-                    "subject": _normalize_text_value(values[4]),
-                    "textAccessNote": _normalize_text_value(values[5]) if len(values) > 5 else None,
+                    "rowNumber": normalize_text_value(values[0]),
+                    "counterparty": normalize_text_value(values[1]),
+                    "agreementDate": normalize_text_value(values[2]),
+                    "agreementNumber": normalize_text_value(values[3]),
+                    "subject": normalize_text_value(values[4]),
+                    "textAccessNote": normalize_text_value(values[5]) if len(values) > 5 else None,
                     "textUrls": _extract_links(cells[5]) if len(cells) > 5 else [],
                 }
             )
@@ -1181,7 +1181,7 @@ def _parse_campaign_sample(
     }
 
     entry: dict[str, Any] = {
-        "statusas": _normalize_text_value(card.get("statusas")),
+        "statusas": normalize_text_value(card.get("statusas")),
         # The 2015 participant pages publish neither a registration date nor a
         # decision number.
         "registravimo-data": None,
@@ -1219,11 +1219,11 @@ def _parse_campaign_sample(
         raw["aukos"] = parsed
         by_section: dict[str, Any] = {}
         for section in parsed["sections"]:
-            section_key = _source_key(str(section.get("title", "")))
+            section_key = source_key(str(section.get("title", "")))
             if not section_key:
                 section_key = f"sekcija-{len(by_section) + 1}"
             by_section[section_key] = {
-                "title": _normalize_text_value(section.get("title")),
+                "title": normalize_text_value(section.get("title")),
                 "records": section.get("records", []),
                 "suvestine": section.get("summary", []),
             }
@@ -1475,7 +1475,7 @@ def parse_anketa_sample(
     }
 
     normalized: dict[str, Any] = {
-        "profilis": _normalize_profile_data(parsed["profile"]),
+        "profilis": normalize_profile_data(parsed["profile"]),
         "anketa": parsed["anketa"]["normalized"],
     }
 
@@ -1487,22 +1487,22 @@ def parse_anketa_sample(
             continue
         raw_data[key] = data
         if key == "biografija" and isinstance(data, dict):
-            normalized["biografija"] = _normalize_biografija_data(data)
+            normalized["biografija"] = normalize_biografija_data(data)
         if key == "turtoIrPajamuDeklaracijos" and isinstance(data, dict):
             normalized["turto-ir-pajamu-deklaracijos"] = _normalize_turto_ir_pajamu_data(data)
         if key == "privaciuInteresuDeklaracija" and isinstance(data, dict):
-            normalized["privaciu-interesu-deklaracija"] = _normalize_privaciu_interesu_data(data)
+            normalized["privaciu-interesu-deklaracija"] = normalize_privaciu_interesu_data(data)
         if key == "patiketiniai" and isinstance(data, dict):
             normalized["patiketiniai"] = _normalize_patiketiniai_data(data)
         if key == "kita" and isinstance(data, dict):
-            normalized["kita"] = _normalize_kita_data(data)
+            normalized["kita"] = normalize_kita_data(data)
 
     if raw_campaigns:
         raw_data["politinesKampanijosDalyvioDuomenys"] = {"campaigns": raw_campaigns}
     if campaign_entries:
         normalized["politines-kampanijos-dalyvio-duomenys"] = campaign_entries
 
-    raw_data = _order_dict_keys(
+    raw_data = order_dict_keys(
         raw_data,
         [
             "profile",
@@ -1515,7 +1515,7 @@ def parse_anketa_sample(
             "kita",
         ],
     )
-    normalized = _order_dict_keys(
+    normalized = order_dict_keys(
         normalized,
         [
             "profilis",
@@ -1552,7 +1552,7 @@ def parse_anketa_sample(
             "candidateSourceUrl": candidate_source_url,
         },
         "rawData": raw_data,
-        "normalized": _normalize_missing_values(normalized),
+        "normalized": normalize_missing_values(normalized),
     }
 
     output_path = output_root / f"{candidate_id}-{election_id}.json"

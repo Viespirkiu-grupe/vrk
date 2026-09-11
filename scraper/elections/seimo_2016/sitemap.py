@@ -9,6 +9,7 @@ from urllib.parse import parse_qs, urljoin, urlparse
 
 from bs4 import BeautifulSoup
 
+from scraper.shared.anketa_tabs import VRK_STATINIAI_BASE, resolve_candidate_url
 from scraper.shared.files import slugify, write_json
 from scraper.shared.http import fetch_text
 from scraper.shared.values import candidate_status_note
@@ -18,7 +19,6 @@ LISTING_URL = (
     "https://www.vrk.lt/2016-seimo/kandidatai"
     "?srcUrl=/rinkimai/102/rnk426/kandidatai/lrsKandidataiPilnasSarasas.html"
 )
-VRK_STATINIAI_BASE = "https://www.vrk.lt/statiniai/puslapiai/"
 
 DEFAULT_SAMPLE_PATH = Path("samples/html/2016-seimo/list.html")
 DEFAULT_WRAPPER_SAMPLE_PATH = Path("samples/html/2016-seimo/page.html")
@@ -67,17 +67,6 @@ def extract_candidate_note(raw_name: str) -> str:
     a tenth of the election.
     """
     return candidate_status_note(raw_name)
-
-
-def resolve_candidate_url(href: str) -> str:
-    if href.startswith("http://") or href.startswith("https://"):
-        return href
-
-    if href.startswith("?srcUrl="):
-        src_url = href.split("?srcUrl=", 1)[1]
-        return urljoin(VRK_STATINIAI_BASE, src_url.lstrip("/"))
-
-    return urljoin(VRK_STATINIAI_BASE, href.lstrip("/"))
 
 
 def _extract_src_url(listing_url: str) -> str | None:

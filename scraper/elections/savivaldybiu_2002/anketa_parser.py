@@ -48,20 +48,20 @@ from bs4 import BeautifulSoup, NavigableString, Tag
 
 from scraper.elections.ep_2004.results import load_ranking
 from scraper.elections.savivaldybiu_2002.sitemap import ELECTION_ID
-from scraper.elections.seimo_2016.anketa_parser import (
-    _find_row_by_question_number,
-    _normalize_missing_values,
-    _normalize_profile_data,
-    _normalize_text_value,
-    _order_dict_keys,
-    _split_list_value,
-    _tag_text,
-    normalize_space,
-)
 from scraper.elections.seimo_zirmunu_2015.anketa_parser import (
     _apply_results,
     _normalize_answer_value,
     load_results,
+)
+from scraper.shared.anketa_tabs import (
+    find_row_by_question_number,
+    normalize_missing_values,
+    normalize_profile_data,
+    normalize_space,
+    normalize_text_value,
+    order_dict_keys,
+    split_list_value,
+    tag_text,
 )
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.deklaracijos import SCOPE_FAMILY, SCOPE_OWN
@@ -196,16 +196,16 @@ def _line_parts(line: list[Any]) -> list[tuple[str, str]]:
             if node.name in ("h1", "h2", "center", "img", "span"):
                 continue
             if node.name == "b":
-                parts.append(("bold", _tag_text(node)))
+                parts.append(("bold", tag_text(node)))
             elif node.name == "i":
-                parts.append(("italic", _tag_text(node)))
+                parts.append(("italic", tag_text(node)))
             else:
                 bolds = node.find_all("b")
                 if bolds:
                     for bold in bolds:
-                        parts.append(("bold", _tag_text(bold)))
+                        parts.append(("bold", tag_text(bold)))
                 else:
-                    text = _tag_text(node)
+                    text = tag_text(node)
                     if text:
                         parts.append(("text", text))
     return parts
@@ -277,7 +277,7 @@ def parse_anketa_html(html: str) -> dict[str, Any]:
             if lowered.startswith("nuo") and rows:
                 # An indented mandate line under Q15 ("nuo: 1997 iki:
                 # 2000 institution"), one per prior mandate.
-                target = _find_row_by_question_number(rows, "15") or rows[-1]
+                target = find_row_by_question_number(rows, "15") or rows[-1]
                 if target.get("records") is None:
                     target["records"] = []
                 target["records"].append(_parse_mandate_line(parts))
@@ -329,7 +329,7 @@ def parse_anketa_html(html: str) -> dict[str, Any]:
 
 def normalize_savivaldybiu_2002_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     def _answer(question_number: str) -> str | None:
-        row = _find_row_by_question_number(rows, question_number)
+        row = find_row_by_question_number(rows, question_number)
         return _normalize_answer_value(row.get("answer") if row else None)
 
     def _prompt_answer(prefix: str) -> str | None:
@@ -339,7 +339,7 @@ def normalize_savivaldybiu_2002_anketa_rows(rows: list[dict[str, Any]]) -> dict[
         return None
 
     mandates = []
-    q15 = _find_row_by_question_number(rows, "15")
+    q15 = find_row_by_question_number(rows, "15")
     for record in (q15 or {}).get("records") or []:
         laikotarpis = None
         if record.get("nuo") or record.get("iki"):
@@ -366,15 +366,15 @@ def normalize_savivaldybiu_2002_anketa_rows(rows: list[dict[str, Any]]) -> dict[
             # the rest of the family uses for it.
             "ar-buvote-pripazintas-kaltu": _answer("9"),
             "teisiniai-argumentai": _normalize_answer_value(
-                (_find_row_by_question_number(rows, "9") or {}).get("explanation")
+                (find_row_by_question_number(rows, "9") or {}).get("explanation")
             ),
         },
         "gimimo-vieta": _answer("10"),
         "tautybe": _answer("11"),
         # The municipal form asks the level ("Aukštasis"), not school lines.
         "issilavinimas": {"aprasas": _answer("12"), "irasai": []},
-        "uzsienio-kalbos": _split_list_value(
-            (_find_row_by_question_number(rows, "13") or {}).get("answer")
+        "uzsienio-kalbos": split_list_value(
+            (find_row_by_question_number(rows, "13") or {}).get("answer")
         ),
         "anksciau-isrinktas": {"aprasas": _answer("15"), "irasai": mandates},
         "pagrindine-darboviete": _answer("16"),
@@ -396,7 +396,7 @@ def _parse_deklaracija_amount(value: Any) -> float | None:
     figures ("25565Lt") and spaces it elsewhere ("151659 Lt."), which
     the 2015-era ``_parse_lt_amount``'s word-boundary strip cannot
     reach, so the unit is taken off the tail here."""
-    text = _normalize_text_value(value)
+    text = normalize_text_value(value)
     if text is None:
         return None
     compact = re.sub(r"lt\.?\s*$", "", text.replace("\xa0", " ").strip(), flags=re.IGNORECASE)
@@ -463,7 +463,7 @@ def normalize_deklaracija(
         prompt = normalize_space(str(item.get("prompt", "")))
         lowered = prompt.lower()
         if lowered.startswith("3. darbovietė") or lowered.startswith("darbovietė"):
-            declaration["darboviete"] = _normalize_text_value(item.get("value"))
+            declaration["darboviete"] = normalize_text_value(item.get("value"))
             continue
         matched = False
         for marker, key in single_items:
@@ -713,10 +713,10 @@ def parse_anketa_sample(
         **({"deklaracija": deklaracija_raw} if deklaracija_raw is not None else {}),
     }
     normalized: dict[str, Any] = {
-        "profilis": _normalize_profile_data(parsed["profile"]),
+        "profilis": normalize_profile_data(parsed["profile"]),
         "anketa": anketa,
         **(
-            {"turto-ir-pajamu-deklaracijos": _order_dict_keys(declaration, DEKLARACIJA_OUTPUT_ORDER)}
+            {"turto-ir-pajamu-deklaracijos": order_dict_keys(declaration, DEKLARACIJA_OUTPUT_ORDER)}
             if declaration is not None
             else {}
         ),
@@ -724,8 +724,8 @@ def parse_anketa_sample(
     output_payload |= {
         "source": {"candidateSourceUrl": source_url},
         "rawData": raw_data,
-        "normalized": _normalize_missing_values(
-            _order_dict_keys(normalized, ["profilis", "anketa", "turto-ir-pajamu-deklaracijos"])
+        "normalized": normalize_missing_values(
+            order_dict_keys(normalized, ["profilis", "anketa", "turto-ir-pajamu-deklaracijos"])
         ),
     }
 

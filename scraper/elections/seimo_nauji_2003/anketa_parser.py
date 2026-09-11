@@ -80,16 +80,6 @@ from scraper.elections.savivaldybiu_2002.anketa_parser import (
     normalize_deklaracija,
 )
 from scraper.elections.seimo_2004.anketa_parser import normalize_seimo_2004_anketa_rows
-from scraper.elections.seimo_2016.anketa_parser import (
-    _find_row_by_question_number,
-    _normalize_biografija_data,
-    _normalize_missing_values,
-    _normalize_profile_data,
-    _order_dict_keys,
-    _row_answer_text,
-    _tag_text,
-    normalize_space,
-)
 from scraper.elections.seimo_birzu_zarasu_ukmerges_2013.anketa_parser import build_candidacy
 from scraper.elections.seimo_nauji_2003.candidate_samples import SUBPAGE_LINK_PATTERN
 from scraper.elections.seimo_nauji_2003.results import load_rounds
@@ -98,6 +88,16 @@ from scraper.elections.seimo_zirmunu_2015.anketa_parser import (
     _apply_results,
     _normalize_answer_value,
     load_results,
+)
+from scraper.shared.anketa_tabs import (
+    find_row_by_question_number,
+    normalize_biografija_data,
+    normalize_missing_values,
+    normalize_profile_data,
+    normalize_space,
+    order_dict_keys,
+    row_answer_text,
+    tag_text,
 )
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.files import load_candidate_index, write_candidate_record
@@ -201,7 +201,7 @@ def _parse_profile_html(soup: BeautifulSoup) -> tuple[dict[str, Any], Tag | None
     # <h2> the candidate's name.
     heading = content.find("h2")
     if heading is not None:
-        profile["candidateDisplayName"] = _tag_text(heading)
+        profile["candidateDisplayName"] = tag_text(heading)
 
     card = _card_row(_question_table(content))
     cell = card.find("td") if card is not None else None
@@ -231,7 +231,7 @@ def _parse_profile_html(soup: BeautifulSoup) -> tuple[dict[str, Any], Tag | None
                 if normalize_space(anchor["href"]) not in ("", "#")
             ]
             fields.append(
-                {"key": _card_label(pending_label), "displayValue": _tag_text(node), "urls": urls}
+                {"key": _card_label(pending_label), "displayValue": tag_text(node), "urls": urls}
             )
             pending_label = ""
             continue
@@ -241,7 +241,7 @@ def _parse_profile_html(soup: BeautifulSoup) -> tuple[dict[str, Any], Tag | None
             if not SUBPAGE_LINK_PATTERN.search(normalize_space(node.get("href", ""))):
                 fields.append(
                     {
-                        "key": _tag_text(node),
+                        "key": tag_text(node),
                         "displayValue": "",
                         "urls": [resolve_candidate_url(normalize_space(node["href"]))]
                         if node.get("href")
@@ -280,7 +280,7 @@ def _parse_record_table(table: Tag) -> list[dict[str, str]]:
         cells = tr.find_all("td")
         if not cells:
             continue
-        values = [_tag_text(cell) for cell in cells]
+        values = [tag_text(cell) for cell in cells]
         if not any(values):
             continue
         columns = RECORD_TABLE_COLUMNS.get(len(cells), [])
@@ -326,7 +326,7 @@ def normalize_seimo_2003_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, An
     Q3 in 2004."""
     normalized = normalize_seimo_2004_anketa_rows(rows)
     birth_date = _normalize_answer_value(
-        _row_answer_text(_find_row_by_question_number(rows, "5"))
+        row_answer_text(find_row_by_question_number(rows, "5"))
     )
     normalized["gimimo-data"] = normalize_birth_date(birth_date) if birth_date else None
     return normalized
@@ -388,7 +388,7 @@ def parse_deklaracija_html(html: str) -> dict[str, Any]:
     text = normalize_space(soup.get_text(" ", strip=True))
     issuer, issued = _issuer_and_date(text)
     payload: dict[str, Any] = {
-        "forma": _tag_text(heading) if heading is not None else "",
+        "forma": tag_text(heading) if heading is not None else "",
         "isdave": issuer,
         "isdavimoData": issued,
         "items": [],
@@ -443,7 +443,7 @@ def _declaration_item(cell: Tag) -> dict[str, Any] | None:
             continue
         if node.name == "b":
             if value is None:
-                value = _tag_text(node)
+                value = tag_text(node)
             continue
         if node.name == "table":
             for entry in node.find_all("li"):
@@ -451,10 +451,10 @@ def _declaration_item(cell: Tag) -> dict[str, Any] | None:
                 bold = entry.find("b")
                 period = "pradzioje" if "pradžioje" in label else "pabaigoje" if "pabaigoje" in label else None
                 if period:
-                    periods[period] = _tag_text(bold) if bold is not None else None
+                    periods[period] = tag_text(bold) if bold is not None else None
             continue
         if value is None:
-            text = _tag_text(node)
+            text = tag_text(node)
             if text:
                 prompt_parts.append(text)
     prompt = normalize_space(" ".join(prompt_parts))
@@ -550,7 +550,7 @@ def parse_anketa_sample(
         "anketa": {"rows": parsed["anketa"]["rows"]},
     }
     normalized: dict[str, Any] = {
-        "profilis": _normalize_profile_data(parsed["profile"]),
+        "profilis": normalize_profile_data(parsed["profile"]),
         "anketa": parsed["anketa"]["normalized"],
     }
 
@@ -575,7 +575,7 @@ def parse_anketa_sample(
             continue
         raw_data[key] = data
         if key == "biografija":
-            normalized["biografija"] = _normalize_biografija_data(data)
+            normalized["biografija"] = normalize_biografija_data(data)
         elif key == "turtoIrPajamuDeklaracijos":
             normalized["turto-ir-pajamu-deklaracijos"] = _normalize_deklaracija_data(data)
 
@@ -595,11 +595,11 @@ def parse_anketa_sample(
         output_payload["kandidatavimas"]["turai"] = rounds_lookup[vrk_id]
     output_payload |= {
         "source": {"candidateSourceUrl": source_url},
-        "rawData": _order_dict_keys(
+        "rawData": order_dict_keys(
             raw_data, ["profile", "anketa", "biografija", "turtoIrPajamuDeklaracijos"]
         ),
-        "normalized": _normalize_missing_values(
-            _order_dict_keys(
+        "normalized": normalize_missing_values(
+            order_dict_keys(
                 normalized, ["profilis", "anketa", "biografija", "turto-ir-pajamu-deklaracijos"]
             )
         ),

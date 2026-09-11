@@ -817,7 +817,8 @@ class Savivaldybiu2023AnketaParserTests(unittest.TestCase):
         self.assertEqual(mitrofanovas["finansavimo-ataskaitos"], [])
 
     def test_sprendimai_tab_is_normalized(self) -> None:
-        # Regression guard for the shared seimo_2016 campaign normalizer, which
+        # Regression guard for the shared campaign normalizer (seimo_2016's,
+        # scraper/shared/anketa_tabs.py since issue #90), which
         # fetched the "Sprendimai" tab into rawData but never normalized it.
         sprendimai = self.zebrauskas["normalized"][
             "politines-kampanijos-dalyvio-duomenys"

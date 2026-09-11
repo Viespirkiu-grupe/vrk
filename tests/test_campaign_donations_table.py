@@ -2,7 +2,7 @@ import unittest
 
 from bs4 import BeautifulSoup
 
-from scraper.elections.seimo_2016.anketa_parser import _parse_donations_table
+from scraper.shared.anketa_tabs import _parse_donations_table
 
 
 def _parse(html: str) -> dict:

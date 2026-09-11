@@ -3,7 +3,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scraper.elections.seimo_2016.anketa_parser import _parse_eur_amount, parse_anketa_sample
+from scraper.elections.seimo_2016.anketa_parser import parse_anketa_sample
+from scraper.shared.anketa_tabs import parse_eur_amount
 from scraper.shared.deklaracijos import DECLARATION_VALUE_KEYS
 
 
@@ -90,19 +91,19 @@ class EurAmountParsingTests(unittest.TestCase):
         # VRK renders such an amount without its leading zero -- the page
         # source reads "<b>,53 Eur</b>" -- which used to normalize to null and
         # lost 102 published figures across six elections.
-        self.assertEqual(_parse_eur_amount(",53 Eur"), 0.53)
-        self.assertEqual(_parse_eur_amount(",6 Eur"), 0.6)
-        self.assertEqual(_parse_eur_amount("-,5 Eur"), -0.5)
+        self.assertEqual(parse_eur_amount(",53 Eur"), 0.53)
+        self.assertEqual(parse_eur_amount(",6 Eur"), 0.6)
+        self.assertEqual(parse_eur_amount("-,5 Eur"), -0.5)
 
     def test_ordinary_amounts_are_unchanged(self) -> None:
-        self.assertEqual(_parse_eur_amount("0 Eur"), 0)
-        self.assertEqual(_parse_eur_amount("43202,09 Eur"), 43202.09)
-        self.assertEqual(_parse_eur_amount("1 325 940 Eur"), 1325940)
+        self.assertEqual(parse_eur_amount("0 Eur"), 0)
+        self.assertEqual(parse_eur_amount("43202,09 Eur"), 43202.09)
+        self.assertEqual(parse_eur_amount("1 325 940 Eur"), 1325940)
 
     def test_non_amounts_stay_null(self) -> None:
         for value in ("", ",", "Eur", "nenurodė", None):
             with self.subTest(value=value):
-                self.assertIsNone(_parse_eur_amount(value))
+                self.assertIsNone(parse_eur_amount(value))
 
 
 if __name__ == "__main__":

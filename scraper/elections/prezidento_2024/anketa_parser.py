@@ -20,26 +20,26 @@ from scraper.elections.ep_2024.anketa_parser import (
     _parse_turto_ir_pajamu_html,
     _records_for_question,
 )
-from scraper.elections.seimo_2016.anketa_parser import (
-    _extract_links,
-    _find_row_by_question_number,
-    _load_candidate_meta,
-    _normalize_campaigns,
-    _normalize_kita_data,
-    _normalize_missing_values,
-    _normalize_profile_data,
-    _normalize_table_records,
-    _order_dict_keys,
-    _parse_anketa_table,
-    _parse_nested_campaign_samples,
-    _parse_politines_kampanijos_html,
-    _parse_tabnav,
-    _row_answer_text,
-    _normalize_text_value,
-    _tag_text,
-    normalize_space,
-)
 from scraper.elections.ep_2019.anketa_parser import parse_office_heading
+from scraper.shared.anketa_tabs import (
+    extract_links,
+    find_row_by_question_number,
+    load_candidate_meta,
+    normalize_campaigns,
+    normalize_kita_data,
+    normalize_missing_values,
+    normalize_profile_data,
+    normalize_space,
+    normalize_table_records,
+    normalize_text_value,
+    order_dict_keys,
+    parse_anketa_table,
+    parse_nested_campaign_samples,
+    parse_politines_kampanijos_html,
+    parse_tabnav,
+    row_answer_text,
+    tag_text,
+)
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.election_results import candidacy_from_elected_note
 from scraper.shared.conviction_details import conviction_entries, conviction_records
@@ -95,7 +95,7 @@ def _parse_profile_table(table: Tag | None) -> dict[str, Any]:
                 photo_src = normalize_space(img.get("src", ""))
 
         value_cell = cells[-1]
-        text = _tag_text(value_cell)
+        text = tag_text(value_cell)
         if not text:
             continue
 
@@ -108,7 +108,7 @@ def _parse_profile_table(table: Tag | None) -> dict[str, Any]:
                 {
                     "key": NOMINATION_KEY,
                     "displayValue": _extract_nominator(text),
-                    "urls": _extract_links(value_cell),
+                    "urls": extract_links(value_cell),
                 }
             )
             continue
@@ -132,15 +132,15 @@ def _parse_profile_table(table: Tag | None) -> dict[str, Any]:
 
 def _normalize_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     def _answer(question_number: str) -> str | None:
-        return _normalize_text_value(
-            _row_answer_text(_find_row_by_question_number(rows, question_number))
+        return normalize_text_value(
+            row_answer_text(find_row_by_question_number(rows, question_number))
         )
 
     return {
         "adresas": _answer("6"),
         "einamos-pareigos": _answer("7"),
         "narystes-politinese-organizacijose": {
-            "irasai": _normalize_table_records(_records_for_question(rows, "8")),
+            "irasai": normalize_table_records(_records_for_question(rows, "8")),
         },
         "pareiskimai": {
             # Q9-Q14 share the Rinkimų kodekso 76 str. wording with the 2024 EP
@@ -189,8 +189,8 @@ def parse_anketa_html(html: str) -> dict[str, Any]:
     profile["officeHeading"] = parse_office_heading(soup)
     if not profile.get("photoSrc"):
         profile["photoSrc"] = _find_photo_src(soup)
-    tabs = _parse_tabnav(tabnav)
-    anketa = _parse_anketa_table(anketa_table)
+    tabs = parse_tabnav(tabnav)
+    anketa = parse_anketa_table(anketa_table)
     anketa["normalized"] = _normalize_anketa_rows(anketa["rows"])
 
     return {
@@ -224,7 +224,7 @@ def _parse_optional_subpages(
         "kita": ("kita.html", _parse_kita_html),
         "politinesKampanijosDalyvioDuomenys": (
             "politines-kampanijos-dalyvio-duomenys.html",
-            _parse_politines_kampanijos_html,
+            parse_politines_kampanijos_html,
         ),
     }
 
@@ -275,7 +275,7 @@ def parse_anketa_sample(
 
     html = anketa_path.read_text(encoding="utf-8")
     parsed = parse_anketa_html(html)
-    meta = _load_candidate_meta(candidate_dir)
+    meta = load_candidate_meta(candidate_dir)
     candidate_meta = meta.get("candidate", {}) if isinstance(meta, dict) else {}
     candidate_source_url = candidate_meta.get("url") if isinstance(candidate_meta, dict) else None
 
@@ -336,7 +336,7 @@ def parse_anketa_sample(
     )
     root_campaign_data = subpages.get("politinesKampanijosDalyvioDuomenys", {}).get("data")
     try:
-        nested_campaigns = _parse_nested_campaign_samples(
+        nested_campaigns = parse_nested_campaign_samples(
             meta if isinstance(meta, dict) else None,
             root_campaign_data if isinstance(root_campaign_data, dict) else None,
             candidate_dir=candidate_dir,
@@ -373,7 +373,7 @@ def parse_anketa_sample(
     }
 
     normalized: dict[str, Any] = {
-        "profilis": _normalize_profile_data(parsed["profile"]),
+        "profilis": normalize_profile_data(parsed["profile"]),
         "anketa": parsed["anketa"]["normalized"],
     }
 
@@ -392,7 +392,7 @@ def parse_anketa_sample(
         if key == "turtoIrPajamuDeklaracijos" and isinstance(data, dict):
             normalized["turto-ir-pajamu-deklaracijos"] = _normalize_turto_ir_pajamu_data(data)
         if key == "kita" and isinstance(data, dict):
-            normalized["kita"] = _normalize_kita_data(data)
+            normalized["kita"] = normalize_kita_data(data)
 
     if nested_campaigns:
         campaign_key = "politinesKampanijosDalyvioDuomenys"
@@ -404,12 +404,12 @@ def parse_anketa_sample(
             "sectionDescription": section_description,
             "campaigns": nested_campaigns,
         }
-        normalized["politines-kampanijos-dalyvio-duomenys"] = _normalize_campaigns(raw_data[campaign_key])
+        normalized["politines-kampanijos-dalyvio-duomenys"] = normalize_campaigns(raw_data[campaign_key])
     elif isinstance(root_campaign_data, dict):
         campaign_key = "politinesKampanijosDalyvioDuomenys"
         raw_data[campaign_key] = root_campaign_data
 
-    raw_data = _order_dict_keys(
+    raw_data = order_dict_keys(
         raw_data,
         [
             "profile",
@@ -421,7 +421,7 @@ def parse_anketa_sample(
             "kita",
         ],
     )
-    normalized = _order_dict_keys(
+    normalized = order_dict_keys(
         normalized,
         [
             "profilis",
@@ -445,7 +445,7 @@ def parse_anketa_sample(
             "candidateSourceUrl": candidate_source_url,
         },
         "rawData": raw_data,
-        "normalized": _normalize_missing_values(normalized),
+        "normalized": normalize_missing_values(normalized),
     }
 
     output_path = output_root / f"{candidate_id}-{ELECTION_ID}.json"

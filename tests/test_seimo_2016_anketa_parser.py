@@ -4,9 +4,11 @@ import unittest
 from pathlib import Path
 
 from scraper.elections.seimo_2016.anketa_parser import (
-    _normalize_anketa_rows,
-    _question_record_rows,
     parse_anketa_sample,
+)
+from scraper.shared.anketa_tabs import (
+    _normalize_anketa_rows,
+    question_record_rows,
 )
 
 
@@ -32,7 +34,7 @@ class QuestionRecordRowsTests(unittest.TestCase):
             {"questionNumber": "12", "prompt": "12. Išsilavinimas", "answer": [{"a": "1"}]},
             {"questionNumber": "13", "prompt": "13. Kalbos", "answer": "Anglų"},
         ]
-        self.assertEqual(_question_record_rows(rows, "12"), [{"a": "1"}])
+        self.assertEqual(question_record_rows(rows, "12"), [{"a": "1"}])
 
     def test_table_in_the_row_after_the_question(self) -> None:
         rows = [
@@ -40,17 +42,17 @@ class QuestionRecordRowsTests(unittest.TestCase):
             {"questionNumber": None, "prompt": "", "answer": [{"a": "1"}, {"a": "2"}]},
             {"questionNumber": "16", "prompt": "16. Darbovietė", "answer": "X"},
         ]
-        self.assertEqual(_question_record_rows(rows, "15"), [{"a": "1"}, {"a": "2"}])
+        self.assertEqual(question_record_rows(rows, "15"), [{"a": "1"}, {"a": "2"}])
 
     def test_following_text_row_does_not_extend_the_table(self) -> None:
         rows = [
             {"questionNumber": "12", "prompt": "12. Išsilavinimas", "answer": ""},
             {"questionNumber": None, "prompt": "Jei turite, nurodykite", "answer": "Nenurodė"},
         ]
-        self.assertEqual(_question_record_rows(rows, "12"), [])
+        self.assertEqual(question_record_rows(rows, "12"), [])
 
     def test_missing_question_yields_nothing(self) -> None:
-        self.assertEqual(_question_record_rows([], "15"), [])
+        self.assertEqual(question_record_rows([], "15"), [])
 
 
 class Seimo2016AnketaParserTests(unittest.TestCase):

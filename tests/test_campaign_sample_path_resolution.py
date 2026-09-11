@@ -3,9 +3,9 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scraper.elections.seimo_2016.anketa_parser import (
-    _parse_nested_campaign_samples,
+from scraper.shared.anketa_tabs import (
     _resolve_sample_path,
+    parse_nested_campaign_samples,
 )
 
 
@@ -62,7 +62,7 @@ def _build_candidate_tree(
 class CampaignSamplePathResolutionTests(unittest.TestCase):
     def _parse(self, candidate_dir: Path, meta: dict) -> tuple[list, list]:
         anomalies: list = []
-        campaigns = _parse_nested_campaign_samples(
+        campaigns = parse_nested_campaign_samples(
             meta,
             None,
             candidate_dir=candidate_dir,

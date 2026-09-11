@@ -29,17 +29,17 @@ from scraper.elections.ep_2004.anketa_parser import (
     parse_anketa_samples as _parse_anketa_samples,
 )
 from scraper.elections.seimo_2004.sitemap import ELECTION_ID
-from scraper.elections.seimo_2016.anketa_parser import (
-    _find_row_by_prompt_prefix,
-    _find_row_by_question_number,
-    _normalize_table_records,
-    _normalize_text_value,
-    _question_record_rows,
-    _row_answer_text,
-    _split_list_value,
-    normalize_space,
-)
 from scraper.elections.seimo_zirmunu_2015.anketa_parser import _normalize_answer_value
+from scraper.shared.anketa_tabs import (
+    find_row_by_prompt_prefix,
+    find_row_by_question_number,
+    normalize_space,
+    normalize_table_records,
+    normalize_text_value,
+    question_record_rows,
+    row_answer_text,
+    split_list_value,
+)
 from scraper.shared.savivaldybiu_archive_1997 import normalize_birth_date
 
 DEFAULT_SAMPLES_ROOT = Path(f"samples/html/{ELECTION_ID}")
@@ -53,11 +53,11 @@ SELF_NOMINATED_MARKER = "išsikėlė"
 def normalize_seimo_2004_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     def _answer(question_number: str) -> str | None:
         return _normalize_answer_value(
-            _row_answer_text(_find_row_by_question_number(rows, question_number))
+            row_answer_text(find_row_by_question_number(rows, question_number))
         )
 
     def _prompt_answer(prefix: str) -> str | None:
-        return _normalize_answer_value(_row_answer_text(_find_row_by_prompt_prefix(rows, prefix)))
+        return _normalize_answer_value(row_answer_text(find_row_by_prompt_prefix(rows, prefix)))
 
     birth_date = _answer("3")
     return {
@@ -76,23 +76,23 @@ def normalize_seimo_2004_anketa_rows(rows: list[dict[str, Any]]) -> dict[str, An
             "ar-buvote-pripazintas-kaltu-del-sunkaus-nusikaltimo": _answer("9.3"),
             # The Q9 explanation, printed as an unlabelled emphasised row
             # right after 9.3 (as on the EP pages).
-            "teisiniai-argumentai": _normalize_answer_value(_row_answer_text(_row_after(rows, "9.3"))),
+            "teisiniai-argumentai": _normalize_answer_value(row_answer_text(_row_after(rows, "9.3"))),
         },
         "gimimo-vieta": _answer("10"),
         "tautybe": _answer("11"),
         "issilavinimas": {
             "aprasas": _answer("12"),
-            "irasai": _normalize_table_records(_question_record_rows(rows, "12")),
+            "irasai": normalize_table_records(question_record_rows(rows, "12")),
         },
         "mokslo-laipsnis": _prompt_answer("moksliniai laipsniai"),
         "pedagoginis-vardas": _prompt_answer("moksliniai vardai"),
-        "uzsienio-kalbos": _split_list_value(
-            _row_answer_text(_find_row_by_question_number(rows, "13"))
+        "uzsienio-kalbos": split_list_value(
+            row_answer_text(find_row_by_question_number(rows, "13"))
         ),
         "politine-organizacija": _answer("14"),
         "anksciau-isrinktas": {
             "aprasas": _answer("15"),
-            "irasai": _normalize_table_records(_question_record_rows(rows, "15")),
+            "irasai": normalize_table_records(question_record_rows(rows, "15")),
         },
         "pagrindine-darboviete": _answer("16"),
         "visuomenine-veikla": _answer("17"),
@@ -138,7 +138,7 @@ def finish_candidacy(output_payload: dict[str, Any], parsed: dict[str, Any]) -> 
         if key.startswith("kandidatas registruotas savarankišku"):
             urls = field.get("urls") or []
             candidacy["savarankiskasKampanijosDalyvis"] = {
-                "sprendimas": _normalize_text_value(field.get("displayValue")),
+                "sprendimas": normalize_text_value(field.get("displayValue")),
                 "nuoroda": urls[0] if urls else None,
             }
             break

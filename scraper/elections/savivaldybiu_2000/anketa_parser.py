@@ -50,17 +50,17 @@ from scraper.elections.seimo_2000.anketa_parser import (
     _text,
 )
 from scraper.elections.seimo_2000.candidate_samples import CANDIDATE_PAGE_NAME
-from scraper.elections.seimo_2016.anketa_parser import (
-    _normalize_missing_values,
-    _normalize_profile_data,
-    _normalize_text_value,
-    _order_dict_keys,
-    normalize_space,
-)
 from scraper.elections.seimo_zirmunu_2015.anketa_parser import (
     _apply_results,
     _normalize_answer_value,
     load_results,
+)
+from scraper.shared.anketa_tabs import (
+    normalize_missing_values,
+    normalize_profile_data,
+    normalize_space,
+    normalize_text_value,
+    order_dict_keys,
 )
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.deklaracija_archive_1990s import parse_declaration
@@ -253,7 +253,7 @@ def normalize_anketa(parsed: dict[str, Any]) -> tuple[dict[str, Any], list[str]]
 
     def _single(key: str) -> str | None:
         values = _values(key)
-        return _normalize_text_value(", ".join(values)) if values else None
+        return normalize_text_value(", ".join(values)) if values else None
 
     # The card prints the family inside the marital-status paragraph:
     # "Šeimyninė padėtis: <b>Vedęs</b> Šeimos nariai: <b>Laima</b> -
@@ -293,7 +293,7 @@ def normalize_anketa(parsed: dict[str, Any]) -> tuple[dict[str, Any], list[str]]
             "priesaikos-uzsienio-valstybei-atsisakymas": _answer("priesaikos-uzsienio-valstybei-atsisakymas"),
             "ar-bendradarbiavote-su-uzsienio-tarnybomis": _answer("ar-bendradarbiavote-su-uzsienio-tarnybomis"),
             "ar-buvote-pripazintas-kaltu": _answer("ar-buvote-pripazintas-kaltu"),
-            "teisiniai-argumentai": _normalize_text_value(explanation),
+            "teisiniai-argumentai": normalize_text_value(explanation),
         },
         # "Gimimo vieta" is on the card template; no page read so far
         # prints it. Kept so a page that does is not silently dropped.
@@ -313,9 +313,9 @@ def normalize_anketa(parsed: dict[str, Any]) -> tuple[dict[str, Any], list[str]]
         },
         "pagrindine-darboviete": _single("pagrindine-darboviete"),
         "visuomenine-veikla": _single("visuomenine-veikla"),
-        "seimine-padetis": _normalize_text_value(", ".join(status_values)) if status_values else None,
-        "sutuoktinio-vardas-pavarde": _normalize_text_value(", ".join(spouse)) if spouse else None,
-        "vaiku-vardai-pavardes": _normalize_text_value(", ".join(children)) if children else None,
+        "seimine-padetis": normalize_text_value(", ".join(status_values)) if status_values else None,
+        "sutuoktinio-vardas-pavarde": normalize_text_value(", ".join(spouse)) if spouse else None,
+        "vaiku-vardai-pavardes": normalize_text_value(", ".join(children)) if children else None,
         "seimos-nariai": [{"vardas": m["value"], "rysys": m["note"]} for m in family],
         "kita-apie-save": _single("kita-apie-save"),
     }
@@ -516,15 +516,15 @@ def parse_anketa_sample(
         "declaration": declaration,
     }
     normalized: dict[str, Any] = {
-        "profilis": _normalize_profile_data(parsed["profile"]),
+        "profilis": normalize_profile_data(parsed["profile"]),
         "anketa": anketa,
         **({"turto-ir-pajamu-deklaracijos": declaration} if declaration else {}),
     }
     output_payload |= {
         "source": {"candidateSourceUrl": source_url},
         "rawData": raw_data,
-        "normalized": _normalize_missing_values(
-            _order_dict_keys(normalized, ["profilis", "anketa", "turto-ir-pajamu-deklaracijos"])
+        "normalized": normalize_missing_values(
+            order_dict_keys(normalized, ["profilis", "anketa", "turto-ir-pajamu-deklaracijos"])
         ),
     }
 

@@ -10,27 +10,27 @@ from scraper.elections.seimo_zanavyku_2018.sitemap import ELECTION_ID
 # inside the name cell, base64 photos, GPM308 income labels and ID001x
 # private-interest sections. That module's parsing rules are reused here.
 from scraper.elections.seimo_anyksciu_panevezio_2017.anketa_parser import parse_anketa_html
-from scraper.elections.seimo_2016.anketa_parser import (
-    _load_candidate_meta,
-    _normalize_biografija_data,
-    _normalize_campaigns,
-    _normalize_kita_data,
-    _normalize_missing_values,
-    _normalize_privaciu_interesu_data,
-    _normalize_profile_data,
-    _order_dict_keys,
-    _parse_biografija_html,
-    _parse_kita_html,
-    _parse_nested_campaign_samples,
-    _parse_politines_kampanijos_html,
-    _parse_privaciu_interesu_html,
-    _parse_turto_ir_pajamu_html,
-)
 # The asset rows keep the I.-V. labels, but the income rows switched to the
 # modern wording ("Deklaruota apmokestinamųjų ir neapmokestinamųjų pajamų suma")
 # between the April 2017 by-election and this one, even though the section is
 # still headed GPM308. Those are the aliases the 2024 EP module carries.
 from scraper.elections.ep_2024.anketa_parser import _normalize_turto_ir_pajamu_data
+from scraper.shared.anketa_tabs import (
+    load_candidate_meta,
+    normalize_biografija_data,
+    normalize_campaigns,
+    normalize_kita_data,
+    normalize_missing_values,
+    normalize_privaciu_interesu_data,
+    normalize_profile_data,
+    order_dict_keys,
+    parse_biografija_html,
+    parse_kita_html,
+    parse_nested_campaign_samples,
+    parse_politines_kampanijos_html,
+    parse_privaciu_interesu_html,
+    parse_turto_ir_pajamu_html,
+)
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.election_results import candidacy_from_elected_note
 from scraper.shared.files import write_candidate_record, write_json
@@ -52,14 +52,14 @@ def _parse_optional_subpages(
 ) -> dict[str, Any]:
     pages: dict[str, Any] = {}
     parser_map: dict[str, Any] = {
-        "biografija": ("biografija.html", _parse_biografija_html),
+        "biografija": ("biografija.html", parse_biografija_html),
         # Singular on these pages, unlike the mayoral elections of the same year.
-        "privaciuInteresuDeklaracija": ("privaciu-interesu-deklaracija.html", _parse_privaciu_interesu_html),
-        "turtoIrPajamuDeklaracijos": ("turto-ir-pajamu-deklaracijos.html", _parse_turto_ir_pajamu_html),
-        "kita": ("kita.html", _parse_kita_html),
+        "privaciuInteresuDeklaracija": ("privaciu-interesu-deklaracija.html", parse_privaciu_interesu_html),
+        "turtoIrPajamuDeklaracijos": ("turto-ir-pajamu-deklaracijos.html", parse_turto_ir_pajamu_html),
+        "kita": ("kita.html", parse_kita_html),
         "politinesKampanijosDalyvioDuomenys": (
             "politines-kampanijos-dalyvio-duomenys.html",
-            _parse_politines_kampanijos_html,
+            parse_politines_kampanijos_html,
         ),
     }
 
@@ -110,7 +110,7 @@ def parse_anketa_sample(
 
     html = anketa_path.read_text(encoding="utf-8")
     parsed = parse_anketa_html(html)
-    meta = _load_candidate_meta(candidate_dir)
+    meta = load_candidate_meta(candidate_dir)
     candidate_meta = meta.get("candidate", {}) if isinstance(meta, dict) else {}
     candidate_source_url = candidate_meta.get("url") if isinstance(candidate_meta, dict) else None
 
@@ -171,7 +171,7 @@ def parse_anketa_sample(
     )
     root_campaign_data = subpages.get("politinesKampanijosDalyvioDuomenys", {}).get("data")
     try:
-        nested_campaigns = _parse_nested_campaign_samples(
+        nested_campaigns = parse_nested_campaign_samples(
             meta if isinstance(meta, dict) else None,
             root_campaign_data if isinstance(root_campaign_data, dict) else None,
             candidate_dir=candidate_dir,
@@ -208,7 +208,7 @@ def parse_anketa_sample(
     }
 
     normalized: dict[str, Any] = {
-        "profilis": _normalize_profile_data(parsed["profile"]),
+        "profilis": normalize_profile_data(parsed["profile"]),
         "anketa": parsed["anketa"]["normalized"],
     }
 
@@ -221,13 +221,13 @@ def parse_anketa_sample(
         if key != "politinesKampanijosDalyvioDuomenys":
             raw_data[key] = data
         if key == "biografija" and isinstance(data, dict):
-            normalized["biografija"] = _normalize_biografija_data(data)
+            normalized["biografija"] = normalize_biografija_data(data)
         if key == "privaciuInteresuDeklaracija" and isinstance(data, dict):
-            normalized["privaciu-interesu-deklaracija"] = _normalize_privaciu_interesu_data(data)
+            normalized["privaciu-interesu-deklaracija"] = normalize_privaciu_interesu_data(data)
         if key == "turtoIrPajamuDeklaracijos" and isinstance(data, dict):
             normalized["turto-ir-pajamu-deklaracijos"] = _normalize_turto_ir_pajamu_data(data)
         if key == "kita" and isinstance(data, dict):
-            normalized["kita"] = _normalize_kita_data(data)
+            normalized["kita"] = normalize_kita_data(data)
 
     if nested_campaigns:
         campaign_key = "politinesKampanijosDalyvioDuomenys"
@@ -239,12 +239,12 @@ def parse_anketa_sample(
             "sectionDescription": section_description,
             "campaigns": nested_campaigns,
         }
-        normalized["politines-kampanijos-dalyvio-duomenys"] = _normalize_campaigns(raw_data[campaign_key])
+        normalized["politines-kampanijos-dalyvio-duomenys"] = normalize_campaigns(raw_data[campaign_key])
     elif isinstance(root_campaign_data, dict):
         campaign_key = "politinesKampanijosDalyvioDuomenys"
         raw_data[campaign_key] = root_campaign_data
 
-    raw_data = _order_dict_keys(
+    raw_data = order_dict_keys(
         raw_data,
         [
             "profile",
@@ -256,7 +256,7 @@ def parse_anketa_sample(
             "kita",
         ],
     )
-    normalized = _order_dict_keys(
+    normalized = order_dict_keys(
         normalized,
         [
             "profilis",
@@ -280,7 +280,7 @@ def parse_anketa_sample(
             "candidateSourceUrl": candidate_source_url,
         },
         "rawData": raw_data,
-        "normalized": _normalize_missing_values(normalized),
+        "normalized": normalize_missing_values(normalized),
     }
 
     output_path = output_root / f"{candidate_id}-{ELECTION_ID}.json"

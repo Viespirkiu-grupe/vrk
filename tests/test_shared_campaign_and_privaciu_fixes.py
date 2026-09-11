@@ -9,10 +9,12 @@ modules. These tests pin the recovered fields at the unit level and end to end.
   A. ep_2024._normalize_privaciu_interesu_data dropped declaration items with an
      empty key. Free-text sections such as "Kiti duomenys" are published as an
      unlabelled sentence, so the whole declared text vanished.
-  B. seimo_2016._normalize_campaigns ignored the "Sprendimai" campaign tab, so
-     VRK decisions about a campaign (unlawful political advertising, accounting
-     breaches) were never normalized.
-  C. seimo_2016._parse_campaign_donations_html lost a donations section whose
+  B. seimo_2016._normalize_campaigns (scraper/shared/anketa_tabs.py's
+     normalize_campaigns since issue #90) ignored the "Sprendimai" campaign
+     tab, so VRK decisions about a campaign (unlawful political advertising,
+     accounting breaches) were never normalized.
+  C. seimo_2016._parse_campaign_donations_html (in scraper/shared/anketa_tabs.py
+     since issue #90) lost a donations section whose
      heading carried the empty-state marker inline ("Gautos ir priimtos aukos:
      Duomenų nėra"). No table or text node follows such a heading, so the next
      heading overwrote the pending title and the section disappeared —
@@ -31,7 +33,7 @@ from scraper.elections.prezidento_2019.anketa_parser import (
 from scraper.elections.savivaldybiu_2023.anketa_parser import (
     parse_anketa_sample as parse_savivaldybiu_2023_sample,
 )
-from scraper.elections.seimo_2016.anketa_parser import (
+from scraper.shared.anketa_tabs import (
     _normalize_sprendimai_tab,
     _parse_campaign_donations_html,
 )
@@ -74,7 +76,7 @@ def _all_decisions(record: dict) -> list[dict]:
 
 
 class SprendimaiTabNormalizationTests(unittest.TestCase):
-    """Fix B — seimo_2016._normalize_sprendimai_tab."""
+    """Fix B — _normalize_sprendimai_tab, in scraper/shared/anketa_tabs.py."""
 
     # Verbatim rawData payload of the "sprendimai" tab from
     # data/2023-kovo-5-savivaldybiu-tarybu-ir-meru/algirdas-zebrauskas-2424292-*.json
@@ -219,8 +221,8 @@ class SprendimaiTabNormalizationTests(unittest.TestCase):
 
     def test_pre_existing_election_gains_decisions(self) -> None:
         # 2019-prezidento is one of the 9 elections whose parsed output changed
-        # when the shared handler landed; it reaches the same seimo_2016
-        # _normalize_campaigns through its own module.
+        # when the shared handler landed; it reaches the same shared
+        # normalize_campaigns through its own module.
         for candidate_id, numbers in PREZIDENTO_2019_DECISIONS.items():
             with self.subTest(candidate=candidate_id):
                 record = _parse(parse_prezidento_2019_sample, "2019-prezidento", candidate_id)

@@ -11,14 +11,15 @@ null value (62 records in 2016 Seimo, 97 in 2020 Seimo, 146 in 2024 Seimo,
 
 The fix has two halves, mirrored into each affected copy:
 
-  - raw parsers (seimo_2016._parse_privaciu_interesu_html,
-    seimo_2020._parse_privaciu_interesu_html,
+  - raw parsers (seimo_2016's, now anketa_tabs.parse_privaciu_interesu_html
+    since issue #90, seimo_2020._parse_privaciu_interesu_html,
     seimo_2024/ep_2024._parse_privaciu_record_table) treat a one-cell row in a
     table that carries column headers as an unlabelled data row of a
     single-column table, not a label;
-  - normalizers (seimo_2016, seimo_2020, seimo_2024
-    _normalize_privaciu_interesu_data) collect unlabelled values under
-    "tekstas", exactly like the fixed ep_2024 copy.
+  - normalizers (seimo_2016's, now anketa_tabs.normalize_privaciu_interesu_data,
+    and seimo_2020's and seimo_2024's _normalize_privaciu_interesu_data)
+    collect unlabelled values under "tekstas", exactly like the fixed ep_2024
+    copy.
 
 One-cell rows in header-less tables (spouse/workplace group labels such as
 "Darbovietė") must keep their label semantics — the 2021-2023 mayoral pages
@@ -42,10 +43,6 @@ from scraper.elections.meru_2025.anketa_parser import (
 from scraper.elections.prezidento_2024.anketa_parser import (
     parse_anketa_sample as parse_prezidento_2024_sample,
 )
-from scraper.elections.seimo_2016.anketa_parser import (
-    _normalize_privaciu_interesu_data as normalize_seimo_2016_privaciu,
-    _parse_privaciu_interesu_html as parse_seimo_2016_privaciu_html,
-)
 from scraper.elections.seimo_2019.anketa_parser import (
     parse_anketa_sample as parse_seimo_2019_sample,
 )
@@ -59,6 +56,10 @@ from scraper.elections.seimo_2024.anketa_parser import (
 )
 from scraper.elections.seimo_zanavyku_2018.anketa_parser import (
     parse_anketa_sample as parse_zanavykai_2018_sample,
+)
+from scraper.shared.anketa_tabs import (
+    normalize_privaciu_interesu_data as normalize_seimo_2016_privaciu,
+    parse_privaciu_interesu_html as parse_seimo_2016_privaciu_html,
 )
 
 

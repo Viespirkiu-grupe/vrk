@@ -1,7 +1,8 @@
 """Pins for the tier-1 normalization cleanups of 2026-08-19.
 
-Four defects surfaced by the corpus-wide review, all in shared seimo_2016
-code, all guarded here on synthetic payloads so they cannot drift back:
+Four defects surfaced by the corpus-wide review, all in the seimo_2016 code
+other modules shared (scraper/shared/anketa_tabs.py since issue #90), all
+guarded here on synthetic payloads so they cannot drift back:
 
 - ID001P records fell back to stulpelis-N keys because the 2019-era pages
   publish six of the seven column headers empty; the canonical 2016 column
@@ -23,11 +24,11 @@ import unittest
 
 from bs4 import BeautifulSoup
 
-from scraper.elections.seimo_2016.anketa_parser import (
+from scraper.shared.anketa_tabs import (
     ID001P_COLUMN_KEYS,
-    _normalize_privaciu_interesu_data,
-    _normalize_text_value,
-    _parse_nested_table,
+    normalize_privaciu_interesu_data,
+    normalize_text_value,
+    parse_nested_table,
 )
 
 
@@ -54,7 +55,7 @@ class Id001pCanonicalColumnsTests(unittest.TestCase):
                 }
             ]
         }
-        normalized = _normalize_privaciu_interesu_data(payload)
+        normalized = normalize_privaciu_interesu_data(payload)
         record = normalized["id001p"][0]
         self.assertEqual(list(record.keys()), ID001P_COLUMN_KEYS)
         self.assertEqual(record["valstybe"], "Lietuvos Respublika")
@@ -72,7 +73,7 @@ class Id001pCanonicalColumnsTests(unittest.TestCase):
                 }
             ]
         }
-        record = _normalize_privaciu_interesu_data(payload)["id001x"][0]
+        record = normalize_privaciu_interesu_data(payload)["id001x"][0]
         self.assertEqual(list(record.keys()), ["stulpelis-1", "stulpelis-2"])
 
 
@@ -90,7 +91,7 @@ class Id001aFoldTests(unittest.TestCase):
                 }
             ]
         }
-        normalized = _normalize_privaciu_interesu_data(payload)
+        normalized = normalize_privaciu_interesu_data(payload)
         self.assertEqual(
             normalized["id001a"], {"tekstas": "Pirmas sakinys. Antras sakinys."}
         )
@@ -111,7 +112,7 @@ class NestedTableAlignmentTests(unittest.TestCase):
         </table>
         """
         table = BeautifulSoup(html, "lxml").find("table")
-        parsed = _parse_nested_table(table)
+        parsed = parse_nested_table(table)
         self.assertEqual(
             parsed["rows"],
             [
@@ -132,14 +133,14 @@ class NestedTableAlignmentTests(unittest.TestCase):
         </table>
         """
         table = BeautifulSoup(html, "lxml").find("table")
-        self.assertEqual(_parse_nested_table(table)["rows"], [{"A": "1", "B": "2"}])
+        self.assertEqual(parse_nested_table(table)["rows"], [{"A": "1", "B": "2"}])
 
 
 class NfcNormalizationTests(unittest.TestCase):
     def test_nfd_input_folds_to_nfc(self) -> None:
         nfd = unicodedata.normalize("NFD", "Šimonytė ė")
         self.assertNotEqual(nfd, "Šimonytė ė")
-        self.assertEqual(_normalize_text_value(nfd), "Šimonytė ė")
+        self.assertEqual(normalize_text_value(nfd), "Šimonytė ė")
 
 
 
@@ -181,7 +182,7 @@ class DeadColumnSkipTests(unittest.TestCase):
                 }
             ]
         }
-        record = _normalize_privaciu_interesu_data(payload)["id001f"][0]
+        record = normalize_privaciu_interesu_data(payload)["id001f"][0]
         self.assertNotIn("asmens-kodas", record)
         self.assertEqual(record["vardas-ir-pavarde"], "JONAS JONAITIS")
 

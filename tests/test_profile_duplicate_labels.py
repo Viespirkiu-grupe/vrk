@@ -14,7 +14,7 @@ import unittest
 from pathlib import Path
 
 from scraper.elections.pakartotiniai_sirvintu_traku_2015.anketa_parser import parse_anketa_sample
-from scraper.elections.seimo_2016.anketa_parser import _normalize_profile_data
+from scraper.shared.anketa_tabs import normalize_profile_data
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -37,7 +37,7 @@ class ProfileDuplicateLabelTests(unittest.TestCase):
                 {"key": "Iškėlė", "displayValue": "C", "urls": []},
             ],
         }
-        kita = _normalize_profile_data(profile)["kita"]
+        kita = normalize_profile_data(profile)["kita"]
         self.assertEqual(
             list(kita.keys()), ["apygarda", "iskele", "apygarda-2", "iskele-2", "iskele-3"]
         )

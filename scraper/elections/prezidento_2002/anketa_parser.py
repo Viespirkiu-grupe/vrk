@@ -38,15 +38,15 @@ from bs4 import BeautifulSoup, NavigableString
 from scraper.elections.prezidento_2002.results import DEFAULT_RESULTS_PATH as _RESULTS_PATH
 from scraper.elections.prezidento_2002.sitemap import ELECTION_ID, extract_listing_entries
 from scraper.elections.prezidento_2004.results import load_rounds
-from scraper.elections.seimo_2016.anketa_parser import (
-    _normalize_biografija_data,
-    _normalize_missing_values,
-    _normalize_profile_data,
-    _normalize_text_value,
-    _order_dict_keys,
-    normalize_space,
-)
 from scraper.elections.seimo_zirmunu_2015.anketa_parser import _apply_results, load_results
+from scraper.shared.anketa_tabs import (
+    normalize_biografija_data,
+    normalize_missing_values,
+    normalize_profile_data,
+    normalize_space,
+    normalize_text_value,
+    order_dict_keys,
+)
 from scraper.shared.anomalies import build_anomaly_event
 from scraper.shared.files import load_candidate_index, write_candidate_record
 from scraper.shared.seimo_archive_1990s import (
@@ -202,7 +202,7 @@ def parse_anketa_sample(
             "sveikatos-pazyma": list(candidate_meta.get("sveikatosSkenaiUrls") or []),
         },
     }
-    normalized: dict[str, Any] = {"profilis": _normalize_profile_data(profile)}
+    normalized: dict[str, Any] = {"profilis": normalize_profile_data(profile)}
 
     def _subpage_failed(key: str, path: Path, error: Exception) -> None:
         anomalies.append(
@@ -229,7 +229,7 @@ def parse_anketa_sample(
                 "headingName": biografija["headingName"],
                 "sourceUrl": candidate_meta.get("biografijaUrl"),
             }
-            normalized["biografija"] = _normalize_biografija_data(biografija)
+            normalized["biografija"] = normalize_biografija_data(biografija)
             anketa = _biography_anketa(biografija["text"])
             if anketa:
                 normalized["anketa"] = anketa
@@ -242,7 +242,7 @@ def parse_anketa_sample(
             _subpage_failed("programa", programa_path, exc)
         else:
             raw_data["programa"] = {"text": text, "sourceUrl": candidate_meta.get("programaUrl")}
-            normalized["programa"] = _normalize_biografija_data({"text": text})
+            normalized["programa"] = normalize_biografija_data({"text": text})
 
     candidate_name = str(candidate_meta.get("candidateName", "")).strip() or profile["candidateDisplayName"]
     output_payload: dict[str, Any] = {
@@ -261,9 +261,9 @@ def parse_anketa_sample(
         output_payload["kandidatavimas"]["turai"] = rounds_lookup[registration_id]
     output_payload |= {
         "source": {"candidateSourceUrl": source_url},
-        "rawData": _order_dict_keys(raw_data, ["profile", "skenai", "biografija", "programa"]),
-        "normalized": _normalize_missing_values(
-            _order_dict_keys(normalized, ["profilis", "anketa", "biografija", "programa"])
+        "rawData": order_dict_keys(raw_data, ["profile", "skenai", "biografija", "programa"]),
+        "normalized": normalize_missing_values(
+            order_dict_keys(normalized, ["profilis", "anketa", "biografija", "programa"])
         ),
     }
 
@@ -274,7 +274,7 @@ def parse_anketa_sample(
     # scalar sources — the card fields and the two parsed texts — and
     # cli.py's row-count line still measures something real.
     scalar_values = [
-        _normalize_text_value(field.get("displayValue")) or (field.get("urls") or [None])[0]
+        normalize_text_value(field.get("displayValue")) or (field.get("urls") or [None])[0]
         for field in profile["fields"]
     ] + [
         (raw_data.get(key) or {}).get("text")
