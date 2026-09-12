@@ -1661,7 +1661,15 @@ def parse_eur_amount(value: Any) -> float | None:
         return None
 
     compact = normalized_value.replace("\u00a0", " ")
-    compact = re.sub(r"\beur\b", "", compact, flags=re.IGNORECASE)
+    # The unit comes off wherever it stands -- spaced ("1 234 Eur"), glued to
+    # the figure ("25565Eur"), closed with a full stop ("25565 Eur.") -- but
+    # never out of the middle of a word. A word-boundary strip reads the glued
+    # form as no figure at all, the blind spot `_parse_deklaracija_amount`
+    # exists to route around for the 2002 pages' litas. No retained 2016-on
+    # page prints either form today (re-parsing all of them changes nothing),
+    # so this guards the next election's pages rather than repairing a past
+    # one (issue #90).
+    compact = re.sub(r"(?:(?<=\d)|\b)eur\b\.?", "", compact, flags=re.IGNORECASE)
     compact = compact.replace(" ", "").replace(",", ".")
     # VRK renders an amount below one euro without its leading zero -- the page
     # source itself reads "<b>,53 Eur</b>" -- so restore the zero rather than
