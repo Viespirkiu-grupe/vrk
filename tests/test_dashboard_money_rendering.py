@@ -9,10 +9,10 @@ wanted -- these tests pin that *both* renderers do it. The figures carry no
 "Lt→€" marker: the conversion is obvious from the currency and the labels were
 removed. See GitHub issue #63.
 
-The money helpers are lifted out of dashboard/index.html and executed with
-node, so this tests the shipped code rather than a transcription of it. The
-page has no build step and the repo no JS toolchain; where node is missing the
-behavioural tests skip and the structural ones still run.
+The money helpers are lifted from the maintained Astro client modules and
+executed with Node, so these tests exercise the original code without requiring
+a build or matching minified bundles. Where Node is missing the behavioural
+tests skip and the structural ones still run.
 """
 
 from __future__ import annotations
@@ -24,9 +24,10 @@ import subprocess
 import unittest
 from pathlib import Path
 
+from tests.dashboard_source import script_source
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
-DASHBOARD_PATH = REPO_ROOT / "dashboard" / "index.html"
-SOURCE = DASHBOARD_PATH.read_text(encoding="utf-8")
+SOURCE = script_source()
 NODE = shutil.which("node")
 
 # The money concepts of the comparison table, and the renderer each row has
@@ -53,7 +54,7 @@ def _extract(name: str) -> str:
     const = re.search(rf"^const {re.escape(name)} = .*?;$", SOURCE, re.S | re.M)
     if const:
         return const.group(0)
-    raise AssertionError(f"{name} not found in {DASHBOARD_PATH.name}")
+    raise AssertionError(f"{name} not found in dashboard.js")
 
 
 def run_in_node(expression: str) -> object:

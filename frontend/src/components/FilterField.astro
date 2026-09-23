@@ -1,0 +1,8 @@
+---
+interface Props { id: string; label: string; title?: string; wide?: boolean; }
+const { id, label, title = label, wide = false } = Astro.props;
+---
+<div class:list={['filter-field', { 'filter-field-wide': wide }]}>
+  <label for={id}>{label}</label>
+  <select id={id} title={title}></select>
+</div>

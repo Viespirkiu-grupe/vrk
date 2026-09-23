@@ -1,203 +1,8 @@
-<!doctype html>
-<html lang="lt">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VRK kandidatų naršyklė</title>
-<style>
-  :root {
-    --bg: #f6f6f4; --panel: #ffffff; --ink: #1c1c1a; --muted: #6d6d68;
-    --line: #e3e3de; --accent: #2456a4; --accent-soft: #eef2f9; --win: #22713c;
-  }
-  * { box-sizing: border-box; }
-  /* Visually hidden, still read out and still a click target. An
-     absolutely positioned grid child takes no track, so the facet
-     labels can live inside #filters without disturbing its two
-     columns (issue #147: the page had no <label> at all, and the six
-     selects carried only a `title`, which a screen reader may not
-     announce). */
-  .sr {
-    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
-    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
-  }
-  html, body { height: 100%; }
-  body { margin: 0; font: 15px/1.5 -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--ink); overflow: hidden; display: flex; flex-direction: column; }
-  header { padding: 14px 22px; background: var(--panel); border-bottom: 1px solid var(--line); display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap; }
-  header h1 { font-size: 17px; margin: 0; }
-  header .stats { color: var(--muted); font-size: 13px; }
-  header .hbtn { padding: 6px 12px; border: 1px solid var(--line); background: var(--panel); border-radius: 8px; cursor: pointer; font-size: 13.5px; }
-  #filterToggle { display: none; margin-top: 8px; padding: 5px 10px; border: 1px solid var(--line); background: var(--panel); border-radius: 6px; cursor: pointer; font-size: 12.5px; }
-  main { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 0; flex: 1; min-height: 0; }
-  #left { border-right: 1px solid var(--line); background: var(--panel); display: flex; flex-direction: column; min-height: 0; min-width: 0; }
-  #searchbox { padding: 12px 12px 8px; }
-  #search { width: 100%; padding: 9px 12px; font-size: 15px; border: 1px solid var(--line); border-radius: 8px; }
-  #filters { padding: 0 12px 10px; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px; }
-  /* 299 of the 338 nominator options and 50 of the 63 municipality ones
-     were wider than a half-width box in a 360px pane, the widest 7.1x
-     over (issue #147). Those two take the whole row; every option also
-     carries its label as a title. */
-  #fParty, #fMunicipality { grid-column: 1 / -1; }
-  #filters select { padding: 5px 6px; border: 1px solid var(--line); border-radius: 6px; font-size: 12.5px; width: 100%; min-width: 0; color: var(--ink); background: var(--panel); }
-  #filterrow { grid-column: 1 / -1; display: flex; gap: 10px; align-items: center; font-size: 13px; color: var(--muted); }
-  #count { flex: 1; }
-  #csvBtn { padding: 4px 10px; border: 1px solid var(--line); background: var(--panel); border-radius: 6px; cursor: pointer; font-size: 12.5px; }
-  #results { overflow-y: auto; flex: 1; }
-  .row { padding: 7px 14px 7px 10px; border-bottom: 1px solid var(--line); cursor: pointer; display: flex; align-items: flex-start; gap: 8px; }
-  .row:hover, .row.active { background: var(--accent-soft); }
-  .row .rowmain:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
-  /* The name is the link (issue #147): the row used to be a
-     role="button" div wrapping the comparison checkbox, which made the
-     checkbox presentational to ARIA and let the row's keydown handler
-     eat the Space that would have ticked it. */
-  .row .rowmain {
-    flex: 1; min-width: 0; overflow: hidden; display: block;
-    color: inherit; text-decoration: none; cursor: pointer;
-  }
-  .row .nm { font-weight: 500; }
-  .row .bd { color: var(--muted); font-size: 12.5px; white-space: nowrap; }
-  .row .pt { display: block; color: var(--muted); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .row .cnt { color: var(--accent); font-size: 12.5px; white-space: nowrap; }
-  .row .cmpbox { margin: 4px 0 0; }
-  #cmpbar { padding: 8px 12px; border-top: 1px solid var(--line); display: flex; gap: 8px; align-items: center; font-size: 13px; background: var(--accent-soft); }
-  #cmpbar[hidden] { display: none; }
-  #cmpbar button { padding: 4px 10px; border: 1px solid var(--line); background: var(--panel); border-radius: 6px; cursor: pointer; font-size: 12.5px; }
-  #person { padding: 22px 28px; overflow-y: auto; }
-  /* The pane takes focus on every render so the next Tab lands inside the
-     record instead of walking 600 rows (issue #147). It is only ever
-     focused programmatically, so the ring shows after keyboard
-     navigation and not after a click. */
-  #person:focus:not(:focus-visible) { outline: none; }
-  #person .placeholder { color: var(--muted); margin-top: 40px; text-align: center; }
-  .phead { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 18px; }
-  .phead img { width: 92px; border-radius: 8px; border: 1px solid var(--line); }
-  .phead h2 { margin: 0 0 4px; font-size: 22px; }
-  .phead .meta { color: var(--muted); }
-  .tabs { display: flex; gap: 6px; margin: 14px 0; flex-wrap: wrap; }
-  .tabs button { padding: 7px 14px; border: 1px solid var(--line); background: var(--panel); border-radius: 8px; cursor: pointer; font-size: 14px; }
-  .tabs button.on { background: var(--accent); color: #fff; border-color: var(--accent); }
-  .ecard { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; margin-bottom: 14px; overflow: hidden; }
-  .ecard > summary { padding: 12px 16px; cursor: pointer; font-weight: 600; list-style: none; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
-  .ecard > summary::-webkit-details-marker { display: none; }
-  .ecard .party { color: var(--muted); font-size: 13px; font-weight: 400; }
-  .ecard .win { color: var(--win); font-size: 13px; font-weight: 500; }
-  .ecard .nores { color: var(--muted); font-size: 13px; font-weight: 400; font-style: italic; }
-  .ecard .body { padding: 4px 16px 14px; border-top: 1px solid var(--line); }
-  .sec { margin: 12px 0; }
-  .sec h4 { margin: 0 0 6px; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
-  dl { margin: 0; display: grid; grid-template-columns: 260px 1fr; gap: 3px 14px; }
-  dt { color: var(--muted); overflow-wrap: anywhere; }
-  dd { margin: 0; overflow-wrap: anywhere; white-space: pre-wrap; }
-  dd a { color: var(--accent); font-size: 12.5px; }
-  table.rec { border-collapse: collapse; font-size: 13.5px; margin: 4px 0; max-width: 100%; display: block; overflow-x: auto; }
-  table.rec th, table.rec td { border: 1px solid var(--line); padding: 4px 8px; text-align: left; vertical-align: top; min-width: 110px; }
-  table.rec th { background: var(--accent-soft); font-weight: 600; }
-  /* Scrolling shadows: a wrapper whose content is wider than it is shows a
-     shadow on the side it can still scroll toward, and nothing when it fits.
-     A 20-candidacy person's chart was 2,740 px in an 830 px wrapper with no
-     hint that anything lay off-screen (issue #149). The two `local` gradients
-     are the panel-coloured mask that hides the shadow at each end. */
-  .tablewrap {
-    overflow-x: auto;
-    background:
-      linear-gradient(to right, var(--panel) 40%, rgba(255, 255, 255, 0)) left center,
-      linear-gradient(to left, var(--panel) 40%, rgba(255, 255, 255, 0)) right center,
-      radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .16), rgba(0, 0, 0, 0)) left center,
-      radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .16), rgba(0, 0, 0, 0)) right center;
-    background-repeat: no-repeat;
-    background-size: 36px 100%, 36px 100%, 13px 100%, 13px 100%;
-    background-attachment: local, local, scroll, scroll;
-  }
-  table.cmp { border-collapse: collapse; width: 100%; font-size: 13.5px; background: var(--panel); }
-  table.cmp th, table.cmp td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; white-space: pre-line; }
-  table.cmp thead th { background: var(--accent-soft); position: sticky; top: 0; z-index: 2; }
-  table.cmp th:first-child { position: sticky; left: 0; background: var(--accent-soft); z-index: 1; min-width: 180px; }
-  table.cmp thead th:first-child { z-index: 3; }
-  table.cmp td.null { color: var(--muted); }
-  table.cmp td.unmapped { color: var(--muted); background: var(--bg); }
-  .loading { color: var(--muted); padding: 20px; }
-  .aggnote { color: var(--muted); font-size: 13px; margin: 6px 0 14px; }
-  /* The coverage grid (issue #162): one row per concept, one column per
-     election, each cell shaded by its fill rate. A form that never asks the
-     question is a hatched dash, which is not the same as nobody answering. */
-  table.covgrid { border-collapse: collapse; font-size: 12px; background: var(--panel); }
-  table.covgrid th, table.covgrid td { border: 1px solid var(--line); padding: 2px 4px; text-align: center; font-variant-numeric: tabular-nums; }
-  table.covgrid thead th.vert { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; font-weight: 500; padding: 6px 2px; height: 150px; vertical-align: bottom; }
-  table.covgrid th.concept { position: sticky; left: 0; background: var(--panel); text-align: left; white-space: nowrap; font-weight: 500; z-index: 1; }
-  table.covgrid td.never { color: var(--muted); background: repeating-linear-gradient(45deg, var(--bg), var(--bg) 3px, var(--panel) 3px, var(--panel) 6px); }
-  /* Under 900 px the two panes stack, and the viewport-locked layout that
-     works side by side does not: measured at 375x812 the header took 158.5 px,
-     the list 361.75 px and the person pane 291.75 px -- 35.9 % of the screen
-     for the thing the page is for -- and `body { overflow: hidden }` meant
-     there was no scrolling to reclaim it (issue #149). So: the document
-     scrolls, the person pane grows with its content, the result list keeps a
-     bounded scroll of its own, and the six filter selects fold behind a
-     button. `#filters[hidden]` needs saying because the `display: grid` above
-     it beats the UA sheet's rule for [hidden] -- which is also why the
-     filters reappear by themselves on a wide screen, whatever the button was
-     last left at. */
-  @media (max-width: 900px) {
-    html, body { height: auto; }
-    body { overflow: visible; }
-    main { grid-template-columns: minmax(0, 1fr); flex: none; }
-    #left { max-height: none; border-right: none; border-bottom: 1px solid var(--line); }
-    #results { max-height: 46vh; }
-    #person { overflow-y: visible; padding: 16px 14px; }
-    #filters[hidden] { display: none; }
-    #filterToggle { display: inline-block; }
-    dl { grid-template-columns: minmax(0, 1fr); gap: 0 0; }
-    dt { margin-top: 8px; font-size: 13px; }
-  }
-</style>
-</head>
-<body>
-<header>
-  <h1>VRK kandidatų naršyklė</h1>
-  <span class="stats" id="topstats">kraunamas indeksas…</span>
-  <button id="aggBtn" class="hbtn" style="margin-left:auto">📊 Rinkimų suvestinė</button>
-  <button id="nominatorBtn" class="hbtn">🏛 Iškėlėjai</button>
-  <button id="coverageBtn" class="hbtn">▦ Aprėptis</button>
-  <button id="moversBtn" class="hbtn">📈 Didžiausi pokyčiai</button>
-</header>
-<main>
-  <div id="left">
-    <div id="searchbox">
-      <label class="sr" for="search">Paieška: asmuo, partija ar darbovietė</label>
-      <input id="search" type="search" placeholder="Ieškokite asmens, partijos ar darbovietės…" autofocus>
-      <button id="filterToggle" type="button" aria-controls="filters" aria-expanded="true">Filtrai</button>
-    </div>
-    <div id="filters">
-      <label class="sr" for="fElection">Rinkimai</label>
-      <select id="fElection" title="Rinkimai"></select>
-      <label class="sr" for="fConstituency">Vienmandatė apygarda (Seimo rinkimai)</label>
-      <select id="fConstituency" title="Vienmandatė apygarda (Seimo rinkimai)"></select>
-      <label class="sr" for="fParty">Iškėlusi partija ar komitetas</label>
-      <select id="fParty" title="Iškėlusi partija ar komitetas"></select>
-      <label class="sr" for="fMunicipality">Savivaldybė</label>
-      <select id="fMunicipality" title="Savivaldybė"></select>
-      <label class="sr" for="fRole">Pareigos, į kurias kandidatuota</label>
-      <select id="fRole" title="Pareigos, į kurias kandidatuota"></select>
-      <label class="sr" for="fWon">Rinkimų rezultatas</label>
-      <select id="fWon" title="Rinkimų rezultatas"></select>
-      <label class="sr" for="fNationality">Tautybė</label>
-      <select id="fNationality" title="Tautybė"></select>
-      <div id="filterrow">
-        <span id="count"></span>
-        <button id="csvBtn" title="Atsisiųsti dabartinę atranką CSV formatu">⬇ CSV</button>
-      </div>
-    </div>
-    <div id="results"></div>
-    <div id="cmpbar" hidden>
-      <span id="cmpcount"></span>
-      <button id="cmpGo">Palyginti</button>
-      <button id="cmpClear">Išvalyti</button>
-    </div>
-  </div>
-  <div id="person" tabindex="-1"><div class="placeholder">Pasirinkite asmenį — matysite rinkimus ir anketų atsakymus.</div></div>
-</main>
-<!-- What changed, for a reader who cannot see the pane change. -->
-<div id="announce" class="sr" role="status" aria-live="polite"></div>
-<script>
-"use strict";
+import "./theme.js";
+import { fold, PLURAL, plural, fmtInt, capitalize, deslug, csvField, csvMoney, median, pct, fmtEUR } from "../lib/format.js";
+import { recordFile, resolvePath, ROOT_SECTIONS, isFilledValue, walkValue } from "../lib/records.js";
+import { partyLineage, partyLineageRoots } from "../lib/parties.js";
+import { MONEY_SERIES, parseMoney, LITAS_PER_EURO, declaredInLitas, INCOME_PATH, EMPLOYMENT_INCOME_PATH, declaredIncome, incomeIsEmploymentOnly, moneyEUR } from "../lib/finance.js";
 
 // Election names come from people.json, which copies them from the one
 // registry (scraper/elections.json). No election list lives in this file:
@@ -232,47 +37,6 @@ const inParty = (e, value) => value.startsWith(PARTY_LINEAGE_PREFIX)
   ? (PARTY_LINEAGES.get(value.slice(PARTY_LINEAGE_PREFIX.length)) || new Set()).has(e.p)
   : e.p === value;
 
-// The entry and everything it continues, depth-first in registry order, as
-// [{id, depth}] over the ids the index carries -- a predecessor a subset
-// build lacks is skipped, not invented.
-function partyLineage(parties, id) {
-  const out = [];
-  const seen = new Set();
-  const walk = (pid, depth) => {
-    if (seen.has(pid) || !parties[pid]) return;
-    seen.add(pid);
-    out.push({ id: pid, depth });
-    for (const pred of parties[pid].pr || []) walk(pred, depth + 1);
-  };
-  walk(id, 0);
-  return out;
-}
-
-// The lineage roots: entries with predecessors that no other entry lists as
-// one. Each becomes a group in the party facet.
-function partyLineageRoots(parties) {
-  const listed = new Set();
-  for (const party of Object.values(parties)) for (const pred of party.pr || []) listed.add(pred);
-  return Object.keys(parties).filter(id => (parties[id].pr || []).length && !listed.has(id));
-}
-
-// Money series for the assets & income chart. The first three are the keys
-// every election from 2007 on declares under. The fourth exists because the
-// 1996-1997 form does not split turtas from piniginės lėšos -- it publishes
-// one summed figure -- so those elections leave the first two null and would
-// otherwise chart no turtas at all, despite the page stating it. It is a
-// different measure, not a fallback, so it gets its own series rather than
-// being folded into the first.
-// ORDER MATTERS: it is the order of MONEY_FIELDS in
-// scripts/build_person_index.py, which people.json's "m" array follows and
-// the Biggest movers picker indexes into.
-const MONEY_SERIES = [
-  ["Privalomas registruoti turtas", "turto-ir-pajamu-deklaracijos.privalomas-registruoti-turtas", "#2456a4"],
-  ["Piniginės lėšos", "turto-ir-pajamu-deklaracijos.pinigines-lesos", "#7fa8d9"],
-  ["Gautos pajamos", "turto-ir-pajamu-deklaracijos.gautos-pajamos", "#2c8a4b"],
-  ["Turtas ir piniginės lėšos (metų pabaigoje)", "turto-ir-pajamu-deklaracijos.turtas-ir-pinigines-lesos-metu-pabaigoje", "#b5761f"],
-];
-
 // Render a declared figure the way the assets pane does: litas converted at
 // the changeover rate and formatted as euro. Without this the compare table
 // printed the stored number raw, so a 2008 income sat next to a 2024 one
@@ -287,7 +51,7 @@ function moneyCell(value, record) {
 // The income row resolves through the `deklaruotos-pajamos` concept, so the
 // 1996-2000 records whose declared total the page contradicts show the
 // employment row they do publish, said in so many words rather than left
-// blank. See declaredIncome() below.
+// blank. See declaredIncome() in lib/finance.js.
 function incomeCell(value, record) {
   const income = declaredIncome(record.normalized || {});
   if (income.value == null) return null;
@@ -398,7 +162,6 @@ function convictionCell(_value, record) {
   }
   return convictionLines(declaration, entries, freeText, related);
 }
-
 
 // The offence sits under one name in the 2016-2021 tables and another inside
 // the nested offence records of the Rinkimų kodekso block.
@@ -686,14 +449,6 @@ const SECTION_LABELS = {
   "number": "Numeris",
 };
 
-function deslug(key) {
-  const words = String(key)
-    .replace(/([a-ząčęėįšųūž])([A-ZĄČĘĖĮŠŲŪŽ])/g, "$1 $2")
-    .replace(/-/g, " ")
-    .toLowerCase();
-  return words.charAt(0).toUpperCase() + words.slice(1);
-}
-
 let CONCEPT_LABELS = {};
 let SEGMENT_LABELS = {};
 // dashboard/field-labels.json: the keys deslug spells wrong. Measured over all
@@ -718,27 +473,23 @@ let CONCEPTS = {};
 const recordCache = new Map();
 const compareSet = new Map();
 
-const fold = (s) => (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase();
-
-// Lithuanian counts three integer forms -- 1 asmuo, 2 asmenys, 11 asmenų --
-// on a rule that is not "n === 1", so pick them through Intl rather than by
-// hand. ("many" is Lithuanian's fraction form; it falls back to the genitive.)
-const PLURAL = new Intl.PluralRules("lt");
-const plural = (n, one, few, rest) => ({ one, few, many: rest, other: rest })[PLURAL.select(n)];
-const fmtInt = (n) => n.toLocaleString("lt-LT");
-const capitalize = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
-
 function bootFailed(err) {
-  const message = `Nepavyko įkelti duomenų: ${err.message || err}. ` +
-    "Ar serveris paleistas iš saugyklos šaknies, šalia data/ ir docs/? " +
-    "Paleiskite: python3 scripts/serve_dashboard.py";
+  console.error("VRK duomenų nepavyko įkelti", err);
   document.getElementById("topstats").textContent = "indekso įkelti nepavyko";
   const root = document.getElementById("person");
-  root.innerHTML = "";
   const div = document.createElement("div");
-  div.className = "placeholder";
-  div.textContent = message;
-  root.appendChild(div);
+  div.className = "placeholder error-state";
+  div.setAttribute("role", "alert");
+  const title = document.createElement("h2");
+  title.textContent = "Duomenų šiuo metu pasiekti nepavyko";
+  const message = document.createElement("p");
+  message.textContent = "Duomenų failai šiuo metu nepasiekiami. Bandykite dar kartą. Jei tai nepadeda, praneškite projekto komandai.";
+  const retry = document.createElement("button");
+  retry.type = "button";
+  retry.textContent = "Bandyti dar kartą";
+  retry.addEventListener("click", () => location.reload());
+  div.append(title, message, retry);
+  root.replaceChildren(div);
 }
 
 async function boot() {
@@ -838,24 +589,30 @@ async function boot() {
       if (first) { ev.preventDefault(); first.focus(); }
     }
   });
-  // The filter fold, which only exists under 900 px (see the media query).
-  // It starts collapsed on a narrow screen -- the six selects are 100 px of a
-  // 375 px-wide phone, above the results -- and the CSS makes the filters
-  // reappear on a wide one whatever this was last set to.
+  // Filters start folded at every width so the candidate results remain visible.
   const filterToggle = document.getElementById("filterToggle");
   const filters = document.getElementById("filters");
-  const narrow = window.matchMedia("(max-width: 900px)");
   const setFilters = (open) => {
     filters.hidden = !open;
     filterToggle.setAttribute("aria-expanded", String(open));
-    filterToggle.textContent = open ? "Filtrai ▴" : "Filtrai ▾";
+    updateFilterToggle();
   };
-  setFilters(!narrow.matches);
+  setFilters(false);
   filterToggle.addEventListener("click", () => setFilters(filters.hidden));
+  document.getElementById("overviewBtn").addEventListener("click", () => {
+    history.replaceState(null, "", location.pathname + location.search);
+    showPlaceholder();
+    document.getElementById("search").focus({ preventScroll: true });
+    document.getElementById("searchbox").scrollIntoView({ block: "start" });
+  });
+  document.getElementById("resetFiltersBtn").addEventListener("click", resetFilters);
   document.getElementById("moversBtn").addEventListener("click", showMovers);
   document.getElementById("aggBtn").addEventListener("click", showAggregates);
   document.getElementById("nominatorBtn").addEventListener("click", showNominator);
   document.getElementById("coverageBtn").addEventListener("click", showCoverage);
+  for (const id of ["moversBtn", "aggBtn", "nominatorBtn", "coverageBtn"]) {
+    document.getElementById(id).addEventListener("click", focusPane);
+  }
   document.getElementById("csvBtn").addEventListener("click", exportCSV);
   document.getElementById("cmpGo").addEventListener("click", showCompare);
   document.getElementById("cmpClear").addEventListener("click", () => {
@@ -903,13 +660,84 @@ let renderToken = 0;
 //: The pane's own empty state, and the end of whatever was being rendered.
 function showPlaceholder(message) {
   renderToken += 1;
+  setActiveView("overviewBtn");
   for (const el of document.querySelectorAll(".row")) el.classList.remove("active");
   const root = document.getElementById("person");
   const div = document.createElement("div");
-  div.className = "placeholder";
-  div.textContent = message || "Pasirinkite asmenį — matysite rinkimus ir anketų atsakymus.";
+  if (message) {
+    div.className = "placeholder";
+    div.textContent = message;
+  } else {
+    div.className = "overview";
+    div.innerHTML = `<div class="overview-heading">
+      <span class="eyebrow">Atviri rinkimų duomenys</span>
+      <h2>Pasirinkite kandidatą</h2>
+      <p>Suraskite asmenį ir peržiūrėkite jo kandidatavimus, anketų atsakymus bei turto ir pajamų deklaracijas. Pažymėję kelis asmenis galėsite juos palyginti.</p>
+    </div><div class="overview-grid"></div>`;
+    const grid = div.querySelector(".overview-grid");
+    for (const [title, description, action] of [
+      ["Rinkimų suvestinė", "Kandidatų sudėtis, rinkimų rezultatai ir deklaracijų rodikliai. Prie skaičių – jų aprėptis.", showAggregates, "01"],
+      ["Iškėlėjai", "Partijų, komitetų ir koalicijų kandidatai skirtinguose rinkimuose. Galima įtraukti organizacijų pirmtakus.", showNominator, "02"],
+      ["Deklaracijų pokyčiai", "Palyginkite pirmą ir paskutinę turimą asmens turto ar pajamų deklaraciją.", showMovers, "03"],
+      ["Duomenų aprėptis", "Sužinokite, ko klausė skirtingų metų anketos ir kiek kandidatų pateikė atsakymą.", showCoverage, "04"],
+    ]) {
+      const card = document.createElement("button");
+      card.type = "button";
+      card.className = "overview-card";
+      const heading = document.createElement("strong");
+      heading.textContent = title;
+      const body = document.createElement("span");
+      body.className = "overview-description";
+      body.textContent = description;
+      const arrow = document.createElement("span");
+      arrow.className = "overview-arrow";
+      arrow.textContent = "Atverti →";
+      arrow.setAttribute("aria-hidden", "true");
+      card.append(heading, body, arrow);
+      card.addEventListener("click", () => { action(); focusPane(); });
+      grid.appendChild(card);
+    }
+    const note = document.createElement("p");
+    note.className = "overview-note";
+    note.textContent = "Šaltinis – VRK viešai paskelbti kandidatų duomenys. Skirtingų metų anketos ir jų aprėptis skiriasi: trūkstamas atsakymas nėra nulinė reikšmė.";
+    div.appendChild(note);
+  }
   root.replaceChildren(div);
   if (message) announce(message);
+}
+
+function setActiveView(id) {
+  for (const button of document.querySelectorAll(".view-button")) {
+    const active = button.id === id;
+    button.classList.toggle("active", active);
+    if (active) button.setAttribute("aria-current", "page");
+    else button.removeAttribute("aria-current");
+  }
+}
+
+function focusPane() {
+  const root = document.getElementById("person");
+  root.focus({ preventScroll: true });
+  if (window.matchMedia("(max-width: 900px)").matches) root.scrollIntoView({ block: "start" });
+}
+
+function updateFilterToggle() {
+  const count = [...document.querySelectorAll("#filters select")].filter(select => select.value).length;
+  const toggle = document.getElementById("filterToggle");
+  const open = !document.getElementById("filters").hidden;
+  toggle.textContent = `Filtrai${count ? ` (${count})` : ""} ${open ? "▴" : "▾"}`;
+}
+
+function resetFilters() {
+  document.getElementById("search").value = "";
+  for (const id of ["fElection", ...FACET_LABELS.map(([, selectId]) => selectId)]) {
+    document.getElementById(id).value = "";
+  }
+  renderList();
+  const view = document.querySelector(".view-button.active")?.id;
+  const refresh = { aggBtn: showAggregates, nominatorBtn: showNominator, moversBtn: showMovers }[view];
+  if (refresh) refresh();
+  announce("Paieška ir filtrai išvalyti.");
 }
 
 //: Drop the person out of the URL without adding a history entry (and
@@ -1125,6 +953,7 @@ function latestPartyName(p) {
 }
 
 function renderList() {
+  updateFilterToggle();
   const q = fold(document.getElementById("search").value.trim());
   const f = activeFilters();
   const out = [];
@@ -1195,6 +1024,20 @@ function renderList() {
   }
   const results = document.getElementById("results");
   results.replaceChildren(frag);
+  if (!out.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty-results";
+    const title = document.createElement("strong");
+    title.textContent = "Kandidatų nerasta";
+    const message = document.createElement("p");
+    message.textContent = "Pabandykite kitą vardą arba sumažinkite taikomų filtrų skaičių.";
+    const reset = document.createElement("button");
+    reset.type = "button";
+    reset.textContent = "Išvalyti paiešką ir filtrus";
+    reset.addEventListener("click", resetFilters);
+    empty.append(title, message, reset);
+    results.appendChild(empty);
+  }
 }
 
 function updateCompareBar() {
@@ -1212,27 +1055,6 @@ function updateCompareBar() {
 // with no candidacy filter active a matched person exports whole. Semicolon
 // separated and BOM-prefixed, which is what lt-LT Excel expects.
 // ---------------------------------------------------------------------------
-
-function csvField(value) {
-  if (value == null) return "";
-  let s = String(value);
-  // A cell a spreadsheet would read as a formula gets a leading apostrophe.
-  // 90 cells of the full export start with one of these — 88 workplace
-  // strings and two negative money figures — and Excel renders them as
-  // #NAME? (issue #149).
-  if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;
-  return /[;"\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
-}
-
-// Money for an lt-LT spreadsheet: a comma decimal, because the locale's
-// decimal separator is a comma and `String(number)` writes a dot. 199,626
-// of the export's 308,135 money cells carried a dot, which imports as
-// left-aligned text — no sum, no sort, no chart (issue #149). The field
-// separator is `;`, so a comma inside a cell needs no quoting.
-function csvMoney(value) {
-  if (value == null) return "";
-  return String(value).replace(".", ",");
-}
 
 function exportCSV() {
   const q = fold(document.getElementById("search").value.trim());
@@ -1291,10 +1113,6 @@ function exportCSV() {
   URL.revokeObjectURL(a.href);
 }
 
-function recordFile(e) {
-  return `data/${e.id}/${e.c}-${e.id}.json`;
-}
-
 // A failed record must degrade to an error note on its card — never hang the
 // whole person page (one 404 used to reject the Promise.all silently).
 //
@@ -1316,15 +1134,6 @@ async function fetchRecord(e) {
   return recordCache.get(file);
 }
 
-function resolvePath(obj, path) {
-  let cur = obj;
-  for (const part of path.split(".")) {
-    if (cur == null || typeof cur !== "object") return null;
-    cur = cur[part];
-  }
-  return cur === undefined ? null : cur;
-}
-
 // ---------------------------------------------------------------------------
 // Concept resolution — the JS twin of field_coverage.concept_value, and held
 // to it by tests/test_dashboard_concept_rows.py. "Filled" is not truthiness
@@ -1333,29 +1142,6 @@ function resolvePath(obj, path) {
 // list met mid-path fans out over its entries; a concept's mapping may be a
 // list of alternative paths, first filled one wins.
 // ---------------------------------------------------------------------------
-
-const ROOT_SECTIONS = new Set(["kandidatavimas"]);
-
-function isFilledValue(v) {
-  if (v == null) return false;
-  if (typeof v === "string") return v.trim() !== "";
-  if (Array.isArray(v)) return v.length > 0;
-  if (typeof v === "object") return Object.keys(v).length > 0;
-  return true;
-}
-
-function walkValue(root, segments) {
-  if (!segments.length) return isFilledValue(root) ? root : null;
-  if (Array.isArray(root)) {
-    for (const entry of root) {
-      const value = walkValue(entry, segments);
-      if (value != null) return value;
-    }
-    return null;
-  }
-  if (root == null || typeof root !== "object" || !(segments[0] in root)) return null;
-  return walkValue(root[segments[0]], segments.slice(1));
-}
 
 // {mapped, value}: mapped=false means the concept map lists no path for this
 // election — the form never asked — which the table shows apart from an
@@ -1483,14 +1269,14 @@ function renderValue(v) {
 // produce exactly that page (issue #148).
 function failureBanner(failed) {
   if (!failed.length) return null;
+  console.warn("VRK įrašų nepavyko įkelti", failed.map(([, r]) => r._error));
   const warn = document.createElement("div");
   warn.setAttribute("role", "alert");
-  warn.style.cssText = "background:#fdf0ee;border:1px solid #e5b8b0;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13.5px;";
+  warn.className = "record-warning";
   warn.textContent =
-    `Nepavyko įkelti ${failed.length} ${plural(failed.length, "įrašo", "įrašų", "įrašų")} — ` +
-    "ar serveris paleistas iš saugyklos šaknies, šalia data/? " +
+    `Nepavyko įkelti ${failed.length} ${plural(failed.length, "įrašo", "įrašų", "įrašų")}. ` +
     "Žemiau rodomi tik įkelti įrašai, o tušti langeliai nereiškia, kad nebuvo atsakyta. " +
-    failed.map(([, r]) => r._error).join(" · ");
+    "Bandykite atverti šį vaizdą dar kartą.";
   return warn;
 }
 
@@ -1505,6 +1291,7 @@ function clearActiveRows() {
 
 async function showPerson(p) {
   const token = ++renderToken;
+  setActiveView("overviewBtn");
   // The URL is the router's business, not this function's. A legacy or
   // merged-away key in the hash is canonicalised to the pid here -- with
   // replaceState, so it neither adds a history entry nor re-enters the
@@ -1664,10 +1451,11 @@ async function showPerson(p) {
   for (const [label, pane] of panes) {
     const btn = document.createElement("button");
     btn.textContent = label;
+    btn.setAttribute("aria-pressed", "false");
     btn.addEventListener("click", () => {
       for (const [, other] of panes) other.style.display = "none";
-      for (const b of tabs.children) b.className = "";
-      pane.style.display = ""; btn.className = "on";
+      for (const b of tabs.children) { b.className = ""; b.setAttribute("aria-pressed", "false"); }
+      pane.style.display = ""; btn.className = "on"; btn.setAttribute("aria-pressed", "true");
       scrollRightOnce(pane);
     });
     tabs.appendChild(btn);
@@ -1675,6 +1463,7 @@ async function showPerson(p) {
     root.appendChild(pane);
   }
   tabs.children[0].className = "on";
+  tabs.children[0].setAttribute("aria-pressed", "true");
   paneE.style.display = "";
   // The pane is the 614th tab stop after 300 rows and their checkboxes, and
   // nothing announced that it had changed (issue #147). Focusing it puts the
@@ -1702,6 +1491,7 @@ async function showCompare() {
   const persons = [...compareSet.values()];
   if (persons.length < 2) return;
   const token = ++renderToken;
+  setActiveView("overviewBtn");
   clearHash();
   clearActiveRows();
   const root = document.getElementById("person");
@@ -1777,6 +1567,8 @@ async function showCompare() {
   }
   wrap.appendChild(t);
   root.appendChild(wrap);
+  focusPane();
+  announce(`Palyginami ${persons.length} asmenys.`);
 }
 
 // ---------------------------------------------------------------------------
@@ -1785,15 +1577,6 @@ async function showCompare() {
 // higher-education share alone swings up to 28.9 points on that choice.
 // Everything computes from people.json; no record fetches.
 // ---------------------------------------------------------------------------
-
-function median(values) {
-  if (!values.length) return null;
-  const sorted = [...values].sort((a, b) => a - b);
-  const mid = sorted.length >> 1;
-  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
-}
-
-const pct = (part, whole) => whole ? `${(100 * part / whole).toFixed(1).replace(".", ",")} %` : "—";
 
 // Which sidebar facets a header view is honouring, in words (issue #148).
 // `showAggregates` used to copy exactly one facet across — the election — and
@@ -1847,7 +1630,7 @@ function appendFacetNote(root, named, onClear) {
   const clear = document.createElement("button");
   clear.type = "button";
   clear.textContent = "rodyti visus";
-  clear.style.cssText = "font:inherit;color:var(--link,#1256a0);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline";
+  clear.style.cssText = "font:inherit;color:var(--accent);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline";
   clear.addEventListener("click", onClear);
   line.appendChild(clear);
   root.appendChild(line);
@@ -1855,6 +1638,7 @@ function appendFacetNote(root, named, onClear) {
 
 function showAggregates() {
   renderToken += 1;
+  setActiveView("aggBtn");
   clearHash();
   clearActiveRows();
   const root = document.getElementById("person");
@@ -1867,6 +1651,7 @@ function showAggregates() {
   h2.textContent = "Rinkimų suvestinė";
   const select = document.createElement("select");
   select.id = "aggElection";
+  select.setAttribute("aria-label", "Suvestinės rinkimai");
   select.style.cssText = "padding:6px 8px;border:1px solid var(--line);border-radius:6px";
   fillElectionSelect(select);
   const filtered = document.getElementById("fElection").value;
@@ -2185,6 +1970,7 @@ function showAggregates() {
 
 function showNominator() {
   renderToken += 1;
+  setActiveView("nominatorBtn");
   clearHash();
   clearActiveRows();
   const root = document.getElementById("person");
@@ -2197,6 +1983,7 @@ function showNominator() {
   h2.textContent = "Iškėlėjo suvestinė";
   const select = document.createElement("select");
   select.id = "nominatorPick";
+  select.setAttribute("aria-label", "Suvestinės iškėlėjas");
   select.style.cssText = "padding:6px 8px;border:1px solid var(--line);border-radius:6px;max-width:100%";
   // The sidebar facet's own rows, lineage groups included, less its
   // "all nominators" row, which is no nominator.
@@ -2333,6 +2120,7 @@ function showNominator() {
 
 function showCoverage() {
   renderToken += 1;
+  setActiveView("coverageBtn");
   clearHash();
   clearActiveRows();
   const root = document.getElementById("person");
@@ -2345,7 +2133,7 @@ function showCoverage() {
   if (!coverage) {
     const missing = document.createElement("div");
     missing.className = "loading";
-    missing.textContent = "Šiame people.json aprėpties duomenų nėra — perkurkite indeksą: python scripts/build_person_index.py";
+    missing.textContent = "Duomenų aprėpties suvestinė šiuo metu nepasiekiama. Kandidatų paieška ir kiti peržiūros būdai veikia toliau.";
     root.appendChild(missing);
     return;
   }
@@ -2390,7 +2178,7 @@ function showCoverage() {
       td.textContent = String(Math.round(share));
       // From 97 % lightness (nobody answered) to 40 % (everybody did).
       td.style.background = `hsl(215, 55%, ${(97 - 0.57 * share).toFixed(1)}%)`;
-      if (share > 55) td.style.color = "#fff";
+      td.style.color = share > 55 ? "#fff" : "#0c0a09";
       td.title = `${th.textContent} — ${electionName(e.id)}: ${fmtInt(filled)} iš ${fmtInt(records)} (${share.toFixed(1).replace(".", ",")} %)`;
     }
   });
@@ -2402,6 +2190,7 @@ function showCoverage() {
 
 function showMovers() {
   renderToken += 1;
+  setActiveView("moversBtn");
   clearHash();
   clearActiveRows();
   const root = document.getElementById("person");
@@ -2410,10 +2199,10 @@ function showMovers() {
   const bar = document.createElement("div");
   bar.style.cssText = "display:flex;gap:12px;align-items:center;margin-bottom:14px;flex-wrap:wrap";
   bar.innerHTML = `<h2 style="margin:0;font-size:20px">Didžiausi pokyčiai</h2>
-    <select id="mvSeries" style="padding:6px 8px;border:1px solid var(--line);border-radius:6px">
+    <select id="mvSeries" aria-label="Deklaracijos rodiklis" style="padding:6px 8px;border:1px solid var(--line);border-radius:6px">
       ${MONEY_SERIES.map(([label], i) => `<option value="${i}">${label}</option>`).join("")}
     </select>
-    <select id="mvDir" style="padding:6px 8px;border:1px solid var(--line);border-radius:6px">
+    <select id="mvDir" aria-label="Pokyčių kryptis" style="padding:6px 8px;border:1px solid var(--line);border-radius:6px">
       <option value="desc">didžiausias padidėjimas</option>
       <option value="asc">didžiausias sumažėjimas</option>
     </select>
@@ -2472,7 +2261,7 @@ function showMovers() {
       tr.insertCell().textContent = `${fmtEUR(r.last.m[s])} (${tag(r.last)})`;
       const d = tr.insertCell();
       d.textContent = (r.delta > 0 ? "+" : "−") + fmtEUR(Math.abs(r.delta));
-      d.style.color = r.delta > 0 ? "var(--win)" : "#a03325";
+      d.style.color = r.delta > 0 ? "var(--win)" : "var(--danger)";
       d.style.fontVariantNumeric = "tabular-nums";
     });
     const wrap = document.createElement("div"); wrap.className = "tablewrap";
@@ -2483,61 +2272,6 @@ function showMovers() {
   document.getElementById("mvDir").addEventListener("change", render);
   render();
 }
-
-// The one shared money-string rule, mirrored by parse_money_text in
-// scripts/build_person_index.py and held together by the fixture list in
-// tests/test_dashboard_money_rendering.py: strip the euro sign and
-// whitespace, allow one decimal separator (comma or dot), refuse anything
-// else. It used to hand multi-separator strings to parseFloat, whose prefix
-// parse silently read "1.234.567,89" as 1.234 while the builder stored None.
-function parseMoney(v) {
-  if (v == null) return null;
-  if (typeof v === "number") return Number.isFinite(v) ? v : null;
-  if (typeof v !== "string") return null;
-  const cleaned = v.replace(/[€\s]/g, "");
-  if (!/^-?\d+(?:[.,]\d+)?$/.test(cleaned)) return null;
-  return parseFloat(cleaned.replace(",", "."));
-}
-
-// The 2012-2015 pages declare in litas (`valiuta: "Lt"`); converted at the
-// irrevocable 2015 changeover rate so a person's series stays comparable.
-// Mirrors scripts/build_person_index.py, which does the same for people.json.
-const LITAS_PER_EURO = 3.4528;
-function declaredInLitas(record) {
-  const d = (record.normalized || {})["turto-ir-pajamu-deklaracijos"];
-  return !!d && d.valiuta === "Lt";
-}
-
-// The `deklaruotos-pajamos` concept, mirrored from
-// scraper/shared/deklaracijos.py. The 1990s form prints rows 1 and 20 of its
-// income section and row 20 is not always trustworthy -- it fails by rendering
-// 0 against a non-zero row 1 -- so the parser refuses it and `gautos-pajamos`
-// is null on 4,463 of the 1997 municipal election's 6,276 records. Row 1 is
-// printed on every one of them and is the only income figure those records
-// have; charting nothing there said "declared no income", which is not what
-// the page says. It is employment income, not a total, and the cell says so.
-const INCOME_PATH = "turto-ir-pajamu-deklaracijos.gautos-pajamos";
-const EMPLOYMENT_INCOME_PATH = "turto-ir-pajamu-deklaracijos.gautos-pajamos-darbo-santykiu";
-function declaredIncome(normalized) {
-  const total = parseMoney(resolvePath(normalized, INCOME_PATH));
-  if (total != null) return { value: total, employmentOnly: false };
-  const row1 = parseMoney(resolvePath(normalized, EMPLOYMENT_INCOME_PATH));
-  if (row1 != null) return { value: row1, employmentOnly: true };
-  return { value: null, employmentOnly: false };
-}
-function incomeIsEmploymentOnly(record) {
-  return declaredIncome(record.normalized || {}).employmentOnly;
-}
-
-function moneyEUR(record, path) {
-  const v = path === INCOME_PATH
-    ? declaredIncome(record.normalized || {}).value
-    : parseMoney(resolvePath(record.normalized || {}, path));
-  if (v == null) return null;
-  return declaredInLitas(record) ? v / LITAS_PER_EURO : v;
-}
-
-const fmtEUR = (n) => n.toLocaleString("lt-LT", { maximumFractionDigits: 0 }) + " €";
 
 // What a chart drawn into the person pane has to fit into: the pane's own
 // content box less the card's padding and border. Read at build time because
@@ -2609,10 +2343,10 @@ function buildAssetPane(loaded, failedCount = 0) {
   const y = (v) => mT + plotH - (v / axisMax) * plotH;
   // The svg keeps its natural width and the card scrolls instead: squeezed
   // to the pane, an 8-election chart shrank its 11px labels to 3.3px.
-  let svg = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img">`;
+  let svg = `<svg aria-label="Turto ir pajamų deklaracijos pagal rinkimus; reikšmės pateiktos lentelėje po diagrama" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img">`;
   for (let t = 0; t <= axisMax; t += tick) {
-    svg += `<line x1="${mL}" y1="${y(t)}" x2="${W - mR}" y2="${y(t)}" stroke="#e3e3de"/>` +
-      `<text x="${mL - 8}" y="${y(t) + 4}" text-anchor="end" font-size="11" fill="#6d6d68">${fmtEUR(t)}</text>`;
+    svg += `<line x1="${mL}" y1="${y(t)}" x2="${W - mR}" y2="${y(t)}" stroke="var(--line)"/>` +
+      `<text x="${mL - 8}" y="${y(t) + 4}" text-anchor="end" font-size="11" fill="var(--muted)">${fmtEUR(t)}</text>`;
   }
   const groupW = plotW / cols.length, barW = Math.min(30, Math.max(7, groupW * 0.24));
   cols.forEach((col, i) => {
@@ -2623,14 +2357,14 @@ function buildAssetPane(loaded, failedCount = 0) {
       const h = Math.max(1.5, (v / axisMax) * plotH);
       svg += `<rect x="${x.toFixed(1)}" y="${(mT + plotH - h).toFixed(1)}" width="${barW.toFixed(1)}" height="${h.toFixed(1)}" fill="${MONEY_SERIES[s][2]}" rx="2"><title>${MONEY_SERIES[s][0]}: ${fmtEUR(v)}</title></rect>`;
     });
-    svg += `<text x="${cx}" y="${mT + plotH + 14}" text-anchor="end" font-size="11.5" fill="#1c1c1a" transform="rotate(-24 ${cx} ${mT + plotH + 14})">${col.label}</text>`;
+    svg += `<text x="${cx}" y="${mT + plotH + 14}" text-anchor="end" font-size="11.5" fill="var(--ink)" transform="rotate(-24 ${cx} ${mT + plotH + 14})">${col.label}</text>`;
   });
-  svg += `<line x1="${mL}" y1="${mT + plotH}" x2="${W - mR}" y2="${mT + plotH}" stroke="#6d6d68"/></svg>`;
+  svg += `<line x1="${mL}" y1="${mT + plotH}" x2="${W - mR}" y2="${mT + plotH}" stroke="var(--muted)"/></svg>`;
 
   const card = document.createElement("div"); card.className = "ecard";
   card.style.padding = "16px";
   card.innerHTML = `<div class="tablewrap">${svg}</div>` +
-    `<div style="display:flex;gap:18px;margin-top:8px;font-size:13px;color:#6d6d68;flex-wrap:wrap">` +
+    `<div style="display:flex;gap:18px;margin-top:8px;font-size:13px;color:var(--muted);flex-wrap:wrap">` +
     MONEY_SERIES.map(([label, , color]) =>
       `<span><span style="display:inline-block;width:11px;height:11px;background:${color};border-radius:2px;margin-right:5px"></span>${label}</span>`
     ).join("") +
@@ -2677,6 +2411,3 @@ function buildAssetPane(loaded, failedCount = 0) {
 }
 
 boot();
-</script>
-</body>
-</html>

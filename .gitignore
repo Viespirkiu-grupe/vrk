@@ -1,4 +1,7 @@
 node_modules/
+frontend/.astro/
+frontend/test-results/
+frontend/playwright-report/
 
 # Editor/OS
 .vscode/

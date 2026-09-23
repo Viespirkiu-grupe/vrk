@@ -16,6 +16,8 @@ import sys
 import unittest
 from pathlib import Path
 
+from tests.dashboard_source import script_source
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
@@ -23,7 +25,7 @@ import field_coverage  # noqa: E402
 from scraper.shared import pareiskimai  # noqa: E402
 
 CONCEPT_MAP = json.loads((REPO_ROOT / "docs" / "concept-map.json").read_text(encoding="utf-8"))
-SOURCE = (REPO_ROOT / "dashboard" / "index.html").read_text(encoding="utf-8")
+SOURCE = script_source()
 REGISTRY = json.loads((REPO_ROOT / "scraper" / "elections.json").read_text(encoding="utf-8"))["elections"]
 NODE = shutil.which("node")
 DECLARATIONS = pareiskimai.declaration_concepts(CONCEPT_MAP)

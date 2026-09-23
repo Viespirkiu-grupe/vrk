@@ -39,9 +39,18 @@ class ServerTests(unittest.TestCase):
         cls._tmp = tempfile.TemporaryDirectory()
         cls.root = Path(cls._tmp.name)
         (cls.root / "dashboard").mkdir()
-        (cls.root / "dashboard" / "index.html").write_text(
-            "<html><body>dashboard</body></html>", encoding="utf-8"
+        build = cls.root / "frontend" / "dist"
+        (build / "_astro").mkdir(parents=True)
+        (build / "index.html").write_text(
+            '<html><body>Astro dashboard<script type="module" src="/dashboard/_astro/app.js"></script></body></html>',
+            encoding="utf-8",
         )
+        (build / "_astro" / "app.js").write_text('console.log("Astro bundle");', encoding="utf-8")
+        (build / "_astro" / "app.css").write_text('body { color: #1b313f; }', encoding="utf-8")
+        # A forgotten MVP file must never shadow the maintained build.
+        (cls.root / "dashboard" / "index.html").write_text("retired MVP", encoding="utf-8")
+        (cls.root / "frontend" / "src").mkdir()
+        (cls.root / "frontend" / "src" / "private.js").write_text("source only", encoding="utf-8")
         (cls.root / "dashboard" / "people.json").write_text(
             json.dumps({"people": [{"n": "Vardenė PAVARDENĖ"}] * 200}), encoding="utf-8"
         )
@@ -88,6 +97,41 @@ class ServerTests(unittest.TestCase):
         status, _, body = self.get("/dashboard/", self.GZIP)
         self.assertEqual(status, 200)
         self.assertIn(b"dashboard", __import__("gzip").decompress(body))
+
+    def test_a_trailing_slash_with_query_does_not_redirect_again(self):
+        status, _, body = self.get("/dashboard/?view=review")
+        self.assertEqual(status, 200)
+        self.assertIn(b"Astro dashboard", body)
+
+    def test_bundled_javascript_and_css_use_the_dashboard_asset_urls(self):
+        for filename, marker, mime in (
+            ("app.js", b"Astro bundle", "javascript"),
+            ("app.css", b"#1b313f", "text/css"),
+        ):
+            with self.subTest(filename):
+                path = f"/dashboard/_astro/{filename}"
+                status, headers, compressed = self.get(path, self.GZIP)
+                self.assertEqual(status, 200)
+                self.assertIn(mime, headers["Content-Type"])
+                self.assertIn(marker, __import__("gzip").decompress(compressed))
+                status, _, body = self.get(path, method="HEAD")
+                self.assertEqual(status, 200)
+                self.assertEqual(body, b"")
+                status, headers, raw = self.get(path)
+                self.assertEqual(status, 200)
+                self.assertNotIn("Content-Encoding", headers)
+                self.assertIn(marker, raw)
+
+    def test_retired_html_does_not_shadow_the_astro_build(self):
+        status, _, body = self.get("/dashboard/index.html")
+        self.assertEqual(status, 200)
+        self.assertIn(b"Astro dashboard", body)
+        self.assertNotIn(b"retired MVP", body)
+
+    def test_frontend_source_and_build_paths_are_not_public_urls(self):
+        for path in ("/frontend/src/private.js", "/frontend/dist/index.html", "/dashboard/../frontend/src/private.js"):
+            with self.subTest(path):
+                self.assertEqual(self.get(path)[0], 403)
 
     def test_people_json_is_gzipped(self):
         status, headers, body = self.get("/dashboard/people.json", self.GZIP)
@@ -150,6 +194,11 @@ class ServerTests(unittest.TestCase):
         self.assertEqual(status, 301)
         self.assertEqual(headers["Location"], "/dashboard/")
 
+    def test_a_dashboard_query_keeps_its_parameters_in_the_slash_redirect(self):
+        status, headers, _ = self.get("/dashboard?view=review", self.GZIP)
+        self.assertEqual(status, 301)
+        self.assertEqual(headers["Location"], "/dashboard/?view=review")
+
     def test_the_root_points_at_the_dashboard(self):
         status, headers, _ = self.get("/", self.GZIP)
         self.assertEqual(status, 302)
@@ -184,6 +233,11 @@ class ServerTests(unittest.TestCase):
                 self.assertEqual(headers["X-Content-Type-Options"], "nosniff")
                 self.assertIn("default-src 'self'", headers["Content-Security-Policy"])
                 self.assertEqual(headers["Referrer-Policy"], "no-referrer")
+                script_policy = next(
+                    rule.strip() for rule in headers["Content-Security-Policy"].split(";")
+                    if rule.strip().startswith("script-src ")
+                )
+                self.assertNotIn("unsafe-inline", script_policy)
 
 
 class CacheTests(unittest.TestCase):

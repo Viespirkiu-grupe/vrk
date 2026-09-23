@@ -97,8 +97,14 @@ Where to start:
   counts a new election moves. [docs/goal.md](docs/goal.md) is the original
   design notes — why plain `requests`, no browser, one file per candidacy —
   and describes a one-election project, which it says at the top.
-- **Browsing** — `dashboard/` is a local person-centric browser over the
-  corpus ([docs/DASHBOARD.md](docs/DASHBOARD.md)).
+- **Browsing** — `frontend/` is an Astro person-centric browser over the
+  corpus, using the Viešpirkiai design language. With Node.js 22.12+ and the
+  corpus available, run `python scripts/build_person_index.py`, then
+  `cd frontend && npm ci && npm run build && npm run preview` and open
+  <http://127.0.0.1:8791/dashboard/>. The frontend builds without the corpus;
+  browsing requires the generated index and records.
+  [docs/DASHBOARD.md](docs/DASHBOARD.md) covers development and testing;
+  [docs/ASTRO_MIGRATION.md](docs/ASTRO_MIGRATION.md) records the migration plan.
 
 ## Licence, data terms and personal data
 

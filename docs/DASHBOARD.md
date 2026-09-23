@@ -13,38 +13,76 @@ takes three forms on a rule that does not follow English's — 1 asmuo,
 
 ## Run it
 
+Prerequisites: Python 3.11+ and Node.js 22.12+ (Node 22 LTS is used in CI).
+The frontend is a static Astro application with locally hosted fonts and
+bundled browser code. Its build does not require the corpus.
+
+From the repository root:
+
 ```bash
-python scripts/build_person_index.py   # writes dashboard/people.json (~28 MB)
-python3 scripts/serve_dashboard.py     # serve dashboard/, data/, docs/, gzipped
+python scripts/build_person_index.py   # requires data/; writes dashboard/people.json
+cd frontend
+npm ci
+npm run build
+npm run preview
 ```
 
-Then open <http://127.0.0.1:8791/dashboard/>. Both commands run from the repo
-root — the index builder reads `data/`, and the page fetches candidate JSONs
-and `docs/concept-map.json` relative to the server root. `serve_dashboard.py`
-is the stdlib server plus gzip: the index compresses 4.1× (29 MB → 7 MB) and
-the page fetches it `no-store` on every load, so plain `python3 -m
-http.server 8791` works but pays the full weight each time.
+Open <http://127.0.0.1:8791/dashboard/>. `npm run preview` runs the gzip
+server, which locates the repository regardless of the working directory.
+To choose a different preview port, run
+`python3 scripts/serve_dashboard.py 8792` from the repository root.
+`/` redirects to `/dashboard/`, and `/dashboard` adds the trailing slash
+while preserving the query and person hash.
 
-It serves those **three directories and nothing else** (issue #160). It used
-to hand out the whole repository root with listings — `/` indexed `.git`,
-`.run-state/`, `samples-full/` and `.venv/`, and `/.git/config`,
-`/conftest.py` and `/scraper/person_overrides.json` all answered 200 — and it
-checked no `Host`, so a page open in the same browser could read every byte
-under the root as same-origin after a DNS rebind. A foreign `Host` is
-refused, a path outside the three is refused, a directory gets no listing,
-and every response carries `nosniff`, a narrow CSP and `no-referrer`. It also
-answers `/dashboard` with a 301 rather than serving the page under a base URL
-one level too high — which is what made the page report a wrong working
-directory when only the trailing slash was missing — sends `ETag` and
-`Last-Modified` so a reload gets a 304 instead of 7 MB, and evicts one cache
-entry instead of clearing all 512.
+For development, `cd frontend && npm run dev` starts Astro at
+<http://127.0.0.1:4321/dashboard/> and a local data server on port 8793.
+Astro proxies only the existing index, field-label, concept-map and corpus
+paths to that server. `VRK_DATA_PORT` can select another data port; Ctrl-C
+stops both processes. Changes to components, CSS and scripts update the
+preview. The data is not copied into the frontend directory.
 
-A person page is
-deep-linkable via the URL hash, which is the person's `pid` (below); a
-pre-pid `name|birth` hash and a merged-away fragment's key still resolve and
-are rewritten to the pid.
+To verify the frontend:
+
+```bash
+cd frontend
+npm run check
+npm run build
+npx playwright install chromium        # once per machine
+npm test
+```
+
+Browser tests use synthetic candidate fixtures with the actual built HTML,
+JavaScript, CSS, fonts, labels and concept map, so they run on a clean clone.
+The repository's `pytest` suite separately runs the original domain and
+formatting regressions against the maintained client modules.
+
+The server serves the Astro output at `/dashboard/`, with the generated
+index and field labels at their established URLs, plus `data/` and `docs/`.
+It does **not** serve `frontend/`, application source, `.git`, or any other
+repository directory; it provides no directory listings. A foreign `Host`
+is refused and every response carries `nosniff`, a narrow CSP and
+`no-referrer`. Compressed resources support `ETag` and `Last-Modified`, and
+an LRU cache avoids repeatedly compressing the index. Scripts, styles and
+fonts load locally. No external font or application runtime is required.
+
+A person page remains deep-linkable by its `pid` hash; pre-pid `name|birth`
+links and merged-away fragment keys still resolve and normalize to that pid.
+A missing corpus/index is shown as a data-loading error, not an empty result
+set. Obtain the corpus using the release instructions in the README, then
+build the index. The old hand-written `dashboard/index.html` is no longer a
+second frontend; always build Astro before previewing a fresh checkout.
+
+The implementation plan and reference revision are recorded in
+[ASTRO_MIGRATION.md](ASTRO_MIGRATION.md).
 
 ## Identity: how candidacies become persons
+
+The Astro migration preserves the data and interpretation contracts described
+below. The current shell adds the shared Viešpirkiai branding, a persistent
+light/dark theme, visible filter labels, and a filter panel that starts folded
+at every width so candidate results remain easy to reach. Its button reports
+the number of active facets. Earlier measurements in this document record
+the original fixes; they are not fresh benchmarks of the redesigned layout.
 
 VRK publishes no cross-election person identifier — the `rkndId` in candidate
 URLs is a per-election registration id — so identity is resolved by
@@ -549,7 +587,7 @@ picker indexes into it by position.
 date, kind, official Lithuanian name, a short label for chart axes, and for a
 by-election, repeat or re-vote the general election whose term it fills. The
 index builder reads it, orders the corpus by its dates, and copies the entries
-into `people.json`, so `dashboard/index.html` holds no election list of its
+into `people.json`, so the frontend holds no election list of its
 own.
 
 Adding an election means adding one entry there. If a scraped
@@ -623,14 +661,19 @@ pins every rule, so a new entry either follows them or fails there.
 - `scripts/serve_dashboard.py` — the stdlib server plus gzip, an LRU
   compression cache keyed on mtime, and the guards of issue #160 (three
   served directories, a loopback-only `Host`, no listings, conditional
-  requests); run from the repo root. `tests/test_serve_dashboard.py` drives
+  requests); maps the Astro build to `/dashboard/`. `tests/test_serve_dashboard.py` drives
   a real server on an ephemeral port.
 - `scripts/find_identity_merge_candidates.py` — scores possible
   surname-change splits and prints the undecided ones; writes
   `dashboard/merge-review.csv` (gitignored — the record of decisions is the
   override file, this is derived output).
-- `dashboard/index.html` — the whole app: no dependencies, vanilla JS, served
-  statically next to `data/`.
+- `frontend/src/pages/`, `layouts/`, `components/` — the Astro page and reusable
+  application shell.
+- `frontend/src/styles/` — shared visual tokens and responsive browser styles.
+- `frontend/src/scripts/`, `lib/` — bundled interactions and domain helpers.
+- `frontend/dist/` — generated static site (gitignored); kept separate from the
+  root release `dist/`.
+- `frontend/tests/` — built-page browser regression tests with synthetic data.
 - `dashboard/field-labels.json` — the Lithuanian label for each record key
   `deslug` spells wrong (version controlled), one entry per key with the
   proof of its label: `printed`, `header`, `restored` or `structural`. The

@@ -1,0 +1,32 @@
+---
+const base = import.meta.env.BASE_URL;
+const repository = 'https://github.com/Viespirkiu-grupe/vrk';
+---
+<footer class="site-footer-shell">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <p class="footer-col-title">Pilietinė iniciatyva</p>
+      <a href="https://viespirkiai.org" aria-label="Viešpirkiai – pagrindinė svetainė">
+        <img src={`${base}branding/viespirkiai.svg`} width="124" height="28" alt="Viešpirkiai" />
+      </a>
+    </div>
+    <nav class="footer-columns" aria-label="Poraštė">
+      <div>
+        <h2 class="footer-col-title">Duomenys</h2>
+        <a href="https://www.vrk.lt" class="external-link">Šaltinis – VRK</a>
+        <a href={`${repository}/releases`} class="external-link">Atsisiųsti duomenis</a>
+        <a href={`${repository}/blob/main/DATA_TERMS.md`} class="external-link">Duomenų naudojimo sąlygos</a>
+      </div>
+      <div>
+        <h2 class="footer-col-title">Projektas</h2>
+        <a href={`${repository}`} class="external-link">Atvirasis kodas</a>
+        <a href={`${repository}/issues`} class="external-link">Pranešti apie klaidą</a>
+        <a href="mailto:viespirkiai@viespirkiai.org">Susisiekti dėl įrašo</a>
+      </div>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <p>Duomenys surinkti iš viešų VRK kandidatų puslapių. Jie gali būti pasenę ar netikslūs – tikrinkite įraše pateiktą pirminį šaltinį. Dėl įrašo taisymo ar pašalinimo <a href="mailto:viespirkiai@viespirkiai.org">susisiekite</a>.</p>
+    <span>Duomenų rinkinys · <a href={`${repository}/blob/main/DATA_TERMS.md`}>CC BY 4.0</a></span>
+  </div>
+</footer>

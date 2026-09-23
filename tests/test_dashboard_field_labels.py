@@ -36,14 +36,15 @@ import re
 import unittest
 from pathlib import Path
 
+from tests.dashboard_source import script_source
+
 from tests import local_data
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 LABELS_PATH = REPO_ROOT / "dashboard" / "field-labels.json"
-DASHBOARD_PATH = REPO_ROOT / "dashboard" / "index.html"
 PAYLOAD = json.loads(LABELS_PATH.read_text(encoding="utf-8"))
 LABELS: dict[str, dict[str, str]] = PAYLOAD["labels"]
-SOURCE = DASHBOARD_PATH.read_text(encoding="utf-8")
+SOURCE = script_source()
 
 PROOFS = ("printed", "header", "restored", "structural")
 
@@ -84,7 +85,7 @@ def fold(text: str) -> str:
 
 
 def deslug(key: str) -> str:
-    """`deslug` out of dashboard/index.html, which this file exists to beat."""
+    """`deslug` out of the Astro client source, which this file exists to beat."""
     words = re.sub(f"([{_LOWER}])([{_UPPER}])", r"\1 \2", key).replace("-", " ").lower()
     return words[:1].upper() + words[1:]
 
