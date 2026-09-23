@@ -34,11 +34,12 @@ import subprocess
 import unittest
 from pathlib import Path
 
+from tests.dashboard_source import script_source
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
-DASHBOARD_PATH = REPO_ROOT / "dashboard" / "index.html"
 CONCEPT_MAP_PATH = REPO_ROOT / "docs" / "concept-map.json"
 COVERAGE_BASELINE_PATH = REPO_ROOT / "docs" / "coverage-baseline.tsv"
-SOURCE = DASHBOARD_PATH.read_text(encoding="utf-8")
+SOURCE = script_source()
 CONCEPT_MAP = json.loads(CONCEPT_MAP_PATH.read_text(encoding="utf-8"))
 NODE = shutil.which("node")
 

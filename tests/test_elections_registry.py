@@ -33,9 +33,10 @@ import re
 import unittest
 from pathlib import Path
 
+from tests.dashboard_source import script_source
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 REGISTRY_PATH = REPO_ROOT / "scraper" / "elections.json"
-DASHBOARD_PATH = REPO_ROOT / "dashboard" / "index.html"
 
 _spec = importlib.util.spec_from_file_location(
     "build_person_index", REPO_ROOT / "scripts" / "build_person_index.py"
@@ -449,12 +450,12 @@ class DashboardCarriesNoElectionListTests(unittest.TestCase):
     """The point of the registry is that index.html stops duplicating it."""
 
     def test_no_hardcoded_label_maps_remain(self):
-        source = DASHBOARD_PATH.read_text(encoding="utf-8")
+        source = script_source()
         for name in ("ELECTION_LABELS", "SHORT_LABELS", "ELECTION_ORDER"):
             self.assertNotIn(name, source)
 
     def test_no_election_id_is_hardcoded_in_the_dashboard(self):
-        source = DASHBOARD_PATH.read_text(encoding="utf-8")
+        source = script_source()
         found = sorted(set(re.findall(r"\b(?:19|20)\d{2}-[a-z0-9-]{3,}\b", source)))
         # Comments may name an id as an example; code may not key off one.
         offenders = [

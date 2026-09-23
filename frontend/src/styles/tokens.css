@@ -1,0 +1,80 @@
+/* Viešpirkiai visual vocabulary, implemented for the VRK browser.
+ * Reference: Viespirkiu-grupe/viespirkiai d445130107984313e67e317edae58301596bce5f.
+ * Original branding and font notices are in public/branding/NOTICE.md.
+ */
+@font-face {
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/ubuntu-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/ubuntu-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+:root {
+  color-scheme: light;
+  --font-sans: Ubuntu, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Consolas, monospace;
+  --bg: #fafaf9;
+  --panel: #fff;
+  --ink: #0c0a09;
+  --muted: #57534e;
+  --line: #d6d3d1;
+  --accent: #075985;
+  --accent-soft: #f0f9ff;
+  --win: #047857;
+  --win-bg: #ecfdf5;
+  --danger: #a03325;
+  --error-bg: #fdf0ee;
+  --brand-filter: none;
+  --shade: #f5f5f4;
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --border: 1px solid var(--line);
+  --shadow-sm: 0 1px 4px rgb(0 0 0 / 9%);
+  --transition: .18s ease;
+  font-synthesis: weight;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0c0a09;
+  --panel: #1c1917;
+  --ink: #fafaf9;
+  --muted: #a8a29e;
+  --line: #44403c;
+  --accent: #bae6fd;
+  --accent-soft: #152935;
+  --win: #6ee7b7;
+  --win-bg: #15352b;
+  --danger: #fca5a5;
+  --error-bg: #3b2020;
+  --shade: #292524;
+  --brand-filter: invert(1);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+  color-scheme: dark;
+  --bg: #0c0a09;
+  --panel: #1c1917;
+  --ink: #fafaf9;
+  --muted: #a8a29e;
+  --line: #44403c;
+  --accent: #bae6fd;
+  --accent-soft: #152935;
+  --win: #6ee7b7;
+  --win-bg: #15352b;
+  --danger: #fca5a5;
+  --error-bg: #3b2020;
+  --shade: #292524;
+  --brand-filter: invert(1);
+  }
+}

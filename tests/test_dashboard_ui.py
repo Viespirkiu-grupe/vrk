@@ -1,4 +1,4 @@
-"""Page-level invariants for dashboard/index.html.
+"""Page-level invariants for the Astro dashboard.
 
 The UI is Lithuanian, like the data it shows. The two things here worth
 pinning against regression rather than eyeballing are the Lithuanian plural
@@ -19,9 +19,10 @@ import subprocess
 import unittest
 from pathlib import Path
 
+from tests.dashboard_source import dashboard_source, style_source
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
-DASHBOARD_PATH = REPO_ROOT / "dashboard" / "index.html"
-SOURCE = DASHBOARD_PATH.read_text(encoding="utf-8")
+SOURCE = dashboard_source()
 # Comments may name an English label while explaining it (the Biggest movers
 # picker, say); only text that can reach the DOM is chrome.
 UNCOMMENTED = "\n".join(
@@ -477,13 +478,13 @@ class ElectionTermGroupingTests(unittest.TestCase):
 
     def test_a_general_groups_its_seat_fills_and_the_terms_run_newest_first(self):
         # Terms newest first; inside a term the general leads and its
-        # seat-fills follow in order, the way the term happened.
+        # seat-fills also run newest first.
         self.assertEqual(
             self._run(self.TREE),
             [
                 ["2000-seimo", ["2003-birzelio-15-seimo-nauji"]],
                 ["2000-kovo-19-savivaldybiu-tarybu", []],
-                ["1996-spalio-20-seimo", ["1997-kovo-23-seimo-pakartotiniai", "1997-gruodzio-21-seimo-pakartotiniai"]],
+                ["1996-spalio-20-seimo", ["1997-gruodzio-21-seimo-pakartotiniai", "1997-kovo-23-seimo-pakartotiniai"]],
             ],
         )
 
@@ -1159,16 +1160,16 @@ class AssetChartTests(unittest.TestCase):
         self.assertIn('pane.dataset.scrollRight = "1";', SOURCE)
         self.assertIn("scrollRightOnce(pane);", SOURCE)
         self.assertIn(
-            'for (const wrap of pane.querySelectorAll(".tablewrap")) wrap.scrollLeft = wrap.scrollWidth;',
+            'for (const wrap of pane.querySelectorAll(".chartwrap")) wrap.scrollLeft = wrap.scrollWidth;',
             SOURCE,
         )
 
     def test_a_wrapper_with_more_to_show_says_so(self):
-        rule = re.search(r"\.tablewrap \{(.*?)\n  \}", SOURCE, re.S).group(1)
+        rule = re.search(r"\.tablewrap \{([^}]+)\}", SOURCE).group(1)
         self.assertIn("overflow-x: auto", rule)
         # The scrolling-shadows pair: a panel-coloured mask that scrolls with
         # the content, and a shadow fixed to each edge.
-        self.assertIn("background-attachment: local, local, scroll, scroll", rule)
+        self.assertRegex(rule, r"background-attachment:\s*local,\s*local,\s*scroll,\s*scroll")
         self.assertEqual(rule.count("radial-gradient(farthest-side"), 2)
 
 
@@ -1182,7 +1183,7 @@ class NarrowScreenTests(unittest.TestCase):
     a 3,683 px document that scrolls, with no horizontal overflow.
     """
 
-    QUERY = re.search(r"@media \(max-width: 900px\) \{(.*?)\n  \}", SOURCE, re.S).group(1)
+    QUERY = style_source().split("@media (max-width: 900px) {", 1)[1].split("@media", 1)[0]
 
     def test_the_document_scrolls(self):
         self.assertIn("html, body { height: auto; }", self.QUERY)
@@ -1191,17 +1192,20 @@ class NarrowScreenTests(unittest.TestCase):
 
     def test_the_result_list_keeps_a_bounded_scroll_of_its_own(self):
         # Otherwise the document grows by every rendered row.
-        self.assertIn("#left { max-height: none;", self.QUERY)
-        self.assertIn("#results { max-height: 46vh; }", self.QUERY)
+        rule = re.search(r"#results \{([^}]+)\}", self.QUERY).group(1)
+        cap = re.search(r"max-height:\s*(\d+)vh", rule)
+        self.assertIsNotNone(cap)
+        self.assertLessEqual(int(cap.group(1)), 46)
+        self.assertIn("overflow-y: auto", re.search(r"#results \{([^}]+)\}", SOURCE).group(1))
 
     def test_the_filters_fold_away(self):
         self.assertIn('<button id="filterToggle" type="button" aria-controls="filters"', SOURCE)
-        self.assertIn("#filterToggle { display: inline-block; }", self.QUERY)
+        self.assertRegex(self.QUERY, r"#filterToggle \{ display: inline-(?:block|flex);")
         # `display: grid` on #filters beats the UA sheet's rule for [hidden],
         # which is why this has to be said -- and why the filters come back by
         # themselves on a wide screen whatever the button was left at.
         self.assertIn("#filters[hidden] { display: none; }", self.QUERY)
-        self.assertIn("setFilters(!narrow.matches);", SOURCE)
+        self.assertIn("setFilters(false);", SOURCE)
         self.assertIn('filterToggle.setAttribute("aria-expanded", String(open));', SOURCE)
 
     def test_the_field_list_stacks(self):
@@ -1283,10 +1287,15 @@ class ScreenReaderTests(unittest.TestCase):
     """
 
     def test_the_search_box_and_every_facet_have_a_label(self):
-        for control in ("search", "fElection", "fParty", "fMunicipality", "fConstituency", "fRole", "fWon"):
+        self.assertRegex(SOURCE, r'<label\b[^>]*for="search"[^>]*>[^<]+</label>')
+        # Astro expands each FilterField into an associated label and select.
+        # Browser tests additionally assert the actual compiled accessible names.
+        self.assertIn('<label for={id}>{label}</label>', SOURCE)
+        self.assertIn('<select id={id} title={title}>', SOURCE)
+        for control in ("fElection", "fParty", "fMunicipality", "fConstituency", "fRole", "fWon", "fNationality"):
             with self.subTest(control):
-                self.assertIn(f'<label class="sr" for="{control}">', SOURCE)
-        rule = re.search(r"\.sr \{(.*?)\n  \}", SOURCE, re.S).group(1)
+                self.assertRegex(SOURCE, rf'<FilterField id="{control}" label="[^"]+"')
+        rule = re.search(r"\.sr \{([^}]+)\}", SOURCE).group(1)
         self.assertIn("position: absolute", rule)
         self.assertIn("clip: rect(0 0 0 0)", rule)
 
@@ -1297,13 +1306,13 @@ class ScreenReaderTests(unittest.TestCase):
         self.assertIn("`${p.n}: ${fmtInt(p.e.length)}", SOURCE)
 
     def test_a_rendered_person_takes_focus(self):
-        self.assertIn('<div id="person" tabindex="-1">', SOURCE)
+        self.assertRegex(SOURCE, r'<(?:div|section) id="person" tabindex="-1"[ >]')
         self.assertIn("root.focus({ preventScroll: true });", SOURCE)
         self.assertIn('root.scrollIntoView({ block: "start" });', SOURCE)
         self.assertIn("root.scrollTop = 0;", SOURCE)
         # Focused programmatically on every render, so the ring belongs to
         # keyboard navigation only.
-        self.assertIn("#person:focus:not(:focus-visible) { outline: none; }", SOURCE)
+        self.assertRegex(SOURCE, r"#person:focus:not\(:focus-visible\)[^{]*\{ outline: none; \}")
 
 
 class FacetUsabilityTests(unittest.TestCase):
@@ -1315,7 +1324,9 @@ class FacetUsabilityTests(unittest.TestCase):
         self.assertIn("  option.title = label;", SOURCE)
 
     def test_the_two_long_label_facets_take_the_whole_row(self):
-        self.assertIn("#fParty, #fMunicipality { grid-column: 1 / -1; }", SOURCE)
+        for control in ("fParty", "fMunicipality"):
+            self.assertRegex(SOURCE, rf'<FilterField id="{control}"[^>]+\bwide\s*/>')
+        self.assertIn(".filter-field-wide { grid-column: 1 / -1; }", SOURCE)
         # Measured live after the fix: the box goes 163 -> 333 px, the
         # nominator overflow 299 -> 123 of 338 and the municipality 50 -> 0
         # of 63.

@@ -1,0 +1,35 @@
+---
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import '../styles/global.css';
+
+interface Props { title?: string; description?: string; }
+const {
+  title = 'Kandidatai ir rinkimai – Viešpirkiai',
+  description = 'Lietuvos rinkimų kandidatai, jų anketos ir deklaracijos vienoje vietoje. Ieškokite, palyginkite ir tyrinėkite viešus VRK duomenis.',
+} = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+<!doctype html>
+<html lang="lt">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#fafaf9" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="description" content={description} />
+    <meta property="og:site_name" content="Viešpirkiai" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="lt_LT" />
+    <link rel="icon" type="image/svg+xml" href={`${base}branding/icon.svg`} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#workspace">Pereiti prie duomenų</a>
+    <SiteHeader />
+    <slot />
+    <SiteFooter />
+  </body>
+</html>

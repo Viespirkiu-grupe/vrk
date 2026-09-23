@@ -17,17 +17,15 @@ import re
 import shutil
 import subprocess
 import unittest
-from pathlib import Path
+from tests.dashboard_source import script_source
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
-DASHBOARD_PATH = REPO_ROOT / "dashboard" / "index.html"
-SOURCE = DASHBOARD_PATH.read_text(encoding="utf-8")
+SOURCE = script_source()
 NODE = shutil.which("node")
 
 
 def _education_cell() -> str:
     match = re.search(r"^function educationCell\(.*?^}", SOURCE, re.S | re.M)
-    assert match is not None, "educationCell not found in index.html"
+    assert match is not None, "educationCell not found in dashboard.js"
     return match.group(0)
 
 

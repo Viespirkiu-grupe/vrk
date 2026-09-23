@@ -1,0 +1,27 @@
+---
+import DashboardNav from './DashboardNav.astro';
+const base = import.meta.env.BASE_URL;
+---
+<header class="site-header-shell">
+  <div class="navbar">
+    <a class="navbar-brand" href={base} aria-label="Viešpirkiai VRK – kandidatų pradžia">
+      <img src={`${base}branding/viespirkiai.svg`} width="124" height="28" alt="Viešpirkiai" />
+      <span class="navbar-brand-section" aria-hidden="true">VRK</span>
+    </a>
+    <div id="siteMenu" class="site-menu">
+      <DashboardNav />
+      <nav class="navbar-links" aria-label="Viešpirkiai">
+        <a href="https://viespirkiai.org/apie">Apie projektą</a>
+        <a href="https://viespirkiai.org" class="external-link">Viešpirkiai.org</a>
+      </nav>
+    </div>
+    <div class="navbar-actions">
+      <button id="themeToggle" type="button" aria-label="Perjungti temą" aria-pressed="false" title="Perjungti temą">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" /></svg>
+      </button>
+      <button id="menuToggle" class="navbar-hamburger" type="button" aria-label="Atidaryti meniu" aria-expanded="false" aria-controls="siteMenu">
+        <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+</header>

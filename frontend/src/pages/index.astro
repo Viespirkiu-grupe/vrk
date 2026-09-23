@@ -1,0 +1,54 @@
+---
+import Layout from '../layouts/Layout.astro';
+import FilterField from '../components/FilterField.astro';
+---
+<Layout>
+  <main id="workspace" tabindex="-1">
+    <div class="dashboard-workspace">
+      <aside id="left" aria-label="Kandidatų paieška ir filtrai">
+        <div id="searchbox">
+          <label class="search-label" for="search">Rasti kandidatą</label>
+          <div class="search-control">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7.5" /><path d="m16 16 5 5" /></svg>
+            <input id="search" type="search" placeholder="Vardas, partija ar darbovietė" aria-describedby="search-hint" enterkeyhint="search" autocomplete="off" />
+          </div>
+          <p id="search-hint" class="field-hint">Ieškoma visuose rinkimuose ir ankstesnėse pavardėse.</p>
+          <button id="filterToggle" type="button" aria-controls="filters" aria-expanded="false">Filtrai</button>
+        </div>
+        <div id="filters" hidden>
+          <div class="filters-heading"><span>Filtrai</span><button id="resetFiltersBtn" type="button">Valyti filtrus</button></div>
+          <FilterField id="fElection" label="Rinkimai" wide />
+          <FilterField id="fConstituency" label="Vienmandatė apygarda" title="Vienmandatė apygarda (Seimo rinkimai)" wide />
+          <FilterField id="fParty" label="Iškėlusi partija ar komitetas" wide />
+          <FilterField id="fMunicipality" label="Savivaldybė" wide />
+          <FilterField id="fRole" label="Pareigos" title="Pareigos, į kurias kandidatuota" />
+          <FilterField id="fWon" label="Rinkimų rezultatas" />
+          <FilterField id="fNationality" label="Tautybė" wide />
+        </div>
+        <div id="filterrow">
+          <span id="count" aria-live="polite"></span>
+          <button id="csvBtn" type="button" title="Atsisiųsti dabartinę atranką CSV formatu"><span aria-hidden="true">↓</span> CSV</button>
+        </div>
+        <div id="results" aria-label="Kandidatų paieškos rezultatai"></div>
+        <div id="cmpbar" hidden>
+          <span id="cmpcount"></span>
+          <button id="cmpGo" type="button">Palyginti</button>
+          <button id="cmpClear" type="button">Išvalyti</button>
+        </div>
+        <p class="comparison-hint">Pažymėkite kelis kandidatus, kad palygintumėte jų duomenis.</p>
+      </aside>
+      <section id="person" tabindex="-1" aria-label="Kandidato duomenys ir rinkimų suvestinės">
+        <section id="intro" class="overview-heading" aria-labelledby="page-title">
+          <p class="eyebrow">Atviri rinkimų duomenys</p>
+          <h1 id="page-title">Kandidatai ir rinkimai</h1>
+          <p class="page-description">Viešos VRK kandidatų anketos, rinkimų rezultatai ir deklaracijos.</p>
+          <p class="stats" id="topstats" role="status">Kraunami duomenys…</p>
+          <p>Pasirinkite kandidatą sąraše ir peržiūrėkite jo kandidatavimus, anketų atsakymus bei turto ir pajamų deklaracijas. Pažymėję kelis asmenis galėsite juos palyginti.</p>
+        </section>
+      </section>
+    </div>
+    <noscript><p class="noscript-note">Paieškai ir duomenų peržiūrai įjunkite JavaScript. Visą duomenų rinkinį galite <a href="https://github.com/Viespirkiu-grupe/vrk/releases">atsisiųsti iš projekto saugyklos</a>.</p></noscript>
+  </main>
+  <div id="announce" class="sr" role="status" aria-live="polite"></div>
+</Layout>
+<script>import '../scripts/dashboard.js';</script>

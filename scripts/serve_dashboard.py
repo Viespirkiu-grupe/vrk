@@ -1,45 +1,13 @@
-"""Serve the dashboard's three directories, gzip-compressing what compresses.
+"""Serve the static Astro browser and its existing corpus URLs on loopback.
 
-`python3 -m http.server` works, but it sends `dashboard/people.json` — 29 MB
-of JSON that gzips 4.1× — uncompressed on every load, and the page fetches it
-`no-store` on purpose (a stale cached index quietly disagrees with the corpus
-on disk). This is the same stdlib server with a gzip layer, an mtime-keyed
-cache, and the four guards issue #160 measured the want of.
+Build first with `cd frontend && npm ci && npm run build`, then run this script
+from any directory. /dashboard/ maps to frontend/dist; the index and field-label
+JSON retain their dashboard/ paths. data/ and docs/ are the only other public
+roots. No source directory or repository listing is served.
 
-Run from the repo root:
-
-    python3 scripts/serve_dashboard.py [port]
-
-and open http://127.0.0.1:8791/dashboard/.
-
-**It serves three directories, not the repository.** `dashboard/`, `data/`
-and `docs/` are everything the page fetches; the server used to hand out the
-whole root, listings and all. Probed from a clone: `/` answered with a
-directory index naming `.claude/`, `.git`, `.github/`, `.run-state/`,
-`data/`, `samples-full/`, `scraper/`, `tests/`, `.venv/` and `dist/`;
-`/.git/config` answered 200, and so did `/conftest.py` and
-`/scraper/person_overrides.json`. Path traversal was blocked and the bind was
-loopback-only, so this was never remote — but a page the user visits in the
-same browser could read every byte under the root as same-origin after a DNS
-rebind, because nothing checked the `Host` header. So: a `Host` that is not
-loopback is refused, a path outside the three directories is refused, and a
-directory request gets no listing.
-
-**A directory redirects instead of being rewritten in place.** `do_GET`
-rewrote `path/` to `path/index.html` and served it, bypassing the stock
-trailing-slash redirect: `/dashboard` answered 200 with the page, whose base
-URL is then `/`, so its first fetch of `people.json` 404'd and the page told
-the user their working directory was wrong. The server was running correctly
-and the slash was missing. `/dashboard` now answers 301, as the stock server
-does.
-
-**Conditional requests get a 304, and the cache evicts one entry.** The gzip
-branch never called `super().do_GET()`, so it sent no `Last-Modified` and no
-`ETag` and answered a conditional request with 200 and all 7 MB — while the
-same request without `Accept-Encoding` got a 304. And the cache *cleared*
-itself at 512 entries, so every ~275 person views threw away the compressed
-`people.json` and the next load paid 0.4 s to rebuild it; it is an LRU now,
-evicting the least recently used entry.
+The server preserves gzip compression, an mtime-keyed LRU, ETag/Last-Modified,
+loopback Host validation and response hardening from issue #160. Build assets
+are separate from the root dist/ directory used by data releases.
 """
 
 from __future__ import annotations
@@ -74,10 +42,10 @@ ALLOWED_HOSTS = {"127.0.0.1", "localhost", "[::1]", "::1"}
 _CACHE: OrderedDict[str, tuple[float, bytes]] = OrderedDict()
 _CACHE_MAX_ENTRIES = 512
 
-#: The page is one file with inline script and style, and fetches only from
-#: its own origin. Nothing it needs comes from anywhere else.
+#: Astro bundles scripts and styles locally. The dynamic record renderers
+#: still use inline styles for chart dimensions. Nothing is fetched remotely.
 CONTENT_SECURITY_POLICY = (
-    "default-src 'self'; script-src 'self' 'unsafe-inline'; "
+    "default-src 'self'; script-src 'self'; "
     "style-src 'self' 'unsafe-inline'; img-src 'self' data:; "
     "connect-src 'self'; base-uri 'none'; form-action 'none'"
 )
@@ -128,6 +96,25 @@ def _is_served(translated: Path, root: Path) -> bool:
 class GzipHandler(SimpleHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
 
+    def translate_path(self, path: str) -> str:
+        """Map the established /dashboard/ URL to the Astro output only.
+
+        The generated person index and field labels keep their old paths.
+        Normalize with the stdlib before mapping so encoded traversals cannot
+        escape the output directory. Source and build configuration are never
+        reachable through /frontend/. A missing build must not fall back to
+        serving the retired MVP page.
+        """
+        translated = Path(super().translate_path(path))
+        dashboard = Path(self.directory) / "dashboard"
+        try:
+            relative = translated.relative_to(dashboard)
+        except ValueError:
+            return str(translated)
+        if relative.as_posix() in {"people.json", "field-labels.json"}:
+            return str(translated)
+        return str(Path(self.directory) / "frontend" / "dist" / relative)
+
     def log_message(self, fmt: str, *args: object) -> None:
         # One line per request, without the stock double-quoting noise.
         sys.stderr.write(f"{self.address_string()} {fmt % args}\n")
@@ -145,7 +132,9 @@ class GzipHandler(SimpleHTTPRequestHandler):
         # itself joins against; anything else and the two disagree the moment
         # either path crosses a symlink (macOS's /var -> /private/var, for
         # one).
-        translated = Path(self.translate_path(self.path))
+        # Guard the normalized public URL, not its internal Astro destination.
+        # Otherwise allowing frontend/dist would also expose it at /frontend/.
+        translated = Path(super().translate_path(self.path))
         if not _is_served(translated, Path(os.getcwd())):
             self._refuse(
                 403,
@@ -175,9 +164,9 @@ class GzipHandler(SimpleHTTPRequestHandler):
         base URL one level too high, so its first fetch 404'd and it blamed
         the user's working directory (issue #160).
         """
-        if not translated.is_dir() or self.path.endswith("/"):
-            return False
         parts = self.path.split("?", 1)
+        if not translated.is_dir() or parts[0].endswith("/"):
+            return False
         self.send_response(301)
         self.send_header("Location", parts[0] + "/" + ("?" + parts[1] if len(parts) > 1 else ""))
         self.send_header("Content-Length", "0")
@@ -248,13 +237,13 @@ class GzipHandler(SimpleHTTPRequestHandler):
 
 
 def main() -> int:
-    if not Path("dashboard").is_dir() or not Path("data").is_dir():
-        print(
-            "No dashboard/ and data/ here — run from the repo root:\n"
-            "    python3 scripts/serve_dashboard.py",
-            file=sys.stderr,
-        )
-        return 1
+    # npm's working directory is frontend/; resolving relative to this script
+    # makes direct invocation and npm run preview behave identically.
+    os.chdir(Path(__file__).resolve().parents[1])
+    if not Path("frontend/dist/index.html").is_file():
+        print("Astro build not found. Run: cd frontend && npm ci && npm run build", file=sys.stderr)
+    if not Path("dashboard/people.json").is_file():
+        print("Person index not found. After obtaining the corpus, run: python3 scripts/build_person_index.py", file=sys.stderr)
     port = int(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_PORT
     server = ThreadingHTTPServer(("127.0.0.1", port), GzipHandler)
     print(
