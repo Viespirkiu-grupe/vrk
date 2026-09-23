@@ -154,8 +154,11 @@ table.rec dt, table.rec dd { overflow-wrap: break-word; }
 table.rec dt { margin: 10px 0 2px; font-size: 12px; }
 table.rec dt:first-child { margin-top: 0; }
 table.rec dd { font-size: 13px; }
-table.cmp { width: 100%; border-collapse: collapse; background: var(--panel); font-size: 13px; }
-table.cmp th, table.cmp td { border: var(--border); padding: 10px 12px; text-align: left; vertical-align: top; white-space: pre-line; }
+/* Cell-owned borders travel with sticky headers; collapsed borders do not. */
+table.cmp { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--panel); font-size: 13px; }
+table.cmp th, table.cmp td { border: 0; border-right: var(--border); border-bottom: var(--border); padding: 10px 12px; text-align: left; vertical-align: top; white-space: pre-line; }
+table.cmp tr > :first-child { border-left: var(--border); }
+table.cmp thead tr:first-child > th { border-top: var(--border); }
 table.cmp td { min-width: 140px; }
 table.cmp thead th { position: sticky; top: 0; z-index: 2; background: var(--shade); font-size: 12px; font-weight: 700; }
 table.cmp th:first-child { position: sticky; left: 0; min-width: 180px; background: var(--shade); z-index: 1; }
