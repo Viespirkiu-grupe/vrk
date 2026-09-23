@@ -4,8 +4,9 @@ const base = import.meta.env.BASE_URL;
 ---
 <header class="site-header-shell">
   <div class="navbar">
-    <a class="navbar-brand" href="https://viespirkiai.org" aria-label="Viešpirkiai – pagrindinė svetainė">
+    <a class="navbar-brand" href={base} aria-label="Viešpirkiai VRK – kandidatų pradžia">
       <img src={`${base}branding/viespirkiai.svg`} width="124" height="28" alt="Viešpirkiai" />
+      <span class="navbar-brand-section" aria-hidden="true">VRK</span>
     </a>
     <div id="siteMenu" class="site-menu">
       <DashboardNav />

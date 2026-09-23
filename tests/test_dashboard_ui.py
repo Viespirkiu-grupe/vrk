@@ -478,13 +478,13 @@ class ElectionTermGroupingTests(unittest.TestCase):
 
     def test_a_general_groups_its_seat_fills_and_the_terms_run_newest_first(self):
         # Terms newest first; inside a term the general leads and its
-        # seat-fills follow in order, the way the term happened.
+        # seat-fills also run newest first.
         self.assertEqual(
             self._run(self.TREE),
             [
                 ["2000-seimo", ["2003-birzelio-15-seimo-nauji"]],
                 ["2000-kovo-19-savivaldybiu-tarybu", []],
-                ["1996-spalio-20-seimo", ["1997-kovo-23-seimo-pakartotiniai", "1997-gruodzio-21-seimo-pakartotiniai"]],
+                ["1996-spalio-20-seimo", ["1997-gruodzio-21-seimo-pakartotiniai", "1997-kovo-23-seimo-pakartotiniai"]],
             ],
         )
 
@@ -1160,7 +1160,7 @@ class AssetChartTests(unittest.TestCase):
         self.assertIn('pane.dataset.scrollRight = "1";', SOURCE)
         self.assertIn("scrollRightOnce(pane);", SOURCE)
         self.assertIn(
-            'for (const wrap of pane.querySelectorAll(".tablewrap")) wrap.scrollLeft = wrap.scrollWidth;',
+            'for (const wrap of pane.querySelectorAll(".chartwrap")) wrap.scrollLeft = wrap.scrollWidth;',
             SOURCE,
         )
 

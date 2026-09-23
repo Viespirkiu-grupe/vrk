@@ -788,13 +788,14 @@ function addOption(select, value, label) {
 // row, or a group holding itself and its seat-fills when it has any (issue
 // #122 -- 55 peers in one list hid which by-election belonged to which
 // Seimas). people.json lists elections chronologically and a parent always
-// precedes its children, so one pass suffices; a child whose parent the
+// precedes its children, so one pass suffices. Prepending each child shows
+// the newest seat-fill first; a child whose parent the
 // index does not carry (a subset build) stands on its own rather than vanish.
 function electionTree(elections) {
   const groups = new Map();
   for (const e of elections) {
     const parent = e.parent && groups.get(e.parent);
-    if (parent) parent.children.push(e);
+    if (parent) parent.children.unshift(e);
     else groups.set(e.id, { election: e, children: [] });
   }
   return [...groups.values()].reverse();
@@ -1314,6 +1315,8 @@ async function showPerson(p) {
   if (token !== renderToken) return;
   const loaded = records.filter(([, r]) => !r._error);
   const failed = records.filter(([, r]) => r._error);
+  // Presentation order must not reverse the chronological financial series.
+  const newestLoaded = [...loaded].reverse();
 
   root.innerHTML = "";
   const banner = failureBanner(failed);
@@ -1327,7 +1330,7 @@ async function showPerson(p) {
   // keeps when the fetch failed: 38 records, on hosts that no longer serve
   // them, so the error handler below usually removes these) and a legacy
   // inline data: URI from a pre-externalization corpus.
-  for (const [e, r] of [...loaded].reverse()) {
+  for (const [e, r] of newestLoaded) {
     const photo = resolvePath(r, "rawData.profile.photoSrc") || resolvePath(r, "normalized.profilis.nuotrauka");
     if (typeof photo !== "string" || !photo) continue;
     const img = document.createElement("img");
@@ -1365,7 +1368,7 @@ async function showPerson(p) {
   root.appendChild(tabs);
 
   const paneE = document.createElement("div");
-  for (const [e, r] of records) {
+  for (const [e, r] of [...records].reverse()) {
     const card = document.createElement("details"); card.className = "ecard";
     if (records.length <= 3) card.open = true;
     const sum = document.createElement("summary");
@@ -1423,7 +1426,7 @@ async function showPerson(p) {
   const cmpWrap = document.createElement("div"); cmpWrap.className = "tablewrap";
   const cmp = document.createElement("table"); cmp.className = "cmp";
   cmp.innerHTML = "<thead><tr><th>Laukas</th></tr></thead><tbody></tbody>";
-  for (const [e] of loaded) {
+  for (const [e] of newestLoaded) {
     const th = document.createElement("th");
     th.textContent = electionShortName(e.id);
     th.title = electionName(e.id);
@@ -1432,7 +1435,7 @@ async function showPerson(p) {
   for (const row of CONCEPT_ROWS) {
     const tr = cmp.tBodies[0].insertRow();
     const th = document.createElement("th"); th.textContent = rowLabel(row); tr.appendChild(th);
-    for (const [e, r] of loaded) {
+    for (const [e, r] of newestLoaded) {
       const { mapped, value } = resolveRow(row, r, e.id);
       const v = value;
       const format = row.format;
@@ -1709,7 +1712,7 @@ function showAggregates() {
       const dateOf = (eid) => (ELECTIONS.get(eid) || {}).date || "";
       const note = document.createElement("div"); note.className = "aggnote";
       note.textContent = "Skaičiai apima ir tos kadencijos naujus bei pakartotinius rinkimus: " +
-        [...seatFills].sort((a, b) => dateOf(a[0]).localeCompare(dateOf(b[0])))
+        [...seatFills].sort((a, b) => dateOf(b[0]).localeCompare(dateOf(a[0])))
           .map(([eid, n]) => `${electionShortName(eid)} (${fmtInt(n)})`).join(", ") + ".";
       holder.appendChild(note);
     }
@@ -2149,7 +2152,7 @@ function showCoverage() {
   note.className = "aggnote";
   note.textContent = "Langelyje — kiek procentų tų rinkimų įrašų atsakė į klausimą; brūkšnys — tų rinkimų anketa šio klausimo neturėjo. Neklausta nėra neatsakyta.";
   root.appendChild(note);
-  const elections = (INDEX.elections || []).filter(e => coverage.filled[e.id]);
+  const elections = (INDEX.elections || []).filter(e => coverage.filled[e.id]).reverse();
   const t = document.createElement("table");
   t.className = "covgrid";
   const head = t.createTHead().insertRow();
@@ -2290,7 +2293,7 @@ function showMovers() {
 function scrollRightOnce(pane) {
   if (pane.dataset.scrollRight !== "1") return;
   delete pane.dataset.scrollRight;
-  for (const wrap of pane.querySelectorAll(".tablewrap")) wrap.scrollLeft = wrap.scrollWidth;
+  for (const wrap of pane.querySelectorAll(".chartwrap")) wrap.scrollLeft = wrap.scrollWidth;
 }
 
 function availableWidth() {
@@ -2371,7 +2374,7 @@ function buildAssetPane(loaded, failedCount = 0) {
 
   const card = document.createElement("div"); card.className = "ecard";
   card.style.padding = "16px";
-  card.innerHTML = `<div class="tablewrap">${svg}</div>` +
+  card.innerHTML = `<div class="tablewrap chartwrap">${svg}</div>` +
     `<div style="display:flex;gap:18px;margin-top:8px;font-size:13px;color:var(--muted);flex-wrap:wrap">` +
     MONEY_SERIES.map(([label, , color]) =>
       `<span><span style="display:inline-block;width:11px;height:11px;background:${color};border-radius:2px;margin-right:5px"></span>${label}</span>`
@@ -2385,15 +2388,17 @@ function buildAssetPane(loaded, failedCount = 0) {
   // where every width is 0.
   pane.dataset.scrollRight = "1";
 
-  // the numbers behind the bars
+  // The table follows the other election lists (newest first); the chart
+  // keeps time moving from left to right.
+  const newestCols = [...cols].reverse();
   const t = document.createElement("table"); t.className = "cmp"; t.style.marginTop = "14px";
   t.innerHTML = "<thead><tr><th>Rodiklis</th></tr></thead><tbody></tbody>";
-  for (const col of cols) { const th = document.createElement("th"); th.textContent = col.label; t.tHead.rows[0].appendChild(th); }
+  for (const col of newestCols) { const th = document.createElement("th"); th.textContent = col.label; t.tHead.rows[0].appendChild(th); }
   let employmentOnly = false;
   MONEY_SERIES.forEach(([label, path], s) => {
     const tr = t.tBodies[0].insertRow();
     const th = document.createElement("th"); th.textContent = label; tr.appendChild(th);
-    cols.forEach((col, i) => {
+    newestCols.forEach((col) => {
       const td = tr.insertCell();
       td.textContent = col.values[s] == null ? "—" : fmtEUR(col.values[s]);
       if (col.values[s] == null) td.className = "null";

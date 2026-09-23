@@ -33,8 +33,11 @@ test('the built Astro page loads its data, navigation and stylesheet', async ({ 
   await expect(page.locator('script[type="module"]:not([src])')).toHaveCount(0);
   await expect(page.locator('#topstats')).toContainText('3 asmenys');
   await expect(page.locator('#count')).toContainText('3');
-  await expect(page.locator('.navbar-brand')).toHaveAttribute('href', 'https://viespirkiai.org');
+  await expect(page.locator('.navbar-brand')).toHaveAttribute('href', '/dashboard/');
+  await expect(page.locator('.navbar-brand')).toHaveAccessibleName('Viešpirkiai VRK – kandidatų pradžia');
+  await expect(page.locator('.navbar-brand-section')).toHaveText('VRK');
   await openFilters(page);
+  await expect(page.locator('#fElection option')).toHaveText(['— visi rinkimai —', '2024 Seimas', '2020 Seimas']);
   for (const control of ['search', 'fElection', 'fParty', 'fMunicipality', 'fConstituency', 'fRole', 'fWon', 'fNationality']) {
     await expect(page.locator(`#${control}`)).toHaveAccessibleName(/\S/);
   }
@@ -80,6 +83,12 @@ test('legacy links canonicalize and Back/Forward restore the selected person', a
   await selectView(page, 'overviewBtn');
   await expect(page.getByRole('heading', { name: 'Kandidatai ir rinkimai', exact: true })).toBeVisible();
   await expect(page.locator('#topstats')).toContainText('3 asmenys');
+  await page.locator('#results a[href="#test-jonas"]').click();
+  await expect(page.locator('#person h2')).toHaveText('Jonas BANDOMASIS');
+  await page.locator('.navbar-brand').click();
+  await expect(page).toHaveURL(/\/dashboard\/$/);
+  await expect(page.getByRole('heading', { name: 'Kandidatai ir rinkimai', exact: true })).toBeVisible();
+  await expect(page.locator('#results .row')).toHaveCount(3);
 });
 
 test('keyboard checkboxes compare people and clear the selection', async ({ page }) => {
@@ -103,15 +112,20 @@ test('keyboard checkboxes compare people and clear the selection', async ({ page
 test('person tabs show actual records, money and election comparison', async ({ page }) => {
   await ready(page, '/dashboard/#test-anna');
   await expect(page.locator('#person details.ecard')).toHaveCount(2);
+  await expect(page.locator('#person details.ecard summary').first()).toContainText('2024 m.');
+  await expect(page.locator('#person details.ecard summary').last()).toContainText('2020 m.');
   await page.getByRole('button', { name: 'Palyginimas tarp rinkimų', exact: true }).click();
   const comparison = page.locator('#person table.cmp:visible');
   await expect(comparison).toContainText('Bandymų universitetas');
-  await expect(comparison.locator('thead')).toContainText('2020 Seimas');
-  await expect(comparison.locator('thead')).toContainText('2024 Seimas');
+  await expect(comparison.locator('thead th')).toHaveText(['Laukas', '2024 Seimas', '2020 Seimas']);
   await noPageOverflow(page);
   await page.getByRole('button', { name: 'Turtas ir pajamos', exact: true }).click();
   await expect(page.locator('#person svg:visible')).toHaveCount(1);
   await expect(page.locator('#person table:visible')).toContainText('€');
+  await expect(page.locator('#person table:visible thead th')).toHaveText(['Rodiklis', '2024 Seimas', '2020 Seimas']);
+  await expect(page.locator('#person table:visible tbody tr').first().locator('td').first()).toHaveText(/20\s000\s€/);
+  const chartElections = (await page.locator('#person svg:visible text').allTextContents()).filter(text => text.endsWith('Seimas'));
+  expect(chartElections).toEqual(['2020 Seimas', '2024 Seimas']);
   await noPageOverflow(page);
 });
 
@@ -129,6 +143,16 @@ test('all four summary views remain usable', async ({ page }) => {
     await expect(page.locator('#person h2')).toHaveText(heading);
     await expect(page.locator('#topstats')).toHaveCount(0);
     await expect(page.locator('#person table').first()).toBeVisible();
+    if (button === 'aggBtn') {
+      await expect(page.locator('#aggElection option')).toHaveText(['2024 Seimas', '2020 Seimas']);
+    } else if (button === 'nominatorBtn') {
+      await expect(page.locator('#person table').first().locator('tbody th')).toHaveText(['2024 Seimas', '2020 Seimas']);
+    } else if (button === 'coverageBtn') {
+      await expect(page.locator('table.covgrid thead th.vert')).toHaveText(['2024 Seimas', '2020 Seimas']);
+      await expect(page.locator('table.covgrid tbody tr').first().locator('td')).toHaveText(['100', '50']);
+    } else if (button === 'moversBtn') {
+      await expect(page.locator('table.ranking tbody tr').first().locator('td').last()).toHaveText(/\+10\s000\s€/);
+    }
     for (const select of await page.locator('#person select').all()) {
       await expect(select).toHaveAccessibleName(/\S/);
     }
@@ -216,6 +240,14 @@ test('narrow viewports contain wide financial and coverage tables', async ({ pag
   await ready(page, '/dashboard/#test-anna');
   await page.getByRole('button', { name: 'Turtas ir pajamos', exact: true }).click();
   await expect(page.locator('#person svg:visible')).toHaveCount(1);
+  const tableScroll = await page.locator('#person table:visible').evaluate(table => table.parentElement.scrollLeft);
+  expect(tableScroll, 'newest-first table opens at its left edge').toBe(0);
+  const chartScroll = await page.locator('#person svg:visible').evaluate(svg => {
+    const wrap = svg.parentElement;
+    return { left: wrap.scrollLeft, max: wrap.scrollWidth - wrap.clientWidth };
+  });
+  expect(chartScroll.max).toBeGreaterThan(0);
+  expect(chartScroll.left, 'chronological chart still opens on its newest elections').toBe(chartScroll.max);
   await noPageOverflow(page);
   await selectView(page, 'coverageBtn');
   await expect(page.locator('#person table.covgrid')).toBeVisible();

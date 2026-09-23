@@ -86,6 +86,8 @@ the view navigation and project links in a full-height mobile menu, following
 the main site's layout. Escape or choosing a view closes it; keyboard focus
 stays within the open header, and resizing to desktop restores normal navigation.
 The sidebar stretches to meet the footer border even on a tall window.
+The header logo pairs Viešpirkiai with a VRK suffix and links to the candidates
+home page; the separate project link still leads to Viešpirkiai.org.
 Earlier measurements in this document record
 the original fixes; they are not fresh benchmarks of the redesigned layout.
 
@@ -192,6 +194,11 @@ up to 28.9 points on that choice. **🏛 Iškėlėjai** is the same summary with
 the grouping key swapped: one nominator across every election it fielded
 candidates in. **▦ Aprėptis** is the concept × election grid of what each
 form asks. **📈 Didžiausi pokyčiai** ranks first-to-last declared money deltas.
+
+Election cards, lists, comparison tables, and the coverage grid show the newest
+elections first. Within each term's filter group, the whole-term option is
+followed by its by-elections from newest to oldest. Financial charts retain
+chronological order, as do the underlying series used to calculate changes.
 
 **What issue #162 brought up from the records.** Three layers the corpus held
 and no view read:
