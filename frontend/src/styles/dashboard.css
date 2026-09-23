@@ -141,10 +141,19 @@ dd { margin: 0; overflow-wrap: anywhere; white-space: pre-wrap; }
 dd a { font-size: 12px; }
 .tablewrap { min-width: 0; max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; background: linear-gradient(to right, var(--panel) 40%, transparent) left center, linear-gradient(to left, var(--panel) 40%, transparent) right center, radial-gradient(farthest-side at 0 50%, rgb(0 0 0 / 16%), transparent) left center, radial-gradient(farthest-side at 100% 50%, rgb(0 0 0 / 16%), transparent) right center; background-repeat: no-repeat; background-size: 36px 100%,36px 100%,13px 100%,13px 100%; background-attachment: local,local,scroll,scroll; }
 .tablewrap > svg { display: block; max-width: none; font-family: var(--font-sans); }
-table { font-variant-numeric: tabular-nums; }
-table.rec { border-collapse: collapse; font-size: 13px; margin: 4px 0; max-width: 100%; display: block; overflow-x: auto; }
+/* Preserve words when sizing columns; only long URLs need arbitrary breaks. */
+table { font-variant-numeric: tabular-nums; overflow-wrap: break-word; word-break: normal; }
+.record-url { overflow-wrap: anywhere; word-break: normal; }
+table.rec { width: 100%; border-collapse: collapse; font-size: 13px; margin: 4px 0; }
 table.rec th, table.rec td { border: var(--border); padding: 8px 10px; text-align: left; vertical-align: top; min-width: 110px; }
 table.rec th { background: var(--shade); font-weight: 700; }
+table.rec td > :is(span, a) { display: block; max-width: 48ch; }
+/* A two-column definition list cannot fit inside a narrow table column. */
+table.rec dl { display: block; min-width: 16rem; max-width: 28rem; }
+table.rec dt, table.rec dd { overflow-wrap: break-word; }
+table.rec dt { margin: 10px 0 2px; font-size: 12px; }
+table.rec dt:first-child { margin-top: 0; }
+table.rec dd { font-size: 13px; }
 table.cmp { width: 100%; border-collapse: collapse; background: var(--panel); font-size: 13px; }
 table.cmp th, table.cmp td { border: var(--border); padding: 10px 12px; text-align: left; vertical-align: top; white-space: pre-line; }
 table.cmp td { min-width: 140px; }

@@ -1230,7 +1230,7 @@ function renderValue(v) {
       a.textContent = text;
       a.target = "_blank";
       a.rel = "noopener noreferrer";
-      a.style.wordBreak = "break-all";
+      a.className = "record-url";
       return a;
     }
     const s = document.createElement("span"); s.textContent = text; return s;
@@ -1247,7 +1247,9 @@ function renderValue(v) {
       const tr = t.tBodies[0].insertRow();
       for (const k of keys) tr.insertCell().appendChild(renderValue(item && typeof item === "object" ? item[k] : item));
     }
-    return t;
+    const wrap = document.createElement("div"); wrap.className = "tablewrap";
+    wrap.appendChild(t);
+    return wrap;
   }
   const dl = document.createElement("dl");
   for (const [k, x] of Object.entries(v)) {

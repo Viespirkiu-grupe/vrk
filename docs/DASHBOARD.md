@@ -88,6 +88,9 @@ stays within the open header, and resizing to desktop restores normal navigation
 The sidebar stretches to meet the footer border even on a tall window.
 The header logo pairs Viešpirkiai with a VRK suffix and links to the candidates
 home page; the separate project link still leads to Viešpirkiai.org.
+Record tables scroll within their own wrappers and preserve whole words when
+sizing columns. Nested label/value details stack within a readable-width cell;
+long source URLs can wrap without forcing the page wider than the viewport.
 Earlier measurements in this document record
 the original fixes; they are not fresh benchmarks of the redesigned layout.
 

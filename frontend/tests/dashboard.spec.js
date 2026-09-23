@@ -129,6 +129,37 @@ test('person tabs show actual records, money and election comparison', async ({ 
   await noPageOverflow(page);
 });
 
+test('wide record tables keep nested labels and values readable', async ({ page }) => {
+  await ready(page, '/dashboard/#test-anna');
+  const section = page.locator('.ecard .sec').filter({ has: page.getByRole('heading', { name: 'Politinės kampanijos dalyvio duomenys', exact: true }) });
+  const table = section.locator('table.rec');
+  await expect(table).toBeVisible();
+  const layout = await table.evaluate(table => {
+    const status = table.tBodies[0].rows[0].cells[0].firstElementChild;
+    const pairs = [...table.querySelectorAll('dl > dd')].map(dd => ({
+      width: dd.getBoundingClientRect().width,
+      top: dd.getBoundingClientRect().top,
+      labelBottom: dd.previousElementSibling.getBoundingClientRect().bottom,
+    }));
+    return {
+      statusHeight: status.getBoundingClientRect().height,
+      lineHeight: parseFloat(getComputedStyle(status).lineHeight),
+      height: table.getBoundingClientRect().height,
+      scrolls: table.parentElement.scrollWidth > table.parentElement.clientWidth,
+      pairs,
+    };
+  });
+  expect(layout.statusHeight, 'a single word must not split across lines').toBeLessThanOrEqual(layout.lineHeight + 1);
+  expect(layout.height, 'nested data should not create a page of single letters').toBeLessThan(600);
+  expect(layout.scrolls, 'wide records scroll inside their wrapper').toBe(true);
+  for (const pair of layout.pairs) {
+    expect(pair.width).toBeGreaterThanOrEqual(200);
+    expect(pair.top).toBeGreaterThanOrEqual(pair.labelBottom);
+  }
+  await expect(table.getByRole('link')).toHaveAttribute('href', /example\.org\/ataskaitos/);
+  await noPageOverflow(page);
+});
+
 test('all four summary views remain usable', async ({ page }) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));

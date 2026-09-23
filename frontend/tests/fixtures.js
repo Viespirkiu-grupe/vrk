@@ -57,6 +57,21 @@ export const records = Object.fromEntries(people.flatMap(person => person.e.map(
   },
 ])));
 
+// A wide campaign table with nested details reproduces the crowded real schema.
+records['/data/2024-seimo/test-anna-2024-seimo.json'].normalized['politines-kampanijos-dalyvio-duomenys'] = [{
+  statusas: 'Atstovaujamasis',
+  'registravimo-data': null,
+  'sprendimo-numeris': null,
+  kontaktai: { 'telefonas-pasiteirauti': '8 500 00000', 'el-pastas': 'bandymai@example.org' },
+  izdininkas: { 'vardas-pavarde': 'Pavyzdinis Iždininkas', telefonas: null, 'el-pastas': null, 'imones-pavadinimas': null, 'imones-kodas': null },
+  auditorius: { 'vardas-pavarde': null, telefonas: null, 'el-pastas': null, 'imones-pavadinimas': null, 'imones-kodas': null },
+  'aukos-pagal-sekcija': {},
+  'finansavimo-ataskaitos': [],
+  sutartys: [],
+  sprendimai: [],
+  atstovauja: { pavadinimas: 'PAVYZDINĖ ILGO PAVADINIMO POLITINĖ ORGANIZACIJA', nuoroda: 'https://example.org/ataskaitos/2024/politines-kampanijos-dalyvio-duomenys/ilga-saltinio-nuoroda' },
+}];
+
 export async function installFixtures(page, { failedRecord, failedIndex = false } = {}) {
   // UI assets, the real concept map and field labels still pass through the
   // production preview server, so missing bundles / bad base URLs fail the suite.
