@@ -1,4 +1,5 @@
 import "./theme.js";
+import "./navigation.js";
 import { fold, PLURAL, plural, fmtInt, capitalize, deslug, csvField, csvMoney, median, pct, fmtEUR } from "../lib/format.js";
 import { recordFile, resolvePath, ROOT_SECTIONS, isFilledValue, walkValue } from "../lib/records.js";
 import { partyLineage, partyLineageRoots } from "../lib/parties.js";

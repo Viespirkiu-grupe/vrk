@@ -81,7 +81,12 @@ The Astro migration preserves the data and interpretation contracts described
 below. The current shell adds the shared Viešpirkiai branding, a persistent
 light/dark theme, visible filter labels, and a filter panel that starts folded
 at every width so candidate results remain easy to reach. Its button reports
-the number of active facets. Earlier measurements in this document record
+the number of active facets. At widths up to 1,200 pixels, a hamburger opens
+the view navigation and project links in a full-height mobile menu, following
+the main site's layout. Escape or choosing a view closes it; keyboard focus
+stays within the open header, and resizing to desktop restores normal navigation.
+The sidebar stretches to meet the footer border even on a tall window.
+Earlier measurements in this document record
 the original fixes; they are not fresh benchmarks of the redesigned layout.
 
 VRK publishes no cross-election person identifier — the `rkndId` in candidate

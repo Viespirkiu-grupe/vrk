@@ -10,6 +10,12 @@ async function openFilters(page) {
   if (!await page.locator('#filters').isVisible()) await page.locator('#filterToggle').click();
 }
 
+async function selectView(page, id) {
+  const menu = page.getByRole('button', { name: 'Atidaryti meniu', exact: true });
+  if (await menu.isVisible()) await menu.click();
+  await page.locator(`#${id}`).click();
+}
+
 async function noPageOverflow(page) {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
   expect(overflow, 'tables should scroll in their own containers, never widen the page').toBe(false);
@@ -71,7 +77,7 @@ test('legacy links canonicalize and Back/Forward restore the selected person', a
   await page.goForward();
   await expect(page.locator('#person h2')).toHaveText('Jonas BANDOMASIS');
   await expect(page.locator('#announce')).toContainText('Jonas BANDOMASIS');
-  await page.getByRole('button', { name: 'Kandidatai', exact: true }).click();
+  await selectView(page, 'overviewBtn');
   await expect(page.getByRole('heading', { name: 'Kandidatai ir rinkimai', exact: true })).toBeVisible();
   await expect(page.locator('#topstats')).toContainText('3 asmenys');
 });
@@ -119,7 +125,7 @@ test('all four summary views remain usable', async ({ page }) => {
     ['coverageBtn', 'Ką klausė kiekvienų rinkimų anketa'],
     ['moversBtn', 'Didžiausi pokyčiai'],
   ]) {
-    await page.locator(`#${button}`).click();
+    await selectView(page, button);
     await expect(page.locator('#person h2')).toHaveText(heading);
     await expect(page.locator('#topstats')).toHaveCount(0);
     await expect(page.locator('#person table').first()).toBeVisible();
@@ -128,7 +134,7 @@ test('all four summary views remain usable', async ({ page }) => {
     }
     await noPageOverflow(page);
   }
-  await page.getByRole('button', { name: 'Kandidatai', exact: true }).click();
+  await selectView(page, 'overviewBtn');
   await expect(page.locator('#topstats')).toContainText('3 asmenys');
   expect(errors).toEqual([]);
 });
@@ -200,7 +206,7 @@ test('theme persists and keyboard skip preserves the person link', async ({ page
   await expect(page).toHaveURL(/#test-anna$/);
   await expect(page.locator('#workspace')).toBeFocused();
   await expect(page.locator('#person h2')).toHaveText('Ona NAUJOJI');
-  await page.locator('#overviewBtn').click();
+  await selectView(page, 'overviewBtn');
   await expect(page.locator('#search')).toBeFocused();
 });
 
@@ -211,7 +217,57 @@ test('narrow viewports contain wide financial and coverage tables', async ({ pag
   await page.getByRole('button', { name: 'Turtas ir pajamos', exact: true }).click();
   await expect(page.locator('#person svg:visible')).toHaveCount(1);
   await noPageOverflow(page);
-  await page.locator('#coverageBtn').click();
+  await selectView(page, 'coverageBtn');
   await expect(page.locator('#person table.covgrid')).toBeVisible();
   await noPageOverflow(page);
+});
+
+test('mobile menu supports keyboard dismissal, view selection and resizing', async ({ page }) => {
+  test.skip(test.info().project.name === 'desktop', 'compact navigation');
+  await ready(page);
+  const toggle = page.locator('#menuToggle');
+  await expect(page.locator('#overviewBtn')).toBeHidden();
+  await toggle.focus();
+  await toggle.press('Enter');
+  await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.locator('#overviewBtn')).toBeFocused();
+  await expect(page.locator('#siteMenu').getByRole('link', { name: 'Apie projektą' })).toBeVisible();
+  await expect(page.locator('main')).toHaveJSProperty('inert', true);
+  await toggle.focus();
+  await page.keyboard.press('Tab');
+  await expect(page.locator('.navbar-brand')).toBeFocused();
+  await page.keyboard.press('Shift+Tab');
+  await expect(toggle).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  await expect(toggle).toBeFocused();
+  await expect(page.locator('main')).toHaveJSProperty('inert', false);
+
+  await selectView(page, 'coverageBtn');
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.locator('#person')).toBeFocused();
+  await expect(page.locator('#person h2')).toHaveText('Ką klausė kiekvienų rinkimų anketa');
+  await noPageOverflow(page);
+
+  await toggle.click();
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await expect(toggle).toBeHidden();
+  await expect(page.locator('#coverageBtn')).toBeVisible();
+  await expect(page.locator('main')).toHaveJSProperty('inert', false);
+  await page.setViewportSize({ width: 375, height: 360 });
+  await expect(page.locator('#overviewBtn')).toBeHidden();
+  await toggle.click();
+  const lastLink = page.locator('#siteMenu .navbar-links a').last();
+  await lastLink.scrollIntoViewIfNeeded();
+  await expect(lastLink).toBeInViewport();
+  await noPageOverflow(page);
+});
+
+test('the sidebar border meets the footer on a tall desktop window', async ({ page }) => {
+  test.skip(test.info().project.name !== 'desktop', 'two-column layout');
+  await page.setViewportSize({ width: 1440, height: 1600 });
+  await ready(page);
+  const gap = await page.evaluate(() => document.querySelector('footer').getBoundingClientRect().top
+    - document.querySelector('#left').getBoundingClientRect().bottom);
+  expect(Math.abs(gap)).toBeLessThan(1);
 });
