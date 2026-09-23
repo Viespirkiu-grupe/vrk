@@ -107,7 +107,7 @@ input[type='checkbox'] { accent-color: var(--ink); width: 16px; height: 16px; fl
 
 /* Shared data components: records, cross-election comparisons and summaries. */
 .phead { display: flex; align-items: flex-start; gap: 24px; padding-bottom: 24px; margin-bottom: 24px; border-bottom: var(--border); }
-.phead img { width: 96px; height: auto; max-height: 132px; object-fit: contain; object-position: top; border: var(--border); border-radius: var(--radius-md); background: var(--panel); }
+.phead img { flex: 0 0 auto; width: 96px; height: 128px; object-fit: cover; object-position: center top; border: var(--border); border-radius: var(--radius-md); background: var(--panel); }
 .phead > div { flex: 1; min-width: 0; }
 .phead h2 { margin: 0 0 10px; font-size: 28px; }
 .phead .meta { font-size: 13px; line-height: 1.7; color: var(--muted); margin-top: 5px; }
@@ -231,7 +231,7 @@ table.covgrid td.never { color: var(--muted); background: repeating-linear-gradi
   #left { padding: 20px; }
   #person { padding: 24px 20px 32px; }
   .phead { gap: 16px; }
-  .phead img { width: 72px; max-height: 100px; }
+  .phead img { width: 72px; height: 96px; }
   .phead h2 { font-size: 23px; }
   .phead .meta { font-size: 12px; }
   .tabs { gap: 6px; }
