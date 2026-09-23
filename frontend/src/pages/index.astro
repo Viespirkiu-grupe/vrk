@@ -4,13 +4,6 @@ import FilterField from '../components/FilterField.astro';
 ---
 <Layout>
   <main id="workspace" tabindex="-1">
-    <section class="page-header" aria-labelledby="page-title">
-      <div class="page-header-copy">
-        <h1 id="page-title">Kandidatai ir rinkimai</h1>
-        <p class="page-description">Viešos VRK kandidatų anketos, rinkimų rezultatai ir deklaracijos.</p>
-      </div>
-      <p class="stats" id="topstats" role="status">Kraunami duomenys…</p>
-    </section>
     <div class="dashboard-workspace">
       <aside id="left" aria-label="Kandidatų paieška ir filtrai">
         <div id="searchbox">
@@ -45,11 +38,13 @@ import FilterField from '../components/FilterField.astro';
         <p class="comparison-hint">Pažymėkite kelis kandidatus, kad palygintumėte jų duomenis.</p>
       </aside>
       <section id="person" tabindex="-1" aria-label="Kandidato duomenys ir rinkimų suvestinės">
-        <div class="placeholder">
-          <p class="eyebrow">Kandidato istorija</p>
-          <h2>Vienas žmogus. Visi jo rinkimai.</h2>
-          <p>Pasirinkite kandidatą sąraše ir peržiūrėkite jo anketas, rinkimų rezultatus, turto bei pajamų deklaracijas.</p>
-        </div>
+        <section id="intro" class="overview-heading" aria-labelledby="page-title">
+          <p class="eyebrow">Atviri rinkimų duomenys</p>
+          <h1 id="page-title">Kandidatai ir rinkimai</h1>
+          <p class="page-description">Viešos VRK kandidatų anketos, rinkimų rezultatai ir deklaracijos.</p>
+          <p class="stats" id="topstats" role="status">Kraunami duomenys…</p>
+          <p>Pasirinkite kandidatą sąraše ir peržiūrėkite jo kandidatavimus, anketų atsakymus bei turto ir pajamų deklaracijas. Pažymėję kelis asmenis galėsite juos palyginti.</p>
+        </section>
       </section>
     </div>
     <noscript><p class="noscript-note">Paieškai ir duomenų peržiūrai įjunkite JavaScript. Visą duomenų rinkinį galite <a href="https://github.com/Viespirkiu-grupe/vrk/releases">atsisiųsti iš projekto saugyklos</a>.</p></noscript>

@@ -71,6 +71,9 @@ test('legacy links canonicalize and Back/Forward restore the selected person', a
   await page.goForward();
   await expect(page.locator('#person h2')).toHaveText('Jonas BANDOMASIS');
   await expect(page.locator('#announce')).toContainText('Jonas BANDOMASIS');
+  await page.getByRole('button', { name: 'Kandidatai', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Kandidatai ir rinkimai', exact: true })).toBeVisible();
+  await expect(page.locator('#topstats')).toContainText('3 asmenys');
 });
 
 test('keyboard checkboxes compare people and clear the selection', async ({ page }) => {
@@ -118,12 +121,15 @@ test('all four summary views remain usable', async ({ page }) => {
   ]) {
     await page.locator(`#${button}`).click();
     await expect(page.locator('#person h2')).toHaveText(heading);
+    await expect(page.locator('#topstats')).toHaveCount(0);
     await expect(page.locator('#person table').first()).toBeVisible();
     for (const select of await page.locator('#person select').all()) {
       await expect(select).toHaveAccessibleName(/\S/);
     }
     await noPageOverflow(page);
   }
+  await page.getByRole('button', { name: 'Kandidatai', exact: true }).click();
+  await expect(page.locator('#topstats')).toContainText('3 asmenys');
   expect(errors).toEqual([]);
 });
 

@@ -472,6 +472,8 @@ let INDEX = null;
 let CONCEPTS = {};
 const recordCache = new Map();
 const compareSet = new Map();
+// Keep the populated introduction when another view replaces the content pane.
+const intro = document.getElementById("intro");
 
 function bootFailed(err) {
   console.error("VRK duomenų nepavyko įkelti", err);
@@ -489,7 +491,7 @@ function bootFailed(err) {
   retry.textContent = "Bandyti dar kartą";
   retry.addEventListener("click", () => location.reload());
   div.append(title, message, retry);
-  root.replaceChildren(div);
+  root.replaceChildren(intro, div);
 }
 
 async function boot() {
@@ -677,12 +679,9 @@ function showPlaceholder(message) {
     div.textContent = message;
   } else {
     div.className = "overview";
-    div.innerHTML = `<div class="overview-heading">
-      <span class="eyebrow">Atviri rinkimų duomenys</span>
-      <h2>Pasirinkite kandidatą</h2>
-      <p>Suraskite asmenį ir peržiūrėkite jo kandidatavimus, anketų atsakymus bei turto ir pajamų deklaracijas. Pažymėję kelis asmenis galėsite juos palyginti.</p>
-    </div><div class="overview-grid"></div>`;
-    const grid = div.querySelector(".overview-grid");
+    const grid = document.createElement("div");
+    grid.className = "overview-grid";
+    div.append(intro, grid);
     for (const [title, description, action] of [
       ["Rinkimų suvestinė", "Kandidatų sudėtis, rinkimų rezultatai ir deklaracijų rodikliai. Prie skaičių – jų aprėptis.", showAggregates, "01"],
       ["Iškėlėjai", "Partijų, komitetų ir koalicijų kandidatai skirtinguose rinkimuose. Galima įtraukti organizacijų pirmtakus.", showNominator, "02"],
@@ -1799,7 +1798,7 @@ function showAggregates() {
       if (!rows.length) return;
       const h = document.createElement("div"); h.className = "aggnote"; h.textContent = title;
       votesWrap.appendChild(h);
-      const t = document.createElement("table"); t.className = "cmp";
+      const t = document.createElement("table"); t.className = "cmp ranking";
       t.innerHTML = `<thead><tr><th>#</th><th>Asmuo</th><th>Iškėlėjas</th><th>${unit}</th><th>Išrinkta</th></tr></thead><tbody></tbody>`;
       rows.forEach(([p, e], i) => {
         const tr = t.tBodies[0].insertRow();
@@ -1851,7 +1850,7 @@ function showAggregates() {
         if (!byCampaign.has(e.ck)) byCampaign.set(e.ck, []);
         byCampaign.get(e.ck).push([p, e]);
       }
-      const ct = document.createElement("table"); ct.className = "cmp";
+      const ct = document.createElement("table"); ct.className = "cmp ranking";
       ct.innerHTML = "<thead><tr><th>#</th><th>Kampanija</th><th>Kandidatavimų kampanijoje</th><th>Gautos aukos</th><th>Išrinkta (iš čia rodomų)</th></tr></thead><tbody></tbody>";
       funded.sort((a, b) => b[1].d - a[1].d).slice(0, 10).forEach(([i, c], rank) => {
         const members = byCampaign.get(i) || [];
@@ -2251,7 +2250,7 @@ function showMovers() {
       rows.push({ p, first, last, delta });
     }
     rows.sort((a, b) => dir === "desc" ? b.delta - a.delta : a.delta - b.delta);
-    const t = document.createElement("table"); t.className = "cmp";
+    const t = document.createElement("table"); t.className = "cmp ranking";
     t.innerHTML = `<thead><tr><th>#</th><th>Asmuo</th><th>Nuo</th><th>Iki</th><th>Δ</th></tr></thead><tbody></tbody>`;
     rows.slice(0, 100).forEach((r, i) => {
       const tr = t.tBodies[0].insertRow();
