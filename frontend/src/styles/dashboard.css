@@ -38,6 +38,8 @@ input[type='checkbox'] { accent-color: var(--ink); width: 16px; height: 16px; fl
 .page-description { max-width: 660px; color: var(--muted); font-size: 15px; margin: 0; }
 .stats { color: var(--muted); font-size: 13px; }
 #topstats { max-width: 400px; margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+/* Wrap between statistics; split a phrase only if it exceeds the whole column. */
+#topstats .stat-phrase { display: inline-block; max-width: 100%; overflow-wrap: anywhere; }
 .view-navigation { display: flex; min-width: 0; gap: 16px; overflow-x: auto; scrollbar-width: thin; }
 .view-button { flex: 0 0 auto; white-space: nowrap; border: 0; border-bottom: 2px solid transparent; border-radius: 0; color: var(--muted); font-size: 13px; padding: 21px 0; background: transparent; }
 .view-button:focus-visible { outline-offset: -3px; }

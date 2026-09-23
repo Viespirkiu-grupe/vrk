@@ -545,13 +545,21 @@ async function boot() {
   // provenance.parsedAt and the parser commit that built the index. Without
   // it, two coexisting people.json builds were indistinguishable on sight.
   const vintage = s.corpusParsedAt
-    ? ` · duomenys ${s.corpusParsedAt.slice(0, 10)}${s.parserCommit ? ` (${s.parserCommit})` : ""}`
+    ? `duomenys ${s.corpusParsedAt.slice(0, 10)}${s.parserCommit ? ` (${s.parserCommit})` : ""}`
     : "";
   const topstats = document.getElementById("topstats");
-  topstats.textContent =
-    `${fmtInt(s.persons)} ${plural(s.persons, "asmuo", "asmenys", "asmenų")} · ` +
-    `${fmtInt(s.records)} ${plural(s.records, "kandidatavimas", "kandidatavimai", "kandidatavimų")} · ` +
-    `${fmtInt(s.personsInMultipleElections)} dalyvavo 2+ rinkimuose` + vintage;
+  const statPhrases = [
+    `${fmtInt(s.persons)} ${plural(s.persons, "asmuo", "asmenys", "asmenų")}`,
+    `${fmtInt(s.records)} ${plural(s.records, "kandidatavimas", "kandidatavimai", "kandidatavimų")}`,
+    `${fmtInt(s.personsInMultipleElections)} dalyvavo 2+ rinkimuose`,
+    vintage,
+  ];
+  topstats.replaceChildren(...statPhrases.filter(Boolean).flatMap((phrase, index) => {
+    const span = document.createElement("span");
+    span.className = "stat-phrase";
+    span.textContent = phrase;
+    return index ? [" · ", span] : [span];
+  }));
   if (s.corpusParsedAt) {
     topstats.title = `korpuso naujausias įrašas ${s.corpusParsedAt}` +
       (s.generatedAt ? `; indeksas sugeneruotas ${s.generatedAt}` : "") +
