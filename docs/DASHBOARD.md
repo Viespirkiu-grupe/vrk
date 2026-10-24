@@ -534,9 +534,14 @@ build takes 35 s.
 and, since issue #118, the 25,294 they linked), keeps VRK's own hosted URL
 only where the fetch failed (38 records, all on hosts that no longer serve
 them), and has nothing for the other 85,542. The page accepts both of those
-plus a legacy inline `data:` URI, prefers the **newest** election's
-portrait, loads lazily, and drops the `<img>` on error rather than showing a
-broken icon — which is what happens to the 38.
+plus a legacy inline `data:` URI and lists every candidate newest election
+first. It loads them one at a time off-DOM (`new Image()` + `decode()`) and
+inserts only the first that decodes; a failure falls through to the next
+older election's portrait, and if none loads no photo element is ever
+inserted, so a deployment without `data/*/photos/` shows no empty box and the
+header never shifts (issue #185). The 38 dead URLs end that way unless an
+older election has a sidecar. A photo that arrives after the reader has moved
+to another view is dropped by the `renderToken` check.
 
 **Currency.** The 2012–2015 pages declare assets and income in litas
 (`turto-ir-pajamu-deklaracijos.valiuta` is `"Lt"` on those records); 2016 on

@@ -213,6 +213,67 @@ test('CSV download contains only the filtered candidacies', async ({ page }) => 
   expect(text).not.toContain('Jonas BANDOMASIS');
 });
 
+// Records every photo element that ever enters the person header, so a box
+// that appears and is removed again still fails the test.
+async function watchPortraits(page) {
+  await page.addInitScript(() => {
+    window.__portraits = [];
+    new MutationObserver(mutations => {
+      for (const m of mutations) for (const node of m.addedNodes) {
+        if (node.nodeType !== 1) continue;
+        for (const img of node.matches('img') ? [node] : node.querySelectorAll('img')) {
+          if (img.closest('.phead')) window.__portraits.push(img.getAttribute('src'));
+        }
+      }
+    }).observe(document, { childList: true, subtree: true });
+  });
+}
+
+test('a missing portrait never shows an empty photo box', async ({ page }) => {
+  await installFixtures(page, {
+    photos: { '/data/2024-seimo/test-anna-2024-seimo.json': 404, '/data/2020-seimo/test-anna-2020-seimo.json': 404 },
+    photoDelay: 400,
+  });
+  await watchPortraits(page);
+  const photoRequests = [];
+  page.on('request', request => { if (request.url().includes('/photos/')) photoRequests.push(new URL(request.url()).pathname); });
+  await ready(page, '/dashboard/#test-anna');
+  await expect(page.locator('#person h2')).toHaveText('Ona NAUJOJI');
+  const left = await page.locator('.phead > div').boundingBox();
+  // Poll while both delayed 404s are still in flight, then after they settle.
+  for (let i = 0; i < 10; i++) {
+    expect(await page.locator('.phead img').count()).toBe(0);
+    await page.waitForTimeout(100);
+  }
+  await expect.poll(() => photoRequests.length).toBe(2);
+  await page.waitForTimeout(200);
+  expect(photoRequests).toEqual(['/data/2024-seimo/photos/test-anna-2024-seimo.png', '/data/2020-seimo/photos/test-anna-2020-seimo.png']);
+  expect(await page.evaluate(() => window.__portraits)).toEqual([]);
+  expect((await page.locator('.phead > div').boundingBox()).x).toBe(left.x);
+});
+
+test('a missing newest portrait falls back to the older election', async ({ page }) => {
+  await installFixtures(page, {
+    photos: { '/data/2024-seimo/test-anna-2024-seimo.json': 404, '/data/2020-seimo/test-anna-2020-seimo.json': 200 },
+  });
+  await watchPortraits(page);
+  await ready(page, '/dashboard/#test-anna');
+  const img = page.locator('.phead img');
+  await expect(img).toBeVisible();
+  await expect(img).toHaveAttribute('src', '../data/2020-seimo/photos/test-anna-2020-seimo.png');
+  expect(await page.evaluate(() => window.__portraits)).toEqual(['../data/2020-seimo/photos/test-anna-2020-seimo.png']);
+});
+
+test('a late portrait stays off the next person page', async ({ page }) => {
+  await installFixtures(page, { photos: { '/data/2024-seimo/test-anna-2024-seimo.json': 200 }, photoDelay: 600 });
+  await ready(page, '/dashboard/#test-anna');
+  await expect(page.locator('#person h2')).toHaveText('Ona NAUJOJI');
+  await page.locator('#results .row', { hasText: 'Jonas BANDOMASIS' }).click();
+  await expect(page.locator('#person h2')).toHaveText('Jonas BANDOMASIS');
+  await page.waitForTimeout(900);
+  await expect(page.locator('.phead img')).toHaveCount(0);
+});
+
 test('failed index reports a visible error', async ({ page }) => {
   await installFixtures(page, { failedIndex: true });
   await page.goto('/dashboard/');

@@ -72,7 +72,13 @@ records['/data/2024-seimo/test-anna-2024-seimo.json'].normalized['politines-kamp
   atstovauja: { pavadinimas: 'PAVYZDINĖ ILGO PAVADINIMO POLITINĖ ORGANIZACIJA', nuoroda: 'https://example.org/ataskaitos/2024/politines-kampanijos-dalyvio-duomenys/ilga-saltinio-nuoroda' },
 }];
 
-export async function installFixtures(page, { failedRecord, failedIndex = false } = {}) {
+// A 1×1 PNG, enough for the portrait loader to decode.
+const PIXEL = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==', 'base64');
+
+// `photos` maps a record path to its sidecar's HTTP status: the record gains
+// rawData.profile.photoSrc and the sidecar answers, after `photoDelay` ms,
+// with the pixel or an empty 404.
+export async function installFixtures(page, { failedRecord, failedIndex = false, photos = {}, photoDelay = 0 } = {}) {
   // UI assets, the real concept map and field labels still pass through the
   // production preview server, so missing bundles / bad base URLs fail the suite.
   await page.route('**/dashboard/people.json', route => route.fulfill({
@@ -82,11 +88,23 @@ export async function installFixtures(page, { failedRecord, failedIndex = false 
   }));
   await page.route('**/data/**/*.json', route => {
     const path = new URL(route.request().url()).pathname;
-    const record = records[path];
+    let record = records[path];
+    if (record && photos[path]) {
+      const file = path.split('/').pop().replace(/\.json$/, '.png');
+      record = { ...record, rawData: { profile: { photoSrc: `photos/${file}` } } };
+    }
     return route.fulfill({
       status: path === failedRecord ? 503 : record ? 200 : 404,
       contentType: 'application/json',
       body: JSON.stringify(record || { error: 'unknown fixture' }),
     });
+  });
+  await page.route('**/data/*/photos/*', async route => {
+    const url = new URL(route.request().url()).pathname;
+    const recordPath = url.replace('/photos/', '/').replace(/\.png$/, '.json');
+    await new Promise(resolve => setTimeout(resolve, photoDelay));
+    return photos[recordPath] === 200
+      ? route.fulfill({ status: 200, contentType: 'image/png', body: PIXEL })
+      : route.fulfill({ status: 404, contentType: 'text/plain', body: 'not found' });
   });
 }

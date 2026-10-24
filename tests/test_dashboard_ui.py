@@ -825,8 +825,15 @@ class PhotoShapeTests(unittest.TestCase):
     def test_the_newest_portrait_wins(self):
         self.assertIn("[...loaded].reverse()", SOURCE)
 
-    def test_photos_load_lazily(self):
-        self.assertIn('img.loading = "lazy";', SOURCE)
+    def test_photos_load_off_dom_and_insert_on_success(self):
+        # Issue #185: the sized, bordered <img> used to be appended before it
+        # loaded, so a deployment without portraits flashed an empty box.
+        # Now each candidate decodes off-DOM and only a success is inserted;
+        # the browser suite drives the 404 and fallback cases.
+        self.assertIn("const img = new Image();", SOURCE)
+        self.assertIn("await img.decode();", SOURCE)
+        self.assertIn("if (token === renderToken) head.prepend(img);", SOURCE)
+        self.assertNotIn("head.appendChild(img)", SOURCE)
 
 
 class ArchiveComparisonRowTests(unittest.TestCase):
@@ -1271,7 +1278,10 @@ class RoutingTests(unittest.TestCase):
         # announcement.
         self.assertIn("let renderToken = 0;", SOURCE)
         self.assertEqual(SOURCE.count("const token = ++renderToken;"), 2)
-        self.assertEqual(SOURCE.count("if (token !== renderToken) return;"), 2)
+        # Two views await their records; the third check is the portrait
+        # loader of issue #185, which stops trying candidates once its
+        # person is no longer on screen.
+        self.assertEqual(SOURCE.count("if (token !== renderToken) return;"), 3)
         # And the synchronous views end whatever is in flight: the
         # placeholder, the election summary, the movers, and the nominator
         # summary and coverage grid of issue #162.

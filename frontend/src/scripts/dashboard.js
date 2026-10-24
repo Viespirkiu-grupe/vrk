@@ -1300,6 +1300,27 @@ function clearActiveRows() {
   for (const el of document.querySelectorAll(".row")) el.classList.remove("active");
 }
 
+//: Loads the candidates one at a time off-DOM and inserts the first that
+//: decodes, so a deployment without portraits never shows the sized, bordered
+//: box (issue #185). A 404 falls through to the next older election's photo;
+//: none loading means no element at all. The token check keeps a late photo
+//: off whichever page replaced this one.
+async function showPortrait(head, urls, token) {
+  for (const url of urls) {
+    if (token !== renderToken) return;
+    const img = new Image();
+    img.alt = "";
+    img.src = url;
+    try {
+      await img.decode();
+    } catch {
+      continue;
+    }
+    if (token === renderToken) head.prepend(img);
+    return;
+  }
+}
+
 async function showPerson(p) {
   const token = ++renderToken;
   setActiveView("overviewBtn");
@@ -1330,22 +1351,15 @@ async function showPerson(p) {
   // election dir — every archived portrait since issue #118, whether the
   // page embedded it or linked it), VRK's own hosted URL (what a record
   // keeps when the fetch failed: 38 records, on hosts that no longer serve
-  // them, so the error handler below usually removes these) and a legacy
-  // inline data: URI from a pre-externalization corpus.
+  // them) and a legacy inline data: URI from a pre-externalization corpus.
+  const photoUrls = [];
   for (const [e, r] of newestLoaded) {
     const photo = resolvePath(r, "rawData.profile.photoSrc") || resolvePath(r, "normalized.profilis.nuotrauka");
     if (typeof photo !== "string" || !photo) continue;
-    const img = document.createElement("img");
-    img.loading = "lazy";
-    img.alt = "";
-    img.addEventListener("error", () => img.remove());
-    if (photo.startsWith("photos/")) img.src = `../data/${e.id}/${photo}`;
-    else if (/^https?:\/\//.test(photo)) img.src = photo;
-    else if (photo.startsWith("data:")) img.src = photo;
-    else continue;
-    head.appendChild(img);
-    break;
+    if (photo.startsWith("photos/")) photoUrls.push(`../data/${e.id}/${photo}`);
+    else if (/^https?:\/\//.test(photo) || photo.startsWith("data:")) photoUrls.push(photo);
   }
+  showPortrait(head, photoUrls, token);
   const hd = document.createElement("div");
   const h2 = document.createElement("h2"); h2.textContent = p.n;
   const meta = document.createElement("div"); meta.className = "meta";
