@@ -2,7 +2,7 @@ import "./theme.js";
 import "./navigation.js";
 import { fold, PLURAL, plural, fmtInt, capitalize, deslug, csvField, csvMoney, median, pct, fmtEUR } from "../lib/format.js";
 import { recordFile, resolvePath, ROOT_SECTIONS, isFilledValue, walkValue } from "../lib/records.js";
-import { partyLineage, partyLineageRoots, partyTypeWord, partyText, partyTitle, partyCoalitions } from "../lib/parties.js";
+import { partyTypeWord, partyText, partyTitle, partyCoalitions, partyRanking } from "../lib/parties.js";
 import { MONEY_SERIES, parseMoney, LITAS_PER_EURO, declaredInLitas, INCOME_PATH, EMPLOYMENT_INCOME_PATH, declaredIncome, incomeIsEmploymentOnly, moneyEUR } from "../lib/finance.js";
 import { collapseRuns, electionKinds, nominatorRuns, runYears, organisationRoots, partySwitches } from "../lib/nominators.js";
 import { VIEW_PATHS, personPath, comparePath, parsePath, resolvePersonKey, isRoutableClick } from "../lib/routes.js";
@@ -896,13 +896,14 @@ function buildFilters() {
   const peopleIn = ids => ids.length === 1
     ? (partyPeople.get(ids[0]) || new Set()).size
     : new Set(ids.flatMap(id => [...(partyPeople.get(id) || [])])).size;
-  // One row per nominator, most people first -- except that a lineage
-  // root becomes a group: its "ir pirmtakai" row first, then itself and
-  // every organisation it continues, indented by depth, each with its own
-  // count. A group sorts by the lineage's total, so Vieningas Kaunas (44
-  // people as a party, 75 with its committee and coalition) sits where its
-  // history puts it. Nothing is listed twice: an organisation inside a lineage has
-  // its row in the group only.
+  // Three groups by Seimas seats (issue #212; partyRanking in
+  // lib/parties.js): the parties in the Seimas now, the other parties by
+  // their seats over every general election, then committees, coalitions
+  // and self-nomination by name. A lineage (#123) is one unit: its
+  // "ir pirmtakai" row matches the whole lineage, then itself and every
+  // organisation it continues, indented by depth, each with its own count.
+  // Nothing is listed twice: an organisation inside a lineage has its row
+  // there only.
   const fParty = document.getElementById("fParty");
   addOption(fParty, "", "— visi iškėlėjai —");
   const partyLabel = (id) => partyText(INDEX.parties, id);
@@ -925,33 +926,34 @@ function buildFilters() {
       "Kartu su bendraisiais sąrašais, kuriuose ji dalyvavo: " + coalitions.map(c => partyText(INDEX.parties, c)).join("; ");
   };
   PARTY_SETS = new Map();
-  const grouped = new Set();
-  const rows = [];
-  for (const root of partyLineageRoots(INDEX.parties || {})) {
-    const lineage = partyLineage(INDEX.parties, root);
-    if (lineage.length < 2) continue;
-    const ids = lineage.map(l => l.id);
-    PARTY_SETS.set(PARTY_LINEAGE_PREFIX + root, new Set(ids));
-    for (const id of ids) grouped.add(id);
-    rows.push({ key: peopleIn(ids), root, lineage });
-  }
-  for (const [id, members] of partyPeople) if (!grouped.has(id)) rows.push({ key: members.size, id });
-  rows.sort((a, b) => b.key - a.key || (a.root || a.id).localeCompare(b.root || b.id));
-  for (const row of rows) {
-    if (!row.root) {
-      addPartyOption(fParty, row.id, `${partyLabel(row.id)} (${fmtInt(row.key)})`);
-      addCoalitionsOption(fParty, row.id, "");
-      continue;
-    }
+  const ranking = partyRanking(INDEX.parties || {}, INDEX.elections || [], INDEX.people);
+  const groups = [
+    [ranking.year ? `Dabar Seime (${ranking.year})` : "Dabar Seime", ranking.current,
+      "Laimėjo vietų paskutiniuose eiliniuose Seimo rinkimuose; daugiausia vietų — pirmos"],
+    ["Kitos partijos", ranking.other, "Pagal visų eilinių Seimo rinkimų vietas, tada pagal išrinktus žmones"],
+    ["Komitetai ir koalicijos", ranking.rest, "Abėcėlės tvarka"],
+  ];
+  for (const [label, units, title] of groups) {
+    if (!units.length) continue;
     const group = document.createElement("optgroup");
-    group.label = partyLabel(row.root);
-    group.title = partyTitle(INDEX.parties, row.root);
+    group.label = label;
+    group.title = title;
     fParty.appendChild(group);
-    addOption(group, PARTY_LINEAGE_PREFIX + row.root, `${partyLabel(row.root)} ir pirmtakai (${fmtInt(row.key)})`).title =
-      "Kartu su organizacijomis, iš kurių ši išaugo: susijungimai, pakeista teisinė forma, perimta registracija";
-    for (const { id, depth } of row.lineage) {
-      addPartyOption(group, id, `${"· ".repeat(depth)}${partyLabel(id)} (${fmtInt(peopleIn([id]))})`);
-      addCoalitionsOption(group, id, "· ".repeat(depth));
+    for (const { root, lineage } of units) {
+      if (lineage.length < 2) {
+        addPartyOption(group, root, `${partyLabel(root)} (${fmtInt(peopleIn([root]))})`);
+        addCoalitionsOption(group, root, "");
+        continue;
+      }
+      const ids = lineage.map(l => l.id);
+      PARTY_SETS.set(PARTY_LINEAGE_PREFIX + root, new Set(ids));
+      addOption(group, PARTY_LINEAGE_PREFIX + root, `${partyLabel(root)} ir pirmtakai (${fmtInt(peopleIn(ids))})`).title =
+        "Kartu su organizacijomis, iš kurių ši išaugo: susijungimai, pakeista teisinė forma, perimta registracija";
+      for (const { id, depth } of lineage) {
+        const indent = "· ".repeat(depth + 1);
+        addPartyOption(group, id, `${indent}${partyLabel(id)} (${fmtInt(peopleIn([id]))})`);
+        addCoalitionsOption(group, id, indent);
+      }
     }
   }
 

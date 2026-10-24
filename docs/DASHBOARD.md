@@ -314,7 +314,13 @@ includes the 2017–2019 by-elections of that same Seimas, which an exact-id
 match used to drop silently; a by-election stays pickable on its own from
 its group (issue #122). The nominator select does the same for lineage: a
 party that grew out of a committee, or a union of parties, is a group whose
-`… ir pirmtakai` row matches all of them (issue #123). Filters conjoin at the candidacy level — a
+`… ir pirmtakai` row matches all of them (issue #123). Its order is a data
+rule, not a list (issue #212; `partyRanking` in `frontend/src/lib/parties.js`):
+**Dabar Seime (<year>)** holds the lineages that won seats in the latest general
+Seimas election (by-elections excluded), by those seats; **Kitos partijos** the
+other parties, by seats over every general Seimas election, then people elected
+anywhere, then name; **Komitetai ir koalicijos** the rest alphabetically,
+*Išsikėlė pats* first. Filters conjoin at the candidacy level — a
 person matches when at least one of their candidacies passes every active
 filter — and **⬇ CSV** exports the current selection (semicolon-separated,
 BOM-prefixed for lt-LT Excel, uncapped even when the list shows only the

@@ -160,6 +160,60 @@ test('the party dropdown counts people per party, lineage and coalition set', as
   }
 });
 
+test('the party dropdown groups by Seimas seats: in the Seimas now, other parties, the rest (#212)', async ({ page }) => {
+  const parties = {
+    ...index.parties,
+    'syn-small': { n: 'Mažoji partija', t: 'partija' },
+    'syn-big': { n: 'Didžioji partija', t: 'partija' },
+    'syn-old': { n: 'Senoji partija', t: 'partija' },
+    'syn-new': { n: 'Naujoji partija', t: 'partija', pr: ['syn-old'] },
+    'syn-coal': { n: 'Naujųjų koalicija', t: 'koalicija', nr: ['syn-new'] },
+    'syn-past': { n: 'Buvusioji partija', t: 'partija' },
+    'syn-self': { n: 'Išsikėlė pats', t: 'issikelimas' },
+  };
+  let n = 0;
+  const run = (id, p, w) => ({ pid: `test-r${++n}`, n: `Asmuo NR${n}`, b: null, k: `ASMUO NR${n}|`,
+    e: [{ id, c: `test-r${n}`, p, w, m: [null, null, null, null] }] });
+  const served = {
+    ...index,
+    parties,
+    people: [
+      ...people,
+      // 2024: syn-big 3 seats, the syn-new lineage 2 (one through its
+      // predecessor), syn-small 1; the most people ran for syn-small.
+      run('2024-seimo', 'syn-big', true), run('2024-seimo', 'syn-big', true), run('2024-seimo', 'syn-big', true),
+      run('2024-seimo', 'syn-new', true), run('2024-seimo', 'syn-old', true),
+      run('2024-seimo', 'syn-small', true),
+      ...Array.from({ length: 6 }, () => run('2024-seimo', 'syn-small', false)),
+      run('2024-seimo', 'syn-coal', false),
+      run('2024-seimo', 'syn-self', true),
+      run('2020-seimo', 'syn-past', true),
+    ],
+  };
+  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
+    status: 200, contentType: 'application/json', body: JSON.stringify(served),
+  }));
+  await page.goto('/');
+  await openFilters(page);
+  const groups = page.locator('#fParty > optgroup');
+  await expect(groups).toHaveCount(3);
+  expect(await groups.evaluateAll(gs => gs.map(g => g.label))).toEqual(['Dabar Seime (2024)', 'Kitos partijos', 'Komitetai ir koalicijos']);
+  // test-party won Anna's 2024 seat; level with syn-small on every count,
+  // "Bandymų" sorts before "Mažoji".
+  expect(await groups.nth(0).locator('option').evaluateAll(os => os.map(o => o.value)))
+    .toEqual(['syn-big', '+syn-new', 'syn-new', '&syn-new', 'syn-old', 'test-party', 'syn-small']);
+  expect(await groups.nth(1).locator('option').evaluateAll(os => os.map(o => o.value))).toEqual(['syn-past']);
+  await expect(groups.nth(0).locator('option[value="+syn-new"]')).toHaveText('Naujoji partija ir pirmtakai (2)');
+  await expect(groups.nth(0).locator('option[value="syn-old"]')).toHaveText('· · Senoji partija (1)');
+  // Self-nomination opens the last group and is never ranked as a party.
+  expect(await groups.nth(2).locator('option').evaluateAll(os => os.map(o => o.value)))
+    .toEqual(['syn-self', 'syn-coal', 'other-party']);
+  for (const [value, count] of [['+syn-new', 2], ['&syn-new', 2], ['syn-big', 3]]) {
+    await page.locator('#fParty').selectOption(value);
+    await expect(page.locator('#results .row')).toHaveCount(count);
+  }
+});
+
 test('a nominator chain shows short labels, muted coalition words and full names on hover', async ({ page }) => {
   // Issue #189: synthetic nominators shaped like the registry's three kinds
   // of label -- a party shortName, a coalition's brand, a joint list.
