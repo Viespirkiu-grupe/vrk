@@ -116,6 +116,7 @@ from scraper.shared.education import LEVELS as EDUCATION_LEVELS  # noqa: E402
 from scraper.shared.education import issilavinimas  # noqa: E402
 from scraper.shared.kampanija import campaign_entry, donation_total_eur  # noqa: E402
 from scraper.shared.kandidatura import ROLE_COUNCIL, ROLE_MAYOR, kandidatura  # noqa: E402
+from scraper.shared.parties import display_name as party_display_name  # noqa: E402
 from scraper.shared.parties import entry as party_entry  # noqa: E402
 from scraper.shared.parties import partija  # noqa: E402
 from scraper.shared.provenance import parser_commit, utc_now_iso  # noqa: E402
@@ -691,17 +692,20 @@ def build_index(
     parties = {}
     for pid in used_party_ids:
         data = party_entry(pid)
+        label = party_display_name(pid)
         parties[pid] = {
-            "n": data.get("shortName") or data["name"],
+            # The display label (issue #189): the shortName, a joint list's
+            # member labels ("LLRA-KŠS + Rusų aljansas") or a coalition's
+            # quoted brand -- see scraper/shared/parties.display_name.
+            "n": label,
             "t": data["type"],
-            # The full name too where "n" is a short one, so the search box
-            # can match either ("valstiečių" finds LVŽS).
-            **(
-                {"f": data["name"]}
-                if data.get("shortName") and data["shortName"] != data["name"]
-                else {}
-            ),
+            # The full legal name too where "n" is a short one: the hover
+            # text, and what the search box matches ("valstiečių" finds LVŽS).
+            **({"f": data["name"]} if label != data["name"] else {}),
             **({"pr": list(data["predecessors"])} if data.get("predecessors") else {}),
+            # A coalition's member parties, so a member's facet can also
+            # offer the joint lists it ran in -- never merged into it.
+            **({"nr": list(data["nariai"])} if data.get("nariai") else {}),
         }
 
     missing_labels = [t for t in EDUCATION_LEVELS if t not in EDUCATION_LEVEL_LABELS]

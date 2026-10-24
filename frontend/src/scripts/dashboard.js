@@ -2,7 +2,7 @@ import "./theme.js";
 import "./navigation.js";
 import { fold, PLURAL, plural, fmtInt, capitalize, deslug, csvField, csvMoney, median, pct, fmtEUR } from "../lib/format.js";
 import { recordFile, resolvePath, ROOT_SECTIONS, isFilledValue, walkValue } from "../lib/records.js";
-import { partyLineage, partyLineageRoots } from "../lib/parties.js";
+import { partyLineage, partyLineageRoots, partyTypeWord, partyText, partyTitle, partyCoalitions } from "../lib/parties.js";
 import { MONEY_SERIES, parseMoney, LITAS_PER_EURO, declaredInLitas, INCOME_PATH, EMPLOYMENT_INCOME_PATH, declaredIncome, incomeIsEmploymentOnly, moneyEUR } from "../lib/finance.js";
 
 // Election names come from people.json, which copies them from the one
@@ -32,11 +32,13 @@ const inElection = (e, id) => e.id === id || electionParent(e.id) === id;
 // forest, so an entry has at most one successor and one root; the party
 // facet offers each root once more as "<name> ir pirmtakai", and that row
 // matches the whole lineage where the plain row matches the one nominator.
+// A party that ran on joint lists (issue #189, the coalitions' "nr") gets a
+// "su koalicijomis" row the same way: itself plus those coalitions, which
+// stay their own nominators everywhere else.
 const PARTY_LINEAGE_PREFIX = "+";
-let PARTY_LINEAGES = new Map();
-const inParty = (e, value) => value.startsWith(PARTY_LINEAGE_PREFIX)
-  ? (PARTY_LINEAGES.get(value.slice(PARTY_LINEAGE_PREFIX.length)) || new Set()).has(e.p)
-  : e.p === value;
+const PARTY_COALITIONS_PREFIX = "&";
+let PARTY_SETS = new Map();
+const inParty = (e, value) => PARTY_SETS.has(value) ? PARTY_SETS.get(value).has(e.p) : e.p === value;
 
 // Render a declared figure the way the assets pane does: litas converted at
 // the changeover rate and formatted as euro. Without this the compare table
@@ -841,15 +843,33 @@ function buildFilters() {
   // its row in the group only.
   const fParty = document.getElementById("fParty");
   addOption(fParty, "", "— visi iškėlėjai —");
-  const partyLabel = (id) => (INDEX.parties[id] || {}).n || id;
-  PARTY_LINEAGES = new Map();
+  const partyLabel = (id) => partyText(INDEX.parties, id);
+  // A short label's tooltip adds the full legal name.
+  const addPartyOption = (select, id, label) => {
+    const option = addOption(select, id, label);
+    const full = (INDEX.parties[id] || {}).f;
+    if (full) option.title = `${label}\n${full}`;
+    return option;
+  };
+  // The "su koalicijomis" row after a party's own, when its joint lists
+  // have candidacies here.
+  const coalitionsOf = partyCoalitions(INDEX.parties || {});
+  const addCoalitionsOption = (select, id, indent) => {
+    const coalitions = (coalitionsOf.get(id) || []).filter(c => partyCounts.has(c));
+    if (!coalitions.length) return;
+    const count = [id, ...coalitions].reduce((n, c) => n + (partyCounts.get(c) || 0), 0);
+    PARTY_SETS.set(PARTY_COALITIONS_PREFIX + id, new Set([id, ...coalitions]));
+    addOption(select, PARTY_COALITIONS_PREFIX + id, `${indent}${partyLabel(id)} su koalicijomis (${fmtInt(count)})`).title =
+      "Kartu su bendraisiais sąrašais, kuriuose ji dalyvavo: " + coalitions.map(c => partyText(INDEX.parties, c)).join("; ");
+  };
+  PARTY_SETS = new Map();
   const grouped = new Set();
   const rows = [];
   for (const root of partyLineageRoots(INDEX.parties || {})) {
     const lineage = partyLineage(INDEX.parties, root);
     if (lineage.length < 2) continue;
     const ids = lineage.map(l => l.id);
-    PARTY_LINEAGES.set(root, new Set(ids));
+    PARTY_SETS.set(PARTY_LINEAGE_PREFIX + root, new Set(ids));
     for (const id of ids) grouped.add(id);
     rows.push({ key: ids.reduce((n, id) => n + (partyCounts.get(id) || 0), 0), root, lineage });
   }
@@ -857,16 +877,19 @@ function buildFilters() {
   rows.sort((a, b) => b.key - a.key || (a.root || a.id).localeCompare(b.root || b.id));
   for (const row of rows) {
     if (!row.root) {
-      addOption(fParty, row.id, `${partyLabel(row.id)} (${fmtInt(row.key)})`);
+      addPartyOption(fParty, row.id, `${partyLabel(row.id)} (${fmtInt(row.key)})`);
+      addCoalitionsOption(fParty, row.id, "");
       continue;
     }
     const group = document.createElement("optgroup");
     group.label = partyLabel(row.root);
+    group.title = partyTitle(INDEX.parties, row.root);
     fParty.appendChild(group);
     addOption(group, PARTY_LINEAGE_PREFIX + row.root, `${partyLabel(row.root)} ir pirmtakai (${fmtInt(row.key)})`).title =
       "Kartu su organizacijomis, iš kurių ši išaugo: susijungimai, pakeista teisinė forma, perimta registracija";
     for (const { id, depth } of row.lineage) {
-      addOption(group, id, `${"· ".repeat(depth)}${partyLabel(id)} (${fmtInt(partyCounts.get(id) || 0)})`);
+      addPartyOption(group, id, `${"· ".repeat(depth)}${partyLabel(id)} (${fmtInt(partyCounts.get(id) || 0)})`);
+      addCoalitionsOption(group, id, "· ".repeat(depth));
     }
   }
 
@@ -959,11 +982,8 @@ function personMatches(p, q, f) {
 const MATCH_CAP = 5000;
 const RENDER_LIMIT = 300;
 
-function latestPartyName(p) {
-  for (let i = p.e.length - 1; i >= 0; i--) {
-    const id = p.e[i].p;
-    if (id) return (INDEX.parties[id] || {}).n || id;
-  }
+function latestPartyId(p) {
+  for (let i = p.e.length - 1; i >= 0; i--) if (p.e[i].p) return p.e[i].p;
   return null;
 }
 
@@ -1014,10 +1034,9 @@ function renderList() {
     const bd = document.createElement("span"); bd.className = "bd";
     bd.textContent = p.b ? `· ${p.b}` : "· gimimo data nežinoma";
     main.append(nm, " ", bd);
-    const partyName = latestPartyName(p);
-    if (partyName) {
-      const pt = document.createElement("span"); pt.className = "pt";
-      pt.textContent = partyName;
+    const partyId = latestPartyId(p);
+    if (partyId) {
+      const pt = partyNode(partyId); pt.classList.add("pt");
       main.appendChild(pt);
     }
     const cnt = document.createElement("span");
@@ -1344,7 +1363,23 @@ function failureBanner(failed) {
 
 function partyNameOf(e) {
   if (!e.p) return null;
-  return (INDEX.parties[e.p] || {}).n || e.p;
+  return partyText(INDEX.parties, e.p);
+}
+
+// A nominator's label as a node (issue #189): the short label, a muted type
+// word before a coalition's, and the full legal name on hover.
+function partyNode(id) {
+  const party = INDEX.parties[id];
+  const span = document.createElement("span");
+  span.title = partyTitle(INDEX.parties, id);
+  const word = partyTypeWord(party);
+  if (word) {
+    const type = document.createElement("span"); type.className = "ptype";
+    type.textContent = word;
+    span.append(type, " ");
+  }
+  span.append(party ? party.n : id);
+  return span;
 }
 
 function clearActiveRows() {
@@ -1425,8 +1460,8 @@ async function showPerson(p) {
   const partyIds = [...new Set(p.e.map(e => e.p).filter(Boolean))];
   if (partyIds.length) {
     const parties = document.createElement("div");
-    parties.className = "meta";
-    parties.textContent = partyIds.map(id => (INDEX.parties[id] || {}).n || id).join(" → ");
+    parties.className = "meta parties";
+    partyIds.forEach((id, i) => parties.append(...(i ? [" → "] : []), partyNode(id)));
     hd.appendChild(parties);
   }
   head.appendChild(hd); root.appendChild(head);
@@ -1440,10 +1475,8 @@ async function showPerson(p) {
     if (records.length <= 3) card.open = true;
     const sum = document.createElement("summary");
     sum.textContent = electionName(e.id);
-    const partyName = partyNameOf(e);
-    if (partyName) {
-      const party = document.createElement("span"); party.className = "party";
-      party.textContent = partyName;
+    if (e.p) {
+      const party = partyNode(e.p); party.classList.add("party");
       sum.appendChild(party);
     }
     // The showing (issue #133): the preference votes on the list, the votes
@@ -1620,7 +1653,7 @@ async function showCompare() {
   });
   infoRow("Iškėlusios partijos", (p) => {
     const ids = [...new Set(p.e.map(e => e.p).filter(Boolean))];
-    return ids.length ? ids.map(id => (INDEX.parties[id] || {}).n || id).join("\n") : null;
+    return ids.length ? ids.map(id => partyText(INDEX.parties, id)).join("\n") : null;
   });
 
   for (const row of CONCEPT_ROWS) {
@@ -1814,7 +1847,7 @@ function showAggregates() {
       // row (issue #162).
       for (const [pid, count] of showAllParties ? top : top.slice(0, 15)) {
         const tr = t.tBodies[0].insertRow();
-        const th = document.createElement("th"); th.textContent = (INDEX.parties[pid] || {}).n || pid; tr.appendChild(th);
+        const th = document.createElement("th"); th.appendChild(partyNode(pid)); tr.appendChild(th);
         tr.insertCell().textContent = fmtInt(count);
         tr.insertCell().textContent = pct(count, withParty.length);
         tr.insertCell().textContent = fmtInt(withParty.filter(e => e.p === pid && e.w === true).length);

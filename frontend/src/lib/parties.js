@@ -24,4 +24,43 @@ function partyLineageRoots(parties) {
   return Object.keys(parties).filter(id => (parties[id].pr || []).length && !listed.has(id));
 }
 
-export { partyLineage, partyLineageRoots };
+// Nominator labels (issue #189). people.json's "n" is already short -- a
+// shortName, a joint list's member labels ("LLRA-KŠS + Rusų aljansas"), a
+// coalition's quoted brand -- and "f" the full legal name where "n" is not
+// it. A coalition always reads as one: "koalicija" goes before every
+// label that does not already say so, since a brand alone could be a
+// committee or a party.
+function partyTypeWord(party) {
+  return party && party.t === "koalicija" && !/koalicij/i.test(party.n || "") ? "koalicija" : "";
+}
+
+// The label as plain text, type word included, for option rows and lists.
+function partyText(parties, id) {
+  const party = parties[id];
+  if (!party) return id;
+  const word = partyTypeWord(party);
+  return word ? `${word} ${party.n}` : party.n;
+}
+
+// The hover text: the full legal name, so a short form is never a dead end.
+function partyTitle(parties, id) {
+  const party = parties[id];
+  return party ? party.f || party.n : id;
+}
+
+// Member id -> the coalitions that list it in "nr", for the party facet's
+// "su koalicijomis" row. The coalitions stay their own nominators; this only
+// lets one row find the joint lists a party also ran on.
+function partyCoalitions(parties) {
+  const out = new Map();
+  for (const [id, party] of Object.entries(parties)) {
+    for (const member of party.nr || []) {
+      if (!parties[member]) continue;
+      if (!out.has(member)) out.set(member, []);
+      out.get(member).push(id);
+    }
+  }
+  return out;
+}
+
+export { partyLineage, partyLineageRoots, partyTypeWord, partyText, partyTitle, partyCoalitions };

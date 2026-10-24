@@ -13,9 +13,19 @@ from __future__ import annotations
 import re
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from scraper.shared import parties
-from scraper.shared.parties import ENTRY_TYPES, ancestors, entries, fold, load_registry, match
+from scraper.shared.parties import (
+    ENTRY_TYPES,
+    ancestors,
+    display_name,
+    entries,
+    fold,
+    load_registry,
+    match,
+    names_only_its_members,
+)
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FORMS_TABLE = REPO_ROOT / "docs" / "nominator-forms.tsv"
@@ -286,6 +296,73 @@ class LineageTests(unittest.TestCase):
         # Šustauskas's 1994 union and the liberals' 2014 one are two registrations.
         self.assertNotIn("lietuvos-laisves-sajunga", ancestors("laisve-ir-teisingumas"))
         self.assertIn("lietuvos-laisves-sajunga-liberalai", ancestors("laisve-ir-teisingumas"))
+
+
+class DisplayNameTests(unittest.TestCase):
+    """Issue #189: the label the dashboard shows, derived in the build."""
+
+    def test_the_coalitions_named_only_by_their_members(self):
+        self.assertEqual(
+            sorted(pid for pid in entries() if names_only_its_members(pid)),
+            [
+                "dp-ir-komitetas-permainu-laikas",
+                "dp-ir-lzp",
+                "llra-ir-rusu-aljansas",
+                "lp-ts-lkd-ir-ls",
+                "lrls-ir-ts-lkd",
+                "lvzs-ir-lcp",
+            ],
+        )
+
+    def test_a_joint_list_reads_as_its_members_short_names(self):
+        self.assertEqual(display_name("llra-ir-rusu-aljansas"), "LLRA-KŠS + Rusų aljansas")
+        self.assertEqual(display_name("dp-ir-lzp"), "DP + LŽP")
+        self.assertEqual(display_name("lrls-ir-ts-lkd"), "LRLS + TS-LKD")
+        # A committee member keeps its type word beside its brand.
+        self.assertEqual(display_name("dp-ir-komitetas-permainu-laikas"), "DP + komitetas „Permainų laikas“")
+
+    def test_a_branded_coalition_reads_as_its_brand(self):
+        self.assertEqual(
+            display_name("koalicija-lenku-rinkimu-akcijos-ir-rusu-aljanso-koalicija-valdemaro-tomasevskio-blokas"),
+            "„Valdemaro Tomaševskio blokas“",
+        )
+        self.assertEqual(
+            display_name("koalicija-lietuvos-lenku-rinkimu-akcijos-ir-lietuvos-rusu-sajungos-koalicija-kartu-mes-jega"),
+            "„Kartu mes jėga!“",
+        )
+        # Straight quotes become Lithuanian ones; the first brand wins.
+        self.assertEqual(display_name("koalicija-kitaip"), "„Kitaip“")
+        self.assertEqual(
+            display_name(
+                "koalicija-geriausias-pasirinkimas-partija-laisve-ir-teisingumas-laisves-partija-liberalu-sajudis"
+            ),
+            "„Geriausias pasirinkimas“",
+        )
+
+    def test_names_without_a_brand_or_member_list_stay_whole(self):
+        self.assertEqual(display_name("koalicija-liberalu-koalicija"), "Liberalų koalicija")
+        self.assertEqual(display_name("lietuvos-centro-sajunga"), "Lietuvos centro sąjunga")
+        # Only coalitions are shortened to a brand: a party keeps its name.
+        self.assertEqual(display_name("laisve-ir-teisingumas"), "Partija „Laisvė ir teisingumas“")
+
+    def test_a_short_name_overrides_every_derivation(self):
+        registry = {
+            "entries": {
+                "a": {"name": "Alfa partija", "type": "partija", "shortName": "AP"},
+                "b": {"name": "Beta partija", "type": "partija", "aliases": ["Betos partija"]},
+                "ab": {"name": "Alfa partija ir Betos partija", "type": "koalicija", "nariai": ["a", "b"]},
+                "ab2": {"name": "Alfa partija; Beta partija", "type": "koalicija", "nariai": ["a", "b"],
+                        "shortName": "Alfa-Beta"},
+                "ab3": {"name": "Alfa partija, Beta partija ir kiti", "type": "koalicija", "nariai": ["a", "b"]},
+            }
+        }
+        with mock.patch.object(parties, "load_registry", return_value=registry):
+            # Aliases strip too (the genitive "Betos partija"), and "ir" is a separator.
+            self.assertEqual(display_name("ab"), "AP + Beta partija")
+            self.assertEqual(display_name("ab2"), "Alfa-Beta")
+            # Anything but separators left over ("kiti") is not a bare member list.
+            self.assertFalse(names_only_its_members("ab3"))
+            self.assertEqual(display_name("ab3"), "Alfa partija, Beta partija ir kiti")
 
 
 if __name__ == "__main__":

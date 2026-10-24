@@ -151,3 +151,63 @@ def partija(record: dict[str, Any], election_id: str | None = None) -> dict[str,
         "partija-vardas-raw": raw,
         "tipas": entry(party_id)["type"] if party_id else None,
     }
+
+
+#: A quoted brand inside a coalition's legal name: „…“, “…”, "…".
+_BRAND = re.compile(r"[„“\"]([^„“”\"]+)[“”\"]")
+#: What may remain of a coalition's name once its members' names are gone.
+_MEMBER_SEPARATORS = re.compile(r"[\s,;]+|\bir\b")
+
+
+def _member_label(party_id: str) -> str:
+    """A member's label inside a joint list's: its shortName, or a
+    committee's brand with its type word ("komitetas „Permainų laikas“"),
+    or its name."""
+    data = entry(party_id)
+    if data.get("shortName"):
+        return data["shortName"]
+    brand = _BRAND.search(data["name"]) if data["type"] == "komitetas" else None
+    return f"komitetas „{brand.group(1).strip()}“" if brand else data["name"]
+
+
+def names_only_its_members(party_id: str) -> bool:
+    """True when a coalition's name is nothing but its members' names: strip
+    every member's name, shortName and aliases (folded, longest first) and
+    only `,` `;` and `ir` remain -- "Darbo partija, Lietuvos žaliųjų partija".
+    Issue #189: such a name says nothing its members' short names do not."""
+    data = entry(party_id)
+    members = data.get("nariai")
+    if data["type"] != "koalicija" or not members:
+        return False
+    rest = fold(data["name"])
+    keys = []
+    for member in members:
+        m = entry(member)
+        keys += [m["name"], *m.get("aliases", []), *([m["shortName"]] if m.get("shortName") else [])]
+    for key in sorted({fold(k) for k in keys}, key=len, reverse=True):
+        rest = rest.replace(key, " ")
+    return not _MEMBER_SEPARATORS.sub("", rest)
+
+
+def display_name(party_id: str) -> str:
+    """The label the dashboard shows for a nominator (issue #189), the full
+    legal `name` staying the hover text and search key:
+
+    1. the registry's `shortName`, a manual override for any entry;
+    2. a coalition named only by its members: their labels joined with
+       " + " -- "LLRA-KŠS + Rusų aljansas", new joint lists included;
+    3. a coalition with a quoted brand: the first brand, in Lithuanian
+       quotes -- „Valdemaro Tomaševskio blokas“;
+    4. the name.
+
+    The type word ("koalicija") is the dashboard's to add, from `type`."""
+    data = entry(party_id)
+    if data.get("shortName"):
+        return data["shortName"]
+    if names_only_its_members(party_id):
+        return " + ".join(_member_label(m) for m in data["nariai"])
+    if data["type"] == "koalicija":
+        brand = _BRAND.search(data["name"])
+        if brand:
+            return f"„{brand.group(1).strip()}“"
+    return data["name"]

@@ -506,8 +506,8 @@ only when won, which made "lost" and "no results data" the same absence.
 **Party.** Each candidacy carries `"p"`, the canonical nominator id from
 `scraper/parties.json` (issue #82) — the join that holds one party together
 across its dash glyphs, genitives and renames — and `people.json`'s top-level
-`"parties"` table maps each used id to `{n: short or full name, t: kind, f:
-full name where n is short}` (`partija`/`koalicija`/`komitetas`/
+`"parties"` table maps each used id to `{n: display label, t: kind, f:
+full name where n is short, pr, nr}` (`partija`/`koalicija`/`komitetas`/
 `issikelimas`) so the page can label it without carrying the registry. The
 key is absent on the five presidential elections whose pages name no
 nominator. The raw string stays in the record file;
@@ -529,6 +529,26 @@ put it rather than where its 44 as a party would. An organisation inside a
 lineage is listed in its group only, never twice; a predecessor the index
 lacks (a subset build) is skipped. The stats view, the CSV and the person
 header keep the exact ids.
+
+**Nominator labels** (issue #189). `n` is the label the build derives in
+`scraper/shared/parties.py::display_name`: the registry's `shortName` where
+it has one (a manual override for any entry); for a coalition whose name is
+nothing but its members' names (strip each member's name, shortName and
+aliases and only `,` `;` `ir` remain), the members' labels joined with
+` + ` (`LLRA-KŠS + Rusų aljansas`); for any other coalition with a quoted
+brand, the first brand in Lithuanian quotes (`„Valdemaro Tomaševskio
+blokas“`); else the name. `f` is the full legal name whenever `n` differs,
+and every surface that shows `n` puts `f` in the hover title. A coalition's
+label gets a muted `koalicija` before it unless it already says so
+(`Liberalų koalicija`), in the person header, the list rows, the election
+cards, the stats table and the facet rows, so Tomaševski's header reads
+`LLRA-KŠS → koalicija „Kartu mes jėga!“ → koalicija „Valdemaro Tomaševskio
+blokas“ → koalicija LLRA-KŠS + Rusų aljansas`. The CSV keeps `n` without the
+word. The table also carries `nr`, a coalition's member ids (the registry's
+`nariai`, where recovered): a party that ran on joint lists gets a
+`<name> su koalicijomis` facet row after its own, matching its candidacies
+and those coalitions'. The coalitions stay their own nominators everywhere
+else.
 
 **The other per-candidacy fields** (issue #87): `"sv"` indexes the top-level
 `municipalities` list — the 62 official names of `scraper/municipalities.json`
