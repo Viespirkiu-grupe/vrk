@@ -160,6 +160,54 @@ test('the party dropdown counts people per party, lineage and coalition set', as
   }
 });
 
+test('the party dropdown opens with the most people elected, self-nomination last (#212)', async ({ page }) => {
+  const parties = {
+    ...index.parties,
+    'syn-small': { n: 'Mažoji partija', t: 'partija' },
+    'syn-big': { n: 'Didžioji partija', t: 'partija' },
+    'syn-old': { n: 'Senoji partija', t: 'partija' },
+    'syn-new': { n: 'Naujoji partija', t: 'partija', pr: ['syn-old'] },
+    'syn-coal': { n: 'Naujųjų koalicija', t: 'koalicija', nr: ['syn-new'] },
+    'syn-self': { n: 'Išsikėlė pats', t: 'issikelimas' },
+  };
+  let n = 0;
+  const run = (p, w) => ({ pid: `test-r${++n}`, n: `Asmuo NR${n}`, b: null, k: `ASMUO NR${n}|`,
+    e: [{ id: '2024-seimo', c: `test-r${n}`, p, w, m: [null, null, null, null] }] });
+  const served = {
+    ...index,
+    parties,
+    people: [
+      ...people,
+      // Elected: syn-big 3, the syn-new lineage 2 (one through its
+      // predecessor), test-party 1 (Ona, 2024), syn-self 4. syn-small fielded
+      // the most and elected nobody.
+      run('syn-big', true), run('syn-big', true), run('syn-big', true),
+      run('syn-new', true), run('syn-old', true),
+      ...Array.from({ length: 6 }, () => run('syn-small', false)),
+      run('syn-coal', false),
+      ...Array.from({ length: 4 }, () => run('syn-self', true)),
+    ],
+  };
+  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
+    status: 200, contentType: 'application/json', body: JSON.stringify(served),
+  }));
+  await page.goto('/');
+  await openFilters(page);
+  // The elected-nobody rows by name (Mažoji, Naujųjų, Pavyzdžių), then
+  // self-nomination, though it elected the most.
+  expect(await page.locator('#fParty option').evaluateAll(os => os.map(o => o.value))).toEqual([
+    '', 'syn-big', '+syn-new', 'syn-new', '&syn-new', 'syn-old', 'test-party',
+    'syn-small', 'syn-coal', 'other-party', 'syn-self',
+  ]);
+  // The brackets stay the people who ran (#176).
+  await expect(page.locator('#fParty option[value="syn-small"]')).toHaveText('Mažoji partija (6)');
+  await expect(page.locator('#fParty option[value="+syn-new"]')).toHaveText('Naujoji partija ir pirmtakai (2)');
+  for (const [value, count] of [['+syn-new', 2], ['&syn-new', 2], ['syn-big', 3]]) {
+    await page.locator('#fParty').selectOption(value);
+    await expect(page.locator('#results .row')).toHaveCount(count);
+  }
+});
+
 test('a nominator chain shows short labels, muted coalition words and full names on hover', async ({ page }) => {
   // Issue #189: synthetic nominators shaped like the registry's three kinds
   // of label -- a party shortName, a coalition's brand, a joint list.

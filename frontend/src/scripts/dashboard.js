@@ -2,7 +2,7 @@ import "./theme.js";
 import "./navigation.js";
 import { fold, PLURAL, plural, fmtInt, capitalize, deslug, csvField, csvMoney, median, pct, fmtEUR } from "../lib/format.js";
 import { recordFile, resolvePath, ROOT_SECTIONS, isFilledValue, walkValue } from "../lib/records.js";
-import { partyLineage, partyLineageRoots, partyTypeWord, partyText, partyTitle, partyCoalitions } from "../lib/parties.js";
+import { partyTypeWord, partyText, partyTitle, partyCoalitions, partyOrder } from "../lib/parties.js";
 import { MONEY_SERIES, parseMoney, LITAS_PER_EURO, declaredInLitas, INCOME_PATH, EMPLOYMENT_INCOME_PATH, declaredIncome, incomeIsEmploymentOnly, moneyEUR } from "../lib/finance.js";
 import { collapseRuns, electionKinds, nominatorRuns, runYears, organisationRoots, partySwitches } from "../lib/nominators.js";
 import { VIEW_PATHS, personPath, comparePath, parsePath, resolvePersonKey, isRoutableClick } from "../lib/routes.js";
@@ -896,13 +896,14 @@ function buildFilters() {
   const peopleIn = ids => ids.length === 1
     ? (partyPeople.get(ids[0]) || new Set()).size
     : new Set(ids.flatMap(id => [...(partyPeople.get(id) || [])])).size;
-  // One row per nominator, most people first -- except that a lineage
-  // root becomes a group: its "ir pirmtakai" row first, then itself and
-  // every organisation it continues, indented by depth, each with its own
-  // count. A group sorts by the lineage's total, so Vieningas Kaunas (44
-  // people as a party, 75 with its committee and coalition) sits where its
-  // history puts it. Nothing is listed twice: an organisation inside a lineage has
-  // its row in the group only.
+  // One row per nominator, most people elected first (issue #212;
+  // partyOrder in lib/parties.js), self-nomination last -- except that a
+  // lineage root becomes a group: its "ir pirmtakai" row first, then itself
+  // and every organisation it continues, indented by depth, each with its
+  // own count. A group sorts by everyone the lineage got elected, so
+  // Vieningas Kaunas sits where its history puts it. Nothing is listed twice: an
+  // organisation inside a lineage has its row in the group only. The
+  // brackets stay the people who ran (#176).
   const fParty = document.getElementById("fParty");
   addOption(fParty, "", "— visi iškėlėjai —");
   const partyLabel = (id) => partyText(INDEX.parties, id);
@@ -925,31 +926,20 @@ function buildFilters() {
       "Kartu su bendraisiais sąrašais, kuriuose ji dalyvavo: " + coalitions.map(c => partyText(INDEX.parties, c)).join("; ");
   };
   PARTY_SETS = new Map();
-  const grouped = new Set();
-  const rows = [];
-  for (const root of partyLineageRoots(INDEX.parties || {})) {
-    const lineage = partyLineage(INDEX.parties, root);
-    if (lineage.length < 2) continue;
-    const ids = lineage.map(l => l.id);
-    PARTY_SETS.set(PARTY_LINEAGE_PREFIX + root, new Set(ids));
-    for (const id of ids) grouped.add(id);
-    rows.push({ key: peopleIn(ids), root, lineage });
-  }
-  for (const [id, members] of partyPeople) if (!grouped.has(id)) rows.push({ key: members.size, id });
-  rows.sort((a, b) => b.key - a.key || (a.root || a.id).localeCompare(b.root || b.id));
-  for (const row of rows) {
-    if (!row.root) {
-      addPartyOption(fParty, row.id, `${partyLabel(row.id)} (${fmtInt(row.key)})`);
-      addCoalitionsOption(fParty, row.id, "");
+  for (const { root, lineage, ran } of partyOrder(INDEX.parties || {}, INDEX.people)) {
+    if (lineage.length < 2) {
+      addPartyOption(fParty, root, `${partyLabel(root)} (${fmtInt(ran)})`);
+      addCoalitionsOption(fParty, root, "");
       continue;
     }
+    PARTY_SETS.set(PARTY_LINEAGE_PREFIX + root, new Set(lineage.map(l => l.id)));
     const group = document.createElement("optgroup");
-    group.label = partyLabel(row.root);
-    group.title = partyTitle(INDEX.parties, row.root);
+    group.label = partyLabel(root);
+    group.title = partyTitle(INDEX.parties, root);
     fParty.appendChild(group);
-    addOption(group, PARTY_LINEAGE_PREFIX + row.root, `${partyLabel(row.root)} ir pirmtakai (${fmtInt(row.key)})`).title =
+    addOption(group, PARTY_LINEAGE_PREFIX + root, `${partyLabel(root)} ir pirmtakai (${fmtInt(ran)})`).title =
       "Kartu su organizacijomis, iš kurių ši išaugo: susijungimai, pakeista teisinė forma, perimta registracija";
-    for (const { id, depth } of row.lineage) {
+    for (const { id, depth } of lineage) {
       addPartyOption(group, id, `${"· ".repeat(depth)}${partyLabel(id)} (${fmtInt(peopleIn([id]))})`);
       addCoalitionsOption(group, id, "· ".repeat(depth));
     }
