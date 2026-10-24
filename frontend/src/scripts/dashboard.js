@@ -967,11 +967,15 @@ function buildFilters() {
     .forEach(([name, i]) => addOption(fConstituency, String(i), name));
 
   // Declared nationality by group (issue #162; scraper/shared/tautybe.py):
-  // the census's names, the largest first, each with its candidacy count.
+  // the census's names, the largest first, each with its count of people.
   const fNationality = document.getElementById("fNationality");
   addOption(fNationality, "", "— visos tautybės —");
+  // People, not candidacies (issue #176): the filter lists a person once when
+  // any candidacy declared the group, so the count is the rows it returns.
   const nationalityCounts = new Map();
-  for (const p of INDEX.people) for (const e of p.e) if (e.tb != null) nationalityCounts.set(e.tb, (nationalityCounts.get(e.tb) || 0) + 1);
+  for (const p of INDEX.people) {
+    for (const tb of new Set(p.e.map(e => e.tb))) if (tb != null) nationalityCounts.set(tb, (nationalityCounts.get(tb) || 0) + 1);
+  }
   (INDEX.nationalities || []).forEach((n, i) => {
     addOption(fNationality, String(i), `${capitalize(n.label)} (${fmtInt(nationalityCounts.get(i) || 0)})`);
   });

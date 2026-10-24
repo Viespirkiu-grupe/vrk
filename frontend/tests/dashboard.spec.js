@@ -80,6 +80,38 @@ test('search finds a former name and facets compose on the same candidacy', asyn
   await expect(page.locator('#results .row')).toHaveCount(1);
 });
 
+// Nationality is declared per candidacy, but the filter lists people (issue
+// #176): the dropdown counts each person once per group they ever declared,
+// so a count is the rows that group returns.
+test('the nationality dropdown counts people, the rows its filter returns (#176)', async ({ page }) => {
+  const candidacy = (id, c, tb) => ({ id, c, p: 'test-party', tb, m: [null, null, null, null] });
+  const served = {
+    ...index,
+    people: [
+      ...people,
+      { pid: 'test-ingus', n: 'Ingušas TRISKART', b: null, k: 'INGUŠAS TRISKART|',
+        e: [candidacy('2020-seimo', 'test-ingus', 2), candidacy('2024-seimo', 'test-ingus', 2), candidacy('2024-seimo', 'test-ingus-2', 2)] },
+      { pid: 'test-dvi', n: 'Sergejus DVIGUBAS', b: null, k: 'SERGEJUS DVIGUBAS|',
+        e: [candidacy('2020-seimo', 'test-dvi', 3), candidacy('2024-seimo', 'test-dvi', 4)] },
+    ],
+    nationalities: [...index.nationalities, { label: 'ingušai' }, { label: 'rusai' }, { label: 'mariai' }],
+  };
+  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
+    status: 200, contentType: 'application/json', body: JSON.stringify(served),
+  }));
+  await page.goto('/');
+  await expect(page.locator('#results .row')).toHaveCount(5);
+  await openFilters(page);
+  await expect(page.locator('#fNationality option')).toHaveText([
+    '— visos tautybės —', 'Lietuviai (1)', 'Lenkai (1)', 'Ingušai (1)', 'Rusai (1)', 'Mariai (1)',
+  ]);
+  for (const [value, names] of [['2', ['Ingušas TRISKART']], ['3', ['Sergejus DVIGUBAS']], ['4', ['Sergejus DVIGUBAS']]]) {
+    await page.locator('#fNationality').selectOption(value);
+    await expect(page.locator('#results .row')).toHaveCount(names.length);
+    for (const name of names) await expect(page.locator('#results')).toContainText(name);
+  }
+});
+
 test('a nominator chain shows short labels, muted coalition words and full names on hover', async ({ page }) => {
   // Issue #189: synthetic nominators shaped like the registry's three kinds
   // of label -- a party shortName, a coalition's brand, a joint list.
