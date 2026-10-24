@@ -83,6 +83,51 @@ class RegistryStructureTests(unittest.TestCase):
             self.assertIsNotNone(match(f"{stem} rajono"))
 
 
+class CountyTests(unittest.TestCase):
+    """Every body lies in one of the 10 counties (issue #213), and the order
+    the dashboard groups by is the fixed population order the registry's
+    `_comment` cites -- data, so a census shift is a reviewed edit."""
+
+    def test_the_county_order_lists_the_10_counties_once(self):
+        self.assertEqual(len(municipalities.counties()), 10)
+        self.assertEqual(len(set(municipalities.counties())), 10)
+        self.assertEqual(
+            municipalities.counties(),
+            ["Vilniaus", "Kauno", "Klaipėdos", "Šiaulių", "Panevėžio", "Marijampolės", "Alytaus", "Telšių", "Utenos", "Tauragės"],
+        )
+
+    def test_every_body_has_one_of_the_10_counties(self):
+        for municipality_id, entry in entries().items():
+            with self.subTest(municipality_id):
+                self.assertIn(entry.get("county"), municipalities.counties())
+
+    def test_every_county_holds_a_current_body(self):
+        used = {e["county"] for e in entries().values() if not e.get("until")}
+        self.assertEqual(used, set(municipalities.counties()))
+
+    def test_the_county_assignments_match_the_address_register(self):
+        # Spot checks of the Registrų centras division, including the bodies
+        # whose county is easiest to get wrong from the name alone.
+        for municipality_id, county in {
+            "vilniaus-miesto": "Vilniaus", "vilniaus-rajono": "Vilniaus", "elektrenu": "Vilniaus",
+            "ukmerges-rajono": "Vilniaus", "birstono": "Kauno", "neringos": "Klaipėdos",
+            "visagino": "Utenos", "pagegiu": "Tauragės", "rietavo": "Telšių", "akmenes-rajono": "Šiaulių",
+            "kazlu-rudos": "Marijampolės", "sakiu-rajono": "Marijampolės", "druskininku": "Alytaus",
+            "marijampoles-miesto": "Marijampolės", "marijampoles-rajono": "Marijampolės",
+        }.items():
+            self.assertEqual(entries()[municipality_id]["county"], county, municipality_id)
+        sizes = {county: sum(1 for e in entries().values() if e["county"] == county and not e.get("until")) for county in municipalities.counties()}
+        self.assertEqual(
+            sizes,
+            {"Vilniaus": 8, "Kauno": 8, "Klaipėdos": 7, "Šiaulių": 7, "Panevėžio": 6,
+             "Marijampolės": 5, "Alytaus": 5, "Telšių": 4, "Utenos": 6, "Tauragės": 4},
+        )
+
+    def test_county_by_name_covers_every_official_name(self):
+        self.assertEqual(municipalities.county_by_name()["Vilniaus miesto savivaldybė"], "Vilniaus")
+        self.assertEqual(len(municipalities.county_by_name()), BODIES_IN_THE_CORPUS)
+
+
 class MatchingTests(unittest.TestCase):
     def test_every_eras_wording_is_one_body(self):
         self.assertEqual(match("Vilniaus miesto"), match("Vilniaus miesto savivaldybė"))

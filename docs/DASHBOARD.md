@@ -635,7 +635,10 @@ else.
 `municipalities` list — the 62 official names of `scraper/municipalities.json`
 (issue #137; the eras' 127 wordings used to be 127 facet rows, every
 municipality twice, each row hiding half its history), interned rather than
-repeated 99,594 times — `"r"` names the offices of a council-and-mayor ballot
+repeated 99,594 times; `municipalityCounties` runs parallel to it with each
+body's county, and `counties` is the fixed population order the filter's
+optgroups follow (issue #213; the source is in the registry's `_comment`) —
+`"r"` names the offices of a council-and-mayor ballot
 (`"m"` a mayoral run alone, `"tm"` council and mayor on one ballot, absent a
 council run; the election's `kind` decides every other office), and a `"tm"`
 candidacy carries `"wt"` and `"wm"`, the council seat's and the mayoralty's

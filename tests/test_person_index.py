@@ -458,6 +458,11 @@ class GroupingTests(unittest.TestCase):
         # The facet lists the registry's official name, whatever the era's
         # card said (issue #137).
         self.assertEqual(index["municipalities"], ["Šiaulių rajono savivaldybė"])
+        # Its county rides parallel to the name (issue #213), with the fixed
+        # county order the filter groups by.
+        self.assertEqual(index["municipalityCounties"], ["Šiaulių"])
+        self.assertEqual(index["counties"][0], "Vilniaus")
+        self.assertEqual(len(index["counties"]), 10)
         self.assertEqual(index["unresolvedMunicipalities"], [])
         self.assertEqual(entry["sv"], 0)
         self.assertEqual(entry["r"], "tm")
@@ -558,6 +563,7 @@ class GroupingTests(unittest.TestCase):
         record["kandidatavimas"] = {"savivaldybe": "Naujoji savivaldybė", "roles": ["tarybos-narys"], "isrinktas": False}
         index = self._build([("2019-kovo-3-savivaldybiu-tarybu", "a-b", record)])
         self.assertEqual(index["municipalities"], ["Naujoji savivaldybė"])
+        self.assertEqual(index["municipalityCounties"], [None])
         self.assertEqual(index["unresolvedMunicipalities"], ["Naujoji savivaldybė"])
 
     def test_the_mayor_flag_is_only_carried_on_two_office_ballots(self):

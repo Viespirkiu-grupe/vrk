@@ -56,6 +56,19 @@ def entry(municipality_id: str) -> dict[str, Any]:
     return entries()[municipality_id]
 
 
+def counties() -> list[str]:
+    """The 10 counties (apskritys) in the registry's fixed order, the most
+    populous first (issue #213; the source is in the file's `_comment`)."""
+    return load_registry()["counties"]
+
+
+@lru_cache(maxsize=1)
+def county_by_name() -> dict[str, str]:
+    """Official body name -> its county, for consumers that hold the name
+    (the person index interns names, not ids)."""
+    return {data["name"]: data["county"] for data in entries().values()}
+
+
 def normalize_form(text: str) -> str:
     """The published string with nothing but presentation removed: NFC,
     whitespace collapsed, the mayoral cards' number suffix stripped. No case

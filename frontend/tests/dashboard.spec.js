@@ -208,6 +208,58 @@ test('the party dropdown opens with the most people elected, self-nomination las
   }
 });
 
+// The municipality filter groups by county (issue #213): one optgroup per
+// apskritis in the index's fixed population order, alphabetical inside, the
+// "all" option outside the groups, and the option values still the "sv"
+// indexes -- so filtering is what it was. sv 0 and 1 stay the base fixture's.
+test('the municipality filter groups by county, the most populous first (#213)', async ({ page }) => {
+  const extra = [
+    ['Vilniaus rajono savivaldybė', 'Vilniaus'], ['Elektrėnų savivaldybė', 'Vilniaus'],
+    ['Kauno miesto savivaldybė', 'Kauno'], ['Klaipėdos miesto savivaldybė', 'Klaipėdos'],
+    ['Panevėžio miesto savivaldybė', 'Panevėžio'], ['Marijampolės miesto savivaldybė (iki 2000 m.)', 'Marijampolės'],
+    ['Alytaus miesto savivaldybė', 'Alytaus'], ['Telšių rajono savivaldybė', 'Telšių'],
+    ['Utenos rajono savivaldybė', 'Utenos'], ['Tauragės rajono savivaldybė', 'Tauragės'],
+  ];
+  const served = {
+    ...index,
+    people: [
+      ...people,
+      { pid: 'test-vr', n: 'Vaida RAJONINĖ', b: null, k: 'VAIDA RAJONINĖ|',
+        e: [{ id: '2024-seimo', c: 'test-vr', p: 'test-party', sv: 2, m: [null, null, null, null] }] },
+    ],
+    municipalities: [...index.municipalities, ...extra.map(([name]) => name)],
+    municipalityCounties: [...index.municipalityCounties, ...extra.map(([, county]) => county)],
+  };
+  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
+    status: 200, contentType: 'application/json', body: JSON.stringify(served),
+  }));
+  await page.goto('/');
+  await expect(page.locator('#results .row')).toHaveCount(4);
+  await openFilters(page);
+  const select = page.locator('#fMunicipality');
+  await expect(select.locator('optgroup')).toHaveCount(10);
+  expect(await select.locator('optgroup').evaluateAll(groups => groups.map(g => g.label))).toEqual(
+    index.counties.map(county => `${county} apskritis`));
+  await expect(select.locator('option').first()).toHaveText('— visos savivaldybės —');
+  expect(await select.locator('option').first().evaluate(o => o.parentElement.tagName)).toBe('SELECT');
+  await expect(select.locator('optgroup[label="Vilniaus apskritis"] option')).toHaveText([
+    'Elektrėnų savivaldybė', 'Vilniaus miesto', 'Vilniaus rajono savivaldybė',
+  ]);
+  await expect(select.locator('optgroup[label="Marijampolės apskritis"] option')).toHaveText(['Marijampolės miesto savivaldybė (iki 2000 m.)']);
+  await expect(select.locator('optgroup[label="Šiaulių apskritis"] option')).toHaveText(['Akmenės rajono']);
+  await select.selectOption('1');
+  await expect(page.locator('#results .row')).toHaveCount(2);
+  for (const name of ['Jonas BANDOMASIS', 'Rūta PAVYZDINĖ']) await expect(page.locator('#results')).toContainText(name);
+  await select.selectOption('2');
+  await expect(page.locator('#results .row')).toHaveCount(1);
+  await expect(page.locator('#results')).toContainText('Vaida RAJONINĖ');
+  await select.selectOption('0');
+  await expect(page.locator('#results .row')).toHaveCount(1);
+  await expect(page.locator('#results')).toContainText('Ona NAUJOJI');
+  await select.selectOption('');
+  await expect(page.locator('#results .row')).toHaveCount(4);
+});
+
 test('a nominator chain shows short labels, muted coalition words and full names on hover', async ({ page }) => {
   // Issue #189: synthetic nominators shaped like the registry's three kinds
   // of label -- a party shortName, a coalition's brand, a joint list.
