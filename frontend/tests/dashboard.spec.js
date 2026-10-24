@@ -494,7 +494,8 @@ test('party switches rank the movers and the loyal, link each person and fit 320
   await expect(line.locator('.pfold-toggle').first()).toHaveText('…');
   await line.locator('.pfold-toggle').first().click();
   await expect(line).toContainText('Komitetas „Mūsų kraštas“ 2016');
-  await expect(page.locator('#person')).toContainText('Perėjimas tarp partijos ir rinkimų komiteto');
+  await expect(page.locator('#person')).toContainText('išsikėlimas pačiam');
+  await expect(page.locator('#person .aggnote').first()).toHaveText('Iš 6 kandidatų 2 bent kartą keitė partiją – iš viso 6 kartus.');
 
   // 320px: the tables scroll in their wrappers, the page never widens.
   await page.setViewportSize({ width: 320, height: 740 });
@@ -508,6 +509,25 @@ test('party switches rank the movers and the loyal, link each person and fit 320
   await expect(page).toHaveURL(/\/partiju-keitimai$/);
   await expect(page.locator('#person h2')).toHaveText('Partijų keitimai');
   expect(errors).toEqual([]);
+});
+
+test('a party-switch group under 0.1 % reads "<0,1 %", not "0,0 %" (#199)', async ({ page }) => {
+  // 1,500 one-time candidates and one mover: 1 of 1,504 is 0.07 %.
+  const parties = { ...index.parties, 'syn-a': { n: 'Partija A', t: 'partija' }, 'syn-b': { n: 'Partija B', t: 'partija' } };
+  const many = Array.from({ length: 1500 }, (_, i) => ({
+    pid: `test-many-${i}`, n: `Vardas PAVARDĖ${i}`, b: null, k: `VARDAS PAVARDĖ${i}|`,
+    e: [{ id: '2024-seimo', c: `test-many-${i}`, p: 'syn-a' }],
+  }));
+  const mover = {
+    pid: 'test-mover', n: 'Jurgis VIENAS', b: null, k: 'JURGIS VIENAS|',
+    e: [{ id: '2020-seimo', c: 'test-mover', p: 'syn-a' }, { id: '2024-seimo', c: 'test-mover', p: 'syn-b' }],
+  };
+  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
+    contentType: 'application/json',
+    body: JSON.stringify({ ...index, parties, people: [...index.people, ...many, mover] }),
+  }));
+  await page.goto('/partiju-keitimai');
+  await expect(page.locator('.switchbar-count')).toHaveText(['1 503 (99,9 %)', '1 (<0,1 %)', '0 (0,0 %)', '0 (0,0 %)', '0 (0,0 %)', '0 (0,0 %)', '0 (0,0 %)']);
 });
 
 test('legacy links canonicalize and Back/Forward restore the selected person', async ({ page }) => {

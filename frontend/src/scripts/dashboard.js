@@ -2525,8 +2525,7 @@ function showSwitches() {
   const total = switched.reduce((n, r) => n + r.switches, 0);
   const lead = document.createElement("div");
   lead.className = "aggnote";
-  lead.textContent = `Iš ${fmtInt(rows.length)} ${plural(rows.length, "asmens", "asmenų", "asmenų")}, kuriuos iškėlė partija, komitetas ar koalicija, ` +
-    `${fmtInt(switched.length)} bent kartą perėjo į kitą organizaciją; iš viso ${fmtInt(total)} ${plural(total, "keitimas", "keitimai", "keitimų")}.`;
+  lead.textContent = `Iš ${fmtInt(rows.length)} ${plural(rows.length, "kandidato", "kandidatų", "kandidatų")} ${fmtInt(switched.length)} bent kartą keitė partiją – iš viso ${fmtInt(total)} ${plural(total, "kartą", "kartus", "kartų")}.`;
   root.appendChild(lead);
 
   const wrap = document.createElement("div");
@@ -2569,7 +2568,9 @@ function showSwitches() {
     track.appendChild(fill);
     const count = document.createElement("span");
     count.className = "switchbar-count";
-    count.textContent = `${fmtInt(n)} (${pct(n, rows.length)})`;
+    // A group too small to show at one decimal is "<0,1 %", not "0,0 %".
+    const share = n && 1000 * n < rows.length ? "<0,1 %" : pct(n, rows.length);
+    count.textContent = `${fmtInt(n)} (${share})`;
     row.append(label, track, count);
     bars.appendChild(row);
   });
@@ -2601,36 +2602,37 @@ function showSwitches() {
     return makeScrollWrap(t);
   };
 
+  // Ties go to more distinct organisations, then to more elections.
   const movers = [...switched]
     .sort((a, b) => b.switches - a.switches || b.organisations - a.organisations || b.elections - a.elections)
     .slice(0, SWITCH_TOP);
-  section("Daugiausiai keitė", `${SWITCH_TOP} asmenų, daugiausiai kartų keitusių iškėlusią organizaciją; esant lygybei pirmesni tie, kurie perėjo per daugiau organizacijų, paskui – daugiau kartų kandidatavę.`)
-    .appendChild(table(["#", "Asmuo", "Keitimų", "Organizacijų", "Rinkimų"], movers, r => [r.switches, r.organisations, r.elections]));
+  section("Daugiausiai keitė", `${SWITCH_TOP} kandidatų, dažniausiai keitusių partiją.`)
+    .appendChild(table(["#", "Asmuo", "Keitė", "Partijų", "Rinkimų"], movers, r => [r.switches, r.organisations, r.elections]));
 
   // One candidacy without a switch says nothing about loyalty.
   const loyal = rows.filter(r => !r.switches && r.elections > 1)
     .sort((a, b) => b.elections - a.elections)
     .slice(0, SWITCH_TOP);
-  section("Ištikimiausi", `${SWITCH_TOP} asmenų, daugiausiai kartų kandidatavusių ir nė karto nekeitusių organizacijos.`)
+  section("Ištikimiausi", `${SWITCH_TOP} kandidatų, daugiausiai kartų kandidatavusių su ta pačia partija.`)
     .appendChild(table(["#", "Asmuo", "Rinkimų"], loyal, r => [r.elections]));
 
   const method = section("Kaip skaičiuojama", null);
   const intro = document.createElement("p");
   intro.className = "aggnote";
-  intro.textContent = "Asmens kandidatavimai rikiuojami pagal rinkimų datą. Keitimu laikomas kiekvienas perėjimas iš vienos organizacijos į kitą, taip pat ir grįžimas į ankstesnę. Keitimu nelaikoma:";
+  intro.textContent = "Keitimu laikomas perėjimas į kitą partiją, koaliciją ar rinkimų komitetą, išsikėlimas pačiam ir grįžimas į ankstesnę partiją. Neskaičiuojama:";
   const list = document.createElement("ul");
   list.className = "aggnote switch-method";
   for (const text of [
-    "pervadinimas ar susijungimas – registre pirmtakais susietos partijos laikomos viena organizacija (pvz., Tėvynės sąjunga ir TS-LKD);",
-    "perėjimas į koaliciją ar iš jos, jei jos narė yra partija, iš kurios ateinama ar į kurią einama (pvz., LSDP → A. Brazausko socialdemokratinė koalicija → LSDP);",
-    "kandidatavimas be iškėlėjo, pvz., prezidento rinkimuose, – jis praleidžiamas.",
+    "partijos pervadinimas ar susijungimas (pvz., Tėvynės sąjunga → TS-LKD);",
+    "kandidatavimas koalicijoje, kurioje yra ta pati partija (pvz., LSDP → A. Brazausko socialdemokratinė koalicija → LSDP);",
+    "rinkimai be iškėlėjo, pvz., prezidento.",
   ]) {
     const li = document.createElement("li"); li.textContent = text;
     list.appendChild(li);
   }
   const outro = document.createElement("p");
   outro.className = "aggnote";
-  outro.textContent = "Perėjimas tarp partijos ir rinkimų komiteto bei savęs išsikėlimas laikomi keitimu. Stulpelyje „Organizacijų“ savęs išsikėlimas neskaičiuojamas, o koalicija skaičiuojama kaip atskira organizacija. „Rinkimų“ – kandidatavimai su žinomu iškėlėju.";
+  outro.textContent = "„Partijų“ – kiek skirtingų partijų, koalicijų ar komitetų kandidatą kėlė (išsikėlimas pačiam neskaičiuojamas).";
   method.append(intro, list, outro);
 }
 
