@@ -627,6 +627,95 @@ class PartyLineageTests(unittest.TestCase):
         )
 
 
+@unittest.skipIf(NODE is None, "node not installed — behavioural checks skipped")
+class NominatorRunTests(unittest.TestCase):
+    """The header's nominator runs (issue #195), run under node."""
+
+    ELECTIONS = [
+        {"id": "1996-spalio-20-seimo", "date": "1996-10-20"},
+        {"id": "1997-kovo-23-savivaldybiu-tarybu", "date": "1997-03-23"},
+        {"id": "2000-spalio-08-seimo", "date": "2000-10-08"},
+        {"id": "2002-gruodzio-22-savivaldybiu", "date": "2002-12-22"},
+        {"id": "2004-birzelio-13-prezidento", "date": "2004-06-13"},
+        {"id": "2024-spalio-13-seimo", "date": "2024-10-13"},
+    ]
+
+    def _runs(self, candidacies, elections=None):
+        helpers = "\n".join(
+            re.search(pattern, SOURCE, re.S | re.M).group(0)
+            for pattern in (
+                r"^function electionYear\(.*?^}",
+                r"^function nominatorRuns\(.*?^}",
+                r"^function runYears\(.*?^}",
+            )
+        )
+        script = (
+            f"const ELECTIONS = {json.dumps(elections or self.ELECTIONS)};\n"
+            f"const CANDIDACIES = {json.dumps(candidacies)};\n"
+            f"{helpers}\nconsole.log(JSON.stringify("
+            "nominatorRuns(CANDIDACIES, ELECTIONS).map(r => [r.id, runYears(r)])));"
+        )
+        out = subprocess.run([NODE, "-"], input=script, capture_output=True, text=True, timeout=30)
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        return json.loads(out.stdout)
+
+    def test_consecutive_candidacies_merge_into_one_run_with_a_range(self):
+        self.assertEqual(
+            self._runs([
+                {"id": "1996-spalio-20-seimo", "p": "x"},
+                {"id": "1997-kovo-23-savivaldybiu-tarybu", "p": "x"},
+            ]),
+            [["x", "1996–1997"]],
+        )
+
+    def test_a_return_to_an_earlier_nominator_is_a_new_run(self):
+        # The Vėsaitė shape: a coalition list in 2000 between two LSDP runs.
+        self.assertEqual(
+            self._runs([
+                {"id": "1996-spalio-20-seimo", "p": "x"},
+                {"id": "1997-kovo-23-savivaldybiu-tarybu", "p": "x"},
+                {"id": "2000-spalio-08-seimo", "p": "y"},
+                {"id": "2002-gruodzio-22-savivaldybiu", "p": "x"},
+                {"id": "2024-spalio-13-seimo", "p": "x"},
+            ]),
+            [["x", "1996–1997"], ["y", "2000"], ["x", "2002–2024"]],
+        )
+
+    def test_candidacies_without_a_nominator_are_skipped_without_breaking_a_run(self):
+        self.assertEqual(
+            self._runs([
+                {"id": "2002-gruodzio-22-savivaldybiu", "p": "x"},
+                {"id": "2004-birzelio-13-prezidento"},
+                {"id": "2024-spalio-13-seimo", "p": "x"},
+            ]),
+            [["x", "2002–2024"]],
+        )
+        self.assertEqual(self._runs([{"id": "2004-birzelio-13-prezidento"}]), [])
+
+    def test_the_election_list_orders_the_runs_not_the_candidacies(self):
+        self.assertEqual(
+            self._runs([
+                {"id": "2024-spalio-13-seimo", "p": "x"},
+                {"id": "2000-spalio-08-seimo", "p": "y"},
+                {"id": "1996-spalio-20-seimo", "p": "x"},
+            ]),
+            [["x", "1996"], ["y", "2000"], ["x", "2024"]],
+        )
+
+    def test_a_single_year_run_shows_one_year_and_an_unlisted_election_its_id_year(self):
+        # Two 1997 elections are still one year; an id the list lacks sorts
+        # last and takes its YYYY prefix.
+        self.assertEqual(
+            self._runs([
+                {"id": "2031-seimo", "p": "z"},
+                {"id": "1997-kovo-23-savivaldybiu-tarybu", "p": "x"},
+                {"id": "1997-kovo-23-savivaldybiu-tarybu", "p": "x"},
+            ]),
+            [["x", "1997"], ["z", "2031"]],
+        )
+
+
 class KeyboardAccessTests(unittest.TestCase):
     """The people list used to be unreachable by keyboard: two focusable
     elements in the whole document, 300 rendered rows of tabIndex -1 divs.

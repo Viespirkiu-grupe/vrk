@@ -92,7 +92,7 @@ test('a nominator chain shows short labels, muted coalition words and full names
   }));
   await page.goto('/dashboard/#test-valdas');
   const chain = page.locator('#person .phead .parties');
-  await expect(chain).toHaveText('SP-B → koalicija „Kartu mes bandom!“ → koalicija SP-B + Kita partija → Bandymų koalicija');
+  await expect(chain).toHaveText('SP-B 2020 → koalicija „Kartu mes bandom!“ 2020 → koalicija SP-B + Kita partija 2024 → Bandymų koalicija 2024');
   const titles = await chain.locator('> span').evaluateAll(spans => spans.map(s => s.title));
   expect(titles).toEqual([
     'Sintetinė partija – Bandymų sąjunga',
@@ -115,6 +115,55 @@ test('a nominator chain shows short labels, muted coalition words and full names
   await expect(page.locator('#results .row')).toHaveCount(1);
   await page.locator('#fParty').selectOption('syn-party');
   await expect(page.locator('#results .row')).toHaveCount(0);
+});
+
+test('a nominator chain runs in time order, merging only consecutive repeats, with years', async ({ page }) => {
+  // Issue #195: a Vėsaitė-shaped person -- one party, a coalition list in
+  // 2000, the party again -- listed out of order and with a nominator-less
+  // presidential run, which must not split the second party run.
+  const elections = [
+    { id: '1996-seimo', kind: 'seimo', date: '1996-10-20', name: '1996 Seimas', shortName: '1996 Seimas' },
+    { id: '1997-savivaldybiu', kind: 'savivaldybiu', date: '1997-03-23', name: '1997 savivaldybės', shortName: '1997 savivaldybės' },
+    { id: '2000-seimo', kind: 'seimo', date: '2000-10-08', name: '2000 Seimas', shortName: '2000 Seimas' },
+    { id: '2002-savivaldybiu', kind: 'savivaldybiu', date: '2002-12-22', name: '2002 savivaldybės', shortName: '2002 savivaldybės' },
+    { id: '2004-prezidento', kind: 'prezidento', date: '2004-06-13', name: '2004 prezidentas', shortName: '2004 prezidentas' },
+    ...index.elections,
+  ];
+  const parties = {
+    ...index.parties,
+    'syn-party': { n: 'SP-B', t: 'partija', f: 'Sintetinė partija – Bandymų sąjunga' },
+    'syn-brand': { n: '„Kartu mes bandom!“', t: 'koalicija', f: 'Sintetinės partijos ir Kitos partijos koalicija „Kartu mes bandom!“', nr: ['syn-party'] },
+  };
+  const birute = {
+    pid: 'test-birute', n: 'Birutė SINTETINĖ', b: '1955-01-01', k: 'BIRUTĖ SINTETINĖ|1955-01-01',
+    e: [
+      { id: '2024-seimo', c: 'test-anna', p: 'syn-party', w: true },
+      { id: '2000-seimo', c: 'test-anna', p: 'syn-brand', w: true },
+      { id: '1996-seimo', c: 'test-anna', p: 'syn-party', w: false },
+      { id: '2004-prezidento', c: 'test-anna', w: false },
+      { id: '2002-savivaldybiu', c: 'test-anna', p: 'syn-party', w: true },
+      { id: '1997-savivaldybiu', c: 'test-anna', p: 'syn-party', w: true },
+      { id: '2020-seimo', c: 'test-anna', p: 'syn-party', w: true },
+    ],
+  };
+  await page.route('**/dashboard/people.json', route => route.fulfill({
+    contentType: 'application/json',
+    body: JSON.stringify({ ...index, elections, parties, people: [...index.people, birute] }),
+  }));
+  await page.goto('/dashboard/#test-birute');
+  const chain = page.locator('#person .phead .parties');
+  await expect(chain).toHaveText('SP-B 1996–1997 → koalicija „Kartu mes bandom!“ 2000 → SP-B 2002–2024');
+  const titles = await chain.locator('> span').evaluateAll(spans => spans.map(s => s.title));
+  expect(titles).toEqual([
+    'Sintetinė partija – Bandymų sąjunga',
+    'Sintetinės partijos ir Kitos partijos koalicija „Kartu mes bandom!“',
+    'Sintetinė partija – Bandymų sąjunga',
+  ]);
+  // The years are quieter than the name they follow.
+  const [years, name] = await chain.locator('> span').first().evaluate(span => [
+    getComputedStyle(span.querySelector('.pyears')).color, getComputedStyle(span).color,
+  ]);
+  expect(years).not.toBe(name);
 });
 
 test('legacy links canonicalize and Back/Forward restore the selected person', async ({ page }) => {
