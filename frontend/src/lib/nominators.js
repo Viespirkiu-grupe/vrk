@@ -8,11 +8,12 @@ function electionYear(election, id) {
   return m ? Number(m[1]) : null;
 }
 
-// [{id, from, to}] over `candidacies` ({id: election id, p: nominator id}),
+// [{id, from, to, elections}] over `candidacies` ({id: election id, p: nominator id}),
 // ordered by `elections` (the index's chronological list) rather than by the
 // candidacies' own order; the sort is stable, so same-election candidacies
 // keep theirs. An election the list lacks sorts last. Candidacies with no
-// nominator are skipped and do not break a run.
+// nominator are skipped and do not break a run. `elections` lists the run's
+// election ids once each, in order, for the item's tooltip (issue #200).
 function nominatorRuns(candidacies, elections) {
   const byId = new Map(elections.map((e, i) => [e.id, [i, e]]));
   const at = c => (byId.has(c.id) ? byId.get(c.id)[0] : elections.length);
@@ -22,12 +23,13 @@ function nominatorRuns(candidacies, elections) {
     const year = electionYear(byId.has(c.id) ? byId.get(c.id)[1] : null, c.id);
     const last = runs[runs.length - 1];
     if (last && last.id === c.p) {
+      if (!last.elections.includes(c.id)) last.elections.push(c.id);
       if (year !== null) {
         last.from = last.from === null ? year : Math.min(last.from, year);
         last.to = last.to === null ? year : Math.max(last.to, year);
       }
     } else {
-      runs.push({ id: c.p, from: year, to: year });
+      runs.push({ id: c.p, from: year, to: year, elections: [c.id] });
     }
   }
   return runs;
@@ -37,6 +39,24 @@ function nominatorRuns(candidacies, elections) {
 function runYears(run) {
   if (run.from === null) return "";
   return run.from === run.to ? String(run.from) : `${run.from}–${run.to}`;
+}
+
+// The elections a run covers, in a tooltip's one line (issue #200): grouped
+// by kind in first-seen order, each with its years once --
+// "Seimas 1996, 2000 · Savivaldybės 1997". `byId` maps an election id to its
+// index entry; an unknown kind is shown as it is.
+const ELECTION_KINDS = { seimo: "Seimas", savivaldybiu: "Savivaldybės", mero: "Merai", prezidento: "Prezidentas", ep: "EP" };
+
+function electionKinds(ids, byId) {
+  const groups = new Map();
+  for (const id of ids) {
+    const election = byId.get(id);
+    const kind = (election && (ELECTION_KINDS[election.kind] || election.kind)) || "";
+    const year = electionYear(election, id);
+    if (!groups.has(kind)) groups.set(kind, []);
+    if (year !== null && !groups.get(kind).includes(year)) groups.get(kind).push(year);
+  }
+  return [...groups].map(([kind, years]) => `${kind} ${years.join(", ")}`.trim()).filter(Boolean).join(" · ");
 }
 
 // A long line folds its middle (issue #198): more than COLLAPSE_OVER items
@@ -51,4 +71,4 @@ function collapseRuns(items, over = COLLAPSE_OVER, keep = COLLAPSE_KEEP) {
   return { head: items.slice(0, keep), hidden: items.slice(keep, -keep), tail: items.slice(-keep) };
 }
 
-export { COLLAPSE_OVER, COLLAPSE_KEEP, electionYear, nominatorRuns, runYears, collapseRuns };
+export { COLLAPSE_OVER, COLLAPSE_KEEP, electionYear, electionKinds, nominatorRuns, runYears, collapseRuns };

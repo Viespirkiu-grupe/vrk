@@ -4,8 +4,9 @@ import { fold, PLURAL, plural, fmtInt, capitalize, deslug, csvField, csvMoney, m
 import { recordFile, resolvePath, ROOT_SECTIONS, isFilledValue, walkValue } from "../lib/records.js";
 import { partyLineage, partyLineageRoots, partyTypeWord, partyText, partyTitle, partyCoalitions } from "../lib/parties.js";
 import { MONEY_SERIES, parseMoney, LITAS_PER_EURO, declaredInLitas, INCOME_PATH, EMPLOYMENT_INCOME_PATH, declaredIncome, incomeIsEmploymentOnly, moneyEUR } from "../lib/finance.js";
-import { collapseRuns, nominatorRuns, runYears } from "../lib/nominators.js";
+import { collapseRuns, electionKinds, nominatorRuns, runYears } from "../lib/nominators.js";
 import { VIEW_PATHS, personPath, comparePath, parsePath, resolvePersonKey, isRoutableClick } from "../lib/routes.js";
+import { attachTooltip, closeTooltip } from "../lib/tooltip.js";
 
 // Election names come from people.json, which copies them from the one
 // registry (scraper/elections.json). No election list lives in this file:
@@ -1421,30 +1422,62 @@ function partyNameOf(e) {
 }
 
 // A nominator's label as a node (issue #189): the short label, a muted type
-// word before a coalition's, and the full legal name on hover.
-function partyNode(id) {
+// word before a coalition's, and the full legal name on hover -- as a native
+// title unless the caller gives it a custom tooltip (issue #200).
+function partyNode(id, { title = true } = {}) {
   const party = INDEX.parties[id];
   const span = document.createElement("span");
-  span.title = partyTitle(INDEX.parties, id);
+  if (title) span.title = partyTitle(INDEX.parties, id);
   const word = partyTypeWord(party);
   if (word) {
     const type = document.createElement("span"); type.className = "ptype";
     type.textContent = word;
     span.append(type, " ");
   }
-  span.append(party ? party.n : id);
+  const name = document.createElement("span"); name.className = "pname";
+  name.textContent = party ? party.n : id;
+  span.append(name);
   return span;
 }
 
+// What a nominator tooltip says (issue #200), in at most three short lines:
+// the full legal name; a coalition's members by short name (`nr`, issue #189)
+// when its shown name is a brand that does not already list them; and the
+// elections the run covers, grouped by kind. The type word is already on the
+// line itself.
+
+function nominatorTip(run) {
+  const party = INDEX.parties[run.id];
+  const out = document.createDocumentFragment();
+  const name = document.createElement("strong");
+  name.textContent = partyTitle(INDEX.parties, run.id);
+  out.append(name);
+  const members = ((party && party.nr) || []).map(m => INDEX.parties[m]).filter(Boolean).map(m => m.n);
+  const shown = partyText(INDEX.parties, run.id);
+  if (members.length && !members.every(m => shown.includes(m))) {
+    const line = document.createElement("span"); line.className = "tip-muted";
+    line.textContent = members.join(" + ");
+    out.append(line);
+  }
+  const elections = electionKinds(run.elections || [], ELECTIONS);
+  if (elections) {
+    const line = document.createElement("span"); line.className = "tip-muted";
+    line.textContent = elections;
+    out.append(line);
+  }
+  return out;
+}
+
 // The header's nominator line: one item per run with its years, joined by
-// arrows. A long line folds its middle behind a bare "…" (issue #198), which
+// arrows, each item with its tooltip (issue #200). A long line folds its
+// middle behind a bare "…" (issue #198), which
 // expands in place; "Suskleisti" at the end folds it again. Focus follows,
 // so a keyboard user is never left on a control that just disappeared.
 function nominatorLine(runs) {
   const line = document.createElement("div");
   line.className = "meta parties";
   const item = run => {
-    const node = partyNode(run.id);
+    const node = partyNode(run.id, { title: false });
     node.classList.add("pitem");
     const years = runYears(run);
     if (years) {
@@ -1452,6 +1485,8 @@ function nominatorLine(runs) {
       span.textContent = years;
       node.append(" ", span);
     }
+    // Only the name opens the tooltip, not the type word or the years.
+    attachTooltip(node.querySelector(".pname"), nominatorTip(run));
     return node;
   };
   const { head, hidden, tail } = collapseRuns(runs);
@@ -1477,6 +1512,7 @@ function nominatorLine(runs) {
   close.setAttribute("aria-expanded", "true");
   close.setAttribute("aria-controls", fold.id);
   const toggle = expand => {
+    closeTooltip();
     fold.hidden = !expand; more.hidden = expand; close.hidden = !expand;
     (expand ? fold : open).focus();
   };
