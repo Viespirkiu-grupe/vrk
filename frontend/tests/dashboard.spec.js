@@ -160,7 +160,7 @@ test('the party dropdown counts people per party, lineage and coalition set', as
   }
 });
 
-test('the party dropdown groups by Seimas seats: in the Seimas now, other parties, the rest (#212)', async ({ page }) => {
+test('the party dropdown opens with the most people elected, self-nomination last (#212)', async ({ page }) => {
   const parties = {
     ...index.parties,
     'syn-small': { n: 'Mažoji partija', t: 'partija' },
@@ -168,26 +168,24 @@ test('the party dropdown groups by Seimas seats: in the Seimas now, other partie
     'syn-old': { n: 'Senoji partija', t: 'partija' },
     'syn-new': { n: 'Naujoji partija', t: 'partija', pr: ['syn-old'] },
     'syn-coal': { n: 'Naujųjų koalicija', t: 'koalicija', nr: ['syn-new'] },
-    'syn-past': { n: 'Buvusioji partija', t: 'partija' },
     'syn-self': { n: 'Išsikėlė pats', t: 'issikelimas' },
   };
   let n = 0;
-  const run = (id, p, w) => ({ pid: `test-r${++n}`, n: `Asmuo NR${n}`, b: null, k: `ASMUO NR${n}|`,
-    e: [{ id, c: `test-r${n}`, p, w, m: [null, null, null, null] }] });
+  const run = (p, w) => ({ pid: `test-r${++n}`, n: `Asmuo NR${n}`, b: null, k: `ASMUO NR${n}|`,
+    e: [{ id: '2024-seimo', c: `test-r${n}`, p, w, m: [null, null, null, null] }] });
   const served = {
     ...index,
     parties,
     people: [
       ...people,
-      // 2024: syn-big 3 seats, the syn-new lineage 2 (one through its
-      // predecessor), syn-small 1; the most people ran for syn-small.
-      run('2024-seimo', 'syn-big', true), run('2024-seimo', 'syn-big', true), run('2024-seimo', 'syn-big', true),
-      run('2024-seimo', 'syn-new', true), run('2024-seimo', 'syn-old', true),
-      run('2024-seimo', 'syn-small', true),
-      ...Array.from({ length: 6 }, () => run('2024-seimo', 'syn-small', false)),
-      run('2024-seimo', 'syn-coal', false),
-      run('2024-seimo', 'syn-self', true),
-      run('2020-seimo', 'syn-past', true),
+      // Elected: syn-big 3, the syn-new lineage 2 (one through its
+      // predecessor), test-party 1 (Ona, 2024), syn-self 4. syn-small fielded
+      // the most and elected nobody.
+      run('syn-big', true), run('syn-big', true), run('syn-big', true),
+      run('syn-new', true), run('syn-old', true),
+      ...Array.from({ length: 6 }, () => run('syn-small', false)),
+      run('syn-coal', false),
+      ...Array.from({ length: 4 }, () => run('syn-self', true)),
     ],
   };
   await page.route(url => url.pathname === '/people.json', route => route.fulfill({
@@ -195,19 +193,17 @@ test('the party dropdown groups by Seimas seats: in the Seimas now, other partie
   }));
   await page.goto('/');
   await openFilters(page);
-  const groups = page.locator('#fParty > optgroup');
-  await expect(groups).toHaveCount(3);
-  expect(await groups.evaluateAll(gs => gs.map(g => g.label))).toEqual(['Dabar Seime (2024)', 'Kitos partijos', 'Komitetai ir koalicijos']);
-  // test-party won Anna's 2024 seat; level with syn-small on every count,
-  // "Bandymų" sorts before "Mažoji".
-  expect(await groups.nth(0).locator('option').evaluateAll(os => os.map(o => o.value)))
-    .toEqual(['syn-big', '+syn-new', 'syn-new', '&syn-new', 'syn-old', 'test-party', 'syn-small']);
-  expect(await groups.nth(1).locator('option').evaluateAll(os => os.map(o => o.value))).toEqual(['syn-past']);
-  await expect(groups.nth(0).locator('option[value="+syn-new"]')).toHaveText('Naujoji partija ir pirmtakai (2)');
-  await expect(groups.nth(0).locator('option[value="syn-old"]')).toHaveText('· · Senoji partija (1)');
-  // Self-nomination opens the last group and is never ranked as a party.
-  expect(await groups.nth(2).locator('option').evaluateAll(os => os.map(o => o.value)))
-    .toEqual(['syn-self', 'syn-coal', 'other-party']);
+  await expect(page.locator('#fParty-hint')).toHaveText('Rikiuota pagal išrinktųjų skaičių');
+  await expect(page.locator('#fParty')).toHaveAttribute('aria-describedby', 'fParty-hint');
+  // The elected-nobody rows by name (Mažoji, Naujųjų, Pavyzdžių), then
+  // self-nomination, though it elected the most.
+  expect(await page.locator('#fParty option').evaluateAll(os => os.map(o => o.value))).toEqual([
+    '', 'syn-big', '+syn-new', 'syn-new', '&syn-new', 'syn-old', 'test-party',
+    'syn-small', 'syn-coal', 'other-party', 'syn-self',
+  ]);
+  // The brackets stay the people who ran (#176).
+  await expect(page.locator('#fParty option[value="syn-small"]')).toHaveText('Mažoji partija (6)');
+  await expect(page.locator('#fParty option[value="+syn-new"]')).toHaveText('Naujoji partija ir pirmtakai (2)');
   for (const [value, count] of [['+syn-new', 2], ['&syn-new', 2], ['syn-big', 3]]) {
     await page.locator('#fParty').selectOption(value);
     await expect(page.locator('#results .row')).toHaveCount(count);
