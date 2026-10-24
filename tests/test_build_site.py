@@ -191,6 +191,20 @@ class OptionTests(unittest.TestCase):
             build(self.repo, self.repo / "data")
 
 
+class StagingIgnoredTests(unittest.TestCase):
+    # The build stages beside --out, which by default is in the checkout; an
+    # untracked staging directory made the commit read as dirty, so every
+    # site/VERSION said dirty=true even when built from a clean main.
+    def test_the_staging_directory_is_gitignored(self):
+        for out in ("site", "build/site"):
+            staging = Path(out).parent / f".{Path(out).name}.staging-12345" / "index.html"
+            result = subprocess.run(
+                ["git", "check-ignore", "--quiet", "--no-index", str(staging)],
+                cwd=REPO_ROOT, capture_output=True,
+            )
+            self.assertEqual(result.returncode, 0, f"{staging} is not ignored by .gitignore")
+
+
 class TarballTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:

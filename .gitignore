@@ -46,3 +46,6 @@ dashboard/people.json
 dashboard/merge-review.csv
 # The built site (issue #188): scripts/build_site.py --out site/
 /site/
+# ...and the staging directory it builds into beside --out, then renames:
+# untracked, it made every build's VERSION say dirty=true.
+.*.staging-*/
