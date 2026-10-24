@@ -130,24 +130,12 @@ policy), and the page's router picks the view. Only these paths fall back.
 A mistyped asset or data URL must stay a 404, not turn into an HTML page,
 and no repository path may become reachable. `serve_dashboard.py` does this
 (`ROUTE_PATHS`, `ROUTE_PREFIXES`; `tests/test_dashboard_ui.py` holds them
-equal to the page's list), and whatever serves production after #188 must
-do the same. In nginx:
-
-```nginx
-location ~ ^/(suvestine|iskelejai|apreptis|pokyciai|partiju-keitimai)/?$ { try_files /index.html =404; add_header Cache-Control "no-cache"; }
-location ~ ^/(asmuo|palyginti)/[^/]*/?$                             { try_files /index.html =404; add_header Cache-Control "no-cache"; }
-```
-
-In Caddy:
-
-```caddy
-@route path_regexp ^/((suvestine|iskelejai|apreptis|pokyciai|partiju-keitimai)|(asmuo|palyginti)/[^/]*)/?$
-handle @route {
-	header Cache-Control "no-cache"
-	rewrite * /index.html
-	file_server
-}
-```
+equal to the page's list), and so do the production configs,
+[`deploy/Caddyfile`](../deploy/Caddyfile) and
+[`deploy/nginx/`](../deploy/nginx/) (issue #188;
+`tests/test_deploy_config.py` holds their route regexes to the page's list
+and to `serve_dashboard.py`'s behaviour). A new view is added in all three.
+[DEPLOY.md](DEPLOY.md) is how production is built and served.
 
 Cloudflare passes these paths to the origin like any other; it needs no
 rule for them as long as the origin answers them. If the site is ever served
@@ -160,9 +148,9 @@ If a cache rule was added for `/dashboard/_astro/` (below), change it to
 
 ### Caching
 
-Two classes of URL, two rules (issue #186). Whatever serves production, now
-`scripts/serve_dashboard.py` and later the static server of #188, must keep
-both:
+Two classes of URL, two rules (issue #186). Whatever serves production
+(the static server of [DEPLOY.md](DEPLOY.md), whose configs are in
+`deploy/`) must keep both, as `scripts/serve_dashboard.py` does locally:
 
 | URL | `Cache-Control` | Why |
 |---|---|---|

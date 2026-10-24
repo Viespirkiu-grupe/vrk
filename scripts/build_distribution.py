@@ -27,6 +27,12 @@ GitHub release ships:
                             WebP per person, `portraits/<pid>.webp`,
                             ~90 MB -- what a server deploys instead of the
                             5 GB of parts. Full builds only.
+    vrk-site-YYYY-MM-DD.tar.zst
+                            the built site (issue #188): what
+                            scripts/build_site.py wrote, packed for
+                            scripts/deploy.sh -- the page, the index, the
+                            redacted records and the web portraits, in the
+                            public URL layout. With `--site DIR` only.
     MANIFEST.json           per-election record counts, the build date,
                             the parser commit, and a sha256 + byte size
                             for each release artifact
@@ -89,6 +95,7 @@ Run from the repo root:
     python scripts/build_distribution.py                    # full corpus + gate, public profile
     python scripts/build_distribution.py 2019-prezidento    # subset, no gate
     python scripts/build_distribution.py --profile full     # the archive verbatim
+    python scripts/build_distribution.py --site site/       # + the site tarball (docs/DEPLOY.md)
 """
 
 from __future__ import annotations
@@ -114,6 +121,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import build_candidacy_table as table  # noqa: E402
 import build_person_index as identity  # noqa: E402
+import build_site  # noqa: E402
 import build_web_portraits as web_portraits  # noqa: E402
 from pii_inventory import PUBLIC_PROFILE_CONDITIONAL, PUBLIC_PROFILE_DROPS  # noqa: E402
 from scraper.shared import provenance  # noqa: E402
@@ -194,6 +202,14 @@ PHOTO_PART_BUDGET = 1_900_000_000
 #: Built from the repository's `portraits/`, which spans every person, so a
 #: subset build does not ship it.
 WEB_PORTRAITS_ASSET = "vrk-web-portraits.tar"
+
+#: The built site (issue #188), dated like the release: what production
+#: deploys. zstd, not gzip: the site's 2.2 GB of compact JSON pack to 148 MB
+#: at level 19 against gzip -9's 337 MB, and `zstd` is one package on any
+#: server. Packed from a directory scripts/build_site.py wrote, which must
+#: say it was built for this release, from this corpus and these portraits.
+SITE_ASSET = "vrk-site-{date}.tar.zst"
+SITE_ASSET_GLOB = "vrk-site-*.tar.*"
 
 RECORD_COLUMNS = (
     "election_id",
@@ -413,7 +429,32 @@ def release_assets(corpus_counts: dict[str, Any]) -> tuple[str, ...]:
     artifacts, the photo parts this build filled, and the web portraits when
     it built them."""
     web = (WEB_PORTRAITS_ASSET,) if corpus_counts.get("web_portraits") else ()
-    return RELEASE_ARTIFACTS + tuple(part["name"] for part in corpus_counts["photo_parts"]) + web
+    site = (corpus_counts["site"]["asset"],) if corpus_counts.get("site") else ()
+    return RELEASE_ARTIFACTS + tuple(part["name"] for part in corpus_counts["photo_parts"]) + web + site
+
+
+def check_site(site: Path, version: str, profile: str, records: int, portraits_version: str) -> dict[str, str]:
+    """The built site, checked against the release it is to ship in.
+
+    `scripts/build_site.py --corpus-tag <version>` writes the VERSION this
+    reads. A site from another day, another profile, a corpus with another
+    record count or another portrait set would deploy something the
+    manifest does not describe; each is refused with the command to run.
+    """
+    rebuild = f"\nRebuild: python scripts/build_site.py --out {site} --corpus-tag {version} --profile {profile}"
+    if not (site / build_site.VERSION_FILE).is_file():
+        raise SystemExit(f"{site} has no VERSION: not a built site.{rebuild}")
+    fields = build_site.read_version(site)
+    expected = {
+        "corpus": version,
+        "profile": profile,
+        "records": str(records),
+        "portraits_version": portraits_version,
+    }
+    wrong = [f"    {key}: the site says {fields.get(key)!r}, this release is {want!r}" for key, want in expected.items() if fields.get(key) != want]
+    if wrong:
+        raise SystemExit(f"{site}/VERSION does not match this release:\n" + "\n".join(wrong) + rebuild)
+    return fields
 
 
 def check_web_portraits(portraits_dir: Path) -> dict[str, Any]:
@@ -789,8 +830,9 @@ def write_manifest(
     subset: list[str] | None,
     profile: str = DEFAULT_PROFILE,
     registered: int = 0,
+    built: datetime | None = None,
 ) -> dict[str, Any]:
-    built = datetime.now(timezone.utc)
+    built = built or datetime.now(timezone.utc)
     manifest: dict[str, Any] = {
         "version": "corpus-" + built.strftime("%Y-%m-%d"),
         "builtAt": built.strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -852,6 +894,9 @@ def write_manifest(
             if corpus_counts.get("web_portraits")
             else {}
         ),
+        # The deployable site (issue #188): its asset and what its VERSION
+        # says, so a deploy can be traced to the commit that built the page.
+        **({"site": corpus_counts["site"]} if corpus_counts.get("site") else {}),
         "artifacts": {
             name: {"bytes": (dist / name).stat().st_size, "sha256": sha256_file(dist / name)}
             for name in release_assets(corpus_counts)
@@ -896,7 +941,12 @@ def promote(staging: Path, dist: Path) -> None:
     web = (WEB_PORTRAITS_ASSET,) if (staging / WEB_PORTRAITS_ASSET).is_file() else ()
     if not web:
         (dist / WEB_PORTRAITS_ASSET).unlink(missing_ok=True)
-    for name in BUILD_OUTPUTS + tuple(parts) + web:
+    # And a site tarball from another day or another build.
+    site = tuple(sorted(path.name for path in staging.glob(SITE_ASSET_GLOB)))
+    for stale in dist.glob(SITE_ASSET_GLOB):
+        if stale.name not in site:
+            stale.unlink()
+    for name in BUILD_OUTPUTS + tuple(parts) + web + site:
         os.replace(staging / name, dist / name)
     os.replace(staging / "MANIFEST.json", dist / "MANIFEST.json")
 
@@ -907,7 +957,12 @@ def build_distribution(
     subset: list[str] | None,
     max_drop: float = 5.0,
     profile: str = DEFAULT_PROFILE,
+    site: Path | None = None,
 ) -> int:
+    if site is not None and subset is not None:
+        raise SystemExit("--site ships the whole site, which a subset build does not describe; drop the election ids")
+    built = datetime.now(timezone.utc)
+    version = "corpus-" + built.strftime("%Y-%m-%d")
     registry = identity.load_registry(repo_root / "scraper" / "elections.json")
     registry_by_id = {entry["id"]: entry for entry in registry}
 
@@ -944,8 +999,11 @@ def build_distribution(
                 " `build_distribution.py <election-id> …` marks the manifest a subset."
             )
         # Checked before minutes of work, not after: the release production
-        # deploys from has to carry the web portraits (issue #187).
-        check_web_portraits(repo_root / web_portraits.PORTRAITS_DIR)
+        # deploys from has to carry the web portraits (issue #187), and the
+        # site it deploys has to be this corpus's (issue #188).
+        portraits = check_web_portraits(repo_root / web_portraits.PORTRAITS_DIR)
+        if site is not None:
+            check_site(site, version, profile, stats["records"], portraits["version"])
         cells = table.measure_cells(rows)
         gate = table.gate(cells, repo_root / table.BASELINE, registry_by_id, False, max_drop)
         if gate:
@@ -1019,11 +1077,21 @@ def build_distribution(
             if subset is None
             else None
         )
+        if site is not None:
+            asset = SITE_ASSET.format(date=version.removeprefix("corpus-"))
+            fields = check_site(site, version, profile, stats["records"], corpus_counts["web_portraits"]["version"])
+            packed = build_site.write_tarball(site, staging / asset)
+            corpus_counts["site"] = {
+                "asset": asset,
+                "files": packed["files"],
+                "unpackedBytes": int(fields["bytes"]) + (site / build_site.VERSION_FILE).stat().st_size,
+                **{key: fields[key] for key in ("commit", "dirty", "built", "people", "portraits")},
+            }
         gzip_file(staging / "vrk.sqlite", staging / "vrk.sqlite.gz", 9)
         gzip_file(staging / "vrk-corpus.sqlite", staging / "vrk-corpus.sqlite.gz", CORPUS_GZIP_LEVEL)
         check_asset_sizes(staging, release_assets(corpus_counts))
         manifest = write_manifest(
-            staging, stats, corpus_counts, subset, profile, registered=len(registry_by_id)
+            staging, stats, corpus_counts, subset, profile, registered=len(registry_by_id), built=built
         )
         promote(staging, dist)
     finally:
@@ -1047,6 +1115,9 @@ def build_distribution(
     if corpus_counts["web_portraits"]:
         web = corpus_counts["web_portraits"]
         print(f"web portraits: {web['count']} ({web['bytes'] / 1e6:.1f} MB WebP, version {web['version']})")
+    if corpus_counts.get("site"):
+        packed = corpus_counts["site"]
+        print(f"site:         {packed['asset']}: {packed['files']:,} files, {packed['unpackedBytes'] / 1e6:,.1f} MB unpacked (commit {packed['commit']})")
     print(f"anomalies:    {corpus_counts['anomalies']} event(s)")
     for part in corpus_counts["photo_parts"]:
         print(
@@ -1101,6 +1172,12 @@ def main() -> int:
         default=DEFAULT_PROFILE,
         help="public (default): drop third-party contacts, strip portrait metadata; full: the archive verbatim.",
     )
+    parser.add_argument(
+        "--site",
+        type=Path,
+        default=None,
+        help="also pack this built site (scripts/build_site.py --corpus-tag corpus-<today>) as vrk-site-<date>.tar.zst.",
+    )
     args = parser.parse_args()
     return build_distribution(
         args.repo_root,
@@ -1108,6 +1185,7 @@ def main() -> int:
         args.election_id or None,
         args.max_drop,
         args.profile,
+        args.site,
     )
 
 

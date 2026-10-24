@@ -1,0 +1,98 @@
+# vrk.viespirkiai.org: the static server for a built site (issue #188).
+#
+# Serves the directory scripts/build_site.py writes, as installed by
+# scripts/deploy.sh: /srv/vrk/current is the live release, /srv/vrk/next the
+# one being checked before the switch. docs/DEPLOY.md has the whole path;
+# scripts/serve_dashboard.py is the local preview this replaces, and the
+# headers here are its headers (tests/test_deploy_config.py holds the routes
+# equal to frontend/src/lib/routes.js and to that script).
+#
+# Plain HTTP on loopback: Cloudflare terminates TLS and reaches this through
+# its tunnel (cloudflared) or a reverse proxy on the same machine. To change
+# the paths or ports, set the environment variables named below in the
+# service's environment (systemctl edit caddy), not this file.
+#
+#   caddy validate --config /etc/caddy/Caddyfile
+#   systemctl reload caddy
+
+{
+	auto_https off
+	admin localhost:2019
+}
+
+(vrk_site) {
+	root * {args[0]}
+
+	# Every response, errors included, as serve_dashboard.py sends them.
+	header {
+		X-Content-Type-Options nosniff
+		Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'"
+		Referrer-Policy no-referrer
+		-Server
+	}
+
+	# Caching (issue #186): Astro's content-hashed bundles, and a portrait
+	# asked for with its set's version, never change under their URL; all
+	# else is rewritten in place and revalidated on every use. The two
+	# specific rules come first: `?Cache-Control` only sets what is unset.
+	@immutable_astro path /_astro/*
+	@immutable_portrait {
+		path /portraits/*
+		expression `{query.v} != ""`
+	}
+	header @immutable_astro Cache-Control "public, max-age=31536000, immutable"
+	header @immutable_portrait Cache-Control "public, max-age=31536000, immutable"
+	header ?Cache-Control no-cache
+
+	# The records are compressed here; the page, bundles and index have
+	# precompressed .br/.gz copies beside them (build_site.py), which
+	# file_server sends as they are and `encode` leaves alone.
+	encode zstd gzip
+
+	# The page's own routes (frontend/src/lib/routes.js, issue #184) answer
+	# with the page, whose router picks the view. Only these: a mistyped
+	# asset or data URL stays a 404.
+	@route path_regexp route ^/((suvestine|iskelejai|apreptis|pokyciai|partiju-keitimai)|(asmuo|palyginti)/[^/]*)/?$
+	handle @route {
+		rewrite * /index.html
+		file_server {
+			precompressed br gzip
+		}
+	}
+
+	# /VERSION has no extension to type it by.
+	handle /VERSION {
+		header Content-Type "text/plain; charset=utf-8"
+		file_server
+	}
+
+	# Everything else is a file of the site or a 404. The directory holds
+	# only what is public, so nothing of the repository is reachable; no
+	# directory is listed, and no dotfile is served.
+	handle {
+		file_server {
+			precompressed br gzip
+			hide .*
+		}
+	}
+
+	# A 404 must not carry the immutable rule, or the edge would keep a
+	# missing bundle for a year.
+	handle_errors {
+		header -Cache-Control
+		respond "{err.status_code} {err.status_text}"
+	}
+}
+
+# The live site.
+http://:{$VRK_PORT:8780} {
+	bind {$VRK_BIND:127.0.0.1}
+	import vrk_site {$VRK_ROOT:/srv/vrk}/current
+}
+
+# The release being deployed, checked by scripts/smoke_check.py before
+# `current` is switched to it. Loopback only.
+http://:{$VRK_PREVIEW_PORT:8781} {
+	bind 127.0.0.1
+	import vrk_site {$VRK_ROOT:/srv/vrk}/next
+}
