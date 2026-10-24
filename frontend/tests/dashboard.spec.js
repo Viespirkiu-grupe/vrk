@@ -645,10 +645,10 @@ test('party switches rank the movers and the loyal, link each person and fit 320
   expect(errors).toEqual([]);
 });
 
-test('a party-switch ranking shows its top 5 and a "Rodyti visus" button (#199)', async ({ page }) => {
-  // Seven movers, each from Partija A to Partija B.
+test('a party-switch ranking holds 55, shows 5 and a "Rodyti dar 50" button (#199)', async ({ page }) => {
+  // Sixty movers, each from Partija A to Partija B: the ranking keeps 55.
   const parties = { ...index.parties, 'syn-a': { n: 'Partija A', t: 'partija' }, 'syn-b': { n: 'Partija B', t: 'partija' } };
-  const movers = Array.from({ length: 7 }, (_, i) => ({
+  const movers = Array.from({ length: 60 }, (_, i) => ({
     pid: `test-mover-${i}`, n: `Keitėjas NR${i}`, b: null, k: `KEITĖJAS NR${i}|`,
     e: [{ id: '2020-seimo', c: `test-mover-${i}`, p: 'syn-a' }, { id: '2024-seimo', c: `test-mover-${i}`, p: 'syn-b' }],
   }));
@@ -658,26 +658,31 @@ test('a party-switch ranking shows its top 5 and a "Rodyti visus" button (#199)'
   }));
   await page.goto('/partiju-keitimai');
   await expect(page.locator('.switches h4')).toHaveText(['Kiek kartų keitė', 'Dažniausiai keitę partiją', 'Ištikimiausi savo partijai', 'Kaip skaičiuojama']);
+  // What counts, then what does not, each its own paragraph before the list.
+  const method = page.locator('.switches .sec').last();
+  await expect(method.locator('p.aggnote').nth(0)).toHaveText(/ankstesnę partiją\.$/);
+  await expect(method.locator('p.aggnote').nth(1)).toHaveText('Neskaičiuojama:');
+  await expect(method.locator('p.aggnote').nth(1).locator('xpath=following-sibling::*[1]')).toHaveJSProperty('tagName', 'UL');
   const ranking = page.locator('#person table.ranking').first();
-  await expect(ranking.locator('tbody tr')).toHaveCount(7);
+  await expect(ranking.locator('tbody tr')).toHaveCount(55);
   await expect(ranking.locator('tbody tr:visible')).toHaveCount(5);
   // The loyal list has one row, so it gets no button.
   await expect(page.locator('.switches .showall')).toHaveCount(1);
   const more = page.locator('.switches .showall');
-  await expect(more).toHaveText('Rodyti visus 7');
+  await expect(more).toHaveText('Rodyti dar 50');
   await expect(more).toHaveAttribute('aria-expanded', 'false');
   await more.click();
   await expect(more).toHaveAttribute('aria-expanded', 'true');
   await expect(more).toHaveText('Rodyti mažiau');
-  await expect(ranking.locator('tbody tr:visible')).toHaveCount(7);
+  await expect(ranking.locator('tbody tr:visible')).toHaveCount(55);
   await more.focus();
   await page.keyboard.press('Enter');
   await expect(more).toHaveAttribute('aria-expanded', 'false');
-  await expect(more).toHaveText('Rodyti visus 7');
+  await expect(more).toHaveText('Rodyti dar 50');
   await expect(ranking.locator('tbody tr:visible')).toHaveCount(5);
   await page.keyboard.press('Enter');
   await expect(more).toHaveAttribute('aria-expanded', 'true');
-  await expect(ranking.locator('tbody tr:visible')).toHaveCount(7);
+  await expect(ranking.locator('tbody tr:visible')).toHaveCount(55);
   await noPageOverflow(page);
 });
 
@@ -784,35 +789,97 @@ test('vote counts leave the card header but stay, formatted, in the card and the
   await expect(rows.filter({ hasText: /^Balsai apygardoje/ })).toHaveCount(1);
 });
 
-test('wide record tables keep nested labels and values readable', async ({ page }) => {
+function campaignSection(page, card) {
+  return page.locator('#person details.ecard').filter({ hasText: card })
+    .locator('.sec').filter({ has: page.getByRole('heading', { name: 'Politinės kampanijos dalyvio duomenys', exact: true }) });
+}
+
+test('a shared campaign says whose it is, sums up, and keeps its lists closed (#210)', async ({ page }) => {
   await ready(page, ANNA);
-  const section = page.locator('.ecard .sec').filter({ has: page.getByRole('heading', { name: 'Politinės kampanijos dalyvio duomenys', exact: true }) });
-  const table = section.locator('table.rec');
-  await expect(table).toBeVisible();
-  const layout = await table.evaluate(table => {
-    const status = table.tBodies[0].rows[0].cells[0].firstElementChild;
-    const pairs = [...table.querySelectorAll('dl > dd')].map(dd => ({
-      width: dd.getBoundingClientRect().width,
-      top: dd.getBoundingClientRect().top,
-      labelBottom: dd.previousElementSibling.getBoundingClientRect().bottom,
-    }));
-    return {
-      statusHeight: status.getBoundingClientRect().height,
-      lineHeight: parseFloat(getComputedStyle(status).lineHeight),
-      height: table.getBoundingClientRect().height,
-      scrolls: table.parentElement.scrollWidth > table.parentElement.clientWidth,
-      pairs,
-    };
-  });
-  expect(layout.statusHeight, 'a single word must not split across lines').toBeLessThanOrEqual(layout.lineHeight + 1);
-  expect(layout.height, 'nested data should not create a page of single letters').toBeLessThan(600);
-  expect(layout.scrolls, 'wide records scroll inside their wrapper').toBe(true);
-  for (const pair of layout.pairs) {
-    expect(pair.width).toBeGreaterThanOrEqual(200);
-    expect(pair.top).toBeGreaterThanOrEqual(pair.labelBottom);
-  }
-  await expect(table.getByRole('link')).toHaveAttribute('href', /example\.org\/ataskaitos/);
+  const section = campaignSection(page, '2024 m.');
+  await expect(section.locator('.campaign-owner')).toHaveText(/^Iškėlėjo kampanija: Bandymų partija, 2024 – bendra 120 kandidatų$/);
+  const summary = section.locator('dl.campaign-summary');
+  const valueOf = label => summary.locator('dt', { hasText: new RegExp(`^(?:${label})$`) }).locator('xpath=following-sibling::dd[1]');
+  await expect(valueOf('Statusas')).toHaveText('Savarankiškas');
+  await expect(valueOf('Sprendimo numeris')).toHaveText('PK1-TEST-1');
+  await expect(valueOf('Iždininkas')).toHaveText(/Pavyzdinis Iždininkas\s+8 600 00000\s+izdas@example\.org/);
+  await expect(valueOf('Auditorius')).toHaveText(/UAB Bandymų auditas\s+Įmonės kodas 123456789/);
+  // The sum is the index's campaigns[].d, so the page agrees with the statistics.
+  await expect(valueOf('Iš viso')).toHaveText(/^45 gautos aukos, 54[\s  ]322 € · 1 finansavimo ataskaita · 30 sutarčių$/);
+  // The record's section is one participant: no one-row wide table.
+  await expect(section.locator(':scope > .campaign > .tablewrap')).toHaveCount(0);
+  const lists = section.locator('details.campaign-list');
+  await expect(lists.locator('summary')).toHaveText(['Aukos (46)', 'Finansavimo ataskaitos (1)', 'Sutartys (30)']);
+  for (const list of await lists.all()) await expect(list).not.toHaveAttribute('open', '');
+  // Below the tablet breakpoint the summary's labels stack over their values.
+  const { height, stacked } = await section.evaluate(el => ({
+    height: el.getBoundingClientRect().height,
+    stacked: getComputedStyle(el.querySelector('dl')).gridTemplateColumns.split(' ').length === 1,
+  }));
+  expect(height, 'the collapsed section is a summary, not a donor list').toBeLessThan(stacked ? 800 : 600);
   await noPageOverflow(page);
+});
+
+test('opening a campaign list shows its table, and "Rodyti dar N" the rest (#210)', async ({ page }) => {
+  await ready(page, ANNA);
+  const section = campaignSection(page, '2024 m.');
+  const lists = section.locator('details.campaign-list');
+
+  await lists.nth(0).locator('summary').click();
+  const donations = lists.nth(0);
+  await expect(donations.locator('h5')).toHaveText(['Gautos ir priimtos aukos (45)', 'Nepriimtos aukos (1)']);
+  const accepted = donations.locator('.campaign-subsection').first();
+  const rows = accepted.locator('table.rec > tbody > tr');
+  await expect(rows).toHaveCount(45);
+  await expect(rows.filter({ visible: true })).toHaveCount(10);
+  const more = accepted.getByRole('button', { name: 'Rodyti dar 35', exact: true });
+  await more.click();
+  await expect(rows.filter({ visible: true })).toHaveCount(45);
+  await expect(accepted.getByRole('button', { name: 'Rodyti mažiau', exact: true })).toHaveAttribute('aria-expanded', 'true');
+  await expect(accepted.locator('dl.campaign-totals dd').first()).toHaveText(/^54[\s  ]322 €$/);
+
+  await lists.nth(1).locator('summary').click();
+  const report = lists.nth(1).locator('table.rec');
+  await expect(report).toBeVisible();
+  // A list of document links prints as anchors named by their file.
+  await expect(report.getByRole('link', { name: 'ataskaita.pdf', exact: true })).toHaveAttribute('href', 'https://example.org/ataskaitos/ataskaita.pdf');
+
+  await lists.nth(2).locator('summary').click();
+  const contracts = lists.nth(2).locator('table.rec > tbody > tr');
+  await expect(contracts).toHaveCount(30);
+  await expect(contracts.filter({ visible: true })).toHaveCount(10);
+  await lists.nth(2).getByRole('button', { name: 'Rodyti dar 20', exact: true }).click();
+  await expect(contracts.filter({ visible: true })).toHaveCount(30);
+  await noPageOverflow(page);
+});
+
+test('an own campaign without contacts prints no empty rows (#210)', async ({ page }) => {
+  await ready(page, ANNA);
+  const section = campaignSection(page, '2020 m.');
+  await expect(section.locator('.campaign-owner')).toHaveText('Kandidato kampanija');
+  const summary = section.locator('dl.campaign-summary');
+  // The public build drops the phones and e-mails (#142): their blocks go,
+  // and so do the empty registration fields and lists.
+  await expect(summary.locator('dt')).toHaveText(['Statusas', 'Atstovauja', 'Iš viso']);
+  await expect(summary).not.toContainText('—');
+  await expect(summary.getByRole('link', { name: 'PAVYZDINĖ ILGO PAVADINIMO POLITINĖ ORGANIZACIJA' })).toHaveAttribute('href', /example\.org\/ataskaitos/);
+  await expect(section.locator('details.campaign-list')).toHaveCount(0);
+});
+
+test('a one-row record nests as a list, a multi-row section stays a table (#210)', async ({ page }) => {
+  await ready(page, JONAS);
+  const card = page.locator('#person details.ecard').first();
+  await card.evaluate(el => { el.open = true; });
+  const anketa = card.locator('.sec').filter({ has: page.getByRole('heading', { name: 'Anketa', exact: true }) });
+  const pairOf = label => anketa.locator('dt', { hasText: new RegExp(`^(?:${label})$`) }).locator('xpath=following-sibling::dd[1]');
+  // teistumo-detales.irasai is one row holding a list: its fields print as
+  // a key-value list, and the plain one-row list inside stays a table.
+  await expect(anketa.locator('th', { hasText: 'Nuosprendžio data' })).toHaveCount(0);
+  await expect(pairOf('Nuosprendžio data')).toHaveText('2013-03-06');
+  await expect(pairOf('Nusikalstamos veikos').locator('table.rec th')).toHaveText(['Sunkumas', /^Kalt/]);
+  // Two rows stay a table, nested cells and all.
+  const earlier = pairOf('Ankstesnės pareigos|Ankstesnes pareigos');
+  await expect(earlier.locator(':scope > .tablewrap > table.rec > tbody > tr')).toHaveCount(2);
 });
 
 test('every summary view remains usable', async ({ page }) => {
