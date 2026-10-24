@@ -28,6 +28,11 @@ for reading and for the dashboard's facet, where 315 raw forms become 136
 districts by name. `docs/constituency-forms.tsv` is the measured table of
 every published form and what it resolves to.
 
+`counties_of(name)` is the one place a name gets a county (issue #217):
+scraper/constituency_counties.json, derived from VRK's per-election precinct
+lists by scripts/build_constituency_counties.py -- every county any map of
+that name reached, since the facet is a name across maps.
+
 "Daugiamandatė" -- the 2000-2012 cards' "Apygarda" row for a candidate who
 stood on the list alone -- is not a constituency, and reads as None here;
 until this module 2,980 rows of the candidacy table shipped it as one.
@@ -35,9 +40,14 @@ until this module 2,980 rows of the candidacy table shipped it as one.
 
 from __future__ import annotations
 
+import json
 import re
 import unicodedata
+from functools import lru_cache
+from pathlib import Path
 from typing import Any
+
+COUNTIES_PATH = Path(__file__).resolve().parents[2] / "scraper" / "constituency_counties.json"
 
 #: A number in any of the label positions: "4. Žirmūnų", "Žirmūnų (Nr. 4)",
 #: "Žirmūnų (Nr.4)", "Žirmūnų Nr. 4", "Raseinių–Kėdainių( 42)".
@@ -137,3 +147,17 @@ def apygarda(raw: Any, numeris: Any = None) -> dict[str, Any]:
         "apygardos-numeris": number if name is not None else None,
         "apygarda-raw": cleaned,
     }
+
+
+@lru_cache(maxsize=1)
+def load_counties() -> dict[str, Any]:
+    return json.loads(COUNTIES_PATH.read_text(encoding="utf-8"))
+
+
+def counties_of(name: str | None) -> list[str]:
+    """The counties (apskritys) the named district lies in, in the municipality
+    registry's population order; more than one for a district that crossed a
+    county line on any map, and empty for a name the file gives no county
+    (Pasaulio lietuvių, the district abroad) or does not know."""
+    entry = load_counties()["entries"].get(name) if name else None
+    return list(entry["counties"]) if entry else []

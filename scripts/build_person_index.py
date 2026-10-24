@@ -107,6 +107,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from scraper.shared.apygardos import counties_of as constituency_counties  # noqa: E402
 from scraper.shared.deklaracijos import (  # noqa: E402
     INCOME_EMPLOYMENT,
     LITAS_PER_EURO,
@@ -738,6 +739,11 @@ def build_index(
         # The single-mandate constituencies by name -- one name per district
         # across the four label eras, not one boundary: "ap" indexes here.
         "constituencies": constituency_list,
+        # Each constituency's counties, parallel to "constituencies" so "ap"
+        # still indexes the names (issue #217): a list, because a district
+        # that crossed a county line is filed under each; empty for the
+        # district abroad, which the filter groups apart.
+        "constituencyCounties": [constituency_counties(name) for name in constituency_list],
         # One row per campaign-finance participant (issue #162): "k" the
         # campaignKey, "d" the declared donations in euro (absent where the
         # campaign publishes none), "n" the candidacies sharing it -- a

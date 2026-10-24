@@ -164,6 +164,64 @@ test('the municipality filter groups by county, the most populous first (#213)',
   await expect(page.locator('#results .row')).toHaveCount(4);
 });
 
+// The constituency filter groups by county too (issue #217), in the same
+// order, with each name's counties read from VRK's precinct lists. A
+// district across a county line is an option under each county, every copy
+// the same "ap" value; a name with no county (the district abroad) gets a
+// labelled group last. ap 0 and 1 stay the base fixture's.
+test('the constituency filter groups by county, a cross-county district under each (#217)', async ({ page }) => {
+  const extra = [
+    ['Antakalnio', ['Vilniaus']], ['Fabijoniškių', ['Vilniaus']], ['Bandomoji pasienio', ['Panevėžio', 'Utenos']],
+    ['Centro', ['Kauno']], ['Baltijos', ['Klaipėdos']], ['Aušros', ['Šiaulių']], ['Sūduvos', ['Marijampolės']],
+    ['Dzūkijos', ['Alytaus']], ['Telšių', ['Telšių']], ['Karšuvos', ['Tauragės']], ['Pasaulio lietuvių', []],
+  ];
+  const served = {
+    ...index,
+    people: [
+      ...people,
+      { pid: 'test-vp', n: 'Vaida PASIENIO', b: null, k: 'VAIDA PASIENIO|',
+        e: [{ id: '2024-seimo', c: 'test-vp', p: 'test-party', ap: 4, m: [null, null, null, null] }] },
+    ],
+    constituencies: [...index.constituencies, ...extra.map(([name]) => name)],
+    constituencyCounties: [...index.constituencyCounties, ...extra.map(([, counties]) => counties)],
+  };
+  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
+    status: 200, contentType: 'application/json', body: JSON.stringify(served),
+  }));
+  await page.goto('/');
+  await expect(page.locator('#results .row')).toHaveCount(4);
+  await openFilters(page);
+  const select = page.locator('#fConstituency');
+  expect(await select.locator('optgroup').evaluateAll(groups => groups.map(g => g.label))).toEqual(
+    [...index.counties.map(county => `${county} apskritis`), 'Be apskrities']);
+  await expect(select.locator('option').first()).toHaveText('— visos apygardos —');
+  expect(await select.locator('option').first().evaluate(o => o.parentElement.tagName)).toBe('SELECT');
+  await expect(select.locator('optgroup[label="Vilniaus apskritis"] option')).toHaveText(['Antakalnio', 'Fabijoniškių', 'Žirmūnų']);
+  await expect(select.locator('optgroup[label="Panevėžio apskritis"] option')).toHaveText(['Aukštaitijos', 'Bandomoji pasienio']);
+  await expect(select.locator('optgroup[label="Utenos apskritis"] option')).toHaveText(['Bandomoji pasienio']);
+  await expect(select.locator('optgroup[label="Be apskrities"] option')).toHaveText(['Pasaulio lietuvių']);
+  // Either copy of the cross-county district filters the same row.
+  for (const county of ['Panevėžio', 'Utenos']) {
+    const option = select.locator(`optgroup[label="${county} apskritis"] option`, { hasText: 'Bandomoji pasienio' });
+    await expect(option).toHaveAttribute('value', '4');
+    await option.evaluate(o => { o.selected = true; o.parentElement.closest('select').dispatchEvent(new Event('change', { bubbles: true })); });
+    expect(await select.evaluate(s => s.selectedOptions[0].parentElement.label)).toBe(`${county} apskritis`);
+    await expect(page.locator('#results .row')).toHaveCount(1);
+    await expect(page.locator('#results')).toContainText('Vaida PASIENIO');
+    await select.selectOption('');
+    await expect(page.locator('#results .row')).toHaveCount(4);
+  }
+  // Filtering is otherwise what it was.
+  await select.selectOption('1');
+  await expect(page.locator('#results .row')).toHaveCount(2);
+  for (const name of ['Jonas BANDOMASIS', 'Rūta PAVYZDINĖ']) await expect(page.locator('#results')).toContainText(name);
+  await select.selectOption('0');
+  await expect(page.locator('#results .row')).toHaveCount(1);
+  await expect(page.locator('#results')).toContainText('Ona NAUJOJI');
+  await select.selectOption('');
+  await expect(page.locator('#results .row')).toHaveCount(4);
+});
+
 test('a nominator chain shows short labels, muted coalition words and full names on hover', async ({ page }) => {
   // Issue #189: synthetic nominators shaped like the registry's three kinds
   // of label -- a party shortName, a coalition's brand, a joint list.

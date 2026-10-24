@@ -1,0 +1,3021 @@
+{
+  "_comment": "The county (apskritis) of every single-mandate constituency name (issue #217), for the dashboard's grouped filter. Derived by scripts/build_constituency_counties.py, not by reading the names: VRK's own precinct list for each Seimas election, 1996-2024 (`sources`; published at https://www.vrk.lt/lt/rinkimu-apygardu-ir-apylinkiu-sarasas-ankstesniuose-rinkimuose), gives every precinct's district and municipality, and scraper/municipalities.json (#213) gives each municipality's county. `counties` is the union over every map the name was used in, in the registry's population order -- a name is not a boundary, and a district that touched two counties is listed under both; `maps` is the evidence, the municipalities and their precinct counts per general election (by-elections ran on their term's map). Names whose counties differ between maps are listed in `changedBetweenMaps`; the sharpest is Dainavos, a Kaunas city district through 2016 and the Prienai-Birštonas-Alytus district from 2020. Two precinct-list entries are read explicitly (the script's DISTRICT_NAMES and MUNICIPALITY_FORMS): 1996's Nr. 67 is 'Prienų' on the cards and 'Prienų–Birštono' in the list, and the 1996/2000 'Kupiškio rajonas' and 2004 bare 'Širvintų' are Kupiškis and Širvintai district. A name with an empty `counties` list has a `note` saying why; the filter groups it apart.",
+  "sources": {
+    "1996": {
+      "election": "1996-spalio-20-seimo",
+      "sha256": "6361458c15c3572a648382ffc94b15096ff62e7d48820fad46573a3eea013927",
+      "url": "https://vrk.lt/fs/prd/p/2026-03/1996m.%20LR%20Seimo%20rinkim%C5%B3%20apylinki%C5%B3%20s%C4%85ra%C5%A1as.xlsx"
+    },
+    "2000": {
+      "election": "2000-seimo",
+      "sha256": "5096c27cd097023fdf6264428bdc36d3e7b1bbf440c8011356a9ef660a116a3a",
+      "url": "https://vrk.lt/fs/prd/p/2026-03/2000m.%20LR%20Seimo%20rinkim%C5%B3%20apylinki%C5%B3%20s%C4%85ra%C5%A1as.xlsx"
+    },
+    "2004": {
+      "election": "2004-seimo",
+      "sha256": "aa227fae22b59ad4fd0112110bafea69c2522d8d58d841bb22845f83c919959c",
+      "url": "https://vrk.lt/fs/prd/p/2026-03/2004m.%20LR%20Seimo%20rinkim%C5%B3%20apylinki%C5%B3%20s%C4%85ra%C5%A1as.xlsx"
+    },
+    "2008": {
+      "election": "2008-seimo",
+      "sha256": "e7cc8b72218cf09942fcc4e7946abb757a87356f217b459b5b5a16ac3d9cfb28",
+      "url": "https://vrk.lt/fs/prd/p/2026-03/2008m.%20LR%20Seimo%20rinkim%C5%B3%20apylinki%C5%B3%20s%C4%85ra%C5%A1as.xlsx"
+    },
+    "2012": {
+      "election": "2012-seimo",
+      "sha256": "f8b7649e766b0d925d3a719f64517f0e017c4905af88144f88108d7c402b5524",
+      "url": "https://vrk.lt/fs/prd/p/2026-03/2012m.%20LR%20Seimo%20rinkim%C5%B3%20apylinki%C5%B3%20s%C4%85ra%C5%A1as.xlsx"
+    },
+    "2016": {
+      "election": "2016-seimo",
+      "sha256": "0103d80baab6583a65556e40edcf5c4949c296684a2f25ebced11320219cdc22",
+      "url": "https://vrk.lt/fs/prd/p/2026-03/2016m.%20LR%20Seimo%20rinkim%C5%B3%20apylinki%C5%B3%20s%C4%85ra%C5%A1as.xlsx"
+    },
+    "2020": {
+      "election": "2020-seimo",
+      "sha256": "226e7ab4e64d0c9480fa6ab01fd018b8b0675ab757587a939dd5c59280b06692",
+      "url": "https://vrk.lt/fs/prd/p/2026-03/2020m.%20LR%20Seimo%20rinkim%C5%B3%20apylinki%C5%B3%20s%C4%85ra%C5%A1as.xlsx"
+    },
+    "2024": {
+      "election": "2024-seimo",
+      "sha256": "a54aa0aae7f5bd19f3a3d9afc70093a1c5add0f27a2d1b8d555878b09df78bac",
+      "url": "https://vrk.lt/fs/prd/p/2026-03/2024m.%20LR%20Seimo%20rinkim%C5%B3%20apylinki%C5%B3%20s%C4%85ra%C5%A1as.xlsx"
+    }
+  },
+  "changedBetweenMaps": [
+    "Dainavos",
+    "Deltuvos pietinė",
+    "Deltuvos šiaurinė",
+    "Kelmės",
+    "Prienų",
+    "Prienų–Birštono"
+  ],
+  "entries": {
+    "Akmenės–Joniškio": {
+      "counties": [
+        "Šiaulių"
+      ],
+      "maps": {
+        "1996": {
+          "Akmenės rajono savivaldybė": 20,
+          "Joniškio rajono savivaldybė": 10
+        },
+        "2000": {
+          "Akmenės rajono savivaldybė": 16,
+          "Joniškio rajono savivaldybė": 12
+        },
+        "2004": {
+          "Akmenės rajono savivaldybė": 18,
+          "Joniškio rajono savivaldybė": 12
+        },
+        "2008": {
+          "Akmenės rajono savivaldybė": 19,
+          "Joniškio rajono savivaldybė": 17
+        },
+        "2012": {
+          "Akmenės rajono savivaldybė": 24,
+          "Joniškio rajono savivaldybė": 17
+        }
+      }
+    },
+    "Akmenės–Mažeikių": {
+      "counties": [
+        "Šiaulių",
+        "Telšių"
+      ],
+      "maps": {
+        "2016": {
+          "Akmenės rajono savivaldybė": 23,
+          "Mažeikių rajono savivaldybė": 20
+        }
+      }
+    },
+    "Aleksoto–Vilijampolės": {
+      "counties": [
+        "Kauno"
+      ],
+      "maps": {
+        "1996": {
+          "Kauno miesto savivaldybė": 19
+        },
+        "2000": {
+          "Kauno miesto savivaldybė": 21
+        },
+        "2004": {
+          "Kauno miesto savivaldybė": 19
+        },
+        "2008": {
+          "Kauno miesto savivaldybė": 20
+        },
+        "2012": {
+          "Kauno miesto savivaldybė": 20
+        },
+        "2016": {
+          "Kauno miesto savivaldybė": 15
+        },
+        "2020": {
+          "Kauno miesto savivaldybė": 13
+        },
+        "2024": {
+          "Kauno miesto savivaldybė": 12,
+          "Kauno rajono savivaldybė": 1
+        }
+      }
+    },
+    "Alytaus": {
+      "counties": [
+        "Alytaus"
+      ],
+      "maps": {
+        "1996": {
+          "Alytaus miesto savivaldybė": 16
+        },
+        "2000": {
+          "Alytaus miesto savivaldybė": 17
+        },
+        "2004": {
+          "Alytaus miesto savivaldybė": 17
+        },
+        "2008": {
+          "Alytaus miesto savivaldybė": 17
+        },
+        "2012": {
+          "Alytaus miesto savivaldybė": 17
+        },
+        "2016": {
+          "Alytaus miesto savivaldybė": 16
+        },
+        "2020": {
+          "Alytaus miesto savivaldybė": 19
+        },
+        "2024": {
+          "Alytaus miesto savivaldybė": 18
+        }
+      }
+    },
+    "Antakalnio": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "1996": {
+          "Vilniaus miesto savivaldybė": 21
+        },
+        "2000": {
+          "Vilniaus miesto savivaldybė": 21
+        },
+        "2004": {
+          "Vilniaus miesto savivaldybė": 21
+        },
+        "2008": {
+          "Vilniaus miesto savivaldybė": 15
+        },
+        "2012": {
+          "Vilniaus miesto savivaldybė": 14
+        },
+        "2016": {
+          "Vilniaus miesto savivaldybė": 11
+        },
+        "2020": {
+          "Vilniaus miesto savivaldybė": 12
+        },
+        "2024": {
+          "Vilniaus miesto savivaldybė": 11
+        }
+      }
+    },
+    "Anykščių–Kupiškio": {
+      "counties": [
+        "Panevėžio",
+        "Utenos"
+      ],
+      "maps": {
+        "1996": {
+          "Anykščių rajono savivaldybė": 37,
+          "Kupiškio rajono savivaldybė": 14
+        },
+        "2000": {
+          "Anykščių rajono savivaldybė": 37,
+          "Kupiškio rajono savivaldybė": 14
+        },
+        "2004": {
+          "Anykščių rajono savivaldybė": 37,
+          "Kupiškio rajono savivaldybė": 14
+        },
+        "2008": {
+          "Anykščių rajono savivaldybė": 36,
+          "Kupiškio rajono savivaldybė": 14
+        },
+        "2012": {
+          "Anykščių rajono savivaldybė": 36,
+          "Kupiškio rajono savivaldybė": 14
+        }
+      }
+    },
+    "Anykščių–Panevėžio": {
+      "counties": [
+        "Panevėžio",
+        "Utenos"
+      ],
+      "maps": {
+        "2016": {
+          "Anykščių rajono savivaldybė": 35,
+          "Panevėžio rajono savivaldybė": 11
+        }
+      }
+    },
+    "Aukštaitijos": {
+      "counties": [
+        "Panevėžio"
+      ],
+      "maps": {
+        "1996": {
+          "Panevėžio miesto savivaldybė": 5,
+          "Panevėžio rajono savivaldybė": 32
+        },
+        "2000": {
+          "Panevėžio miesto savivaldybė": 5,
+          "Panevėžio rajono savivaldybė": 32
+        },
+        "2004": {
+          "Panevėžio miesto savivaldybė": 5,
+          "Panevėžio rajono savivaldybė": 31
+        },
+        "2008": {
+          "Panevėžio miesto savivaldybė": 5,
+          "Panevėžio rajono savivaldybė": 29
+        },
+        "2012": {
+          "Panevėžio miesto savivaldybė": 5,
+          "Panevėžio rajono savivaldybė": 28
+        },
+        "2016": {
+          "Panevėžio miesto savivaldybė": 5,
+          "Panevėžio rajono savivaldybė": 30
+        },
+        "2020": {
+          "Panevėžio miesto savivaldybė": 5,
+          "Panevėžio rajono savivaldybė": 29
+        },
+        "2024": {
+          "Panevėžio miesto savivaldybė": 4,
+          "Panevėžio rajono savivaldybė": 31
+        }
+      }
+    },
+    "Aušros": {
+      "counties": [
+        "Šiaulių"
+      ],
+      "maps": {
+        "1996": {
+          "Šiaulių miesto savivaldybė": 16
+        },
+        "2000": {
+          "Šiaulių miesto savivaldybė": 12
+        },
+        "2004": {
+          "Šiaulių miesto savivaldybė": 12
+        },
+        "2008": {
+          "Šiaulių miesto savivaldybė": 12
+        },
+        "2012": {
+          "Šiaulių miesto savivaldybė": 12
+        },
+        "2016": {
+          "Šiaulių miesto savivaldybė": 14
+        },
+        "2020": {
+          "Šiaulių miesto savivaldybė": 17
+        },
+        "2024": {
+          "Šiaulių miesto savivaldybė": 17
+        }
+      }
+    },
+    "Baltijos": {
+      "counties": [
+        "Klaipėdos"
+      ],
+      "maps": {
+        "1996": {
+          "Klaipėdos miesto savivaldybė": 16
+        },
+        "2000": {
+          "Klaipėdos miesto savivaldybė": 15
+        },
+        "2004": {
+          "Klaipėdos miesto savivaldybė": 15
+        },
+        "2008": {
+          "Klaipėdos miesto savivaldybė": 15
+        },
+        "2012": {
+          "Klaipėdos miesto savivaldybė": 15
+        },
+        "2016": {
+          "Klaipėdos miesto savivaldybė": 15
+        },
+        "2020": {
+          "Klaipėdos miesto savivaldybė": 16
+        },
+        "2024": {
+          "Klaipėdos miesto savivaldybė": 16,
+          "Klaipėdos rajono savivaldybė": 2
+        }
+      }
+    },
+    "Biržų–Kupiškio": {
+      "counties": [
+        "Panevėžio"
+      ],
+      "maps": {
+        "1996": {
+          "Biržų rajono savivaldybė": 32,
+          "Kupiškio rajono savivaldybė": 10
+        },
+        "2000": {
+          "Biržų rajono savivaldybė": 32,
+          "Kupiškio rajono savivaldybė": 10
+        },
+        "2004": {
+          "Biržų rajono savivaldybė": 32,
+          "Kupiškio rajono savivaldybė": 10
+        },
+        "2008": {
+          "Biržų rajono savivaldybė": 32,
+          "Kupiškio rajono savivaldybė": 10
+        },
+        "2012": {
+          "Biržų rajono savivaldybė": 32,
+          "Kupiškio rajono savivaldybė": 10
+        },
+        "2016": {
+          "Biržų rajono savivaldybė": 32,
+          "Kupiškio rajono savivaldybė": 14
+        }
+      }
+    },
+    "Centro": {
+      "counties": [
+        "Kauno"
+      ],
+      "maps": {
+        "1996": {
+          "Kauno miesto savivaldybė": 16
+        },
+        "2000": {
+          "Kauno miesto savivaldybė": 19
+        },
+        "2004": {
+          "Kauno miesto savivaldybė": 16
+        },
+        "2008": {
+          "Kauno miesto savivaldybė": 17
+        },
+        "2012": {
+          "Kauno miesto savivaldybė": 15
+        }
+      }
+    },
+    "Centro–Žaliakalnio": {
+      "counties": [
+        "Kauno"
+      ],
+      "maps": {
+        "2016": {
+          "Kauno miesto savivaldybė": 16
+        },
+        "2020": {
+          "Kauno miesto savivaldybė": 15
+        },
+        "2024": {
+          "Kauno miesto savivaldybė": 15
+        }
+      }
+    },
+    "Dainavos": {
+      "counties": [
+        "Kauno",
+        "Alytaus"
+      ],
+      "maps": {
+        "1996": {
+          "Kauno miesto savivaldybė": 13
+        },
+        "2000": {
+          "Kauno miesto savivaldybė": 12
+        },
+        "2004": {
+          "Kauno miesto savivaldybė": 10
+        },
+        "2008": {
+          "Kauno miesto savivaldybė": 10
+        },
+        "2012": {
+          "Kauno miesto savivaldybė": 10
+        },
+        "2016": {
+          "Kauno miesto savivaldybė": 12
+        },
+        "2020": {
+          "Alytaus rajono savivaldybė": 14,
+          "Birštono savivaldybė": 3,
+          "Prienų rajono savivaldybė": 27
+        },
+        "2024": {
+          "Alytaus rajono savivaldybė": 11,
+          "Birštono savivaldybė": 3,
+          "Prienų rajono savivaldybė": 24
+        }
+      }
+    },
+    "Dainų": {
+      "counties": [
+        "Šiaulių"
+      ],
+      "maps": {
+        "1996": {
+          "Šiaulių miesto savivaldybė": 11
+        },
+        "2000": {
+          "Šiaulių miesto savivaldybė": 10,
+          "Šiaulių rajono savivaldybė": 3
+        },
+        "2004": {
+          "Šiaulių miesto savivaldybė": 10,
+          "Šiaulių rajono savivaldybė": 3
+        },
+        "2008": {
+          "Šiaulių miesto savivaldybė": 10,
+          "Šiaulių rajono savivaldybė": 3
+        },
+        "2012": {
+          "Šiaulių miesto savivaldybė": 10,
+          "Šiaulių rajono savivaldybė": 3
+        }
+      }
+    },
+    "Danės": {
+      "counties": [
+        "Klaipėdos"
+      ],
+      "maps": {
+        "1996": {
+          "Klaipėdos miesto savivaldybė": 20
+        },
+        "2000": {
+          "Klaipėdos miesto savivaldybė": 23
+        },
+        "2004": {
+          "Klaipėdos miesto savivaldybė": 23
+        },
+        "2008": {
+          "Klaipėdos miesto savivaldybė": 23
+        },
+        "2012": {
+          "Klaipėdos miesto savivaldybė": 23
+        },
+        "2016": {
+          "Klaipėdos miesto savivaldybė": 16,
+          "Klaipėdos rajono savivaldybė": 3
+        },
+        "2020": {
+          "Klaipėdos miesto savivaldybė": 18
+        },
+        "2024": {
+          "Klaipėdos miesto savivaldybė": 16
+        }
+      }
+    },
+    "Deltuvos pietinė": {
+      "counties": [
+        "Vilniaus",
+        "Kauno"
+      ],
+      "maps": {
+        "2020": {
+          "Jonavos rajono savivaldybė": 1,
+          "Ukmergės rajono savivaldybė": 27
+        },
+        "2024": {
+          "Ukmergės rajono savivaldybė": 19,
+          "Širvintų rajono savivaldybė": 23
+        }
+      }
+    },
+    "Deltuvos šiaurinė": {
+      "counties": [
+        "Vilniaus",
+        "Panevėžio",
+        "Utenos"
+      ],
+      "maps": {
+        "2020": {
+          "Anykščių rajono savivaldybė": 35,
+          "Panevėžio rajono savivaldybė": 11
+        },
+        "2024": {
+          "Anykščių rajono savivaldybė": 35,
+          "Panevėžio rajono savivaldybė": 9,
+          "Ukmergės rajono savivaldybė": 6
+        }
+      }
+    },
+    "Dzūkijos": {
+      "counties": [
+        "Alytaus"
+      ],
+      "maps": {
+        "1996": {
+          "Alytaus miesto savivaldybė": 7,
+          "Alytaus rajono savivaldybė": 50
+        },
+        "2000": {
+          "Alytaus miesto savivaldybė": 7,
+          "Alytaus rajono savivaldybė": 50
+        },
+        "2004": {
+          "Alytaus miesto savivaldybė": 7,
+          "Alytaus rajono savivaldybė": 45
+        },
+        "2008": {
+          "Alytaus miesto savivaldybė": 7,
+          "Alytaus rajono savivaldybė": 45
+        },
+        "2012": {
+          "Alytaus miesto savivaldybė": 7,
+          "Alytaus rajono savivaldybė": 45
+        },
+        "2016": {
+          "Alytaus miesto savivaldybė": 8,
+          "Alytaus rajono savivaldybė": 40
+        },
+        "2020": {
+          "Alytaus miesto savivaldybė": 4,
+          "Alytaus rajono savivaldybė": 12,
+          "Varėnos rajono savivaldybė": 31
+        },
+        "2024": {
+          "Alytaus miesto savivaldybė": 3,
+          "Alytaus rajono savivaldybė": 10,
+          "Varėnos rajono savivaldybė": 29
+        }
+      }
+    },
+    "Fabijoniškių": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "1996": {
+          "Vilniaus miesto savivaldybė": 11
+        },
+        "2000": {
+          "Vilniaus miesto savivaldybė": 11
+        },
+        "2004": {
+          "Vilniaus miesto savivaldybė": 10
+        },
+        "2008": {
+          "Vilniaus miesto savivaldybė": 12
+        },
+        "2012": {
+          "Vilniaus miesto savivaldybė": 11
+        },
+        "2016": {
+          "Vilniaus miesto savivaldybė": 11
+        },
+        "2020": {
+          "Vilniaus miesto savivaldybė": 11
+        },
+        "2024": {
+          "Vilniaus miesto savivaldybė": 11
+        }
+      }
+    },
+    "Gargždų": {
+      "counties": [
+        "Klaipėdos"
+      ],
+      "maps": {
+        "1996": {
+          "Klaipėdos rajono savivaldybė": 31
+        },
+        "2000": {
+          "Klaipėdos rajono savivaldybė": 31
+        },
+        "2004": {
+          "Klaipėdos rajono savivaldybė": 31
+        },
+        "2008": {
+          "Klaipėdos rajono savivaldybė": 31
+        },
+        "2012": {
+          "Klaipėdos rajono savivaldybė": 31
+        },
+        "2016": {
+          "Klaipėdos rajono savivaldybė": 29
+        },
+        "2020": {
+          "Klaipėdos rajono savivaldybė": 25
+        },
+        "2024": {
+          "Klaipėdos rajono savivaldybė": 25
+        }
+      }
+    },
+    "Garliavos": {
+      "counties": [
+        "Kauno"
+      ],
+      "maps": {
+        "2016": {
+          "Kauno rajono savivaldybė": 20
+        },
+        "2020": {
+          "Kauno rajono savivaldybė": 23
+        },
+        "2024": {
+          "Kauno miesto savivaldybė": 1,
+          "Kauno rajono savivaldybė": 21
+        }
+      }
+    },
+    "Ignalinos–Švenčionių": {
+      "counties": [
+        "Vilniaus",
+        "Utenos"
+      ],
+      "maps": {
+        "1996": {
+          "Ignalinos rajono savivaldybė": 27,
+          "Švenčionių rajono savivaldybė": 17
+        },
+        "2000": {
+          "Ignalinos rajono savivaldybė": 27,
+          "Švenčionių rajono savivaldybė": 18
+        },
+        "2004": {
+          "Ignalinos rajono savivaldybė": 27,
+          "Švenčionių rajono savivaldybė": 18
+        },
+        "2008": {
+          "Ignalinos rajono savivaldybė": 26,
+          "Švenčionių rajono savivaldybė": 18
+        },
+        "2012": {
+          "Ignalinos rajono savivaldybė": 26,
+          "Švenčionių rajono savivaldybė": 18
+        }
+      }
+    },
+    "Jonavos": {
+      "counties": [
+        "Kauno"
+      ],
+      "maps": {
+        "1996": {
+          "Jonavos rajono savivaldybė": 27
+        },
+        "2000": {
+          "Jonavos rajono savivaldybė": 27
+        },
+        "2004": {
+          "Jonavos rajono savivaldybė": 27
+        },
+        "2008": {
+          "Jonavos rajono savivaldybė": 27
+        },
+        "2012": {
+          "Jonavos rajono savivaldybė": 26
+        },
+        "2016": {
+          "Jonavos rajono savivaldybė": 26
+        },
+        "2020": {
+          "Jonavos rajono savivaldybė": 25
+        },
+        "2024": {
+          "Jonavos rajono savivaldybė": 26
+        }
+      }
+    },
+    "Jotvingių": {
+      "counties": [
+        "Alytaus"
+      ],
+      "maps": {
+        "2020": {
+          "Druskininkų savivaldybė": 14,
+          "Lazdijų rajono savivaldybė": 25
+        },
+        "2024": {
+          "Druskininkų savivaldybė": 14,
+          "Lazdijų rajono savivaldybė": 22
+        }
+      }
+    },
+    "Jurbarko": {
+      "counties": [
+        "Tauragės"
+      ],
+      "maps": {
+        "1996": {
+          "Jurbarko rajono savivaldybė": 31,
+          "Tauragės rajono savivaldybė": 5
+        },
+        "2000": {
+          "Jurbarko rajono savivaldybė": 31,
+          "Tauragės rajono savivaldybė": 5
+        },
+        "2004": {
+          "Jurbarko rajono savivaldybė": 31,
+          "Tauragės rajono savivaldybė": 5
+        },
+        "2008": {
+          "Jurbarko rajono savivaldybė": 31,
+          "Tauragės rajono savivaldybė": 4
+        },
+        "2012": {
+          "Jurbarko rajono savivaldybė": 31,
+          "Tauragės rajono savivaldybė": 4
+        }
+      }
+    },
+    "Jurbarko–Pagėgių": {
+      "counties": [
+        "Tauragės"
+      ],
+      "maps": {
+        "2016": {
+          "Jurbarko rajono savivaldybė": 31,
+          "Pagėgių savivaldybė": 11
+        }
+      }
+    },
+    "Justiniškių": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "1996": {
+          "Vilniaus miesto savivaldybė": 10
+        },
+        "2000": {
+          "Vilniaus miesto savivaldybė": 11
+        },
+        "2004": {
+          "Vilniaus miesto savivaldybė": 10
+        },
+        "2008": {
+          "Vilniaus miesto savivaldybė": 11
+        },
+        "2012": {
+          "Vilniaus miesto savivaldybė": 11
+        },
+        "2016": {
+          "Vilniaus miesto savivaldybė": 9
+        }
+      }
+    },
+    "Justiniškių–Viršuliškių": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "2020": {
+          "Vilniaus miesto savivaldybė": 10
+        },
+        "2024": {
+          "Vilniaus miesto savivaldybė": 10
+        }
+      }
+    },
+    "Kaišiadorių–Elektrėnų": {
+      "counties": [
+        "Vilniaus",
+        "Kauno"
+      ],
+      "maps": {
+        "1996": {
+          "Kaišiadorių rajono savivaldybė": 30,
+          "Trakų rajono savivaldybė": 2
+        },
+        "2000": {
+          "Elektrėnų savivaldybė": 7,
+          "Kaišiadorių rajono savivaldybė": 25
+        },
+        "2004": {
+          "Elektrėnų savivaldybė": 7,
+          "Kaišiadorių rajono savivaldybė": 29
+        },
+        "2008": {
+          "Elektrėnų savivaldybė": 7,
+          "Kaišiadorių rajono savivaldybė": 29
+        },
+        "2012": {
+          "Elektrėnų savivaldybė": 7,
+          "Kaišiadorių rajono savivaldybė": 29
+        },
+        "2016": {
+          "Elektrėnų savivaldybė": 5,
+          "Kaišiadorių rajono savivaldybė": 30
+        },
+        "2020": {
+          "Elektrėnų savivaldybė": 8,
+          "Kaišiadorių rajono savivaldybė": 27
+        },
+        "2024": {
+          "Elektrėnų savivaldybė": 8,
+          "Kaišiadorių rajono savivaldybė": 27
+        }
+      }
+    },
+    "Kalniečių": {
+      "counties": [
+        "Kauno"
+      ],
+      "maps": {
+        "1996": {
+          "Kauno miesto savivaldybė": 11
+        },
+        "2000": {
+          "Kauno miesto savivaldybė": 8
+        },
+        "2004": {
+          "Kauno miesto savivaldybė": 8
+        },
+        "2008": {
+          "Kauno miesto savivaldybė": 8
+        },
+        "2012": {
+          "Kauno miesto savivaldybė": 8
+        },
+        "2016": {
+          "Kauno miesto savivaldybė": 11
+        },
+        "2020": {
+          "Kauno miesto savivaldybė": 12
+        },
+        "2024": {
+          "Kauno miesto savivaldybė": 12
+        }
+      }
+    },
+    "Karoliniškių": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "1996": {
+          "Vilniaus miesto savivaldybė": 18
+        },
+        "2000": {
+          "Vilniaus miesto savivaldybė": 19
+        },
+        "2004": {
+          "Vilniaus miesto savivaldybė": 19
+        },
+        "2008": {
+          "Vilniaus miesto savivaldybė": 20
+        },
+        "2012": {
+          "Vilniaus miesto savivaldybė": 16
+        },
+        "2016": {
+          "Vilniaus miesto savivaldybė": 14
+        }
+      }
+    },
+    "Karšuvos": {
+      "counties": [
+        "Tauragės"
+      ],
+      "maps": {
+        "2020": {
+          "Jurbarko rajono savivaldybė": 29,
+          "Pagėgių savivaldybė": 11,
+          "Tauragės rajono savivaldybė": 3
+        },
+        "2024": {
+          "Jurbarko rajono savivaldybė": 29,
+          "Pagėgių savivaldybė": 11,
+          "Tauragės rajono savivaldybė": 5
+        }
+      }
+    },
+    "Kauno kaimiškoji": {
+      "counties": [
+        "Kauno"
+      ],
+      "maps": {
+        "1996": {
+          "Kauno miesto savivaldybė": 4,
+          "Kauno rajono savivaldybė": 21
+        },
+        "2000": {
+          "Kauno rajono savivaldybė": 22
+        },
+        "2004": {
+          "Kauno rajono savivaldybė": 22
+        },
+        "2008": {
+          "Kauno rajono savivaldybė": 24
+        },
+        "2012": {
+          "Kauno rajono savivaldybė": 26
+        }
+      }
+    },
+    "Kauno–Kėdainių": {
+      "counties": [
+        "Kauno"
+      ],
+      "maps": {
+        "1996": {
+          "Kauno miesto savivaldybė": 2,
+          "Kauno rajono savivaldybė": 19,
+          "Kėdainių rajono savivaldybė": 20
+        },
+        "2000": {
+          "Kauno rajono savivaldybė": 19,
+          "Kėdainių rajono savivaldybė": 20
+        },
+        "2004": {
+          "Kauno rajono savivaldybė": 19,
+          "Kėdainių rajono savivaldybė": 21
+        },
+        "2008": {
+          "Kauno rajono savivaldybė": 20,
+          "Kėdainių rajono savivaldybė": 20
+        },
+        "2012": {
+          "Kauno rajono savivaldybė": 22,
+          "Kėdainių rajono savivaldybė": 20
+        }
+      }
+    },
+    "Kelmės": {
+      "counties": [
+        "Šiaulių",
+        "Telšių"
+      ],
+      "maps": {
+        "1996": {
+          "Kelmės rajono savivaldybė": 41,
+          "Telšių rajono savivaldybė": 3
+        },
+        "2000": {
+          "Kelmės rajono savivaldybė": 41,
+          "Telšių rajono savivaldybė": 3
+        },
+        "2004": {
+          "Kelmės rajono savivaldybė": 41,
+          "Telšių rajono savivaldybė": 3
+        },
+        "2008": {
+          "Kelmės rajono savivaldybė": 41
+        },
+        "2012": {
+          "Kelmės rajono savivaldybė": 40,
+          "Telšių rajono savivaldybė": 1
+        }
+      }
+    },
+    "Kelmės–Šiaulių": {
+      "counties": [
+        "Šiaulių"
+      ],
+      "maps": {
+        "2016": {
+          "Kelmės rajono savivaldybė": 40,
+          "Šiaulių rajono savivaldybė": 10
+        }
+      }
+    },
+    "Kelmės–Šilalės": {
+      "counties": [
+        "Šiaulių",
+        "Tauragės"
+      ],
+      "maps": {
+        "2020": {
+          "Kelmės rajono savivaldybė": 32,
+          "Šilalės rajono savivaldybė": 22
+        },
+        "2024": {
+          "Kelmės rajono savivaldybė": 29,
+          "Šilalės rajono savivaldybė": 22
+        }
+      }
+    },
+    "Kretingos": {
+      "counties": [
+        "Klaipėdos"
+      ],
+      "maps": {
+        "1996": {
+          "Kretingos rajono savivaldybė": 38
+        },
+        "2000": {
+          "Kretingos rajono savivaldybė": 38
+        },
+        "2004": {
+          "Kretingos rajono savivaldybė": 38
+        },
+        "2008": {
+          "Kretingos rajono savivaldybė": 39
+        },
+        "2012": {
+          "Kretingos rajono savivaldybė": 39
+        }
+      }
+    },
+    "Kretingos–Palangos": {
+      "counties": [
+        "Klaipėdos"
+      ],
+      "maps": {
+        "2016": {
+          "Kretingos rajono savivaldybė": 10,
+          "Palangos miesto savivaldybė": 7
+        }
+      }
+    },
+    "Kuršo": {
+      "counties": [
+        "Klaipėdos"
+      ],
+      "maps": {
+        "2016": {
+          "Kretingos rajono savivaldybė": 31,
+          "Skuodo rajono savivaldybė": 22
+        },
+        "2020": {
+          "Kretingos rajono savivaldybė": 35,
+          "Skuodo rajono savivaldybė": 10
+        },
+        "2024": {
+          "Kretingos rajono savivaldybė": 37,
+          "Skuodo rajono savivaldybė": 10
+        }
+      }
+    },
+    "Kuršėnų–Dainų": {
+      "counties": [
+        "Šiaulių"
+      ],
+      "maps": {
+        "2016": {
+          "Šiaulių miesto savivaldybė": 7,
+          "Šiaulių rajono savivaldybė": 20
+        }
+      }
+    },
+    "Kėdainių": {
+      "counties": [
+        "Kauno"
+      ],
+      "maps": {
+        "1996": {
+          "Kėdainių rajono savivaldybė": 34
+        },
+        "2000": {
+          "Kėdainių rajono savivaldybė": 34
+        },
+        "2004": {
+          "Kėdainių rajono savivaldybė": 34
+        },
+        "2008": {
+          "Kėdainių rajono savivaldybė": 34
+        },
+        "2012": {
+          "Kėdainių rajono savivaldybė": 34
+        },
+        "2016": {
+          "Kėdainių rajono savivaldybė": 38
+        },
+        "2020": {
+          "Kėdainių rajono savivaldybė": 38
+        },
+        "2024": {
+          "Kėdainių rajono savivaldybė": 38
+        }
+      }
+    },
+    "Lazdijų–Druskininkų": {
+      "counties": [
+        "Alytaus"
+      ],
+      "maps": {
+        "1996": {
+          "Druskininkų savivaldybė": 7,
+          "Lazdijų rajono savivaldybė": 33
+        },
+        "2000": {
+          "Druskininkų savivaldybė": 10,
+          "Lazdijų rajono savivaldybė": 30
+        },
+        "2004": {
+          "Druskininkų savivaldybė": 14,
+          "Lazdijų rajono savivaldybė": 30
+        },
+        "2008": {
+          "Druskininkų savivaldybė": 14,
+          "Lazdijų rajono savivaldybė": 30
+        },
+        "2012": {
+          "Druskininkų savivaldybė": 14,
+          "Lazdijų rajono savivaldybė": 30
+        },
+        "2016": {
+          "Druskininkų savivaldybė": 14,
+          "Lazdijų rajono savivaldybė": 30
+        }
+      }
+    },
+    "Lazdynų": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "1996": {
+          "Vilniaus miesto savivaldybė": 17
+        },
+        "2000": {
+          "Vilniaus miesto savivaldybė": 13
+        },
+        "2004": {
+          "Vilniaus miesto savivaldybė": 15
+        },
+        "2008": {
+          "Vilniaus miesto savivaldybė": 15
+        },
+        "2012": {
+          "Vilniaus miesto savivaldybė": 15
+        },
+        "2016": {
+          "Vilniaus miesto savivaldybė": 12
+        },
+        "2020": {
+          "Vilniaus miesto savivaldybė": 11
+        },
+        "2024": {
+          "Vilniaus miesto savivaldybė": 12
+        }
+      }
+    },
+    "Marijampolės": {
+      "counties": [
+        "Marijampolės"
+      ],
+      "maps": {
+        "1996": {
+          "Marijampolės miesto savivaldybė (iki 2000 m.)": 15
+        },
+        "2000": {
+          "Marijampolės savivaldybė": 15
+        },
+        "2004": {
+          "Marijampolės savivaldybė": 15
+        },
+        "2008": {
+          "Marijampolės savivaldybė": 15
+        },
+        "2012": {
+          "Marijampolės savivaldybė": 15
+        },
+        "2016": {
+          "Marijampolės savivaldybė": 15
+        },
+        "2020": {
+          "Marijampolės savivaldybė": 15
+        },
+        "2024": {
+          "Marijampolės savivaldybė": 16
+        }
+      }
+    },
+    "Marių": {
+      "counties": [
+        "Klaipėdos"
+      ],
+      "maps": {
+        "1996": {
+          "Klaipėdos miesto savivaldybė": 12
+        },
+        "2000": {
+          "Klaipėdos miesto savivaldybė": 10
+        },
+        "2004": {
+          "Klaipėdos miesto savivaldybė": 10
+        },
+        "2008": {
+          "Klaipėdos miesto savivaldybė": 10
+        },
+        "2012": {
+          "Klaipėdos miesto savivaldybė": 10
+        },
+        "2016": {
+          "Klaipėdos miesto savivaldybė": 10
+        },
+        "2020": {
+          "Klaipėdos miesto savivaldybė": 10
+        },
+        "2024": {
+          "Klaipėdos miesto savivaldybė": 11
+        }
+      }
+    },
+    "Mažeikių": {
+      "counties": [
+        "Telšių"
+      ],
+      "maps": {
+        "1996": {
+          "Mažeikių rajono savivaldybė": 16
+        },
+        "2000": {
+          "Mažeikių rajono savivaldybė": 16
+        },
+        "2004": {
+          "Mažeikių rajono savivaldybė": 16
+        },
+        "2008": {
+          "Mažeikių rajono savivaldybė": 16
+        },
+        "2012": {
+          "Mažeikių rajono savivaldybė": 16
+        },
+        "2016": {
+          "Mažeikių rajono savivaldybė": 18
+        },
+        "2020": {
+          "Mažeikių rajono savivaldybė": 17
+        },
+        "2024": {
+          "Mažeikių rajono savivaldybė": 18
+        }
+      }
+    },
+    "Medininkų": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "2016": {
+          "Vilniaus rajono savivaldybė": 23
+        },
+        "2020": {
+          "Vilniaus rajono savivaldybė": 23
+        }
+      }
+    },
+    "Molėtų–Širvintų": {
+      "counties": [
+        "Vilniaus",
+        "Utenos"
+      ],
+      "maps": {
+        "2016": {
+          "Molėtų rajono savivaldybė": 24,
+          "Širvintų rajono savivaldybė": 24
+        },
+        "2020": {
+          "Molėtų rajono savivaldybė": 24,
+          "Vilniaus rajono savivaldybė": 1,
+          "Širvintų rajono savivaldybė": 23
+        }
+      }
+    },
+    "Molėtų–Švenčionių": {
+      "counties": [
+        "Vilniaus",
+        "Utenos"
+      ],
+      "maps": {
+        "1996": {
+          "Molėtų rajono savivaldybė": 24,
+          "Švenčionių rajono savivaldybė": 12
+        },
+        "2000": {
+          "Molėtų rajono savivaldybė": 24,
+          "Švenčionių rajono savivaldybė": 11
+        },
+        "2004": {
+          "Molėtų rajono savivaldybė": 24,
+          "Švenčionių rajono savivaldybė": 11
+        },
+        "2008": {
+          "Molėtų rajono savivaldybė": 24,
+          "Švenčionių rajono savivaldybė": 11
+        },
+        "2012": {
+          "Molėtų rajono savivaldybė": 24,
+          "Vilniaus rajono savivaldybė": 2,
+          "Švenčionių rajono savivaldybė": 10
+        }
+      }
+    },
+    "Mėguvos": {
+      "counties": [
+        "Klaipėdos"
+      ],
+      "maps": {
+        "2020": {
+          "Klaipėdos rajono savivaldybė": 8,
+          "Kretingos rajono savivaldybė": 5,
+          "Palangos miesto savivaldybė": 5
+        },
+        "2024": {
+          "Klaipėdos rajono savivaldybė": 7,
+          "Kretingos rajono savivaldybė": 3,
+          "Palangos miesto savivaldybė": 6
+        }
+      }
+    },
+    "Nalšios": {
+      "counties": [
+        "Vilniaus",
+        "Utenos"
+      ],
+      "maps": {
+        "2016": {
+          "Ignalinos rajono savivaldybė": 26,
+          "Švenčionių rajono savivaldybė": 27
+        }
+      }
+    },
+    "Nalšios pietinė": {
+      "counties": [
+        "Vilniaus",
+        "Utenos"
+      ],
+      "maps": {
+        "2020": {
+          "Ignalinos rajono savivaldybė": 17,
+          "Švenčionių rajono savivaldybė": 25
+        },
+        "2024": {
+          "Molėtų rajono savivaldybė": 24,
+          "Švenčionių rajono savivaldybė": 25
+        }
+      }
+    },
+    "Nalšios šiaurinė": {
+      "counties": [
+        "Utenos"
+      ],
+      "maps": {
+        "2020": {
+          "Ignalinos rajono savivaldybė": 3,
+          "Visagino savivaldybė": 16,
+          "Zarasų rajono savivaldybė": 21
+        },
+        "2024": {
+          "Ignalinos rajono savivaldybė": 14,
+          "Visagino savivaldybė": 10,
+          "Zarasų rajono savivaldybė": 3
+        }
+      }
+    },
+    "Naujamiesčio": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "1996": {
+          "Vilniaus miesto savivaldybė": 18
+        },
+        "2000": {
+          "Vilniaus miesto savivaldybė": 21
+        },
+        "2004": {
+          "Vilniaus miesto savivaldybė": 21
+        },
+        "2008": {
+          "Vilniaus miesto savivaldybė": 16
+        },
+        "2012": {
+          "Vilniaus miesto savivaldybė": 16
+        },
+        "2016": {
+          "Vilniaus miesto savivaldybė": 8
+        }
+      }
+    },
+    "Naujamiesčio–Naujininkų": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "2020": {
+          "Vilniaus miesto savivaldybė": 13
+        }
+      }
+    },
+    "Naujamiesčio–Vilkpėdės": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "2024": {
+          "Vilniaus miesto savivaldybė": 11
+        }
+      }
+    },
+    "Naujininkų–Rasų": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "2024": {
+          "Vilniaus miesto savivaldybė": 11
+        }
+      }
+    },
+    "Naujosios Vilnios": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "1996": {
+          "Vilniaus miesto savivaldybė": 21
+        },
+        "2000": {
+          "Vilniaus miesto savivaldybė": 18
+        },
+        "2004": {
+          "Vilniaus miesto savivaldybė": 17
+        },
+        "2008": {
+          "Vilniaus miesto savivaldybė": 17
+        },
+        "2012": {
+          "Vilniaus miesto savivaldybė": 18
+        },
+        "2016": {
+          "Vilniaus miesto savivaldybė": 13
+        },
+        "2020": {
+          "Vilniaus miesto savivaldybė": 13
+        },
+        "2024": {
+          "Vilniaus miesto savivaldybė": 13
+        }
+      }
+    },
+    "Nemenčinės": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "2016": {
+          "Vilniaus rajono savivaldybė": 26
+        },
+        "2020": {
+          "Vilniaus rajono savivaldybė": 25
+        },
+        "2024": {
+          "Vilniaus rajono savivaldybė": 25
+        }
+      }
+    },
+    "Nevėžio": {
+      "counties": [
+        "Panevėžio"
+      ],
+      "maps": {
+        "1996": {
+          "Panevėžio miesto savivaldybė": 13
+        },
+        "2000": {
+          "Panevėžio miesto savivaldybė": 13
+        },
+        "2004": {
+          "Panevėžio miesto savivaldybė": 13
+        },
+        "2008": {
+          "Panevėžio miesto savivaldybė": 13
+        },
+        "2012": {
+          "Panevėžio miesto savivaldybė": 13
+        },
+        "2016": {
+          "Panevėžio miesto savivaldybė": 13
+        },
+        "2020": {
+          "Panevėžio miesto savivaldybė": 13
+        },
+        "2024": {
+          "Panevėžio miesto savivaldybė": 14
+        }
+      }
+    },
+    "Pajūrio": {
+      "counties": [
+        "Klaipėdos"
+      ],
+      "maps": {
+        "1996": {
+          "Klaipėdos miesto savivaldybė": 11,
+          "Neringos savivaldybė": 3,
+          "Palangos miesto savivaldybė": 7
+        },
+        "2000": {
+          "Klaipėdos miesto savivaldybė": 7,
+          "Neringos savivaldybė": 3,
+          "Palangos miesto savivaldybė": 7
+        },
+        "2004": {
+          "Klaipėdos miesto savivaldybė": 7,
+          "Neringos savivaldybė": 3,
+          "Palangos miesto savivaldybė": 7
+        },
+        "2008": {
+          "Klaipėdos miesto savivaldybė": 7,
+          "Neringos savivaldybė": 3,
+          "Palangos miesto savivaldybė": 7
+        },
+        "2012": {
+          "Klaipėdos miesto savivaldybė": 7,
+          "Neringos savivaldybė": 3,
+          "Palangos miesto savivaldybė": 7
+        },
+        "2016": {
+          "Klaipėdos miesto savivaldybė": 14,
+          "Neringos savivaldybė": 3
+        },
+        "2020": {
+          "Klaipėdos miesto savivaldybė": 11,
+          "Neringos savivaldybė": 3
+        },
+        "2024": {
+          "Klaipėdos miesto savivaldybė": 12,
+          "Neringos savivaldybė": 3
+        }
+      }
+    },
+    "Pakruojo–Joniškio": {
+      "counties": [
+        "Šiaulių"
+      ],
+      "maps": {
+        "1996": {
+          "Joniškio rajono savivaldybė": 14,
+          "Pakruojo rajono savivaldybė": 39
+        },
+        "2000": {
+          "Joniškio rajono savivaldybė": 14,
+          "Pakruojo rajono savivaldybė": 38
+        },
+        "2004": {
+          "Joniškio rajono savivaldybė": 14,
+          "Pakruojo rajono savivaldybė": 38
+        },
+        "2008": {
+          "Joniškio rajono savivaldybė": 17,
+          "Pakruojo rajono savivaldybė": 38
+        },
+        "2012": {
+          "Joniškio rajono savivaldybė": 17,
+          "Pakruojo rajono savivaldybė": 38
+        }
+      }
+    },
+    "Panemunės": {
+      "counties": [
+        "Kauno"
+      ],
+      "maps": {
+        "1996": {
+          "Kauno miesto savivaldybė": 18
+        },
+        "2000": {
+          "Kauno miesto savivaldybė": 15
+        },
+        "2004": {
+          "Kauno miesto savivaldybė": 14
+        },
+        "2008": {
+          "Kauno miesto savivaldybė": 13
+        },
+        "2012": {
+          "Kauno miesto savivaldybė": 13
+        },
+        "2016": {
+          "Kauno miesto savivaldybė": 14
+        },
+        "2020": {
+          "Kauno miesto savivaldybė": 13
+        },
+        "2024": {
+          "Kauno miesto savivaldybė": 14
+        }
+      }
+    },
+    "Panerių": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "2016": {
+          "Vilniaus miesto savivaldybė": 17
+        }
+      }
+    },
+    "Panerių–Grigiškių": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "2020": {
+          "Vilniaus miesto savivaldybė": 13
+        }
+      }
+    },
+    "Panevėžio vakarinė": {
+      "counties": [
+        "Panevėžio"
+      ],
+      "maps": {
+        "2020": {
+          "Panevėžio miesto savivaldybė": 11
+        },
+        "2024": {
+          "Panevėžio miesto savivaldybė": 10
+        }
+      }
+    },
+    "Pasaulio lietuvių": {
+      "counties": [],
+      "note": "the district of voters abroad (2020 and 2024, Nr. 72): no precinct lies in Lithuania"
+    },
+    "Pasvalio–Pakruojo": {
+      "counties": [
+        "Šiaulių",
+        "Panevėžio"
+      ],
+      "maps": {
+        "2016": {
+          "Pakruojo rajono savivaldybė": 23,
+          "Pasvalio rajono savivaldybė": 35
+        }
+      }
+    },
+    "Pasvalio–Panevėžio": {
+      "counties": [
+        "Panevėžio"
+      ],
+      "maps": {
+        "1996": {
+          "Panevėžio rajono savivaldybė": 12,
+          "Pasvalio rajono savivaldybė": 35
+        },
+        "2000": {
+          "Panevėžio rajono savivaldybė": 12,
+          "Pasvalio rajono savivaldybė": 35
+        },
+        "2004": {
+          "Panevėžio rajono savivaldybė": 12,
+          "Pasvalio rajono savivaldybė": 35
+        },
+        "2008": {
+          "Panevėžio rajono savivaldybė": 13,
+          "Pasvalio rajono savivaldybė": 35
+        },
+        "2012": {
+          "Panevėžio rajono savivaldybė": 13,
+          "Pasvalio rajono savivaldybė": 35
+        }
+      }
+    },
+    "Pašilaičių": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "2020": {
+          "Vilniaus miesto savivaldybė": 10
+        },
+        "2024": {
+          "Vilniaus miesto savivaldybė": 10
+        }
+      }
+    },
+    "Petrašiūnų": {
+      "counties": [
+        "Kauno"
+      ],
+      "maps": {
+        "2016": {
+          "Kauno miesto savivaldybė": 13
+        }
+      }
+    },
+    "Petrašiūnų–Gričiupio": {
+      "counties": [
+        "Kauno"
+      ],
+      "maps": {
+        "2020": {
+          "Kauno miesto savivaldybė": 14
+        },
+        "2024": {
+          "Kauno miesto savivaldybė": 14
+        }
+      }
+    },
+    "Pietų Žemaitijos": {
+      "counties": [
+        "Klaipėdos",
+        "Telšių",
+        "Tauragės"
+      ],
+      "maps": {
+        "2016": {
+          "Rietavo savivaldybė": 7,
+          "Šilalės rajono savivaldybė": 27,
+          "Šilutės rajono savivaldybė": 9
+        }
+      }
+    },
+    "Pilaitės–Karoliniškių": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "2020": {
+          "Vilniaus miesto savivaldybė": 12
+        },
+        "2024": {
+          "Vilniaus miesto savivaldybė": 13
+        }
+      }
+    },
+    "Plungės": {
+      "counties": [
+        "Telšių"
+      ],
+      "maps": {
+        "1996": {
+          "Plungės rajono savivaldybė": 34
+        },
+        "2016": {
+          "Plungės rajono savivaldybė": 28,
+          "Rietavo savivaldybė": 2
+        }
+      }
+    },
+    "Plungės–Rietavo": {
+      "counties": [
+        "Telšių"
+      ],
+      "maps": {
+        "2000": {
+          "Plungės rajono savivaldybė": 27,
+          "Rietavo savivaldybė": 9
+        },
+        "2004": {
+          "Plungės rajono savivaldybė": 28,
+          "Rietavo savivaldybė": 9
+        },
+        "2008": {
+          "Plungės rajono savivaldybė": 28,
+          "Rietavo savivaldybė": 9
+        },
+        "2012": {
+          "Plungės rajono savivaldybė": 28,
+          "Rietavo savivaldybė": 9
+        },
+        "2020": {
+          "Plungės rajono savivaldybė": 28,
+          "Rietavo savivaldybė": 8
+        },
+        "2024": {
+          "Plungės rajono savivaldybė": 28,
+          "Rietavo savivaldybė": 8
+        }
+      }
+    },
+    "Pramonės": {
+      "counties": [
+        "Kauno"
+      ],
+      "maps": {
+        "1996": {
+          "Kauno miesto savivaldybė": 14
+        },
+        "2000": {
+          "Kauno miesto savivaldybė": 13
+        },
+        "2004": {
+          "Kauno miesto savivaldybė": 12
+        },
+        "2008": {
+          "Kauno miesto savivaldybė": 12
+        },
+        "2012": {
+          "Kauno miesto savivaldybė": 12
+        }
+      }
+    },
+    "Prienų": {
+      "counties": [
+        "Kauno",
+        "Marijampolės"
+      ],
+      "maps": {
+        "1996": {
+          "Birštono savivaldybė": 1,
+          "Marijampolės rajono savivaldybė (iki 2000 m.)": 2,
+          "Prienų rajono savivaldybė": 34
+        },
+        "2000": {
+          "Birštono savivaldybė": 3,
+          "Kaišiadorių rajono savivaldybė": 3,
+          "Prienų rajono savivaldybė": 32
+        },
+        "2004": {
+          "Birštono savivaldybė": 3,
+          "Prienų rajono savivaldybė": 32
+        },
+        "2008": {
+          "Birštono savivaldybė": 3,
+          "Prienų rajono savivaldybė": 30
+        }
+      }
+    },
+    "Prienų–Birštono": {
+      "counties": [
+        "Kauno",
+        "Alytaus"
+      ],
+      "maps": {
+        "2012": {
+          "Birštono savivaldybė": 3,
+          "Prienų rajono savivaldybė": 30
+        },
+        "2016": {
+          "Alytaus rajono savivaldybė": 5,
+          "Birštono savivaldybė": 3,
+          "Prienų rajono savivaldybė": 30
+        }
+      }
+    },
+    "Radviliškio": {
+      "counties": [
+        "Šiaulių"
+      ],
+      "maps": {
+        "1996": {
+          "Radviliškio rajono savivaldybė": 43
+        },
+        "2000": {
+          "Radviliškio rajono savivaldybė": 44
+        },
+        "2004": {
+          "Radviliškio rajono savivaldybė": 44
+        },
+        "2008": {
+          "Radviliškio rajono savivaldybė": 42
+        },
+        "2012": {
+          "Radviliškio rajono savivaldybė": 42
+        },
+        "2016": {
+          "Radviliškio rajono savivaldybė": 38
+        }
+      }
+    },
+    "Radviliškio–Tytuvėnų": {
+      "counties": [
+        "Šiaulių"
+      ],
+      "maps": {
+        "2020": {
+          "Kelmės rajono savivaldybė": 8,
+          "Radviliškio rajono savivaldybė": 28
+        },
+        "2024": {
+          "Kelmės rajono savivaldybė": 6,
+          "Radviliškio rajono savivaldybė": 28
+        }
+      }
+    },
+    "Raseinių": {
+      "counties": [
+        "Kauno"
+      ],
+      "maps": {
+        "1996": {
+          "Raseinių rajono savivaldybė": 42
+        },
+        "2000": {
+          "Raseinių rajono savivaldybė": 42
+        },
+        "2004": {
+          "Raseinių rajono savivaldybė": 46
+        },
+        "2008": {
+          "Raseinių rajono savivaldybė": 46
+        },
+        "2012": {
+          "Raseinių rajono savivaldybė": 46
+        }
+      }
+    },
+    "Raseinių–Josvainių": {
+      "counties": [
+        "Kauno"
+      ],
+      "maps": {
+        "2024": {
+          "Kėdainių rajono savivaldybė": 14,
+          "Raseinių rajono savivaldybė": 43
+        }
+      }
+    },
+    "Raseinių–Kėdainių": {
+      "counties": [
+        "Kauno"
+      ],
+      "maps": {
+        "2016": {
+          "Kėdainių rajono savivaldybė": 14,
+          "Raseinių rajono savivaldybė": 46
+        },
+        "2020": {
+          "Kėdainių rajono savivaldybė": 14,
+          "Raseinių rajono savivaldybė": 46
+        }
+      }
+    },
+    "Raudondvario": {
+      "counties": [
+        "Kauno"
+      ],
+      "maps": {
+        "2016": {
+          "Kauno rajono savivaldybė": 25
+        },
+        "2020": {
+          "Kauno rajono savivaldybė": 26
+        },
+        "2024": {
+          "Kauno rajono savivaldybė": 27
+        }
+      }
+    },
+    "Riešės": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "2024": {
+          "Vilniaus rajono savivaldybė": 23
+        }
+      }
+    },
+    "Rokiškio": {
+      "counties": [
+        "Panevėžio"
+      ],
+      "maps": {
+        "1996": {
+          "Rokiškio rajono savivaldybė": 42
+        },
+        "2000": {
+          "Rokiškio rajono savivaldybė": 42
+        },
+        "2004": {
+          "Rokiškio rajono savivaldybė": 42
+        },
+        "2008": {
+          "Rokiškio rajono savivaldybė": 40
+        },
+        "2012": {
+          "Rokiškio rajono savivaldybė": 39
+        }
+      }
+    },
+    "Saulės": {
+      "counties": [
+        "Šiaulių"
+      ],
+      "maps": {
+        "1996": {
+          "Šiaulių miesto savivaldybė": 16
+        },
+        "2000": {
+          "Šiaulių miesto savivaldybė": 12
+        },
+        "2004": {
+          "Šiaulių miesto savivaldybė": 12
+        },
+        "2008": {
+          "Šiaulių miesto savivaldybė": 12
+        },
+        "2012": {
+          "Šiaulių miesto savivaldybė": 12
+        },
+        "2016": {
+          "Šiaulių miesto savivaldybė": 13
+        },
+        "2020": {
+          "Šiaulių miesto savivaldybė": 14
+        },
+        "2024": {
+          "Šiaulių miesto savivaldybė": 14
+        }
+      }
+    },
+    "Savanorių": {
+      "counties": [
+        "Kauno"
+      ],
+      "maps": {
+        "2020": {
+          "Kauno miesto savivaldybė": 10,
+          "Kauno rajono savivaldybė": 6
+        },
+        "2024": {
+          "Kauno miesto savivaldybė": 11,
+          "Kauno rajono savivaldybė": 6
+        }
+      }
+    },
+    "Senamiesčio": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "1996": {
+          "Vilniaus miesto savivaldybė": 17
+        },
+        "2000": {
+          "Vilniaus miesto savivaldybė": 18
+        },
+        "2004": {
+          "Vilniaus miesto savivaldybė": 14
+        },
+        "2008": {
+          "Vilniaus miesto savivaldybė": 14
+        },
+        "2012": {
+          "Vilniaus miesto savivaldybė": 14
+        },
+        "2016": {
+          "Vilniaus miesto savivaldybė": 15
+        }
+      }
+    },
+    "Senamiesčio–Žvėryno": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "2020": {
+          "Vilniaus miesto savivaldybė": 15
+        },
+        "2024": {
+          "Vilniaus miesto savivaldybė": 13
+        }
+      }
+    },
+    "Skuodo–Mažeikių": {
+      "counties": [
+        "Klaipėdos",
+        "Telšių"
+      ],
+      "maps": {
+        "1996": {
+          "Mažeikių rajono savivaldybė": 18,
+          "Plungės rajono savivaldybė": 1,
+          "Skuodo rajono savivaldybė": 24
+        },
+        "2000": {
+          "Mažeikių rajono savivaldybė": 22,
+          "Plungės rajono savivaldybė": 1,
+          "Skuodo rajono savivaldybė": 24
+        },
+        "2004": {
+          "Mažeikių rajono savivaldybė": 22,
+          "Skuodo rajono savivaldybė": 24
+        },
+        "2008": {
+          "Mažeikių rajono savivaldybė": 22,
+          "Skuodo rajono savivaldybė": 24
+        },
+        "2012": {
+          "Mažeikių rajono savivaldybė": 22,
+          "Skuodo rajono savivaldybė": 22
+        }
+      }
+    },
+    "Suvalkijos": {
+      "counties": [
+        "Marijampolės"
+      ],
+      "maps": {
+        "1996": {
+          "Marijampolės rajono savivaldybė (iki 2000 m.)": 52
+        },
+        "2000": {
+          "Kalvarijos savivaldybė": 17,
+          "Kazlų Rūdos savivaldybė": 14,
+          "Marijampolės savivaldybė": 26
+        },
+        "2004": {
+          "Kalvarijos savivaldybė": 17,
+          "Kazlų Rūdos savivaldybė": 14,
+          "Marijampolės savivaldybė": 26
+        },
+        "2008": {
+          "Kalvarijos savivaldybė": 17,
+          "Kazlų Rūdos savivaldybė": 14,
+          "Marijampolės savivaldybė": 28
+        },
+        "2012": {
+          "Kalvarijos savivaldybė": 17,
+          "Kazlų Rūdos savivaldybė": 14,
+          "Marijampolės savivaldybė": 24
+        }
+      }
+    },
+    "Sėlos": {
+      "counties": [
+        "Panevėžio"
+      ],
+      "maps": {
+        "2016": {
+          "Kupiškio rajono savivaldybė": 10,
+          "Rokiškio rajono savivaldybė": 38
+        }
+      }
+    },
+    "Sėlos rytinė": {
+      "counties": [
+        "Panevėžio",
+        "Utenos"
+      ],
+      "maps": {
+        "2020": {
+          "Kupiškio rajono savivaldybė": 12,
+          "Rokiškio rajono savivaldybė": 37,
+          "Zarasų rajono savivaldybė": 1
+        },
+        "2024": {
+          "Rokiškio rajono savivaldybė": 35,
+          "Zarasų rajono savivaldybė": 15
+        }
+      }
+    },
+    "Sėlos vakarinė": {
+      "counties": [
+        "Panevėžio"
+      ],
+      "maps": {
+        "2020": {
+          "Biržų rajono savivaldybė": 32,
+          "Kupiškio rajono savivaldybė": 12
+        },
+        "2024": {
+          "Biržų rajono savivaldybė": 30,
+          "Kupiškio rajono savivaldybė": 20
+        }
+      }
+    },
+    "Sūduvos": {
+      "counties": [
+        "Marijampolės"
+      ],
+      "maps": {
+        "2016": {
+          "Kalvarijos savivaldybė": 17,
+          "Kazlų Rūdos savivaldybė": 14,
+          "Marijampolės savivaldybė": 22
+        }
+      }
+    },
+    "Sūduvos pietinė": {
+      "counties": [
+        "Marijampolės",
+        "Alytaus"
+      ],
+      "maps": {
+        "2020": {
+          "Alytaus rajono savivaldybė": 15,
+          "Kalvarijos savivaldybė": 17,
+          "Marijampolės savivaldybė": 21
+        },
+        "2024": {
+          "Alytaus rajono savivaldybė": 15,
+          "Kalvarijos savivaldybė": 17,
+          "Marijampolės savivaldybė": 20
+        }
+      }
+    },
+    "Sūduvos šiaurinė": {
+      "counties": [
+        "Kauno",
+        "Marijampolės"
+      ],
+      "maps": {
+        "2020": {
+          "Kauno rajono savivaldybė": 2,
+          "Kazlų Rūdos savivaldybė": 14,
+          "Šakių rajono savivaldybė": 33
+        },
+        "2024": {
+          "Kauno rajono savivaldybė": 4,
+          "Kazlų Rūdos savivaldybė": 14,
+          "Šakių rajono savivaldybė": 31
+        }
+      }
+    },
+    "Tauragės": {
+      "counties": [
+        "Tauragės"
+      ],
+      "maps": {
+        "1996": {
+          "Tauragės rajono savivaldybė": 30
+        },
+        "2000": {
+          "Tauragės rajono savivaldybė": 28
+        },
+        "2004": {
+          "Tauragės rajono savivaldybė": 28
+        },
+        "2008": {
+          "Tauragės rajono savivaldybė": 29
+        },
+        "2012": {
+          "Tauragės rajono savivaldybė": 30
+        },
+        "2016": {
+          "Tauragės rajono savivaldybė": 34
+        },
+        "2020": {
+          "Tauragės rajono savivaldybė": 30,
+          "Šilalės rajono savivaldybė": 5
+        },
+        "2024": {
+          "Tauragės rajono savivaldybė": 28,
+          "Šilalės rajono savivaldybė": 5
+        }
+      }
+    },
+    "Telšių": {
+      "counties": [
+        "Telšių"
+      ],
+      "maps": {
+        "1996": {
+          "Telšių rajono savivaldybė": 29
+        },
+        "2000": {
+          "Telšių rajono savivaldybė": 30
+        },
+        "2004": {
+          "Telšių rajono savivaldybė": 30
+        },
+        "2008": {
+          "Telšių rajono savivaldybė": 33
+        },
+        "2012": {
+          "Telšių rajono savivaldybė": 32
+        },
+        "2016": {
+          "Telšių rajono savivaldybė": 33
+        },
+        "2020": {
+          "Telšių rajono savivaldybė": 33
+        },
+        "2024": {
+          "Telšių rajono savivaldybė": 33
+        }
+      }
+    },
+    "Trakų": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "1996": {
+          "Trakų rajono savivaldybė": 33,
+          "Vilniaus miesto savivaldybė": 1
+        }
+      }
+    },
+    "Trakų–Elektrėnų": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "2000": {
+          "Elektrėnų savivaldybė": 8,
+          "Trakų rajono savivaldybė": 22,
+          "Vilniaus miesto savivaldybė": 5
+        },
+        "2004": {
+          "Elektrėnų savivaldybė": 8,
+          "Trakų rajono savivaldybė": 20,
+          "Vilniaus miesto savivaldybė": 3
+        },
+        "2008": {
+          "Elektrėnų savivaldybė": 8,
+          "Trakų rajono savivaldybė": 21,
+          "Vilniaus miesto savivaldybė": 3
+        },
+        "2012": {
+          "Elektrėnų savivaldybė": 8,
+          "Trakų rajono savivaldybė": 22,
+          "Vilniaus miesto savivaldybė": 3
+        }
+      }
+    },
+    "Trakų–Vievio": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "2016": {
+          "Elektrėnų savivaldybė": 10,
+          "Trakų rajono savivaldybė": 9,
+          "Vilniaus miesto savivaldybė": 3
+        },
+        "2020": {
+          "Elektrėnų savivaldybė": 7,
+          "Trakų rajono savivaldybė": 27
+        },
+        "2024": {
+          "Elektrėnų savivaldybė": 6,
+          "Trakų rajono savivaldybė": 27
+        }
+      }
+    },
+    "Ukmergės": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "1996": {
+          "Ukmergės rajono savivaldybė": 40
+        },
+        "2000": {
+          "Ukmergės rajono savivaldybė": 40
+        },
+        "2004": {
+          "Ukmergės rajono savivaldybė": 40
+        },
+        "2008": {
+          "Ukmergės rajono savivaldybė": 40
+        },
+        "2012": {
+          "Ukmergės rajono savivaldybė": 32
+        },
+        "2016": {
+          "Ukmergės rajono savivaldybė": 39
+        }
+      }
+    },
+    "Utenos": {
+      "counties": [
+        "Utenos"
+      ],
+      "maps": {
+        "1996": {
+          "Utenos rajono savivaldybė": 29
+        },
+        "2000": {
+          "Utenos rajono savivaldybė": 29
+        },
+        "2004": {
+          "Utenos rajono savivaldybė": 29
+        },
+        "2008": {
+          "Utenos rajono savivaldybė": 31
+        },
+        "2012": {
+          "Utenos rajono savivaldybė": 30
+        },
+        "2016": {
+          "Utenos rajono savivaldybė": 30
+        },
+        "2020": {
+          "Utenos rajono savivaldybė": 32
+        },
+        "2024": {
+          "Utenos rajono savivaldybė": 32
+        }
+      }
+    },
+    "Vakarinė": {
+      "counties": [
+        "Panevėžio"
+      ],
+      "maps": {
+        "1996": {
+          "Panevėžio miesto savivaldybė": 11
+        },
+        "2000": {
+          "Panevėžio miesto savivaldybė": 11
+        },
+        "2004": {
+          "Panevėžio miesto savivaldybė": 11
+        },
+        "2008": {
+          "Panevėžio miesto savivaldybė": 11
+        },
+        "2012": {
+          "Panevėžio miesto savivaldybė": 11
+        },
+        "2016": {
+          "Panevėžio miesto savivaldybė": 11
+        }
+      }
+    },
+    "Varėnos–Eišiškių": {
+      "counties": [
+        "Vilniaus",
+        "Alytaus"
+      ],
+      "maps": {
+        "1996": {
+          "Varėnos rajono savivaldybė": 39,
+          "Šalčininkų rajono savivaldybė": 10
+        },
+        "2000": {
+          "Druskininkų savivaldybė": 4,
+          "Varėnos rajono savivaldybė": 34,
+          "Šalčininkų rajono savivaldybė": 11
+        },
+        "2004": {
+          "Varėnos rajono savivaldybė": 34,
+          "Šalčininkų rajono savivaldybė": 11
+        },
+        "2008": {
+          "Varėnos rajono savivaldybė": 33,
+          "Šalčininkų rajono savivaldybė": 12
+        },
+        "2012": {
+          "Varėnos rajono savivaldybė": 33,
+          "Šalčininkų rajono savivaldybė": 12
+        }
+      }
+    },
+    "Varėnos–Trakų": {
+      "counties": [
+        "Vilniaus",
+        "Alytaus"
+      ],
+      "maps": {
+        "2016": {
+          "Trakų rajono savivaldybė": 19,
+          "Varėnos rajono savivaldybė": 31
+        }
+      }
+    },
+    "Verkių": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "2016": {
+          "Vilniaus miesto savivaldybė": 10
+        },
+        "2020": {
+          "Vilniaus miesto savivaldybė": 9
+        },
+        "2024": {
+          "Vilniaus miesto savivaldybė": 9
+        }
+      }
+    },
+    "Vilkaviškio": {
+      "counties": [
+        "Marijampolės"
+      ],
+      "maps": {
+        "1996": {
+          "Vilkaviškio rajono savivaldybė": 41
+        },
+        "2000": {
+          "Vilkaviškio rajono savivaldybė": 40
+        },
+        "2004": {
+          "Vilkaviškio rajono savivaldybė": 40
+        },
+        "2008": {
+          "Vilkaviškio rajono savivaldybė": 41
+        },
+        "2012": {
+          "Vilkaviškio rajono savivaldybė": 41
+        },
+        "2016": {
+          "Vilkaviškio rajono savivaldybė": 40
+        },
+        "2020": {
+          "Vilkaviškio rajono savivaldybė": 43
+        },
+        "2024": {
+          "Vilkaviškio rajono savivaldybė": 39,
+          "Šakių rajono savivaldybė": 1
+        }
+      }
+    },
+    "Vilniaus pietinė": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "2024": {
+          "Vilniaus miesto savivaldybė": 8,
+          "Vilniaus rajono savivaldybė": 7
+        }
+      }
+    },
+    "Vilniaus–Trakų": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "1996": {
+          "Trakų rajono savivaldybė": 5,
+          "Vilniaus rajono savivaldybė": 15
+        },
+        "2000": {
+          "Trakų rajono savivaldybė": 5,
+          "Vilniaus miesto savivaldybė": 1,
+          "Vilniaus rajono savivaldybė": 15
+        },
+        "2004": {
+          "Trakų rajono savivaldybė": 6,
+          "Vilniaus miesto savivaldybė": 1,
+          "Vilniaus rajono savivaldybė": 15
+        },
+        "2008": {
+          "Trakų rajono savivaldybė": 6,
+          "Vilniaus miesto savivaldybė": 2,
+          "Vilniaus rajono savivaldybė": 14
+        },
+        "2012": {
+          "Trakų rajono savivaldybė": 6,
+          "Vilniaus miesto savivaldybė": 2,
+          "Vilniaus rajono savivaldybė": 14
+        }
+      }
+    },
+    "Vilniaus–Šalčininkų": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "1996": {
+          "Vilniaus rajono savivaldybė": 15,
+          "Šalčininkų rajono savivaldybė": 23
+        },
+        "2000": {
+          "Vilniaus rajono savivaldybė": 16,
+          "Šalčininkų rajono savivaldybė": 25
+        },
+        "2004": {
+          "Vilniaus rajono savivaldybė": 15,
+          "Šalčininkų rajono savivaldybė": 25
+        },
+        "2008": {
+          "Vilniaus rajono savivaldybė": 16,
+          "Šalčininkų rajono savivaldybė": 25
+        },
+        "2012": {
+          "Vilniaus rajono savivaldybė": 16,
+          "Šalčininkų rajono savivaldybė": 25
+        }
+      }
+    },
+    "Visagino–Zarasų": {
+      "counties": [
+        "Utenos"
+      ],
+      "maps": {
+        "2016": {
+          "Visagino savivaldybė": 16,
+          "Zarasų rajono savivaldybė": 23
+        }
+      }
+    },
+    "Zanavykų": {
+      "counties": [
+        "Kauno",
+        "Marijampolės"
+      ],
+      "maps": {
+        "2016": {
+          "Kauno rajono savivaldybė": 3,
+          "Vilkaviškio rajono savivaldybė": 3,
+          "Šakių rajono savivaldybė": 34
+        }
+      }
+    },
+    "Zarasų–Visagino": {
+      "counties": [
+        "Utenos"
+      ],
+      "maps": {
+        "1996": {
+          "Visagino savivaldybė": 6,
+          "Zarasų rajono savivaldybė": 24
+        },
+        "2000": {
+          "Visagino savivaldybė": 6,
+          "Zarasų rajono savivaldybė": 24
+        },
+        "2004": {
+          "Visagino savivaldybė": 16,
+          "Zarasų rajono savivaldybė": 24
+        },
+        "2008": {
+          "Visagino savivaldybė": 16,
+          "Zarasų rajono savivaldybė": 24
+        },
+        "2012": {
+          "Visagino savivaldybė": 16,
+          "Zarasų rajono savivaldybė": 24
+        }
+      }
+    },
+    "Šakių": {
+      "counties": [
+        "Marijampolės"
+      ],
+      "maps": {
+        "1996": {
+          "Vilkaviškio rajono savivaldybė": 3,
+          "Šakių rajono savivaldybė": 38
+        },
+        "2000": {
+          "Vilkaviškio rajono savivaldybė": 3,
+          "Šakių rajono savivaldybė": 36
+        },
+        "2004": {
+          "Vilkaviškio rajono savivaldybė": 3,
+          "Šakių rajono savivaldybė": 36
+        },
+        "2008": {
+          "Vilkaviškio rajono savivaldybė": 3,
+          "Šakių rajono savivaldybė": 35
+        },
+        "2012": {
+          "Vilkaviškio rajono savivaldybė": 3,
+          "Šakių rajono savivaldybė": 34
+        }
+      }
+    },
+    "Šalčininkų–Vilniaus": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "2016": {
+          "Vilniaus rajono savivaldybė": 4,
+          "Šalčininkų rajono savivaldybė": 36
+        },
+        "2020": {
+          "Vilniaus rajono savivaldybė": 4,
+          "Šalčininkų rajono savivaldybė": 36
+        },
+        "2024": {
+          "Vilniaus rajono savivaldybė": 10,
+          "Šalčininkų rajono savivaldybė": 35
+        }
+      }
+    },
+    "Šeškinės": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "1996": {
+          "Vilniaus miesto savivaldybė": 14
+        },
+        "2000": {
+          "Vilniaus miesto savivaldybė": 14
+        },
+        "2004": {
+          "Vilniaus miesto savivaldybė": 12
+        },
+        "2008": {
+          "Vilniaus miesto savivaldybė": 13
+        },
+        "2012": {
+          "Vilniaus miesto savivaldybė": 14
+        },
+        "2016": {
+          "Vilniaus miesto savivaldybė": 11
+        }
+      }
+    },
+    "Šeškinės–Šnipiškių": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "2020": {
+          "Vilniaus miesto savivaldybė": 11
+        },
+        "2024": {
+          "Vilniaus miesto savivaldybė": 11
+        }
+      }
+    },
+    "Šiaulių kaimiškoji": {
+      "counties": [
+        "Šiaulių"
+      ],
+      "maps": {
+        "1996": {
+          "Šiaulių rajono savivaldybė": 40
+        },
+        "2000": {
+          "Šiaulių rajono savivaldybė": 37
+        },
+        "2004": {
+          "Šiaulių rajono savivaldybė": 37
+        },
+        "2008": {
+          "Šiaulių rajono savivaldybė": 37
+        },
+        "2012": {
+          "Šiaulių rajono savivaldybė": 37
+        }
+      }
+    },
+    "Šiaulių krašto": {
+      "counties": [
+        "Šiaulių"
+      ],
+      "maps": {
+        "2020": {
+          "Šiaulių miesto savivaldybė": 3,
+          "Šiaulių rajono savivaldybė": 32
+        },
+        "2024": {
+          "Šiaulių miesto savivaldybė": 3,
+          "Šiaulių rajono savivaldybė": 31
+        }
+      }
+    },
+    "Šilainių": {
+      "counties": [
+        "Kauno"
+      ],
+      "maps": {
+        "1996": {
+          "Kauno miesto savivaldybė": 13
+        },
+        "2000": {
+          "Kauno miesto savivaldybė": 13
+        },
+        "2004": {
+          "Kauno miesto savivaldybė": 13
+        },
+        "2008": {
+          "Kauno miesto savivaldybė": 13
+        },
+        "2012": {
+          "Kauno miesto savivaldybė": 13
+        },
+        "2016": {
+          "Kauno miesto savivaldybė": 10
+        },
+        "2020": {
+          "Kauno miesto savivaldybė": 11
+        },
+        "2024": {
+          "Kauno miesto savivaldybė": 11
+        }
+      }
+    },
+    "Šilalės–Šilutės": {
+      "counties": [
+        "Klaipėdos",
+        "Tauragės"
+      ],
+      "maps": {
+        "1996": {
+          "Šilalės rajono savivaldybė": 24,
+          "Šilutės rajono savivaldybė": 14
+        },
+        "2000": {
+          "Šilalės rajono savivaldybė": 26,
+          "Šilutės rajono savivaldybė": 14
+        },
+        "2004": {
+          "Šilalės rajono savivaldybė": 27,
+          "Šilutės rajono savivaldybė": 17
+        },
+        "2008": {
+          "Šilalės rajono savivaldybė": 26,
+          "Šilutės rajono savivaldybė": 16
+        },
+        "2012": {
+          "Šilalės rajono savivaldybė": 27,
+          "Šilutės rajono savivaldybė": 16
+        }
+      }
+    },
+    "Šilutės": {
+      "counties": [
+        "Klaipėdos"
+      ],
+      "maps": {
+        "1996": {
+          "Šilutės rajono savivaldybė": 25
+        },
+        "2016": {
+          "Šilutės rajono savivaldybė": 28
+        },
+        "2020": {
+          "Šilutės rajono savivaldybė": 37
+        },
+        "2024": {
+          "Šilutės rajono savivaldybė": 35
+        }
+      }
+    },
+    "Šilutės–Pagėgių": {
+      "counties": [
+        "Klaipėdos",
+        "Tauragės"
+      ],
+      "maps": {
+        "2000": {
+          "Pagėgių savivaldybė": 11,
+          "Šilutės rajono savivaldybė": 14
+        },
+        "2004": {
+          "Pagėgių savivaldybė": 11,
+          "Šilutės rajono savivaldybė": 22
+        },
+        "2008": {
+          "Pagėgių savivaldybė": 11,
+          "Šilutės rajono savivaldybė": 23
+        },
+        "2012": {
+          "Pagėgių savivaldybė": 11,
+          "Šilutės rajono savivaldybė": 22
+        }
+      }
+    },
+    "Širvintų–Vilniaus": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "1996": {
+          "Vilniaus miesto savivaldybė": 1,
+          "Vilniaus rajono savivaldybė": 25,
+          "Širvintų rajono savivaldybė": 24
+        },
+        "2000": {
+          "Vilniaus miesto savivaldybė": 1,
+          "Vilniaus rajono savivaldybė": 23,
+          "Širvintų rajono savivaldybė": 24
+        },
+        "2004": {
+          "Vilniaus rajono savivaldybė": 23,
+          "Širvintų rajono savivaldybė": 24
+        },
+        "2008": {
+          "Vilniaus rajono savivaldybė": 23,
+          "Širvintų rajono savivaldybė": 24
+        },
+        "2012": {
+          "Vilniaus rajono savivaldybė": 21,
+          "Širvintų rajono savivaldybė": 24
+        }
+      }
+    },
+    "Žaliakalnio": {
+      "counties": [
+        "Kauno"
+      ],
+      "maps": {
+        "1996": {
+          "Kauno miesto savivaldybė": 14
+        },
+        "2000": {
+          "Kauno miesto savivaldybė": 15
+        },
+        "2004": {
+          "Kauno miesto savivaldybė": 15
+        },
+        "2008": {
+          "Kauno miesto savivaldybė": 15
+        },
+        "2012": {
+          "Kauno miesto savivaldybė": 14
+        }
+      }
+    },
+    "Žemaitijos šiaurinė": {
+      "counties": [
+        "Klaipėdos",
+        "Šiaulių",
+        "Telšių"
+      ],
+      "maps": {
+        "2020": {
+          "Akmenės rajono savivaldybė": 20,
+          "Mažeikių rajono savivaldybė": 16,
+          "Skuodo rajono savivaldybė": 12
+        },
+        "2024": {
+          "Akmenės rajono savivaldybė": 18,
+          "Mažeikių rajono savivaldybė": 15,
+          "Skuodo rajono savivaldybė": 12
+        }
+      }
+    },
+    "Žiemgalos": {
+      "counties": [
+        "Šiaulių"
+      ],
+      "maps": {
+        "2016": {
+          "Joniškio rajono savivaldybė": 36,
+          "Pakruojo rajono savivaldybė": 15,
+          "Šiaulių rajono savivaldybė": 9
+        }
+      }
+    },
+    "Žiemgalos rytinė": {
+      "counties": [
+        "Šiaulių",
+        "Panevėžio"
+      ],
+      "maps": {
+        "2020": {
+          "Pakruojo rajono savivaldybė": 22,
+          "Pasvalio rajono savivaldybė": 35
+        },
+        "2024": {
+          "Pakruojo rajono savivaldybė": 25,
+          "Pasvalio rajono savivaldybė": 33
+        }
+      }
+    },
+    "Žiemgalos vakarinė": {
+      "counties": [
+        "Šiaulių"
+      ],
+      "maps": {
+        "2020": {
+          "Joniškio rajono savivaldybė": 36,
+          "Pakruojo rajono savivaldybė": 13,
+          "Šiaulių rajono savivaldybė": 7
+        },
+        "2024": {
+          "Joniškio rajono savivaldybė": 36,
+          "Pakruojo rajono savivaldybė": 9,
+          "Šiaulių rajono savivaldybė": 8
+        }
+      }
+    },
+    "Žirmūnų": {
+      "counties": [
+        "Vilniaus"
+      ],
+      "maps": {
+        "1996": {
+          "Vilniaus miesto savivaldybė": 16
+        },
+        "2000": {
+          "Vilniaus miesto savivaldybė": 16
+        },
+        "2004": {
+          "Vilniaus miesto savivaldybė": 17
+        },
+        "2008": {
+          "Vilniaus miesto savivaldybė": 17
+        },
+        "2012": {
+          "Vilniaus miesto savivaldybė": 17
+        },
+        "2016": {
+          "Vilniaus miesto savivaldybė": 16
+        },
+        "2020": {
+          "Vilniaus miesto savivaldybė": 14
+        },
+        "2024": {
+          "Vilniaus miesto savivaldybė": 14
+        }
+      }
+    }
+  }
+}

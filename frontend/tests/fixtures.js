@@ -33,6 +33,7 @@ export const index = {
   municipalityCounties: ['Šiaulių', 'Vilniaus'],
   counties: ['Vilniaus', 'Kauno', 'Klaipėdos', 'Šiaulių', 'Panevėžio', 'Marijampolės', 'Alytaus', 'Telšių', 'Utenos', 'Tauragės'],
   constituencies: ['Aukštaitijos', 'Žirmūnų'],
+  constituencyCounties: [['Panevėžio'], ['Vilniaus']],
   nationalities: [{ label: 'lietuviai' }, { label: 'lenkai' }],
   educationLevels: [{ label: 'Aukštasis universitetinis' }],
   campaigns: [],

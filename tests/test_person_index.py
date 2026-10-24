@@ -497,6 +497,8 @@ class GroupingTests(unittest.TestCase):
         index = self._build([("2016-seimo", "a-b", record)])
         entry = index["people"][0]["e"][0]
         self.assertEqual(index["constituencies"], ["Dzūkijos"])
+        # Its counties ride parallel to the name (issue #217).
+        self.assertEqual(index["constituencyCounties"], [["Alytaus"]])
         self.assertEqual(entry["ap"], 0)
         self.assertNotIn("v", entry)
         self.assertNotIn("cv", entry)

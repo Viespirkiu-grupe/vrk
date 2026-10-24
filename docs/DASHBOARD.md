@@ -661,7 +661,17 @@ single-winner race's last round contested (a Seimas constituency, or the
 country for a presidential candidate), and `"ap"`, an index into the
 top-level `constituencies` list — the district's one name across the four
 label eras (`scraper/shared/apygardos.py`; 315 raw labels, 136 names; a name,
-not a boundary — Kėdainių in 2000 and in 2020 are one row). The page offers
+not a boundary — Kėdainių in 2000 and in 2020 are one row).
+`constituencyCounties` runs parallel to it with each name's counties, a list
+(issue #217): `scraper/constituency_counties.json`, which
+`scripts/build_constituency_counties.py` derives from VRK's per-election
+precinct lists of 1996–2024 rather than from the names (79 of the 136 name no
+municipality). A name is filed under every county any of its maps reached —
+29 cross a county line, Dainavos was a Kaunas city district through 2016 and
+Prienai–Birštonas–Alytus land from 2020 — and the facet's optgroups follow
+`counties` like the municipality facet's, the district listed under each of
+its counties with the same `ap` value; Pasaulio lietuvių, the district
+abroad, has no county and sits in a last *Be apskrities* group. The page offers
 the constituency as a facet and a CSV column (`apygarda`), prints the
 counts inside the opened election card, in thousands (*Pirmumo balsai*
 `11 541`, the race's `isViso`/`balsai`), but not on the card header: a bare
