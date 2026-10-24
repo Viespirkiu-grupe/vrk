@@ -139,7 +139,19 @@ dl { display: grid; grid-template-columns: minmax(150px, 28%) minmax(0, 1fr); ma
 dt { color: var(--muted); overflow-wrap: anywhere; }
 dd { margin: 0; overflow-wrap: anywhere; white-space: pre-wrap; }
 dd a { font-size: 12px; }
-.tablewrap { min-width: 0; max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; background: linear-gradient(to right, var(--panel) 40%, transparent) left center, linear-gradient(to left, var(--panel) 40%, transparent) right center, radial-gradient(farthest-side at 0 50%, rgb(0 0 0 / 16%), transparent) left center, radial-gradient(farthest-side at 100% 50%, rgb(0 0 0 / 16%), transparent) right center; background-repeat: no-repeat; background-size: 36px 100%,36px 100%,13px 100%,13px 100%; background-attachment: local,local,scroll,scroll; }
+.tablewrap { min-width: 0; max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; --fade: 32px; --l: 0px; --r: 0px; --sticky: 0px; --bar: 0px; }
+/* A side with more to scroll fades its content out (issue #190). A mask, not
+   painted shadows: opaque sticky cells covered those, and no one cover colour
+   matches both panels and the page. The fade starts after a sticky first
+   column (--sticky, set by makeScrollWrap) and stops above a classic
+   scrollbar (--bar), so both stay fully opaque. */
+.tablewrap:is([data-more-left], [data-more-right]) {
+  --edge: linear-gradient(to right, #000 var(--sticky), transparent var(--sticky), #000 calc(var(--sticky) + var(--l)), #000 calc(100% - var(--r)), transparent);
+  -webkit-mask: var(--edge) top / 100% calc(100% - var(--bar)) no-repeat, linear-gradient(#000 0 0) bottom / 100% var(--bar) no-repeat;
+  mask: var(--edge) top / 100% calc(100% - var(--bar)) no-repeat, linear-gradient(#000 0 0) bottom / 100% var(--bar) no-repeat;
+}
+.tablewrap[data-more-left] { --l: var(--fade); }
+.tablewrap[data-more-right] { --r: var(--fade); }
 .tablewrap > svg { display: block; max-width: none; font-family: var(--font-sans); }
 /* Preserve words when sizing columns; only long URLs need arbitrary breaks. */
 table { font-variant-numeric: tabular-nums; overflow-wrap: break-word; word-break: normal; }
@@ -274,6 +286,7 @@ table.covgrid td.never { color: var(--muted); background: repeating-linear-gradi
   .dashboard-workspace { display: block; }
   #person { padding: 0; }
   .tablewrap, table.rec { overflow: visible; }
+  .tablewrap:is([data-more-left], [data-more-right]) { -webkit-mask: none; mask: none; }
   body { background: #fff; }
 }
 

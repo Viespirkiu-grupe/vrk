@@ -1215,6 +1215,49 @@ function appendSourceLinks(dd, nuorodos) {
   }
 }
 
+// Wide tables and charts scroll inside a `.tablewrap`, which fades its
+// content at an edge that has more to show (issue #190). The fade is a CSS
+// mask, so it needs no colour to match whatever panel or page is behind it;
+// this marks which side has more, and how wide a sticky first column is so
+// the left fade starts after it. A wrapper that fits gets no fade at all.
+const scrollWraps = new ResizeObserver(entries => {
+  for (const { target } of entries) measureScrollWrap(target.closest(".tablewrap"));
+});
+const scrollWrapContent = new WeakSet();
+
+function updateScrollWrap(wrap) {
+  const max = wrap.scrollWidth - wrap.clientWidth;
+  wrap.toggleAttribute("data-more-left", max > 1 && wrap.scrollLeft > 1);
+  wrap.toggleAttribute("data-more-right", max > 1 && wrap.scrollLeft < max - 1);
+}
+
+function measureScrollWrap(wrap) {
+  if (!wrap) return;
+  // Tables are often filled after the wrapper exists, and a table that grows
+  // inside a wrapper of the same size resizes only itself.
+  const content = wrap.firstElementChild;
+  if (content && !scrollWrapContent.has(content)) { scrollWrapContent.add(content); scrollWraps.observe(content); }
+  const cell = wrap.querySelector(":scope > table")?.rows[0]?.cells[0];
+  const sticky = cell && getComputedStyle(cell).position === "sticky"
+    ? cell.getBoundingClientRect().right - wrap.getBoundingClientRect().left : 0;
+  wrap.style.setProperty("--sticky", `${Math.max(0, Math.round(sticky))}px`);
+  // A classic scrollbar is part of the box the mask covers; keep it opaque.
+  wrap.style.setProperty("--bar", `${wrap.offsetHeight - wrap.clientHeight}px`);
+  updateScrollWrap(wrap);
+}
+
+function watchScrollWrap(wrap) {
+  wrap.addEventListener("scroll", () => updateScrollWrap(wrap), { passive: true });
+  scrollWraps.observe(wrap);
+  return wrap;
+}
+
+function makeScrollWrap(content) {
+  const wrap = document.createElement("div"); wrap.className = "tablewrap";
+  if (content) wrap.appendChild(content);
+  return watchScrollWrap(wrap);
+}
+
 function renderValue(v) {
   if (v == null || v === "") { const s = document.createElement("span"); s.textContent = "—"; s.style.color = "var(--muted)"; return s; }
   if (typeof v === "boolean") { const s = document.createElement("span"); s.textContent = v ? "taip" : "ne"; return s; }
@@ -1247,8 +1290,7 @@ function renderValue(v) {
       const tr = t.tBodies[0].insertRow();
       for (const k of keys) tr.insertCell().appendChild(renderValue(item && typeof item === "object" ? item[k] : item));
     }
-    const wrap = document.createElement("div"); wrap.className = "tablewrap";
-    wrap.appendChild(t);
+    const wrap = makeScrollWrap(t);
     return wrap;
   }
   const dl = document.createElement("dl");
@@ -1425,7 +1467,7 @@ async function showPerson(p) {
   }
 
   const paneC = document.createElement("div");
-  const cmpWrap = document.createElement("div"); cmpWrap.className = "tablewrap";
+  const cmpWrap = makeScrollWrap();
   const cmp = document.createElement("table"); cmp.className = "cmp";
   cmp.innerHTML = "<thead><tr><th>Laukas</th></tr></thead><tbody></tbody>";
   for (const [e] of newestLoaded) {
@@ -1529,7 +1571,7 @@ async function showCompare() {
   note.textContent = "Kiekviename langelyje — naujausias to asmens atsakymas ir rinkimai, kuriuose jis pateiktas.";
   root.appendChild(note);
 
-  const wrap = document.createElement("div"); wrap.className = "tablewrap";
+  const wrap = makeScrollWrap();
   const t = document.createElement("table"); t.className = "cmp";
   t.innerHTML = "<thead><tr><th>Laukas</th></tr></thead><tbody></tbody>";
   for (const [p] of perPerson) {
@@ -1771,8 +1813,7 @@ function showAggregates() {
         tr.insertCell().textContent = pct(rest, withParty.length);
         tr.insertCell().textContent = fmtInt(restWon);
       }
-      const wrap = document.createElement("div"); wrap.className = "tablewrap";
-      wrap.appendChild(t);
+      const wrap = makeScrollWrap(t);
       partyWrap.appendChild(wrap);
       if (top.length > 15) {
         const toggle = document.createElement("button");
@@ -1819,8 +1860,7 @@ function showAggregates() {
         const votes = tr.insertCell(); votes.textContent = fmtInt(e[key]); votes.style.fontVariantNumeric = "tabular-nums";
         tr.insertCell().textContent = e.w === true ? "taip" : e.w === false ? "ne" : "—";
       });
-      const wrap = document.createElement("div"); wrap.className = "tablewrap";
-      wrap.appendChild(t);
+      const wrap = makeScrollWrap(t);
       votesWrap.appendChild(wrap);
     };
     ranking("Daugiausiai pirmumo balsų", "v", "Pirmumo balsai");
@@ -1879,8 +1919,7 @@ function showAggregates() {
         money.style.fontVariantNumeric = "tabular-nums";
         tr.insertCell().textContent = fmtInt(members.filter(([, e]) => e.w === true).length);
       });
-      const cwrap = document.createElement("div"); cwrap.className = "tablewrap";
-      cwrap.appendChild(ct);
+      const cwrap = makeScrollWrap(ct);
       campaignWrap.appendChild(cwrap);
     }
 
@@ -1908,8 +1947,7 @@ function showAggregates() {
         tr.insertCell().textContent = pct(count, withNationality.length);
         tr.insertCell().textContent = fmtInt(withNationality.filter(e => e.tb === i && e.w === true).length);
       }
-      const nwrap = document.createElement("div"); nwrap.className = "tablewrap";
-      nwrap.appendChild(nt);
+      const nwrap = makeScrollWrap(nt);
       nationalityWrap.appendChild(nwrap);
     }
 
@@ -1937,8 +1975,7 @@ function showAggregates() {
         tr.insertCell().textContent = fmtInt(count);
         tr.insertCell().textContent = pct(count, withEducation.length);
       }
-      const wrap = document.createElement("div"); wrap.className = "tablewrap";
-      wrap.appendChild(t);
+      const wrap = makeScrollWrap(t);
       eduWrap.appendChild(wrap);
     }
 
@@ -1959,8 +1996,7 @@ function showAggregates() {
         ? `${fmtInt(values.length)} iš ${fmtInt(total)} (${pct(values.length, total)})`
         : "—";
     });
-    const wrap = document.createElement("div"); wrap.className = "tablewrap";
-    wrap.appendChild(t);
+    const wrap = makeScrollWrap(t);
     moneyWrap.appendChild(wrap);
     const dsCount = candidacies.filter(e => e.ds).length;
     if (dsCount) {
@@ -2084,8 +2120,7 @@ function showNominator() {
         : "—";
       donations.style.fontVariantNumeric = "tabular-nums";
     }
-    const wrap = document.createElement("div"); wrap.className = "tablewrap";
-    wrap.appendChild(t);
+    const wrap = makeScrollWrap(t);
     holder.appendChild(wrap);
 
     // The people it fielded most often.
@@ -2116,8 +2151,7 @@ function showNominator() {
       tr.insertCell().textContent = fmtInt(n);
       tr.insertCell().textContent = fmtInt(w);
     }
-    const pwrap = document.createElement("div"); pwrap.className = "tablewrap";
-    pwrap.appendChild(pt);
+    const pwrap = makeScrollWrap(pt);
     holder.appendChild(pwrap);
   }
   select.addEventListener("change", render);
@@ -2195,9 +2229,7 @@ function showCoverage() {
       td.title = `${th.textContent} — ${electionName(e.id)}: ${fmtInt(filled)} iš ${fmtInt(records)} (${share.toFixed(1).replace(".", ",")} %)`;
     }
   });
-  const wrap = document.createElement("div");
-  wrap.className = "tablewrap";
-  wrap.appendChild(t);
+  const wrap = makeScrollWrap(t);
   root.appendChild(wrap);
 }
 
@@ -2277,8 +2309,7 @@ function showMovers() {
       d.style.color = r.delta > 0 ? "var(--win)" : "var(--danger)";
       d.style.fontVariantNumeric = "tabular-nums";
     });
-    const wrap = document.createElement("div"); wrap.className = "tablewrap";
-    wrap.appendChild(t);
+    const wrap = makeScrollWrap(t);
     holder.replaceChildren(wrap);
   }
   document.getElementById("mvSeries").addEventListener("change", render);
@@ -2383,9 +2414,10 @@ function buildAssetPane(loaded, failedCount = 0) {
     ).join("") +
     `<span style="margin-left:auto">nėra stulpelio — nedeklaruota arba nepaskelbta · užveskite pelę ant stulpelio, kad matytumėte sumą` +
     `</span></div>`;
+  watchScrollWrap(card.querySelector(".chartwrap"));
   pane.appendChild(card);
   // A chart too wide for its wrapper opens on the newest election, not the
-  // oldest: the scroll shadow on the left says the earlier ones are there.
+  // oldest: the fade on the left says the earlier ones are there.
   // It has to run when the tab is shown -- the pane is built `display: none`,
   // where every width is 0.
   pane.dataset.scrollRight = "1";
@@ -2411,8 +2443,7 @@ function buildAssetPane(loaded, failedCount = 0) {
       }
     });
   });
-  const tableWrap = document.createElement("div"); tableWrap.className = "tablewrap";
-  tableWrap.appendChild(t);
+  const tableWrap = makeScrollWrap(t);
   pane.appendChild(tableWrap);
   if (employmentOnly) {
     const note = document.createElement("div");
