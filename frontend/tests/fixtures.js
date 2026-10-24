@@ -30,6 +30,8 @@ export const index = {
   people,
   parties: { 'test-party': { n: 'Bandymų partija' }, 'other-party': { n: 'Pavyzdžių komitetas' } },
   municipalities: ['Akmenės rajono', 'Vilniaus miesto'],
+  municipalityCounties: ['Šiaulių', 'Vilniaus'],
+  counties: ['Vilniaus', 'Kauno', 'Klaipėdos', 'Šiaulių', 'Panevėžio', 'Marijampolės', 'Alytaus', 'Telšių', 'Utenos', 'Tauragės'],
   constituencies: ['Aukštaitijos', 'Žirmūnų'],
   nationalities: [{ label: 'lietuviai' }, { label: 'lenkai' }],
   educationLevels: [{ label: 'Aukštasis universitetinis' }],

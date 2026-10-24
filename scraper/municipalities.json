@@ -1,9 +1,22 @@
 {
-  "_comment": "The municipality join (issue #137): one entry per municipal body, and every spelling VRK's pages publish for it as an alias. The parsers pass each era's wording through verbatim -- 'Vilniaus miesto' on the 1997/2000/2002/2019/2023 cards, 'Vilniaus miesto savivaldybė' on 2007/2011/2015, 'Palangos savivaldybė' in 2011 alone -- so without this file every one of the 60 municipalities appeared twice in the dashboard's facet and in the shipped `municipality` column, each half hiding the other half of its history. `name` is the official name of the body; `kind` its type (miesto / rajono / savivaldybe); `aliases` the published forms, matched exactly after whitespace normalisation and the mayoral cards' constituency number ('Telšių rajono (Nr. 51)') is stripped -- scraper/shared/municipalities.py never guesses. The two 1997 Marijampolė bodies stay separate entries with `until`: the 2000 reform merged a city and a district into one new municipality, and a facet that folded them would put a 1997 district councillor under a body that did not exist. docs/municipality-forms.tsv is the measured form table and tests/test_municipality_registry.py holds every form to exactly one entry.",
+  "_comment": "The municipality join (issue #137): one entry per municipal body, and every spelling VRK's pages publish for it as an alias. The parsers pass each era's wording through verbatim -- 'Vilniaus miesto' on the 1997/2000/2002/2019/2023 cards, 'Vilniaus miesto savivaldybė' on 2007/2011/2015, 'Palangos savivaldybė' in 2011 alone -- so without this file every one of the 60 municipalities appeared twice in the dashboard's facet and in the shipped `municipality` column, each half hiding the other half of its history. `name` is the official name of the body; `kind` its type (miesto / rajono / savivaldybe); `aliases` the published forms, matched exactly after whitespace normalisation and the mayoral cards' constituency number ('Telšių rajono (Nr. 51)') is stripped -- scraper/shared/municipalities.py never guesses. The two 1997 Marijampolė bodies stay separate entries with `until`: the 2000 reform merged a city and a district into one new municipality, and a facet that folded them would put a 1997 district councillor under a body that did not exist. docs/municipality-forms.tsv is the measured form table and tests/test_municipality_registry.py holds every form to exactly one entry. `county` is the apskritis the body's territory lies in, as Registrų centras's Address Register publishes it (data.gov.lt dataset gov/rc/ar: Savivaldybe.apskritis -> Apskritis.pavadinimas, read 2026-10-24; all 60 current municipalities matched by name), the division the Law on the Territorial Administrative Units and Their Boundaries (No. I-558) sets; the two pre-2000 Marijampolė bodies are Marijampolės county, whose territory the merged municipality kept. `counties` is the fixed order the dashboard's municipality filter groups by (issue #213): largest resident population first, Statistics Lithuania (OSP) table S3R167_M3010214, population at the beginning of 2026 (updated 2026-05-07) -- Vilniaus 888,712, Kauno 587,094, Klaipėdos 345,218, Šiaulių 263,692, Panevėžio 203,565, Marijampolės 131,348, Alytaus 130,630, Telšių 128,136, Utenos 120,394, Tauragės 88,803; the start-of-2025 figures give the same order. It is data, not computed at runtime, so a census shift is a reviewed edit here.",
+  "counties": [
+    "Vilniaus",
+    "Kauno",
+    "Klaipėdos",
+    "Šiaulių",
+    "Panevėžio",
+    "Marijampolės",
+    "Alytaus",
+    "Telšių",
+    "Utenos",
+    "Tauragės"
+  ],
   "entries": {
     "akmenes-rajono": {
       "name": "Akmenės rajono savivaldybė",
       "kind": "rajono",
+      "county": "Šiaulių",
       "aliases": [
         "Akmenės rajono",
         "Akmenės rajono savivaldybė"
@@ -12,6 +25,7 @@
     "alytaus-miesto": {
       "name": "Alytaus miesto savivaldybė",
       "kind": "miesto",
+      "county": "Alytaus",
       "aliases": [
         "Alytaus miesto",
         "Alytaus miesto savivaldybė"
@@ -20,6 +34,7 @@
     "alytaus-rajono": {
       "name": "Alytaus rajono savivaldybė",
       "kind": "rajono",
+      "county": "Alytaus",
       "aliases": [
         "Alytaus rajono",
         "Alytaus rajono savivaldybė"
@@ -28,6 +43,7 @@
     "anyksciu-rajono": {
       "name": "Anykščių rajono savivaldybė",
       "kind": "rajono",
+      "county": "Utenos",
       "aliases": [
         "Anykščių rajono",
         "Anykščių rajono savivaldybė"
@@ -36,6 +52,7 @@
     "birstono": {
       "name": "Birštono savivaldybė",
       "kind": "savivaldybe",
+      "county": "Kauno",
       "aliases": [
         "Birštono",
         "Birštono savivaldybė",
@@ -46,6 +63,7 @@
     "birzu-rajono": {
       "name": "Biržų rajono savivaldybė",
       "kind": "rajono",
+      "county": "Panevėžio",
       "aliases": [
         "Biržų rajono",
         "Biržų rajono savivaldybė"
@@ -54,6 +72,7 @@
     "druskininku": {
       "name": "Druskininkų savivaldybė",
       "kind": "savivaldybe",
+      "county": "Alytaus",
       "aliases": [
         "Druskininkų",
         "Druskininkų savivaldybė",
@@ -64,6 +83,7 @@
     "elektrenu": {
       "name": "Elektrėnų savivaldybė",
       "kind": "savivaldybe",
+      "county": "Vilniaus",
       "aliases": [
         "Elektrėnų",
         "Elektrėnų savivaldybė"
@@ -72,6 +92,7 @@
     "ignalinos-rajono": {
       "name": "Ignalinos rajono savivaldybė",
       "kind": "rajono",
+      "county": "Utenos",
       "aliases": [
         "Ignalinos rajono",
         "Ignalinos rajono savivaldybė"
@@ -80,6 +101,7 @@
     "jonavos-rajono": {
       "name": "Jonavos rajono savivaldybė",
       "kind": "rajono",
+      "county": "Kauno",
       "aliases": [
         "Jonavos rajono",
         "Jonavos rajono savivaldybė"
@@ -88,6 +110,7 @@
     "joniskio-rajono": {
       "name": "Joniškio rajono savivaldybė",
       "kind": "rajono",
+      "county": "Šiaulių",
       "aliases": [
         "Joniškio rajono",
         "Joniškio rajono savivaldybė"
@@ -96,6 +119,7 @@
     "jurbarko-rajono": {
       "name": "Jurbarko rajono savivaldybė",
       "kind": "rajono",
+      "county": "Tauragės",
       "aliases": [
         "Jurbarko rajono",
         "Jurbarko rajono savivaldybė"
@@ -104,6 +128,7 @@
     "kaisiadoriu-rajono": {
       "name": "Kaišiadorių rajono savivaldybė",
       "kind": "rajono",
+      "county": "Kauno",
       "aliases": [
         "Kaišiadorių rajono",
         "Kaišiadorių rajono savivaldybė"
@@ -112,6 +137,7 @@
     "kalvarijos": {
       "name": "Kalvarijos savivaldybė",
       "kind": "savivaldybe",
+      "county": "Marijampolės",
       "aliases": [
         "Kalvarijos",
         "Kalvarijos savivaldybė"
@@ -120,6 +146,7 @@
     "kauno-miesto": {
       "name": "Kauno miesto savivaldybė",
       "kind": "miesto",
+      "county": "Kauno",
       "aliases": [
         "Kauno miesto",
         "Kauno miesto savivaldybė"
@@ -128,6 +155,7 @@
     "kauno-rajono": {
       "name": "Kauno rajono savivaldybė",
       "kind": "rajono",
+      "county": "Kauno",
       "aliases": [
         "Kauno rajono",
         "Kauno rajono savivaldybė"
@@ -136,6 +164,7 @@
     "kazlu-rudos": {
       "name": "Kazlų Rūdos savivaldybė",
       "kind": "savivaldybe",
+      "county": "Marijampolės",
       "aliases": [
         "Kazlų Rūdos",
         "Kazlų Rūdos savivaldybė"
@@ -144,6 +173,7 @@
     "kedainiu-rajono": {
       "name": "Kėdainių rajono savivaldybė",
       "kind": "rajono",
+      "county": "Kauno",
       "aliases": [
         "Kėdainių rajono",
         "Kėdainių rajono savivaldybė"
@@ -152,6 +182,7 @@
     "kelmes-rajono": {
       "name": "Kelmės rajono savivaldybė",
       "kind": "rajono",
+      "county": "Šiaulių",
       "aliases": [
         "Kelmės rajono",
         "Kelmės rajono savivaldybė"
@@ -160,6 +191,7 @@
     "klaipedos-miesto": {
       "name": "Klaipėdos miesto savivaldybė",
       "kind": "miesto",
+      "county": "Klaipėdos",
       "aliases": [
         "Klaipėdos miesto",
         "Klaipėdos miesto savivaldybė"
@@ -168,6 +200,7 @@
     "klaipedos-rajono": {
       "name": "Klaipėdos rajono savivaldybė",
       "kind": "rajono",
+      "county": "Klaipėdos",
       "aliases": [
         "Klaipėdos rajono",
         "Klaipėdos rajono savivaldybė"
@@ -176,6 +209,7 @@
     "kretingos-rajono": {
       "name": "Kretingos rajono savivaldybė",
       "kind": "rajono",
+      "county": "Klaipėdos",
       "aliases": [
         "Kretingos rajono",
         "Kretingos rajono savivaldybė"
@@ -184,6 +218,7 @@
     "kupiskio-rajono": {
       "name": "Kupiškio rajono savivaldybė",
       "kind": "rajono",
+      "county": "Panevėžio",
       "aliases": [
         "Kupiškio rajono",
         "Kupiškio rajono savivaldybė"
@@ -192,6 +227,7 @@
     "lazdiju-rajono": {
       "name": "Lazdijų rajono savivaldybė",
       "kind": "rajono",
+      "county": "Alytaus",
       "aliases": [
         "Lazdijų rajono",
         "Lazdijų rajono savivaldybė"
@@ -200,6 +236,7 @@
     "marijampoles": {
       "name": "Marijampolės savivaldybė",
       "kind": "savivaldybe",
+      "county": "Marijampolės",
       "aliases": [
         "Marijampolės",
         "Marijampolės savivaldybė"
@@ -210,6 +247,7 @@
     "marijampoles-miesto": {
       "name": "Marijampolės miesto savivaldybė (iki 2000 m.)",
       "kind": "miesto",
+      "county": "Marijampolės",
       "aliases": [
         "Marijampolės miesto",
         "Marijampolės miesto savivaldybė"
@@ -220,6 +258,7 @@
     "marijampoles-rajono": {
       "name": "Marijampolės rajono savivaldybė (iki 2000 m.)",
       "kind": "rajono",
+      "county": "Marijampolės",
       "aliases": [
         "Marijampolės rajono",
         "Marijampolės rajono savivaldybė"
@@ -230,6 +269,7 @@
     "mazeikiu-rajono": {
       "name": "Mažeikių rajono savivaldybė",
       "kind": "rajono",
+      "county": "Telšių",
       "aliases": [
         "Mažeikių rajono",
         "Mažeikių rajono savivaldybė"
@@ -238,6 +278,7 @@
     "moletu-rajono": {
       "name": "Molėtų rajono savivaldybė",
       "kind": "rajono",
+      "county": "Utenos",
       "aliases": [
         "Molėtų rajono",
         "Molėtų rajono savivaldybė"
@@ -246,6 +287,7 @@
     "neringos": {
       "name": "Neringos savivaldybė",
       "kind": "savivaldybe",
+      "county": "Klaipėdos",
       "aliases": [
         "Neringos",
         "Neringos savivaldybė",
@@ -256,6 +298,7 @@
     "pagegiu": {
       "name": "Pagėgių savivaldybė",
       "kind": "savivaldybe",
+      "county": "Tauragės",
       "aliases": [
         "Pagėgių",
         "Pagėgių savivaldybė"
@@ -264,6 +307,7 @@
     "pakruojo-rajono": {
       "name": "Pakruojo rajono savivaldybė",
       "kind": "rajono",
+      "county": "Šiaulių",
       "aliases": [
         "Pakruojo rajono",
         "Pakruojo rajono savivaldybė"
@@ -272,6 +316,7 @@
     "palangos-miesto": {
       "name": "Palangos miesto savivaldybė",
       "kind": "miesto",
+      "county": "Klaipėdos",
       "aliases": [
         "Palangos miesto",
         "Palangos miesto savivaldybė",
@@ -281,6 +326,7 @@
     "panevezio-miesto": {
       "name": "Panevėžio miesto savivaldybė",
       "kind": "miesto",
+      "county": "Panevėžio",
       "aliases": [
         "Panevėžio miesto",
         "Panevėžio miesto savivaldybė"
@@ -289,6 +335,7 @@
     "panevezio-rajono": {
       "name": "Panevėžio rajono savivaldybė",
       "kind": "rajono",
+      "county": "Panevėžio",
       "aliases": [
         "Panevėžio rajono",
         "Panevėžio rajono savivaldybė"
@@ -297,6 +344,7 @@
     "pasvalio-rajono": {
       "name": "Pasvalio rajono savivaldybė",
       "kind": "rajono",
+      "county": "Panevėžio",
       "aliases": [
         "Pasvalio rajono",
         "Pasvalio rajono savivaldybė"
@@ -305,6 +353,7 @@
     "plunges-rajono": {
       "name": "Plungės rajono savivaldybė",
       "kind": "rajono",
+      "county": "Telšių",
       "aliases": [
         "Plungės rajono",
         "Plungės rajono savivaldybė"
@@ -313,6 +362,7 @@
     "prienu-rajono": {
       "name": "Prienų rajono savivaldybė",
       "kind": "rajono",
+      "county": "Kauno",
       "aliases": [
         "Prienų rajono",
         "Prienų rajono savivaldybė"
@@ -321,6 +371,7 @@
     "radviliskio-rajono": {
       "name": "Radviliškio rajono savivaldybė",
       "kind": "rajono",
+      "county": "Šiaulių",
       "aliases": [
         "Radviliškio rajono",
         "Radviliškio rajono savivaldybė"
@@ -329,6 +380,7 @@
     "raseiniu-rajono": {
       "name": "Raseinių rajono savivaldybė",
       "kind": "rajono",
+      "county": "Kauno",
       "aliases": [
         "Raseinių rajono",
         "Raseinių rajono savivaldybė"
@@ -337,6 +389,7 @@
     "rietavo": {
       "name": "Rietavo savivaldybė",
       "kind": "savivaldybe",
+      "county": "Telšių",
       "aliases": [
         "Rietavo",
         "Rietavo savivaldybė"
@@ -345,6 +398,7 @@
     "rokiskio-rajono": {
       "name": "Rokiškio rajono savivaldybė",
       "kind": "rajono",
+      "county": "Panevėžio",
       "aliases": [
         "Rokiškio rajono",
         "Rokiškio rajono savivaldybė"
@@ -353,6 +407,7 @@
     "sakiu-rajono": {
       "name": "Šakių rajono savivaldybė",
       "kind": "rajono",
+      "county": "Marijampolės",
       "aliases": [
         "Šakių rajono",
         "Šakių rajono savivaldybė"
@@ -361,6 +416,7 @@
     "salcininku-rajono": {
       "name": "Šalčininkų rajono savivaldybė",
       "kind": "rajono",
+      "county": "Vilniaus",
       "aliases": [
         "Šalčininkų rajono",
         "Šalčininkų rajono savivaldybė"
@@ -369,6 +425,7 @@
     "siauliu-miesto": {
       "name": "Šiaulių miesto savivaldybė",
       "kind": "miesto",
+      "county": "Šiaulių",
       "aliases": [
         "Šiaulių miesto",
         "Šiaulių miesto savivaldybė"
@@ -377,6 +434,7 @@
     "siauliu-rajono": {
       "name": "Šiaulių rajono savivaldybė",
       "kind": "rajono",
+      "county": "Šiaulių",
       "aliases": [
         "Šiaulių rajono",
         "Šiaulių rajono savivaldybė"
@@ -385,6 +443,7 @@
     "silales-rajono": {
       "name": "Šilalės rajono savivaldybė",
       "kind": "rajono",
+      "county": "Tauragės",
       "aliases": [
         "Šilalės rajono",
         "Šilalės rajono savivaldybė"
@@ -393,6 +452,7 @@
     "silutes-rajono": {
       "name": "Šilutės rajono savivaldybė",
       "kind": "rajono",
+      "county": "Klaipėdos",
       "aliases": [
         "Šilutės rajono",
         "Šilutės rajono savivaldybė"
@@ -401,6 +461,7 @@
     "sirvintu-rajono": {
       "name": "Širvintų rajono savivaldybė",
       "kind": "rajono",
+      "county": "Vilniaus",
       "aliases": [
         "Širvintų rajono",
         "Širvintų rajono savivaldybė"
@@ -409,6 +470,7 @@
     "skuodo-rajono": {
       "name": "Skuodo rajono savivaldybė",
       "kind": "rajono",
+      "county": "Klaipėdos",
       "aliases": [
         "Skuodo rajono",
         "Skuodo rajono savivaldybė"
@@ -417,6 +479,7 @@
     "svencioniu-rajono": {
       "name": "Švenčionių rajono savivaldybė",
       "kind": "rajono",
+      "county": "Vilniaus",
       "aliases": [
         "Švenčionių rajono",
         "Švenčionių rajono savivaldybė"
@@ -425,6 +488,7 @@
     "taurages-rajono": {
       "name": "Tauragės rajono savivaldybė",
       "kind": "rajono",
+      "county": "Tauragės",
       "aliases": [
         "Tauragės rajono",
         "Tauragės rajono savivaldybė"
@@ -433,6 +497,7 @@
     "telsiu-rajono": {
       "name": "Telšių rajono savivaldybė",
       "kind": "rajono",
+      "county": "Telšių",
       "aliases": [
         "Telšių rajono",
         "Telšių rajono savivaldybė"
@@ -441,6 +506,7 @@
     "traku-rajono": {
       "name": "Trakų rajono savivaldybė",
       "kind": "rajono",
+      "county": "Vilniaus",
       "aliases": [
         "Trakų rajono",
         "Trakų rajono savivaldybė"
@@ -449,6 +515,7 @@
     "ukmerges-rajono": {
       "name": "Ukmergės rajono savivaldybė",
       "kind": "rajono",
+      "county": "Vilniaus",
       "aliases": [
         "Ukmergės rajono",
         "Ukmergės rajono savivaldybė"
@@ -457,6 +524,7 @@
     "utenos-rajono": {
       "name": "Utenos rajono savivaldybė",
       "kind": "rajono",
+      "county": "Utenos",
       "aliases": [
         "Utenos rajono",
         "Utenos rajono savivaldybė"
@@ -465,6 +533,7 @@
     "varenos-rajono": {
       "name": "Varėnos rajono savivaldybė",
       "kind": "rajono",
+      "county": "Alytaus",
       "aliases": [
         "Varėnos rajono",
         "Varėnos rajono savivaldybė"
@@ -473,6 +542,7 @@
     "vilkaviskio-rajono": {
       "name": "Vilkaviškio rajono savivaldybė",
       "kind": "rajono",
+      "county": "Marijampolės",
       "aliases": [
         "Vilkaviškio rajono",
         "Vilkaviškio rajono savivaldybė"
@@ -481,6 +551,7 @@
     "vilniaus-miesto": {
       "name": "Vilniaus miesto savivaldybė",
       "kind": "miesto",
+      "county": "Vilniaus",
       "aliases": [
         "Vilniaus miesto",
         "Vilniaus miesto savivaldybė"
@@ -489,6 +560,7 @@
     "vilniaus-rajono": {
       "name": "Vilniaus rajono savivaldybė",
       "kind": "rajono",
+      "county": "Vilniaus",
       "aliases": [
         "Vilniaus rajono",
         "Vilniaus rajono savivaldybė"
@@ -497,6 +569,7 @@
     "visagino": {
       "name": "Visagino savivaldybė",
       "kind": "savivaldybe",
+      "county": "Utenos",
       "aliases": [
         "Visagino",
         "Visagino savivaldybė",
@@ -507,6 +580,7 @@
     "zarasu-rajono": {
       "name": "Zarasų rajono savivaldybė",
       "kind": "rajono",
+      "county": "Utenos",
       "aliases": [
         "Zarasų rajono",
         "Zarasų rajono savivaldybė"

@@ -951,10 +951,30 @@ function buildFilters() {
 
   const fMunicipality = document.getElementById("fMunicipality");
   addOption(fMunicipality, "", "— visos savivaldybės —");
+  // One group per county (issue #213), in the index's fixed order -- the most
+  // populous first (scraper/municipalities.json cites the OSP figure) --
+  // alphabetical inside. The option values stay the "sv" indexes, so the
+  // filter itself is unchanged; a wording no registry entry claims has no
+  // county and follows the groups ungrouped.
+  const municipalityCounties = INDEX.municipalityCounties || [];
+  const municipalityGroups = new Map((INDEX.counties || []).map(county => [county, fMunicipality]));
+  for (const county of municipalityGroups.keys()) {
+    const group = document.createElement("optgroup");
+    group.label = `${county} apskritis`;
+    fMunicipality.appendChild(group);
+    municipalityGroups.set(county, group);
+  }
+  const ungrouped = [];
   (INDEX.municipalities || [])
     .map((name, i) => [name, i])
     .sort((a, b) => a[0].localeCompare(b[0], "lt"))
-    .forEach(([name, i]) => addOption(fMunicipality, String(i), name));
+    .forEach(([name, i]) => {
+      const group = municipalityGroups.get(municipalityCounties[i]);
+      if (group) addOption(group, String(i), name);
+      else ungrouped.push([name, i]);
+    });
+  for (const group of municipalityGroups.values()) if (!group.children.length) group.remove();
+  for (const [name, i] of ungrouped) addOption(fMunicipality, String(i), name);
 
   // The single-mandate constituency by name (issue #133): one name per
   // district across the four label eras (scraper/shared/apygardos.py), which

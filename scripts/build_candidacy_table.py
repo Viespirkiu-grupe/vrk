@@ -928,12 +928,19 @@ def write_sqlite(
         )
         # The municipality registry as a table (issue #137): one row per
         # body, `until` set on the two the 2000 reform dissolved, so
-        # candidacies.municipality_id joins to an official name and a kind.
+        # candidacies.municipality_id joins to an official name, a kind and
+        # the county (apskritis) the territory lies in (issue #213).
         create(
             "municipalities",
-            ("municipality_id", "name", "kind", "until"),
+            ("municipality_id", "name", "kind", "county", "until"),
             [
-                {"municipality_id": municipality_id, "name": data["name"], "kind": data["kind"], "until": data.get("until")}
+                {
+                    "municipality_id": municipality_id,
+                    "name": data["name"],
+                    "kind": data["kind"],
+                    "county": data["county"],
+                    "until": data.get("until"),
+                }
                 for municipality_id, data in sorted(municipality_entries().items())
             ],
         )

@@ -312,9 +312,10 @@ no repository. Before, it was an anonymous 2.5 GB file.
 shortName, records` — where `parent` is the general election whose term a
 by-election, repeat or re-vote fills, NULL for a general election, so
 `COALESCE(parent, id)` groups candidacies by term (issue #122).
-`municipalities(municipality_id, name, kind, until)` is the municipality
+`municipalities(municipality_id, name, kind, county, until)` is the municipality
 registry as a table (issue #137): the 60 bodies of the 2000 reform plus the two
-it dissolved, `kind` ∈ `miesto` | `rajono` | `savivaldybe`.
+it dissolved, `kind` ∈ `miesto` | `rajono` | `savivaldybe`, `county` the
+apskritis in the genitive form (`Vilniaus`, `Kauno`, …; issue #213).
 `persons(person_id, name, birth_key, candidacies, elections, merged_keys)` is
 the identity layer as a table (issue #96): `person_id` is the `pid` the
 dashboard puts in its URL — `p` plus 12 hex digits of blake2s over the

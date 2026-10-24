@@ -116,6 +116,8 @@ from scraper.shared.education import LEVELS as EDUCATION_LEVELS  # noqa: E402
 from scraper.shared.education import issilavinimas  # noqa: E402
 from scraper.shared.kampanija import campaign_entry, donation_total_eur  # noqa: E402
 from scraper.shared.kandidatura import ROLE_COUNCIL, ROLE_MAYOR, kandidatura  # noqa: E402
+from scraper.shared.municipalities import counties as municipality_counties  # noqa: E402
+from scraper.shared.municipalities import county_by_name  # noqa: E402
 from scraper.shared.parties import display_name as party_display_name  # noqa: E402
 from scraper.shared.parties import entry as party_entry  # noqa: E402
 from scraper.shared.parties import partija  # noqa: E402
@@ -727,6 +729,12 @@ def build_index(
         "unresolvedMunicipalities": sorted(unresolved_municipalities),
         "parties": parties,
         "municipalities": municipality_list,
+        # Each municipality's county (apskritis), parallel to "municipalities"
+        # so "sv" still indexes the names, and the counties in the fixed
+        # population order the filter groups by (issue #213). A wording no
+        # registry entry claims has no county (null) and is grouped apart.
+        "municipalityCounties": [county_by_name().get(name) for name in municipality_list],
+        "counties": municipality_counties(),
         # The single-mandate constituencies by name -- one name per district
         # across the four label eras, not one boundary: "ap" indexes here.
         "constituencies": constituency_list,
