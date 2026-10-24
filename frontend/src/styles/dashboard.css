@@ -133,10 +133,20 @@ html.nav-open, html.nav-open body { overflow: hidden; }
    a nominator line still scans by name. The header chain's names step up to
    the text colour for the same reason. */
 .ptype { opacity: .6; }
-.phead .parties > span { color: var(--ink); }
+.phead .parties .pitem { color: var(--ink); }
 .phead .parties .ptype { color: var(--muted); opacity: 1; }
 /* A run's years (issue #195) are secondary in the same way. */
 .phead .parties .pyears { color: var(--muted); }
+/* A long line's fold (issue #198): the toggles are muted like the years and
+   carry no underline, so the line still reads as one sentence rather than
+   gaining a link or a panel button. */
+.phead .parties .pfold-toggle { padding: 0 2px; border: 0; border-radius: var(--radius-sm); background: none; color: var(--muted); font: inherit; text-decoration: none; cursor: pointer; }
+.phead .parties .pfold-toggle:hover { color: var(--ink); }
+/* The "…" itself is a small pill, after the main site's Badge: it reads as a
+   control without competing with the names around it. */
+.phead .parties .pmore .pfold-toggle { display: inline-flex; align-items: center; height: 18px; padding: 0 7px; border: var(--border); border-radius: 999px; background: var(--shade); font-size: var(--text-xs); line-height: 1; vertical-align: 1px; }
+.phead .parties .pmore .pfold-toggle:hover { border-color: var(--muted); }
+.phead .parties .pfold:focus { outline: none; }
 .ecard .win { color: var(--win); font-size: 12px; font-weight: 500; background: var(--win-bg); padding: 2px 7px; border-radius: var(--radius-sm); }
 .ecard .nores { font-size: 12px; color: var(--muted); font-weight: 400; font-style: italic; }
 .ecard .body { padding: 8px 20px 20px; border-top: var(--border); }
