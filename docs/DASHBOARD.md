@@ -96,6 +96,7 @@ not redirected and answer 404.
 | `/iskelejai` | Iškėlėjai |
 | `/apreptis` | Anketų aprėptis |
 | `/pokyciai` | Didžiausi (deklaracijų) pokyčiai |
+| `/partiju-keitimai` | Partijų keitimai |
 
 The slugs come from the UI's own labels; `frontend/src/lib/routes.js` holds
 them. A person resolves by pid alone. The name slug is decoration: a missing
@@ -133,14 +134,14 @@ equal to the page's list), and whatever serves production after #188 must
 do the same. In nginx:
 
 ```nginx
-location ~ ^/(suvestine|iskelejai|apreptis|pokyciai)/?$ { try_files /index.html =404; add_header Cache-Control "no-cache"; }
-location ~ ^/(asmuo|palyginti)/[^/]*/?$            { try_files /index.html =404; add_header Cache-Control "no-cache"; }
+location ~ ^/(suvestine|iskelejai|apreptis|pokyciai|partiju-keitimai)/?$ { try_files /index.html =404; add_header Cache-Control "no-cache"; }
+location ~ ^/(asmuo|palyginti)/[^/]*/?$                             { try_files /index.html =404; add_header Cache-Control "no-cache"; }
 ```
 
 In Caddy:
 
 ```caddy
-@route path_regexp ^/((suvestine|iskelejai|apreptis|pokyciai)|(asmuo|palyginti)/[^/]*)/?$
+@route path_regexp ^/((suvestine|iskelejai|apreptis|pokyciai|partiju-keitimai)|(asmuo|palyginti)/[^/]*)/?$
 handle @route {
 	header Cache-Control "no-cache"
 	rewrite * /index.html

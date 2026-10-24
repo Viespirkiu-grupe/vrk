@@ -200,6 +200,7 @@ for (const [path, heading, view] of [
   ['/iskelejai', 'Iškėlėjo suvestinė', 'nominatorBtn'],
   ['/apreptis', 'Ką klausė kiekvienų rinkimų anketa', 'coverageBtn'],
   ['/pokyciai', 'Didžiausi pokyčiai', 'moversBtn'],
+  ['/partiju-keitimai', 'Partijų keitimai', 'switchesBtn'],
   ['/palyginti/test-anna,test-jonas', 'Asmenų palyginimas', 'overviewBtn'],
 ]) {
   test(`${path} opens its view directly`, async ({ page }) => {
@@ -445,6 +446,69 @@ test('Back and Forward move between a person and the statistics', async ({ page 
   await expect(page.locator('#person h2')).toHaveText('Didžiausi pokyčiai');
 });
 
+test('party switches rank the movers and the loyal, link each person and fit 320px (#199)', async ({ page }) => {
+  // Synthetic shapes: a mover through six nominators (a self-nomination and
+  // a committee among them, and a return), a rename plus an own-party
+  // coalition that is no switch, and a single move.
+  const years = [2004, 2008, 2012, 2016, 2020, 2024];
+  const elections = years.map(y => ({ id: `${y}-syn`, kind: 'seimo', date: `${y}-10-10`, name: `${y} m. Seimo rinkimai`, shortName: `${y} Seimas` }));
+  const parties = {
+    ...index.parties,
+    'syn-a': { n: 'Partija A', t: 'partija' },
+    'syn-b': { n: 'Partija B', t: 'partija' },
+    'syn-c': { n: 'Partija C', t: 'partija' },
+    'syn-kom': { n: 'Komitetas „Mūsų kraštas“', t: 'komitetas' },
+    'issikele-pats': { n: 'Išsikėlė pats', t: 'issikelimas' },
+    'syn-old': { n: 'Senoji partija', t: 'partija' },
+    'syn-new': { n: 'Naujoji partija', t: 'partija', pr: ['syn-old'] },
+    'syn-coal': { n: 'Naujųjų koalicija', t: 'koalicija', nr: ['syn-new', 'syn-c'] },
+  };
+  const person = (pid, n, nominators) => ({
+    pid, n, b: '1970-01-01', k: `${n.toUpperCase()}|1970-01-01`,
+    e: nominators.map((p, i) => ({ id: `${years[i]}-syn`, c: pid, p, w: false })),
+  });
+  const synthetic = [
+    person('test-kestas', 'Kęstas KEITĖJAS', ['syn-a', 'issikele-pats', 'syn-b', 'syn-kom', 'syn-a', 'syn-c']),
+    person('test-lina', 'Lina LINIJA', ['syn-old', 'syn-new', 'syn-coal', 'syn-new']),
+    person('test-jurgis', 'Jurgis VIENAS', ['syn-a', 'syn-b']),
+  ];
+  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
+    contentType: 'application/json',
+    body: JSON.stringify({ ...index, elections: [...elections, ...index.elections], parties, people: [...index.people, ...synthetic] }),
+  }));
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('/partiju-keitimai');
+  await expect(page.locator('#person h2')).toHaveText('Partijų keitimai');
+  await expect(page.locator('#switchesBtn')).toHaveAttribute('aria-current', 'page');
+
+  await expect(page.locator('.switchbar-count')).toHaveText(['4 (66,7 %)', '1 (16,7 %)', '0 (0,0 %)', '0 (0,0 %)', '0 (0,0 %)', '1 (16,7 %)', '0 (0,0 %)']);
+  const [movers, loyal] = await page.locator('#person table.ranking').all();
+  await expect(movers.locator('tbody td:nth-child(2) > a')).toHaveText(['Kęstas KEITĖJAS · 1970-01-01', 'Jurgis VIENAS · 1970-01-01']);
+  await expect(movers.locator('tbody tr').first().locator('td.num')).toHaveText(['5', '4', '6']);
+  await expect(loyal.locator('tbody td:nth-child(2) > a')).toHaveText(['Lina LINIJA · 1970-01-01', 'Ona NAUJOJI · 1980-01-02']);
+  await expect(loyal.locator('tbody tr').first().locator('td.num')).toHaveText(['4']);
+  // The header's nominator line, fold and all.
+  const line = movers.locator('tbody tr').first().locator('.parties');
+  await expect(line.locator('.pfold-toggle').first()).toHaveText('…');
+  await line.locator('.pfold-toggle').first().click();
+  await expect(line).toContainText('Komitetas „Mūsų kraštas“ 2016');
+  await expect(page.locator('#person')).toContainText('Perėjimas tarp partijos ir rinkimų komiteto');
+
+  // 320px: the tables scroll in their wrappers, the page never widens.
+  await page.setViewportSize({ width: 320, height: 740 });
+  await noPageOverflow(page);
+  await expect(page.locator('#person .switches .tablewrap')).toHaveCount(2);
+
+  await movers.locator('tbody a').first().click();
+  await expect(page).toHaveURL(/\/asmuo\/kestas-keitejas-test-kestas$/);
+  await expect(page.locator('#person h2')).toHaveText('Kęstas KEITĖJAS');
+  await page.goBack();
+  await expect(page).toHaveURL(/\/partiju-keitimai$/);
+  await expect(page.locator('#person h2')).toHaveText('Partijų keitimai');
+  expect(errors).toEqual([]);
+});
+
 test('legacy links canonicalize and Back/Forward restore the selected person', async ({ page }) => {
   await ready(page, `/#${encodeURIComponent(people[0].ak[0])}`);
   await expect(page.locator('#person h2')).toHaveText('Ona NAUJOJI');
@@ -538,7 +602,7 @@ test('wide record tables keep nested labels and values readable', async ({ page 
   await noPageOverflow(page);
 });
 
-test('all four summary views remain usable', async ({ page }) => {
+test('every summary view remains usable', async ({ page }) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await ready(page);
@@ -547,6 +611,7 @@ test('all four summary views remain usable', async ({ page }) => {
     ['nominatorBtn', 'Iškėlėjo suvestinė'],
     ['coverageBtn', 'Ką klausė kiekvienų rinkimų anketa'],
     ['moversBtn', 'Didžiausi pokyčiai'],
+    ['switchesBtn', 'Partijų keitimai'],
   ]) {
     await selectView(page, button);
     await expect(page.locator('#person h2')).toHaveText(heading);

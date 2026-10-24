@@ -8,6 +8,7 @@ const VIEW_PATHS = {
   nominatorBtn: "/iskelejai",
   coverageBtn: "/apreptis",
   moversBtn: "/pokyciai",
+  switchesBtn: "/partiju-keitimai",
 };
 
 const PERSON_PREFIX = "/asmuo/";
