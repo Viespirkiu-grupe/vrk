@@ -71,4 +71,55 @@ function collapseRuns(items, over = COLLAPSE_OVER, keep = COLLAPSE_KEEP) {
   return { head: items.slice(0, keep), hidden: items.slice(keep, -keep), tail: items.slice(-keep) };
 }
 
-export { COLLAPSE_OVER, COLLAPSE_KEEP, electionYear, electionKinds, nominatorRuns, runYears, collapseRuns };
+// Party switches (issue #199). Raw changes in the nominator line overcount:
+// 18,892 of them in the corpus, 11,429 real moves between organisations.
+// Not a switch: (a) a rename or merger -- entries linked by the registry's
+// predecessors (`pr`, issue #123) are one organisation, by union-find over
+// the links, so a merger joins both of its parents' lines; (b) a coalition
+// whose members (`nr`, issue #189) include the organisation on the other
+// side of the move; (c) a candidacy with no nominator, which is skipped.
+// A move to or from an electoral committee does count (Dan, 2026-10-24).
+
+// Entry id -> its organisation, the root of its lineage component.
+function organisationRoots(parties) {
+  const up = new Map(Object.keys(parties).map(id => [id, id]));
+  const find = id => {
+    if (!up.has(id)) up.set(id, id);
+    while (up.get(id) !== id) { up.set(id, up.get(up.get(id))); id = up.get(id); }
+    return id;
+  };
+  for (const [id, party] of Object.entries(parties)) {
+    for (const pred of party.pr || []) {
+      const a = find(id), b = find(pred);
+      if (a !== b) up.set(a, b);
+    }
+  }
+  return new Map([...up.keys()].map(id => [id, find(id)]));
+}
+
+// {switches, organisations, elections} for one person's candidacies, in the
+// chronological order nominatorRuns gives them. `organisations` counts the
+// distinct ones (a coalition is its own), leaving out self-nomination, which
+// is no organisation -- though a move to or from it is still a switch.
+// `elections` counts the candidacies with a nominator. Pass `roots` from
+// organisationRoots to rank many people without rebuilding it each time.
+function partySwitches(candidacies, elections, parties, roots = organisationRoots(parties)) {
+  const org = id => roots.get(id) || id;
+  const covers = (coalition, other) =>
+    ((parties[coalition] && parties[coalition].nr) || []).some(m => org(m) === org(other));
+  const runs = nominatorRuns(candidacies, elections);
+  let switches = 0;
+  for (let i = 1; i < runs.length; i++) {
+    const from = runs[i - 1].id, to = runs[i].id;
+    if (org(from) === org(to) || covers(to, from) || covers(from, to)) continue;
+    switches += 1;
+  }
+  const own = runs.filter(r => !(parties[r.id] && parties[r.id].t === "issikelimas"));
+  return {
+    switches,
+    organisations: new Set(own.map(r => org(r.id))).size,
+    elections: candidacies.filter(c => c.p).length,
+  };
+}
+
+export { COLLAPSE_OVER, COLLAPSE_KEEP, electionYear, electionKinds, nominatorRuns, runYears, collapseRuns, organisationRoots, partySwitches };
