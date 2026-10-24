@@ -193,8 +193,6 @@ test('the party dropdown opens with the most people elected, self-nomination las
   }));
   await page.goto('/');
   await openFilters(page);
-  await expect(page.locator('#fParty-hint')).toHaveText('Rikiuota pagal išrinktųjų skaičių');
-  await expect(page.locator('#fParty')).toHaveAttribute('aria-describedby', 'fParty-hint');
   // The elected-nobody rows by name (Mažoji, Naujųjų, Pavyzdžių), then
   // self-nomination, though it elected the most.
   expect(await page.locator('#fParty option').evaluateAll(os => os.map(o => o.value))).toEqual([

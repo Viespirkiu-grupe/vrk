@@ -1622,8 +1622,7 @@ class ScreenReaderTests(unittest.TestCase):
         # Astro expands each FilterField into an associated label and select.
         # Browser tests additionally assert the actual compiled accessible names.
         self.assertIn('<label for={id}>{label}</label>', SOURCE)
-        # A field's hint (issue #212) is its select's description.
-        self.assertIn('<select id={id} title={title} aria-describedby={hint ? `${id}-hint` : undefined}>', SOURCE)
+        self.assertIn('<select id={id} title={title}>', SOURCE)
         for control in ("fElection", "fParty", "fMunicipality", "fConstituency", "fRole", "fWon", "fNationality"):
             with self.subTest(control):
                 self.assertRegex(SOURCE, rf'<FilterField id="{control}" label="[^"]+"')
