@@ -129,6 +129,12 @@ html.nav-open, html.nav-open body { overflow: hidden; }
 .ecard[open] > summary::before { content: '−'; }
 .ecard > summary:hover { background: var(--shade); }
 .ecard .party { color: var(--muted); font-size: 13px; font-weight: 400; }
+/* A coalition's type word (issue #189): same size, quieter than the name, so
+   a nominator line still scans by name. The header chain's names step up to
+   the text colour for the same reason. */
+.ptype { opacity: .6; }
+.phead .parties > span { color: var(--ink); }
+.phead .parties .ptype { color: var(--muted); opacity: 1; }
 .ecard .win { color: var(--win); font-size: 12px; font-weight: 500; background: var(--win-bg); padding: 2px 7px; border-radius: var(--radius-sm); }
 .ecard .nores { font-size: 12px; color: var(--muted); font-weight: 400; font-style: italic; }
 .ecard .body { padding: 8px 20px 20px; border-top: var(--border); }

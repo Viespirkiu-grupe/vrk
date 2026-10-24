@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { installFixtures, people } from './fixtures.js';
+import { installFixtures, people, index } from './fixtures.js';
 
 async function ready(page, path = '/dashboard/') {
   await page.goto(path);
@@ -65,6 +65,56 @@ test('search finds a former name and facets compose on the same candidacy', asyn
   await expect(page.locator('#results .row')).toHaveCount(0);
   await page.locator('#fWon').selectOption('lost');
   await expect(page.locator('#results .row')).toHaveCount(1);
+});
+
+test('a nominator chain shows short labels, muted coalition words and full names on hover', async ({ page }) => {
+  // Issue #189: synthetic nominators shaped like the registry's three kinds
+  // of label -- a party shortName, a coalition's brand, a joint list.
+  const parties = {
+    ...index.parties,
+    'syn-party': { n: 'SP-B', t: 'partija', f: 'Sintetinė partija – Bandymų sąjunga' },
+    'syn-brand': { n: '„Kartu mes bandom!“', t: 'koalicija', f: 'Sintetinės partijos ir Kitos partijos koalicija „Kartu mes bandom!“', nr: ['syn-party', 'syn-other'] },
+    'syn-joint': { n: 'SP-B + Kita partija', t: 'koalicija', f: 'Sintetinė partija – Bandymų sąjunga, Kita partija', nr: ['syn-party', 'syn-other'] },
+    'syn-named': { n: 'Bandymų koalicija', t: 'koalicija' },
+  };
+  const valdas = {
+    pid: 'test-valdas', n: 'Valdas SINTETINIS', b: '1965-06-07', k: 'VALDAS SINTETINIS|1965-06-07',
+    e: [
+      { id: '2020-seimo', c: 'test-anna', p: 'syn-party', w: true },
+      { id: '2020-seimo', c: 'test-anna', p: 'syn-brand', w: true },
+      { id: '2024-seimo', c: 'test-anna', p: 'syn-joint', w: false },
+      { id: '2024-seimo', c: 'test-anna', p: 'syn-named', w: false },
+    ],
+  };
+  await page.route('**/dashboard/people.json', route => route.fulfill({
+    contentType: 'application/json',
+    body: JSON.stringify({ ...index, parties, people: [...index.people, valdas] }),
+  }));
+  await page.goto('/dashboard/#test-valdas');
+  const chain = page.locator('#person .phead .parties');
+  await expect(chain).toHaveText('SP-B → koalicija „Kartu mes bandom!“ → koalicija SP-B + Kita partija → Bandymų koalicija');
+  const titles = await chain.locator('> span').evaluateAll(spans => spans.map(s => s.title));
+  expect(titles).toEqual([
+    'Sintetinė partija – Bandymų sąjunga',
+    'Sintetinės partijos ir Kitos partijos koalicija „Kartu mes bandom!“',
+    'Sintetinė partija – Bandymų sąjunga, Kita partija',
+    'Bandymų koalicija',
+  ]);
+  // The type word is quieter than the name beside it.
+  const [word, name] = await chain.locator('> span').nth(1).evaluate(span => [
+    getComputedStyle(span.querySelector('.ptype')).color, getComputedStyle(span).color,
+  ]);
+  expect(word).not.toBe(name);
+
+  // The party's "su koalicijomis" row finds its joint lists as well, while
+  // its own row still finds only its own candidacy.
+  await openFilters(page);
+  await expect(page.locator('#fParty option[value="&syn-party"]')).toHaveText('SP-B su koalicijomis (3)');
+  await page.locator('#fParty').selectOption('&syn-party');
+  await page.locator('#fElection').selectOption('2024-seimo');
+  await expect(page.locator('#results .row')).toHaveCount(1);
+  await page.locator('#fParty').selectOption('syn-party');
+  await expect(page.locator('#results .row')).toHaveCount(0);
 });
 
 test('legacy links canonicalize and Back/Forward restore the selected person', async ({ page }) => {

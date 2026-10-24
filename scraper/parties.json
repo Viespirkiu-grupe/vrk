@@ -337,8 +337,9 @@
   "lietuvos-regionu-partija": {
    "name": "Lietuvos regionų partija",
    "type": "partija",
+   "shortName": "LRP",
    "since": "2018",
-   "note": "Įkurta kaip Lietuvos socialdemokratų darbo partija (atskilus nuo LSDP); 2021 m. persivadino.",
+   "note": "Įkurta kaip Lietuvos socialdemokratų darbo partija (atskilus nuo LSDP); 2021 m. persivadino. Trumpinys LRP – partijos svetainėje (https://www.ltregionupartija.lt/: „Lietuvos regionų partija (LRP)“, tikrinta 2026-10-24; #189).",
    "aliases": [
     "Lietuvos socialdemokratų darbo partija"
    ]
@@ -617,7 +618,8 @@
   "rusu-aljansas": {
    "name": "Politinė partija Rusų aljansas",
    "type": "partija",
-   "note": "Klaipėdos partija (JAR 195724855), nuo 2002 m.; ne ta pati kaip Lietuvos rusų sąjunga.",
+   "shortName": "Rusų aljansas",
+   "note": "Klaipėdos partija (JAR 195724855), nuo 2002 m.; ne ta pati kaip Lietuvos rusų sąjunga. Trumpas vardas be teisinės formos – kaip VRK registruotame koalicijos pavadinime „Lenkų rinkimų akcijos ir Rusų aljanso koalicija „Valdemaro Tomaševskio blokas““ (2015 m. savivaldybių tarybų rinkimai, vrk.lt; #189).",
    "aliases": [
     "Politinė partija Rusų Aljansas"
    ]

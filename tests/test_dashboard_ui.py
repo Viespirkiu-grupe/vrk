@@ -551,10 +551,12 @@ class PartyLineageTests(unittest.TestCase):
             re.search(pattern, SOURCE, re.S | re.M).group(0)
             for pattern in (
                 r"^const PARTY_LINEAGE_PREFIX = .*?;$",
-                r"^let PARTY_LINEAGES = .*?;$",
+                r"^const PARTY_COALITIONS_PREFIX = .*?;$",
+                r"^let PARTY_SETS = .*?;$",
                 r"^const inParty = .*?;$",
                 r"^function partyLineage\(.*?^}",
                 r"^function partyLineageRoots\(.*?^}",
+                r"^function partyCoalitions\(.*?^}",
             )
         )
         script = (
@@ -565,6 +567,26 @@ class PartyLineageTests(unittest.TestCase):
         if out.returncode != 0:
             raise AssertionError(out.stderr.strip())
         return json.loads(out.stdout)
+
+    def test_a_coalitions_row_adds_the_joint_lists_and_the_plain_row_stays_one(self):
+        # Issue #189: "nr" lists a coalition's members; the member's
+        # "su koalicijomis" row finds those joint lists too.
+        parties = {
+            **self.PARTIES,
+            "dp-ir-lzp": {"n": "DP + LŽP", "t": "koalicija", "nr": ["darbo-partija", "lzp"]},
+        }
+        self.assertEqual(
+            self._run(
+                'Object.fromEntries(partyCoalitions(PARTIES)) && '
+                'PARTY_SETS.set(PARTY_COALITIONS_PREFIX + "darbo-partija", '
+                'new Set(["darbo-partija", ...partyCoalitions(PARTIES).get("darbo-partija")])) && '
+                '[[...partyCoalitions(PARTIES).keys()], inParty({p: "dp-ir-lzp"}, "&darbo-partija"),'
+                ' inParty({p: "darbo-partija"}, "&darbo-partija"), inParty({p: "dp-ir-lzp"}, "darbo-partija")]',
+                parties,
+            ),
+            # The member the index lacks (lzp) gets no row.
+            [["darbo-partija"], True, True, False],
+        )
 
     def test_a_lineage_walks_depth_first_in_registry_order(self):
         self.assertEqual(
@@ -591,7 +613,7 @@ class PartyLineageTests(unittest.TestCase):
     def test_a_lineage_row_matches_the_whole_lineage_and_a_plain_row_one_nominator(self):
         self.assertEqual(
             self._run(
-                'PARTY_LINEAGES.set("ts-lkd", new Set(partyLineage(PARTIES, "ts-lkd").map(l => l.id))) && '
+                'PARTY_SETS.set("+ts-lkd", new Set(partyLineage(PARTIES, "ts-lkd").map(l => l.id))) && '
                 '[inParty({p: "lkdp"}, "+ts-lkd"), inParty({p: "ts-lkd"}, "+ts-lkd"), inParty({p: "lsdp"}, "+ts-lkd"),'
                 ' inParty({p: "lkdp"}, "ts-lkd"), inParty({p: "ts-lkd"}, "ts-lkd"), inParty({p: "lkdp"}, "+lsdp")]'
             ),
@@ -1389,7 +1411,7 @@ class FilterCompositionTests(unittest.TestCase):
         )
         script = (
             f"const ELECTIONS = new Map({json.dumps(self.ELECTIONS)}.map(e => [e.id, e]));\n"
-            "const PARTY_LINEAGES = new Map();\n"
+            "const PARTY_SETS = new Map();\n"
             f"{helpers}\n"
             f"console.log(JSON.stringify(candidacyMatches({json.dumps(candidacy)}, {json.dumps(full)})));"
         )
@@ -1505,7 +1527,7 @@ class CsvRowTests(unittest.TestCase):
         stubs = """
         const INDEX = %s;
         const ELECTIONS = new Map(INDEX.elections.map(e => [e.id, e]));
-        const PARTY_LINEAGES = new Map();
+        const PARTY_SETS = new Map();
         const fold = (s) => (s || "").toUpperCase();
         const activeFilters = () => ({election: "", party: "", municipality: "",
           constituency: "", role: "", won: "", any: false});
