@@ -906,7 +906,7 @@ function buildFilters() {
   // brackets stay the people who ran (#176).
   const fParty = document.getElementById("fParty");
   addOption(fParty, "", "— visi iškėlėjai —");
-  const partyLabel = (id) => partyText(INDEX.parties, id);
+  const partyLabel = (id) => partyText(INDEX.parties, id, { start: true });
   // A short label's tooltip adds the full legal name.
   const addPartyOption = (select, id, label) => {
     const option = addOption(select, id, label);
@@ -1092,7 +1092,7 @@ function renderList() {
     main.append(nm, " ", bd);
     const partyId = latestPartyId(p);
     if (partyId) {
-      const pt = partyNode(partyId); pt.classList.add("pt");
+      const pt = partyNode(partyId, { start: true }); pt.classList.add("pt");
       main.appendChild(pt);
     }
     const cnt = document.createElement("span");
@@ -1435,20 +1435,20 @@ function failureBanner(failed) {
 
 function partyNameOf(e) {
   if (!e.p) return null;
-  return partyText(INDEX.parties, e.p);
+  return partyText(INDEX.parties, e.p, { start: true });
 }
 
 // A nominator's label as a node (issue #189): the short label, a muted type
 // word before a coalition's, and the full legal name on hover -- as a native
 // title unless the caller gives it a custom tooltip (issue #200).
-function partyNode(id, { title = true } = {}) {
+function partyNode(id, { title = true, start = false } = {}) {
   const party = INDEX.parties[id];
   const span = document.createElement("span");
   if (title) span.title = partyTitle(INDEX.parties, id);
   const word = partyTypeWord(party);
   if (word) {
     const type = document.createElement("span"); type.className = "ptype";
-    type.textContent = word;
+    type.textContent = start ? capitalize(word) : word;
     span.append(type, " ");
   }
   const name = document.createElement("span"); name.className = "pname";
@@ -1620,7 +1620,7 @@ async function showPerson(p) {
     const sum = document.createElement("summary");
     sum.textContent = electionName(e.id);
     if (e.p) {
-      const party = partyNode(e.p); party.classList.add("party");
+      const party = partyNode(e.p, { start: true }); party.classList.add("party");
       sum.appendChild(party);
     }
     // No vote counts here (issue #204): a bare "11 541 pirmumo balsas" beside
@@ -1789,7 +1789,7 @@ async function showCompare() {
   });
   infoRow("Iškėlusios partijos", (p) => {
     const ids = [...new Set(p.e.map(e => e.p).filter(Boolean))];
-    return ids.length ? ids.map(id => partyText(INDEX.parties, id)).join("\n") : null;
+    return ids.length ? ids.map(id => partyText(INDEX.parties, id, { start: true })).join("\n") : null;
   });
 
   for (const row of CONCEPT_ROWS) {
@@ -1982,7 +1982,7 @@ function showAggregates() {
       // row (issue #162).
       for (const [pid, count] of showAllParties ? top : top.slice(0, 15)) {
         const tr = t.tBodies[0].insertRow();
-        const th = document.createElement("th"); th.appendChild(partyNode(pid)); tr.appendChild(th);
+        const th = document.createElement("th"); th.appendChild(partyNode(pid, { start: true })); tr.appendChild(th);
         tr.insertCell().textContent = fmtInt(count);
         tr.insertCell().textContent = pct(count, withParty.length);
         tr.insertCell().textContent = fmtInt(withParty.filter(e => e.p === pid && e.w === true).length);
