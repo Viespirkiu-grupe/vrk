@@ -31,7 +31,8 @@ every published form and what it resolves to.
 `counties_of(name)` is the one place a name gets a county (issue #217):
 scraper/constituency_counties.json, derived from VRK's per-election precinct
 lists by scripts/build_constituency_counties.py -- every county any map of
-that name reached, since the facet is a name across maps.
+that name reached, since the facet is a name across maps -- and `city_of`
+the big city a mostly-city district is grouped under instead of its county.
 
 "Daugiamandatė" -- the 2000-2012 cards' "Apygarda" row for a candidate who
 stood on the list alone -- is not a constituency, and reads as None here;
@@ -161,3 +162,15 @@ def counties_of(name: str | None) -> list[str]:
     (Pasaulio lietuvių, the district abroad) or does not know."""
     entry = load_counties()["entries"].get(name) if name else None
     return list(entry["counties"]) if entry else []
+
+
+def city_of(name: str | None) -> str | None:
+    """The big city (keyed by its county, "Vilniaus") whose municipality holds
+    most of the district's precincts over its maps, else None (issue #217)."""
+    entry = load_counties()["entries"].get(name) if name else None
+    return entry.get("city") if entry else None
+
+
+def cities() -> list[str]:
+    """The five big cities with a filter group of their own, by county key."""
+    return list(load_counties()["cities"])

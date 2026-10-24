@@ -499,6 +499,8 @@ class GroupingTests(unittest.TestCase):
         self.assertEqual(index["constituencies"], ["Dzūkijos"])
         # Its counties ride parallel to the name (issue #217).
         self.assertEqual(index["constituencyCounties"], [["Alytaus"]])
+        self.assertEqual(index["constituencyCities"], [None])
+        self.assertEqual(index["cities"], ["Vilniaus", "Kauno", "Klaipėdos", "Šiaulių", "Panevėžio"])
         self.assertEqual(entry["ap"], 0)
         self.assertNotIn("v", entry)
         self.assertNotIn("cv", entry)

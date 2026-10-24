@@ -1,5 +1,5 @@
 {
-  "_comment": "The county (apskritis) of every single-mandate constituency name (issue #217), for the dashboard's grouped filter. Derived by scripts/build_constituency_counties.py, not by reading the names: VRK's own precinct list for each Seimas election, 1996-2024 (`sources`; published at https://www.vrk.lt/lt/rinkimu-apygardu-ir-apylinkiu-sarasas-ankstesniuose-rinkimuose), gives every precinct's district and municipality, and scraper/municipalities.json (#213) gives each municipality's county. `counties` is the union over every map the name was used in, in the registry's population order -- a name is not a boundary, and a district that touched two counties is listed under both; `maps` is the evidence, the municipalities and their precinct counts per general election (by-elections ran on their term's map). Names whose counties differ between maps are listed in `changedBetweenMaps`; the sharpest is Dainavos, a Kaunas city district through 2016 and the Prienai-Birštonas-Alytus district from 2020. Two precinct-list entries are read explicitly (the script's DISTRICT_NAMES and MUNICIPALITY_FORMS): 1996's Nr. 67 is 'Prienų' on the cards and 'Prienų–Birštono' in the list, and the 1996/2000 'Kupiškio rajonas' and 2004 bare 'Širvintų' are Kupiškis and Širvintai district. A name with an empty `counties` list has a `note` saying why; the filter groups it apart.",
+  "_comment": "The county (apskritis) of every single-mandate constituency name (issue #217), for the dashboard's grouped filter. Derived by scripts/build_constituency_counties.py, not by reading the names: VRK's own precinct list for each Seimas election, 1996-2024 (`sources`; published at https://www.vrk.lt/lt/rinkimu-apygardu-ir-apylinkiu-sarasas-ankstesniuose-rinkimuose), gives every precinct's district and municipality, and scraper/municipalities.json (#213) gives each municipality's county. `counties` is the union over every map the name was used in, in the registry's population order -- a name is not a boundary, and a district that touched two counties is listed under both; `maps` is the evidence, the municipalities and their precinct counts per general election (by-elections ran on their term's map). Names whose counties differ between maps are listed in `changedBetweenMaps`; the sharpest is Dainavos, a Kaunas city district through 2016 and the Prienai-Birštonas-Alytus district from 2020. Two precinct-list entries are read explicitly (the script's DISTRICT_NAMES and MUNICIPALITY_FORMS): 1996's Nr. 67 is 'Prienų' on the cards and 'Prienų–Birštono' in the list, and the 1996/2000 'Kupiškio rajonas' and 2004 bare 'Širvintų' are Kupiškis and Širvintai district. A name with an empty `counties` list has a `note` saying why; the filter groups it apart. `city` puts a district in one of the five big cities' own groups (`cities`), which the filter shows ahead of that city's county group and in place of it: the city whose municipality holds a strict majority of the district's precincts summed over every map (`cityPrecincts` gives the count); null otherwise. `cityMajorityFlips` marks a name whose per-map majority disagrees between maps -- Dainavos (all Kaunas city through 2016, none of it from 2020: 45%, so the county group) and Pajūrio (Klaipėda city majority in 1996 and from 2016, minority 2000-2012: 56%, so the city group).",
   "sources": {
     "1996": {
       "election": "1996-spalio-20-seimo",
@@ -50,11 +50,19 @@
     "Prienų",
     "Prienų–Birštono"
   ],
+  "cities": {
+    "Vilniaus": "Vilniaus miesto savivaldybė",
+    "Kauno": "Kauno miesto savivaldybė",
+    "Klaipėdos": "Klaipėdos miesto savivaldybė",
+    "Šiaulių": "Šiaulių miesto savivaldybė",
+    "Panevėžio": "Panevėžio miesto savivaldybė"
+  },
   "entries": {
     "Akmenės–Joniškio": {
       "counties": [
         "Šiaulių"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Akmenės rajono savivaldybė": 20,
@@ -83,6 +91,7 @@
         "Šiaulių",
         "Telšių"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Akmenės rajono savivaldybė": 23,
@@ -94,6 +103,13 @@
       "counties": [
         "Kauno"
       ],
+      "city": "Kauno",
+      "cityPrecincts": {
+        "Kauno": {
+          "in": 139,
+          "of": 140
+        }
+      },
       "maps": {
         "1996": {
           "Kauno miesto savivaldybė": 19
@@ -126,6 +142,7 @@
       "counties": [
         "Alytaus"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Alytaus miesto savivaldybė": 16
@@ -157,6 +174,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 126,
+          "of": 126
+        }
+      },
       "maps": {
         "1996": {
           "Vilniaus miesto savivaldybė": 21
@@ -189,6 +213,7 @@
         "Panevėžio",
         "Utenos"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Anykščių rajono savivaldybė": 37,
@@ -217,6 +242,7 @@
         "Panevėžio",
         "Utenos"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Anykščių rajono savivaldybė": 35,
@@ -228,6 +254,13 @@
       "counties": [
         "Panevėžio"
       ],
+      "city": null,
+      "cityPrecincts": {
+        "Panevėžio": {
+          "in": 39,
+          "of": 281
+        }
+      },
       "maps": {
         "1996": {
           "Panevėžio miesto savivaldybė": 5,
@@ -267,6 +300,13 @@
       "counties": [
         "Šiaulių"
       ],
+      "city": "Šiaulių",
+      "cityPrecincts": {
+        "Šiaulių": {
+          "in": 112,
+          "of": 112
+        }
+      },
       "maps": {
         "1996": {
           "Šiaulių miesto savivaldybė": 16
@@ -298,6 +338,13 @@
       "counties": [
         "Klaipėdos"
       ],
+      "city": "Klaipėdos",
+      "cityPrecincts": {
+        "Klaipėdos": {
+          "in": 123,
+          "of": 125
+        }
+      },
       "maps": {
         "1996": {
           "Klaipėdos miesto savivaldybė": 16
@@ -330,6 +377,7 @@
       "counties": [
         "Panevėžio"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Biržų rajono savivaldybė": 32,
@@ -361,6 +409,13 @@
       "counties": [
         "Kauno"
       ],
+      "city": "Kauno",
+      "cityPrecincts": {
+        "Kauno": {
+          "in": 83,
+          "of": 83
+        }
+      },
       "maps": {
         "1996": {
           "Kauno miesto savivaldybė": 16
@@ -383,6 +438,13 @@
       "counties": [
         "Kauno"
       ],
+      "city": "Kauno",
+      "cityPrecincts": {
+        "Kauno": {
+          "in": 46,
+          "of": 46
+        }
+      },
       "maps": {
         "2016": {
           "Kauno miesto savivaldybė": 16
@@ -400,6 +462,14 @@
         "Kauno",
         "Alytaus"
       ],
+      "city": null,
+      "cityPrecincts": {
+        "Kauno": {
+          "in": 67,
+          "of": 149
+        }
+      },
+      "cityMajorityFlips": true,
       "maps": {
         "1996": {
           "Kauno miesto savivaldybė": 13
@@ -435,6 +505,13 @@
       "counties": [
         "Šiaulių"
       ],
+      "city": "Šiaulių",
+      "cityPrecincts": {
+        "Šiaulių": {
+          "in": 51,
+          "of": 63
+        }
+      },
       "maps": {
         "1996": {
           "Šiaulių miesto savivaldybė": 11
@@ -461,6 +538,13 @@
       "counties": [
         "Klaipėdos"
       ],
+      "city": "Klaipėdos",
+      "cityPrecincts": {
+        "Klaipėdos": {
+          "in": 162,
+          "of": 165
+        }
+      },
       "maps": {
         "1996": {
           "Klaipėdos miesto savivaldybė": 20
@@ -494,6 +578,7 @@
         "Vilniaus",
         "Kauno"
       ],
+      "city": null,
       "maps": {
         "2020": {
           "Jonavos rajono savivaldybė": 1,
@@ -511,6 +596,7 @@
         "Panevėžio",
         "Utenos"
       ],
+      "city": null,
       "maps": {
         "2020": {
           "Anykščių rajono savivaldybė": 35,
@@ -527,6 +613,7 @@
       "counties": [
         "Alytaus"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Alytaus miesto savivaldybė": 7,
@@ -568,6 +655,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 88,
+          "of": 88
+        }
+      },
       "maps": {
         "1996": {
           "Vilniaus miesto savivaldybė": 11
@@ -599,6 +693,7 @@
       "counties": [
         "Klaipėdos"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Klaipėdos rajono savivaldybė": 31
@@ -630,6 +725,13 @@
       "counties": [
         "Kauno"
       ],
+      "city": null,
+      "cityPrecincts": {
+        "Kauno": {
+          "in": 1,
+          "of": 65
+        }
+      },
       "maps": {
         "2016": {
           "Kauno rajono savivaldybė": 20
@@ -648,6 +750,7 @@
         "Vilniaus",
         "Utenos"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Ignalinos rajono savivaldybė": 27,
@@ -675,6 +778,7 @@
       "counties": [
         "Kauno"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Jonavos rajono savivaldybė": 27
@@ -706,6 +810,7 @@
       "counties": [
         "Alytaus"
       ],
+      "city": null,
       "maps": {
         "2020": {
           "Druskininkų savivaldybė": 14,
@@ -721,6 +826,7 @@
       "counties": [
         "Tauragės"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Jurbarko rajono savivaldybė": 31,
@@ -748,6 +854,7 @@
       "counties": [
         "Tauragės"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Jurbarko rajono savivaldybė": 31,
@@ -759,6 +866,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 62,
+          "of": 62
+        }
+      },
       "maps": {
         "1996": {
           "Vilniaus miesto savivaldybė": 10
@@ -784,6 +898,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 20,
+          "of": 20
+        }
+      },
       "maps": {
         "2020": {
           "Vilniaus miesto savivaldybė": 10
@@ -798,6 +919,7 @@
         "Vilniaus",
         "Kauno"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Kaišiadorių rajono savivaldybė": 30,
@@ -837,6 +959,13 @@
       "counties": [
         "Kauno"
       ],
+      "city": "Kauno",
+      "cityPrecincts": {
+        "Kauno": {
+          "in": 78,
+          "of": 78
+        }
+      },
       "maps": {
         "1996": {
           "Kauno miesto savivaldybė": 11
@@ -868,6 +997,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 106,
+          "of": 106
+        }
+      },
       "maps": {
         "1996": {
           "Vilniaus miesto savivaldybė": 18
@@ -893,6 +1029,7 @@
       "counties": [
         "Tauragės"
       ],
+      "city": null,
       "maps": {
         "2020": {
           "Jurbarko rajono savivaldybė": 29,
@@ -910,6 +1047,13 @@
       "counties": [
         "Kauno"
       ],
+      "city": null,
+      "cityPrecincts": {
+        "Kauno": {
+          "in": 4,
+          "of": 119
+        }
+      },
       "maps": {
         "1996": {
           "Kauno miesto savivaldybė": 4,
@@ -933,6 +1077,13 @@
       "counties": [
         "Kauno"
       ],
+      "city": null,
+      "cityPrecincts": {
+        "Kauno": {
+          "in": 2,
+          "of": 202
+        }
+      },
       "maps": {
         "1996": {
           "Kauno miesto savivaldybė": 2,
@@ -962,6 +1113,7 @@
         "Šiaulių",
         "Telšių"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Kelmės rajono savivaldybė": 41,
@@ -988,6 +1140,7 @@
       "counties": [
         "Šiaulių"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Kelmės rajono savivaldybė": 40,
@@ -1000,6 +1153,7 @@
         "Šiaulių",
         "Tauragės"
       ],
+      "city": null,
       "maps": {
         "2020": {
           "Kelmės rajono savivaldybė": 32,
@@ -1015,6 +1169,7 @@
       "counties": [
         "Klaipėdos"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Kretingos rajono savivaldybė": 38
@@ -1037,6 +1192,7 @@
       "counties": [
         "Klaipėdos"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Kretingos rajono savivaldybė": 10,
@@ -1048,6 +1204,7 @@
       "counties": [
         "Klaipėdos"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Kretingos rajono savivaldybė": 31,
@@ -1067,6 +1224,13 @@
       "counties": [
         "Šiaulių"
       ],
+      "city": null,
+      "cityPrecincts": {
+        "Šiaulių": {
+          "in": 7,
+          "of": 27
+        }
+      },
       "maps": {
         "2016": {
           "Šiaulių miesto savivaldybė": 7,
@@ -1078,6 +1242,7 @@
       "counties": [
         "Kauno"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Kėdainių rajono savivaldybė": 34
@@ -1109,6 +1274,7 @@
       "counties": [
         "Alytaus"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Druskininkų savivaldybė": 7,
@@ -1140,6 +1306,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 110,
+          "of": 110
+        }
+      },
       "maps": {
         "1996": {
           "Vilniaus miesto savivaldybė": 17
@@ -1171,6 +1344,7 @@
       "counties": [
         "Marijampolės"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Marijampolės miesto savivaldybė (iki 2000 m.)": 15
@@ -1202,6 +1376,13 @@
       "counties": [
         "Klaipėdos"
       ],
+      "city": "Klaipėdos",
+      "cityPrecincts": {
+        "Klaipėdos": {
+          "in": 83,
+          "of": 83
+        }
+      },
       "maps": {
         "1996": {
           "Klaipėdos miesto savivaldybė": 12
@@ -1233,6 +1414,7 @@
       "counties": [
         "Telšių"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Mažeikių rajono savivaldybė": 16
@@ -1264,6 +1446,7 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Vilniaus rajono savivaldybė": 23
@@ -1278,6 +1461,7 @@
         "Vilniaus",
         "Utenos"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Molėtų rajono savivaldybė": 24,
@@ -1295,6 +1479,7 @@
         "Vilniaus",
         "Utenos"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Molėtų rajono savivaldybė": 24,
@@ -1323,6 +1508,7 @@
       "counties": [
         "Klaipėdos"
       ],
+      "city": null,
       "maps": {
         "2020": {
           "Klaipėdos rajono savivaldybė": 8,
@@ -1341,6 +1527,7 @@
         "Vilniaus",
         "Utenos"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Ignalinos rajono savivaldybė": 26,
@@ -1353,6 +1540,7 @@
         "Vilniaus",
         "Utenos"
       ],
+      "city": null,
       "maps": {
         "2020": {
           "Ignalinos rajono savivaldybė": 17,
@@ -1368,6 +1556,7 @@
       "counties": [
         "Utenos"
       ],
+      "city": null,
       "maps": {
         "2020": {
           "Ignalinos rajono savivaldybė": 3,
@@ -1385,6 +1574,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 100,
+          "of": 100
+        }
+      },
       "maps": {
         "1996": {
           "Vilniaus miesto savivaldybė": 18
@@ -1410,6 +1606,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 13,
+          "of": 13
+        }
+      },
       "maps": {
         "2020": {
           "Vilniaus miesto savivaldybė": 13
@@ -1420,6 +1623,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 11,
+          "of": 11
+        }
+      },
       "maps": {
         "2024": {
           "Vilniaus miesto savivaldybė": 11
@@ -1430,6 +1640,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 11,
+          "of": 11
+        }
+      },
       "maps": {
         "2024": {
           "Vilniaus miesto savivaldybė": 11
@@ -1440,6 +1657,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 130,
+          "of": 130
+        }
+      },
       "maps": {
         "1996": {
           "Vilniaus miesto savivaldybė": 21
@@ -1471,6 +1695,7 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Vilniaus rajono savivaldybė": 26
@@ -1487,6 +1712,13 @@
       "counties": [
         "Panevėžio"
       ],
+      "city": "Panevėžio",
+      "cityPrecincts": {
+        "Panevėžio": {
+          "in": 105,
+          "of": 105
+        }
+      },
       "maps": {
         "1996": {
           "Panevėžio miesto savivaldybė": 13
@@ -1518,6 +1750,14 @@
       "counties": [
         "Klaipėdos"
       ],
+      "city": "Klaipėdos",
+      "cityPrecincts": {
+        "Klaipėdos": {
+          "in": 76,
+          "of": 135
+        }
+      },
+      "cityMajorityFlips": true,
       "maps": {
         "1996": {
           "Klaipėdos miesto savivaldybė": 11,
@@ -1562,6 +1802,7 @@
       "counties": [
         "Šiaulių"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Joniškio rajono savivaldybė": 14,
@@ -1589,6 +1830,13 @@
       "counties": [
         "Kauno"
       ],
+      "city": "Kauno",
+      "cityPrecincts": {
+        "Kauno": {
+          "in": 114,
+          "of": 114
+        }
+      },
       "maps": {
         "1996": {
           "Kauno miesto savivaldybė": 18
@@ -1620,6 +1868,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 17,
+          "of": 17
+        }
+      },
       "maps": {
         "2016": {
           "Vilniaus miesto savivaldybė": 17
@@ -1630,6 +1885,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 13,
+          "of": 13
+        }
+      },
       "maps": {
         "2020": {
           "Vilniaus miesto savivaldybė": 13
@@ -1640,6 +1902,13 @@
       "counties": [
         "Panevėžio"
       ],
+      "city": "Panevėžio",
+      "cityPrecincts": {
+        "Panevėžio": {
+          "in": 21,
+          "of": 21
+        }
+      },
       "maps": {
         "2020": {
           "Panevėžio miesto savivaldybė": 11
@@ -1651,6 +1920,7 @@
     },
     "Pasaulio lietuvių": {
       "counties": [],
+      "city": null,
       "note": "the district of voters abroad (2020 and 2024, Nr. 72): no precinct lies in Lithuania"
     },
     "Pasvalio–Pakruojo": {
@@ -1658,6 +1928,7 @@
         "Šiaulių",
         "Panevėžio"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Pakruojo rajono savivaldybė": 23,
@@ -1669,6 +1940,7 @@
       "counties": [
         "Panevėžio"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Panevėžio rajono savivaldybė": 12,
@@ -1696,6 +1968,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 20,
+          "of": 20
+        }
+      },
       "maps": {
         "2020": {
           "Vilniaus miesto savivaldybė": 10
@@ -1709,6 +1988,13 @@
       "counties": [
         "Kauno"
       ],
+      "city": "Kauno",
+      "cityPrecincts": {
+        "Kauno": {
+          "in": 13,
+          "of": 13
+        }
+      },
       "maps": {
         "2016": {
           "Kauno miesto savivaldybė": 13
@@ -1719,6 +2005,13 @@
       "counties": [
         "Kauno"
       ],
+      "city": "Kauno",
+      "cityPrecincts": {
+        "Kauno": {
+          "in": 28,
+          "of": 28
+        }
+      },
       "maps": {
         "2020": {
           "Kauno miesto savivaldybė": 14
@@ -1734,6 +2027,7 @@
         "Telšių",
         "Tauragės"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Rietavo savivaldybė": 7,
@@ -1746,6 +2040,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 25,
+          "of": 25
+        }
+      },
       "maps": {
         "2020": {
           "Vilniaus miesto savivaldybė": 12
@@ -1759,6 +2060,7 @@
       "counties": [
         "Telšių"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Plungės rajono savivaldybė": 34
@@ -1773,6 +2075,7 @@
       "counties": [
         "Telšių"
       ],
+      "city": null,
       "maps": {
         "2000": {
           "Plungės rajono savivaldybė": 27,
@@ -1804,6 +2107,13 @@
       "counties": [
         "Kauno"
       ],
+      "city": "Kauno",
+      "cityPrecincts": {
+        "Kauno": {
+          "in": 63,
+          "of": 63
+        }
+      },
       "maps": {
         "1996": {
           "Kauno miesto savivaldybė": 14
@@ -1827,6 +2137,7 @@
         "Kauno",
         "Marijampolės"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Birštono savivaldybė": 1,
@@ -1853,6 +2164,7 @@
         "Kauno",
         "Alytaus"
       ],
+      "city": null,
       "maps": {
         "2012": {
           "Birštono savivaldybė": 3,
@@ -1869,6 +2181,7 @@
       "counties": [
         "Šiaulių"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Radviliškio rajono savivaldybė": 43
@@ -1894,6 +2207,7 @@
       "counties": [
         "Šiaulių"
       ],
+      "city": null,
       "maps": {
         "2020": {
           "Kelmės rajono savivaldybė": 8,
@@ -1909,6 +2223,7 @@
       "counties": [
         "Kauno"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Raseinių rajono savivaldybė": 42
@@ -1931,6 +2246,7 @@
       "counties": [
         "Kauno"
       ],
+      "city": null,
       "maps": {
         "2024": {
           "Kėdainių rajono savivaldybė": 14,
@@ -1942,6 +2258,7 @@
       "counties": [
         "Kauno"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Kėdainių rajono savivaldybė": 14,
@@ -1957,6 +2274,7 @@
       "counties": [
         "Kauno"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Kauno rajono savivaldybė": 25
@@ -1973,6 +2291,7 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": null,
       "maps": {
         "2024": {
           "Vilniaus rajono savivaldybė": 23
@@ -1983,6 +2302,7 @@
       "counties": [
         "Panevėžio"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Rokiškio rajono savivaldybė": 42
@@ -2005,6 +2325,13 @@
       "counties": [
         "Šiaulių"
       ],
+      "city": "Šiaulių",
+      "cityPrecincts": {
+        "Šiaulių": {
+          "in": 105,
+          "of": 105
+        }
+      },
       "maps": {
         "1996": {
           "Šiaulių miesto savivaldybė": 16
@@ -2036,6 +2363,13 @@
       "counties": [
         "Kauno"
       ],
+      "city": "Kauno",
+      "cityPrecincts": {
+        "Kauno": {
+          "in": 21,
+          "of": 33
+        }
+      },
       "maps": {
         "2020": {
           "Kauno miesto savivaldybė": 10,
@@ -2051,6 +2385,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 92,
+          "of": 92
+        }
+      },
       "maps": {
         "1996": {
           "Vilniaus miesto savivaldybė": 17
@@ -2076,6 +2417,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 28,
+          "of": 28
+        }
+      },
       "maps": {
         "2020": {
           "Vilniaus miesto savivaldybė": 15
@@ -2090,6 +2438,7 @@
         "Klaipėdos",
         "Telšių"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Mažeikių rajono savivaldybė": 18,
@@ -2119,6 +2468,7 @@
       "counties": [
         "Marijampolės"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Marijampolės rajono savivaldybė (iki 2000 m.)": 52
@@ -2149,6 +2499,7 @@
       "counties": [
         "Panevėžio"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Kupiškio rajono savivaldybė": 10,
@@ -2161,6 +2512,7 @@
         "Panevėžio",
         "Utenos"
       ],
+      "city": null,
       "maps": {
         "2020": {
           "Kupiškio rajono savivaldybė": 12,
@@ -2177,6 +2529,7 @@
       "counties": [
         "Panevėžio"
       ],
+      "city": null,
       "maps": {
         "2020": {
           "Biržų rajono savivaldybė": 32,
@@ -2192,6 +2545,7 @@
       "counties": [
         "Marijampolės"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Kalvarijos savivaldybė": 17,
@@ -2205,6 +2559,7 @@
         "Marijampolės",
         "Alytaus"
       ],
+      "city": null,
       "maps": {
         "2020": {
           "Alytaus rajono savivaldybė": 15,
@@ -2223,6 +2578,7 @@
         "Kauno",
         "Marijampolės"
       ],
+      "city": null,
       "maps": {
         "2020": {
           "Kauno rajono savivaldybė": 2,
@@ -2240,6 +2596,7 @@
       "counties": [
         "Tauragės"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Tauragės rajono savivaldybė": 30
@@ -2273,6 +2630,7 @@
       "counties": [
         "Telšių"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Telšių rajono savivaldybė": 29
@@ -2304,6 +2662,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": null,
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 1,
+          "of": 34
+        }
+      },
       "maps": {
         "1996": {
           "Trakų rajono savivaldybė": 33,
@@ -2315,6 +2680,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": null,
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 14,
+          "of": 131
+        }
+      },
       "maps": {
         "2000": {
           "Elektrėnų savivaldybė": 8,
@@ -2342,6 +2714,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": null,
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 3,
+          "of": 89
+        }
+      },
       "maps": {
         "2016": {
           "Elektrėnų savivaldybė": 10,
@@ -2362,6 +2741,7 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Ukmergės rajono savivaldybė": 40
@@ -2387,6 +2767,7 @@
       "counties": [
         "Utenos"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Utenos rajono savivaldybė": 29
@@ -2418,6 +2799,13 @@
       "counties": [
         "Panevėžio"
       ],
+      "city": "Panevėžio",
+      "cityPrecincts": {
+        "Panevėžio": {
+          "in": 66,
+          "of": 66
+        }
+      },
       "maps": {
         "1996": {
           "Panevėžio miesto savivaldybė": 11
@@ -2444,6 +2832,7 @@
         "Vilniaus",
         "Alytaus"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Varėnos rajono savivaldybė": 39,
@@ -2473,6 +2862,7 @@
         "Vilniaus",
         "Alytaus"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Trakų rajono savivaldybė": 19,
@@ -2484,6 +2874,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 28,
+          "of": 28
+        }
+      },
       "maps": {
         "2016": {
           "Vilniaus miesto savivaldybė": 10
@@ -2500,6 +2897,7 @@
       "counties": [
         "Marijampolės"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Vilkaviškio rajono savivaldybė": 41
@@ -2532,6 +2930,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 8,
+          "of": 15
+        }
+      },
       "maps": {
         "2024": {
           "Vilniaus miesto savivaldybė": 8,
@@ -2543,6 +2948,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": null,
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 6,
+          "of": 107
+        }
+      },
       "maps": {
         "1996": {
           "Trakų rajono savivaldybė": 5,
@@ -2574,6 +2986,7 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Vilniaus rajono savivaldybė": 15,
@@ -2601,6 +3014,7 @@
       "counties": [
         "Utenos"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Visagino savivaldybė": 16,
@@ -2613,6 +3027,7 @@
         "Kauno",
         "Marijampolės"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Kauno rajono savivaldybė": 3,
@@ -2625,6 +3040,7 @@
       "counties": [
         "Utenos"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Visagino savivaldybė": 6,
@@ -2652,6 +3068,7 @@
       "counties": [
         "Marijampolės"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Vilkaviškio rajono savivaldybė": 3,
@@ -2679,6 +3096,7 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Vilniaus rajono savivaldybė": 4,
@@ -2698,6 +3116,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 78,
+          "of": 78
+        }
+      },
       "maps": {
         "1996": {
           "Vilniaus miesto savivaldybė": 14
@@ -2723,6 +3148,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 22,
+          "of": 22
+        }
+      },
       "maps": {
         "2020": {
           "Vilniaus miesto savivaldybė": 11
@@ -2736,6 +3168,7 @@
       "counties": [
         "Šiaulių"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Šiaulių rajono savivaldybė": 40
@@ -2758,6 +3191,13 @@
       "counties": [
         "Šiaulių"
       ],
+      "city": null,
+      "cityPrecincts": {
+        "Šiaulių": {
+          "in": 6,
+          "of": 69
+        }
+      },
       "maps": {
         "2020": {
           "Šiaulių miesto savivaldybė": 3,
@@ -2773,6 +3213,13 @@
       "counties": [
         "Kauno"
       ],
+      "city": "Kauno",
+      "cityPrecincts": {
+        "Kauno": {
+          "in": 97,
+          "of": 97
+        }
+      },
       "maps": {
         "1996": {
           "Kauno miesto savivaldybė": 13
@@ -2805,6 +3252,7 @@
         "Klaipėdos",
         "Tauragės"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Šilalės rajono savivaldybė": 24,
@@ -2832,6 +3280,7 @@
       "counties": [
         "Klaipėdos"
       ],
+      "city": null,
       "maps": {
         "1996": {
           "Šilutės rajono savivaldybė": 25
@@ -2852,6 +3301,7 @@
         "Klaipėdos",
         "Tauragės"
       ],
+      "city": null,
       "maps": {
         "2000": {
           "Pagėgių savivaldybė": 11,
@@ -2875,6 +3325,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": null,
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 2,
+          "of": 237
+        }
+      },
       "maps": {
         "1996": {
           "Vilniaus miesto savivaldybė": 1,
@@ -2904,6 +3361,13 @@
       "counties": [
         "Kauno"
       ],
+      "city": "Kauno",
+      "cityPrecincts": {
+        "Kauno": {
+          "in": 73,
+          "of": 73
+        }
+      },
       "maps": {
         "1996": {
           "Kauno miesto savivaldybė": 14
@@ -2928,6 +3392,7 @@
         "Šiaulių",
         "Telšių"
       ],
+      "city": null,
       "maps": {
         "2020": {
           "Akmenės rajono savivaldybė": 20,
@@ -2945,6 +3410,7 @@
       "counties": [
         "Šiaulių"
       ],
+      "city": null,
       "maps": {
         "2016": {
           "Joniškio rajono savivaldybė": 36,
@@ -2958,6 +3424,7 @@
         "Šiaulių",
         "Panevėžio"
       ],
+      "city": null,
       "maps": {
         "2020": {
           "Pakruojo rajono savivaldybė": 22,
@@ -2973,6 +3440,7 @@
       "counties": [
         "Šiaulių"
       ],
+      "city": null,
       "maps": {
         "2020": {
           "Joniškio rajono savivaldybė": 36,
@@ -2990,6 +3458,13 @@
       "counties": [
         "Vilniaus"
       ],
+      "city": "Vilniaus",
+      "cityPrecincts": {
+        "Vilniaus": {
+          "in": 127,
+          "of": 127
+        }
+      },
       "maps": {
         "1996": {
           "Vilniaus miesto savivaldybė": 16

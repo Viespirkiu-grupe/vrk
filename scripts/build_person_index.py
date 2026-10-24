@@ -107,6 +107,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from scraper.shared.apygardos import cities as constituency_cities  # noqa: E402
+from scraper.shared.apygardos import city_of as constituency_city  # noqa: E402
 from scraper.shared.apygardos import counties_of as constituency_counties  # noqa: E402
 from scraper.shared.deklaracijos import (  # noqa: E402
     INCOME_EMPLOYMENT,
@@ -744,6 +746,10 @@ def build_index(
         # that crossed a county line is filed under each; empty for the
         # district abroad, which the filter groups apart.
         "constituencyCounties": [constituency_counties(name) for name in constituency_list],
+        # The big city a mostly-city district is grouped under in place of
+        # its county (null elsewhere), and the cities that have a group.
+        "constituencyCities": [constituency_city(name) for name in constituency_list],
+        "cities": constituency_cities(),
         # One row per campaign-finance participant (issue #162): "k" the
         # campaignKey, "d" the declared donations in euro (absent where the
         # campaign publishes none), "n" the candidacies sharing it -- a

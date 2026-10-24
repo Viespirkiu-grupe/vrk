@@ -986,22 +986,35 @@ function buildFilters() {
   // that crossed a county line is an option under each county it touched,
   // all with the same "ap" value, so any of them filters the same rows. A
   // name with no county -- the district abroad -- gets a labelled group last.
+  // The five big cities each get a group just ahead of their county's (an
+  // optgroup cannot nest), and a district most of whose precincts lie in the
+  // city municipality is listed there in place of that county's group.
   const constituencyCounties = INDEX.constituencyCounties || [];
+  const constituencyCities = INDEX.constituencyCities || [];
+  const cities = new Set(INDEX.cities || []);
   const constituencyGroups = new Map();
-  for (const county of [...(INDEX.counties || []), null]) {
+  const cityGroups = new Map();
+  const appendGroup = label => {
     const group = document.createElement("optgroup");
-    group.label = county ? `${county} apskritis` : "Be apskrities";
+    group.label = label;
     fConstituency.appendChild(group);
-    constituencyGroups.set(county, group);
+    return group;
+  };
+  for (const county of [...(INDEX.counties || []), null]) {
+    if (county && cities.has(county)) cityGroups.set(county, appendGroup(`${county} miestas`));
+    constituencyGroups.set(county, appendGroup(county ? `${county} apskritis` : "Be apskrities"));
   }
   (INDEX.constituencies || [])
     .map((name, i) => [name, i])
     .sort((a, b) => a[0].localeCompare(b[0], "lt"))
     .forEach(([name, i]) => {
-      const groups = (constituencyCounties[i] || []).map(county => constituencyGroups.get(county)).filter(Boolean);
+      const city = constituencyCities[i];
+      const groups = (constituencyCounties[i] || [])
+        .map(county => (county === city && cityGroups.get(county)) || constituencyGroups.get(county))
+        .filter(Boolean);
       for (const group of groups.length ? groups : [constituencyGroups.get(null)]) addOption(group, String(i), name);
     });
-  for (const group of constituencyGroups.values()) if (!group.children.length) group.remove();
+  for (const group of [...cityGroups.values(), ...constituencyGroups.values()]) if (!group.children.length) group.remove();
 
   // Declared nationality by group (issue #162; scraper/shared/tautybe.py):
   // the census's names, the largest first, each with its count of people.
