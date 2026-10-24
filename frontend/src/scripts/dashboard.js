@@ -1386,25 +1386,26 @@ function clearActiveRows() {
   for (const el of document.querySelectorAll(".row")) el.classList.remove("active");
 }
 
-//: Loads the candidates one at a time off-DOM and inserts the first that
-//: decodes, so a deployment without portraits never shows the sized, bordered
-//: box (issue #185). A 404 falls through to the next older election's photo;
-//: none loading means no element at all. The token check keeps a late photo
-//: off whichever page replaced this one.
-async function showPortrait(head, urls, token) {
-  for (const url of urls) {
-    if (token !== renderToken) return;
-    const img = new Image();
-    img.alt = "";
-    img.src = url;
-    try {
-      await img.decode();
-    } catch {
-      continue;
-    }
-    if (token === renderToken) head.prepend(img);
-    return;
-  }
+//: The person's web portrait (issue #187): one 192x256 WebP per person,
+//: requested only when the index says it exists (`ph`, issue #185), with the
+//: portrait set's version as the query so the server can cache it for good.
+//: It decodes off-DOM and is inserted only on success, so a failed load never
+//: shows the sized, bordered box; the token check keeps a late photo off
+//: whichever page replaced this one.
+function loadPortrait(p) {
+  if (!p.ph) return null;
+  const img = new Image();
+  img.alt = "";
+  img.width = 96;
+  img.height = 128;
+  const v = INDEX.portraits && INDEX.portraits.v;
+  img.src = `../portraits/${encodeURIComponent(p.pid)}.webp${v ? `?v=${encodeURIComponent(v)}` : ""}`;
+  return img.decode().then(() => img, () => null);
+}
+
+async function showPortrait(head, portrait, token) {
+  const img = await portrait;
+  if (img && token === renderToken) head.prepend(img);
 }
 
 async function showPerson(p) {
@@ -1420,6 +1421,8 @@ async function showPerson(p) {
   for (const el of document.querySelectorAll(".row")) el.classList.toggle("active", el.dataset.key === p.pid);
   const root = document.getElementById("person");
   root.innerHTML = `<div class="loading">Kraunami įrašai (${p.e.length})…</div>`;
+  // Started before the records: its URL needs nothing they hold.
+  const portrait = loadPortrait(p);
   const records = await Promise.all(p.e.map(e => fetchRecord(e).then(r => [e, r])));
   if (token !== renderToken) return;
   const loaded = records.filter(([, r]) => !r._error);
@@ -1431,21 +1434,10 @@ async function showPerson(p) {
   const banner = failureBanner(failed);
   if (banner) root.appendChild(banner);
   const head = document.createElement("div"); head.className = "phead";
-  // The newest election's portrait, not the oldest: people age, and the
-  // recent photo is the one a reader recognises. Three shapes are accepted:
-  // the externalized sidecar (photos/<id>.<ext>, resolved against the
-  // election dir — every archived portrait since issue #118, whether the
-  // page embedded it or linked it), VRK's own hosted URL (what a record
-  // keeps when the fetch failed: 38 records, on hosts that no longer serve
-  // them) and a legacy inline data: URI from a pre-externalization corpus.
-  const photoUrls = [];
-  for (const [e, r] of newestLoaded) {
-    const photo = resolvePath(r, "rawData.profile.photoSrc") || resolvePath(r, "normalized.profilis.nuotrauka");
-    if (typeof photo !== "string" || !photo) continue;
-    if (photo.startsWith("photos/")) photoUrls.push(`../data/${e.id}/${photo}`);
-    else if (/^https?:\/\//.test(photo) || photo.startsWith("data:")) photoUrls.push(photo);
-  }
-  showPortrait(head, photoUrls, token);
+  // The newest election's portrait, chosen and shrunk at build time
+  // (scripts/build_web_portraits.py): the records' own photos/ sidecars are
+  // the full-resolution archive, not something this page loads.
+  showPortrait(head, portrait, token);
   const hd = document.createElement("div");
   const h2 = document.createElement("h2"); h2.textContent = p.n;
   const meta = document.createElement("div"); meta.className = "meta";

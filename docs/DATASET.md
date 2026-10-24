@@ -14,7 +14,8 @@ corpus ready-made — the flat comparison table (`candidacies.csv.gz`) and the
 whole corpus as one SQLite database (`vrk-corpus.sqlite.gz`: every record's
 raw and normalized JSON and the anomaly logs), its portraits beside it in
 `vrk-photos-N.sqlite` parts (deduplicated by content hash, split to stay
-under GitHub's 2 GiB per-asset cap), with a `MANIFEST.json` naming the
+under GitHub's 2 GiB per-asset cap) and, for the browser, one small WebP
+per person in `vrk-web-portraits.tar` (issue #187), with a `MANIFEST.json` naming the
 parser commit, per-election counts and a checksum per asset. `python scripts/build_distribution.py` builds the
 assets (issue #94); [CANDIDACIES.md](CANDIDACIES.md#distribution) documents
 them. The corpus is published under CC BY 4.0 with a required attribution

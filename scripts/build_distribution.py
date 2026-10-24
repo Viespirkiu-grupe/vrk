@@ -23,6 +23,10 @@ GitHub release ships:
     vrk-photos-N.sqlite     the portraits themselves, deduplicated by
                             content hash, in as many parts as keep every
                             asset under GitHub's 2 GiB cap (issue #130)
+    vrk-web-portraits.tar   the web portraits (issue #187): one 192x256
+                            WebP per person, `portraits/<pid>.webp`,
+                            ~90 MB -- what a server deploys instead of the
+                            5 GB of parts. Full builds only.
     MANIFEST.json           per-election record counts, the build date,
                             the parser commit, and a sha256 + byte size
                             for each release artifact
@@ -99,6 +103,7 @@ import shutil
 import sqlite3
 import subprocess
 import sys
+import tarfile
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
@@ -109,6 +114,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import build_candidacy_table as table  # noqa: E402
 import build_person_index as identity  # noqa: E402
+import build_web_portraits as web_portraits  # noqa: E402
 from pii_inventory import PUBLIC_PROFILE_CONDITIONAL, PUBLIC_PROFILE_DROPS  # noqa: E402
 from scraper.shared import provenance  # noqa: E402
 from scraper.shared.files import PORTRAIT_KEYS, write_json  # noqa: E402
@@ -178,6 +184,16 @@ RELEASE_ASSET_LIMIT = 2 * 1024**3
 PHOTO_PART_NAME = "vrk-photos-{index}.sqlite"
 PHOTO_PART_GLOB = "vrk-photos-*.sqlite"
 PHOTO_PART_BUDGET = 1_900_000_000
+
+#: The web portraits as one plain tar (issue #187): `portraits/<pid>.webp`,
+#: unpacked where the server's root is. The builder's own manifest stays
+#: behind -- 7 MB of source paths and build-machine mtimes a server has no
+#: use for; the version the page needs is in people.json, and MANIFEST.json
+#: checksums the tar.
+#: Uncompressed for the same reason as the parts -- WebP leaves gzip nothing.
+#: Built from the repository's `portraits/`, which spans every person, so a
+#: subset build does not ship it.
+WEB_PORTRAITS_ASSET = "vrk-web-portraits.tar"
 
 RECORD_COLUMNS = (
     "election_id",
@@ -393,9 +409,69 @@ class PhotoParts:
 
 
 def release_assets(corpus_counts: dict[str, Any]) -> tuple[str, ...]:
-    """Every file a release uploads beside MANIFEST.json: the four fixed
-    artifacts, then the photo parts this build filled."""
-    return RELEASE_ARTIFACTS + tuple(part["name"] for part in corpus_counts["photo_parts"])
+    """Every file a release uploads beside MANIFEST.json: the fixed
+    artifacts, the photo parts this build filled, and the web portraits when
+    it built them."""
+    web = (WEB_PORTRAITS_ASSET,) if corpus_counts.get("web_portraits") else ()
+    return RELEASE_ARTIFACTS + tuple(part["name"] for part in corpus_counts["photo_parts"]) + web
+
+
+def check_web_portraits(portraits_dir: Path) -> dict[str, Any]:
+    """The built web portraits, verified against their manifest.
+
+    Every file the manifest lists must be on disk and hash to its recorded
+    output, and no other `.webp` may sit beside them -- the tar is what
+    production serves, and a stale or half-rebuilt directory would ship faces
+    the index does not point at. Raises SystemExit with the command to run.
+    """
+    manifest_path = portraits_dir / web_portraits.MANIFEST_NAME
+    if not manifest_path.is_file():
+        raise SystemExit(
+            f"no {manifest_path}: a full release ships the web portraits (issue #187)."
+            "\nRun: python scripts/build_web_portraits.py"
+        )
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    listed = manifest["portraits"]
+    on_disk = {path.stem for path in portraits_dir.glob("*.webp")}
+    problems = [f"    {pid}.webp: listed, not on disk" for pid in sorted(set(listed) - on_disk)]
+    problems += [f"    {pid}.webp: on disk, not listed" for pid in sorted(on_disk - set(listed))]
+    for pid in sorted(set(listed) & on_disk):
+        if sha256_file(portraits_dir / f"{pid}.webp") != listed[pid]["out"]:
+            problems.append(f"    {pid}.webp: does not hash to its manifest entry")
+    if problems:
+        shown = "\n".join(problems[:20]) + (f"\n    ... and {len(problems) - 20} more" if len(problems) > 20 else "")
+        raise SystemExit(
+            f"{portraits_dir}/ disagrees with its manifest:\n{shown}"
+            "\nRe-run: python scripts/build_web_portraits.py"
+        )
+    return {
+        "count": len(listed),
+        "bytes": sum(entry["outBytes"] for entry in listed.values()),
+        "version": manifest["version"],
+        "settings": manifest["settings"],
+    }
+
+
+def write_web_portraits_tar(portraits_dir: Path, target: Path) -> dict[str, Any]:
+    """Tar the checked web portraits under `portraits/`, in pid order.
+
+    Owner and mode are normalised; the mtimes are the files' own, which the
+    builder only moves when a portrait's bytes change, so the server's
+    Last-Modified survives a redeploy.
+    """
+    counts = check_web_portraits(portraits_dir)
+    names = sorted(path.name for path in portraits_dir.glob("*.webp"))
+    with tarfile.open(target, "w", format=tarfile.PAX_FORMAT) as tar:
+        for name in names:
+            path = portraits_dir / name
+            info = tar.gettarinfo(str(path), arcname=f"portraits/{name}")
+            info.uid = info.gid = 0
+            info.uname = info.gname = ""
+            info.mode = 0o644
+            info.mtime = int(info.mtime)
+            with open(path, "rb") as handle:
+                tar.addfile(info, handle)
+    return counts
 
 
 def check_asset_sizes(directory: Path, names: tuple[str, ...]) -> None:
@@ -760,12 +836,22 @@ def write_manifest(
             "photosMetadataUntouched": corpus_counts["photos_untouched"],
             "photosMalformed": corpus_counts["photos_malformed"],
             "photoParts": len(corpus_counts["photo_parts"]),
+            # One small WebP per person (issue #187), in vrk-web-portraits.tar.
+            "webPortraits": (corpus_counts.get("web_portraits") or {}).get("count", 0),
+            "webPortraitBytes": (corpus_counts.get("web_portraits") or {}).get("bytes", 0),
             "anomalies": corpus_counts["anomalies"],
         },
         "recordsPerElection": corpus_counts["per_election"],
         # Which part holds which elections' portraits (issue #130), so a
         # consumer after one era's pictures downloads one part, not all.
         "photoParts": corpus_counts["photo_parts"],
+        # The version is the query string the page puts on each portrait URL
+        # (people.json's `portraits.v`); the settings are what built them.
+        **(
+            {"webPortraits": {k: corpus_counts["web_portraits"][k] for k in ("count", "bytes", "version", "settings")}}
+            if corpus_counts.get("web_portraits")
+            else {}
+        ),
         "artifacts": {
             name: {"bytes": (dist / name).stat().st_size, "sha256": sha256_file(dist / name)}
             for name in release_assets(corpus_counts)
@@ -806,7 +892,11 @@ def promote(staging: Path, dist: Path) -> None:
     for stale in dist.glob(PHOTO_PART_GLOB):
         if stale.name not in parts:
             stale.unlink()
-    for name in BUILD_OUTPUTS + tuple(parts):
+    # Likewise a subset build's dist/ must not keep a full build's portraits.
+    web = (WEB_PORTRAITS_ASSET,) if (staging / WEB_PORTRAITS_ASSET).is_file() else ()
+    if not web:
+        (dist / WEB_PORTRAITS_ASSET).unlink(missing_ok=True)
+    for name in BUILD_OUTPUTS + tuple(parts) + web:
         os.replace(staging / name, dist / name)
     os.replace(staging / "MANIFEST.json", dist / "MANIFEST.json")
 
@@ -853,6 +943,9 @@ def build_distribution(
                 "\n\nScrape them, or name the ones you mean —"
                 " `build_distribution.py <election-id> …` marks the manifest a subset."
             )
+        # Checked before minutes of work, not after: the release production
+        # deploys from has to carry the web portraits (issue #187).
+        check_web_portraits(repo_root / web_portraits.PORTRAITS_DIR)
         cells = table.measure_cells(rows)
         gate = table.gate(cells, repo_root / table.BASELINE, registry_by_id, False, max_drop)
         if gate:
@@ -921,6 +1014,11 @@ def build_distribution(
                 f" rows, the records table holds {corpus_counts['records']}"
             )
 
+        corpus_counts["web_portraits"] = (
+            write_web_portraits_tar(repo_root / web_portraits.PORTRAITS_DIR, staging / WEB_PORTRAITS_ASSET)
+            if subset is None
+            else None
+        )
         gzip_file(staging / "vrk.sqlite", staging / "vrk.sqlite.gz", 9)
         gzip_file(staging / "vrk-corpus.sqlite", staging / "vrk-corpus.sqlite.gz", CORPUS_GZIP_LEVEL)
         check_asset_sizes(staging, release_assets(corpus_counts))
@@ -946,6 +1044,9 @@ def build_distribution(
             else ""
         )
     )
+    if corpus_counts["web_portraits"]:
+        web = corpus_counts["web_portraits"]
+        print(f"web portraits: {web['count']} ({web['bytes'] / 1e6:.1f} MB WebP, version {web['version']})")
     print(f"anomalies:    {corpus_counts['anomalies']} event(s)")
     for part in corpus_counts["photo_parts"]:
         print(

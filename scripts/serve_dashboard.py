@@ -2,15 +2,16 @@
 
 Build first with `cd frontend && npm ci && npm run build`, then run this script
 from any directory. /dashboard/ maps to frontend/dist; the index and field-label
-JSON retain their dashboard/ paths. data/ and docs/ are the only other public
-roots. No source directory or repository listing is served.
+JSON retain their dashboard/ paths. data/, docs/ and portraits/ are the only
+other public roots. No source directory or repository listing is served.
 
 The server preserves gzip compression, an mtime-keyed LRU, ETag/Last-Modified,
 loopback Host validation and response hardening from issue #160. Build assets
 are separate from the root dist/ directory used by data releases.
 
 Caching (issue #186): Astro's content-hashed `/dashboard/_astro/*` files are
-`immutable` for a year; everything else (HTML, the index, records, the concept
+`immutable` for a year, and so is a web portrait asked for with its set's
+version (`/portraits/<pid>.webp?v=…`, issue #187); everything else (HTML, the index, records, the concept
 map) is `no-cache`, kept but revalidated on every load. docs/DASHBOARD.md has
 the rules a replacement static server and the Cloudflare zone must keep.
 """
@@ -28,13 +29,15 @@ from pathlib import Path
 
 DEFAULT_PORT = 8791
 
-#: Worth compressing. Photos are JPEGs and stay as they are.
+#: Worth compressing. Portraits are WebP and stay as they are.
 COMPRESSIBLE_SUFFIXES = {".json", ".html", ".tsv", ".csv", ".js", ".css", ".svg", ".txt", ".md"}
 
 #: The only directories the page fetches from: itself, the records it opens
-#: per person, and the concept map it resolves its comparison rows against.
+#: per person, the concept map it resolves its comparison rows against, and
+#: the web portraits (issue #187) -- a top-level sibling of data/, so its URL
+#: stays /portraits/ when #184 moves the page off /dashboard/.
 #: Anything else under the repository root is not the dashboard's business.
-SERVED_ROOTS = ("dashboard", "data", "docs")
+SERVED_ROOTS = ("dashboard", "data", "docs", "portraits")
 
 #: Hosts a browser reaches a loopback server by. A request naming anything
 #: else is a DNS rebind: the name resolves to 127.0.0.1 while the browser
@@ -61,11 +64,21 @@ IMMUTABLE_CACHE_CONTROL = "public, max-age=31536000, immutable"
 #: full 7 MB download of an unchanged index on every visit.
 REVALIDATE_CACHE_CONTROL = "no-cache"
 
+#: Web portraits are keyed by pid and rebuilt in place, so the bare URL is
+#: revalidated like a record. The page always asks with `?v=<version>`, the
+#: hash of the whole portrait set that people.json carries: a changed
+#: portrait changes it, so that URL is never reused for other bytes.
+PORTRAITS_PREFIX = "/portraits/"
+
 
 def cache_control(url_path: str) -> str:
     """The Cache-Control a successful response to this URL carries."""
-    path = url_path.split("?", 1)[0].split("#", 1)[0]
-    return IMMUTABLE_CACHE_CONTROL if path.startswith(IMMUTABLE_PREFIX) else REVALIDATE_CACHE_CONTROL
+    path, _, query = url_path.split("#", 1)[0].partition("?")
+    if path.startswith(IMMUTABLE_PREFIX):
+        return IMMUTABLE_CACHE_CONTROL
+    if path.startswith(PORTRAITS_PREFIX) and any(p.startswith("v=") and len(p) > 2 for p in query.split("&")):
+        return IMMUTABLE_CACHE_CONTROL
+    return REVALIDATE_CACHE_CONTROL
 
 
 CONTENT_SECURITY_POLICY = (
@@ -91,7 +104,7 @@ def _gzipped(path: Path) -> bytes:
 
 
 def _is_served(translated: Path, root: Path) -> bool:
-    """Is this path inside one of the three directories the page fetches?
+    """Is this path inside one of the directories the page fetches?
 
     Compared *lexically*, not through `Path.resolve()`, and against
     `os.getcwd()` — the base `translate_path` itself joins against. `data/`

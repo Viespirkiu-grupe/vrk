@@ -279,43 +279,63 @@ async function watchPortraits(page) {
   });
 }
 
-test('a missing portrait never shows an empty photo box', async ({ page }) => {
-  await installFixtures(page, {
-    photos: { '/data/2024-seimo/test-anna-2024-seimo.json': 404, '/data/2020-seimo/test-anna-2020-seimo.json': 404 },
-    photoDelay: 400,
+// Every image request the page makes: portraits, and the archive sidecars it
+// must no longer touch.
+function watchImageRequests(page) {
+  const seen = [];
+  page.on('request', request => {
+    const url = new URL(request.url());
+    if (/\/(portraits|photos)\//.test(url.pathname)) seen.push(url.pathname + url.search);
   });
+  return seen;
+}
+
+test('a person with ph loads their versioned web portrait', async ({ page }) => {
+  await installFixtures(page, { portraits: { 'test-anna': 200 }, recordPhotos: true });
   await watchPortraits(page);
-  const photoRequests = [];
-  page.on('request', request => { if (request.url().includes('/photos/')) photoRequests.push(new URL(request.url()).pathname); });
+  const requests = watchImageRequests(page);
+  await ready(page, '/dashboard/#test-anna');
+  const img = page.locator('.phead img');
+  await expect(img).toBeVisible();
+  await expect(img).toHaveAttribute('src', '../portraits/test-anna.webp?v=test1');
+  expect(await page.evaluate(() => window.__portraits)).toEqual(['../portraits/test-anna.webp?v=test1']);
+  // One request, and none for the records' full-resolution sidecars.
+  expect(requests).toEqual(['/portraits/test-anna.webp?v=test1']);
+});
+
+test('a person without ph makes no photo request', async ({ page }) => {
+  await installFixtures(page, { portraits: { 'test-anna': 200 }, recordPhotos: true });
+  await watchPortraits(page);
+  const requests = watchImageRequests(page);
+  await ready(page, '/dashboard/#test-jonas');
+  await expect(page.locator('#person h2')).toHaveText('Jonas BANDOMASIS');
+  await expect(page.locator('#person')).toContainText('Bandymų specialistas');
+  await page.waitForTimeout(300);
+  expect(requests).toEqual([]);
+  expect(await page.evaluate(() => window.__portraits)).toEqual([]);
+});
+
+test('a missing portrait never shows an empty photo box', async ({ page }) => {
+  await installFixtures(page, { portraits: { 'test-anna': 404 }, photoDelay: 400 });
+  await watchPortraits(page);
+  const requests = watchImageRequests(page);
   await ready(page, '/dashboard/#test-anna');
   await expect(page.locator('#person h2')).toHaveText('Ona NAUJOJI');
   const left = await page.locator('.phead > div').boundingBox();
-  // Poll while both delayed 404s are still in flight, then after they settle.
+  // Poll while the delayed 404 is still in flight, then after it settles.
   for (let i = 0; i < 10; i++) {
     expect(await page.locator('.phead img').count()).toBe(0);
     await page.waitForTimeout(100);
   }
-  await expect.poll(() => photoRequests.length).toBe(2);
+  await expect.poll(() => requests.length).toBe(1);
   await page.waitForTimeout(200);
-  expect(photoRequests).toEqual(['/data/2024-seimo/photos/test-anna-2024-seimo.png', '/data/2020-seimo/photos/test-anna-2020-seimo.png']);
+  expect(requests).toEqual(['/portraits/test-anna.webp?v=test1']);
   expect(await page.evaluate(() => window.__portraits)).toEqual([]);
   expect((await page.locator('.phead > div').boundingBox()).x).toBe(left.x);
 });
 
-test('a missing newest portrait falls back to the older election', async ({ page }) => {
-  await installFixtures(page, {
-    photos: { '/data/2024-seimo/test-anna-2024-seimo.json': 404, '/data/2020-seimo/test-anna-2020-seimo.json': 200 },
-  });
-  await watchPortraits(page);
-  await ready(page, '/dashboard/#test-anna');
-  const img = page.locator('.phead img');
-  await expect(img).toBeVisible();
-  await expect(img).toHaveAttribute('src', '../data/2020-seimo/photos/test-anna-2020-seimo.png');
-  expect(await page.evaluate(() => window.__portraits)).toEqual(['../data/2020-seimo/photos/test-anna-2020-seimo.png']);
-});
-
 test('a late portrait stays off the next person page', async ({ page }) => {
-  await installFixtures(page, { photos: { '/data/2024-seimo/test-anna-2024-seimo.json': 200 }, photoDelay: 600 });
+  await installFixtures(page, { portraits: { 'test-anna': 200 }, photoDelay: 600 });
   await ready(page, '/dashboard/#test-anna');
   await expect(page.locator('#person h2')).toHaveText('Ona NAUJOJI');
   await page.locator('#results .row', { hasText: 'Jonas BANDOMASIS' }).click();

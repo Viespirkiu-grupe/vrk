@@ -7,3 +7,6 @@
 beautifulsoup4==4.15.0
 lxml==6.1.2
 requests==2.34.2
+# Decodes every portrait container VRK served and encodes the web portraits
+# (scripts/build_web_portraits.py, issue #187); its wheels bundle libwebp.
+Pillow==13.0.0

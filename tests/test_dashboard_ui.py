@@ -843,24 +843,31 @@ class VotesAndConstituencyTests(unittest.TestCase):
 
 
 class PhotoShapeTests(unittest.TestCase):
-    """25,332 records carry their portrait as VRK's own URL — the only shape
-    29% of persons have — and the page used to refuse it, show a photo for
-    3% of persons, and prefer the oldest election's portrait."""
+    """One web portrait per person (issue #187), requested only behind `ph`.
 
-    def test_the_url_shape_is_accepted(self):
-        self.assertIn('/^https?:\\/\\//.test(photo)', SOURCE)
+    The page used to try every record's own portrait newest-first -- the
+    `photos/` sidecar, VRK's URL, a `data:` URI -- at full resolution. The
+    choice moved to build time (scripts/build_web_portraits.py); the browser
+    suite drives the request, the 404 and the late-arrival cases.
+    """
 
-    def test_the_newest_portrait_wins(self):
-        self.assertIn("[...loaded].reverse()", SOURCE)
+    def test_only_a_flagged_person_is_requested(self):
+        self.assertIn("if (!p.ph) return null;", SOURCE)
+        self.assertIn("../portraits/${encodeURIComponent(p.pid)}.webp", SOURCE)
+        self.assertIn("INDEX.portraits && INDEX.portraits.v", SOURCE)
+
+    def test_the_record_photo_shapes_are_gone(self):
+        self.assertNotIn("rawData.profile.photoSrc", SOURCE)
+        self.assertNotIn('/^https?:\\/\\//.test(photo)', SOURCE)
+        self.assertNotIn("../data/${e.id}/${photo}", SOURCE)
 
     def test_photos_load_off_dom_and_insert_on_success(self):
         # Issue #185: the sized, bordered <img> used to be appended before it
         # loaded, so a deployment without portraits flashed an empty box.
-        # Now each candidate decodes off-DOM and only a success is inserted;
-        # the browser suite drives the 404 and fallback cases.
+        # It decodes off-DOM and only a success is inserted.
         self.assertIn("const img = new Image();", SOURCE)
-        self.assertIn("await img.decode();", SOURCE)
-        self.assertIn("if (token === renderToken) head.prepend(img);", SOURCE)
+        self.assertIn("return img.decode().then(() => img, () => null);", SOURCE)
+        self.assertIn("if (img && token === renderToken) head.prepend(img);", SOURCE)
         self.assertNotIn("head.appendChild(img)", SOURCE)
 
 
@@ -1311,10 +1318,10 @@ class RoutingTests(unittest.TestCase):
         # announcement.
         self.assertIn("let renderToken = 0;", SOURCE)
         self.assertEqual(SOURCE.count("const token = ++renderToken;"), 2)
-        # Two views await their records; the third check is the portrait
-        # loader of issue #185, which stops trying candidates once its
-        # person is no longer on screen.
-        self.assertEqual(SOURCE.count("if (token !== renderToken) return;"), 3)
+        # Two views await their records. The portrait (issues #185, #187)
+        # checks the token once, before it inserts.
+        self.assertEqual(SOURCE.count("if (token !== renderToken) return;"), 2)
+        self.assertIn("if (img && token === renderToken) head.prepend(img);", SOURCE)
         # And the synchronous views end whatever is in flight: the
         # placeholder, the election summary, the movers, and the nominator
         # summary and coverage grid of issue #162.

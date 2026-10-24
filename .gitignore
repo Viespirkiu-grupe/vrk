@@ -38,6 +38,9 @@ sitemaps/
 # stays tracked -- see scripts/tracked_fixtures.py, which force-adds it.
 samples/
 samples-full/
+# Web portraits (issue #187): generated from data/ by
+# scripts/build_web_portraits.py and shipped as a release asset.
+portraits/
 # Dashboard-generated index
 dashboard/people.json
 dashboard/merge-review.csv
