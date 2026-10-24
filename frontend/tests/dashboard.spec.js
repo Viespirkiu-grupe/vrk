@@ -507,6 +507,28 @@ test('person tabs show actual records, money and election comparison', async ({ 
   await noPageOverflow(page);
 });
 
+test('vote counts leave the card header but stay, formatted, in the card and the comparison (#204)', async ({ page }) => {
+  await ready(page, JONAS);
+  const card = page.locator('#person details.ecard').first();
+  const summary = card.locator('summary');
+  await expect(summary).toContainText('2024 m.');
+  await expect(summary).not.toContainText(/pirmumo/i);
+  await expect(summary).not.toContainText(/apygardoje/i);
+  await expect(summary).not.toContainText(/11\s541/);
+  await card.evaluate(el => { el.open = true; });
+  const block = card.locator('.sec').filter({ has: page.getByRole('heading', { name: 'Kandidatavimas', exact: true }) });
+  const valueOf = label => block.locator('dt', { hasText: new RegExp(`^${label}`) }).first().locator('xpath=following-sibling::dd[1]');
+  await expect(block.locator('dt', { hasText: /^Pirmumo balsai$/ })).toHaveCount(1);
+  await expect(valueOf('Pirmumo balsai')).toHaveText(/^11[\s  ]541$/);
+  await expect(valueOf('Vienmandatės balsai').locator('dd').first()).toHaveText(/^6[\s  ]999$/);
+  // Only the vote counts: a rating score keeps its digits as the record has them.
+  await expect(valueOf('Reitingo balai')).toHaveText('12345');
+  await page.getByRole('button', { name: 'Palyginimas tarp rinkimų', exact: true }).click();
+  const rows = page.locator('#person table.cmp:visible tbody th');
+  await expect(rows.filter({ hasText: /^Pirmumo balsai$/ })).toHaveCount(1);
+  await expect(rows.filter({ hasText: /^Balsai apygardoje/ })).toHaveCount(1);
+});
+
 test('wide record tables keep nested labels and values readable', async ({ page }) => {
   await ready(page, ANNA);
   const section = page.locator('.ecard .sec').filter({ has: page.getByRole('heading', { name: 'Politinės kampanijos dalyvio duomenys', exact: true }) });
