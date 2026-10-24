@@ -1,0 +1,23 @@
+/* Viešpirkiai tooltips (issue #200), after the main site's .tooltip and
+   RiskSignalChip: a quiet panel in both themes -- the shade background with
+   a hairline border and ink text -- with --radius-sm, --text-xs,
+   --z-tooltip and an opacity fade. lib/tooltip.js positions it; nothing here
+   may widen the page. */
+.has-tip { cursor: help; text-decoration: underline dotted; text-decoration-color: color-mix(in srgb, currentColor 55%, transparent); text-underline-offset: 3px; }
+.has-tip:hover, .has-tip.tip-active { text-decoration-color: currentColor; }
+button.has-tip { cursor: pointer; }
+
+.vp-tip { position: fixed; top: 0; left: 0; z-index: var(--z-tooltip); box-sizing: border-box; width: max-content; max-width: min(300px, calc(100vw - 16px)); padding: 7px 10px; border: var(--border); border-radius: var(--radius-sm); background: var(--shade); color: var(--ink); box-shadow: var(--shadow-lg); font-size: var(--text-xs); font-weight: 400; line-height: 1.5; text-align: left; white-space: normal; overflow-wrap: anywhere; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(2px); transition: opacity var(--transition), transform var(--transition), visibility var(--transition); }
+.vp-tip[data-side="below"] { transform: translateY(-2px); }
+.vp-tip.is-visible { opacity: 1; visibility: visible; transform: none; }
+/* A pinned bubble on a wrapped line can sit over the next item: presses go
+   through it, so that item still opens its own, and only × catches them. */
+.vp-tip.is-open { padding-right: 28px; }
+.vp-tip-body > * { display: block; margin: 0; }
+.vp-tip-body > * + * { margin-top: 2px; }
+.vp-tip-body strong { font-weight: 600; }
+.vp-tip-body .tip-muted { color: var(--muted); }
+.vp-tip-close { display: none; position: absolute; top: 4px; right: 4px; align-items: center; justify-content: center; width: 20px; height: 20px; padding: 0; border: 0; background: none; color: inherit; opacity: .7; font-size: 14px; line-height: 1; cursor: pointer; }
+.vp-tip-close:hover { opacity: 1; }
+.vp-tip.is-open .vp-tip-close { display: inline-flex; pointer-events: auto; }
+@media (prefers-reduced-motion: reduce) { .vp-tip { transition: none; } }

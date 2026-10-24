@@ -716,6 +716,48 @@ class NominatorRunTests(unittest.TestCase):
 
 
 @unittest.skipIf(NODE is None, "node not installed — behavioural checks skipped")
+class ElectionKindsTests(unittest.TestCase):
+    """The nominator tooltip's elections line (issue #200), run under node."""
+
+    ELECTIONS = [
+        {"id": "1996-seimo", "date": "1996-10-20", "kind": "seimo"},
+        {"id": "1997-savivaldybiu", "date": "1997-03-23", "kind": "savivaldybiu"},
+        {"id": "1998-seimo-pakartotiniai", "date": "1998-03-22", "kind": "seimo", "parent": "1996-seimo"},
+        {"id": "1998-seimo-kiti", "date": "1998-11-15", "kind": "seimo", "parent": "1996-seimo"},
+        {"id": "2019-ep", "date": "2019-05-26", "kind": "ep"},
+        {"id": "2020-naujoji", "date": "2020-01-01", "kind": "naujoji"},
+    ]
+
+    def _kinds(self, ids):
+        helpers = "\n".join(
+            re.search(pattern, SOURCE, re.S | re.M).group(0)
+            for pattern in (
+                r"^function electionYear\(.*?^}",
+                r"^const ELECTION_KINDS = .*?;",
+                r"^function electionKinds\(.*?^}",
+            )
+        )
+        script = (
+            f"const BY_ID = new Map({json.dumps(self.ELECTIONS)}.map(e => [e.id, e]));\n"
+            f"{helpers}\nconsole.log(JSON.stringify(electionKinds({json.dumps(ids)}, BY_ID)));"
+        )
+        out = subprocess.run([NODE, "-"], input=script, capture_output=True, text=True, timeout=30)
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        return json.loads(out.stdout)
+
+    def test_kinds_group_in_first_seen_order_with_each_year_once(self):
+        self.assertEqual(
+            self._kinds(["1996-seimo", "1997-savivaldybiu", "1998-seimo-pakartotiniai", "1998-seimo-kiti", "2019-ep"]),
+            "Seimas 1996, 1998 · Savivaldybės 1997 · EP 2019",
+        )
+
+    def test_an_unknown_kind_shows_as_it_is_and_an_unlisted_election_by_its_id_year(self):
+        self.assertEqual(self._kinds(["2020-naujoji", "2031-seimo"]), "naujoji 2020 · 2031")
+        self.assertEqual(self._kinds([]), "")
+
+
+@unittest.skipIf(NODE is None, "node not installed — behavioural checks skipped")
 class CollapseRunTests(unittest.TestCase):
     """The header line's folded middle (issue #198), run under node."""
 

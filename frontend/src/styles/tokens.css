@@ -40,7 +40,9 @@
   --radius-lg: 10px;
   --border: 1px solid var(--line);
   --shadow-sm: 0 1px 4px rgb(0 0 0 / 9%);
+  --shadow-lg: 0 8px 24px rgb(0 0 0 / 12%);
   --text-xs: 11px;
+  --z-tooltip: 500;
   --transition: .18s ease;
   font-synthesis: weight;
 }

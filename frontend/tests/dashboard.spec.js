@@ -24,6 +24,16 @@ async function noPageOverflow(page) {
   expect(overflow, 'tables should scroll in their own containers, never widen the page').toBe(false);
 }
 
+// Each nominator item's tooltip, found through its aria-describedby (issue #200).
+async function fullNames(chain) {
+  return chain.locator('.pitem .pname').evaluateAll(items => items.map(item =>
+    document.getElementById(item.getAttribute('aria-describedby')).querySelector('strong').textContent));
+}
+
+function tipOf(page, trigger) {
+  return trigger.getAttribute('aria-describedby').then(id => page.locator(`#${id}`));
+}
+
 test.beforeEach(async ({ page }) => {
   await installFixtures(page);
 });
@@ -96,8 +106,8 @@ test('a nominator chain shows short labels, muted coalition words and full names
   await page.goto('/#test-valdas');
   const chain = page.locator('#person .phead .parties');
   await expect(chain).toHaveText('SP-B 2020 → koalicija „Kartu mes bandom!“ 2020 → koalicija SP-B + Kita partija 2024 → Bandymų koalicija 2024');
-  const titles = await chain.locator('> span').evaluateAll(spans => spans.map(s => s.title));
-  expect(titles).toEqual([
+  // The full names moved from `title` into the custom tooltips (issue #200).
+  expect(await fullNames(chain)).toEqual([
     'Sintetinė partija – Bandymų sąjunga',
     'Sintetinės partijos ir Kitos partijos koalicija „Kartu mes bandom!“',
     'Sintetinė partija – Bandymų sąjunga, Kita partija',
@@ -156,8 +166,7 @@ test('a nominator chain runs in time order, merging only consecutive repeats, wi
   await page.goto('/#test-birute');
   const chain = page.locator('#person .phead .parties');
   await expect(chain).toHaveText('SP-B 1996–1997 → koalicija „Kartu mes bandom!“ 2000 → SP-B 2002–2024');
-  const titles = await chain.locator('> span').evaluateAll(spans => spans.map(s => s.title));
-  expect(titles).toEqual([
+  expect(await fullNames(chain)).toEqual([
     'Sintetinė partija – Bandymų sąjunga',
     'Sintetinės partijos ir Kitos partijos koalicija „Kartu mes bandom!“',
     'Sintetinė partija – Bandymų sąjunga',
@@ -292,6 +301,124 @@ test('a long nominator line folds its middle and expands in place', async ({ pag
   await page.keyboard.press('Enter');
   await expect(chain.locator('.pitem:visible')).toHaveCount(4);
   await noPageOverflow(page);
+});
+
+test('nominator tooltips show on hover with name, members and elections, and replace title', async ({ page }) => {
+  const chain = await foldFixture(page);
+  const items = chain.locator('.pitem .pname');
+  await expect(chain.locator('[title]')).toHaveCount(0);
+  const tip = await tipOf(page, items.nth(1));
+  await expect(tip).toHaveAttribute('role', 'tooltip');
+  await expect(tip).toBeHidden();
+
+  await items.nth(1).hover();
+  await expect(tip).toBeVisible();
+  await expect(tip).toContainText('Sintetinė partija – Bandymų sąjunga, Kita partija');
+  await expect(tip).toContainText('SP-B + Pavyzdžių komitetas');
+  await expect(tip).not.toContainText('Koalicija');
+  await expect(tip).toContainText('Seimas 2002');
+  // Moving to the next item swaps the bubble rather than stacking a second.
+  await items.nth(0).hover();
+  const first = await tipOf(page, items.nth(0));
+  await expect(first).toBeVisible();
+  await expect(first).toContainText('Seimas 2001');
+  await expect(tip).toBeHidden();
+  await page.mouse.move(1, 1);
+  await expect(first).toBeHidden();
+
+  // The fold button is a bare ellipsis with no tooltip of its own.
+  const more = chain.getByRole('button', { name: 'Rodyti dar 4' });
+  await expect(more).toHaveText('…');
+  await expect(more).not.toHaveAttribute('aria-describedby', /.+/);
+  await more.click();
+  await expect(chain.locator('.pitem [title], .pitem[title]')).toHaveCount(0);
+});
+
+test('only the name opens a nominator tooltip, not the type word or the years', async ({ page }) => {
+  const chain = await foldFixture(page);
+  await chain.locator('.pitem .ptype').first().hover();
+  await page.waitForTimeout(300);
+  await expect(page.locator('.vp-tip.is-visible')).toHaveCount(0);
+  await chain.locator('.pitem .pyears').first().hover();
+  await page.waitForTimeout(300);
+  await expect(page.locator('.vp-tip.is-visible')).toHaveCount(0);
+  await chain.locator('.pitem .pname').first().hover();
+  await expect(page.locator('.vp-tip.is-visible')).toHaveCount(1);
+});
+
+test('nominator tooltips follow the keyboard: Tab shows, Esc closes', async ({ page }) => {
+  const chain = await foldFixture(page);
+  const items = chain.locator('.pitem .pname');
+  await page.locator('#person .phead h2').click();
+  await page.keyboard.press('Tab');
+  await expect(items.nth(0)).toBeFocused();
+  const first = await tipOf(page, items.nth(0));
+  await expect(first).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(first).toBeHidden();
+  await expect(items.nth(0)).toBeFocused();
+
+  await page.keyboard.press('Tab');
+  const second = await tipOf(page, items.nth(1));
+  await expect(second).toBeVisible();
+  await page.keyboard.press('Tab');
+  const more = chain.getByRole('button', { name: 'Rodyti dar 4' });
+  await expect(more).toBeFocused();
+  await expect(second).toBeHidden();
+  await page.keyboard.press('Enter');
+  await expect(chain.locator('.pitem')).toHaveCount(8);
+  await expect(chain.locator('.pitem:visible')).toHaveCount(8);
+});
+
+test('on a 320px touch screen a tap opens one tooltip inside the viewport and a tap outside closes it', async ({ browser }, testInfo) => {
+  test.skip(testInfo.project.name !== 'phone', 'its own 320px touch context; once is enough');
+  const context = await browser.newContext({ viewport: { width: 320, height: 640 }, hasTouch: true, isMobile: true });
+  const page = await context.newPage();
+  await installFixtures(page);
+  const chain = await foldFixture(page);
+  const items = chain.locator('.pitem .pname');
+  await expect(chain.locator('.pitem [title], .pitem[title]')).toHaveCount(0);
+
+  const last = items.last();
+  await last.tap();
+  const lastTip = await tipOf(page, last);
+  await expect(lastTip).toBeVisible();
+  await expect(lastTip).toHaveClass(/is-open/);
+  const box = await lastTip.boundingBox();
+  expect(box.x).toBeGreaterThanOrEqual(0);
+  expect(box.x + box.width).toBeLessThanOrEqual(320);
+  expect(box.y).toBeGreaterThanOrEqual(0);
+  expect(box.y + box.height).toBeLessThanOrEqual(640);
+  await noPageOverflow(page);
+
+  // Only one at a time: tapping another item moves the bubble.
+  await items.first().tap();
+  const firstTip = await tipOf(page, items.first());
+  await expect(firstTip).toBeVisible();
+  await expect(lastTip).toBeHidden();
+  // Tapping the open item again closes it, and a tap outside closes any.
+  await items.first().tap();
+  await expect(firstTip).toBeHidden();
+  await items.first().tap();
+  await expect(firstTip).toBeVisible();
+  await page.locator('#person .phead h2').tap();
+  await expect(firstTip).toBeHidden();
+
+  // With no room above, the bubble flips below its item: scrolled to sit
+  // just under the sticky site header, which a tap would otherwise scroll
+  // away from.
+  await items.first().evaluate(el => {
+    const header = document.querySelector('.site-header, header').getBoundingClientRect().bottom;
+    window.scrollBy(0, el.getBoundingClientRect().top - header - 4);
+  });
+  await items.first().tap();
+  await expect(firstTip).toHaveAttribute('data-side', 'below');
+  const below = await firstTip.boundingBox();
+  const item = await items.first().boundingBox();
+  expect(below.y).toBeGreaterThan(item.y);
+  expect(below.x + below.width).toBeLessThanOrEqual(320);
+  await noPageOverflow(page);
+  await context.close();
 });
 
 test('Back and Forward move between a person and the statistics', async ({ page }) => {
