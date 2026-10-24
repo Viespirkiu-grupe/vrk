@@ -716,6 +716,99 @@ class NominatorRunTests(unittest.TestCase):
 
 
 @unittest.skipIf(NODE is None, "node not installed — behavioural checks skipped")
+class PartySwitchTests(unittest.TestCase):
+    """The party-switch metric (issue #199), run under node on shaped fixtures."""
+
+    ELECTIONS = [{"id": f"{year}-x", "date": f"{year}-03-01"} for year in range(1996, 2026)]
+    PARTIES = {
+        "lsdp": {"n": "LSDP", "t": "partija", "pr": ["lddp"]},
+        "lddp": {"n": "LDDP", "t": "partija"},
+        "brazausko-koalicija": {"n": "A. Brazausko koalicija", "t": "koalicija", "nr": ["lddp", "lsdp-old"]},
+        "lsdp-old": {"n": "LSDP (1989)", "t": "partija"},
+        "lls": {"n": "LLS", "t": "partija"},
+        "lics": {"n": "LiCS", "t": "partija", "pr": ["lls"]},
+        "taip": {"n": "Sąjunga Taip", "t": "partija"},
+        "llsl": {"n": "LLSL", "t": "partija", "pr": ["lics", "taip"]},
+        "zuoko-koalicija": {"n": "Už Vilnių", "t": "koalicija", "nr": ["lls", "mkds"]},
+        "mkds": {"n": "MKDS", "t": "partija"},
+        "a": {"n": "A", "t": "partija"},
+        "b": {"n": "B", "t": "partija"},
+        "c": {"n": "C", "t": "partija"},
+        "komitetas": {"n": "Komitetas", "t": "komitetas"},
+        "issikele-pats": {"n": "Išsikėlė pats", "t": "issikelimas"},
+    }
+
+    def _switches(self, nominators):
+        """`nominators` lists one per year from 1996; None is a candidacy without one."""
+        candidacies = [
+            {"id": f"{1996 + i}-x", **({"p": p} if p else {})} for i, p in enumerate(nominators)
+        ]
+        helpers = "\n".join(
+            re.search(pattern, SOURCE, re.S | re.M).group(0)
+            for pattern in (
+                r"^function electionYear\(.*?^}",
+                r"^function nominatorRuns\(.*?^}",
+                r"^function organisationRoots\(.*?^}",
+                r"^function partySwitches\(.*?^}",
+            )
+        )
+        script = (
+            f"{helpers}\nconsole.log(JSON.stringify(partySwitches("
+            f"{json.dumps(candidacies)}, {json.dumps(self.ELECTIONS)}, {json.dumps(self.PARTIES)})));"
+        )
+        out = subprocess.run([NODE, "-"], input=script, capture_output=True, text=True, timeout=30)
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        return json.loads(out.stdout)
+
+    def test_a_rename_is_not_a_switch(self):
+        self.assertEqual(
+            self._switches(["lddp", "lddp", "lsdp"]),
+            {"switches": 0, "organisations": 1, "elections": 3},
+        )
+
+    def test_the_vesaite_shape_an_own_party_coalition_and_back_is_no_switch(self):
+        # LDDP -> a coalition listing LDDP -> LSDP, which continues LDDP.
+        self.assertEqual(
+            self._switches(["lddp", "brazausko-koalicija", "lsdp", "lsdp"]),
+            {"switches": 0, "organisations": 2, "elections": 4},
+        )
+
+    def test_the_zuokas_shape_a_merger_joins_both_parents_lines(self):
+        # LLS -> his coalition (LLS a member) -> LiCS -> Taip -> LiCS -> LLSL:
+        # seven raw changes, none a switch.
+        self.assertEqual(
+            self._switches(["lls", "zuoko-koalicija", "lics", "taip", "lics", "llsl", "taip", "llsl"]),
+            {"switches": 0, "organisations": 2, "elections": 8},
+        )
+
+    def test_the_orlauskas_shape_every_move_counts_including_returns(self):
+        self.assertEqual(
+            self._switches(["a", "issikele-pats", "a", "b", "komitetas", "c", "b"]),
+            {"switches": 6, "organisations": 4, "elections": 7},
+        )
+
+    def test_a_return_to_an_earlier_party_is_a_switch(self):
+        self.assertEqual(
+            self._switches(["a", "b", "a"]),
+            {"switches": 2, "organisations": 2, "elections": 3},
+        )
+
+    def test_a_move_to_a_committee_counts(self):
+        self.assertEqual(self._switches(["a", "komitetas"])["switches"], 1)
+
+    def test_a_coalition_without_either_side_among_its_members_is_a_switch(self):
+        self.assertEqual(self._switches(["a", "zuoko-koalicija"])["switches"], 1)
+
+    def test_candidacies_without_a_nominator_are_skipped(self):
+        self.assertEqual(
+            self._switches(["a", None, "a", None]),
+            {"switches": 0, "organisations": 1, "elections": 2},
+        )
+        self.assertEqual(self._switches([None]), {"switches": 0, "organisations": 0, "elections": 0})
+
+
+@unittest.skipIf(NODE is None, "node not installed — behavioural checks skipped")
 class ElectionKindsTests(unittest.TestCase):
     """The nominator tooltip's elections line (issue #200), run under node."""
 
@@ -974,6 +1067,12 @@ class VotesAndConstituencyTests(unittest.TestCase):
         self.assertIn('"pirmumo_balsai", "balsai_apygardoje"', SOURCE)
         self.assertIn("Daugiausiai pirmumo balsų", SOURCE)
         self.assertIn("balsų skaičių nėra", SOURCE)
+
+    def test_the_card_header_prints_no_vote_counts(self):
+        # Issue #204: the counts moved off the <summary> into the opened card.
+        self.assertNotIn('"pirmumo balsas", "pirmumo balsai", "pirmumo balsų"', SOURCE)
+        self.assertNotIn("apygardoje` : null", SOURCE)
+        self.assertIn("isVoteCount(key, parent)", SOURCE)
 
     def test_the_comparison_rows_name_the_three_vote_concepts(self):
         for concept in ("pirmumo-balsai", "apygardos-balsai", "sarasas-balsai"):
@@ -1486,7 +1585,7 @@ class RoutingTests(unittest.TestCase):
         spec = importlib.util.spec_from_file_location("serve_dashboard", REPO_ROOT / "scripts" / "serve_dashboard.py")
         serve = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(serve)
-        client = set(re.findall(r'^\s+\w+Btn: "(/[a-z]+)",$', SOURCE, flags=re.M))
+        client = set(re.findall(r'^\s+\w+Btn: "(/[a-z-]+)",$', SOURCE, flags=re.M))
         self.assertEqual(client, set(serve.ROUTE_PATHS))
         self.assertEqual(set(re.findall(r'^const \w+_PREFIX = "(/[a-z]+/)";$', SOURCE, flags=re.M)), set(serve.ROUTE_PREFIXES))
 
@@ -1504,8 +1603,9 @@ class RoutingTests(unittest.TestCase):
         self.assertIn("if (img && token === renderToken) head.prepend(img);", SOURCE)
         # And the synchronous views end whatever is in flight: the
         # placeholder, the election summary, the movers, and the nominator
-        # summary and coverage grid of issue #162.
-        self.assertEqual(SOURCE.count("renderToken += 1;"), 5)
+        # summary and coverage grid of issue #162, and the party switches of
+        # issue #199.
+        self.assertEqual(SOURCE.count("renderToken += 1;"), 6)
 
 
 class ScreenReaderTests(unittest.TestCase):

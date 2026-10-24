@@ -52,7 +52,7 @@
 	# The page's own routes (frontend/src/lib/routes.js, issue #184) answer
 	# with the page, whose router picks the view. Only these: a mistyped
 	# asset or data URL stays a 404.
-	@route path_regexp route ^/((suvestine|iskelejai|apreptis|pokyciai)|(asmuo|palyginti)/[^/]*)/?$
+	@route path_regexp route ^/((suvestine|iskelejai|apreptis|pokyciai|partiju-keitimai)|(asmuo|palyginti)/[^/]*)/?$
 	handle @route {
 		rewrite * /index.html
 		file_server {

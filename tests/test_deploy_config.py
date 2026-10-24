@@ -28,7 +28,7 @@ serve = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(serve)
 
 #: The page's own list: VIEW_PATHS and the two key-carrying prefixes.
-VIEW_PATHS = set(re.findall(r'^\s+\w+Btn: "(/[a-z]+)",$', ROUTES_JS, flags=re.M))
+VIEW_PATHS = set(re.findall(r'^\s+\w+Btn: "(/[a-z-]+)",$', ROUTES_JS, flags=re.M))
 PREFIXES = set(re.findall(r'^const \w+_PREFIX = "(/[a-z]+/)";$', ROUTES_JS, flags=re.M))
 
 CADDY_ROUTE = re.compile(re.search(r"^\s*@route path_regexp route (\S+)$", CADDYFILE, flags=re.M).group(1))
@@ -41,7 +41,7 @@ NGINX_ROUTES = [
 
 PATHS = [
     "/", "/index.html", "/suvestine", "/suvestine/", "/iskelejai", "/apreptis", "/pokyciai/",
-    "/suvestinex", "/suvestine/x", "/xsuvestine",
+    "/suvestinex", "/suvestine/x", "/partiju-keitimai", "/partiju-keitimai/", "/partiju", "/xsuvestine",
     "/asmuo/", "/asmuo/birute-vesaite-p7d185515b624", "/asmuo/p7d185515b624/", "/asmuo/a/b", "/asmuo",
     "/palyginti/p1,p2,p3", "/palyginti/p1/", "/palyginti/x/y",
     "/people.json", "/data/2019-prezidento/x.json", "/_astro/index.js", "/portraits/p1.webp",
@@ -56,18 +56,18 @@ def nginx_is_route(path: str) -> bool:
 class RouteListTests(unittest.TestCase):
     def test_the_page_lists_what_the_tests_expect(self):
         # A sanity floor, so a routes.js reshuffle cannot make both sides empty.
-        self.assertEqual(VIEW_PATHS, {"/suvestine", "/iskelejai", "/apreptis", "/pokyciai"})
+        self.assertEqual(VIEW_PATHS, {"/suvestine", "/iskelejai", "/apreptis", "/pokyciai", "/partiju-keitimai"})
         self.assertEqual(PREFIXES, {"/asmuo/", "/palyginti/"})
 
     def test_caddy_lists_the_pages_routes(self):
-        views = set(re.search(r"\(\(([a-z|]+)\)\|", CADDY_ROUTE.pattern).group(1).split("|"))
+        views = set(re.search(r"\(\(([a-z|-]+)\)\|", CADDY_ROUTE.pattern).group(1).split("|"))
         prefixes = set(re.search(r"\|\(([a-z|]+)\)/", CADDY_ROUTE.pattern).group(1).split("|"))
         self.assertEqual({"/" + v for v in views}, VIEW_PATHS)
         self.assertEqual({f"/{p}/" for p in prefixes}, PREFIXES)
 
     def test_nginx_lists_the_pages_routes(self):
         self.assertEqual(len(NGINX_ROUTES), 2)
-        views = set(re.search(r"\^/\(([a-z|]+)\)/\?\$", NGINX_ROUTES[0].pattern).group(1).split("|"))
+        views = set(re.search(r"\^/\(([a-z|-]+)\)/\?\$", NGINX_ROUTES[0].pattern).group(1).split("|"))
         prefixes = set(re.search(r"\^/\(([a-z|]+)\)/\[", NGINX_ROUTES[1].pattern).group(1).split("|"))
         self.assertEqual({"/" + v for v in views}, VIEW_PATHS)
         self.assertEqual({f"/{p}/" for p in prefixes}, PREFIXES)

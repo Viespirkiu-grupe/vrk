@@ -64,7 +64,7 @@ BUILD_DIR = os.path.join("frontend", "dist")
 #: `<slug>-<pid>` and a comparison's `<pid>,<pid>,…`. Nothing else falls
 #: back, so a mistyped asset URL is still a 404 rather than an HTML page.
 #: frontend/src/lib/routes.js is the other half and must list the same.
-ROUTE_PATHS = ("/suvestine", "/iskelejai", "/apreptis", "/pokyciai")
+ROUTE_PATHS = ("/suvestine", "/iskelejai", "/apreptis", "/pokyciai", "/partiju-keitimai")
 ROUTE_PREFIXES = ("/asmuo/", "/palyginti/")
 
 

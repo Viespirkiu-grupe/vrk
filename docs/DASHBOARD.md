@@ -96,6 +96,7 @@ not redirected and answer 404.
 | `/iskelejai` | Iškėlėjai |
 | `/apreptis` | Anketų aprėptis |
 | `/pokyciai` | Didžiausi (deklaracijų) pokyčiai |
+| `/partiju-keitimai` | Partijų keitimai |
 
 The slugs come from the UI's own labels; `frontend/src/lib/routes.js` holds
 them. A person resolves by pid alone. The name slug is decoration: a missing
@@ -659,8 +660,11 @@ top-level `constituencies` list — the district's one name across the four
 label eras (`scraper/shared/apygardos.py`; 315 raw labels, 136 names; a name,
 not a boundary — Kėdainių in 2000 and in 2020 are one row). The page offers
 the constituency as a facet and a CSV column (`apygarda`), prints the
-showing on each election card ("4 321 pirmumo balsų · 6 999 balsų
-apygardoje"), exports `pirmumo_balsai` and `balsai_apygardoje`, adds three
+counts inside the opened election card, in thousands (*Pirmumo balsai*
+`11 541`, the race's `isViso`/`balsai`), but not on the card header: a bare
+count beside the elected badge read as a headline result with nothing to
+measure it against (issue #204). It exports `pirmumo_balsai` and
+`balsai_apygardoje`, adds three
 comparison rows (*Pirmumo balsai*, *Balsai apygardoje* — every round, read
 off the record the way `kandidatura()` reads it — and *Sąrašo balsai*), and
 gives **Rinkimų suvestinė** a *Balsai* section: coverage, total and median,

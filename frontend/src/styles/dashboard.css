@@ -133,20 +133,20 @@ html.nav-open, html.nav-open body { overflow: hidden; }
    a nominator line still scans by name. The header chain's names step up to
    the text colour for the same reason. */
 .ptype { opacity: .6; }
-.phead .parties .pitem { color: var(--ink); }
-.phead .parties .ptype { color: var(--muted); opacity: 1; }
+:is(.phead, .switches) .parties .pitem { color: var(--ink); }
+:is(.phead, .switches) .parties .ptype { color: var(--muted); opacity: 1; }
 /* A run's years (issue #195) are secondary in the same way. */
-.phead .parties .pyears { color: var(--muted); }
+:is(.phead, .switches) .parties .pyears { color: var(--muted); }
 /* A long line's fold (issue #198): the toggles are muted like the years and
    carry no underline, so the line still reads as one sentence rather than
    gaining a link or a panel button. */
-.phead .parties .pfold-toggle { padding: 0 2px; border: 0; border-radius: var(--radius-sm); background: none; color: var(--muted); font: inherit; text-decoration: none; cursor: pointer; }
-.phead .parties .pfold-toggle:hover { color: var(--ink); }
+:is(.phead, .switches) .parties .pfold-toggle { padding: 0 2px; border: 0; border-radius: var(--radius-sm); background: none; color: var(--muted); font: inherit; text-decoration: none; cursor: pointer; }
+:is(.phead, .switches) .parties .pfold-toggle:hover { color: var(--ink); }
 /* The "…" itself is a small pill, after the main site's Badge: it reads as a
    control without competing with the names around it. */
-.phead .parties .pmore .pfold-toggle { display: inline-flex; align-items: center; height: 18px; padding: 0 7px; border: var(--border); border-radius: 999px; background: var(--shade); font-size: var(--text-xs); line-height: 1; vertical-align: 1px; }
-.phead .parties .pmore .pfold-toggle:hover { border-color: var(--muted); }
-.phead .parties .pfold:focus { outline: none; }
+:is(.phead, .switches) .parties .pmore .pfold-toggle { display: inline-flex; align-items: center; height: 18px; padding: 0 7px; border: var(--border); border-radius: 999px; background: var(--shade); font-size: var(--text-xs); line-height: 1; vertical-align: 1px; }
+:is(.phead, .switches) .parties .pmore .pfold-toggle:hover { border-color: var(--muted); }
+:is(.phead, .switches) .parties .pfold:focus { outline: none; }
 .ecard .win { color: var(--win); font-size: 12px; font-weight: 500; background: var(--win-bg); padding: 2px 7px; border-radius: var(--radius-sm); }
 .ecard .nores { font-size: 12px; color: var(--muted); font-weight: 400; font-style: italic; }
 .ecard .body { padding: 8px 20px 20px; border-top: var(--border); }
@@ -198,6 +198,17 @@ table.cmp td.null { color: var(--muted); }
 table.cmp td.unmapped { color: var(--muted); background: var(--shade); }
 table.cmp.ranking :is(th, td):first-child { width: 1%; min-width: 3.5em; max-width: none; white-space: nowrap; }
 .loading { color: var(--muted); padding: 24px; font-size: 13px; }
+/* Party switches (issue #199): the distribution as plain bars, so it reflows
+   at any width, and the ranking's nominator line under each name. */
+.switchbars { display: grid; grid-template-columns: max-content minmax(0, 1fr) max-content; gap: 6px 12px; align-items: center; max-width: 720px; font-size: 13px; }
+.switchbar { display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; align-items: center; }
+.switchbar-track { height: 14px; background: var(--shade); border-radius: var(--radius-sm); overflow: hidden; }
+.switchbar-track > span { display: block; height: 100%; background: var(--accent); }
+.switchbar-count { color: var(--muted); font-variant-numeric: tabular-nums; text-align: right; }
+.switches table.cmp td.num { min-width: 0; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.switches table.cmp td:nth-child(2) { min-width: 220px; }
+.switches .meta { font-size: 12px; line-height: 1.6; color: var(--muted); margin-top: 4px; white-space: normal; }
+.switch-method { margin: 0 0 10px; padding-left: 20px; }
 .aggnote { color: var(--muted); font-size: 13px; line-height: 1.65; margin: 10px 0 20px; max-width: 880px; }
 .aggnote button { font-size: 12px; padding: 4px 9px; }
 table.covgrid { border-collapse: collapse; font-size: 11px; background: var(--panel); }
@@ -319,3 +330,7 @@ table.covgrid td.never { color: var(--muted); background: repeating-linear-gradi
 .overview-note { color: var(--muted); font-size: 13px; margin-top: 24px; }
 .record-warning { background: var(--error-bg); border: 1px solid var(--danger); border-radius: var(--radius-md); padding: 12px 16px; margin-bottom: 16px; font-size: 14px; }
 .error-state button { margin-top: 12px; }
+/* A ranking's "Rodyti visus N" (issue #199): one quiet full-width button under
+   its table, after the main site's truncation notice. */
+.switches .showall { display: block; width: 100%; margin-top: 8px; padding: 8px 14px; color: var(--muted); font-size: 13px; }
+.switches .showall:hover { color: var(--ink); }
