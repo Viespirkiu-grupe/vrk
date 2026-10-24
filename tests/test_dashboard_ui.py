@@ -1167,10 +1167,15 @@ class AssetChartTests(unittest.TestCase):
     def test_a_wrapper_with_more_to_show_says_so(self):
         rule = re.search(r"\.tablewrap \{([^}]+)\}", SOURCE).group(1)
         self.assertIn("overflow-x: auto", rule)
-        # The scrolling-shadows pair: a panel-coloured mask that scrolls with
-        # the content, and a shadow fixed to each edge.
-        self.assertRegex(rule, r"background-attachment:\s*local,\s*local,\s*scroll,\s*scroll")
-        self.assertEqual(rule.count("radial-gradient(farthest-side"), 2)
+        # A mask on the content, not painted shadows: the opaque sticky cells
+        # covered those, and no one cover colour matched both panels and the
+        # page (issue #190). The browser test checks what it looks like.
+        self.assertNotIn("background", rule)
+        self.assertIn(".tablewrap[data-more-left] { --l: var(--fade); }", SOURCE)
+        self.assertIn(".tablewrap[data-more-right] { --r: var(--fade); }", SOURCE)
+        self.assertRegex(SOURCE, r"-webkit-mask: var\(--edge\)")
+        # One factory builds every wrapper, so every one gets the fade.
+        self.assertEqual(SOURCE.count('className = "tablewrap"'), 1)
 
 
 class NarrowScreenTests(unittest.TestCase):
