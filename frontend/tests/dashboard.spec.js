@@ -543,10 +543,10 @@ test('party switches rank the movers and the loyal, link each person and fit 320
   expect(errors).toEqual([]);
 });
 
-test('a party-switch ranking shows its top 5 and a "Rodyti visus" button (#199)', async ({ page }) => {
-  // Seven movers, each from Partija A to Partija B.
+test('a party-switch ranking holds 55, shows 5 and a "Rodyti dar 50" button (#199)', async ({ page }) => {
+  // Sixty movers, each from Partija A to Partija B: the ranking keeps 55.
   const parties = { ...index.parties, 'syn-a': { n: 'Partija A', t: 'partija' }, 'syn-b': { n: 'Partija B', t: 'partija' } };
-  const movers = Array.from({ length: 7 }, (_, i) => ({
+  const movers = Array.from({ length: 60 }, (_, i) => ({
     pid: `test-mover-${i}`, n: `Keitėjas NR${i}`, b: null, k: `KEITĖJAS NR${i}|`,
     e: [{ id: '2020-seimo', c: `test-mover-${i}`, p: 'syn-a' }, { id: '2024-seimo', c: `test-mover-${i}`, p: 'syn-b' }],
   }));
@@ -556,26 +556,31 @@ test('a party-switch ranking shows its top 5 and a "Rodyti visus" button (#199)'
   }));
   await page.goto('/partiju-keitimai');
   await expect(page.locator('.switches h4')).toHaveText(['Kiek kartų keitė', 'Dažniausiai keitę partiją', 'Ištikimiausi savo partijai', 'Kaip skaičiuojama']);
+  // What counts, then what does not, each its own paragraph before the list.
+  const method = page.locator('.switches .sec').last();
+  await expect(method.locator('p.aggnote').nth(0)).toHaveText(/ankstesnę partiją\.$/);
+  await expect(method.locator('p.aggnote').nth(1)).toHaveText('Neskaičiuojama:');
+  await expect(method.locator('p.aggnote').nth(1).locator('xpath=following-sibling::*[1]')).toHaveJSProperty('tagName', 'UL');
   const ranking = page.locator('#person table.ranking').first();
-  await expect(ranking.locator('tbody tr')).toHaveCount(7);
+  await expect(ranking.locator('tbody tr')).toHaveCount(55);
   await expect(ranking.locator('tbody tr:visible')).toHaveCount(5);
   // The loyal list has one row, so it gets no button.
   await expect(page.locator('.switches .showall')).toHaveCount(1);
   const more = page.locator('.switches .showall');
-  await expect(more).toHaveText('Rodyti visus 7');
+  await expect(more).toHaveText('Rodyti dar 50');
   await expect(more).toHaveAttribute('aria-expanded', 'false');
   await more.click();
   await expect(more).toHaveAttribute('aria-expanded', 'true');
   await expect(more).toHaveText('Rodyti mažiau');
-  await expect(ranking.locator('tbody tr:visible')).toHaveCount(7);
+  await expect(ranking.locator('tbody tr:visible')).toHaveCount(55);
   await more.focus();
   await page.keyboard.press('Enter');
   await expect(more).toHaveAttribute('aria-expanded', 'false');
-  await expect(more).toHaveText('Rodyti visus 7');
+  await expect(more).toHaveText('Rodyti dar 50');
   await expect(ranking.locator('tbody tr:visible')).toHaveCount(5);
   await page.keyboard.press('Enter');
   await expect(more).toHaveAttribute('aria-expanded', 'true');
-  await expect(ranking.locator('tbody tr:visible')).toHaveCount(7);
+  await expect(ranking.locator('tbody tr:visible')).toHaveCount(55);
   await noPageOverflow(page);
 });
 
@@ -713,7 +718,7 @@ test('a shared campaign says whose it is, sums up, and keeps its lists closed (#
   await noPageOverflow(page);
 });
 
-test('opening a campaign list shows its table, and "Rodyti visus" the rest (#210)', async ({ page }) => {
+test('opening a campaign list shows its table, and "Rodyti dar N" the rest (#210)', async ({ page }) => {
   await ready(page, ANNA);
   const section = campaignSection(page, '2024 m.');
   const lists = section.locator('details.campaign-list');
@@ -725,7 +730,7 @@ test('opening a campaign list shows its table, and "Rodyti visus" the rest (#210
   const rows = accepted.locator('table.rec > tbody > tr');
   await expect(rows).toHaveCount(45);
   await expect(rows.filter({ visible: true })).toHaveCount(10);
-  const more = accepted.getByRole('button', { name: 'Rodyti visus 45', exact: true });
+  const more = accepted.getByRole('button', { name: 'Rodyti dar 35', exact: true });
   await more.click();
   await expect(rows.filter({ visible: true })).toHaveCount(45);
   await expect(accepted.getByRole('button', { name: 'Rodyti mažiau', exact: true })).toHaveAttribute('aria-expanded', 'true');
@@ -741,7 +746,7 @@ test('opening a campaign list shows its table, and "Rodyti visus" the rest (#210
   const contracts = lists.nth(2).locator('table.rec > tbody > tr');
   await expect(contracts).toHaveCount(30);
   await expect(contracts.filter({ visible: true })).toHaveCount(10);
-  await lists.nth(2).getByRole('button', { name: 'Rodyti visus 30', exact: true }).click();
+  await lists.nth(2).getByRole('button', { name: 'Rodyti dar 20', exact: true }).click();
   await expect(contracts.filter({ visible: true })).toHaveCount(30);
   await noPageOverflow(page);
 });

@@ -1346,8 +1346,8 @@ function makeScrollWrap(content) {
   return watchScrollWrap(wrap);
 }
 
-// A long table shows its first `shown` rows and a "Rodyti visus N" button
-// under it (issue #199, shared with the campaign lists of #210). `wrap` is a
+// A long table shows its first `shown` rows and a "Rodyti dar N" button
+// under it, N being the rows it hides (issue #199, shared with the campaign lists of #210). `wrap` is a
 // makeScrollWrap holding the table; a table that fits comes back as is.
 function truncateRows(wrap, shown) {
   const table = wrap.querySelector(":scope > table");
@@ -1357,13 +1357,14 @@ function truncateRows(wrap, shown) {
   for (const tr of extra) tr.hidden = true;
   const more = document.createElement("button");
   more.type = "button"; more.className = "showall";
-  more.textContent = `Rodyti visus ${rows.length}`;
+  const label = `Rodyti dar ${fmtInt(extra.length)}`;
+  more.textContent = label;
   more.setAttribute("aria-expanded", "false");
   more.addEventListener("click", () => {
     const open = more.getAttribute("aria-expanded") !== "true";
     for (const tr of extra) tr.hidden = !open;
     more.setAttribute("aria-expanded", String(open));
-    more.textContent = open ? "Rodyti mažiau" : `Rodyti visus ${rows.length}`;
+    more.textContent = open ? "Rodyti mažiau" : label;
     if (!open) wrap.scrollIntoView({ block: "nearest" });
   });
   const out = document.createDocumentFragment();
@@ -1489,7 +1490,7 @@ function renderValue(v, key = null, parent = null) {
 // 2,414, so the same donor list repeated on every page of the list. The
 // section says whose campaign it is, sums it up, and keeps its donations,
 // reports, contracts and decisions in closed lists.
-//: Rows a campaign list shows before "Rodyti visus".
+//: Rows a campaign list shows before "Rodyti dar N".
 const CAMPAIGN_SHOWN = 10;
 //: Keys the campaign layout places itself; any other key is listed as is.
 const CAMPAIGN_KEYS = new Set([
@@ -2735,8 +2736,8 @@ function showMovers() {
 // and who ran the most times without moving. The metric is partySwitches()
 // in lib/nominators.js; the rows are the whole index's, computed once on the
 // first visit (about 140 ms over the 60,568 people) and kept.
-const SWITCH_TOP = 50;
-//: Rows a ranking shows before "Rodyti visus", so the second table is in reach.
+const SWITCH_TOP = 55;
+//: Rows a ranking shows before "Rodyti dar 50", so the second table is in reach.
 const SWITCH_SHOWN = 5;
 let switchRows = null;
 
@@ -2860,7 +2861,11 @@ function showSwitches() {
   const method = section("Kaip skaičiuojama", null);
   const intro = document.createElement("p");
   intro.className = "aggnote";
-  intro.textContent = "Keitimu laikomas perėjimas į kitą partiją, koaliciją ar rinkimų komitetą, išsikėlimas pačiam ir grįžimas į ankstesnę partiją. Neskaičiuojama:";
+  intro.textContent = "Keitimu laikomas perėjimas į kitą partiją, koaliciją ar rinkimų komitetą, išsikėlimas pačiam ir grįžimas į ankstesnę partiją.";
+  // Its own paragraph, so the list reads as what is *not* a switch.
+  const exclusions = document.createElement("p");
+  exclusions.className = "aggnote";
+  exclusions.textContent = "Neskaičiuojama:";
   const list = document.createElement("ul");
   list.className = "aggnote switch-method";
   for (const text of [
@@ -2874,7 +2879,7 @@ function showSwitches() {
   const outro = document.createElement("p");
   outro.className = "aggnote";
   outro.textContent = "„Partijų“ – kiek skirtingų partijų, koalicijų ar komitetų kandidatą kėlė (išsikėlimas pačiam neskaičiuojamas).";
-  method.append(intro, list, outro);
+  method.append(intro, exclusions, list, outro);
 }
 
 // What a chart drawn into the person pane has to fit into: the pane's own
