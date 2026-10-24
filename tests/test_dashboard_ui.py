@@ -715,6 +715,41 @@ class NominatorRunTests(unittest.TestCase):
         )
 
 
+@unittest.skipIf(NODE is None, "node not installed — behavioural checks skipped")
+class CollapseRunTests(unittest.TestCase):
+    """The header line's folded middle (issue #198), run under node."""
+
+    def _collapse(self, n):
+        helpers = "\n".join(
+            re.search(pattern, SOURCE, re.S | re.M).group(0)
+            for pattern in (
+                r"^const COLLAPSE_OVER = .*?;",
+                r"^const COLLAPSE_KEEP = .*?;",
+                r"^function collapseRuns\(.*?^}",
+            )
+        )
+        script = (
+            f"{helpers}\nconst parts = collapseRuns([...Array({n}).keys()]);\n"
+            "console.log(JSON.stringify([parts.head, parts.hidden, parts.tail]));"
+        )
+        out = subprocess.run([NODE, "-"], input=script, capture_output=True, text=True, timeout=30)
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        return json.loads(out.stdout)
+
+    def test_five_items_do_not_collapse(self):
+        self.assertEqual(self._collapse(5), [[0, 1, 2, 3, 4], [], []])
+
+    def test_six_items_show_two_at_each_end_and_hide_two(self):
+        self.assertEqual(self._collapse(6), [[0, 1], [2, 3], [4, 5]])
+
+    def test_eleven_items_show_two_at_each_end_and_hide_seven(self):
+        self.assertEqual(self._collapse(11), [[0, 1], [2, 3, 4, 5, 6, 7, 8], [9, 10]])
+
+    def test_an_empty_line_stays_empty(self):
+        self.assertEqual(self._collapse(0), [[], [], []])
+
+
 class KeyboardAccessTests(unittest.TestCase):
     """The people list used to be unreachable by keyboard: two focusable
     elements in the whole document, 300 rendered rows of tabIndex -1 divs.

@@ -4,7 +4,7 @@ import { fold, PLURAL, plural, fmtInt, capitalize, deslug, csvField, csvMoney, m
 import { recordFile, resolvePath, ROOT_SECTIONS, isFilledValue, walkValue } from "../lib/records.js";
 import { partyLineage, partyLineageRoots, partyTypeWord, partyText, partyTitle, partyCoalitions } from "../lib/parties.js";
 import { MONEY_SERIES, parseMoney, LITAS_PER_EURO, declaredInLitas, INCOME_PATH, EMPLOYMENT_INCOME_PATH, declaredIncome, incomeIsEmploymentOnly, moneyEUR } from "../lib/finance.js";
-import { nominatorRuns, runYears } from "../lib/nominators.js";
+import { collapseRuns, nominatorRuns, runYears } from "../lib/nominators.js";
 import { VIEW_PATHS, personPath, comparePath, parsePath, resolvePersonKey, isRoutableClick } from "../lib/routes.js";
 
 // Election names come from people.json, which copies them from the one
@@ -1436,6 +1436,59 @@ function partyNode(id) {
   return span;
 }
 
+// The header's nominator line: one item per run with its years, joined by
+// arrows. A long line folds its middle behind a bare "…" (issue #198), which
+// expands in place; "Suskleisti" at the end folds it again. Focus follows,
+// so a keyboard user is never left on a control that just disappeared.
+function nominatorLine(runs) {
+  const line = document.createElement("div");
+  line.className = "meta parties";
+  const item = run => {
+    const node = partyNode(run.id);
+    node.classList.add("pitem");
+    const years = runYears(run);
+    if (years) {
+      const span = document.createElement("span"); span.className = "pyears";
+      span.textContent = years;
+      node.append(" ", span);
+    }
+    return node;
+  };
+  const { head, hidden, tail } = collapseRuns(runs);
+  head.forEach((run, i) => line.append(...(i ? [" → "] : []), item(run)));
+  if (!hidden.length) return line;
+
+  const fold = document.createElement("span");
+  fold.className = "pfold"; fold.id = `pfold-${++foldSeq}`; fold.hidden = true;
+  fold.tabIndex = -1;
+  for (const run of hidden) fold.append(" → ", item(run));
+  const more = document.createElement("span"); more.className = "pmore";
+  const open = document.createElement("button");
+  open.type = "button"; open.className = "pfold-toggle";
+  open.textContent = "…";
+  // The bare ellipsis is enough to see; a screen reader still hears the count.
+  open.setAttribute("aria-label", `Rodyti dar ${hidden.length}`);
+  open.setAttribute("aria-expanded", "false");
+  open.setAttribute("aria-controls", fold.id);
+  more.append(" → ", open);
+  const close = document.createElement("button");
+  close.type = "button"; close.className = "pfold-toggle"; close.hidden = true;
+  close.textContent = "Suskleisti";
+  close.setAttribute("aria-expanded", "true");
+  close.setAttribute("aria-controls", fold.id);
+  const toggle = expand => {
+    fold.hidden = !expand; more.hidden = expand; close.hidden = !expand;
+    (expand ? fold : open).focus();
+  };
+  open.addEventListener("click", () => toggle(true));
+  close.addEventListener("click", () => toggle(false));
+  line.append(fold, more);
+  tail.forEach(run => line.append(" → ", item(run)));
+  line.append(" ", close);
+  return line;
+}
+let foldSeq = 0;
+
 function clearActiveRows() {
   for (const el of document.querySelectorAll(".row")) el.classList.remove("active");
 }
@@ -1500,19 +1553,7 @@ async function showPerson(p) {
   // earlier nominator is a new run.
   const runs = nominatorRuns(p.e, INDEX.elections || []);
   if (runs.length) {
-    const parties = document.createElement("div");
-    parties.className = "meta parties";
-    runs.forEach((run, i) => {
-      const item = partyNode(run.id);
-      const years = runYears(run);
-      if (years) {
-        const span = document.createElement("span"); span.className = "pyears";
-        span.textContent = years;
-        item.append(" ", span);
-      }
-      parties.append(...(i ? [" → "] : []), item);
-    });
-    hd.appendChild(parties);
+    hd.appendChild(nominatorLine(runs));
   }
   head.appendChild(hd); root.appendChild(head);
 

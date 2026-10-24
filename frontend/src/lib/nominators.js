@@ -39,4 +39,16 @@ function runYears(run) {
   return run.from === run.to ? String(run.from) : `${run.from}–${run.to}`;
 }
 
-export { electionYear, nominatorRuns, runYears };
+// A long line folds its middle (issue #198): more than COLLAPSE_OVER items
+// show the first and last COLLAPSE_KEEP -- where someone started and where
+// they are now -- around a button for the rest.
+const COLLAPSE_OVER = 5;
+const COLLAPSE_KEEP = 2;
+
+// {head, hidden, tail} over `items`; a short line is all head.
+function collapseRuns(items, over = COLLAPSE_OVER, keep = COLLAPSE_KEEP) {
+  if (items.length <= over) return { head: [...items], hidden: [], tail: [] };
+  return { head: items.slice(0, keep), hidden: items.slice(keep, -keep), tail: items.slice(-keep) };
+}
+
+export { COLLAPSE_OVER, COLLAPSE_KEEP, electionYear, nominatorRuns, runYears, collapseRuns };

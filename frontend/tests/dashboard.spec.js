@@ -240,6 +240,60 @@ for (const [path, key] of [
   });
 }
 
+// Eight alternating runs, 2001-2008: a Tomaševski-shaped line (issue #198).
+const foldElections = Array.from({ length: 8 }, (_, i) => ({
+  id: `${2001 + i}-seimo`, kind: 'seimo', date: `${2001 + i}-10-01`, name: `${2001 + i} Seimas`, shortName: `${2001 + i} Seimas`,
+}));
+const foldParties = {
+  ...index.parties,
+  'syn-party': { n: 'SP-B', t: 'partija', f: 'Sintetinė partija – Bandymų sąjunga' },
+  'syn-joint': { n: 'SP-B + Kita partija', t: 'koalicija', f: 'Sintetinė partija – Bandymų sąjunga, Kita partija', nr: ['syn-party', 'other-party'] },
+};
+const foldPerson = {
+  pid: 'test-folded', n: 'Valdemar SINTETINIS', b: '1965-06-07', k: 'VALDEMAR SINTETINIS|1965-06-07',
+  e: foldElections.map((e, i) => ({ id: e.id, c: 'test-anna', p: i % 2 ? 'syn-joint' : 'syn-party', w: false })),
+};
+
+async function foldFixture(page) {
+  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
+    contentType: 'application/json',
+    body: JSON.stringify({ ...index, elections: [...foldElections, ...index.elections], parties: foldParties, people: [...index.people, foldPerson] }),
+  }));
+  await page.goto('/asmuo/test-folded');
+  return page.locator('#person .phead .parties');
+}
+
+test('a long nominator line folds its middle and expands in place', async ({ page }) => {
+  const chain = await foldFixture(page);
+  const more = chain.getByRole('button', { name: 'Rodyti dar 4' });
+  const less = chain.getByRole('button', { name: 'Suskleisti' });
+  const collapsed = 'SP-B 2001 → koalicija SP-B + Kita partija 2002 → … → SP-B 2007 → koalicija SP-B + Kita partija 2008';
+  await expect(chain).toHaveText(collapsed, { useInnerText: true });
+  await expect(more).toHaveAttribute('aria-expanded', 'false');
+  await expect(chain.locator('.pitem:visible')).toHaveCount(4);
+  await expect(less).toBeHidden();
+
+  await more.click();
+  await expect(chain.locator('.pitem:visible')).toHaveCount(8);
+  await expect(chain).toHaveText(
+    'SP-B 2001 → koalicija SP-B + Kita partija 2002 → SP-B 2003 → koalicija SP-B + Kita partija 2004 → SP-B 2005 → koalicija SP-B + Kita partija 2006 → SP-B 2007 → koalicija SP-B + Kita partija 2008 Suskleisti',
+    { useInnerText: true },
+  );
+  await expect(more).toBeHidden();
+  await expect(less).toHaveAttribute('aria-expanded', 'true');
+
+  // Collapsing hands focus back to the button that expands it again.
+  await less.click();
+  await expect(chain).toHaveText(collapsed, { useInnerText: true });
+  await expect(more).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(chain.locator('.pitem:visible')).toHaveCount(8);
+  await less.focus();
+  await page.keyboard.press('Enter');
+  await expect(chain.locator('.pitem:visible')).toHaveCount(4);
+  await noPageOverflow(page);
+});
+
 test('Back and Forward move between a person and the statistics', async ({ page }) => {
   await ready(page, ANNA);
   await expect(page.locator('#person h2')).toHaveText('Ona NAUJOJI');
