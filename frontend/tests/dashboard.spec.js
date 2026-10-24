@@ -112,6 +112,54 @@ test('the nationality dropdown counts people, the rows its filter returns (#176)
   }
 });
 
+// The party facet counts people the same way (follow-up to #176): a person
+// counts once per option's set -- a lineage, a party with its coalitions --
+// however many of its members they ran for, so each count is the rows shown.
+test('the party dropdown counts people per party, lineage and coalition set', async ({ page }) => {
+  const parties = {
+    ...index.parties,
+    'syn-solo': { n: 'Vienišių partija', t: 'partija' },
+    'syn-old': { n: 'Senoji partija', t: 'partija' },
+    'syn-new': { n: 'Naujoji partija', t: 'partija', pr: ['syn-old'] },
+    'syn-coal': { n: 'Naujųjų koalicija', t: 'koalicija', nr: ['syn-new'] },
+  };
+  const person = (pid, n, nominators) => ({
+    pid, n, b: null, k: `${n.toUpperCase()}|`,
+    e: nominators.map((p, i) => ({ id: i % 2 ? '2024-seimo' : '2020-seimo', c: `${pid}-${i}`, p, m: [null, null, null, null] })),
+  });
+  const served = {
+    ...index,
+    parties,
+    people: [
+      ...people,
+      person('test-solo', 'Vienas TRISKART', ['syn-solo', 'syn-solo', 'syn-solo']),
+      person('test-line', 'Lina LINIJA', ['syn-old', 'syn-new']),
+      person('test-both', 'Jonas ABIEJŲ', ['syn-new', 'syn-coal']),
+      person('test-coal', 'Kotryna KOALICIJA', ['syn-coal']),
+    ],
+  };
+  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
+    status: 200, contentType: 'application/json', body: JSON.stringify(served),
+  }));
+  await page.goto('/');
+  await expect(page.locator('#results .row')).toHaveCount(7);
+  await openFilters(page);
+  const expected = {
+    'test-party': 1, // Ona ran for it twice
+    'syn-solo': 1,
+    '+syn-new': 2, // Lina ran for both members and counts once
+    'syn-new': 2,
+    'syn-old': 1,
+    '&syn-new': 3, // Jonas ran for the party and its coalition and counts once
+    'syn-coal': 2,
+  };
+  for (const [value, count] of Object.entries(expected)) {
+    await expect(page.locator(`#fParty option[value="${value}"]`)).toHaveText(new RegExp(`\\(${count}\\)$`));
+    await page.locator('#fParty').selectOption(value);
+    await expect(page.locator('#results .row')).toHaveCount(count);
+  }
+});
+
 test('a nominator chain shows short labels, muted coalition words and full names on hover', async ({ page }) => {
   // Issue #189: synthetic nominators shaped like the registry's three kinds
   // of label -- a party shortName, a coalition's brand, a joint list.
@@ -152,9 +200,10 @@ test('a nominator chain shows short labels, muted coalition words and full names
   expect(word).not.toBe(name);
 
   // The party's "su koalicijomis" row finds its joint lists as well, while
-  // its own row still finds only its own candidacy.
+  // its own row still finds only its own candidacy. Valdas ran on all three
+  // lists and counts once (#176).
   await openFilters(page);
-  await expect(page.locator('#fParty option[value="&syn-party"]')).toHaveText('SP-B su koalicijomis (3)');
+  await expect(page.locator('#fParty option[value="&syn-party"]')).toHaveText('SP-B su koalicijomis (1)');
   await page.locator('#fParty').selectOption('&syn-party');
   await page.locator('#fElection').selectOption('2024-seimo');
   await expect(page.locator('#results .row')).toHaveCount(1);
