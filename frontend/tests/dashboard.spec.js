@@ -165,23 +165,25 @@ test('the municipality filter groups by county, the most populous first (#213)',
 });
 
 // The constituency filter groups by county too (issue #217), in the same
-// order, with each name's counties read from VRK's precinct lists. A
-// district across a county line is an option under each county, every copy
-// the same "ap" value; a name with no county (the district abroad) gets a
-// labelled group last. The five big cities each get a group just ahead of
-// their county's, holding the districts most of whose precincts lie in the
-// city -- in place of that county's group, not beside it. ap 0 and 1 stay
-// the base fixture's (Žirmūnų is a Vilnius city district there).
-test('the constituency filter groups by city and county, a cross-county district under each (#217)', async ({ page }) => {
+// order, with each name's groups read from VRK's precinct lists. A district
+// across a county line is an option under each county, every copy the same
+// "ap" value; a name with no county (the district abroad) gets a labelled
+// group last. The five big cities each get a group just ahead of their
+// county's, decided per map: a map mostly inside the city lists the name
+// there, any other map under its counties -- so a name reused for a city and
+// a rural district (Dainavos) is in both. ap 0 and 1 stay the base fixture's
+// (Žirmūnų is a Vilnius city district there).
+test('the constituency filter groups by city and county, a district under each group its maps place it in (#217)', async ({ page }) => {
   const extra = [
-    ['Antakalnio', ['Vilniaus'], 'Vilniaus'], ['Fabijoniškių', ['Vilniaus'], 'Vilniaus'],
-    ['Bandomoji pasienio', ['Panevėžio', 'Utenos'], null],
-    ['Centro', ['Kauno'], 'Kauno'], ['Baltijos', ['Klaipėdos'], 'Klaipėdos'], ['Aušros', ['Šiaulių'], 'Šiaulių'],
-    ['Sūduvos', ['Marijampolės'], null], ['Dzūkijos', ['Alytaus'], null], ['Telšių', ['Telšių'], null],
-    ['Karšuvos', ['Tauragės'], null], ['Pasaulio lietuvių', [], null],
-    ['Bandomoji miesto–rajono', ['Vilniaus', 'Kauno'], 'Kauno'], ['Trakų–Vievio', ['Vilniaus'], null],
-    ['Jonavos', ['Kauno'], null], ['Kretingos', ['Klaipėdos'], null], ['Kelmės', ['Šiaulių'], null],
-    ['Nevėžio', ['Panevėžio'], 'Panevėžio'],
+    ['Antakalnio', ['Vilniaus miestas']], ['Fabijoniškių', ['Vilniaus miestas']],
+    ['Bandomoji pasienio', ['Panevėžio apskritis', 'Utenos apskritis']],
+    ['Centro', ['Kauno miestas']], ['Baltijos', ['Klaipėdos miestas']], ['Aušros', ['Šiaulių miestas']],
+    ['Sūduvos', ['Marijampolės apskritis']], ['Dzūkijos', ['Alytaus apskritis']], ['Telšių', ['Telšių apskritis']],
+    ['Karšuvos', ['Tauragės apskritis']], ['Pasaulio lietuvių', []],
+    // City-majority on its old map, Prienai and Alytus district on its new one.
+    ['Bandomoji dvejopa', ['Kauno miestas', 'Kauno apskritis', 'Alytaus apskritis']],
+    ['Trakų–Vievio', ['Vilniaus apskritis']], ['Jonavos', ['Kauno apskritis']], ['Kretingos', ['Klaipėdos apskritis']],
+    ['Kelmės', ['Šiaulių apskritis']], ['Nevėžio', ['Panevėžio miestas']],
   ];
   const served = {
     ...index,
@@ -189,12 +191,11 @@ test('the constituency filter groups by city and county, a cross-county district
       ...people,
       { pid: 'test-vp', n: 'Vaida PASIENIO', b: null, k: 'VAIDA PASIENIO|',
         e: [{ id: '2024-seimo', c: 'test-vp', p: 'test-party', ap: 4, m: [null, null, null, null] }] },
-      { pid: 'test-pm', n: 'Petras MIESTINIS', b: null, k: 'PETRAS MIESTINIS|',
-        e: [{ id: '2024-seimo', c: 'test-pm', p: 'test-party', ap: 13, m: [null, null, null, null] }] },
+      { pid: 'test-pd', n: 'Petras DVEJOPAS', b: null, k: 'PETRAS DVEJOPAS|',
+        e: [{ id: '2024-seimo', c: 'test-pd', p: 'test-party', ap: 13, m: [null, null, null, null] }] },
     ],
     constituencies: [...index.constituencies, ...extra.map(([name]) => name)],
-    constituencyCounties: [...index.constituencyCounties, ...extra.map(([, counties]) => counties)],
-    constituencyCities: [...index.constituencyCities, ...extra.map(([, , city]) => city)],
+    constituencyGroups: [...index.constituencyGroups, ...extra.map(([, groups]) => groups)],
   };
   await page.route(url => url.pathname === '/people.json', route => route.fulfill({
     status: 200, contentType: 'application/json', body: JSON.stringify(served),
@@ -215,17 +216,20 @@ test('the constituency filter groups by city and county, a cross-county district
   // A city district sits in the city group and not in its county's; a
   // district outside the city stays in the county group.
   await expect(select.locator('optgroup[label="Vilniaus miestas"] option')).toHaveText(['Antakalnio', 'Fabijoniškių', 'Žirmūnų']);
-  await expect(select.locator('optgroup[label="Vilniaus apskritis"] option')).toHaveText(['Bandomoji miesto–rajono', 'Trakų–Vievio']);
-  await expect(select.locator('optgroup[label="Kauno miestas"] option')).toHaveText(['Bandomoji miesto–rajono', 'Centro']);
-  await expect(select.locator('optgroup[label="Kauno apskritis"] option')).toHaveText(['Jonavos']);
+  await expect(select.locator('optgroup[label="Vilniaus apskritis"] option')).toHaveText(['Trakų–Vievio']);
   await expect(select.locator('optgroup[label="Panevėžio miestas"] option')).toHaveText(['Nevėžio']);
   await expect(select.locator('optgroup[label="Panevėžio apskritis"] option')).toHaveText(['Aukštaitijos', 'Bandomoji pasienio']);
   await expect(select.locator('optgroup[label="Utenos apskritis"] option')).toHaveText(['Bandomoji pasienio']);
   await expect(select.locator('optgroup[label="Be apskrities"] option')).toHaveText(['Pasaulio lietuvių']);
-  // Every copy of a district listed twice filters the same row.
+  // A name whose maps disagree is in the city group and the county groups.
+  await expect(select.locator('optgroup[label="Kauno miestas"] option')).toHaveText(['Bandomoji dvejopa', 'Centro']);
+  await expect(select.locator('optgroup[label="Kauno apskritis"] option')).toHaveText(['Bandomoji dvejopa', 'Jonavos']);
+  await expect(select.locator('optgroup[label="Alytaus apskritis"] option')).toHaveText(['Bandomoji dvejopa', 'Dzūkijos']);
+  // Every copy of a name listed more than once filters the same row.
   for (const [label, value, name] of [
     ['Panevėžio apskritis', '4', 'Vaida PASIENIO'], ['Utenos apskritis', '4', 'Vaida PASIENIO'],
-    ['Kauno miestas', '13', 'Petras MIESTINIS'], ['Vilniaus apskritis', '13', 'Petras MIESTINIS'],
+    ['Kauno miestas', '13', 'Petras DVEJOPAS'], ['Kauno apskritis', '13', 'Petras DVEJOPAS'],
+    ['Alytaus apskritis', '13', 'Petras DVEJOPAS'],
   ]) {
     const option = select.locator(`optgroup[label="${label}"] option[value="${value}"]`);
     await option.evaluate(o => { o.selected = true; o.parentElement.closest('select').dispatchEvent(new Event('change', { bubbles: true })); });

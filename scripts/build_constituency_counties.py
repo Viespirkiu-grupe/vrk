@@ -96,8 +96,6 @@ NO_COUNTY = {
 
 #: The five big cities the filter gives a group of their own, ahead of their
 #: county's, keyed by that county (each lies in the county of its name).
-#: A district is the city's when most of its precincts, summed over every map
-#: the name was used in, lie in the city municipality -- a strict majority.
 CITIES = {
     "Vilniaus": "Vilniaus miesto savivaldybė",
     "Kauno": "Kauno miesto savivaldybė",
@@ -107,22 +105,35 @@ CITIES = {
 }
 
 
-def city_of(per_map: dict[str, dict[str, int]]) -> tuple[str | None, dict[str, dict[str, int]], bool]:
-    """The city the district belongs to by the summed-precinct majority, the
-    precinct share of every city it reaches, and whether that majority flips
-    between maps (a name reused for a different district)."""
-    total = sum(sum(bodies.values()) for bodies in per_map.values())
-    shares, city, flips = {}, None, False
+def city_group(county: str) -> str:
+    return f"{county} miestas"
+
+
+def county_group(county: str) -> str:
+    return f"{county} apskritis"
+
+
+def group_order() -> list[str]:
+    """Every filter group in display order: each big city's just ahead of its
+    county's, the counties in the registry's population order."""
+    order = []
+    for county in municipalities.counties():
+        if county in CITIES:
+            order.append(city_group(county))
+        order.append(county_group(county))
+    return order
+
+
+def place(bodies: dict[str, int]) -> list[str]:
+    """The groups one map puts a district in: its big city's, when that city
+    municipality holds a strict majority of the map's precincts; otherwise
+    every county its precincts touch."""
+    total = sum(bodies.values())
     for county, body in CITIES.items():
-        inside = sum(bodies.get(body, 0) for bodies in per_map.values())
-        if not inside:
-            continue
-        shares[county] = {"in": inside, "of": total}
-        if 2 * inside > total:
-            city = county
-        if len({2 * bodies.get(body, 0) > sum(bodies.values()) for bodies in per_map.values()}) > 1:
-            flips = True
-    return city, shares, flips
+        if 2 * bodies.get(body, 0) > total:
+            return [city_group(county)]
+    county_of = municipalities.county_by_name()
+    return sorted({county_group(county_of[body]) for body in bodies}, key=group_order().index)
 
 _NS = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
 
@@ -199,16 +210,16 @@ def derive(repo_root: Path, source: Path) -> dict[str, Any]:
     entries: dict[str, Any] = {}
     for name in sorted(names):
         if name in NO_COUNTY:
-            entries[name] = {"counties": [], "city": None, "note": NO_COUNTY[name]}
+            entries[name] = {"counties": [], "groups": [], "note": NO_COUNTY[name]}
             continue
         per_map = {year: dict(sorted(maps[name][year].items())) for year in sorted(maps[name])}
         counties = {county_of[body] for bodies in per_map.values() for body in bodies}
-        city, shares, flips = city_of(per_map)
+        placed = {year: place(bodies) for year, bodies in per_map.items()}
+        groups = {group for year_groups in placed.values() for group in year_groups}
         entries[name] = {
             "counties": sorted(counties, key=order.index),
-            "city": city,
-            **({"cityPrecincts": shares} if shares else {}),
-            **({"cityMajorityFlips": True} if flips else {}),
+            "groups": sorted(groups, key=group_order().index),
+            "placedBy": placed,
             "maps": per_map,
         }
     return entries
@@ -236,17 +247,22 @@ def render(entries: dict[str, Any]) -> str:
             "explicitly (the script's DISTRICT_NAMES and MUNICIPALITY_FORMS): 1996's Nr. 67 is 'Prienų' on the "
             "cards and 'Prienų–Birštono' in the list, and the 1996/2000 'Kupiškio rajonas' and 2004 bare "
             "'Širvintų' are Kupiškis and Širvintai district. A name with an empty `counties` list has a `note` "
-            "saying why; the filter groups it apart. `city` puts a district in one of the five big cities' own "
-            "groups (`cities`), which the filter shows ahead of that city's county group and in place of it: "
-            "the city whose municipality holds a strict majority of the district's precincts summed over every "
-            "map (`cityPrecincts` gives the count); null otherwise. `cityMajorityFlips` marks a name whose "
-            "per-map majority disagrees between maps -- Dainavos (all Kaunas city through 2016, none of it "
-            "from 2020: 45%, so the county group) and Pajūrio (Klaipėda city majority in 1996 and from 2016, "
-            "minority 2000-2012: 56%, so the city group)."
+            "saying why; the filter groups it apart. `groups` are the filter groups the name is listed in, "
+            "decided per map (`placedBy`): a map whose precincts are mostly (a strict majority) in one of the "
+            "five big cities' municipalities (`cities`) places the name in that city's group, which the filter "
+            "shows just ahead of the city's county group; any other map places it under every county its "
+            "precincts touch. The name is listed under the union, one option per group. "
+            "`placementDiffersBetweenMaps` lists the names whose maps disagree -- Dainavos is two districts "
+            "under one name, all Kaunas city through 2016 and Prienai-Birštonas-Alytus district from 2020, so "
+            "it is in Kauno miestas and in Kauno and Alytaus apskritis."
         ),
         "sources": sources,
         "changedBetweenMaps": changed,
+        "placementDiffersBetweenMaps": [
+            name for name, entry in entries.items() if len({tuple(g) for g in entry.get("placedBy", {}).values()}) > 1
+        ],
         "cities": CITIES,
+        "groupOrder": group_order(),
         "entries": entries,
     }
     return json.dumps(document, ensure_ascii=False, indent=2) + "\n"

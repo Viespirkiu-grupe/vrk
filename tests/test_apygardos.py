@@ -18,9 +18,9 @@ from scraper.shared import municipalities
 from scraper.shared.apygardos import (
     DASHLESS_ARCHIVE,
     apygarda,
-    cities,
-    city_of,
     counties_of,
+    group_order,
+    groups_of,
     is_multi_mandate,
     load_counties,
     normalize_name,
@@ -199,46 +199,60 @@ class CountyTests(unittest.TestCase):
             ["Dainavos", "Deltuvos pietinė", "Deltuvos šiaurinė", "Kelmės", "Prienų", "Prienų–Birštono"],
         )
 
-    def test_the_city_is_the_summed_precinct_majority(self):
-        # Issue #217: a district is a big city's when that city municipality
-        # holds a strict majority of its precincts over every map it was used
-        # in -- recomputed here from the evidence for all 136 names.
+    def test_the_groups_are_the_per_map_placement_over_the_evidence(self):
+        # Issue #217: each map places the name -- in a big city's group when
+        # that city municipality holds a strict majority of the map's
+        # precincts, else under every county the map touches -- and the name
+        # is listed under the union. Recomputed here for all 136 names.
         cities = self.registry["cities"]
         self.assertEqual(list(cities), ["Vilniaus", "Kauno", "Klaipėdos", "Šiaulių", "Panevėžio"])
+        order = self.registry["groupOrder"]
+        self.assertEqual(order[:4], ["Vilniaus miestas", "Vilniaus apskritis", "Kauno miestas", "Kauno apskritis"])
+        self.assertEqual(len(order), 15)
+        self.assertEqual(group_order(), order)
+        county_of = municipalities.county_by_name()
         for name, entry in self.registry["entries"].items():
             with self.subTest(name):
-                maps = entry.get("maps", {})
-                total = sum(sum(bodies.values()) for bodies in maps.values())
-                expected = None
-                for county, body in cities.items():
-                    inside = sum(bodies.get(body, 0) for bodies in maps.values())
-                    if total and 2 * inside > total:
-                        expected = county
-                    if inside:
-                        self.assertEqual(entry["cityPrecincts"][county], {"in": inside, "of": total})
-                self.assertEqual(entry["city"], expected)
-                if expected:
-                    self.assertIn(expected, entry["counties"])
-                self.assertEqual(city_of(name), expected)
+                placed = {}
+                for year, bodies in entry.get("maps", {}).items():
+                    total = sum(bodies.values())
+                    city = [c for c, body in cities.items() if 2 * bodies.get(body, 0) > total]
+                    placed[year] = (
+                        [f"{city[0]} miestas"] if city
+                        else sorted({f"{county_of[b]} apskritis" for b in bodies}, key=order.index)
+                    )
+                self.assertEqual(entry.get("placedBy", {}), placed)
+                union = sorted({g for groups in placed.values() for g in groups}, key=order.index)
+                self.assertEqual(entry["groups"], union)
+                self.assertEqual(groups_of(name), union)
+                if name != "Pasaulio lietuvių":
+                    self.assertTrue(union)
 
     def test_the_city_groups_hold_the_expected_districts(self):
-        by_city = {}
+        by_group = {}
         for name, entry in self.registry["entries"].items():
-            if entry["city"]:
-                by_city.setdefault(entry["city"], []).append(name)
-        self.assertEqual({city: len(names) for city, names in by_city.items()},
-                         {"Vilniaus": 22, "Kauno": 11, "Klaipėdos": 4, "Šiaulių": 3, "Panevėžio": 3})
-        # Partly-city districts the majority rule places either way.
-        for name, city in {
-            "Vilniaus pietinė": "Vilniaus", "Aleksoto–Vilijampolės": "Kauno", "Savanorių": "Kauno",
-            "Baltijos": "Klaipėdos", "Danės": "Klaipėdos", "Pajūrio": "Klaipėdos", "Dainų": "Šiaulių",
-            "Dainavos": None, "Garliavos": None, "Aukštaitijos": None, "Kuršėnų–Dainų": None, "Šiaulių krašto": None,
+            for group in entry["groups"]:
+                by_group.setdefault(group, []).append(name)
+        self.assertEqual({g: len(n) for g, n in by_group.items() if g.endswith("miestas")},
+                         {"Vilniaus miestas": 22, "Kauno miestas": 12, "Klaipėdos miestas": 4,
+                          "Šiaulių miestas": 3, "Panevėžio miestas": 3})
+        for name, groups in {
+            # A strict city majority on every map: the city group alone.
+            "Vilniaus pietinė": ["Vilniaus miestas"], "Savanorių": ["Kauno miestas"], "Dainų": ["Šiaulių miestas"],
+            "Danės": ["Klaipėdos miestas"],
+            # A city minority on every map: the county groups alone.
+            "Garliavos": ["Kauno apskritis"], "Aukštaitijos": ["Panevėžio apskritis"], "Kuršėnų–Dainų": ["Šiaulių apskritis"],
+            # Maps that disagree: a Kaunas city district through 2016 and
+            # Prienai-Birštonas-Alytus land from 2020; a Klaipėda city
+            # majority in 1996 and from 2016, a minority in 2000-2012.
+            "Dainavos": ["Kauno miestas", "Kauno apskritis", "Alytaus apskritis"],
+            "Pajūrio": ["Klaipėdos miestas", "Klaipėdos apskritis"],
         }.items():
-            self.assertEqual(city_of(name), city, name)
-        self.assertEqual(cities(), ["Vilniaus", "Kauno", "Klaipėdos", "Šiaulių", "Panevėžio"])
-        # The two names whose per-map majority flips: a name reused for
-        # another district (Dainavos) and a boundary that moved (Pajūrio).
-        self.assertEqual(sorted(n for n, e in self.registry["entries"].items() if e.get("cityMajorityFlips")), ["Dainavos", "Pajūrio"])
+            self.assertEqual(groups_of(name), groups, name)
+        both = sorted(n for n, e in self.registry["entries"].items()
+                      if any(g.endswith("miestas") for g in e["groups"]) and any(g.endswith("apskritis") for g in e["groups"]))
+        self.assertEqual(both, ["Dainavos", "Pajūrio"])
+        self.assertEqual(groups_of("Nėra tokios"), [])
 
     def test_every_source_is_a_general_election_of_the_registry(self):
         import json

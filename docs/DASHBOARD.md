@@ -672,13 +672,16 @@ Prienai–Birštonas–Alytus land from 2020 — and the facet's optgroups follo
 `counties` like the municipality facet's, the district listed under each of
 its counties with the same `ap` value; Pasaulio lietuvių, the district
 abroad, has no county and sits in a last *Be apskrities* group. The five big
-cities (`cities`: Vilnius, Kaunas, Klaipėda, Šiauliai, Panevėžys) each get a
-*… miestas* group just ahead of their county's, and `constituencyCities`
-names the city a district goes under in place of that county's group: the
-one whose city municipality holds a strict majority of the district's
-precincts summed over every map (43 districts; the file's `cityPrecincts`
-gives the count, and `cityMajorityFlips` marks Dainavos and Pajūrio, whose
-per-map majority disagrees). The page offers
+cities (Vilnius, Kaunas, Klaipėda, Šiauliai, Panevėžys) each get a
+*… miestas* group just ahead of their county's (`constituencyGroupOrder`),
+and `constituencyGroups` lists the groups each name is in, decided per map
+(the file's `placedBy`): a map whose precincts lie mostly — a strict
+majority — in a big city's municipality puts the name in that city's group
+in place of its county's, any other map under every county it touched, and
+the name is listed under the union. 44 names are in a city group; Dainavos (a
+Kaunas city district through 2016, Prienai–Birštonas–Alytus land from 2020)
+and Pajūrio (a Klaipėda city majority in 1996 and from 2016 only) are in
+both a city and a county group. The page offers
 the constituency as a facet and a CSV column (`apygarda`), prints the
 counts inside the opened election card, in thousands (*Pirmumo balsai*
 `11 541`, the race's `isViso`/`balsai`), but not on the card header: a bare
