@@ -135,6 +135,8 @@ html.nav-open, html.nav-open body { overflow: hidden; }
 .ptype { opacity: .6; }
 .phead .parties > span { color: var(--ink); }
 .phead .parties .ptype { color: var(--muted); opacity: 1; }
+/* A run's years (issue #195) are secondary in the same way. */
+.phead .parties .pyears { color: var(--muted); }
 .ecard .win { color: var(--win); font-size: 12px; font-weight: 500; background: var(--win-bg); padding: 2px 7px; border-radius: var(--radius-sm); }
 .ecard .nores { font-size: 12px; color: var(--muted); font-weight: 400; font-style: italic; }
 .ecard .body { padding: 8px 20px 20px; border-top: var(--border); }

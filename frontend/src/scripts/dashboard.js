@@ -4,6 +4,7 @@ import { fold, PLURAL, plural, fmtInt, capitalize, deslug, csvField, csvMoney, m
 import { recordFile, resolvePath, ROOT_SECTIONS, isFilledValue, walkValue } from "../lib/records.js";
 import { partyLineage, partyLineageRoots, partyTypeWord, partyText, partyTitle, partyCoalitions } from "../lib/parties.js";
 import { MONEY_SERIES, parseMoney, LITAS_PER_EURO, declaredInLitas, INCOME_PATH, EMPLOYMENT_INCOME_PATH, declaredIncome, incomeIsEmploymentOnly, moneyEUR } from "../lib/finance.js";
+import { nominatorRuns, runYears } from "../lib/nominators.js";
 
 // Election names come from people.json, which copies them from the one
 // registry (scraper/elections.json). No election list lives in this file:
@@ -1455,13 +1456,23 @@ async function showPerson(p) {
     `rinkimų: ${p.e.length}, laimėta: ${won}` +
     (unknown ? `, be rezultatų duomenų: ${unknown}` : "");
   hd.append(h2, meta);
-  // Who fielded them, across their whole run — distinct canonical nominator
-  // names in first-appearance order, so a party switch reads as one.
-  const partyIds = [...new Set(p.e.map(e => e.p).filter(Boolean))];
-  if (partyIds.length) {
+  // Who fielded them, in time order (issue #195): consecutive candidacies
+  // under one nominator merge into a run with its years, and a return to an
+  // earlier nominator is a new run.
+  const runs = nominatorRuns(p.e, INDEX.elections || []);
+  if (runs.length) {
     const parties = document.createElement("div");
     parties.className = "meta parties";
-    partyIds.forEach((id, i) => parties.append(...(i ? [" → "] : []), partyNode(id)));
+    runs.forEach((run, i) => {
+      const item = partyNode(run.id);
+      const years = runYears(run);
+      if (years) {
+        const span = document.createElement("span"); span.className = "pyears";
+        span.textContent = years;
+        item.append(" ", span);
+      }
+      parties.append(...(i ? [" → "] : []), item);
+    });
     hd.appendChild(parties);
   }
   head.appendChild(hd); root.appendChild(head);
