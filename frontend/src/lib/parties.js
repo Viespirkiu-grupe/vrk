@@ -35,11 +35,15 @@ function partyTypeWord(party) {
 }
 
 // The label as plain text, type word included, for option rows and lists.
-function partyText(parties, id) {
+// `start`: the label opens its own line, cell or option, so the type word is
+// capitalised ("Koalicija …"); inside a sentence or the nominator line it
+// stays lower case.
+function partyText(parties, id, { start = false } = {}) {
   const party = parties[id];
   if (!party) return id;
   const word = partyTypeWord(party);
-  return word ? `${word} ${party.n}` : party.n;
+  if (!word) return party.n;
+  return `${start ? word.charAt(0).toUpperCase() + word.slice(1) : word} ${party.n}`;
 }
 
 // The hover text: the full legal name, so a short form is never a dead end.

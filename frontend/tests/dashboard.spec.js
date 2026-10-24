@@ -151,6 +151,11 @@ test('a nominator chain shows short labels, muted coalition words and full names
   ]);
   expect(word).not.toBe(name);
 
+  // A label that opens its own line, card header or option capitalises the
+  // type word; inside the chain above it stays lower case.
+  await expect(page.locator('#person summary .party').filter({ hasText: 'Kartu mes bandom' }).first()).toHaveText('Koalicija „Kartu mes bandom!“');
+  await expect(page.locator('#fParty option[value="syn-joint"]')).toHaveText(/^Koalicija SP-B \+ Kita partija \(\d+\)$/);
+
   // The party's "su koalicijomis" row finds its joint lists as well, while
   // its own row still finds only its own candidacy.
   await openFilters(page);
