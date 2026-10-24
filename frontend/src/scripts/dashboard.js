@@ -2560,7 +2560,7 @@ function showSwitches() {
     row.setAttribute("role", "listitem");
     const label = document.createElement("span");
     label.className = "switchbar-label";
-    label.textContent = i === 6 ? "6 ir daugiau" : `${i} ${plural(i, "kartą", "kartus", "kartų")}`;
+    label.textContent = i === 0 ? "nė karto" : i === 6 ? "6 ir daugiau" : `${i} ${plural(i, "kartą", "kartus", "kartų")}`;
     const track = document.createElement("span");
     track.className = "switchbar-track";
     track.setAttribute("aria-hidden", "true");

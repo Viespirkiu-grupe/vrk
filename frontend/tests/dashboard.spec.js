@@ -482,6 +482,7 @@ test('party switches rank the movers and the loyal, link each person and fit 320
   await expect(page.locator('#person h2')).toHaveText('Partijų keitimai');
   await expect(page.locator('#switchesBtn')).toHaveAttribute('aria-current', 'page');
 
+  await expect(page.locator('.switchbar-label')).toHaveText(['nė karto', '1 kartą', '2 kartus', '3 kartus', '4 kartus', '5 kartus', '6 ir daugiau']);
   await expect(page.locator('.switchbar-count')).toHaveText(['4 (66,7 %)', '1 (16,7 %)', '0 (0,0 %)', '0 (0,0 %)', '0 (0,0 %)', '1 (16,7 %)', '0 (0,0 %)']);
   const [movers, loyal] = await page.locator('#person table.ranking').all();
   await expect(movers.locator('tbody td:nth-child(2) > a')).toHaveText(['Kęstas KEITĖJAS · 1970-01-01', 'Jurgis VIENAS · 1970-01-01']);
