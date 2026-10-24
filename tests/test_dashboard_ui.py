@@ -525,8 +525,9 @@ class PartyLineageSourceTests(unittest.TestCase):
 
     def test_the_facet_offers_a_lineage_row_per_root(self):
         self.assertIn("ir pirmtakai", UNCOMMENTED)
-        self.assertIn("partyLineageRoots(INDEX.parties || {})", SOURCE)
-        self.assertIn("PARTY_LINEAGE_PREFIX + row.root", SOURCE)
+        # The roots come through the elected-people order (issue #212).
+        self.assertIn("partyOrder(INDEX.parties || {}, INDEX.people)", SOURCE)
+        self.assertIn("PARTY_LINEAGE_PREFIX + root", SOURCE)
 
     def test_the_filter_matches_through_the_lineage(self):
         self.assertIn("if (f.party && !inParty(e, f.party)) return false;", SOURCE)

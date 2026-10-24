@@ -10,8 +10,8 @@ export const people = [
     pid: 'test-anna', n: 'Ona NAUJOJI', b: '1980-01-02', k: 'ONA NAUJOJI|1980-01-02',
     ak: ['ONA SENESNĖ|1980-01-02'],
     e: [
-      { id: '2020-seimo', c: 'test-anna', p: 'test-party', w: false, sv: 0, ap: 0, tb: 0, ed: 1, v: 123, wp: 'Bandymų universitetas', m: [10000, 500, 20000, null] },
-      { id: '2024-seimo', c: 'test-anna', p: 'test-party', w: true, sv: 0, ap: 0, ed: 1, v: 234, wp: 'Bandymų universitetas', m: [20000, 1000, 30000, null] },
+      { id: '2020-seimo', c: 'test-anna', p: 'test-party', w: false, sv: 0, ap: 0, tb: 0, ck: 1, ed: 1, v: 123, wp: 'Bandymų universitetas', m: [10000, 500, 20000, null] },
+      { id: '2024-seimo', c: 'test-anna', p: 'test-party', w: true, sv: 0, ap: 0, ck: 0, ed: 1, v: 234, wp: 'Bandymų universitetas', m: [20000, 1000, 30000, null] },
     ],
   },
   {
@@ -35,7 +35,8 @@ export const index = {
   constituencies: ['Aukštaitijos', 'Žirmūnų'],
   nationalities: [{ label: 'lietuviai' }, { label: 'lenkai' }],
   educationLevels: [{ label: 'Aukštasis universitetinis' }],
-  campaigns: [],
+  // A party's list campaign shared by 120 candidacies, and one candidate's own.
+  campaigns: [{ k: 'dalyvis-test-shared', d: 54321.5, n: 120 }, { k: 'dalyvis-test-own', d: 1500, n: 1 }],
   coverage: {
     concepts: ['issilavinimas', 'tautybe'],
     records: { '2020-seimo': 2, '2024-seimo': 2 },
@@ -68,20 +69,54 @@ records['/data/2024-seimo/test-jonas-2024-seimo.json'].kandidatavimas = {
   vienmandatesBalsai: { isViso: 6999, procentai: 8.84, vieta: 2 },
 };
 
-// A wide campaign table with nested details reproduces the crowded real schema.
+// Campaign participants (issue #210). Anna's 2024 card holds her party's
+// shared campaign with long donation and contract lists; her 2020 card her
+// own, shaped as the public build leaves it: no phones or e-mails.
+const donation = i => ({ rowNumber: `${i + 1}.`, donor: `AUKOTOJAS ${i + 1}`, municipality: 'Vilniaus miesto', date: '2024-05-01', incomeSourceCode: 'FAA', amount: 100 + i, notes: null });
 records['/data/2024-seimo/test-anna-2024-seimo.json'].normalized['politines-kampanijos-dalyvio-duomenys'] = [{
+  statusas: 'Savarankiškas',
+  'registravimo-data': '2024-03-01',
+  'sprendimo-numeris': 'PK1-TEST-1',
+  kontaktai: { 'telefonas-pasiteirauti': '8 500 00000', 'el-pastas': 'bandymai@example.org' },
+  izdininkas: { 'vardas-pavarde': 'Pavyzdinis Iždininkas', telefonas: '8 600 00000', 'el-pastas': 'izdas@example.org', 'imones-pavadinimas': null, 'imones-kodas': null },
+  auditorius: { 'vardas-pavarde': null, telefonas: null, 'el-pastas': null, 'imones-pavadinimas': 'UAB Bandymų auditas', 'imones-kodas': '123456789' },
+  'aukos-pagal-sekcija': {
+    'gautos-ir-priimtos-aukos': {
+      title: 'Gautos ir priimtos aukos',
+      records: Array.from({ length: 45 }, (_, i) => donation(i)),
+      totals: { 'is-viso': 54321.5, 'fiziniu-asmenu': 4321.5 },
+    },
+    'nepriimtos-aukos': { title: 'Nepriimtos aukos', records: [donation(99)], totals: { 'is-viso': 199 } },
+  },
+  'finansavimo-ataskaitos': [
+    { rowNumber: '1.', approvedDate: '2024-11-01', status: 'Pateikta', reportUrls: ['https://example.org/ataskaitos/ataskaita.pdf'] },
+  ],
+  sutartys: Array.from({ length: 30 }, (_, i) => ({ rowNumber: `${i + 1}.`, counterparty: `UAB Tiekėjas ${i + 1}`, agreementDate: '2024-04-01', agreementNumber: String(i + 1), subject: 'Reklama', textUrls: [] })),
+  sprendimai: [],
+}];
+records['/data/2020-seimo/test-anna-2020-seimo.json'].normalized['politines-kampanijos-dalyvio-duomenys'] = [{
   statusas: 'Atstovaujamasis',
   'registravimo-data': null,
   'sprendimo-numeris': null,
-  kontaktai: { 'telefonas-pasiteirauti': '8 500 00000', 'el-pastas': 'bandymai@example.org' },
-  izdininkas: { 'vardas-pavarde': 'Pavyzdinis Iždininkas', telefonas: null, 'el-pastas': null, 'imones-pavadinimas': null, 'imones-kodas': null },
-  auditorius: { 'vardas-pavarde': null, telefonas: null, 'el-pastas': null, 'imones-pavadinimas': null, 'imones-kodas': null },
+  kontaktai: {},
+  izdininkas: { 'vardas-pavarde': null, 'imones-pavadinimas': null, 'imones-kodas': null },
+  auditorius: { 'vardas-pavarde': null, 'imones-pavadinimas': null, 'imones-kodas': null },
   'aukos-pagal-sekcija': {},
   'finansavimo-ataskaitos': [],
   sutartys: [],
   sprendimai: [],
   atstovauja: { pavadinimas: 'PAVYZDINĖ ILGO PAVADINIMO POLITINĖ ORGANIZACIJA', nuoroda: 'https://example.org/ataskaitos/2024/politines-kampanijos-dalyvio-duomenys/ilga-saltinio-nuoroda' },
 }];
+
+// The general rule (issue #210): a one-row list whose cells nest is a
+// record, two rows of anything stay a table.
+Object.assign(records['/data/2024-seimo/test-jonas-2024-seimo.json'].normalized.anketa, {
+  'teistumo-detales': { irasai: [{ 'nuosprendzio-data': '2013-03-06', 'nusikalstamos-veikos': [{ sunkumas: 'Nesunkus', 'kaltes-forma': 'Tyčinis' }] }] },
+  'ankstesnes-pareigos': [
+    { pareigos: 'Mokytojas', laikotarpis: { nuo: '2001', iki: '2005' } },
+    { pareigos: 'Direktorius', laikotarpis: { nuo: '2005', iki: '2020' } },
+  ],
+});
 
 // A 1×1 PNG, enough for the portrait loader to decode.
 const PIXEL = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==', 'base64');
