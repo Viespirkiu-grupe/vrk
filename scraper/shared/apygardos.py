@@ -28,10 +28,20 @@ for reading and for the dashboard's facet, where 315 raw forms become 136
 districts by name. `docs/constituency-forms.tsv` is the measured table of
 every published form and what it resolves to.
 
+A name can now map to more than one entry (issue #219). Where two
+consecutive maps a name was used in share no municipality, the name was
+reused for a different place, and the facet splits it into eras: Dainavos was
+a Kaunas city district through 2016 and is the Alytaus r., Prienų r. and
+Birštonas district from 2020, so its candidacies go to "Dainavos (iki 2016)"
+or "Dainavos (nuo 2020)". `entry_of(name, election_id)` is that step, by the
+map the election ran on (a by-election's is its term's general election,
+scraper/elections.json `parent`); every other name is its own one entry.
+`normalize_name` and the `apygarda` field stay the plain name VRK prints.
+
 `counties_of(name)` is the one place a name gets a county (issue #217):
 scraper/constituency_counties.json, derived from VRK's per-election precinct
 lists by scripts/build_constituency_counties.py -- every county any map of
-that name reached, since the facet is a name across maps -- and `groups_of`
+that entry reached, since the facet is a name across maps -- and `groups_of`
 the filter groups it is listed in, a big city's for every map whose precincts
 lie mostly in that city, the counties for the other maps.
 
@@ -50,6 +60,7 @@ from pathlib import Path
 from typing import Any
 
 COUNTIES_PATH = Path(__file__).resolve().parents[2] / "scraper" / "constituency_counties.json"
+ELECTIONS_PATH = Path(__file__).resolve().parents[2] / "scraper" / "elections.json"
 
 #: A number in any of the label positions: "4. Žirmūnų", "Žirmūnų (Nr. 4)",
 #: "Žirmūnų (Nr.4)", "Žirmūnų Nr. 4", "Raseinių–Kėdainių( 42)".
@@ -156,8 +167,39 @@ def load_counties() -> dict[str, Any]:
     return json.loads(COUNTIES_PATH.read_text(encoding="utf-8"))
 
 
+@lru_cache(maxsize=1)
+def _map_years() -> dict[str, str]:
+    """Every election id -> the year of the precinct-list map it ran on: a
+    general election's own, a by-election's through its `parent`."""
+    sources = {source["election"]: year for year, source in load_counties()["sources"].items()}
+    registry = json.loads(ELECTIONS_PATH.read_text(encoding="utf-8"))["elections"]
+    return {
+        entry["id"]: sources[entry.get("parent") or entry["id"]]
+        for entry in registry
+        if (entry.get("parent") or entry["id"]) in sources
+    }
+
+
+def entry_of(name: str | None, election_id: str | None) -> str | None:
+    """The facet entry a candidacy's constituency belongs to: the name
+    itself, or -- for a name reused for a different place (`eras` in
+    scraper/constituency_counties.json) -- the era whose maps include the
+    one `election_id` ran on. A split name on an election no source map
+    covers raises, so a new map is a red build, not a silent guess."""
+    if not name:
+        return None
+    labels = load_counties().get("eras", {}).get(name)
+    if not labels:
+        return name
+    year = _map_years().get(election_id or "")
+    for label in labels:
+        if year in load_counties()["entries"][label]["maps"]:
+            return label
+    raise ValueError(f"{name!r} is split into eras {labels}, and {election_id!r} ran on none of their maps")
+
+
 def counties_of(name: str | None) -> list[str]:
-    """The counties (apskritys) the named district lies in, in the municipality
+    """The counties (apskritys) the named entry (`entry_of`) lies in, in the municipality
     registry's population order; more than one for a district that crossed a
     county line on any map, and empty for a name the file gives no county
     (Pasaulio lietuvių, the district abroad) or does not know."""
@@ -166,7 +208,7 @@ def counties_of(name: str | None) -> list[str]:
 
 
 def groups_of(name: str | None) -> list[str]:
-    """The filter groups the named district is listed in (issue #217), decided
+    """The filter groups the named entry (`entry_of`) is listed in (issue #217), decided
     per map: "Kauno miestas" for a map whose precincts lie mostly in Kaunas
     city, "Kauno apskritis" (and every other county touched) for any other
     map; the union over the name's maps. Empty where the file has no county."""

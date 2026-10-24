@@ -17,7 +17,14 @@ and precinct counts per map.
 A name's counties are the union over the maps it was used in, because the
 facet is a name and not a boundary: a 2008 Kelmės candidate and a 2012 one
 sit in the same row, and the row belongs under each county either map
-reached. By-elections ran on their term's general map (the 2017 Anykščių–
+reached. That holds while the maps overlap. Where two consecutive maps a name
+was used in share no municipality, the name was reused for a different place
+(issue #219), and the name is split into eras at that boundary, each its own
+entry: Dainavos, all Kaunas city through 2016 and Alytaus r., Prienų r. and
+Birštonas from 2020, becomes "Dainavos (iki 2016)" and "Dainavos (nuo
+2020)". Boundary changes that keep some municipality (Deltuvos, Kelmės,
+Prienų, Pajūrio) stay one entry. `eras` maps each split name to its entries,
+and scraper/shared/apygardos.py assigns a candidacy by its election's map. By-elections ran on their term's general map (the 2017 Anykščių–
 Panevėžio vote on 2016's, the 2023 Raseinių–Kėdainių vote on 2020's), and
 every by-election name is also a general-election name, so the eight lists
 cover every name but one: Pasaulio lietuvių, the 2020+ district of voters
@@ -124,6 +131,47 @@ def group_order() -> list[str]:
     return order
 
 
+def territory(bodies: dict[str, int]) -> set[str]:
+    """The municipalities one map's precincts lie in, each pre-2000 body
+    together with the bodies the 2000 reform split it into (the registry's
+    `successors`): 1996's Marijampolės miesto savivaldybė is 2000's
+    Marijampolės savivaldybė, not another place."""
+    registry = municipalities.entries()
+    by_name = {entry["name"]: entry for entry in registry.values()}
+    covered = set(bodies)
+    for body in bodies:
+        covered |= {registry[successor]["name"] for successor in by_name.get(body, {}).get("successors", [])}
+    return covered
+
+
+def eras(per_map: dict[str, dict[str, int]]) -> list[list[str]]:
+    """The name's map years cut into eras: a new era starts wherever two
+    consecutive maps the name was used in share no municipality (counting a
+    pre-2000 body as its successors) -- the name was reused for a different
+    place. A moved boundary that keeps any municipality stays one era."""
+    years = sorted(per_map)
+    cut = [[years[0]]] if years else []
+    for before, after in zip(years, years[1:]):
+        if territory(per_map[before]) & territory(per_map[after]):
+            cut[-1].append(after)
+        else:
+            cut.append([after])
+    return cut
+
+
+def era_label(name: str, era: list[str], position: int, count: int) -> str:
+    """The entry's label: the name alone when it is one era, otherwise the
+    boundary year -- "(iki 2016)" for the first era, "(nuo 2020)" for the
+    last, the span for any between."""
+    if count == 1:
+        return name
+    if position == 0:
+        return f"{name} (iki {era[-1]})"
+    if position == count - 1:
+        return f"{name} (nuo {era[0]})"
+    return f"{name} ({era[0]}–{era[-1]})"
+
+
 def place(bodies: dict[str, int]) -> list[str]:
     """The groups one map puts a district in: its big city's, when that city
     municipality holds a strict majority of the map's precincts; otherwise
@@ -213,15 +261,19 @@ def derive(repo_root: Path, source: Path) -> dict[str, Any]:
             entries[name] = {"counties": [], "groups": [], "note": NO_COUNTY[name]}
             continue
         per_map = {year: dict(sorted(maps[name][year].items())) for year in sorted(maps[name])}
-        counties = {county_of[body] for bodies in per_map.values() for body in bodies}
-        placed = {year: place(bodies) for year, bodies in per_map.items()}
-        groups = {group for year_groups in placed.values() for group in year_groups}
-        entries[name] = {
-            "counties": sorted(counties, key=order.index),
-            "groups": sorted(groups, key=group_order().index),
-            "placedBy": placed,
-            "maps": per_map,
-        }
+        cut = eras(per_map)
+        for position, era in enumerate(cut):
+            era_maps = {year: per_map[year] for year in era}
+            counties = {county_of[body] for bodies in era_maps.values() for body in bodies}
+            placed = {year: place(bodies) for year, bodies in era_maps.items()}
+            groups = {group for year_groups in placed.values() for group in year_groups}
+            entries[era_label(name, era, position, len(cut))] = {
+                **({"name": name} if len(cut) > 1 else {}),
+                "counties": sorted(counties, key=order.index),
+                "groups": sorted(groups, key=group_order().index),
+                "placedBy": placed,
+                "maps": era_maps,
+            }
     return entries
 
 
@@ -241,9 +293,13 @@ def render(entries: dict[str, Any]) -> str:
             "municipality's county. `counties` is the union over every map the name was used in, in the "
             "registry's population order -- a name is not a boundary, and a district that touched two counties "
             "is listed under both; `maps` is the evidence, the municipalities and their precinct counts per "
-            "general election (by-elections ran on their term's map). Names whose counties differ between "
-            "maps are listed in `changedBetweenMaps`; the sharpest is Dainavos, a Kaunas city district through "
-            "2016 and the Prienai-Birštonas-Alytus district from 2020. Two precinct-list entries are read "
+            "general election (by-elections ran on their term's map). A name reused for a different place -- two "
+            "consecutive maps of it sharing no municipality, a pre-2000 body counting as the bodies it became "
+            "(scraper/municipalities.json `successors`) -- is split into eras at that boundary (issue #219), "
+            "one entry each, labelled '<name> (iki <last year>)' and '<name> (nuo <first year>)' and carrying "
+            "`name`; `eras` lists them per name. Dainavos is the one such name: a Kaunas city district through "
+            "2016, the Alytaus r., Prienų r. and Birštonas district from 2020. Names whose counties differ "
+            "between maps without a split are listed in `changedBetweenMaps`. Two precinct-list entries are read "
             "explicitly (the script's DISTRICT_NAMES and MUNICIPALITY_FORMS): 1996's Nr. 67 is 'Prienų' on the "
             "cards and 'Prienų–Birštono' in the list, and the 1996/2000 'Kupiškio rajonas' and 2004 bare "
             "'Širvintų' are Kupiškis and Širvintai district. A name with an empty `counties` list has a `note` "
@@ -252,11 +308,15 @@ def render(entries: dict[str, Any]) -> str:
             "five big cities' municipalities (`cities`) places the name in that city's group, which the filter "
             "shows just ahead of the city's county group; any other map places it under every county its "
             "precincts touch. The name is listed under the union, one option per group. "
-            "`placementDiffersBetweenMaps` lists the names whose maps disagree -- Dainavos is two districts "
-            "under one name, all Kaunas city through 2016 and Prienai-Birštonas-Alytus district from 2020, so "
-            "it is in Kauno miestas and in Kauno and Alytaus apskritis."
+            "`placementDiffersBetweenMaps` lists the entries whose maps disagree -- Pajūrio, a Klaipėda city "
+            "majority in 1996 and from 2016 and a minority in 2000-2012, is in both Klaipėdos miestas and "
+            "Klaipėdos apskritis."
         ),
         "sources": sources,
+        "eras": {
+            name: [label for label, entry in entries.items() if entry.get("name") == name]
+            for name in dict.fromkeys(entry["name"] for entry in entries.values() if "name" in entry)
+        },
         "changedBetweenMaps": changed,
         "placementDiffersBetweenMaps": [
             name for name, entry in entries.items() if len({tuple(g) for g in entry.get("placedBy", {}).values()}) > 1

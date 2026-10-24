@@ -108,7 +108,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from scraper.shared.apygardos import counties_of as constituency_counties  # noqa: E402
+from scraper.shared.apygardos import entry_of as constituency_entry  # noqa: E402
 from scraper.shared.apygardos import group_order as constituency_group_order  # noqa: E402
+from scraper.shared.apygardos import load_counties as constituency_registry  # noqa: E402
 from scraper.shared.apygardos import groups_of as constituency_groups  # noqa: E402
 from scraper.shared.deklaracijos import (  # noqa: E402
     INCOME_EMPLOYMENT,
@@ -479,8 +481,12 @@ def build_index(
                     # nothing is hidden, and the run reports it so the
                     # registry gets the alias rather than the facet a twin.
                     unresolved_municipalities.add(candidacy["savivaldybe-raw"])
-            if candidacy["apygarda"]:
-                constituencies.add(candidacy["apygarda"])
+            # The facet entry, not the bare name (issue #219): a name reused
+            # for a different place is one entry per era, by the map this
+            # election ran on -- "Dainavos (iki 2016)" / "(nuo 2020)".
+            constituency = constituency_entry(candidacy["apygarda"], election_id)
+            if constituency:
+                constituencies.add(constituency)
             if candidacy["pirmumo-balsai"] is not None or candidacy["apygardos-balsai"] is not None:
                 with_votes += 1
             workplace = None
@@ -559,7 +565,7 @@ def build_index(
                     # municipality.
                     "preferenceVotes": candidacy["pirmumo-balsai"],
                     "constituencyVotes": candidacy["apygardos-balsai"],
-                    "constituency": candidacy["apygarda"],
+                    "constituency": constituency,
                     "campaign": campaign_key,
                     "nationality": nationality_id,
                 }
@@ -575,7 +581,18 @@ def build_index(
     # are 62 bodies, and the facet used to list all 127.
     municipality_list = sorted(municipalities)
     municipality_index = {name: i for i, name in enumerate(municipality_list)}
-    constituency_list = sorted(constituencies)
+    # Sorted by the plain name, so splitting a name into eras (issue #219)
+    # renumbers nothing: its first era takes the name's slot and the later
+    # ones are appended, and every other name keeps the "ap" it had.
+    eras = constituency_registry().get("eras", {})
+    plain_name = {label: name for name, labels in eras.items() for label in labels}
+    constituency_list = []
+    later_eras = []
+    for name in sorted({plain_name.get(entry, entry) for entry in constituencies}):
+        present = [label for label in eras.get(name, [name]) if label in constituencies]
+        constituency_list.append(present[0])
+        later_eras += present[1:]
+    constituency_list += later_eras
     constituency_index = {name: i for i, name in enumerate(constituency_list)}
     # Campaigns and nationalities are interned the same way (issue #162). A
     # campaign row carries its donations total and the number of candidacies
@@ -739,7 +756,9 @@ def build_index(
         "municipalityCounties": [county_by_name().get(name) for name in municipality_list],
         "counties": municipality_counties(),
         # The single-mandate constituencies by name -- one name per district
-        # across the four label eras, not one boundary: "ap" indexes here.
+        # across the four label eras, not one boundary: "ap" indexes here. A
+        # name reused for a different place is one entry per era, labelled
+        # "Dainavos (iki 2016)" / "Dainavos (nuo 2020)" (issue #219).
         "constituencies": constituency_list,
         # Each constituency's counties, parallel to "constituencies" so "ap"
         # still indexes the names (issue #217): a list, because a district

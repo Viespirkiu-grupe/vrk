@@ -71,7 +71,11 @@ official name — `Vilniaus miesto savivaldybė` whether the era's card said
 Joniškio", "Aukštaitijos (Nr. 28)" and "33. Aukštaitijos" used to be four
 values; 315 labels are 136 names) and `constituency_number` its number in
 that election — the number moves with the 2016 redistricting, so the pair
-(election, number) is the boundary and the name is for reading; the
+(election, number) is the boundary and the name is for reading. It stays
+VRK's plain name even where the dashboard splits a reused name into eras
+(issue #219: "Dainavos (iki 2016)" / "Dainavos (nuo 2020)"): the era label
+is the facet's, and the table's `election` and `constituency_number` already
+tell the two Dainavos districts apart without a column of its own; the
 2000–2012 cards' "Daugiamandatė" row, which 2,980 list-only candidates
 shipped as their constituency, is empty now. `list_movement` is
 `list_position − post_election_position`, positive when the preference

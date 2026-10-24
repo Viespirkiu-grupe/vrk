@@ -665,14 +665,21 @@ single-winner race's last round contested (a Seimas constituency, or the
 country for a presidential candidate), and `"ap"`, an index into the
 top-level `constituencies` list — the district's one name across the four
 label eras (`scraper/shared/apygardos.py`; 315 raw labels, 136 names; a name,
-not a boundary — Kėdainių in 2000 and in 2020 are one row).
+not a boundary — Kėdainių in 2000 and in 2020 are one row). The exception is
+a name reused for a different place (issue #219): where two consecutive maps
+of a name share no municipality, the name is one entry per era, and a
+candidacy goes to the era of the map its election ran on. Dainavos, a Kaunas
+city district through 2016 and the Alytaus r., Prienų r. and Birštonas
+district from 2020, is *Dainavos (iki 2016)* (59 people) and *Dainavos (nuo
+2020)* (16), where the one row used to mix all 75; so the list holds 137
+entries. The first era keeps the name's sorted slot and later eras are
+appended, so no other name's `ap` moves.
 `constituencyCounties` runs parallel to it with each name's counties, a list
 (issue #217): `scraper/constituency_counties.json`, which
 `scripts/build_constituency_counties.py` derives from VRK's per-election
 precinct lists of 1996–2024 rather than from the names (79 of the 136 name no
 municipality). A name is filed under every county any of its maps reached —
-29 cross a county line, Dainavos was a Kaunas city district through 2016 and
-Prienai–Birštonas–Alytus land from 2020 — and the facet's optgroups follow
+29 cross a county line — and the facet's optgroups follow
 `counties` like the municipality facet's, the district listed under each of
 its counties with the same `ap` value; Pasaulio lietuvių, the district
 abroad, has no county and sits in a last *Be apskrities* group. The five big
@@ -682,11 +689,13 @@ and `constituencyGroups` lists the groups each name is in, decided per map
 (the file's `placedBy`): a map whose precincts lie mostly — a strict
 majority — in a big city's municipality puts the name in that city's group
 in place of its county's, any other map under every county it touched, and
-the name is listed under the union. 44 names are in a city group; Dainavos (a
-Kaunas city district through 2016, Prienai–Birštonas–Alytus land from 2020)
-and Pajūrio (a Klaipėda city majority in 1996 and from 2016 only) are in
-both a city and a county group. The page offers
-the constituency as a facet and a CSV column (`apygarda`), prints the
+the name is listed under the union. 44 entries are in a city group; Pajūrio
+(a Klaipėda city majority in 1996 and from 2016 only) is in both a city and a
+county group, and the two Dainavos eras sit apart — *iki 2016* under *Kauno
+miestas* alone, *nuo 2020* under *Kauno apskritis* and *Alytaus apskritis*.
+The page offers the constituency as a facet and a CSV column (`apygarda`,
+the facet entry, so an era-split name exports with its era label, the
+option it was filtered by), prints the
 counts inside the opened election card, in thousands (*Pirmumo balsai*
 `11 541`, the race's `isViso`/`balsai`), but not on the card header: a bare
 count beside the elected badge read as a headline result with nothing to
