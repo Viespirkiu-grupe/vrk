@@ -33,6 +33,9 @@ export const index = {
   municipalityCounties: ['Šiaulių', 'Vilniaus'],
   counties: ['Vilniaus', 'Kauno', 'Klaipėdos', 'Šiaulių', 'Panevėžio', 'Marijampolės', 'Alytaus', 'Telšių', 'Utenos', 'Tauragės'],
   constituencies: ['Aukštaitijos', 'Žirmūnų'],
+  constituencyCounties: [['Panevėžio'], ['Vilniaus']],
+  constituencyGroups: [['Panevėžio apskritis'], ['Vilniaus miestas']],
+  constituencyGroupOrder: ['Vilniaus miestas', 'Vilniaus apskritis', 'Kauno miestas', 'Kauno apskritis', 'Klaipėdos miestas', 'Klaipėdos apskritis', 'Šiaulių miestas', 'Šiaulių apskritis', 'Panevėžio miestas', 'Panevėžio apskritis', 'Marijampolės apskritis', 'Alytaus apskritis', 'Telšių apskritis', 'Utenos apskritis', 'Tauragės apskritis'],
   nationalities: [{ label: 'lietuviai' }, { label: 'lenkai' }],
   educationLevels: [{ label: 'Aukštasis universitetinis' }],
   // A party's list campaign shared by 120 candidacies, and one candidate's own.

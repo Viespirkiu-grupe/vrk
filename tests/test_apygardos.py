@@ -14,7 +14,18 @@ from pathlib import Path
 
 import local_data
 
-from scraper.shared.apygardos import DASHLESS_ARCHIVE, apygarda, is_multi_mandate, normalize_name, number_of
+from scraper.shared import municipalities
+from scraper.shared.apygardos import (
+    DASHLESS_ARCHIVE,
+    apygarda,
+    counties_of,
+    group_order,
+    groups_of,
+    is_multi_mandate,
+    load_counties,
+    normalize_name,
+    number_of,
+)
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FORMS_TABLE = REPO_ROOT / "docs" / "constituency-forms.tsv"
@@ -130,6 +141,127 @@ class FormsTableTests(unittest.TestCase):
                 if raw and raw not in forms:
                     unknown.add(raw)
         self.assertEqual(sorted(unknown), [], "run scripts/constituency_report.py --update")
+
+
+class CountyTests(unittest.TestCase):
+    """Every district name lies in at least one of the 10 counties (issue
+    #217), read from VRK's precinct lists rather than from the name."""
+
+    def setUp(self):
+        self.registry = load_counties()
+        self.names = {name for _form, _records, name, _number, _elections in forms_table_rows() if name}
+
+    def test_the_file_covers_every_name_the_corpus_publishes(self):
+        self.assertEqual(len(self.names), 136)
+        self.assertEqual(set(self.registry["entries"]), self.names)
+
+    def test_every_name_has_a_county_and_every_county_is_one_of_the_10(self):
+        for name in sorted(self.names):
+            with self.subTest(name):
+                entry = self.registry["entries"][name]
+                if name == "Pasaulio lietuvių":
+                    # The district abroad: no precinct in Lithuania, so no county.
+                    self.assertEqual(entry["counties"], [])
+                    self.assertTrue(entry["note"])
+                    continue
+                self.assertGreaterEqual(len(entry["counties"]), 1)
+                self.assertTrue(set(entry["counties"]) <= set(municipalities.counties()))
+                self.assertEqual(entry["counties"], sorted(entry["counties"], key=municipalities.counties().index))
+
+    def test_the_counties_are_the_union_of_the_evidence(self):
+        county_of = municipalities.county_by_name()
+        for name, entry in self.registry["entries"].items():
+            with self.subTest(name):
+                evidence = {county_of[body] for bodies in entry.get("maps", {}).values() for body in bodies}
+                self.assertEqual(set(entry["counties"]), evidence)
+
+    def test_the_names_a_heuristic_would_get_wrong(self):
+        for name, counties in {
+            # City districts and regional names that name no municipality.
+            "Antakalnio": ["Vilniaus"], "Centro": ["Kauno"], "Baltijos": ["Klaipėdos"], "Aušros": ["Šiaulių"],
+            "Aukštaitijos": ["Panevėžio"], "Sėlos rytinė": ["Panevėžio", "Utenos"], "Karšuvos": ["Tauragės"],
+            "Jotvingių": ["Alytaus"], "Deltuvos šiaurinė": ["Vilniaus", "Panevėžio", "Utenos"],
+            # A city district through 2016, Prienai-Birštonas-Alytus land from 2020.
+            "Dainavos": ["Kauno", "Alytaus"],
+            # Districts across a county line.
+            "Anykščių–Panevėžio": ["Panevėžio", "Utenos"], "Kelmės–Šilalės": ["Šiaulių", "Tauragės"],
+            "Varėnos–Eišiškių": ["Vilniaus", "Alytaus"], "Pietų Žemaitijos": ["Klaipėdos", "Telšių", "Tauragės"],
+            # Ukmergė and Elektrėnai are Vilnius county; Birštonas is Kaunas county.
+            "Ukmergės": ["Vilniaus"], "Trakų–Elektrėnų": ["Vilniaus"], "Prienų–Birštono": ["Kauno", "Alytaus"],
+        }.items():
+            self.assertEqual(counties_of(name), counties, name)
+        self.assertEqual(counties_of("Nėra tokios"), [])
+        self.assertEqual(counties_of(None), [])
+
+    def test_the_changed_names_are_the_ones_whose_maps_disagree(self):
+        self.assertEqual(
+            self.registry["changedBetweenMaps"],
+            ["Dainavos", "Deltuvos pietinė", "Deltuvos šiaurinė", "Kelmės", "Prienų", "Prienų–Birštono"],
+        )
+
+    def test_the_groups_are_the_per_map_placement_over_the_evidence(self):
+        # Issue #217: each map places the name -- in a big city's group when
+        # that city municipality holds a strict majority of the map's
+        # precincts, else under every county the map touches -- and the name
+        # is listed under the union. Recomputed here for all 136 names.
+        cities = self.registry["cities"]
+        self.assertEqual(list(cities), ["Vilniaus", "Kauno", "Klaipėdos", "Šiaulių", "Panevėžio"])
+        order = self.registry["groupOrder"]
+        self.assertEqual(order[:4], ["Vilniaus miestas", "Vilniaus apskritis", "Kauno miestas", "Kauno apskritis"])
+        self.assertEqual(len(order), 15)
+        self.assertEqual(group_order(), order)
+        county_of = municipalities.county_by_name()
+        for name, entry in self.registry["entries"].items():
+            with self.subTest(name):
+                placed = {}
+                for year, bodies in entry.get("maps", {}).items():
+                    total = sum(bodies.values())
+                    city = [c for c, body in cities.items() if 2 * bodies.get(body, 0) > total]
+                    placed[year] = (
+                        [f"{city[0]} miestas"] if city
+                        else sorted({f"{county_of[b]} apskritis" for b in bodies}, key=order.index)
+                    )
+                self.assertEqual(entry.get("placedBy", {}), placed)
+                union = sorted({g for groups in placed.values() for g in groups}, key=order.index)
+                self.assertEqual(entry["groups"], union)
+                self.assertEqual(groups_of(name), union)
+                if name != "Pasaulio lietuvių":
+                    self.assertTrue(union)
+
+    def test_the_city_groups_hold_the_expected_districts(self):
+        by_group = {}
+        for name, entry in self.registry["entries"].items():
+            for group in entry["groups"]:
+                by_group.setdefault(group, []).append(name)
+        self.assertEqual({g: len(n) for g, n in by_group.items() if g.endswith("miestas")},
+                         {"Vilniaus miestas": 22, "Kauno miestas": 12, "Klaipėdos miestas": 4,
+                          "Šiaulių miestas": 3, "Panevėžio miestas": 3})
+        for name, groups in {
+            # A strict city majority on every map: the city group alone.
+            "Vilniaus pietinė": ["Vilniaus miestas"], "Savanorių": ["Kauno miestas"], "Dainų": ["Šiaulių miestas"],
+            "Danės": ["Klaipėdos miestas"],
+            # A city minority on every map: the county groups alone.
+            "Garliavos": ["Kauno apskritis"], "Aukštaitijos": ["Panevėžio apskritis"], "Kuršėnų–Dainų": ["Šiaulių apskritis"],
+            # Maps that disagree: a Kaunas city district through 2016 and
+            # Prienai-Birštonas-Alytus land from 2020; a Klaipėda city
+            # majority in 1996 and from 2016, a minority in 2000-2012.
+            "Dainavos": ["Kauno miestas", "Kauno apskritis", "Alytaus apskritis"],
+            "Pajūrio": ["Klaipėdos miestas", "Klaipėdos apskritis"],
+        }.items():
+            self.assertEqual(groups_of(name), groups, name)
+        both = sorted(n for n, e in self.registry["entries"].items()
+                      if any(g.endswith("miestas") for g in e["groups"]) and any(g.endswith("apskritis") for g in e["groups"]))
+        self.assertEqual(both, ["Dainavos", "Pajūrio"])
+        self.assertEqual(groups_of("Nėra tokios"), [])
+
+    def test_every_source_is_a_general_election_of_the_registry(self):
+        import json
+
+        ids = {e["id"] for e in json.loads((REPO_ROOT / "scraper" / "elections.json").read_text(encoding="utf-8"))["elections"]}
+        for year, source in self.registry["sources"].items():
+            self.assertIn(source["election"], ids)
+            self.assertRegex(source["sha256"], r"^[0-9a-f]{64}$")
+            self.assertTrue(source["url"].startswith("https://vrk.lt/"))
 
 
 if __name__ == "__main__":

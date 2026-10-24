@@ -260,6 +260,92 @@ test('the municipality filter groups by county, the most populous first (#213)',
   await expect(page.locator('#results .row')).toHaveCount(4);
 });
 
+// The constituency filter groups by county too (issue #217), in the same
+// order, with each name's groups read from VRK's precinct lists. A district
+// across a county line is an option under each county, every copy the same
+// "ap" value; a name with no county (the district abroad) gets a labelled
+// group last. The five big cities each get a group just ahead of their
+// county's, decided per map: a map mostly inside the city lists the name
+// there, any other map under its counties -- so a name reused for a city and
+// a rural district (Dainavos) is in both. ap 0 and 1 stay the base fixture's
+// (Žirmūnų is a Vilnius city district there).
+test('the constituency filter groups by city and county, a district under each group its maps place it in (#217)', async ({ page }) => {
+  const extra = [
+    ['Antakalnio', ['Vilniaus miestas']], ['Fabijoniškių', ['Vilniaus miestas']],
+    ['Bandomoji pasienio', ['Panevėžio apskritis', 'Utenos apskritis']],
+    ['Centro', ['Kauno miestas']], ['Baltijos', ['Klaipėdos miestas']], ['Aušros', ['Šiaulių miestas']],
+    ['Sūduvos', ['Marijampolės apskritis']], ['Dzūkijos', ['Alytaus apskritis']], ['Telšių', ['Telšių apskritis']],
+    ['Karšuvos', ['Tauragės apskritis']], ['Pasaulio lietuvių', []],
+    // City-majority on its old map, Prienai and Alytus district on its new one.
+    ['Bandomoji dvejopa', ['Kauno miestas', 'Kauno apskritis', 'Alytaus apskritis']],
+    ['Trakų–Vievio', ['Vilniaus apskritis']], ['Jonavos', ['Kauno apskritis']], ['Kretingos', ['Klaipėdos apskritis']],
+    ['Kelmės', ['Šiaulių apskritis']], ['Nevėžio', ['Panevėžio miestas']],
+  ];
+  const served = {
+    ...index,
+    people: [
+      ...people,
+      { pid: 'test-vp', n: 'Vaida PASIENIO', b: null, k: 'VAIDA PASIENIO|',
+        e: [{ id: '2024-seimo', c: 'test-vp', p: 'test-party', ap: 4, m: [null, null, null, null] }] },
+      { pid: 'test-pd', n: 'Petras DVEJOPAS', b: null, k: 'PETRAS DVEJOPAS|',
+        e: [{ id: '2024-seimo', c: 'test-pd', p: 'test-party', ap: 13, m: [null, null, null, null] }] },
+    ],
+    constituencies: [...index.constituencies, ...extra.map(([name]) => name)],
+    constituencyGroups: [...index.constituencyGroups, ...extra.map(([, groups]) => groups)],
+  };
+  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
+    status: 200, contentType: 'application/json', body: JSON.stringify(served),
+  }));
+  await page.goto('/');
+  await expect(page.locator('#results .row')).toHaveCount(5);
+  await openFilters(page);
+  const select = page.locator('#fConstituency');
+  expect(await select.locator('optgroup').evaluateAll(groups => groups.map(g => g.label))).toEqual([
+    'Vilniaus miestas', 'Vilniaus apskritis', 'Kauno miestas', 'Kauno apskritis',
+    'Klaipėdos miestas', 'Klaipėdos apskritis', 'Šiaulių miestas', 'Šiaulių apskritis',
+    'Panevėžio miestas', 'Panevėžio apskritis',
+    'Marijampolės apskritis', 'Alytaus apskritis', 'Telšių apskritis', 'Utenos apskritis', 'Tauragės apskritis',
+    'Be apskrities',
+  ]);
+  await expect(select.locator('option').first()).toHaveText('— visos apygardos —');
+  expect(await select.locator('option').first().evaluate(o => o.parentElement.tagName)).toBe('SELECT');
+  // A city district sits in the city group and not in its county's; a
+  // district outside the city stays in the county group.
+  await expect(select.locator('optgroup[label="Vilniaus miestas"] option')).toHaveText(['Antakalnio', 'Fabijoniškių', 'Žirmūnų']);
+  await expect(select.locator('optgroup[label="Vilniaus apskritis"] option')).toHaveText(['Trakų–Vievio']);
+  await expect(select.locator('optgroup[label="Panevėžio miestas"] option')).toHaveText(['Nevėžio']);
+  await expect(select.locator('optgroup[label="Panevėžio apskritis"] option')).toHaveText(['Aukštaitijos', 'Bandomoji pasienio']);
+  await expect(select.locator('optgroup[label="Utenos apskritis"] option')).toHaveText(['Bandomoji pasienio']);
+  await expect(select.locator('optgroup[label="Be apskrities"] option')).toHaveText(['Pasaulio lietuvių']);
+  // A name whose maps disagree is in the city group and the county groups.
+  await expect(select.locator('optgroup[label="Kauno miestas"] option')).toHaveText(['Bandomoji dvejopa', 'Centro']);
+  await expect(select.locator('optgroup[label="Kauno apskritis"] option')).toHaveText(['Bandomoji dvejopa', 'Jonavos']);
+  await expect(select.locator('optgroup[label="Alytaus apskritis"] option')).toHaveText(['Bandomoji dvejopa', 'Dzūkijos']);
+  // Every copy of a name listed more than once filters the same row.
+  for (const [label, value, name] of [
+    ['Panevėžio apskritis', '4', 'Vaida PASIENIO'], ['Utenos apskritis', '4', 'Vaida PASIENIO'],
+    ['Kauno miestas', '13', 'Petras DVEJOPAS'], ['Kauno apskritis', '13', 'Petras DVEJOPAS'],
+    ['Alytaus apskritis', '13', 'Petras DVEJOPAS'],
+  ]) {
+    const option = select.locator(`optgroup[label="${label}"] option[value="${value}"]`);
+    await option.evaluate(o => { o.selected = true; o.parentElement.closest('select').dispatchEvent(new Event('change', { bubbles: true })); });
+    expect(await select.evaluate(s => s.selectedOptions[0].parentElement.label)).toBe(label);
+    await expect(page.locator('#results .row')).toHaveCount(1);
+    await expect(page.locator('#results')).toContainText(name);
+    await select.selectOption('');
+    await expect(page.locator('#results .row')).toHaveCount(5);
+  }
+  // Filtering is otherwise what it was.
+  await select.selectOption('1');
+  await expect(page.locator('#results .row')).toHaveCount(2);
+  for (const name of ['Jonas BANDOMASIS', 'Rūta PAVYZDINĖ']) await expect(page.locator('#results')).toContainText(name);
+  await select.selectOption('0');
+  await expect(page.locator('#results .row')).toHaveCount(1);
+  await expect(page.locator('#results')).toContainText('Ona NAUJOJI');
+  await select.selectOption('');
+  await expect(page.locator('#results .row')).toHaveCount(5);
+});
+
 test('a nominator chain shows short labels, muted coalition words and full names on hover', async ({ page }) => {
   // Issue #189: synthetic nominators shaped like the registry's three kinds
   // of label -- a party shortName, a coalition's brand, a joint list.

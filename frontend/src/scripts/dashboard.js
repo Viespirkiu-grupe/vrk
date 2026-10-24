@@ -977,10 +977,32 @@ function buildFilters() {
   // is a name and not a boundary -- Kėdainių in 2000 and in 2020 are one row.
   const fConstituency = document.getElementById("fConstituency");
   addOption(fConstituency, "", "— visos apygardos —");
+  // Grouped by county the way the municipalities are (issue #217), from
+  // VRK's precinct lists (scraper/constituency_counties.json). A district
+  // that crossed a county line is an option under each county it touched,
+  // all with the same "ap" value, so any of them filters the same rows. A
+  // name with no county -- the district abroad -- gets a labelled group last.
+  // The five big cities each get a group just ahead of their county's (an
+  // optgroup cannot nest). The groups are decided per map: a map whose
+  // precincts lie mostly in a big city lists the name in that city's group,
+  // any other map under the counties it touched -- so Dainavos, a Kaunas city
+  // district until 2016 and Prienai-Alytus land since, is in both kinds.
+  const memberships = INDEX.constituencyGroups || [];
+  const constituencyGroups = new Map();
+  for (const label of [...(INDEX.constituencyGroupOrder || []), "Be apskrities"]) {
+    const group = document.createElement("optgroup");
+    group.label = label;
+    fConstituency.appendChild(group);
+    constituencyGroups.set(label, group);
+  }
   (INDEX.constituencies || [])
     .map((name, i) => [name, i])
     .sort((a, b) => a[0].localeCompare(b[0], "lt"))
-    .forEach(([name, i]) => addOption(fConstituency, String(i), name));
+    .forEach(([name, i]) => {
+      const groups = (memberships[i] || []).map(label => constituencyGroups.get(label)).filter(Boolean);
+      for (const group of groups.length ? groups : [constituencyGroups.get("Be apskrities")]) addOption(group, String(i), name);
+    });
+  for (const group of constituencyGroups.values()) if (!group.children.length) group.remove();
 
   // Declared nationality by group (issue #162; scraper/shared/tautybe.py):
   // the census's names, the largest first, each with its count of people.
