@@ -16,7 +16,7 @@ export const people = [
   },
   {
     pid: 'test-jonas', n: 'Jonas BANDOMASIS', b: '1975-03-04', k: 'JONAS BANDOMASIS|1975-03-04',
-    e: [{ id: '2024-seimo', c: 'test-jonas', p: 'other-party', w: false, sv: 1, ap: 1, ed: 1, v: 12, m: [1000, 0, 5000, null] }],
+    e: [{ id: '2024-seimo', c: 'test-jonas', p: 'other-party', w: false, sv: 1, ap: 1, ed: 1, v: 11541, cv: 6999, m: [1000, 0, 5000, null] }],
   },
   {
     pid: 'test-ruta', n: 'Rūta PAVYZDINĖ', b: null, k: 'RŪTA PAVYZDINĖ|',
@@ -56,6 +56,15 @@ export const records = Object.fromEntries(people.flatMap(person => person.e.map(
     },
   },
 ])));
+
+// The root candidacy block of the 2000-2015 records, with its vote counts
+// (issue #204): the opened card prints them in thousands, the other numbers
+// verbatim.
+records['/data/2024-seimo/test-jonas-2024-seimo.json'].kandidatavimas = {
+  pirmumoBalsai: 11541,
+  reitingoBalai: 12345,
+  vienmandatesBalsai: { isViso: 6999, procentai: 8.84, vieta: 2 },
+};
 
 // A wide campaign table with nested details reproduces the crowded real schema.
 records['/data/2024-seimo/test-anna-2024-seimo.json'].normalized['politines-kampanijos-dalyvio-duomenys'] = [{

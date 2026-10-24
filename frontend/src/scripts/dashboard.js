@@ -1341,9 +1341,25 @@ function makeScrollWrap(content) {
   return watchScrollWrap(wrap);
 }
 
-function renderValue(v) {
+// The record keys behind the pirmumo-balsai and apygardos-balsai concepts
+// (docs/concept-map.json). The opened card printed them as a raw `11541`
+// once the card header stopped repeating them (issue #204); the rest of the
+// record's numbers -- list positions, ids, rating scores -- stay verbatim.
+const VOTE_COUNT_KEYS = new Set(["pirmumoBalsai", "teigiami-balsai"]);
+const VOTE_COUNT_PARENTS = {
+  vienmandatesBalsai: "isViso", vienmandatesBalsai2: "isViso", turai: "balsai",
+};
+
+function isVoteCount(key, parent) {
+  return VOTE_COUNT_KEYS.has(key) || (parent != null && VOTE_COUNT_PARENTS[parent] === key);
+}
+
+// `key` is the field's own key and `parent` the key of the object or list
+// holding it, so the vote counts above can be told from other numbers.
+function renderValue(v, key = null, parent = null) {
   if (v == null || v === "") { const s = document.createElement("span"); s.textContent = "—"; s.style.color = "var(--muted)"; return s; }
   if (typeof v === "boolean") { const s = document.createElement("span"); s.textContent = v ? "taip" : "ne"; return s; }
+  if (Number.isInteger(v) && isVoteCount(key, parent)) { const s = document.createElement("span"); s.textContent = fmtInt(v); return s; }
   if (typeof v !== "object") {
     const text = String(v);
     // 17 record keys hold a bare http(s) URL, and 802 of a 1,329-record
@@ -1371,7 +1387,7 @@ function renderValue(v) {
     for (const k of keys) { const th = document.createElement("th"); th.textContent = labelFor(k); t.tHead.rows[0].appendChild(th); }
     for (const item of v) {
       const tr = t.tBodies[0].insertRow();
-      for (const k of keys) tr.insertCell().appendChild(renderValue(item && typeof item === "object" ? item[k] : item));
+      for (const k of keys) tr.insertCell().appendChild(renderValue(item && typeof item === "object" ? item[k] : item, k, key));
     }
     const wrap = makeScrollWrap(t);
     return wrap;
@@ -1389,7 +1405,7 @@ function renderValue(v) {
       appendSourceLinks(dd, x.nuorodos);
     } else {
       dt.textContent = labelFor(k);
-      dd.appendChild(renderValue(x));
+      dd.appendChild(renderValue(x, k, key));
     }
     dl.append(dt, dd);
   }
@@ -1606,17 +1622,10 @@ async function showPerson(p) {
       const party = partyNode(e.p); party.classList.add("party");
       sum.appendChild(party);
     }
-    // The showing (issue #133): the preference votes on the list, the votes
-    // of the single-winner race's last round, whichever the record has.
-    const showing = [
-      e.v != null ? `${fmtInt(e.v)} ${plural(e.v, "pirmumo balsas", "pirmumo balsai", "pirmumo balsų")}` : null,
-      e.cv != null ? `${fmtInt(e.cv)} ${plural(e.cv, "balsas", "balsai", "balsų")} apygardoje` : null,
-    ].filter(Boolean);
-    if (showing.length) {
-      const votes = document.createElement("span"); votes.className = "party";
-      votes.textContent = showing.join(" · ");
-      sum.appendChild(votes);
-    }
+    // No vote counts here (issue #204): a bare "11 541 pirmumo balsas" beside
+    // the elected badge read as a headline result with no reference point.
+    // The opened card lists them with their VRK source; the comparison and
+    // statistics views put them in context.
     if (e.w === true) {
       const win = document.createElement("span"); win.className = "win";
       // A council-and-mayor candidacy says which office was won.
@@ -1642,7 +1651,7 @@ async function showPerson(p) {
       for (const [sec, val] of sections) {
         const wrap = document.createElement("div"); wrap.className = "sec";
         const h = document.createElement("h4"); h.textContent = labelFor(sec);
-        wrap.appendChild(h); wrap.appendChild(renderValue(val));
+        wrap.appendChild(h); wrap.appendChild(renderValue(val, sec));
         body.appendChild(wrap);
       }
     }

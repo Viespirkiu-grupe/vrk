@@ -975,6 +975,12 @@ class VotesAndConstituencyTests(unittest.TestCase):
         self.assertIn("Daugiausiai pirmumo balsų", SOURCE)
         self.assertIn("balsų skaičių nėra", SOURCE)
 
+    def test_the_card_header_prints_no_vote_counts(self):
+        # Issue #204: the counts moved off the <summary> into the opened card.
+        self.assertNotIn('"pirmumo balsas", "pirmumo balsai", "pirmumo balsų"', SOURCE)
+        self.assertNotIn("apygardoje` : null", SOURCE)
+        self.assertIn("isVoteCount(key, parent)", SOURCE)
+
     def test_the_comparison_rows_name_the_three_vote_concepts(self):
         for concept in ("pirmumo-balsai", "apygardos-balsai", "sarasas-balsai"):
             self.assertIn(f'concept: "{concept}"', SOURCE)
