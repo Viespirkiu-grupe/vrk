@@ -105,6 +105,11 @@ Where to start:
   browsing requires the generated index and records.
   [docs/DASHBOARD.md](docs/DASHBOARD.md) covers development and testing;
   [docs/ASTRO_MIGRATION.md](docs/ASTRO_MIGRATION.md) records the migration plan.
+- **Deploying** — [docs/DEPLOY.md](docs/DEPLOY.md) is the whole path from
+  corpus to vrk.viespirkiai.org: `scripts/build_site.py` builds the site
+  directory, `build_distribution.py --site` ships it as a release asset, and
+  `scripts/deploy.sh` installs it on the server behind a smoke check, with
+  rollback. The server configs are in `deploy/`.
 
 ## Licence, data terms and personal data
 

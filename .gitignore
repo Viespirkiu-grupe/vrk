@@ -44,3 +44,5 @@ portraits/
 # Dashboard-generated index
 dashboard/people.json
 dashboard/merge-review.csv
+# The built site (issue #188): scripts/build_site.py --out site/
+/site/
