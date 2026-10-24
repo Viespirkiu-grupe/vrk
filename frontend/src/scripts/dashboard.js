@@ -1346,6 +1346,31 @@ function makeScrollWrap(content) {
   return watchScrollWrap(wrap);
 }
 
+// A long table shows its first `shown` rows and a "Rodyti visus N" button
+// under it (issue #199, shared with the campaign lists of #210). `wrap` is a
+// makeScrollWrap holding the table; a table that fits comes back as is.
+function truncateRows(wrap, shown) {
+  const table = wrap.querySelector(":scope > table");
+  const rows = table && table.tBodies[0] ? [...table.tBodies[0].rows] : [];
+  if (rows.length <= shown) return wrap;
+  const extra = rows.slice(shown);
+  for (const tr of extra) tr.hidden = true;
+  const more = document.createElement("button");
+  more.type = "button"; more.className = "showall";
+  more.textContent = `Rodyti visus ${rows.length}`;
+  more.setAttribute("aria-expanded", "false");
+  more.addEventListener("click", () => {
+    const open = more.getAttribute("aria-expanded") !== "true";
+    for (const tr of extra) tr.hidden = !open;
+    more.setAttribute("aria-expanded", String(open));
+    more.textContent = open ? "Rodyti mažiau" : `Rodyti visus ${rows.length}`;
+    if (!open) wrap.scrollIntoView({ block: "nearest" });
+  });
+  const out = document.createDocumentFragment();
+  out.append(wrap, more);
+  return out;
+}
+
 // The record keys behind the pirmumo-balsai and apygardos-balsai concepts
 // (docs/concept-map.json). The opened card printed them as a raw `11541`
 // once the card header stopped repeating them (issue #204); the rest of the
@@ -1357,6 +1382,27 @@ const VOTE_COUNT_PARENTS = {
 
 function isVoteCount(key, parent) {
   return VOTE_COUNT_KEYS.has(key) || (parent != null && VOTE_COUNT_PARENTS[parent] === key);
+}
+
+function isPlainObject(x) {
+  return x != null && typeof x === "object" && !Array.isArray(x);
+}
+
+// An object with at least one cell that would render as a nested list or
+// table (issue #210).
+function isRecordRow(row) {
+  return isPlainObject(row) && Object.values(row).some(x =>
+    (isPlainObject(x) && Object.keys(x).length) || (Array.isArray(x) && x.some(isPlainObject)));
+}
+
+// The file a document URL names, for its link text; the host when the path
+// has none.
+function urlFileName(url) {
+  try {
+    const u = new URL(url);
+    const last = u.pathname.split("/").filter(Boolean).pop();
+    return last ? decodeURIComponent(last) : u.host;
+  } catch { return url; }
 }
 
 // `key` is the field's own key and `parent` the key of the object or list
@@ -1383,9 +1429,29 @@ function renderValue(v, key = null, parent = null) {
     const s = document.createElement("span"); s.textContent = text; return s;
   }
   if (Array.isArray(v)) {
+    // A list of document links (a campaign's report and contract files) as
+    // anchors named by their file, not 200-character URLs joined by "; ".
+    if (v.length && v.every(x => typeof x === "string" && /^https?:\/\/\S/.test(x))) {
+      const s = document.createElement("span");
+      v.forEach((url, i) => {
+        if (i) s.append(document.createElement("br"));
+        const a = document.createElement("a");
+        a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer";
+        a.className = "record-url";
+        a.textContent = urlFileName(url);
+        s.append(a);
+      });
+      return s;
+    }
     if (v.every(x => x == null || typeof x !== "object")) {
       const s = document.createElement("span"); s.textContent = v.filter(x => x != null).join("; ") || "—"; return s;
     }
+    // A single row whose cells hold objects or lists is one record, not a
+    // table (issue #210): the campaign participant rendered as one row of 10
+    // columns, 3,992 × 7,908 px, every cell stretched to its tallest
+    // neighbour's nested tables. It reads as the key-value list an object
+    // gets; a row of plain values, or two rows of anything, stays a table.
+    if (v.length === 1 && isRecordRow(v[0])) return renderValue(v[0], key, parent);
     const keys = [...new Set(v.flatMap(x => (x && typeof x === "object" && !Array.isArray(x)) ? Object.keys(x) : []))];
     const t = document.createElement("table"); t.className = "rec";
     t.innerHTML = "<thead><tr></tr></thead><tbody></tbody>";
@@ -1415,6 +1481,165 @@ function renderValue(v, key = null, parent = null) {
     dl.append(dt, dd);
   }
   return dl;
+}
+
+// The campaign participant section (issue #210). It is usually not the
+// candidate's own campaign: 98 participants -- a party's list campaign each
+// -- are shared by 15,568 of the 20,199 candidacies with one, the largest by
+// 2,414, so the same donor list repeated on every page of the list. The
+// section says whose campaign it is, sums it up, and keeps its donations,
+// reports, contracts and decisions in closed lists.
+//: Rows a campaign list shows before "Rodyti visus".
+const CAMPAIGN_SHOWN = 10;
+//: Keys the campaign layout places itself; any other key is listed as is.
+const CAMPAIGN_KEYS = new Set([
+  "statusas", "registravimo-data", "sprendimo-numeris", "atstovauja",
+  "kontaktai", "izdininkas", "auditorius",
+  "aukos-pagal-sekcija", "finansavimo-ataskaitos", "sutartys", "sprendimai",
+]);
+//: A contact block's fields in the order they print, one per line. The
+//: phone and e-mail are absent from the public build (#142), and a block
+//: with nothing left prints no row at all.
+const CONTACT_FIELDS = ["vardas-pavarde", "imones-pavadinimas", "imones-kodas", "telefonas-pasiteirauti", "telefonas", "el-pastas"];
+
+function campaignOwner(e) {
+  const campaign = e.ck != null ? (INDEX.campaigns || [])[e.ck] : null;
+  if (!campaign) return null;
+  const line = document.createElement("p"); line.className = "campaign-owner";
+  if (!(campaign.n > 1)) { line.textContent = "Kandidato kampanija"; return line; }
+  const year = ((ELECTIONS.get(e.id) || {}).date || "").slice(0, 4);
+  const shared = `${year ? `${year} – ` : ""}bendra ${fmtInt(campaign.n)} ${plural(campaign.n, "kandidatui", "kandidatams", "kandidatų")}`;
+  if (e.p) line.append("Iškėlėjo kampanija: ", partyNode(e.p), `, ${shared}`);
+  else line.textContent = `Bendra kampanija, ${shared}`;
+  return line;
+}
+
+function contactLines(block) {
+  if (!isPlainObject(block)) return null;
+  const lines = CONTACT_FIELDS.filter(k => isFilledValue(block[k])).map(k =>
+    k === "imones-kodas" ? `Įmonės kodas ${block[k]}` : String(block[k]));
+  return lines.length ? lines.join("\n") : null;
+}
+
+// One closed list: "<title> (<count>)", its content built only when opened.
+function campaignList(title, count, build) {
+  const det = document.createElement("details"); det.className = "campaign-list";
+  const sum = document.createElement("summary");
+  sum.textContent = `${title} (${fmtInt(count)})`;
+  det.appendChild(sum);
+  det.addEventListener("toggle", () => {
+    if (det.open && det.childElementCount === 1) det.appendChild(build());
+  });
+  return det;
+}
+
+function campaignTable(rows, key) {
+  const wrap = renderValue(rows, key);
+  return wrap.classList.contains("tablewrap") ? truncateRows(wrap, CAMPAIGN_SHOWN) : wrap;
+}
+
+// The donation sections: each its own table under its VRK title, then its
+// totals -- VRK's own sums, a `totals` object from 2019 or the earlier
+// `suvestine` rows.
+function donationSections(sections) {
+  const out = document.createElement("div");
+  for (const [key, section] of sections) {
+    const block = document.createElement("div"); block.className = "campaign-subsection";
+    const records = Array.isArray(section.records) ? section.records : [];
+    const h = document.createElement("h5");
+    h.textContent = `${section.title || labelFor(key)}${records.length ? ` (${fmtInt(records.length)})` : ""}`;
+    block.appendChild(h);
+    for (const note of [section.message, section.status]) {
+      if (!isFilledValue(note) || typeof note !== "string") continue;
+      const p = document.createElement("p"); p.className = "aggnote"; p.textContent = note;
+      block.appendChild(p);
+    }
+    if (records.length) block.appendChild(campaignTable(records, key));
+    if (isPlainObject(section.totals)) {
+      const dl = document.createElement("dl"); dl.className = "campaign-totals";
+      for (const [k, x] of Object.entries(section.totals)) {
+        if (typeof x !== "number") continue;
+        const dt = document.createElement("dt"); dt.textContent = labelFor(k);
+        const dd = document.createElement("dd"); dd.textContent = fmtEUR(x);
+        dl.append(dt, dd);
+      }
+      if (dl.childElementCount) block.appendChild(dl);
+    } else if (Array.isArray(section.suvestine) && section.suvestine.length) {
+      block.appendChild(campaignTable(section.suvestine, "suvestine"));
+    }
+    out.appendChild(block);
+  }
+  return out;
+}
+
+function renderCampaign(value, e) {
+  // Not the participant shape (one object in a list): the generic layout.
+  if (!Array.isArray(value) || value.length !== 1 || !isPlainObject(value[0])) return renderValue(value, "politines-kampanijos-dalyvio-duomenys");
+  const entry = value[0];
+  const out = document.createElement("div"); out.className = "campaign";
+  const owner = campaignOwner(e);
+  if (owner) out.appendChild(owner);
+
+  const dl = document.createElement("dl"); dl.className = "campaign-summary";
+  const row = (label, content) => {
+    if (content == null) return;
+    const dt = document.createElement("dt"); dt.textContent = label;
+    const dd = document.createElement("dd");
+    dd.append(content);
+    dl.append(dt, dd);
+  };
+  for (const k of ["statusas", "registravimo-data", "sprendimo-numeris"]) {
+    if (isFilledValue(entry[k])) row(labelFor(k), String(entry[k]));
+  }
+  const rep = entry.atstovauja;
+  if (isPlainObject(rep) && isFilledValue(rep.pavadinimas)) {
+    let node = document.createTextNode(rep.pavadinimas);
+    if (typeof rep.nuoroda === "string" && /^https?:\/\//.test(rep.nuoroda)) {
+      node = document.createElement("a");
+      node.href = rep.nuoroda; node.target = "_blank"; node.rel = "noopener noreferrer";
+      node.textContent = rep.pavadinimas;
+    }
+    row("Atstovauja", node);
+  }
+  row("Kontaktai", contactLines(entry.kontaktai));
+  row("Iždininkas", contactLines(entry.izdininkas));
+  row("Auditorius", contactLines(entry.auditorius));
+
+  const sections = Object.entries(isPlainObject(entry["aukos-pagal-sekcija"]) ? entry["aukos-pagal-sekcija"] : {})
+    .filter(([, s]) => isPlainObject(s) && Object.keys(s).length);
+  const accepted = sections.find(([k]) => k === "gautos-ir-priimtos-aukos" || k === "aukotoju-sarasas");
+  const acceptedCount = accepted && Array.isArray(accepted[1].records) ? accepted[1].records.length : 0;
+  const donationCount = sections.reduce((n, [, s]) => n + (Array.isArray(s.records) ? s.records.length : 0), 0);
+  const listOf = k => (Array.isArray(entry[k]) ? entry[k] : []);
+  const reports = listOf("finansavimo-ataskaitos");
+  const contracts = listOf("sutartys");
+  const decisions = listOf("sprendimai");
+  const audits = isPlainObject(entry.auditorius) && Array.isArray(entry.auditorius.ataskaitos) ? entry.auditorius.ataskaitos : [];
+
+  // The sum is the index's (people.json campaigns[].d, scraper/shared/
+  // kampanija.py donation_total_eur), so this page and the statistics agree.
+  const campaign = e.ck != null ? (INDEX.campaigns || [])[e.ck] : null;
+  const totals = [];
+  if (accepted || (campaign && campaign.d != null)) {
+    totals.push(`${fmtInt(acceptedCount)} ${plural(acceptedCount, "gauta auka", "gautos aukos", "gautų aukų")}` +
+      (campaign && campaign.d != null ? `, ${fmtEUR(campaign.d)}` : ""));
+  }
+  if (reports.length) totals.push(`${fmtInt(reports.length)} ${plural(reports.length, "finansavimo ataskaita", "finansavimo ataskaitos", "finansavimo ataskaitų")}`);
+  if (contracts.length) totals.push(`${fmtInt(contracts.length)} ${plural(contracts.length, "sutartis", "sutartys", "sutarčių")}`);
+  if (totals.length) row("Iš viso", totals.join(" · "));
+
+  for (const [k, x] of Object.entries(entry)) {
+    if (CAMPAIGN_KEYS.has(k) || !isFilledValue(x)) continue;
+    row(labelFor(k), renderValue(x, k, "politines-kampanijos-dalyvio-duomenys"));
+  }
+  if (dl.childElementCount) out.appendChild(dl);
+
+  if (sections.length) out.appendChild(campaignList("Aukos", donationCount, () => donationSections(sections)));
+  if (reports.length) out.appendChild(campaignList("Finansavimo ataskaitos", reports.length, () => campaignTable(reports, "finansavimo-ataskaitos")));
+  if (contracts.length) out.appendChild(campaignList("Sutartys", contracts.length, () => campaignTable(contracts, "sutartys")));
+  if (decisions.length) out.appendChild(campaignList("Sprendimai", decisions.length, () => campaignTable(decisions, "sprendimai")));
+  if (audits.length) out.appendChild(campaignList("Auditoriaus ataskaitos", audits.length, () => campaignTable(audits, "ataskaitos")));
+  return out;
 }
 
 // A record that would not load, said out loud. Every view that fetches
@@ -1656,7 +1881,8 @@ async function showPerson(p) {
       for (const [sec, val] of sections) {
         const wrap = document.createElement("div"); wrap.className = "sec";
         const h = document.createElement("h4"); h.textContent = labelFor(sec);
-        wrap.appendChild(h); wrap.appendChild(renderValue(val, sec));
+        wrap.appendChild(h);
+        wrap.appendChild(sec === "politines-kampanijos-dalyvio-duomenys" ? renderCampaign(val, e) : renderValue(val, sec));
         body.appendChild(wrap);
       }
     }
@@ -2614,24 +2840,7 @@ function showSwitches() {
         td.textContent = fmtInt(value);
       }
     });
-    const wrap = makeScrollWrap(t);
-    if (list.length <= SWITCH_SHOWN) return wrap;
-    const extra = [...t.tBodies[0].rows].slice(SWITCH_SHOWN);
-    for (const tr of extra) tr.hidden = true;
-    const more = document.createElement("button");
-    more.type = "button"; more.className = "showall";
-    more.textContent = `Rodyti visus ${list.length}`;
-    more.setAttribute("aria-expanded", "false");
-    more.addEventListener("click", () => {
-      const open = more.getAttribute("aria-expanded") !== "true";
-      for (const tr of extra) tr.hidden = !open;
-      more.setAttribute("aria-expanded", String(open));
-      more.textContent = open ? "Rodyti mažiau" : `Rodyti visus ${list.length}`;
-      if (!open) wrap.scrollIntoView({ block: "nearest" });
-    });
-    const out = document.createDocumentFragment();
-    out.append(wrap, more);
-    return out;
+    return truncateRows(makeScrollWrap(t), SWITCH_SHOWN);
   };
 
   // Ties go to more distinct organisations, then to more elections.
