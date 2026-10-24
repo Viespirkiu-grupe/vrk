@@ -332,7 +332,7 @@ class FreshnessTests(unittest.TestCase):
     """
 
     def test_the_index_is_fetched_no_cache(self):
-        self.assertRegex(SOURCE, r'fetch\("people\.json",\s*\{\s*cache:\s*"no-cache"')
+        self.assertRegex(SOURCE, r'fetch\("/people\.json",\s*\{\s*cache:\s*"no-cache"')
 
     def test_no_fetch_uses_the_cache_unrevalidated(self):
         modes = set(re.findall(r'cache:\s*"([a-z-]+)"', SOURCE))
@@ -347,25 +347,24 @@ class DeepLinkTests(unittest.TestCase):
     resolves a legacy key and a merged-away fragment's key from `ak`.
     """
 
-    def test_the_page_writes_the_pid_into_the_hash(self):
-        # A row's link *is* the pid URL, so the click, the shared link and the
-        # Back button all take one path (issue #147). showPerson only
-        # canonicalises a legacy key, and with replaceState, so it adds no
-        # history entry and does not re-enter the router.
-        self.assertIn('main.href = `#${p.pid}`;', SOURCE)
-        self.assertIn(
-            'if (decodeURIComponent(location.hash.slice(1)) !== p.pid) {\n'
-            '    history.replaceState(null, "", `#${p.pid}`);',
-            SOURCE,
-        )
+    def test_the_page_links_the_pid_path(self):
+        # A row's link *is* the person's URL, `/asmuo/<slug>-<pid>` since
+        # issue #184, so the click, the shared link and the Back button all
+        # take one path (issue #147). The router canonicalises a legacy key
+        # or a wrong slug with replaceState, so it adds no history entry and
+        # does not re-enter the router.
+        self.assertIn("main.href = personPath(p);", SOURCE)
+        self.assertIn('return `${PERSON_PREFIX}${slug ? `${slug}-` : ""}${encodeURIComponent(p.pid)}`;', SOURCE)
+        self.assertIn('if (location.pathname + location.hash !== path) history.replaceState(null, "", path);', SOURCE)
         self.assertNotIn("location.hash = p.pid;", SOURCE)
         self.assertNotIn("location.hash = encodeURIComponent(p.k)", SOURCE)
+        self.assertNotIn('"#" + p.pid', SOURCE)
 
     def test_a_legacy_or_merged_away_hash_still_resolves(self):
-        self.assertRegex(
-            SOURCE,
-            r"p\.pid === key \|\| p\.k === key \|\| \(p\.ak \|\| \[\]\)\.includes\(key\)",
-        )
+        # Every key a person was ever linked by, with the pid winning a clash.
+        self.assertIn("for (const k of [p.k, ...(p.ak || [])]) if (k && !personKeys.has(k)) personKeys.set(k, p);", SOURCE)
+        self.assertIn("for (const p of INDEX.people) personKeys.set(p.pid, p);", SOURCE)
+        self.assertIn("const person = personByKey(legacy);", SOURCE)
 
     def test_every_name_a_person_ran_under_is_searchable(self):
         # A merged person's other names live in the canonical key and "ak" —
@@ -379,7 +378,7 @@ class DeepLinkTests(unittest.TestCase):
         )
 
     def test_candidate_records_are_fetched_no_cache(self):
-        self.assertRegex(SOURCE, r'fetch\("\.\./"\s*\+\s*file,\s*\{\s*cache:\s*"no-cache"')
+        self.assertRegex(SOURCE, r'fetch\("/"\s*\+\s*file,\s*\{\s*cache:\s*"no-cache"')
 
 
 class ComparisonTableRenderingTests(unittest.TestCase):
@@ -739,7 +738,7 @@ class KeyboardAccessTests(unittest.TestCase):
 
     def test_the_name_is_a_link_and_the_checkbox_says_whom_it_compares(self):
         self.assertIn('const main = document.createElement("a");', SOURCE)
-        self.assertIn('main.href = `#${p.pid}`;', SOURCE)
+        self.assertIn("main.href = personPath(p);", SOURCE)
         self.assertIn('box.setAttribute("aria-label", `Pažymėti palyginimui: ${p.n}`);', SOURCE)
 
     def test_the_arrow_keys_still_walk_the_list(self):
@@ -942,13 +941,13 @@ class PhotoShapeTests(unittest.TestCase):
 
     def test_only_a_flagged_person_is_requested(self):
         self.assertIn("if (!p.ph) return null;", SOURCE)
-        self.assertIn("../portraits/${encodeURIComponent(p.pid)}.webp", SOURCE)
+        self.assertIn("`/portraits/${encodeURIComponent(p.pid)}.webp", SOURCE)
         self.assertIn("INDEX.portraits && INDEX.portraits.v", SOURCE)
 
     def test_the_record_photo_shapes_are_gone(self):
         self.assertNotIn("rawData.profile.photoSrc", SOURCE)
         self.assertNotIn('/^https?:\\/\\//.test(photo)', SOURCE)
-        self.assertNotIn("../data/${e.id}/${photo}", SOURCE)
+        self.assertNotIn("data/${e.id}/${photo}", SOURCE)
 
     def test_photos_load_off_dom_and_insert_on_success(self):
         # Issue #185: the sized, bordered <img> used to be appended before it
@@ -1375,29 +1374,44 @@ class RoutingTests(unittest.TestCase):
     empty hash with the placeholder, and Forward returns the person.
     """
 
-    def test_the_hash_is_the_one_way_in(self):
-        self.assertIn('window.addEventListener("hashchange", routeFromHash);', SOURCE)
-        self.assertIn("function routeFromHash() {", SOURCE)
-        self.assertIn("function personFromHash() {", SOURCE)
-        # Boot routes through the same function rather than reading the hash
+    def test_the_router_is_the_one_way_in(self):
+        # Since issue #184 the path, not the hash, names the view. Back and
+        # Forward, a routed click and the first load all go through route().
+        self.assertIn('window.addEventListener("popstate", () => {', SOURCE)
+        self.assertIn("function route() {", SOURCE)
+        self.assertIn("    navigate(a.pathname + a.search);", SOURCE)
+        # Boot routes through the same function rather than reading the URL
         # itself.
-        self.assertIn("  routeFromHash();\n}", SOURCE)
+        self.assertIn("  route();\n}", SOURCE)
+        self.assertNotIn("hashchange", SOURCE)
 
     def test_a_hash_naming_nobody_is_said_out_loud(self):
         # Leaving the last person on screen under a stale link is the defect;
         # the placeholder names the key that resolved to nothing.
         self.assertIn("function showPlaceholder(message) {", SOURCE)
-        self.assertIn("Nuoroda „${key}“ nieko neatitinka.", SOURCE)
+        self.assertIn("Nuoroda „${what}“ nieko neatitinka.", SOURCE)
 
-    def test_the_header_views_do_not_claim_a_person(self):
-        # `location.hash = ""` pushes an entry and re-enters the router.
-        # Five views: the election summary, the movers, the comparison, and
-        # issue #162's nominator summary and coverage grid.
+    def test_every_view_has_its_own_path(self):
+        # Issue #184: the five views used to clear the hash and had no URL at
+        # all. Each now has a path, and a view never writes the URL itself:
+        # the router does, so the URL cannot drift from the screen.
         self.assertNotIn('location.hash = ""', SOURCE)
-        self.assertEqual(SOURCE.count("clearHash();"), 5)
-        self.assertIn(
-            'history.replaceState(null, "", location.pathname + location.search);', SOURCE
-        )
+        self.assertNotIn("clearHash", SOURCE)
+        for path in ('"/suvestine"', '"/iskelejai"', '"/apreptis"', '"/pokyciai"', '"/asmuo/"', '"/palyginti/"'):
+            self.assertIn(path, SOURCE)
+        self.assertIn('navigate(comparePath([...compareSet.keys()]))', SOURCE)
+        self.assertEqual(SOURCE.count("history.pushState("), 1)
+
+    def test_the_server_falls_back_for_the_same_paths(self):
+        # scripts/serve_dashboard.py answers exactly these with the page.
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location("serve_dashboard", REPO_ROOT / "scripts" / "serve_dashboard.py")
+        serve = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(serve)
+        client = set(re.findall(r'^\s+\w+Btn: "(/[a-z]+)",$', SOURCE, flags=re.M))
+        self.assertEqual(client, set(serve.ROUTE_PATHS))
+        self.assertEqual(set(re.findall(r'^const \w+_PREFIX = "(/[a-z]+/)";$', SOURCE, flags=re.M)), set(serve.ROUTE_PREFIXES))
 
     def test_a_slow_render_cannot_land_on_a_later_one(self):
         # `fetchRecord` memoises by file, so an uncached 20-election person

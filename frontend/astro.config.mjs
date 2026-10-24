@@ -5,7 +5,6 @@ import { defineConfig } from 'astro/config';
 const dataOrigin = `http://127.0.0.1:${process.env.VRK_DATA_PORT || '8793'}`;
 export default defineConfig({
   output: 'static',
-  base: '/dashboard',
   trailingSlash: 'always',
   server: { host: '127.0.0.1', port: 4321 },
   vite: {
@@ -14,9 +13,10 @@ export default defineConfig({
     server: {
       strictPort: true,
       proxy: {
-        // Astro removes the configured base before Vite's proxy middleware.
-        '/people.json': { target: dataOrigin, rewrite: path => `/dashboard${path}` },
-        '/field-labels.json': { target: dataOrigin, rewrite: path => `/dashboard${path}` },
+        // The page is the site root (issue #184); serve_dashboard.py answers
+        // these at the same paths production does.
+        '/people.json': dataOrigin,
+        '/field-labels.json': dataOrigin,
         '/data/': dataOrigin,
         '/portraits/': dataOrigin,
         '/docs/concept-map.json': dataOrigin,

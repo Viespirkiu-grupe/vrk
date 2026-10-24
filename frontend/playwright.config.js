@@ -20,7 +20,7 @@ export default defineConfig({
   webServer: {
     command: 'python3 scripts/serve_dashboard.py 8792',
     cwd: '..',
-    url: 'http://127.0.0.1:8792/dashboard/',
+    url: 'http://127.0.0.1:8792/',
     reuseExistingServer: !process.env.CI,
     timeout: 30_000,
   },

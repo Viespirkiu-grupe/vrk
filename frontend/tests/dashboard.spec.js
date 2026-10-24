@@ -1,7 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { installFixtures, people, index } from './fixtures.js';
 
-async function ready(page, path = '/dashboard/') {
+const ANNA = '/asmuo/ona-naujoji-test-anna';
+const JONAS = '/asmuo/jonas-bandomasis-test-jonas';
+
+async function ready(page, path = '/') {
   await page.goto(path);
   await expect(page.locator('#results .row')).toHaveCount(3);
 }
@@ -33,7 +36,7 @@ test('the built Astro page loads its data, navigation and stylesheet', async ({ 
   await expect(page.locator('script[type="module"]:not([src])')).toHaveCount(0);
   await expect(page.locator('#topstats')).toContainText('3 asmenys');
   await expect(page.locator('#count')).toContainText('3');
-  await expect(page.locator('.navbar-brand')).toHaveAttribute('href', '/dashboard/');
+  await expect(page.locator('.navbar-brand')).toHaveAttribute('href', '/');
   await expect(page.locator('.navbar-brand')).toHaveAccessibleName('Viešpirkiai VRK – kandidatų pradžia');
   await expect(page.locator('.navbar-brand-section')).toHaveText('VRK');
   await openFilters(page);
@@ -86,11 +89,11 @@ test('a nominator chain shows short labels, muted coalition words and full names
       { id: '2024-seimo', c: 'test-anna', p: 'syn-named', w: false },
     ],
   };
-  await page.route('**/dashboard/people.json', route => route.fulfill({
+  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
     contentType: 'application/json',
     body: JSON.stringify({ ...index, parties, people: [...index.people, valdas] }),
   }));
-  await page.goto('/dashboard/#test-valdas');
+  await page.goto('/#test-valdas');
   const chain = page.locator('#person .phead .parties');
   await expect(chain).toHaveText('SP-B 2020 → koalicija „Kartu mes bandom!“ 2020 → koalicija SP-B + Kita partija 2024 → Bandymų koalicija 2024');
   const titles = await chain.locator('> span').evaluateAll(spans => spans.map(s => s.title));
@@ -146,11 +149,11 @@ test('a nominator chain runs in time order, merging only consecutive repeats, wi
       { id: '2020-seimo', c: 'test-anna', p: 'syn-party', w: true },
     ],
   };
-  await page.route('**/dashboard/people.json', route => route.fulfill({
+  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
     contentType: 'application/json',
     body: JSON.stringify({ ...index, elections, parties, people: [...index.people, birute] }),
   }));
-  await page.goto('/dashboard/#test-birute');
+  await page.goto('/#test-birute');
   const chain = page.locator('#person .phead .parties');
   await expect(chain).toHaveText('SP-B 1996–1997 → koalicija „Kartu mes bandom!“ 2000 → SP-B 2002–2024');
   const titles = await chain.locator('> span').evaluateAll(spans => spans.map(s => s.title));
@@ -166,26 +169,121 @@ test('a nominator chain runs in time order, merging only consecutive repeats, wi
   expect(years).not.toBe(name);
 });
 
-test('legacy links canonicalize and Back/Forward restore the selected person', async ({ page }) => {
-  await ready(page, `/dashboard/#${encodeURIComponent(people[0].ak[0])}`);
+test('the page fetches its data by absolute URL, so a deep path loads too (#184)', async ({ page }) => {
+  const requested = [];
+  page.on('request', request => requested.push(new URL(request.url()).pathname));
+  await ready(page, JONAS);
+  await expect(page.locator('#person h2')).toHaveText('Jonas BANDOMASIS');
+  for (const path of ['/people.json', '/docs/concept-map.json', '/field-labels.json']) {
+    expect(requested, path).toContain(path);
+  }
+  expect(requested.some(path => path.startsWith('/data/'))).toBe(true);
+  expect(requested.filter(path => path.startsWith('/asmuo/') && path !== JONAS)).toEqual([]);
+  expect(requested.filter(path => path.startsWith('/dashboard'))).toEqual([]);
+});
+
+// Issue #184: every view has its own path, and a link to one opens straight
+// into it from a fresh tab -- the server answers each with the page.
+for (const [path, heading, view] of [
+  ['/', 'Kandidatai ir rinkimai', 'overviewBtn'],
+  [ANNA, 'Ona NAUJOJI', 'overviewBtn'],
+  ['/suvestine', 'Rinkimų suvestinė', 'aggBtn'],
+  ['/iskelejai', 'Iškėlėjo suvestinė', 'nominatorBtn'],
+  ['/apreptis', 'Ką klausė kiekvienų rinkimų anketa', 'coverageBtn'],
+  ['/pokyciai', 'Didžiausi pokyčiai', 'moversBtn'],
+  ['/palyginti/test-anna,test-jonas', 'Asmenų palyginimas', 'overviewBtn'],
+]) {
+  test(`${path} opens its view directly`, async ({ page }) => {
+    const errors = [];
+    page.on('pageerror', error => errors.push(error.message));
+    const response = await page.goto(path);
+    expect(response.status()).toBe(200);
+    await expect(page.locator('#results .row')).toHaveCount(3);
+    const title = path === '/' ? page.getByRole('heading', { name: heading, exact: true }) : page.locator('#person h2');
+    await expect(title).toHaveText(heading);
+    await expect(page.locator(`#${view}`)).toHaveAttribute('aria-current', 'page');
+    expect(new URL(page.url()).pathname).toBe(path);
+    expect(errors).toEqual([]);
+  });
+}
+
+test('a comparison link checks its people and the compare bar', async ({ page }) => {
+  await ready(page, '/palyginti/test-anna,test-jonas');
+  await expect(page.locator('#person table.cmp thead th')).toHaveCount(3);
+  await expect(page.getByRole('checkbox', { name: 'Pažymėti palyginimui: Ona NAUJOJI' })).toBeChecked();
+  await expect(page.getByRole('checkbox', { name: 'Pažymėti palyginimui: Jonas BANDOMASIS' })).toBeChecked();
+  await expect(page.locator('#cmpcount')).toHaveText('pažymėta: 2 asmenys');
+});
+
+test('a missing or wrong slug, a bare pid and an old hash all rewrite to the canonical path', async ({ page }) => {
+  for (const from of ['/asmuo/test-anna', '/asmuo/kazkas-kitas-test-anna/', '/#test-anna', `/#${encodeURIComponent(people[0].k)}`]) {
+    await ready(page, from);
+    await expect(page.locator('#person h2')).toHaveText('Ona NAUJOJI');
+    await expect(page).toHaveURL(/\/asmuo\/ona-naujoji-test-anna$/);
+    // Rewritten in place: Back leaves the page rather than revisiting the old URL.
+    const entries = await page.evaluate(() => history.length);
+    await page.goto('about:blank');
+    await page.goBack();
+    await expect(page.locator('#person h2')).toHaveText('Ona NAUJOJI');
+    expect(await page.evaluate(() => history.length)).toBe(entries + 1);
+  }
+});
+
+for (const [path, key] of [
+  ['/asmuo/nera-tokio-pzzzzzzzzzzzz', 'nera-tokio-pzzzzzzzzzzzz'],
+  ['/#nera-tokio', 'nera-tokio'],
+  ['/palyginti/test-anna,nera-tokio', 'test-anna,nera-tokio'],
+]) {
+  test(`${path} names nobody and says so`, async ({ page }) => {
+    await ready(page, path);
+    await expect(page.locator('#person .placeholder')).toHaveText(`Nuoroda „${key}“ nieko neatitinka.`);
+  });
+}
+
+test('Back and Forward move between a person and the statistics', async ({ page }) => {
+  await ready(page, ANNA);
   await expect(page.locator('#person h2')).toHaveText('Ona NAUJOJI');
-  await expect(page).toHaveURL(/#test-anna$/);
+  await selectView(page, 'aggBtn');
+  await expect(page.locator('#person h2')).toHaveText('Rinkimų suvestinė');
+  await expect(page).toHaveURL(/:8792\/suvestine$/);
+  await page.goBack();
+  await expect(page.locator('#person h2')).toHaveText('Ona NAUJOJI');
+  await expect(page).toHaveURL(/\/asmuo\/ona-naujoji-test-anna$/);
+  await page.goForward();
+  await expect(page.locator('#person h2')).toHaveText('Rinkimų suvestinė');
+  await expect(page.locator('#aggBtn')).toHaveAttribute('aria-current', 'page');
+  // A person linked from inside a view is a real link, routed in place.
+  await selectView(page, 'moversBtn');
+  await expect(page).toHaveURL(/\/pokyciai$/);
+  const link = page.locator('#person table.ranking a').first();
+  await expect(link).toHaveAttribute('href', /^\/asmuo\/[a-z-]+-test-[a-z]+$/);
+  const name = await link.textContent();
+  await link.click();
+  await expect(page.locator('#person h2')).toHaveText(name.split(' · ')[0]);
+  await page.goBack();
+  await expect(page.locator('#person h2')).toHaveText('Didžiausi pokyčiai');
+});
+
+test('legacy links canonicalize and Back/Forward restore the selected person', async ({ page }) => {
+  await ready(page, `/#${encodeURIComponent(people[0].ak[0])}`);
+  await expect(page.locator('#person h2')).toHaveText('Ona NAUJOJI');
+  await expect(page).toHaveURL(/\/asmuo\/ona-naujoji-test-anna$/);
   await expect(page.locator('#person')).toBeFocused();
-  await page.locator('#results a[href="#test-jonas"]').click();
+  await page.locator(`#results a[href="${JONAS}"]`).click();
   await expect(page.locator('#person h2')).toHaveText('Jonas BANDOMASIS');
   await page.goBack();
   await expect(page.locator('#person h2')).toHaveText('Ona NAUJOJI');
-  await expect(page).toHaveURL(/#test-anna$/);
+  await expect(page).toHaveURL(/\/asmuo\/ona-naujoji-test-anna$/);
   await page.goForward();
   await expect(page.locator('#person h2')).toHaveText('Jonas BANDOMASIS');
   await expect(page.locator('#announce')).toContainText('Jonas BANDOMASIS');
   await selectView(page, 'overviewBtn');
   await expect(page.getByRole('heading', { name: 'Kandidatai ir rinkimai', exact: true })).toBeVisible();
   await expect(page.locator('#topstats')).toContainText('3 asmenys');
-  await page.locator('#results a[href="#test-jonas"]').click();
+  await page.locator(`#results a[href="${JONAS}"]`).click();
   await expect(page.locator('#person h2')).toHaveText('Jonas BANDOMASIS');
   await page.locator('.navbar-brand').click();
-  await expect(page).toHaveURL(/\/dashboard\/$/);
+  await expect(page).toHaveURL(/:8792\/$/);
   await expect(page.getByRole('heading', { name: 'Kandidatai ir rinkimai', exact: true })).toBeVisible();
   await expect(page.locator('#results .row')).toHaveCount(3);
 });
@@ -209,7 +307,7 @@ test('keyboard checkboxes compare people and clear the selection', async ({ page
 });
 
 test('person tabs show actual records, money and election comparison', async ({ page }) => {
-  await ready(page, '/dashboard/#test-anna');
+  await ready(page, ANNA);
   await expect(page.locator('#person details.ecard')).toHaveCount(2);
   await expect(page.locator('#person details.ecard summary').first()).toContainText('2024 m.');
   await expect(page.locator('#person details.ecard summary').last()).toContainText('2020 m.');
@@ -229,7 +327,7 @@ test('person tabs show actual records, money and election comparison', async ({ 
 });
 
 test('wide record tables keep nested labels and values readable', async ({ page }) => {
-  await ready(page, '/dashboard/#test-anna');
+  await ready(page, ANNA);
   const section = page.locator('.ecard .sec').filter({ has: page.getByRole('heading', { name: 'Politinės kampanijos dalyvio duomenys', exact: true }) });
   const table = section.locator('table.rec');
   await expect(table).toBeVisible();
@@ -343,11 +441,11 @@ test('a person with ph loads their versioned web portrait', async ({ page }) => 
   await installFixtures(page, { portraits: { 'test-anna': 200 }, recordPhotos: true });
   await watchPortraits(page);
   const requests = watchImageRequests(page);
-  await ready(page, '/dashboard/#test-anna');
+  await ready(page, ANNA);
   const img = page.locator('.phead img');
   await expect(img).toBeVisible();
-  await expect(img).toHaveAttribute('src', '../portraits/test-anna.webp?v=test1');
-  expect(await page.evaluate(() => window.__portraits)).toEqual(['../portraits/test-anna.webp?v=test1']);
+  await expect(img).toHaveAttribute('src', '/portraits/test-anna.webp?v=test1');
+  expect(await page.evaluate(() => window.__portraits)).toEqual(['/portraits/test-anna.webp?v=test1']);
   // One request, and none for the records' full-resolution sidecars.
   expect(requests).toEqual(['/portraits/test-anna.webp?v=test1']);
 });
@@ -356,7 +454,7 @@ test('a person without ph makes no photo request', async ({ page }) => {
   await installFixtures(page, { portraits: { 'test-anna': 200 }, recordPhotos: true });
   await watchPortraits(page);
   const requests = watchImageRequests(page);
-  await ready(page, '/dashboard/#test-jonas');
+  await ready(page, JONAS);
   await expect(page.locator('#person h2')).toHaveText('Jonas BANDOMASIS');
   await expect(page.locator('#person')).toContainText('Bandymų specialistas');
   await page.waitForTimeout(300);
@@ -368,7 +466,7 @@ test('a missing portrait never shows an empty photo box', async ({ page }) => {
   await installFixtures(page, { portraits: { 'test-anna': 404 }, photoDelay: 400 });
   await watchPortraits(page);
   const requests = watchImageRequests(page);
-  await ready(page, '/dashboard/#test-anna');
+  await ready(page, ANNA);
   await expect(page.locator('#person h2')).toHaveText('Ona NAUJOJI');
   const left = await page.locator('.phead > div').boundingBox();
   // Poll while the delayed 404 is still in flight, then after it settles.
@@ -385,7 +483,7 @@ test('a missing portrait never shows an empty photo box', async ({ page }) => {
 
 test('a late portrait stays off the next person page', async ({ page }) => {
   await installFixtures(page, { portraits: { 'test-anna': 200 }, photoDelay: 600 });
-  await ready(page, '/dashboard/#test-anna');
+  await ready(page, ANNA);
   await expect(page.locator('#person h2')).toHaveText('Ona NAUJOJI');
   await page.locator('#results .row', { hasText: 'Jonas BANDOMASIS' }).click();
   await expect(page.locator('#person h2')).toHaveText('Jonas BANDOMASIS');
@@ -395,7 +493,7 @@ test('a late portrait stays off the next person page', async ({ page }) => {
 
 test('failed index reports a visible error', async ({ page }) => {
   await installFixtures(page, { failedIndex: true });
-  await page.goto('/dashboard/');
+  await page.goto('/');
   await expect(page.locator('#topstats')).toContainText('indekso įkelti nepavyko');
   await expect(page.locator('#person [role="alert"]')).toContainText('Duomenų šiuo metu pasiekti nepavyko');
   await expect(page.getByRole('button', { name: 'Bandyti dar kartą' })).toBeVisible();
@@ -406,7 +504,7 @@ test('failed index reports a visible error', async ({ page }) => {
 
 test('a missing record warns while retaining the loaded election', async ({ page }) => {
   await installFixtures(page, { failedRecord: '/data/2020-seimo/test-anna-2020-seimo.json' });
-  await ready(page, '/dashboard/#test-anna');
+  await ready(page, ANNA);
   await expect(page.locator('#person h2')).toHaveText('Ona NAUJOJI');
   await expect(page.locator('#person [role="alert"]')).toBeVisible();
   await expect(page.locator('#person')).toContainText('Bandymų universitetas');
@@ -428,7 +526,7 @@ test('mobile filters fold and reopening them preserves selected values', async (
 
 test('theme persists and keyboard skip preserves the person link', async ({ page }) => {
   await page.emulateMedia({ colorScheme: 'light' });
-  await ready(page, '/dashboard/#test-anna');
+  await ready(page, ANNA);
   await expect(page.locator('#person h2')).toHaveText('Ona NAUJOJI');
   await page.locator('#themeToggle').click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
@@ -438,7 +536,7 @@ test('theme persists and keyboard skip preserves the person link', async ({ page
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await page.locator('.skip-link').focus();
   await page.locator('.skip-link').press('Enter');
-  await expect(page).toHaveURL(/#test-anna$/);
+  await expect(page).toHaveURL(/\/asmuo\/ona-naujoji-test-anna$/);
   await expect(page.locator('#workspace')).toBeFocused();
   await expect(page.locator('#person h2')).toHaveText('Ona NAUJOJI');
   await selectView(page, 'overviewBtn');
@@ -448,7 +546,7 @@ test('theme persists and keyboard skip preserves the person link', async ({ page
 test('narrow viewports contain wide financial and coverage tables', async ({ page }) => {
   test.skip(test.info().project.name !== 'phone', '320px stress check');
   await page.setViewportSize({ width: 320, height: 740 });
-  await ready(page, '/dashboard/#test-anna');
+  await ready(page, ANNA);
   await page.getByRole('button', { name: 'Turtas ir pajamos', exact: true }).click();
   await expect(page.locator('#person svg:visible')).toHaveCount(1);
   const tableScroll = await page.locator('#person table:visible').evaluate(table => table.parentElement.scrollLeft);
@@ -469,7 +567,7 @@ test('wide tables fade only on the side with more to scroll, never over the stic
   const project = test.info().project.name;
   test.skip(project === 'tablet', '320px and desktop cover both outcomes');
   if (project === 'phone') await page.setViewportSize({ width: 320, height: 740 });
-  await ready(page, '/dashboard/#test-anna');
+  await ready(page, ANNA);
   await page.getByRole('button', { name: 'Turtas ir pajamos', exact: true }).click();
   const wrap = page.locator('#person table.cmp:visible').locator('..');
   await expect(wrap).toHaveClass(/\btablewrap\b/);

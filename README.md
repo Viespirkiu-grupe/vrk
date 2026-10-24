@@ -101,7 +101,7 @@ Where to start:
   corpus, using the Viešpirkiai design language. With Node.js 22.12+ and the
   corpus available, run `python scripts/build_person_index.py`, then
   `cd frontend && npm ci && npm run build && npm run preview` and open
-  <http://127.0.0.1:8791/dashboard/>. The frontend builds without the corpus;
+  <http://127.0.0.1:8791/>. The frontend builds without the corpus;
   browsing requires the generated index and records.
   [docs/DASHBOARD.md](docs/DASHBOARD.md) covers development and testing;
   [docs/ASTRO_MIGRATION.md](docs/ASTRO_MIGRATION.md) records the migration plan.
