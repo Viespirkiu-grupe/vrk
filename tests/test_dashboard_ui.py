@@ -322,15 +322,21 @@ class ConvictionCellTests(unittest.TestCase):
 
 
 class FreshnessTests(unittest.TestCase):
-    """Both fetches must bypass the browser cache.
+    """Both fetches must revalidate the browser cache on every load.
 
     Records are rewritten in place when a parser gains a field, so a cached
-    copy shows empty rows against a corpus that has the figures — and an empty
-    row is indistinguishable from "never declared".
+    copy used without asking shows empty rows against a corpus that has the
+    figures — and an empty row is indistinguishable from "never declared".
+    `no-cache` keeps the copy but asks the server first (a 304 when unchanged,
+    issue #186); anything laxer would let a stale copy through.
     """
 
-    def test_the_index_is_fetched_no_store(self):
-        self.assertRegex(SOURCE, r'fetch\("people\.json",\s*\{\s*cache:\s*"no-store"')
+    def test_the_index_is_fetched_no_cache(self):
+        self.assertRegex(SOURCE, r'fetch\("people\.json",\s*\{\s*cache:\s*"no-cache"')
+
+    def test_no_fetch_uses_the_cache_unrevalidated(self):
+        modes = set(re.findall(r'cache:\s*"([a-z-]+)"', SOURCE))
+        self.assertEqual(modes, {"no-cache"})
 
 
 class DeepLinkTests(unittest.TestCase):
@@ -372,8 +378,8 @@ class DeepLinkTests(unittest.TestCase):
             r"\[p\.k, \.\.\.\(p\.ak \|\| \[\]\)\]\.map\(k => k\.slice\(0, k\.lastIndexOf\(\"\|\"\)\)",
         )
 
-    def test_candidate_records_are_fetched_no_store(self):
-        self.assertRegex(SOURCE, r'fetch\("\.\./"\s*\+\s*file,\s*\{\s*cache:\s*"no-store"')
+    def test_candidate_records_are_fetched_no_cache(self):
+        self.assertRegex(SOURCE, r'fetch\("\.\./"\s*\+\s*file,\s*\{\s*cache:\s*"no-cache"')
 
 
 class ComparisonTableRenderingTests(unittest.TestCase):

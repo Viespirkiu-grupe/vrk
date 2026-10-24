@@ -500,13 +500,19 @@ async function boot() {
   // the app quietly disagree with the data on disk. The concept map rides
   // along: the comparison rows resolve through it, so the page carries no
   // path list of its own.
+  //
+  // no-cache, not no-store: the browser keeps its copy but must revalidate it
+  // on every load, so a corpus update is still seen on the next visit while
+  // an unchanged 7 MB index costs one 304 (issue #186). The server's
+  // Last-Modified carries that check; Cloudflare drops the ETag whenever it
+  // recompresses.
   let conceptMap;
   let labelsRes;
   try {
     const [indexRes, mapRes, fieldRes] = await Promise.all([
-      fetch("people.json", { cache: "no-store" }),
-      fetch("../docs/concept-map.json", { cache: "no-store" }),
-      fetch("field-labels.json", { cache: "no-store" }).catch(() => null),
+      fetch("people.json", { cache: "no-cache" }),
+      fetch("../docs/concept-map.json", { cache: "no-cache" }),
+      fetch("field-labels.json", { cache: "no-cache" }).catch(() => null),
     ]);
     if (!indexRes.ok) throw new Error(`people.json: HTTP ${indexRes.status}`);
     if (!mapRes.ok) throw new Error(`docs/concept-map.json: HTTP ${mapRes.status}`);
@@ -1125,17 +1131,20 @@ function exportCSV() {
 // A failed record must degrade to an error note on its card — never hang the
 // whole person page (one 404 used to reject the Promise.all silently).
 //
-// no-store for the same reason people.json uses it, and it is not theoretical:
-// records are rewritten in place when a parser gains a field — the 1996-1997
-// declarations were backfilled into existing files — and a browser holding the
-// pre-backfill copy showed empty asset rows against a corpus that had the
-// figures, with no way to tell the difference from "never declared".
+// no-cache for the same reason people.json uses it, and the staleness it
+// guards against is not theoretical: records are rewritten in place when a
+// parser gains a field — the 1996-1997 declarations were backfilled into
+// existing files — and a browser holding the pre-backfill copy showed empty
+// asset rows against a corpus that had the figures, with no way to tell the
+// difference from "never declared". Revalidating every time is enough: a
+// rewrite moves the file's mtime, so the If-Modified-Since check misses and
+// the new body comes back; only an untouched record is answered with a 304.
 async function fetchRecord(e) {
   const file = recordFile(e);
   if (!recordCache.has(file)) {
     recordCache.set(
       file,
-      fetch("../" + file, { cache: "no-store" })
+      fetch("../" + file, { cache: "no-cache" })
         .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
         .catch(err => { recordCache.delete(file); return { _error: `${file}: ${err.message || err}` }; })
     );
