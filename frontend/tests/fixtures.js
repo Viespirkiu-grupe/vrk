@@ -75,22 +75,29 @@ records['/data/2024-seimo/test-anna-2024-seimo.json'].normalized['politines-kamp
 // A 1×1 PNG, enough for the portrait loader to decode.
 const PIXEL = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==', 'base64');
 
-// `photos` maps a record path to its sidecar's HTTP status: the record gains
-// rawData.profile.photoSrc and the sidecar answers, after `photoDelay` ms,
-// with the pixel or an empty 404.
-export async function installFixtures(page, { failedRecord, failedIndex = false, photos = {}, photoDelay = 0 } = {}) {
+// `portraits` maps a pid to its web portrait's HTTP status: the person gains
+// `ph: 1`, the index the portrait set's version, and portraits/<pid>.webp
+// answers, after `photoDelay` ms, with the pixel or an empty 404.
+// `recordPhotos` gives every record an archive sidecar path, which the page
+// must not request (issue #187).
+export async function installFixtures(page, { failedRecord, failedIndex = false, portraits = {}, photoDelay = 0, recordPhotos = false } = {}) {
+  const served = {
+    ...index,
+    people: people.map(p => (p.pid in portraits ? { ...p, ph: 1 } : p)),
+    ...(Object.keys(portraits).length ? { portraits: { v: 'test1', n: Object.keys(portraits).length } } : {}),
+  };
   // UI assets, the real concept map and field labels still pass through the
   // production preview server, so missing bundles / bad base URLs fail the suite.
   await page.route('**/dashboard/people.json', route => route.fulfill({
     status: failedIndex ? 503 : 200,
     contentType: 'application/json',
-    body: JSON.stringify(failedIndex ? { error: 'fixture unavailable' } : index),
+    body: JSON.stringify(failedIndex ? { error: 'fixture unavailable' } : served),
   }));
   await page.route('**/data/**/*.json', route => {
     const path = new URL(route.request().url()).pathname;
     let record = records[path];
-    if (record && photos[path]) {
-      const file = path.split('/').pop().replace(/\.json$/, '.png');
+    if (record && recordPhotos) {
+      const file = path.split('/').pop().replace(/\.json$/, '.jpg');
       record = { ...record, rawData: { profile: { photoSrc: `photos/${file}` } } };
     }
     return route.fulfill({
@@ -99,11 +106,10 @@ export async function installFixtures(page, { failedRecord, failedIndex = false,
       body: JSON.stringify(record || { error: 'unknown fixture' }),
     });
   });
-  await page.route('**/data/*/photos/*', async route => {
-    const url = new URL(route.request().url()).pathname;
-    const recordPath = url.replace('/photos/', '/').replace(/\.png$/, '.json');
+  await page.route('**/portraits/*', async route => {
+    const pid = new URL(route.request().url()).pathname.split('/').pop().replace(/\.webp$/, '');
     await new Promise(resolve => setTimeout(resolve, photoDelay));
-    return photos[recordPath] === 200
+    return portraits[pid] === 200
       ? route.fulfill({ status: 200, contentType: 'image/png', body: PIXEL })
       : route.fulfill({ status: 404, contentType: 'text/plain', body: 'not found' });
   });

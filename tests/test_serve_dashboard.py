@@ -58,6 +58,8 @@ class ServerTests(unittest.TestCase):
         (cls.root / "data" / "2016-seimo" / "x-2016-seimo.json").write_text("{}", encoding="utf-8")
         (cls.root / "docs").mkdir()
         (cls.root / "docs" / "concept-map.json").write_text("{}", encoding="utf-8")
+        (cls.root / "portraits").mkdir()
+        (cls.root / "portraits" / "p0123456789ab.webp").write_bytes(b"RIFF\x04\x00\x00\x00WEBP")
         # What the server must not serve.
         (cls.root / ".git").mkdir()
         (cls.root / ".git" / "config").write_text("[core]\n", encoding="utf-8")
@@ -239,6 +241,10 @@ class ServerTests(unittest.TestCase):
             "/dashboard/people.json": "no-cache",
             "/data/2016-seimo/x-2016-seimo.json": "no-cache",
             "/docs/concept-map.json": "no-cache",
+            # Issue #187: versioned portraits are a new URL per change.
+            "/portraits/p0123456789ab.webp?v=2b7c6a62": serve.IMMUTABLE_CACHE_CONTROL,
+            "/portraits/p0123456789ab.webp": "no-cache",
+            "/portraits/p0123456789ab.webp?v=": "no-cache",
         }
         self.assertEqual(serve.IMMUTABLE_CACHE_CONTROL, "public, max-age=31536000, immutable")
         for path, expected in cases.items():
@@ -249,6 +255,20 @@ class ServerTests(unittest.TestCase):
                     status, got, _ = self.get(path, headers, method)
                     self.assertEqual(status, 200)
                     self.assertEqual(got.get("Cache-Control"), expected)
+
+    def test_web_portraits_are_served_as_webp(self):
+        # Issue #187: the one image root the page fetches from, uncompressed.
+        status, headers, body = self.get("/portraits/p0123456789ab.webp?v=1", self.GZIP)
+        headers = {name.lower(): value for name, value in headers.items()}
+        self.assertEqual(status, 200)
+        self.assertEqual(headers["content-type"], "image/webp")
+        self.assertNotIn("content-encoding", headers)
+        self.assertTrue(body.startswith(b"RIFF"))
+        status, headers, _ = self.get("/portraits/pmissing.webp?v=1")
+        self.assertEqual(status, 404)
+        self.assertNotIn("Cache-Control", headers)
+        status, _, _ = self.get("/portraits/")
+        self.assertEqual(status, 404)
 
     def test_a_304_repeats_the_cache_control(self):
         for path in ("/dashboard/people.json", "/dashboard/_astro/app.js"):

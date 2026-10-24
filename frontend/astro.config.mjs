@@ -18,6 +18,7 @@ export default defineConfig({
         '/people.json': { target: dataOrigin, rewrite: path => `/dashboard${path}` },
         '/field-labels.json': { target: dataOrigin, rewrite: path => `/dashboard${path}` },
         '/data/': dataOrigin,
+        '/portraits/': dataOrigin,
         '/docs/concept-map.json': dataOrigin,
       },
     },

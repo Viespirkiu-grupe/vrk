@@ -124,6 +124,7 @@ from scraper.shared.files import write_json  # noqa: E402
 from scraper.shared.tautybe import tautybe  # noqa: E402
 
 import field_coverage  # noqa: E402
+from build_web_portraits import PORTRAITS_DIR, apply_portrait_flags  # noqa: E402
 
 DATA_ROOT = Path("data")
 OUTPUT_PATH = Path("dashboard/people.json")
@@ -820,6 +821,11 @@ def main() -> int:
         )
         return 1
 
+    # `ph: 1` on the people whose portraits/<pid>.webp exists, so a page
+    # without the portraits requests none (issues #185, #187). After a corpus
+    # change, scripts/build_web_portraits.py runs next and re-stamps it.
+    apply_portrait_flags(index, PORTRAITS_DIR)
+
     # 29 MB the dashboard fetches whole on every load, and the file with the
     # most to lose from a half-write: through the atomic writer, in the
     # compact form the page expects (issue #153).
@@ -842,6 +848,12 @@ def main() -> int:
     print(f"constituencies:           {len(index['constituencies'])} district names; {stats['candidaciesWithVotes']} candidacies carry a vote figure")
     print(f"campaigns:                {stats['campaigns']} participants over {stats['candidaciesWithCampaign']} candidacies")
     print(f"nationality:              {stats['nationalityAnswers']} answers in {len(index['nationalities'])} groups")
+    portraits = index.get("portraits")
+    print(
+        f"web portraits:            {portraits['n']} people (version {portraits['v']})"
+        if portraits
+        else f"web portraits:            none in {PORTRAITS_DIR}/ -- run scripts/build_web_portraits.py"
+    )
     generals = sum(1 for e in index["elections"] if "parent" not in e)
     print(
         f"elections:                {len(index['elections'])} of {len(load_registry())} registered "

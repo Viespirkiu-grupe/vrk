@@ -21,6 +21,7 @@ From the repository root:
 
 ```bash
 python scripts/build_person_index.py   # requires data/; writes dashboard/people.json
+python scripts/build_web_portraits.py  # requires data/ + the index; writes portraits/, flags the index
 cd frontend
 npm ci
 npm run build
@@ -36,8 +37,8 @@ while preserving the query and person hash.
 
 For development, `cd frontend && npm run dev` starts Astro at
 <http://127.0.0.1:4321/dashboard/> and a local data server on port 8793.
-Astro proxies only the existing index, field-label, concept-map and corpus
-paths to that server. `VRK_DATA_PORT` can select another data port; Ctrl-C
+Astro proxies only the existing index, field-label, concept-map, corpus and
+web-portrait paths to that server. `VRK_DATA_PORT` can select another data port; Ctrl-C
 stops both processes. Changes to components, CSS and scripts update the
 preview. The data is not copied into the frontend directory.
 
@@ -57,7 +58,8 @@ The repository's `pytest` suite separately runs the original domain and
 formatting regressions against the maintained client modules.
 
 The server serves the Astro output at `/dashboard/`, with the generated
-index and field labels at their established URLs, plus `data/` and `docs/`.
+index and field labels at their established URLs, plus `data/`, `docs/` and
+`portraits/`.
 It does **not** serve `frontend/`, application source, `.git`, or any other
 repository directory; it provides no directory listings. A foreign `Host`
 is refused and every response carries `nosniff`, a narrow CSP and
@@ -82,7 +84,8 @@ both:
 | URL | `Cache-Control` | Why |
 |---|---|---|
 | `/dashboard/_astro/*` | `public, max-age=31536000, immutable` | Astro names each file after a hash of its content, so a changed file is a new URL. |
-| everything else: `/dashboard/` HTML, `people.json`, `field-labels.json`, `data/**` records, `docs/concept-map.json` | `no-cache` | Rewritten in place: the index after every corpus update, records when a parser gains a field. |
+| `/portraits/<pid>.webp?v=<version>` | `public, max-age=31536000, immutable` | The version is the hash of the whole portrait set (`portraits.v` in people.json, issue #187), so a changed portrait is a new URL. The page never asks without it. |
+| everything else: `/dashboard/` HTML, `people.json`, `field-labels.json`, `data/**` records, `docs/concept-map.json`, a portrait without `?v=` | `no-cache` | Rewritten in place: the index after every corpus update, records when a parser gains a field. |
 
 `no-cache` means a browser keeps the copy but must ask the server before
 using it, and the page's own fetches say the same (`cache: "no-cache"` in
@@ -104,8 +107,9 @@ rewritten in place being served fresh.
 **Cloudflare rule the operator adds** (Caching → Cache Rules; not set from
 this repository):
 
-- *When:* URI Path starts with `/dashboard/_astro/` (host
-  `vrk.viespirkiai.org`).
+- *When:* URI Path starts with `/dashboard/_astro/` or `/portraits/` (host
+  `vrk.viespirkiai.org`). Cloudflare's default cache key includes the query
+  string, which is what carries a portrait's version.
 - *Then:* Eligible for cache; Edge TTL "Use cache-control header if present";
   Browser TTL "Respect origin".
 
@@ -607,18 +611,61 @@ the shared resolvers — `scraper/shared/kampanija.py`,
 build takes 35 s.
 
 **Photos.** The corpus stores portraits as externalized sidecars
-(`photos/<candidateId>.<ext>`, 27,493 records — the 2,199 the pages embedded
-and, since issue #118, the 25,294 they linked), keeps VRK's own hosted URL
-only where the fetch failed (38 records, all on hosts that no longer serve
-them), and has nothing for the other 85,542. The page accepts both of those
-plus a legacy inline `data:` URI and lists every candidate newest election
-first. It loads them one at a time off-DOM (`new Image()` + `decode()`) and
-inserts only the first that decodes; a failure falls through to the next
-older election's portrait, and if none loads no photo element is ever
-inserted, so a deployment without `data/*/photos/` shows no empty box and the
-header never shifts (issue #185). The 38 dead URLs end that way unless an
-older election has a sidecar. A photo that arrives after the reader has moved
-to another view is dropped by the `renderToken` check.
+(`photos/<candidateId>.<ext>`, 27,493 files and 5.2 GB — the 2,199 the pages
+embedded and, since issue #118, the 25,294 they linked). That is the
+archive, and the page no longer reads it. It shows one **web portrait** per
+person instead (issue #187), built by `scripts/build_web_portraits.py`:
+
+- **Source:** the person's newest candidacy with a sidecar, falling back to
+  an older one when a file does not decode. Pillow decodes by content, so the
+  BMP, TIFF and PNG files VRK served under `.jpg` work.
+- **Shape:** EXIF orientation applied, transparency flattened onto white, an
+  embedded colour profile converted to sRGB, cropped 3:4 from the top
+  (matching `object-position: center top`) and resized to 192×256, which is
+  2× the 96×128 desktop box.
+- **Encoding:** WebP q75, method 6, written from a fresh image, so no EXIF,
+  XMP or ICC chunk survives (#142). q75 came from a contact sheet of 24
+  portraits from 2009–2023 at q65, q75 and q85, which averaged 3.2, 3.6 and
+  5.6 KB. q65 visibly softens hair and skin; q85 costs half as much again
+  for nothing the box shows.
+- **Output:** `portraits/<pid>.webp` (gitignored), plus `portraits/manifest.json`,
+  which records each person's source path, size, mtime, sha256, settings hash
+  and output hash.
+
+The manifest makes the build incremental. An unchanged person is not
+decoded, an output is rewritten only when its bytes differ (encoding is
+deterministic), and a source that failed is not retried. Measured on the full
+corpus on 2026-10-24 (10 cores):
+
+| | |
+|---|---|
+| people with a sidecar | 19,403 of 60,568 |
+| web portraits | 19,402: 75.3 MB of WebP, 3.8 KB on average |
+| undecodable | 1, a Word document saved as `.zip` in the 2019 municipal tree, with no older portrait to fall back to |
+| first build | 36.5 s |
+| re-run, nothing changed | 0.9 s, no file written |
+
+The index flag `ph: 1` marks exactly the people whose `portraits/<pid>.webp`
+exists, and the top-level `portraits: {v, n}` carries the set's version (a
+hash over every pid and output hash) and the count. Both scripts stamp them
+with the same function, so a fresh index over an existing `portraits/` is
+already right. After a corpus change the order is: index, then portraits.
+The portraits script reads the new index and re-stamps it.
+
+The page requests `../portraits/<pid>.webp?v=<version>` only when `ph` is
+set, so a person without one, or a deployment without `portraits/`, makes no
+photo request (#185 step 2). The request starts alongside the record fetches.
+The image decodes off-DOM (`new Image()` + `decode()`) and is inserted only
+on success, so a failed load never shows an empty box and the header never
+shifts. A photo that arrives after the reader has moved to another view is
+dropped by the `renderToken` check.
+
+The page's old three-shape fallback is gone: the `photos/` sidecar, VRK's
+hosted URL and the inline `data:` URI, tried newest election first. Each of
+those either duplicated the build's choice at full resolution (a 233 KB
+average download for a 96×128 box) or could not load. The 38 URLs point at
+hosts that no longer serve them, and no record carries a `data:` URI since
+#91. The build's fallback over undecodable files replaces the 404 fallback.
 
 **Currency.** The 2012–2015 pages declare assets and income in litas
 (`turto-ir-pajamu-deklaracijos.valiuta` is `"Lt"` on those records); 2016 on
@@ -755,8 +802,12 @@ pins every rule, so a new entry either follows them or fails there.
 - `scripts/build_person_index.py` — builds `dashboard/people.json`
   (gitignored); applies the override merges, assigns pids, prints the audit
   counts on every run.
+- `scripts/build_web_portraits.py` — builds `portraits/<pid>.webp` and its
+  manifest from `data/*/photos/` (gitignored, issue #187) and stamps `ph` in
+  the index. `tests/test_web_portraits.py` pins the selection, the shape, the
+  stripped metadata, idempotence and the flag on synthetic images.
 - `scripts/serve_dashboard.py` — the stdlib server plus gzip, an LRU
-  compression cache keyed on mtime, and the guards of issue #160 (three
+  compression cache keyed on mtime, and the guards of issue #160 (four
   served directories, a loopback-only `Host`, no listings, conditional
   requests), and the two `Cache-Control` classes of issue #186; maps the
   Astro build to `/dashboard/`. `tests/test_serve_dashboard.py` drives
