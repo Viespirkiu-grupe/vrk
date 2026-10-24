@@ -28,17 +28,18 @@ npm run build
 npm run preview
 ```
 
-Open <http://127.0.0.1:8791/dashboard/>. `npm run preview` runs the gzip
+Open <http://127.0.0.1:8791/>. `npm run preview` runs the gzip
 server, which locates the repository regardless of the working directory.
 To choose a different preview port, run
 `python3 scripts/serve_dashboard.py 8792` from the repository root.
-`/` redirects to `/dashboard/`, and `/dashboard` adds the trailing slash
-while preserving the query and person hash.
+Every view has its own path (see [URL layout](#url-layout)).
 
 For development, `cd frontend && npm run dev` starts Astro at
-<http://127.0.0.1:4321/dashboard/> and a local data server on port 8793.
+<http://127.0.0.1:4321/> and a local data server on port 8793.
 Astro proxies only the existing index, field-label, concept-map, corpus and
-web-portrait paths to that server. `VRK_DATA_PORT` can select another data port; Ctrl-C
+web-portrait paths to that server. The dev server answers only `/`: a view path
+such as `/suvestine` works when reached by a click, but a reload or a pasted
+link on one is Astro's 404. Use `npm run preview` to try direct links. `VRK_DATA_PORT` can select another data port; Ctrl-C
 stops both processes. Changes to components, CSS and scripts update the
 preview. The data is not copied into the frontend directory.
 
@@ -57,23 +58,104 @@ JavaScript, CSS, fonts, labels and concept map, so they run on a clean clone.
 The repository's `pytest` suite separately runs the original domain and
 formatting regressions against the maintained client modules.
 
-The server serves the Astro output at `/dashboard/`, with the generated
-index and field labels at their established URLs, plus `data/`, `docs/` and
-`portraits/`.
-It does **not** serve `frontend/`, application source, `.git`, or any other
-repository directory; it provides no directory listings. A foreign `Host`
+The server serves the Astro output at `/`, the generated index and field
+labels beside it, the records under `data/`, the web portraits under
+`portraits/` and, of `docs/`, only `concept-map.json`. Every other URL is
+looked up inside the Astro build, so `frontend/`, application source,
+`scripts/`, `.git` and every other repository path answer 404; it provides
+no directory listings. A foreign `Host`
 is refused and every response carries `nosniff`, a narrow CSP and
 `no-referrer`. Compressed resources support `ETag` and `Last-Modified` (see
 [Caching](#caching)), and
 an LRU cache avoids repeatedly compressing the index. Scripts, styles and
 fonts load locally. No external font or application runtime is required.
 
-A person page remains deep-linkable by its `pid` hash; pre-pid `name|birth`
-links and merged-away fragment keys still resolve and normalize to that pid.
+A person page is deep-linkable as `/asmuo/<slug>-<pid>`; a bare pid, the
+older `/#<pid>` hash, pre-pid `name|birth` links and merged-away fragment keys
+still resolve and normalize to that path.
 A missing corpus/index is shown as a data-loading error, not an empty result
 set. Obtain the corpus using the release instructions in the README, then
 build the index. The old hand-written `dashboard/index.html` is no longer a
 second frontend; always build Astro before previewing a fresh checkout.
+
+### URL layout
+
+The page is the site root, <https://vrk.viespirkiai.org/> (issue #184). It
+used to live at `/dashboard/`, a leftover from the MVP's
+`dashboard/index.html`; that site was never announced, so the old URLs are
+not redirected and answer 404.
+
+**Every view has its own path,** so a link opens straight into it:
+
+| Path | View |
+|---|---|
+| `/` | front page (Kandidatai) |
+| `/asmuo/<slug>-<pid>` | a person, e.g. `/asmuo/birute-vesaite-p7d185515b624` |
+| `/palyginti/<pid>,<pid>,…` | comparison of the selected people |
+| `/suvestine` | Rinkimų suvestinė |
+| `/iskelejai` | Iškėlėjai |
+| `/apreptis` | Anketų aprėptis |
+| `/pokyciai` | Didžiausi (deklaracijų) pokyčiai |
+
+The slugs come from the UI's own labels; `frontend/src/lib/routes.js` holds
+them. A person resolves by pid alone. The name slug is decoration: a missing
+or wrong one, a bare pid, an old `/#<pid>` hash or a pre-pid `name|birth`
+key is rewritten to the canonical path with `replaceState`, so it adds no
+history entry. A click on a view or a person uses `pushState`, so Back and
+Forward move between views; the first load, a routed click and `popstate`
+all go through one `route()`. A path or pid naming nobody shows
+„Nuoroda … nieko neatitinka.“ Filters and the search box are not in the URL
+yet.
+
+**The files behind the page:**
+
+| URL | File |
+|---|---|
+| `/`, `/_astro/*`, `/branding/*`, `/fonts/*` | `frontend/dist/` (the Astro build) |
+| `/people.json`, `/field-labels.json` | `dashboard/people.json`, `dashboard/field-labels.json` |
+| `/data/<election>/<file>.json` | `data/` |
+| `/portraits/<pid>.webp?v=<version>` | `portraits/` |
+| `/docs/concept-map.json` | `docs/concept-map.json` |
+
+The index and labels stay in `dashboard/` on disk: every builder, release
+script and the distribution write or read them there. Only their URL moved.
+A static deploy (#188) copies them next to the build's `index.html`. The page
+fetches all of these by absolute URL (`/people.json`, `/data/…`), so they
+resolve the same from `/asmuo/x` as from `/`.
+
+**The fallback every server needs.** The view paths are not files: the
+server must answer each with `frontend/dist/index.html` (and its `no-cache`
+policy), and the page's router picks the view. Only these paths fall back.
+A mistyped asset or data URL must stay a 404, not turn into an HTML page,
+and no repository path may become reachable. `serve_dashboard.py` does this
+(`ROUTE_PATHS`, `ROUTE_PREFIXES`; `tests/test_dashboard_ui.py` holds them
+equal to the page's list), and whatever serves production after #188 must
+do the same. In nginx:
+
+```nginx
+location ~ ^/(suvestine|iskelejai|apreptis|pokyciai)/?$ { try_files /index.html =404; add_header Cache-Control "no-cache"; }
+location ~ ^/(asmuo|palyginti)/[^/]*/?$            { try_files /index.html =404; add_header Cache-Control "no-cache"; }
+```
+
+In Caddy:
+
+```caddy
+@route path_regexp ^/((suvestine|iskelejai|apreptis|pokyciai)|(asmuo|palyginti)/[^/]*)/?$
+handle @route {
+	header Cache-Control "no-cache"
+	rewrite * /index.html
+	file_server
+}
+```
+
+Cloudflare passes these paths to the origin like any other; it needs no
+rule for them as long as the origin answers them. If the site is ever served
+from Cloudflare Pages or another static host without such a rule, its
+`_redirects` needs the same paths as 200 rewrites
+(`/asmuo/* /index.html 200`, and so on).
+
+If a cache rule was added for `/dashboard/_astro/` (below), change it to
+`/_astro/`.
 
 ### Caching
 
@@ -83,9 +165,9 @@ both:
 
 | URL | `Cache-Control` | Why |
 |---|---|---|
-| `/dashboard/_astro/*` | `public, max-age=31536000, immutable` | Astro names each file after a hash of its content, so a changed file is a new URL. |
+| `/_astro/*` | `public, max-age=31536000, immutable` | Astro names each file after a hash of its content, so a changed file is a new URL. |
 | `/portraits/<pid>.webp?v=<version>` | `public, max-age=31536000, immutable` | The version is the hash of the whole portrait set (`portraits.v` in people.json, issue #187), so a changed portrait is a new URL. The page never asks without it. |
-| everything else: `/dashboard/` HTML, `people.json`, `field-labels.json`, `data/**` records, `docs/concept-map.json`, a portrait without `?v=` | `no-cache` | Rewritten in place: the index after every corpus update, records when a parser gains a field. |
+| everything else: the `/` HTML, `people.json`, `field-labels.json`, `data/**` records, `docs/concept-map.json`, a portrait without `?v=` | `no-cache` | Rewritten in place: the index after every corpus update, records when a parser gains a field. |
 
 `no-cache` means a browser keeps the copy but must ask the server before
 using it, and the page's own fetches say the same (`cache: "no-cache"` in
@@ -107,7 +189,7 @@ rewritten in place being served fresh.
 **Cloudflare rule the operator adds** (Caching → Cache Rules; not set from
 this repository):
 
-- *When:* URI Path starts with `/dashboard/_astro/` or `/portraits/` (host
+- *When:* URI Path starts with `/_astro/` or `/portraits/` (host
   `vrk.viespirkiai.org`). Cloudflare's default cache key includes the query
   string, which is what carries a portrait's version.
 - *Then:* Eligible for cache; Edge TTL "Use cache-control header if present";
@@ -122,11 +204,11 @@ index can be cached at the edge only once it has a content-hashed name
 A check on production, with `-D -` showing the headers:
 
 ```bash
-curl -s -o /dev/null -D - -H 'Accept-Encoding: br, gzip' https://vrk.viespirkiai.org/dashboard/people.json
+curl -s -o /dev/null -D - -H 'Accept-Encoding: br, gzip' https://vrk.viespirkiai.org/people.json
 ```
 
 ```bash
-curl -s -o /dev/null -w '%{http_code}\n' -H 'If-Modified-Since: <the Last-Modified above>' https://vrk.viespirkiai.org/dashboard/people.json
+curl -s -o /dev/null -w '%{http_code}\n' -H 'If-Modified-Since: <the Last-Modified above>' https://vrk.viespirkiai.org/people.json
 ```
 
 The first should show `cache-control: no-cache` and a `last-modified`, and
@@ -181,12 +263,12 @@ search box.
 
 **The pid** (issue #96). Every person carries `"pid"` — `p` + 12 hex digits
 of blake2s over the natural `name|birth` key — which is what the page writes
-into the URL hash. It survives a rebuild and a new election: for a merged
+into the URL (`/asmuo/<slug>-<pid>` since issue #184). It survives a rebuild and a new election: for a merged
 person it derives from the fragment holding the chronologically earliest
 candidacy, and elections are only added at the recent end now that the
 historical sweep is done. The old `name|birth` deep links keep resolving —
 the page accepts a pid, a natural key, or a merged-away fragment's key (from
-`"ak"`) and rewrites the hash to the pid.
+`"ak"`) and rewrites the URL to the pid's path.
 
 **A split person is healed by hand, not by rule.**
 `scripts/find_identity_merge_candidates.py` finds the plausible splits in
@@ -453,7 +535,9 @@ naming nobody says so instead of leaving the last person on screen. Driven
 live: two clicks, then Back brings the first person and their hash back, Back
 again lands on the placeholder, Forward returns the person, and a legacy
 `INGRIDA ŠIMONYTĖ|1974-11-15` link resolves and rewrites itself to
-`#p0a1d6eb067f0`.
+`#p0a1d6eb067f0`. (Issue #184 moved the router from the hash to paths;
+[URL layout](#url-layout) has the current rules, and the old hashes still
+rewrite.)
 
 **A slow render cannot land on a later one.** `fetchRecord` memoises by file,
 so an uncached 20-election person followed by a cached one could end with the
@@ -807,10 +891,12 @@ pins every rule, so a new entry either follows them or fails there.
   the index. `tests/test_web_portraits.py` pins the selection, the shape, the
   stripped metadata, idempotence and the flag on synthetic images.
 - `scripts/serve_dashboard.py` — the stdlib server plus gzip, an LRU
-  compression cache keyed on mtime, and the guards of issue #160 (four
-  served directories, a loopback-only `Host`, no listings, conditional
-  requests), and the two `Cache-Control` classes of issue #186; maps the
-  Astro build to `/dashboard/`. `tests/test_serve_dashboard.py` drives
+  compression cache keyed on mtime, and the guards of issue #160 (only the
+  build, the index, `data/`, `portraits/` and the concept map, a
+  loopback-only `Host`, no listings, conditional requests), and the two
+  `Cache-Control` classes of issue #186; serves the Astro build at `/` and
+  the page itself for each view path (issue #184).
+  `tests/test_serve_dashboard.py` drives
   a real server on an ephemeral port.
 - `scripts/find_identity_merge_candidates.py` — scores possible
   surname-change splits and prints the undecided ones; writes
@@ -846,7 +932,7 @@ pins every rule, so a new entry either follows them or fails there.
   export pass (the CSV's comma decimals and formula guard, the chart axis and
   its width cap, the scroll affordance, the narrow-screen layout and the bare
   URL anchors) and issue #147's keyboard, screen-reader and routing pass (the
-  row's link and checkbox, the focus move and the live region, the hash
+  row's link and checkbox, the focus move and the live region, the
   router, the render token, the facet widths and the search debounce).
 - `tests/test_dashboard_field_labels.py` — holds `field-labels.json` to the
   four proofs its entries claim, and every key in it to still occurring in

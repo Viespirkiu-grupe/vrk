@@ -1,15 +1,20 @@
 """Serve the static Astro browser and its existing corpus URLs on loopback.
 
 Build first with `cd frontend && npm ci && npm run build`, then run this script
-from any directory. /dashboard/ maps to frontend/dist; the index and field-label
-JSON retain their dashboard/ paths. data/, docs/ and portraits/ are the only
-other public roots. No source directory or repository listing is served.
+from any directory. The site root `/` is frontend/dist (issue #184); the index
+and field-label JSON are served beside the page at `/people.json` and
+`/field-labels.json` from where the builders write them, `dashboard/`. Besides
+those, only data/, portraits/ and docs/concept-map.json are reachable. The
+page's own routes (`/asmuo/<pid>`, `/suvestine`, …; see `ROUTE_PATHS`) answer
+with the built index.html, which routes on the client. Every other URL
+resolves inside the build, so no source directory, repository file or listing
+is served.
 
 The server preserves gzip compression, an mtime-keyed LRU, ETag/Last-Modified,
 loopback Host validation and response hardening from issue #160. Build assets
 are separate from the root dist/ directory used by data releases.
 
-Caching (issue #186): Astro's content-hashed `/dashboard/_astro/*` files are
+Caching (issue #186): Astro's content-hashed `/_astro/*` files are
 `immutable` for a year, and so is a web portrait asked for with its set's
 version (`/portraits/<pid>.webp?v=…`, issue #187); everything else (HTML, the index, records, the concept
 map) is `no-cache`, kept but revalidated on every load. docs/DASHBOARD.md has
@@ -32,12 +37,46 @@ DEFAULT_PORT = 8791
 #: Worth compressing. Portraits are WebP and stay as they are.
 COMPRESSIBLE_SUFFIXES = {".json", ".html", ".tsv", ".csv", ".js", ".css", ".svg", ".txt", ".md"}
 
-#: The only directories the page fetches from: itself, the records it opens
-#: per person, the concept map it resolves its comparison rows against, and
-#: the web portraits (issue #187) -- a top-level sibling of data/, so its URL
-#: stays /portraits/ when #184 moves the page off /dashboard/.
+#: Repository directories served under their own name: the records the page
+#: opens per person and the web portraits (issue #187).
+SERVED_ROOTS = ("data", "portraits")
+
+#: Single repository files served at their own path. Of docs/ the page reads
+#: only the concept map it resolves its comparison rows against.
+SERVED_FILES = ("docs/concept-map.json",)
+
+#: The generated person index and field labels. Every builder and release
+#: script writes them to `dashboard/` (gitignored for the index), so they stay
+#: there on disk and are served at the root, beside the page that fetches them
+#: (issue #184).
+INDEX_DIR = "dashboard"
+INDEX_FILES = ("people.json", "field-labels.json")
+
+#: The Astro output. Every URL not listed above resolves inside it, which is
+#: what keeps the rest of the repository (frontend/, scripts/, .git/, …) out
+#: of reach: `/scripts/x.py` asks for frontend/dist/scripts/x.py and 404s.
+BUILD_DIR = os.path.join("frontend", "dist")
+
+#: The page's client-side routes (issue #184): each view has its own URL, so
+#: a shared link opens straight into it. The server answers them with the
+#: page itself and the page's router picks the view. Exact paths, with or
+#: without a trailing slash, and two prefixes that carry a key: a person's
+#: `<slug>-<pid>` and a comparison's `<pid>,<pid>,…`. Nothing else falls
+#: back, so a mistyped asset URL is still a 404 rather than an HTML page.
+#: frontend/src/lib/routes.js is the other half and must list the same.
+ROUTE_PATHS = ("/suvestine", "/iskelejai", "/apreptis", "/pokyciai")
+ROUTE_PREFIXES = ("/asmuo/", "/palyginti/")
+
+
+def is_route(url_path: str) -> bool:
+    """Is this URL one of the page's own routes, answered with index.html?"""
+    path = url_path.split("#", 1)[0].split("?", 1)[0]
+    return path.rstrip("/") in ROUTE_PATHS or any(
+        path.startswith(prefix) and "/" not in path[len(prefix) :].rstrip("/")
+        for prefix in ROUTE_PREFIXES
+    )
+
 #: Anything else under the repository root is not the dashboard's business.
-SERVED_ROOTS = ("dashboard", "data", "docs", "portraits")
 
 #: Hosts a browser reaches a loopback server by. A request naming anything
 #: else is a DNS rebind: the name resolves to 127.0.0.1 while the browser
@@ -54,7 +93,7 @@ _CACHE_MAX_ENTRIES = 512
 #: still use inline styles for chart dimensions. Nothing is fetched remotely.
 #: Astro names every bundled file after a hash of its content, so a changed
 #: file is a new URL and the old one can be cached forever.
-IMMUTABLE_PREFIX = "/dashboard/_astro/"
+IMMUTABLE_PREFIX = "/_astro/"
 IMMUTABLE_CACHE_CONTROL = "public, max-age=31536000, immutable"
 
 #: Everything else is rewritten in place: the index after every corpus update,
@@ -104,7 +143,10 @@ def _gzipped(path: Path) -> bytes:
 
 
 def _is_served(translated: Path, root: Path) -> bool:
-    """Is this path inside one of the directories the page fetches?
+    """Is this the destination of a public URL, as `translate_path` maps them?
+
+    A second check on what `translate_path` produced, so a mapping mistake
+    there fails closed rather than handing out a repository file.
 
     Compared *lexically*, not through `Path.resolve()`, and against
     `os.getcwd()` — the base `translate_path` itself joins against. `data/`
@@ -121,36 +163,47 @@ def _is_served(translated: Path, root: Path) -> bool:
     """
     normalized = os.path.normpath(str(translated))
     base = os.path.normpath(str(root))
-    if normalized == base:
-        return True  # the root itself, which redirects
     prefix = base.rstrip(os.sep) + os.sep
     if not normalized.startswith(prefix):
         return False
-    first = normalized[len(prefix) :].split(os.sep, 1)[0]
-    return first in SERVED_ROOTS
+    relative = normalized[len(prefix) :]
+    build = os.path.normpath(BUILD_DIR)
+    if relative == build or relative.startswith(build + os.sep):
+        return True
+    if relative.split(os.sep, 1)[0] in SERVED_ROOTS:
+        return True
+    files = {os.path.normpath(name) for name in SERVED_FILES}
+    files |= {os.path.join(INDEX_DIR, name) for name in INDEX_FILES}
+    return relative in files
 
 
 class GzipHandler(SimpleHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
 
     def translate_path(self, path: str) -> str:
-        """Map the established /dashboard/ URL to the Astro output only.
+        """Map a public URL to the file it names (issue #184).
 
-        The generated person index and field labels keep their old paths.
-        Normalize with the stdlib before mapping so encoded traversals cannot
-        escape the output directory. Source and build configuration are never
-        reachable through /frontend/. A missing build must not fall back to
-        serving the retired MVP page.
+        `data/…` and `portraits/…` are their repository directories,
+        `/docs/concept-map.json` its file, `/people.json` and
+        `/field-labels.json` the generated files in `dashboard/`, and a
+        page route (`is_route`) the built index.html. Everything else is the
+        Astro output, so `/` is the page and a source path such as
+        `/frontend/src/…` or `/scripts/…` is looked up inside the build and
+        is not found. The stdlib normalizes first, so encoded traversals cannot
+        escape. A missing build must not fall back to serving the retired MVP
+        page in `dashboard/`, and it cannot: that directory is not a root.
         """
+        root = Path(self.directory)
+        if is_route(path):
+            return str(root / BUILD_DIR / "index.html")
         translated = Path(super().translate_path(path))
-        dashboard = Path(self.directory) / "dashboard"
-        try:
-            relative = translated.relative_to(dashboard)
-        except ValueError:
+        relative = translated.relative_to(root)
+        name = relative.as_posix()
+        if relative.parts[:1] and relative.parts[0] in SERVED_ROOTS or name in SERVED_FILES:
             return str(translated)
-        if relative.as_posix() in {"people.json", "field-labels.json"}:
-            return str(translated)
-        return str(Path(self.directory) / "frontend" / "dist" / relative)
+        if name in INDEX_FILES:
+            return str(root / INDEX_DIR / name)
+        return str(root / BUILD_DIR / relative)
 
     def log_message(self, fmt: str, *args: object) -> None:
         # One line per request, without the stock double-quoting noise.
@@ -160,7 +213,7 @@ class GzipHandler(SimpleHTTPRequestHandler):
         self.send_error(code, why)
 
     def _guard(self) -> bool:
-        """True when the request may be served at all."""
+        """True when the request may be served; otherwise it is answered."""
         host = (self.headers.get("Host") or "").rsplit(":", 1)[0].strip("[]")
         if host and host not in {h.strip("[]") for h in ALLOWED_HOSTS}:
             self._refuse(403, "This server answers loopback names only")
@@ -169,21 +222,15 @@ class GzipHandler(SimpleHTTPRequestHandler):
         # itself joins against; anything else and the two disagree the moment
         # either path crosses a symlink (macOS's /var -> /private/var, for
         # one).
-        # Guard the normalized public URL, not its internal Astro destination.
-        # Otherwise allowing frontend/dist would also expose it at /frontend/.
-        translated = Path(super().translate_path(self.path))
-        if not _is_served(translated, Path(os.getcwd())):
-            self._refuse(
-                403,
-                "Only " + ", ".join(f"{name}/" for name in SERVED_ROOTS) + " are served",
-            )
+        if not _is_served(Path(self.translate_path(self.path)), Path(os.getcwd())):
+            self._refuse(403, "Only the site, data/, portraits/ and the index are served")
             return False
         return True
 
     def list_directory(self, path):  # noqa: ANN001, ANN201 - stdlib signature
         # The stock server indexes a directory with no index.html. Nothing the
         # page fetches is a directory, and a listing of `data/` names 55
-        # elections and of `dashboard/` the gitignored review CSV.
+        # elections.
         self._refuse(404, "No directory listing")
         return None
 
@@ -224,13 +271,6 @@ class GzipHandler(SimpleHTTPRequestHandler):
             super().do_HEAD()
 
     def do_GET(self) -> None:  # noqa: N802 - stdlib naming
-        if self.path.split("?", 1)[0] in ("", "/"):
-            # The root is not served, and it is the one thing a person types.
-            self.send_response(302)
-            self.send_header("Location", "/dashboard/")
-            self.send_header("Content-Length", "0")
-            self.end_headers()
-            return
         if not self._guard():
             return
         translated = Path(self.translate_path(self.path))
@@ -299,8 +339,8 @@ def main() -> int:
     port = int(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_PORT
     server = ThreadingHTTPServer(("127.0.0.1", port), GzipHandler)
     print(
-        f"Serving {', '.join(name + '/' for name in SERVED_ROOTS)}"
-        f" at http://127.0.0.1:{port}/dashboard/ (gzip on; Ctrl-C stops)"
+        f"Serving the site, the index and {', '.join(name + '/' for name in SERVED_ROOTS)}"
+        f" at http://127.0.0.1:{port}/ (gzip on; Ctrl-C stops)"
     )
     try:
         server.serve_forever()

@@ -42,7 +42,7 @@ class ServerTests(unittest.TestCase):
         build = cls.root / "frontend" / "dist"
         (build / "_astro").mkdir(parents=True)
         (build / "index.html").write_text(
-            '<html><body>Astro dashboard<script type="module" src="/dashboard/_astro/app.js"></script></body></html>',
+            '<html><body>Astro dashboard<script type="module" src="/_astro/app.js"></script></body></html>',
             encoding="utf-8",
         )
         (build / "_astro" / "app.js").write_text('console.log("Astro bundle");', encoding="utf-8")
@@ -58,6 +58,9 @@ class ServerTests(unittest.TestCase):
         (cls.root / "data" / "2016-seimo" / "x-2016-seimo.json").write_text("{}", encoding="utf-8")
         (cls.root / "docs").mkdir()
         (cls.root / "docs" / "concept-map.json").write_text("{}", encoding="utf-8")
+        (cls.root / "docs" / "DASHBOARD.md").write_text("# not for the page\n", encoding="utf-8")
+        (cls.root / "dashboard" / "field-labels.json").write_text('{"turtas": "Turtas"}', encoding="utf-8")
+        (cls.root / "dashboard" / "merge-review.csv").write_text("pid,pid\n", encoding="utf-8")
         (cls.root / "portraits").mkdir()
         (cls.root / "portraits" / "p0123456789ab.webp").write_bytes(b"RIFF\x04\x00\x00\x00WEBP")
         # What the server must not serve.
@@ -66,6 +69,9 @@ class ServerTests(unittest.TestCase):
         (cls.root / "conftest.py").write_text("# secret\n", encoding="utf-8")
         (cls.root / "scraper").mkdir()
         (cls.root / "scraper" / "person_overrides.json").write_text("{}", encoding="utf-8")
+        (cls.root / "scripts").mkdir()
+        (cls.root / "scripts" / "serve_dashboard.py").write_text("# source\n", encoding="utf-8")
+        (cls.root / "frontend" / "astro.config.mjs").write_text("// config\n", encoding="utf-8")
 
         cls._cwd = os.getcwd()
         os.chdir(cls.root)
@@ -95,15 +101,25 @@ class ServerTests(unittest.TestCase):
 
     # -- what is served -----------------------------------------------------
 
-    def test_the_dashboard_and_its_index(self):
-        status, _, body = self.get("/dashboard/", self.GZIP)
+    def test_the_site_root_is_the_page(self):
+        # Issue #184: `/` used to 302 to `/dashboard/`.
+        status, _, body = self.get("/", self.GZIP)
         self.assertEqual(status, 200)
-        self.assertIn(b"dashboard", __import__("gzip").decompress(body))
+        self.assertIn(b"Astro dashboard", __import__("gzip").decompress(body))
+        for path in ("/index.html", "/?view=review"):
+            with self.subTest(path):
+                status, _, body = self.get(path)
+                self.assertEqual(status, 200)
+                self.assertIn(b"Astro dashboard", body)
 
-    def test_a_trailing_slash_with_query_does_not_redirect_again(self):
-        status, _, body = self.get("/dashboard/?view=review")
+    def test_the_index_and_labels_are_served_beside_the_page(self):
+        # They stay in dashboard/ on disk, where every builder writes them.
+        status, _, body = self.get("/field-labels.json")
         self.assertEqual(status, 200)
-        self.assertIn(b"Astro dashboard", body)
+        self.assertEqual(json.loads(body), {"turtas": "Turtas"})
+        status, _, body = self.get("/people.json")
+        self.assertEqual(status, 200)
+        self.assertEqual(len(json.loads(body)["people"]), 200)
 
     def test_bundled_javascript_and_css_use_the_dashboard_asset_urls(self):
         for filename, marker, mime in (
@@ -111,7 +127,7 @@ class ServerTests(unittest.TestCase):
             ("app.css", b"#1b313f", "text/css"),
         ):
             with self.subTest(filename):
-                path = f"/dashboard/_astro/{filename}"
+                path = f"/_astro/{filename}"
                 status, headers, compressed = self.get(path, self.GZIP)
                 self.assertEqual(status, 200)
                 self.assertIn(mime, headers["Content-Type"])
@@ -125,18 +141,29 @@ class ServerTests(unittest.TestCase):
                 self.assertIn(marker, raw)
 
     def test_retired_html_does_not_shadow_the_astro_build(self):
-        status, _, body = self.get("/dashboard/index.html")
-        self.assertEqual(status, 200)
+        for path in ("/index.html", "/dashboard/index.html", "/asmuo/x"):
+            with self.subTest(path):
+                _, _, body = self.get(path)
+                self.assertNotIn(b"retired MVP", body)
+        status, _, body = self.get("/index.html")
         self.assertIn(b"Astro dashboard", body)
-        self.assertNotIn(b"retired MVP", body)
 
     def test_frontend_source_and_build_paths_are_not_public_urls(self):
-        for path in ("/frontend/src/private.js", "/frontend/dist/index.html", "/dashboard/../frontend/src/private.js"):
+        # The build is the root now, so these resolve inside it and miss.
+        for path in (
+            "/frontend/src/private.js",
+            "/frontend/dist/index.html",
+            "/frontend/astro.config.mjs",
+            "/frontend/../frontend/src/private.js",
+        ):
             with self.subTest(path):
-                self.assertEqual(self.get(path)[0], 403)
+                status, _, body = self.get(path)
+                self.assertEqual(status, 404)
+                self.assertNotIn(b"source only", body)
+                self.assertNotIn(b"Astro dashboard", body)
 
     def test_people_json_is_gzipped(self):
-        status, headers, body = self.get("/dashboard/people.json", self.GZIP)
+        status, headers, body = self.get("/people.json", self.GZIP)
         self.assertEqual(status, 200)
         self.assertEqual(headers["Content-Encoding"], "gzip")
         decoded = __import__("gzip").decompress(body)
@@ -149,18 +176,61 @@ class ServerTests(unittest.TestCase):
                 self.assertEqual(self.get(path, self.GZIP)[0], 200)
 
     def test_an_uncompressed_client_still_gets_the_file(self):
-        status, headers, body = self.get("/dashboard/people.json")
+        status, headers, body = self.get("/people.json")
         self.assertEqual(status, 200)
         self.assertNotIn("Content-Encoding", headers)
         self.assertEqual(len(json.loads(body)["people"]), 200)
 
     # -- what is not --------------------------------------------------------
 
-    def test_nothing_outside_the_three_directories(self):
-        # The server used to answer all of these 200.
-        for path in ("/.git/config", "/conftest.py", "/scraper/person_overrides.json"):
+    def test_no_repository_path_outside_the_served_set(self):
+        # The server used to answer all of these 200. With the build at the
+        # root (issue #184) every one resolves inside frontend/dist and 404s,
+        # the retired /dashboard/ URLs included: the page was never published
+        # there, so they are not redirected.
+        for path in (
+            "/.git/config",
+            "/conftest.py",
+            "/scraper/person_overrides.json",
+            "/scripts/serve_dashboard.py",
+            "/docs/DASHBOARD.md",
+            "/merge-review.csv",
+            "/dashboard/merge-review.csv",
+            "/dashboard/people.json",
+            "/dashboard/index.html",
+            "/dashboard/",
+        ):
+            for method in ("GET", "HEAD"):
+                with self.subTest(path=path, method=method):
+                    status, _, body = self.get(path, self.GZIP, method=method)
+                    self.assertEqual(status, 404)
+                    for secret in (b"[core]", b"secret", b"source", b"pid,pid", b"not for the page"):
+                        self.assertNotIn(secret, body)
+
+    def test_the_guard_refuses_what_translate_path_would_not_produce(self):
+        # Defence in depth: the guard re-checks each destination, so a
+        # mapping mistake fails closed.
+        root = Path("/srv/vrk")
+        for path, served in (
+            ("frontend/dist/index.html", True),
+            ("frontend/dist/_astro/app.js", True),
+            ("data/2016-seimo/x.json", True),
+            ("portraits/p0123456789ab.webp", True),
+            ("docs/concept-map.json", True),
+            ("dashboard/people.json", True),
+            ("dashboard/field-labels.json", True),
+            ("dashboard/merge-review.csv", False),
+            ("dashboard/index.html", False),
+            ("docs/DASHBOARD.md", False),
+            ("frontend/src/private.js", False),
+            ("frontend/distx/index.html", False),
+            ("scripts/serve_dashboard.py", False),
+            (".git/config", False),
+            ("", False),
+        ):
             with self.subTest(path):
-                self.assertEqual(self.get(path, self.GZIP)[0], 403)
+                self.assertEqual(serve._is_served(root / path, root), served)
+        self.assertFalse(serve._is_served(Path("/etc/passwd"), root))
 
     def test_a_directory_gets_no_listing(self):
         # `/` listed `.claude/`, `.git`, `.run-state/`, `samples-full/`, …
@@ -171,59 +241,134 @@ class ServerTests(unittest.TestCase):
         # Nothing checked `Host`, so a page the user visits in the same
         # browser could read the served root as same-origin after a DNS
         # rebind.
-        status, _, _ = self.get("/dashboard/people.json", {**self.GZIP, "Host": "evil.example.com"})
-        self.assertEqual(status, 403)
+        for path in ("/people.json", "/asmuo/x"):
+            with self.subTest(path):
+                status, _, _ = self.get(path, {**self.GZIP, "Host": "evil.example.com"})
+                self.assertEqual(status, 403)
         for host in ("127.0.0.1", f"127.0.0.1:{self.port}", "localhost", f"localhost:{self.port}"):
             with self.subTest(host):
-                self.assertEqual(self.get("/dashboard/", {**self.GZIP, "Host": host})[0], 200)
+                self.assertEqual(self.get("/", {**self.GZIP, "Host": host})[0], 200)
 
     def test_traversal_stays_blocked(self):
-        for path in ("/dashboard/../conftest.py", "/../conftest.py", "/dashboard/%2e%2e/conftest.py"):
+        for path in (
+            "/dashboard/../conftest.py",
+            "/../conftest.py",
+            "/dashboard/%2e%2e/conftest.py",
+            "/%2e%2e/conftest.py",
+            "/data/../conftest.py",
+            "/portraits/%2e%2e/conftest.py",
+            "/docs/../conftest.py",
+            "/_astro/../../../conftest.py",
+        ):
             with self.subTest(path):
-                self.assertNotEqual(self.get(path, self.GZIP)[0], 200)
+                status, _, body = self.get(path, self.GZIP)
+                self.assertNotEqual(status, 200)
+                self.assertNotIn(b"secret", body)
 
     def test_head_is_guarded_too(self):
-        self.assertEqual(self.get("/conftest.py", self.GZIP, method="HEAD")[0], 403)
-        self.assertEqual(self.get("/dashboard/index.html", self.GZIP, method="HEAD")[0], 200)
+        self.assertEqual(self.get("/conftest.py", self.GZIP, method="HEAD")[0], 404)
+        self.assertEqual(self.get("/", self.GZIP, method="HEAD")[0], 200)
+        self.assertEqual(self.get("/people.json", self.GZIP, method="HEAD")[0], 200)
 
-    # -- the redirects ------------------------------------------------------
+    # -- redirects and page routes -------------------------------------------
 
     def test_a_directory_without_its_slash_redirects(self):
         # It answered 200 with the page, whose base URL is then one level too
         # high, so its first fetch 404'd and `bootFailed` told the user their
         # working directory was wrong.
-        status, headers, _ = self.get("/dashboard", self.GZIP)
-        self.assertEqual(status, 301)
-        self.assertEqual(headers["Location"], "/dashboard/")
+        for path, location in (("/_astro", "/_astro/"), ("/data?x=1", "/data/?x=1")):
+            with self.subTest(path):
+                status, headers, _ = self.get(path, self.GZIP)
+                self.assertEqual(status, 301)
+                self.assertEqual(headers["Location"], location)
 
-    def test_a_dashboard_query_keeps_its_parameters_in_the_slash_redirect(self):
-        status, headers, _ = self.get("/dashboard?view=review", self.GZIP)
-        self.assertEqual(status, 301)
-        self.assertEqual(headers["Location"], "/dashboard/?view=review")
+    # Issue #184: every view has its own path, answered with the page itself;
+    # the page's router picks the view. Only those paths fall back -- a
+    # mistyped asset is still a 404, and no repository root becomes reachable.
 
-    def test_the_root_points_at_the_dashboard(self):
-        status, headers, _ = self.get("/", self.GZIP)
-        self.assertEqual(status, 302)
-        self.assertEqual(headers["Location"], "/dashboard/")
+    ROUTES = (
+        "/asmuo/birute-vesaite-p7d185515b624",
+        "/asmuo/p7d185515b624",
+        "/asmuo/nobody/",
+        "/palyginti/p7d185515b624,p0123456789ab",
+        "/suvestine",
+        "/suvestine/",
+        "/iskelejai",
+        "/apreptis",
+        "/pokyciai?x=1",
+    )
+
+    def test_every_route_is_answered_with_the_page(self):
+        for path in self.ROUTES:
+            for headers, method in ((self.GZIP, "GET"), ({}, "GET"), ({}, "HEAD")):
+                with self.subTest(path=path, headers=headers, method=method):
+                    status, got, body = self.get(path, headers, method)
+                    got = {name.lower(): value for name, value in got.items()}
+                    self.assertEqual(status, 200)
+                    self.assertIn("text/html", got["content-type"])
+                    self.assertEqual(got["cache-control"], "no-cache")
+                    if method == "GET":
+                        if headers:
+                            body = __import__("gzip").decompress(body)
+                        self.assertIn(b"Astro dashboard", body)
+
+    def test_only_the_route_paths_fall_back(self):
+        for path in (
+            "/asmuo",
+            "/asmuo/x/y",
+            "/asmuo/../conftest.py",
+            "/palyginti/a/b",
+            "/suvestine/x",
+            "/suvestines",
+            "/statistika",
+            "/dashboard/",
+            "/dashboard",
+            "/dashboard/people.json",
+            "/_astro/missing.js",
+            "/data/2016-seimo/missing.json",
+            "/portraits/pmissing.webp",
+        ):
+            with self.subTest(path):
+                status, headers, body = self.get(path, self.GZIP)
+                self.assertEqual(status, 404)
+                self.assertNotIn("Location", headers)
+                self.assertNotIn(b"Astro dashboard", body)
+                self.assertNotIn(b"secret", body)
+
+    def test_route_matching(self):
+        for path, expected in (
+            ("/asmuo/x", True),
+            ("/asmuo/x/", True),
+            ("/asmuo/", True),
+            ("/palyginti/a,b?x=1", True),
+            ("/apreptis/", True),
+            ("/asmuo", False),
+            ("/asmuo/x/y", False),
+            ("/apreptis/x", False),
+            ("/", False),
+            ("/people.json", False),
+        ):
+            with self.subTest(path):
+                self.assertIs(serve.is_route(path), expected)
 
     # -- caching and headers -----------------------------------------------
 
     def test_a_conditional_request_gets_a_304(self):
-        _, headers, body = self.get("/dashboard/people.json", self.GZIP)
+        _, headers, body = self.get("/people.json", self.GZIP)
         etag, modified = headers["ETag"], headers["Last-Modified"]
         self.assertTrue(etag and modified)
         status, _, empty = self.get(
-            "/dashboard/people.json", {**self.GZIP, "If-None-Match": etag}
+            "/people.json", {**self.GZIP, "If-None-Match": etag}
         )
         self.assertEqual(status, 304)
         self.assertEqual(empty, b"")
         status, _, _ = self.get(
-            "/dashboard/people.json", {**self.GZIP, "If-Modified-Since": modified}
+            "/people.json", {**self.GZIP, "If-Modified-Since": modified}
         )
         self.assertEqual(status, 304)
         # A different ETag still gets the body.
         status, _, again = self.get(
-            "/dashboard/people.json", {**self.GZIP, "If-None-Match": 'W/"0000000000000000"'}
+            "/people.json", {**self.GZIP, "If-None-Match": 'W/"0000000000000000"'}
         )
         self.assertEqual(status, 200)
         self.assertEqual(again, body)
@@ -234,11 +379,13 @@ class ServerTests(unittest.TestCase):
 
     def test_cache_control_per_path_class(self):
         cases = {
-            "/dashboard/_astro/app.js": serve.IMMUTABLE_CACHE_CONTROL,
-            "/dashboard/_astro/app.css": serve.IMMUTABLE_CACHE_CONTROL,
-            "/dashboard/": "no-cache",
-            "/dashboard/?q=x": "no-cache",
-            "/dashboard/people.json": "no-cache",
+            "/_astro/app.js": serve.IMMUTABLE_CACHE_CONTROL,
+            "/_astro/app.css": serve.IMMUTABLE_CACHE_CONTROL,
+            "/": "no-cache",
+            "/?q=x": "no-cache",
+            "/index.html": "no-cache",
+            "/people.json": "no-cache",
+            "/field-labels.json": "no-cache",
             "/data/2016-seimo/x-2016-seimo.json": "no-cache",
             "/docs/concept-map.json": "no-cache",
             # Issue #187: versioned portraits are a new URL per change.
@@ -271,7 +418,7 @@ class ServerTests(unittest.TestCase):
         self.assertEqual(status, 404)
 
     def test_a_304_repeats_the_cache_control(self):
-        for path in ("/dashboard/people.json", "/dashboard/_astro/app.js"):
+        for path in ("/people.json", "/_astro/app.js"):
             with self.subTest(path):
                 _, headers, _ = self.get(path, self.GZIP)
                 status, again, _ = self.get(
@@ -283,7 +430,7 @@ class ServerTests(unittest.TestCase):
     def test_errors_and_redirects_are_not_marked_cacheable(self):
         # An immutable 404 under _astro/ would pin a missing asset at the
         # edge for a year.
-        for path in ("/dashboard/_astro/missing.js", "/conftest.py", "/dashboard", "/"):
+        for path in ("/_astro/missing.js", "/conftest.py", "/dashboard/", "/dashboard/_astro/app.js", "/_astro"):
             with self.subTest(path):
                 status, headers, _ = self.get(path, self.GZIP)
                 self.assertIn(status, (301, 302, 403, 404))
@@ -292,7 +439,7 @@ class ServerTests(unittest.TestCase):
     def test_if_modified_since_alone_revalidates(self):
         # What a browser sends from behind Cloudflare, which drops the origin
         # ETag when it recompresses: no If-None-Match, only the date.
-        for path in ("/dashboard/people.json", "/data/2016-seimo/x-2016-seimo.json"):
+        for path in ("/people.json", "/data/2016-seimo/x-2016-seimo.json"):
             for encoding in (self.GZIP, {}):
                 with self.subTest(path=path, encoding=encoding):
                     _, headers, _ = self.get(path, encoding)
@@ -325,11 +472,11 @@ class ServerTests(unittest.TestCase):
                 self.assertEqual(json.loads(body), {"turtas": 1200})
 
     def test_if_none_match_takes_precedence_and_compares_weakly(self):
-        _, headers, _ = self.get("/dashboard/people.json", self.GZIP)
+        _, headers, _ = self.get("/people.json", self.GZIP)
         etag, modified = headers["ETag"], headers["Last-Modified"]
         # A mismatched tag wins over a date that alone would be a 304.
         status, _, _ = self.get(
-            "/dashboard/people.json",
+            "/people.json",
             {**self.GZIP, "If-None-Match": 'W/"0000000000000000"', "If-Modified-Since": modified},
         )
         self.assertEqual(status, 200)
@@ -337,12 +484,12 @@ class ServerTests(unittest.TestCase):
         for match in (f'"aaaa", {etag}', etag.removeprefix("W/")):
             with self.subTest(match):
                 status, _, _ = self.get(
-                    "/dashboard/people.json", {**self.GZIP, "If-None-Match": match}
+                    "/people.json", {**self.GZIP, "If-None-Match": match}
                 )
                 self.assertEqual(status, 304)
 
     def test_every_response_carries_the_hardening_headers(self):
-        for path in ("/dashboard/", "/dashboard/people.json", "/conftest.py"):
+        for path in ("/", "/people.json", "/conftest.py", "/asmuo/x"):
             with self.subTest(path):
                 _, headers, _ = self.get(path, self.GZIP)
                 self.assertEqual(headers["X-Content-Type-Options"], "nosniff")

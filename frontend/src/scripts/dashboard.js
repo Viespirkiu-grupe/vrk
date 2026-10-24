@@ -5,6 +5,7 @@ import { recordFile, resolvePath, ROOT_SECTIONS, isFilledValue, walkValue } from
 import { partyLineage, partyLineageRoots, partyTypeWord, partyText, partyTitle, partyCoalitions } from "../lib/parties.js";
 import { MONEY_SERIES, parseMoney, LITAS_PER_EURO, declaredInLitas, INCOME_PATH, EMPLOYMENT_INCOME_PATH, declaredIncome, incomeIsEmploymentOnly, moneyEUR } from "../lib/finance.js";
 import { nominatorRuns, runYears } from "../lib/nominators.js";
+import { VIEW_PATHS, personPath, comparePath, parsePath, resolvePersonKey, isRoutableClick } from "../lib/routes.js";
 
 // Election names come from people.json, which copies them from the one
 // registry (scraper/elections.json). No election list lives in this file:
@@ -513,9 +514,9 @@ async function boot() {
   let labelsRes;
   try {
     const [indexRes, mapRes, fieldRes] = await Promise.all([
-      fetch("people.json", { cache: "no-cache" }),
-      fetch("../docs/concept-map.json", { cache: "no-cache" }),
-      fetch("field-labels.json", { cache: "no-cache" }).catch(() => null),
+      fetch("/people.json", { cache: "no-cache" }),
+      fetch("/docs/concept-map.json", { cache: "no-cache" }),
+      fetch("/field-labels.json", { cache: "no-cache" }).catch(() => null),
     ]);
     if (!indexRes.ok) throw new Error(`people.json: HTTP ${indexRes.status}`);
     if (!mapRes.ok) throw new Error(`docs/concept-map.json: HTTP ${mapRes.status}`);
@@ -620,21 +621,16 @@ async function boot() {
   setFilters(false);
   filterToggle.addEventListener("click", () => setFilters(filters.hidden));
   document.getElementById("overviewBtn").addEventListener("click", () => {
-    history.replaceState(null, "", location.pathname + location.search);
-    showPlaceholder();
+    navigate("/");
     document.getElementById("search").focus({ preventScroll: true });
     document.getElementById("searchbox").scrollIntoView({ block: "start" });
   });
   document.getElementById("resetFiltersBtn").addEventListener("click", resetFilters);
-  document.getElementById("moversBtn").addEventListener("click", showMovers);
-  document.getElementById("aggBtn").addEventListener("click", showAggregates);
-  document.getElementById("nominatorBtn").addEventListener("click", showNominator);
-  document.getElementById("coverageBtn").addEventListener("click", showCoverage);
-  for (const id of ["moversBtn", "aggBtn", "nominatorBtn", "coverageBtn"]) {
-    document.getElementById(id).addEventListener("click", focusPane);
+  for (const [id, path] of Object.entries(VIEW_PATHS)) {
+    document.getElementById(id).addEventListener("click", () => { navigate(path); focusPane(); });
   }
   document.getElementById("csvBtn").addEventListener("click", exportCSV);
-  document.getElementById("cmpGo").addEventListener("click", showCompare);
+  document.getElementById("cmpGo").addEventListener("click", () => navigate(comparePath([...compareSet.keys()])));
   document.getElementById("cmpClear").addEventListener("click", () => {
     compareSet.clear();
     updateCompareBar();
@@ -644,31 +640,96 @@ async function boot() {
   // One way in, for a click, a shared link and the Back button alike
   // (issue #147): the hash was read once at boot and assigned by showPerson,
   // so history moved while the pane kept the previous person and the URL no
-  // longer matched the screen.
-  window.addEventListener("hashchange", routeFromHash);
-  routeFromHash();
+  // longer matched the screen. Since issue #184 every view has a path of its
+  // own; a click on a link to one is handled here rather than reloading.
+  document.addEventListener("click", (ev) => {
+    const a = ev.target instanceof Element ? ev.target.closest("a[href]") : null;
+    if (!a || !isRoutableClick(ev, a)) return;
+    ev.preventDefault();
+    navigate(a.pathname + a.search);
+  });
+  window.addEventListener("popstate", () => {
+    // A fragment-only move (an in-page anchor) is not a new view, except a
+    // pasted `/#<pid>` on the front page, which is the legacy person link.
+    if (location.pathname === routedPath && !(location.pathname === "/" && location.hash.length > 1)) return;
+    route();
+  });
+  route();
 }
 
-//: The person named by the URL, or nobody. The pid is the durable deep link
-//: (issue #96); a pre-pid name|birth hash and a merged-away fragment's key
-//: both still resolve, and showPerson rewrites the URL to the pid without
-//: adding a history entry, so old shared links keep working.
-function personFromHash() {
-  const key = decodeURIComponent(location.hash.slice(1));
-  if (!key) return null;
-  return (
-    INDEX.people.find(p => p.pid === key || p.k === key || (p.ak || []).includes(key)) || null
-  );
+//: Person lookup by any key a link may carry: the pid (the durable deep
+//: link, issue #96), a pre-pid name|birth key, or a merged-away fragment's
+//: key. Built once, on the first route.
+let personKeys = null;
+function personByKey(key) {
+  if (!personKeys) {
+    personKeys = new Map();
+    for (const p of INDEX.people) {
+      for (const k of [p.k, ...(p.ak || [])]) if (k && !personKeys.has(k)) personKeys.set(k, p);
+    }
+    for (const p of INDEX.people) personKeys.set(p.pid, p);
+  }
+  return personKeys.get(key) || null;
 }
 
-function routeFromHash() {
-  const key = decodeURIComponent(location.hash.slice(1));
-  const person = personFromHash();
-  if (person) { showPerson(person); return; }
-  // An empty hash is the front page -- which is where Back out of a person
-  // lands. A hash naming nobody is a stale or mistyped link, and saying so
-  // beats leaving the last person on screen under it.
-  showPlaceholder(key ? `Nuoroda „${key}“ nieko neatitinka.` : null);
+//: The path the screen was last routed from.
+let routedPath = null;
+
+//: Go to a view: a new history entry, then the router draws it. The same
+//: path again redraws without a second entry.
+function navigate(path) {
+  if (path !== location.pathname + location.search || location.hash) history.pushState(null, "", path);
+  route();
+}
+
+//: Point the URL at what is on screen without a history entry or a reroute.
+function canonicalize(path) {
+  if (location.pathname + location.hash !== path) history.replaceState(null, "", path);
+  routedPath = location.pathname;
+}
+
+//: The router (issues #147, #184): the path picks the view. A person is
+//: `/asmuo/<slug>-<pid>`, resolved by pid alone; a missing or wrong slug, a
+//: bare pid or a legacy key is rewritten to the canonical path. The old
+//: `/#<pid>` and name|birth hashes still work on the front page and are
+//: rewritten the same way, so links shared before the paths keep opening
+//: the right person. Anything naming nobody says so, rather than leaving the
+//: last view on screen under a URL that does not match it.
+function route() {
+  routedPath = location.pathname;
+  const { view, key } = parsePath(location.pathname);
+  const nothing = (what) => showPlaceholder(`Nuoroda „${what}“ nieko neatitinka.`);
+  if (view === "front") {
+    let legacy = location.hash.slice(1);
+    try { legacy = decodeURIComponent(legacy); } catch { /* keep it raw */ }
+    if (!legacy) { showPlaceholder(); return; }
+    const person = personByKey(legacy);
+    if (!person) { nothing(legacy); return; }
+    canonicalize(personPath(person));
+    showPerson(person);
+    return;
+  }
+  if (view === "person") {
+    const person = key ? resolvePersonKey(key, personByKey) : null;
+    if (!person) { nothing(key); return; }
+    canonicalize(personPath(person));
+    showPerson(person);
+    return;
+  }
+  if (view === "compare") {
+    const persons = [...new Map(key.map(personByKey).filter(Boolean).map(p => [p.pid, p])).values()];
+    if (persons.length < 2 || persons.length !== key.length) { nothing(key.join(",")); return; }
+    compareSet.clear();
+    for (const p of persons) compareSet.set(p.pid, p);
+    updateCompareBar();
+    renderList();
+    canonicalize(comparePath(persons.map(p => p.pid)));
+    showCompare();
+    return;
+  }
+  const show = { aggBtn: showAggregates, nominatorBtn: showNominator, coverageBtn: showCoverage, moversBtn: showMovers }[view];
+  if (show) { canonicalize(VIEW_PATHS[view]); show(); return; }
+  nothing(key);
 }
 
 //: Which render is current. `fetchRecord` memoises by file, so clicking an
@@ -692,11 +753,11 @@ function showPlaceholder(message) {
     const grid = document.createElement("div");
     grid.className = "overview-grid";
     div.append(intro, grid);
-    for (const [title, description, action] of [
-      ["Rinkimų suvestinė", "Kandidatų sudėtis, rinkimų rezultatai ir deklaracijų rodikliai. Prie skaičių – jų aprėptis.", showAggregates, "01"],
-      ["Iškėlėjai", "Partijų, komitetų ir koalicijų kandidatai skirtinguose rinkimuose. Galima įtraukti organizacijų pirmtakus.", showNominator, "02"],
-      ["Deklaracijų pokyčiai", "Palyginkite pirmą ir paskutinę turimą asmens turto ar pajamų deklaraciją.", showMovers, "03"],
-      ["Duomenų aprėptis", "Sužinokite, ko klausė skirtingų metų anketos ir kiek kandidatų pateikė atsakymą.", showCoverage, "04"],
+    for (const [title, description, path] of [
+      ["Rinkimų suvestinė", "Kandidatų sudėtis, rinkimų rezultatai ir deklaracijų rodikliai. Prie skaičių – jų aprėptis.", VIEW_PATHS.aggBtn, "01"],
+      ["Iškėlėjai", "Partijų, komitetų ir koalicijų kandidatai skirtinguose rinkimuose. Galima įtraukti organizacijų pirmtakus.", VIEW_PATHS.nominatorBtn, "02"],
+      ["Deklaracijų pokyčiai", "Palyginkite pirmą ir paskutinę turimą asmens turto ar pajamų deklaraciją.", VIEW_PATHS.moversBtn, "03"],
+      ["Duomenų aprėptis", "Sužinokite, ko klausė skirtingų metų anketos ir kiek kandidatų pateikė atsakymą.", VIEW_PATHS.coverageBtn, "04"],
     ]) {
       const card = document.createElement("button");
       card.type = "button";
@@ -711,7 +772,7 @@ function showPlaceholder(message) {
       arrow.textContent = "Atverti →";
       arrow.setAttribute("aria-hidden", "true");
       card.append(heading, body, arrow);
-      card.addEventListener("click", () => { action(); focusPane(); });
+      card.addEventListener("click", () => { navigate(path); focusPane(); });
       grid.appendChild(card);
     }
     const note = document.createElement("p");
@@ -755,14 +816,6 @@ function resetFilters() {
   const refresh = { aggBtn: showAggregates, nominatorBtn: showNominator, moversBtn: showMovers }[view];
   if (refresh) refresh();
   announce("Paieška ir filtrai išvalyti.");
-}
-
-//: Drop the person out of the URL without adding a history entry (and
-//: without re-entering the router, which an assignment to location.hash
-//: would do): the three header views are not a person, and the URL should
-//: not claim one.
-function clearHash() {
-  history.replaceState(null, "", location.pathname + location.search);
 }
 
 //: Said out loud, once, into the page's live region. A screen reader gets
@@ -1026,11 +1079,11 @@ function renderList() {
     });
     // The name is a real link to the person's own URL: Enter opens them,
     // Space is left to the checkbox, and a middle click or ⌘-click opens a
-    // second person in a new tab. Navigation goes through the hash, so one
+    // second person in a new tab. Navigation goes through the router, so one
     // path serves a click, a shared link, and the Back button.
     const main = document.createElement("a");
     main.className = "rowmain";
-    main.href = `#${p.pid}`;
+    main.href = personPath(p);
     const nm = document.createElement("span"); nm.className = "nm"; nm.textContent = p.n;
     const bd = document.createElement("span"); bd.className = "bd";
     bd.textContent = p.b ? `· ${p.b}` : "· gimimo data nežinoma";
@@ -1164,7 +1217,7 @@ async function fetchRecord(e) {
   if (!recordCache.has(file)) {
     recordCache.set(
       file,
-      fetch("../" + file, { cache: "no-cache" })
+      fetch("/" + file, { cache: "no-cache" })
         .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
         .catch(err => { recordCache.delete(file); return { _error: `${file}: ${err.message || err}` }; })
     );
@@ -1400,7 +1453,7 @@ function loadPortrait(p) {
   img.width = 96;
   img.height = 128;
   const v = INDEX.portraits && INDEX.portraits.v;
-  img.src = `../portraits/${encodeURIComponent(p.pid)}.webp${v ? `?v=${encodeURIComponent(v)}` : ""}`;
+  img.src = `/portraits/${encodeURIComponent(p.pid)}.webp${v ? `?v=${encodeURIComponent(v)}` : ""}`;
   return img.decode().then(() => img, () => null);
 }
 
@@ -1412,13 +1465,7 @@ async function showPortrait(head, portrait, token) {
 async function showPerson(p) {
   const token = ++renderToken;
   setActiveView("overviewBtn");
-  // The URL is the router's business, not this function's. A legacy or
-  // merged-away key in the hash is canonicalised to the pid here -- with
-  // replaceState, so it neither adds a history entry nor re-enters the
-  // router.
-  if (decodeURIComponent(location.hash.slice(1)) !== p.pid) {
-    history.replaceState(null, "", `#${p.pid}`);
-  }
+  // The URL is the router's business, not this function's.
   for (const el of document.querySelectorAll(".row")) el.classList.toggle("active", el.dataset.key === p.pid);
   const root = document.getElementById("person");
   root.innerHTML = `<div class="loading">Kraunami įrašai (${p.e.length})…</div>`;
@@ -1606,7 +1653,6 @@ async function showCompare() {
   if (persons.length < 2) return;
   const token = ++renderToken;
   setActiveView("overviewBtn");
-  clearHash();
   clearActiveRows();
   const root = document.getElementById("person");
   const total = persons.reduce((n, p) => n + p.e.length, 0);
@@ -1753,7 +1799,6 @@ function appendFacetNote(root, named, onClear) {
 function showAggregates() {
   renderToken += 1;
   setActiveView("aggBtn");
-  clearHash();
   clearActiveRows();
   const root = document.getElementById("person");
   root.innerHTML = "";
@@ -1911,9 +1956,8 @@ function showAggregates() {
         tr.insertCell().textContent = String(i + 1);
         const cell = tr.insertCell();
         const a = document.createElement("a");
-        a.href = "#" + p.pid;
+        a.href = personPath(p);
         a.textContent = p.n;
-        a.addEventListener("click", (ev) => { ev.preventDefault(); showPerson(p); });
         cell.appendChild(a);
         tr.insertCell().textContent = partyNameOf(e) || "—";
         const votes = tr.insertCell(); votes.textContent = fmtInt(e[key]); votes.style.fontVariantNumeric = "tabular-nums";
@@ -1965,9 +2009,8 @@ function showAggregates() {
         if (c.n === 1 && members.length === 1) {
           const [p] = members[0];
           const a = document.createElement("a");
-          a.href = "#" + p.pid;
+          a.href = personPath(p);
           a.textContent = p.n;
-          a.addEventListener("click", (ev) => { ev.preventDefault(); showPerson(p); });
           who.appendChild(a);
         } else {
           who.textContent = [...new Set(members.map(([, e]) => partyNameOf(e)).filter(Boolean))].join(", ") || "bendra kampanija";
@@ -2079,7 +2122,6 @@ function showAggregates() {
 function showNominator() {
   renderToken += 1;
   setActiveView("nominatorBtn");
-  clearHash();
   clearActiveRows();
   const root = document.getElementById("person");
   root.innerHTML = "";
@@ -2203,9 +2245,8 @@ function showNominator() {
       const tr = pt.tBodies[0].insertRow();
       const cell = tr.insertCell();
       const a = document.createElement("a");
-      a.href = "#" + p.pid;
+      a.href = personPath(p);
       a.textContent = p.n;
-      a.addEventListener("click", (ev) => { ev.preventDefault(); showPerson(p); });
       cell.appendChild(a);
       tr.insertCell().textContent = fmtInt(n);
       tr.insertCell().textContent = fmtInt(w);
@@ -2227,7 +2268,6 @@ function showNominator() {
 function showCoverage() {
   renderToken += 1;
   setActiveView("coverageBtn");
-  clearHash();
   clearActiveRows();
   const root = document.getElementById("person");
   root.innerHTML = "";
@@ -2295,7 +2335,6 @@ function showCoverage() {
 function showMovers() {
   renderToken += 1;
   setActiveView("moversBtn");
-  clearHash();
   clearActiveRows();
   const root = document.getElementById("person");
   root.innerHTML = "";
@@ -2354,9 +2393,8 @@ function showMovers() {
       tr.insertCell().textContent = String(i + 1);
       const nameCell = tr.insertCell();
       const a = document.createElement("a");
-      a.href = "#" + r.p.pid;
+      a.href = personPath(r.p);
       a.textContent = `${r.p.n} · ${r.p.b || "?"}`;
-      a.addEventListener("click", (ev) => { ev.preventDefault(); showPerson(r.p); });
       nameCell.appendChild(a);
       // "ds" marks an income figure that is the 1990s form's employment row
       // rather than a declared total (the `deklaruotos-pajamos` concept).

@@ -88,7 +88,7 @@ export async function installFixtures(page, { failedRecord, failedIndex = false,
   };
   // UI assets, the real concept map and field labels still pass through the
   // production preview server, so missing bundles / bad base URLs fail the suite.
-  await page.route('**/dashboard/people.json', route => route.fulfill({
+  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
     status: failedIndex ? 503 : 200,
     contentType: 'application/json',
     body: JSON.stringify(failedIndex ? { error: 'fixture unavailable' } : served),
