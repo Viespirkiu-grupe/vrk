@@ -346,6 +346,47 @@ test('narrow viewports contain wide financial and coverage tables', async ({ pag
   await noPageOverflow(page);
 });
 
+test('wide tables fade only on the side with more to scroll, never over the sticky column', async ({ page }) => {
+  const project = test.info().project.name;
+  test.skip(project === 'tablet', '320px and desktop cover both outcomes');
+  if (project === 'phone') await page.setViewportSize({ width: 320, height: 740 });
+  await ready(page, '/dashboard/#test-anna');
+  await page.getByRole('button', { name: 'Turtas ir pajamos', exact: true }).click();
+  const wrap = page.locator('#person table.cmp:visible').locator('..');
+  await expect(wrap).toHaveClass(/\btablewrap\b/);
+
+  if (project === 'desktop') {
+    expect(await wrap.evaluate(w => w.scrollWidth <= w.clientWidth)).toBe(true);
+    await expect(wrap).not.toHaveAttribute('data-more-left');
+    await expect(wrap).not.toHaveAttribute('data-more-right');
+    expect(await wrap.evaluate(w => getComputedStyle(w).maskImage)).toBe('none');
+    return;
+  }
+
+  await expect(wrap).toHaveAttribute('data-more-right', '');
+  await expect(wrap).not.toHaveAttribute('data-more-left');
+  await wrap.evaluate(w => { w.scrollLeft = w.scrollWidth; });
+  await expect(wrap).toHaveAttribute('data-more-left', '');
+  await expect(wrap).not.toHaveAttribute('data-more-right');
+
+  // The fade starts where the sticky column ends: the column looks the same
+  // with the mask as without, and the cells scrolled under the fade do not.
+  const sticky = await wrap.evaluate(w => {
+    const cell = w.querySelector('table').rows[0].cells[0];
+    return { var: parseFloat(w.style.getPropertyValue('--sticky')), width: cell.getBoundingClientRect().width };
+  });
+  expect(Math.abs(sticky.var - sticky.width)).toBeLessThanOrEqual(1);
+  await wrap.scrollIntoViewIfNeeded();
+  const box = await wrap.boundingBox();
+  const column = { x: box.x, y: box.y, width: sticky.width, height: box.height };
+  const fade = { x: box.x + sticky.width, y: box.y, width: 24, height: box.height };
+  const masked = [await page.screenshot({ clip: column }), await page.screenshot({ clip: fade })];
+  await wrap.evaluate(w => w.style.setProperty('mask', 'none'));
+  const plain = [await page.screenshot({ clip: column }), await page.screenshot({ clip: fade })];
+  expect(masked[0].equals(plain[0]), 'the sticky column is never faded').toBe(true);
+  expect(masked[1].equals(plain[1]), 'the content after it is').toBe(false);
+});
+
 test('mobile menu supports keyboard dismissal, view selection and resizing', async ({ page }) => {
   test.skip(test.info().project.name === 'desktop', 'compact navigation');
   await ready(page);
