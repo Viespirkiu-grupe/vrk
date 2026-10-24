@@ -511,6 +511,42 @@ test('party switches rank the movers and the loyal, link each person and fit 320
   expect(errors).toEqual([]);
 });
 
+test('a party-switch ranking shows its top 5 and a "Rodyti visus" button (#199)', async ({ page }) => {
+  // Seven movers, each from Partija A to Partija B.
+  const parties = { ...index.parties, 'syn-a': { n: 'Partija A', t: 'partija' }, 'syn-b': { n: 'Partija B', t: 'partija' } };
+  const movers = Array.from({ length: 7 }, (_, i) => ({
+    pid: `test-mover-${i}`, n: `Keitėjas NR${i}`, b: null, k: `KEITĖJAS NR${i}|`,
+    e: [{ id: '2020-seimo', c: `test-mover-${i}`, p: 'syn-a' }, { id: '2024-seimo', c: `test-mover-${i}`, p: 'syn-b' }],
+  }));
+  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
+    contentType: 'application/json',
+    body: JSON.stringify({ ...index, parties, people: [...index.people, ...movers] }),
+  }));
+  await page.goto('/partiju-keitimai');
+  await expect(page.locator('.switches h4')).toHaveText(['Kiek kartų keitė', 'Dažniausiai keitę partiją', 'Ištikimiausi savo partijai', 'Kaip skaičiuojama']);
+  const ranking = page.locator('#person table.ranking').first();
+  await expect(ranking.locator('tbody tr')).toHaveCount(7);
+  await expect(ranking.locator('tbody tr:visible')).toHaveCount(5);
+  // The loyal list has one row, so it gets no button.
+  await expect(page.locator('.switches .showall')).toHaveCount(1);
+  const more = page.locator('.switches .showall');
+  await expect(more).toHaveText('Rodyti visus 7');
+  await expect(more).toHaveAttribute('aria-expanded', 'false');
+  await more.click();
+  await expect(more).toHaveAttribute('aria-expanded', 'true');
+  await expect(more).toHaveText('Rodyti mažiau');
+  await expect(ranking.locator('tbody tr:visible')).toHaveCount(7);
+  await more.focus();
+  await page.keyboard.press('Enter');
+  await expect(more).toHaveAttribute('aria-expanded', 'false');
+  await expect(more).toHaveText('Rodyti visus 7');
+  await expect(ranking.locator('tbody tr:visible')).toHaveCount(5);
+  await page.keyboard.press('Enter');
+  await expect(more).toHaveAttribute('aria-expanded', 'true');
+  await expect(ranking.locator('tbody tr:visible')).toHaveCount(7);
+  await noPageOverflow(page);
+});
+
 test('a party-switch group under 0.1 % reads "<0,1 %", not "0,0 %" (#199)', async ({ page }) => {
   // 1,500 one-time candidates and one mover: 1 of 1,504 is 0.07 %.
   const parties = { ...index.parties, 'syn-a': { n: 'Partija A', t: 'partija' }, 'syn-b': { n: 'Partija B', t: 'partija' } };

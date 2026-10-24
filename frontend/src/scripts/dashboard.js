@@ -2497,6 +2497,8 @@ function showMovers() {
 // in lib/nominators.js; the rows are the whole index's, computed once on the
 // first visit (about 140 ms over the 60,568 people) and kept.
 const SWITCH_TOP = 50;
+//: Rows a ranking shows before "Rodyti visus", so the second table is in reach.
+const SWITCH_SHOWN = 5;
 let switchRows = null;
 
 function partySwitchRows() {
@@ -2599,21 +2601,38 @@ function showSwitches() {
         td.textContent = fmtInt(value);
       }
     });
-    return makeScrollWrap(t);
+    const wrap = makeScrollWrap(t);
+    if (list.length <= SWITCH_SHOWN) return wrap;
+    const extra = [...t.tBodies[0].rows].slice(SWITCH_SHOWN);
+    for (const tr of extra) tr.hidden = true;
+    const more = document.createElement("button");
+    more.type = "button"; more.className = "showall";
+    more.textContent = `Rodyti visus ${list.length}`;
+    more.setAttribute("aria-expanded", "false");
+    more.addEventListener("click", () => {
+      const open = more.getAttribute("aria-expanded") !== "true";
+      for (const tr of extra) tr.hidden = !open;
+      more.setAttribute("aria-expanded", String(open));
+      more.textContent = open ? "Rodyti mažiau" : `Rodyti visus ${list.length}`;
+      if (!open) wrap.scrollIntoView({ block: "nearest" });
+    });
+    const out = document.createDocumentFragment();
+    out.append(wrap, more);
+    return out;
   };
 
   // Ties go to more distinct organisations, then to more elections.
   const movers = [...switched]
     .sort((a, b) => b.switches - a.switches || b.organisations - a.organisations || b.elections - a.elections)
     .slice(0, SWITCH_TOP);
-  section("Daugiausiai keitė", `${SWITCH_TOP} kandidatų, dažniausiai keitusių partiją.`)
+  section("Dažniausiai keitę partiją", null)
     .appendChild(table(["#", "Asmuo", "Keitė", "Partijų", "Rinkimų"], movers, r => [r.switches, r.organisations, r.elections]));
 
   // One candidacy without a switch says nothing about loyalty.
   const loyal = rows.filter(r => !r.switches && r.elections > 1)
     .sort((a, b) => b.elections - a.elections)
     .slice(0, SWITCH_TOP);
-  section("Ištikimiausi", `${SWITCH_TOP} kandidatų, daugiausiai kartų kandidatavusių su ta pačia partija.`)
+  section("Ištikimiausi savo partijai", null)
     .appendChild(table(["#", "Asmuo", "Rinkimų"], loyal, r => [r.elections]));
 
   const method = section("Kaip skaičiuojama", null);
