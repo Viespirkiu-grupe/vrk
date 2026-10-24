@@ -51,6 +51,20 @@ class RegistryStructureTests(unittest.TestCase):
             ["marijampoles-miesto", "marijampoles-rajono"],
         )
 
+    def test_a_dissolved_body_names_the_current_bodies_it_became(self):
+        # Issue #219: the constituency era rule reads a pre-2000 body as its
+        # successors' territory, so 1996's Marijampolės and Suvalkijos
+        # districts are not new places in 2000.
+        for municipality_id, entry in entries().items():
+            with self.subTest(municipality_id):
+                successors = entry.get("successors", [])
+                self.assertEqual(bool(successors), bool(entry.get("until")))
+                for successor in successors:
+                    self.assertIn(successor, entries())
+                    self.assertFalse(entries()[successor].get("until"))
+                    self.assertEqual(entries()[successor]["county"], entry["county"])
+        self.assertEqual(entries()["marijampoles-rajono"]["successors"], ["marijampoles", "kalvarijos", "kazlu-rudos"])
+
     def test_every_entry_is_well_formed(self):
         for municipality_id, entry in entries().items():
             with self.subTest(municipality_id):

@@ -1,5 +1,5 @@
 {
-  "_comment": "The county (apskritis) of every single-mandate constituency name (issue #217), for the dashboard's grouped filter. Derived by scripts/build_constituency_counties.py, not by reading the names: VRK's own precinct list for each Seimas election, 1996-2024 (`sources`; published at https://www.vrk.lt/lt/rinkimu-apygardu-ir-apylinkiu-sarasas-ankstesniuose-rinkimuose), gives every precinct's district and municipality, and scraper/municipalities.json (#213) gives each municipality's county. `counties` is the union over every map the name was used in, in the registry's population order -- a name is not a boundary, and a district that touched two counties is listed under both; `maps` is the evidence, the municipalities and their precinct counts per general election (by-elections ran on their term's map). Names whose counties differ between maps are listed in `changedBetweenMaps`; the sharpest is Dainavos, a Kaunas city district through 2016 and the Prienai-Birštonas-Alytus district from 2020. Two precinct-list entries are read explicitly (the script's DISTRICT_NAMES and MUNICIPALITY_FORMS): 1996's Nr. 67 is 'Prienų' on the cards and 'Prienų–Birštono' in the list, and the 1996/2000 'Kupiškio rajonas' and 2004 bare 'Širvintų' are Kupiškis and Širvintai district. A name with an empty `counties` list has a `note` saying why; the filter groups it apart. `groups` are the filter groups the name is listed in, decided per map (`placedBy`): a map whose precincts are mostly (a strict majority) in one of the five big cities' municipalities (`cities`) places the name in that city's group, which the filter shows just ahead of the city's county group; any other map places it under every county its precincts touch. The name is listed under the union, one option per group. `placementDiffersBetweenMaps` lists the names whose maps disagree -- Dainavos is two districts under one name, all Kaunas city through 2016 and Prienai-Birštonas-Alytus district from 2020, so it is in Kauno miestas and in Kauno and Alytaus apskritis.",
+  "_comment": "The county (apskritis) of every single-mandate constituency name (issue #217), for the dashboard's grouped filter. Derived by scripts/build_constituency_counties.py, not by reading the names: VRK's own precinct list for each Seimas election, 1996-2024 (`sources`; published at https://www.vrk.lt/lt/rinkimu-apygardu-ir-apylinkiu-sarasas-ankstesniuose-rinkimuose), gives every precinct's district and municipality, and scraper/municipalities.json (#213) gives each municipality's county. `counties` is the union over every map the name was used in, in the registry's population order -- a name is not a boundary, and a district that touched two counties is listed under both; `maps` is the evidence, the municipalities and their precinct counts per general election (by-elections ran on their term's map). A name reused for a different place -- two consecutive maps of it sharing no municipality, a pre-2000 body counting as the bodies it became (scraper/municipalities.json `successors`) -- is split into eras at that boundary (issue #219), one entry each, labelled '<name> (iki <last year>)' and '<name> (nuo <first year>)' and carrying `name`; `eras` lists them per name. Dainavos is the one such name: a Kaunas city district through 2016, the Alytaus r., Prienų r. and Birštonas district from 2020. Names whose counties differ between maps without a split are listed in `changedBetweenMaps`. Two precinct-list entries are read explicitly (the script's DISTRICT_NAMES and MUNICIPALITY_FORMS): 1996's Nr. 67 is 'Prienų' on the cards and 'Prienų–Birštono' in the list, and the 1996/2000 'Kupiškio rajonas' and 2004 bare 'Širvintų' are Kupiškis and Širvintai district. A name with an empty `counties` list has a `note` saying why; the filter groups it apart. `groups` are the filter groups the name is listed in, decided per map (`placedBy`): a map whose precincts are mostly (a strict majority) in one of the five big cities' municipalities (`cities`) places the name in that city's group, which the filter shows just ahead of the city's county group; any other map places it under every county its precincts touch. The name is listed under the union, one option per group. `placementDiffersBetweenMaps` lists the entries whose maps disagree -- Pajūrio, a Klaipėda city majority in 1996 and from 2016 and a minority in 2000-2012, is in both Klaipėdos miestas and Klaipėdos apskritis.",
   "sources": {
     "1996": {
       "election": "1996-spalio-20-seimo",
@@ -42,8 +42,13 @@
       "url": "https://vrk.lt/fs/prd/p/2026-03/2024m.%20LR%20Seimo%20rinkim%C5%B3%20apylinki%C5%B3%20s%C4%85ra%C5%A1as.xlsx"
     }
   },
+  "eras": {
+    "Dainavos": [
+      "Dainavos (iki 2016)",
+      "Dainavos (nuo 2020)"
+    ]
+  },
   "changedBetweenMaps": [
-    "Dainavos",
     "Deltuvos pietinė",
     "Deltuvos šiaurinė",
     "Kelmės",
@@ -51,7 +56,6 @@
     "Prienų–Birštono"
   ],
   "placementDiffersBetweenMaps": [
-    "Dainavos",
     "Deltuvos pietinė",
     "Deltuvos šiaurinė",
     "Kelmės",
@@ -725,15 +729,13 @@
         }
       }
     },
-    "Dainavos": {
+    "Dainavos (iki 2016)": {
+      "name": "Dainavos",
       "counties": [
-        "Kauno",
-        "Alytaus"
+        "Kauno"
       ],
       "groups": [
-        "Kauno miestas",
-        "Kauno apskritis",
-        "Alytaus apskritis"
+        "Kauno miestas"
       ],
       "placedBy": {
         "1996": [
@@ -753,14 +755,6 @@
         ],
         "2016": [
           "Kauno miestas"
-        ],
-        "2020": [
-          "Kauno apskritis",
-          "Alytaus apskritis"
-        ],
-        "2024": [
-          "Kauno apskritis",
-          "Alytaus apskritis"
         ]
       },
       "maps": {
@@ -781,7 +775,30 @@
         },
         "2016": {
           "Kauno miesto savivaldybė": 12
-        },
+        }
+      }
+    },
+    "Dainavos (nuo 2020)": {
+      "name": "Dainavos",
+      "counties": [
+        "Kauno",
+        "Alytaus"
+      ],
+      "groups": [
+        "Kauno apskritis",
+        "Alytaus apskritis"
+      ],
+      "placedBy": {
+        "2020": [
+          "Kauno apskritis",
+          "Alytaus apskritis"
+        ],
+        "2024": [
+          "Kauno apskritis",
+          "Alytaus apskritis"
+        ]
+      },
+      "maps": {
         "2020": {
           "Alytaus rajono savivaldybė": 14,
           "Birštono savivaldybė": 3,

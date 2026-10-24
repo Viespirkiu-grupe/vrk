@@ -266,8 +266,8 @@ test('the municipality filter groups by county, the most populous first (#213)',
 // "ap" value; a name with no county (the district abroad) gets a labelled
 // group last. The five big cities each get a group just ahead of their
 // county's, decided per map: a map mostly inside the city lists the name
-// there, any other map under its counties -- so a name reused for a city and
-// a rural district (Dainavos) is in both. ap 0 and 1 stay the base fixture's
+// there, any other map under its counties -- so a name whose maps disagree
+// (Pajūrio) is in both. ap 0 and 1 stay the base fixture's
 // (Žirmūnų is a Vilnius city district there).
 test('the constituency filter groups by city and county, a district under each group its maps place it in (#217)', async ({ page }) => {
   const extra = [
@@ -344,6 +344,66 @@ test('the constituency filter groups by city and county, a district under each g
   await expect(page.locator('#results')).toContainText('Ona NAUJOJI');
   await select.selectOption('');
   await expect(page.locator('#results .row')).toHaveCount(5);
+});
+
+// A name reused for a different place is one entry per era (issue #219):
+// each era its own "ap", listed under its own maps' groups and filtering only
+// its own candidacies. Synthetic: "Bandomoji (iki 2016)" a Kaunas city
+// district, "Bandomoji (nuo 2020)" a rural one; the second is appended after
+// the base fixture's names, as the index appends a later era.
+test('two eras of one constituency name are separate options under their own groups, each filtering its own candidates (#219)', async ({ page }) => {
+  const served = {
+    ...index,
+    elections: [
+      { id: '2016-seimo', kind: 'seimo', date: '2016-10-09', name: '2016 m. Lietuvos Respublikos Seimo rinkimai', shortName: '2016 Seimas' },
+      ...index.elections,
+    ],
+    people: [
+      ...people,
+      { pid: 'test-se', n: 'Saulius SENOJO', b: null, k: 'SAULIUS SENOJO|',
+        e: [{ id: '2016-seimo', c: 'test-se', p: 'test-party', ap: 2, m: [null, null, null, null] }] },
+      { pid: 'test-na', n: 'Nijolė NAUJOJO', b: null, k: 'NIJOLĖ NAUJOJO|',
+        e: [{ id: '2020-seimo', c: 'test-na', p: 'test-party', ap: 3, m: [null, null, null, null] }] },
+      { pid: 'test-ab', n: 'Algis ABIEJŲ', b: null, k: 'ALGIS ABIEJŲ|',
+        e: [
+          { id: '2016-seimo', c: 'test-ab', p: 'test-party', ap: 2, m: [null, null, null, null] },
+          { id: '2024-seimo', c: 'test-ab2', p: 'test-party', ap: 3, m: [null, null, null, null] },
+        ] },
+    ],
+    constituencies: [...index.constituencies, 'Bandomoji (iki 2016)', 'Bandomoji (nuo 2020)'],
+    constituencyCounties: [...index.constituencyCounties, ['Kauno'], ['Kauno', 'Alytaus']],
+    constituencyGroups: [...index.constituencyGroups, ['Kauno miestas'], ['Kauno apskritis', 'Alytaus apskritis']],
+  };
+  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
+    status: 200, contentType: 'application/json', body: JSON.stringify(served),
+  }));
+  await page.goto('/');
+  await expect(page.locator('#results .row')).toHaveCount(6);
+  await openFilters(page);
+  const select = page.locator('#fConstituency');
+  await expect(select.locator('optgroup[label="Kauno miestas"] option')).toHaveText(['Bandomoji (iki 2016)']);
+  await expect(select.locator('optgroup[label="Kauno apskritis"] option')).toHaveText(['Bandomoji (nuo 2020)']);
+  await expect(select.locator('optgroup[label="Alytaus apskritis"] option')).toHaveText(['Bandomoji (nuo 2020)']);
+  for (const [label, value, names, absent] of [
+    ['Kauno miestas', '2', ['Saulius SENOJO', 'Algis ABIEJŲ'], 'Nijolė NAUJOJO'],
+    ['Kauno apskritis', '3', ['Nijolė NAUJOJO', 'Algis ABIEJŲ'], 'Saulius SENOJO'],
+    ['Alytaus apskritis', '3', ['Nijolė NAUJOJO', 'Algis ABIEJŲ'], 'Saulius SENOJO'],
+  ]) {
+    const option = select.locator(`optgroup[label="${label}"] option[value="${value}"]`);
+    await option.evaluate(o => { o.selected = true; o.parentElement.closest('select').dispatchEvent(new Event('change', { bubbles: true })); });
+    await expect(page.locator('#results .row')).toHaveCount(names.length);
+    for (const name of names) await expect(page.locator('#results')).toContainText(name);
+    await expect(page.locator('#results')).not.toContainText(absent);
+    await select.selectOption('');
+    await expect(page.locator('#results .row')).toHaveCount(6);
+  }
+  // Scoped to one election, the person who ran in both eras is only in the
+  // era that election belongs to.
+  await page.locator('#fElection').selectOption('2016-seimo');
+  await select.selectOption('3');
+  await expect(page.locator('#results .row')).toHaveCount(0);
+  await select.selectOption('2');
+  await expect(page.locator('#results .row')).toHaveCount(2);
 });
 
 test('a nominator chain shows short labels, muted coalition words and full names on hover', async ({ page }) => {

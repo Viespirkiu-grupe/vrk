@@ -985,8 +985,11 @@ function buildFilters() {
   // The five big cities each get a group just ahead of their county's (an
   // optgroup cannot nest). The groups are decided per map: a map whose
   // precincts lie mostly in a big city lists the name in that city's group,
-  // any other map under the counties it touched -- so Dainavos, a Kaunas city
-  // district until 2016 and Prienai-Alytus land since, is in both kinds.
+  // any other map under the counties it touched -- so Pajūrio, a Klaipėda
+  // city majority on some maps only, is in both kinds. A name reused for a
+  // different place is one entry per era (issue #219): "Dainavos (iki 2016)"
+  // under Kauno miestas, "Dainavos (nuo 2020)" under Kauno and Alytaus
+  // apskritis, each its own "ap" and so its own candidates.
   const memberships = INDEX.constituencyGroups || [];
   const constituencyGroups = new Map();
   for (const label of [...(INDEX.constituencyGroupOrder || []), "Be apskrities"]) {

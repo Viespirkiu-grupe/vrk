@@ -5,7 +5,9 @@ Issue #133: the single-mandate constituency reached the candidacy table as
 could not offer it as a facet. `scraper/shared/apygardos.py` now folds the
 label eras to one name per district; this script measures every label the
 corpus publishes and writes `docs/constituency-forms.tsv` -- form, records,
-the name and number it resolves to, the elections carrying it -- so a clone
+the name and number it resolves to, the elections carrying it, and -- for a
+name the dashboard splits into eras because it was reused for a different
+place (issue #219) -- the era entries its candidacies land in -- so a clone
 can hold the corpus's spellings to the rule (tests/test_apygardos.py) and a
 new spelling upstream is a red test before it is a doubled facet row.
 
@@ -23,11 +25,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from scraper.shared.apygardos import normalize_name, number_of  # noqa: E402
+from scraper.shared.apygardos import entry_of, normalize_name, number_of  # noqa: E402
 from scraper.shared.kandidatura import kandidatura  # noqa: E402
 
 TABLE = Path("docs/constituency-forms.tsv")
-COLUMNS = ("form", "records", "name", "number", "elections")
+COLUMNS = ("form", "records", "name", "number", "elections", "entries")
 
 
 def measure(repo_root: Path) -> tuple[Counter[str], dict[str, set[str]]]:
@@ -61,6 +63,15 @@ def read_table(path: Path) -> dict[str, tuple[str, str]]:
     return rows
 
 
+def entries_of(form: str, elections: set[str]) -> str:
+    """The dashboard entries a form's candidacies land in, where that is not
+    the name itself: a name reused for a different place is one entry per
+    era (issue #219), "Dainavos (iki 2016)" / "Dainavos (nuo 2020)"."""
+    name = normalize_name(form)
+    entries = sorted({entry_of(name, election) for election in elections}) if name else []
+    return ",".join(entries) if entries != [name] and entries else ""
+
+
 def write_table(path: Path, counts: Counter[str], elections: dict[str, set[str]]) -> None:
     lines = ["\t".join(COLUMNS)]
     for form in sorted(counts, key=lambda f: (normalize_name(f) or "", f)):
@@ -72,6 +83,7 @@ def write_table(path: Path, counts: Counter[str], elections: dict[str, set[str]]
                     normalize_name(form) or "",
                     str(number_of(form) or ""),
                     ",".join(sorted(elections[form])),
+                    entries_of(form, elections[form]),
                 ]
             )
         )

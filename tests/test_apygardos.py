@@ -19,6 +19,7 @@ from scraper.shared.apygardos import (
     DASHLESS_ARCHIVE,
     apygarda,
     counties_of,
+    entry_of,
     group_order,
     groups_of,
     is_multi_mandate,
@@ -114,6 +115,20 @@ class FormsTableTests(unittest.TestCase):
                 self.assertEqual(normalize_name(form) or "", name)
                 self.assertEqual(str(number_of(form) or ""), number)
 
+    def test_the_entries_column_names_the_era_split_forms(self):
+        # Issue #219: a form whose name is split into eras lists the entries
+        # its candidacies land in; every other form leaves it empty.
+        noted = {}
+        for line in FORMS_TABLE.read_text(encoding="utf-8").splitlines()[1:]:
+            form, _records, name, _number, elections, entries = line.split("\t")
+            if entries:
+                noted[form] = entries
+                self.assertEqual(entries, ",".join(sorted({entry_of(name, e) for e in elections.split(",")})))
+        self.assertEqual(noted, {
+            "67. Dainavos": "Dainavos (nuo 2020)", "Dainavos": "Dainavos (iki 2016)",
+            "Dainavos (Nr. 16)": "Dainavos (iki 2016)", "Dainavos Nr. 67": "Dainavos (nuo 2020)",
+        })
+
     def test_the_multi_mandate_forms_resolve_to_no_district(self):
         rows = forms_table_rows()
         self.assertTrue(any(form.startswith("Daugiamandat") and name == "" for form, _, name, _, _ in rows))
@@ -152,11 +167,13 @@ class CountyTests(unittest.TestCase):
         self.names = {name for _form, _records, name, _number, _elections in forms_table_rows() if name}
 
     def test_the_file_covers_every_name_the_corpus_publishes(self):
+        # 136 names, 137 entries: Dainavos is two eras (issue #219).
         self.assertEqual(len(self.names), 136)
-        self.assertEqual(set(self.registry["entries"]), self.names)
+        self.assertEqual(len(self.registry["entries"]), 137)
+        self.assertEqual({entry.get("name", label) for label, entry in self.registry["entries"].items()}, self.names)
 
     def test_every_name_has_a_county_and_every_county_is_one_of_the_10(self):
-        for name in sorted(self.names):
+        for name in sorted(self.registry["entries"]):
             with self.subTest(name):
                 entry = self.registry["entries"][name]
                 if name == "Pasaulio lietuvių":
@@ -181,8 +198,9 @@ class CountyTests(unittest.TestCase):
             "Antakalnio": ["Vilniaus"], "Centro": ["Kauno"], "Baltijos": ["Klaipėdos"], "Aušros": ["Šiaulių"],
             "Aukštaitijos": ["Panevėžio"], "Sėlos rytinė": ["Panevėžio", "Utenos"], "Karšuvos": ["Tauragės"],
             "Jotvingių": ["Alytaus"], "Deltuvos šiaurinė": ["Vilniaus", "Panevėžio", "Utenos"],
-            # A city district through 2016, Prienai-Birštonas-Alytus land from 2020.
-            "Dainavos": ["Kauno", "Alytaus"],
+            # A city district through 2016, Prienai-Birštonas-Alytus land from
+            # 2020: two entries (issue #219), and the bare name is neither.
+            "Dainavos (iki 2016)": ["Kauno"], "Dainavos (nuo 2020)": ["Kauno", "Alytaus"], "Dainavos": [],
             # Districts across a county line.
             "Anykščių–Panevėžio": ["Panevėžio", "Utenos"], "Kelmės–Šilalės": ["Šiaulių", "Tauragės"],
             "Varėnos–Eišiškių": ["Vilniaus", "Alytaus"], "Pietų Žemaitijos": ["Klaipėdos", "Telšių", "Tauragės"],
@@ -196,7 +214,7 @@ class CountyTests(unittest.TestCase):
     def test_the_changed_names_are_the_ones_whose_maps_disagree(self):
         self.assertEqual(
             self.registry["changedBetweenMaps"],
-            ["Dainavos", "Deltuvos pietinė", "Deltuvos šiaurinė", "Kelmės", "Prienų", "Prienų–Birštono"],
+            ["Deltuvos pietinė", "Deltuvos šiaurinė", "Kelmės", "Prienų", "Prienų–Birštono"],
         )
 
     def test_the_groups_are_the_per_map_placement_over_the_evidence(self):
@@ -242,16 +260,19 @@ class CountyTests(unittest.TestCase):
             "Danės": ["Klaipėdos miestas"],
             # A city minority on every map: the county groups alone.
             "Garliavos": ["Kauno apskritis"], "Aukštaitijos": ["Panevėžio apskritis"], "Kuršėnų–Dainų": ["Šiaulių apskritis"],
-            # Maps that disagree: a Kaunas city district through 2016 and
-            # Prienai-Birštonas-Alytus land from 2020; a Klaipėda city
-            # majority in 1996 and from 2016, a minority in 2000-2012.
-            "Dainavos": ["Kauno miestas", "Kauno apskritis", "Alytaus apskritis"],
+            # Maps that disagree: a Klaipėda city majority in 1996 and from
+            # 2016, a minority in 2000-2012.
             "Pajūrio": ["Klaipėdos miestas", "Klaipėdos apskritis"],
+            # A name reused for a different place, one entry per era (#219):
+            # a Kaunas city district through 2016, Prienai-Birštonas-Alytus
+            # land from 2020.
+            "Dainavos (iki 2016)": ["Kauno miestas"],
+            "Dainavos (nuo 2020)": ["Kauno apskritis", "Alytaus apskritis"],
         }.items():
             self.assertEqual(groups_of(name), groups, name)
         both = sorted(n for n, e in self.registry["entries"].items()
                       if any(g.endswith("miestas") for g in e["groups"]) and any(g.endswith("apskritis") for g in e["groups"]))
-        self.assertEqual(both, ["Dainavos", "Pajūrio"])
+        self.assertEqual(both, ["Pajūrio"])
         self.assertEqual(groups_of("Nėra tokios"), [])
 
     def test_every_source_is_a_general_election_of_the_registry(self):
@@ -262,6 +283,121 @@ class CountyTests(unittest.TestCase):
             self.assertIn(source["election"], ids)
             self.assertRegex(source["sha256"], r"^[0-9a-f]{64}$")
             self.assertTrue(source["url"].startswith("https://vrk.lt/"))
+
+
+def _build_script():
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("build_constituency_counties", REPO_ROOT / "scripts" / "build_constituency_counties.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+class EraTests(unittest.TestCase):
+    """A name reused for a different place is split into eras (issue #219):
+    wherever two consecutive maps the name was used in share no municipality,
+    a pre-2000 body counting as the bodies the 2000 reform made of it."""
+
+    def setUp(self):
+        self.registry = load_counties()
+        # Every name's maps, the eras merged back.
+        self.maps: dict[str, dict[str, dict[str, int]]] = {}
+        for label, entry in self.registry["entries"].items():
+            self.maps.setdefault(entry.get("name", label), {}).update(entry.get("maps", {}))
+
+    def test_the_rule_over_the_evidence_splits_dainavos_alone(self):
+        successors = {
+            entry["name"]: {entries_by_id["name"] for entries_by_id in (municipalities.entries()[s] for s in entry.get("successors", []))}
+            for entry in municipalities.entries().values()
+        }
+
+        def territory(bodies):
+            return set(bodies).union(*(successors[b] for b in bodies))
+
+        split = {}
+        for name, per_map in self.maps.items():
+            years = sorted(per_map)
+            cuts = [(a, b) for a, b in zip(years, years[1:]) if not territory(per_map[a]) & territory(per_map[b])]
+            if cuts:
+                split[name] = cuts
+        self.assertEqual(split, {"Dainavos": [("2016", "2020")]})
+        self.assertEqual(self.registry["eras"], {"Dainavos": ["Dainavos (iki 2016)", "Dainavos (nuo 2020)"]})
+        self.assertEqual(sorted(self.registry["entries"]["Dainavos (iki 2016)"]["maps"]), ["1996", "2000", "2004", "2008", "2012", "2016"])
+        self.assertEqual(sorted(self.registry["entries"]["Dainavos (nuo 2020)"]["maps"]), ["2020", "2024"])
+
+    def test_boundary_changes_that_keep_territory_do_not_split(self):
+        for name in ("Deltuvos pietinė", "Deltuvos šiaurinė", "Kelmės", "Prienų", "Prienų–Birštono", "Pajūrio"):
+            with self.subTest(name):
+                self.assertIn(name, self.registry["entries"])
+                self.assertNotIn(name, self.registry["eras"])
+                self.assertGreater(len(self.registry["entries"][name]["maps"]), 1)
+
+    def test_the_2000_merger_is_not_a_new_place(self):
+        # Marijampolės and Suvalkijos: 1996 in the pre-2000 city and district
+        # bodies, from 2000 in the municipalities the reform made of them.
+        # Read literally, the rule would split both.
+        for name in ("Marijampolės", "Suvalkijos"):
+            with self.subTest(name):
+                self.assertNotIn(name, self.registry["eras"])
+                self.assertIn("1996", self.registry["entries"][name]["maps"])
+                self.assertIn("2000", self.registry["entries"][name]["maps"])
+
+    def test_the_script_rule_on_synthetic_maps(self):
+        script = _build_script()
+        self.assertEqual(script.eras({"2016": {"A": 1}, "2020": {"B": 1}, "2024": {"B": 1, "C": 1}}), [["2016"], ["2020", "2024"]])
+        self.assertEqual(script.eras({"2012": {"A": 1, "B": 1}, "2016": {"B": 1}}), [["2012", "2016"]])
+        self.assertEqual(script.eras({"2000": {"A": 1}, "2008": {"B": 1}, "2016": {"C": 1}}), [["2000"], ["2008"], ["2016"]])
+        self.assertEqual(
+            [script.era_label("X", era, i, 3) for i, era in enumerate([["2000"], ["2008", "2012"], ["2016"]])],
+            ["X (iki 2000)", "X (2008–2012)", "X (nuo 2016)"],
+        )
+        self.assertEqual(script.era_label("X", ["2000", "2004"], 0, 1), "X")
+
+    def test_entry_of_follows_the_map_the_election_ran_on(self):
+        self.assertEqual(entry_of("Dainavos", "1996-spalio-20-seimo"), "Dainavos (iki 2016)")
+        self.assertEqual(entry_of("Dainavos", "2016-seimo"), "Dainavos (iki 2016)")
+        # A by-election runs on its term's general map, whatever its year.
+        self.assertEqual(entry_of("Dainavos", "2019-rugsejo-8-seimo"), "Dainavos (iki 2016)")
+        self.assertEqual(entry_of("Dainavos", "2020-seimo"), "Dainavos (nuo 2020)")
+        self.assertEqual(entry_of("Dainavos", "2024-seimo"), "Dainavos (nuo 2020)")
+        self.assertEqual(entry_of("Kelmės", "2024-seimo"), "Kelmės")
+        self.assertEqual(entry_of("Kelmės", None), "Kelmės")
+        self.assertIsNone(entry_of(None, "2024-seimo"))
+        with self.assertRaises(ValueError):
+            entry_of("Dainavos", "2099-seimo")
+
+    def test_every_seimas_candidacy_maps_to_exactly_one_entry(self):
+        local_data.require_corpus()
+        import json
+
+        from scraper.shared.kandidatura import kandidatura
+
+        registry = json.loads((REPO_ROOT / "scraper" / "elections.json").read_text(encoding="utf-8"))["elections"]
+        map_year = {source["election"]: year for year, source in self.registry["sources"].items()}
+        dainavos: dict[str, set[str]] = {}
+        resolved = 0
+        for election in registry:
+            directory = REPO_ROOT / "data" / election["id"]
+            if election["kind"] != "seimo" or not directory.is_dir():
+                continue
+            for path in sorted(directory.glob("*.json")):
+                name = kandidatura(json.loads(path.read_text(encoding="utf-8")), "seimo")["apygarda"]
+                if not name:
+                    continue
+                entry = entry_of(name, election["id"])
+                self.assertIn(entry, self.registry["entries"], (path.name, name))
+                self.assertEqual(self.registry["entries"][entry].get("name", entry), name)
+                # The entry holds the map this election ran on (the district
+                # abroad has no precinct list, so no maps at all).
+                year = map_year[election.get("parent") or election["id"]]
+                self.assertIn(year, self.registry["entries"][entry].get("maps", {year: None}), (path.name, entry))
+                resolved += 1
+                if name == "Dainavos":
+                    dainavos.setdefault(election["id"], set()).add(entry)
+        self.assertGreater(resolved, 5000)
+        self.assertEqual(dainavos["2016-seimo"], {"Dainavos (iki 2016)"})
+        self.assertEqual(dainavos["2020-seimo"], {"Dainavos (nuo 2020)"})
 
 
 if __name__ == "__main__":

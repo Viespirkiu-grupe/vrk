@@ -483,7 +483,9 @@ def project_record(
     row["role"] = candidacy["vaidmuo"]
     # One name per district across the four label eras, the number beside
     # it (scraper/shared/apygardos.py, issue #133); the label as published
-    # stays in the record file.
+    # stays in the record file. VRK's plain name, not the dashboard's era
+    # entry (issue #219): (election, number) already tells the 1996-2016
+    # Kaunas Dainavos from the 2020- Prienai-Alytus one.
     row["constituency"] = candidacy["apygarda"]
     row["constituency_number"] = candidacy["apygardos-numeris"]
     # The official name and the registry id (scraper/municipalities.json,

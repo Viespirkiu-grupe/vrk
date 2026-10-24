@@ -1,5 +1,5 @@
 {
-  "_comment": "The municipality join (issue #137): one entry per municipal body, and every spelling VRK's pages publish for it as an alias. The parsers pass each era's wording through verbatim -- 'Vilniaus miesto' on the 1997/2000/2002/2019/2023 cards, 'Vilniaus miesto savivaldybė' on 2007/2011/2015, 'Palangos savivaldybė' in 2011 alone -- so without this file every one of the 60 municipalities appeared twice in the dashboard's facet and in the shipped `municipality` column, each half hiding the other half of its history. `name` is the official name of the body; `kind` its type (miesto / rajono / savivaldybe); `aliases` the published forms, matched exactly after whitespace normalisation and the mayoral cards' constituency number ('Telšių rajono (Nr. 51)') is stripped -- scraper/shared/municipalities.py never guesses. The two 1997 Marijampolė bodies stay separate entries with `until`: the 2000 reform merged a city and a district into one new municipality, and a facet that folded them would put a 1997 district councillor under a body that did not exist. docs/municipality-forms.tsv is the measured form table and tests/test_municipality_registry.py holds every form to exactly one entry. `county` is the apskritis the body's territory lies in, as Registrų centras's Address Register publishes it (data.gov.lt dataset gov/rc/ar: Savivaldybe.apskritis -> Apskritis.pavadinimas, read 2026-10-24; all 60 current municipalities matched by name), the division the Law on the Territorial Administrative Units and Their Boundaries (No. I-558) sets; the two pre-2000 Marijampolė bodies are Marijampolės county, whose territory the merged municipality kept. `counties` is the fixed order the dashboard's municipality filter groups by (issue #213): largest resident population first, Statistics Lithuania (OSP) table S3R167_M3010214, population at the beginning of 2026 (updated 2026-05-07) -- Vilniaus 888,712, Kauno 587,094, Klaipėdos 345,218, Šiaulių 263,692, Panevėžio 203,565, Marijampolės 131,348, Alytaus 130,630, Telšių 128,136, Utenos 120,394, Tauragės 88,803; the start-of-2025 figures give the same order. It is data, not computed at runtime, so a census shift is a reviewed edit here.",
+  "_comment": "The municipality join (issue #137): one entry per municipal body, and every spelling VRK's pages publish for it as an alias. The parsers pass each era's wording through verbatim -- 'Vilniaus miesto' on the 1997/2000/2002/2019/2023 cards, 'Vilniaus miesto savivaldybė' on 2007/2011/2015, 'Palangos savivaldybė' in 2011 alone -- so without this file every one of the 60 municipalities appeared twice in the dashboard's facet and in the shipped `municipality` column, each half hiding the other half of its history. `name` is the official name of the body; `kind` its type (miesto / rajono / savivaldybe); `aliases` the published forms, matched exactly after whitespace normalisation and the mayoral cards' constituency number ('Telšių rajono (Nr. 51)') is stripped -- scraper/shared/municipalities.py never guesses. The two 1997 Marijampolė bodies stay separate entries with `until`: the 2000 reform merged a city and a district into one new municipality, and a facet that folded them would put a 1997 district councillor under a body that did not exist. Their `successors` are the post-2000 bodies their territory went to (the district's also to Kalvarijos and Kazlų Rūdos), which scripts/build_constituency_counties.py reads to tell a reorganised municipality from a district moved elsewhere (issue #219). docs/municipality-forms.tsv is the measured form table and tests/test_municipality_registry.py holds every form to exactly one entry. `county` is the apskritis the body's territory lies in, as Registrų centras's Address Register publishes it (data.gov.lt dataset gov/rc/ar: Savivaldybe.apskritis -> Apskritis.pavadinimas, read 2026-10-24; all 60 current municipalities matched by name), the division the Law on the Territorial Administrative Units and Their Boundaries (No. I-558) sets; the two pre-2000 Marijampolė bodies are Marijampolės county, whose territory the merged municipality kept. `counties` is the fixed order the dashboard's municipality filter groups by (issue #213): largest resident population first, Statistics Lithuania (OSP) table S3R167_M3010214, population at the beginning of 2026 (updated 2026-05-07) -- Vilniaus 888,712, Kauno 587,094, Klaipėdos 345,218, Šiaulių 263,692, Panevėžio 203,565, Marijampolės 131,348, Alytaus 130,630, Telšių 128,136, Utenos 120,394, Tauragės 88,803; the start-of-2025 figures give the same order. It is data, not computed at runtime, so a census shift is a reviewed edit here.",
   "counties": [
     "Vilniaus",
     "Kauno",
@@ -253,6 +253,9 @@
         "Marijampolės miesto savivaldybė"
       ],
       "until": "2000",
+      "successors": [
+        "marijampoles"
+      ],
       "note": "The city municipality of 1995-2000, merged into Marijampolės savivaldybė by the 2000 reform. Appears in 1997-kovo-23-savivaldybiu-tarybu only."
     },
     "marijampoles-rajono": {
@@ -264,6 +267,11 @@
         "Marijampolės rajono savivaldybė"
       ],
       "until": "2000",
+      "successors": [
+        "marijampoles",
+        "kalvarijos",
+        "kazlu-rudos"
+      ],
       "note": "The district municipality of 1995-2000, merged into Marijampolės savivaldybė by the 2000 reform. Appears in 1997-kovo-23-savivaldybiu-tarybu only."
     },
     "mazeikiu-rajono": {
