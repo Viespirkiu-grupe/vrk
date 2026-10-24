@@ -226,6 +226,101 @@ class ServerTests(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertEqual(again, body)
 
+    # Issue #186: every visit re-downloaded the 7 MB index, because the page
+    # said no-store and so did the server. Hashed build assets are now cached
+    # for good; everything rewritten in place is kept but revalidated.
+
+    def test_cache_control_per_path_class(self):
+        cases = {
+            "/dashboard/_astro/app.js": serve.IMMUTABLE_CACHE_CONTROL,
+            "/dashboard/_astro/app.css": serve.IMMUTABLE_CACHE_CONTROL,
+            "/dashboard/": "no-cache",
+            "/dashboard/?q=x": "no-cache",
+            "/dashboard/people.json": "no-cache",
+            "/data/2016-seimo/x-2016-seimo.json": "no-cache",
+            "/docs/concept-map.json": "no-cache",
+        }
+        self.assertEqual(serve.IMMUTABLE_CACHE_CONTROL, "public, max-age=31536000, immutable")
+        for path, expected in cases.items():
+            # Both branches: the gzip one and the stdlib one an identity
+            # client (or a HEAD) falls through to.
+            for headers, method in ((self.GZIP, "GET"), ({}, "GET"), (self.GZIP, "HEAD")):
+                with self.subTest(path=path, headers=headers, method=method):
+                    status, got, _ = self.get(path, headers, method)
+                    self.assertEqual(status, 200)
+                    self.assertEqual(got.get("Cache-Control"), expected)
+
+    def test_a_304_repeats_the_cache_control(self):
+        for path in ("/dashboard/people.json", "/dashboard/_astro/app.js"):
+            with self.subTest(path):
+                _, headers, _ = self.get(path, self.GZIP)
+                status, again, _ = self.get(
+                    path, {**self.GZIP, "If-Modified-Since": headers["Last-Modified"]}
+                )
+                self.assertEqual(status, 304)
+                self.assertEqual(again["Cache-Control"], headers["Cache-Control"])
+
+    def test_errors_and_redirects_are_not_marked_cacheable(self):
+        # An immutable 404 under _astro/ would pin a missing asset at the
+        # edge for a year.
+        for path in ("/dashboard/_astro/missing.js", "/conftest.py", "/dashboard", "/"):
+            with self.subTest(path):
+                status, headers, _ = self.get(path, self.GZIP)
+                self.assertIn(status, (301, 302, 403, 404))
+                self.assertNotIn("Cache-Control", headers)
+
+    def test_if_modified_since_alone_revalidates(self):
+        # What a browser sends from behind Cloudflare, which drops the origin
+        # ETag when it recompresses: no If-None-Match, only the date.
+        for path in ("/dashboard/people.json", "/data/2016-seimo/x-2016-seimo.json"):
+            for encoding in (self.GZIP, {}):
+                with self.subTest(path=path, encoding=encoding):
+                    _, headers, _ = self.get(path, encoding)
+                    status, _, empty = self.get(
+                        path, {**encoding, "If-Modified-Since": headers["Last-Modified"]}
+                    )
+                    self.assertEqual(status, 304)
+                    self.assertEqual(empty, b"")
+
+    def test_a_rewritten_record_is_never_answered_304(self):
+        # The guarantee no-store used to buy: a record backfilled in place
+        # must reach a browser holding the old copy on its next load.
+        record = self.root / "data" / "2016-seimo" / "rewritten-2016-seimo.json"
+        record.write_text('{"turtas": null}', encoding="utf-8")
+        old = record.stat().st_mtime - 60
+        os.utime(record, (old, old))
+        url = "/data/2016-seimo/rewritten-2016-seimo.json"
+        for encoding in (self.GZIP, {}):
+            with self.subTest(encoding=encoding):
+                record.write_text('{"turtas": null}', encoding="utf-8")
+                os.utime(record, (old, old))
+                _, headers, _ = self.get(url, encoding)
+                record.write_text('{"turtas": 1200}', encoding="utf-8")
+                status, _, body = self.get(
+                    url, {**encoding, "If-Modified-Since": headers["Last-Modified"]}
+                )
+                self.assertEqual(status, 200)
+                if encoding:
+                    body = __import__("gzip").decompress(body)
+                self.assertEqual(json.loads(body), {"turtas": 1200})
+
+    def test_if_none_match_takes_precedence_and_compares_weakly(self):
+        _, headers, _ = self.get("/dashboard/people.json", self.GZIP)
+        etag, modified = headers["ETag"], headers["Last-Modified"]
+        # A mismatched tag wins over a date that alone would be a 304.
+        status, _, _ = self.get(
+            "/dashboard/people.json",
+            {**self.GZIP, "If-None-Match": 'W/"0000000000000000"', "If-Modified-Since": modified},
+        )
+        self.assertEqual(status, 200)
+        # A list, and a tag a proxy stripped of its W/ prefix, both match.
+        for match in (f'"aaaa", {etag}', etag.removeprefix("W/")):
+            with self.subTest(match):
+                status, _, _ = self.get(
+                    "/dashboard/people.json", {**self.GZIP, "If-None-Match": match}
+                )
+                self.assertEqual(status, 304)
+
     def test_every_response_carries_the_hardening_headers(self):
         for path in ("/dashboard/", "/dashboard/people.json", "/conftest.py"):
             with self.subTest(path):

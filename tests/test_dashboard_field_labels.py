@@ -123,7 +123,7 @@ class FileTests(unittest.TestCase):
         self.assertEqual(sorted(section_keys & set(LABELS)), [])
 
     def test_the_page_reads_the_file_and_survives_without_it(self):
-        self.assertIn('fetch("field-labels.json", { cache: "no-store" })', SOURCE)
+        self.assertIn('fetch("field-labels.json", { cache: "no-cache" })', SOURCE)
         self.assertIn("(FIELD_LABELS[key] || {}).lt || deslug(key)", SOURCE)
         # Not fatal: the labels are an improvement on deslug, not a
         # precondition for the page.

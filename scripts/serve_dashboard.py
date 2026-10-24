@@ -8,6 +8,11 @@ roots. No source directory or repository listing is served.
 The server preserves gzip compression, an mtime-keyed LRU, ETag/Last-Modified,
 loopback Host validation and response hardening from issue #160. Build assets
 are separate from the root dist/ directory used by data releases.
+
+Caching (issue #186): Astro's content-hashed `/dashboard/_astro/*` files are
+`immutable` for a year; everything else (HTML, the index, records, the concept
+map) is `no-cache`, kept but revalidated on every load. docs/DASHBOARD.md has
+the rules a replacement static server and the Cloudflare zone must keep.
 """
 
 from __future__ import annotations
@@ -44,6 +49,25 @@ _CACHE_MAX_ENTRIES = 512
 
 #: Astro bundles scripts and styles locally. The dynamic record renderers
 #: still use inline styles for chart dimensions. Nothing is fetched remotely.
+#: Astro names every bundled file after a hash of its content, so a changed
+#: file is a new URL and the old one can be cached forever.
+IMMUTABLE_PREFIX = "/dashboard/_astro/"
+IMMUTABLE_CACHE_CONTROL = "public, max-age=31536000, immutable"
+
+#: Everything else is rewritten in place: the index after every corpus update,
+#: records when a parser gains a field. `no-cache` lets a browser (or edge)
+#: keep the copy but never use it without asking, and the answer to that
+#: question is a 304 on the unchanged mtime. Not `no-store`, which forced a
+#: full 7 MB download of an unchanged index on every visit.
+REVALIDATE_CACHE_CONTROL = "no-cache"
+
+
+def cache_control(url_path: str) -> str:
+    """The Cache-Control a successful response to this URL carries."""
+    path = url_path.split("?", 1)[0].split("#", 1)[0]
+    return IMMUTABLE_CACHE_CONTROL if path.startswith(IMMUTABLE_PREFIX) else REVALIDATE_CACHE_CONTROL
+
+
 CONTENT_SECURITY_POLICY = (
     "default-src 'self'; script-src 'self'; "
     "style-src 'self' 'unsafe-inline'; img-src 'self' data:; "
@@ -150,7 +174,16 @@ class GzipHandler(SimpleHTTPRequestHandler):
         self._refuse(404, "No directory listing")
         return None
 
+    def send_response(self, code: int, message: str | None = None) -> None:
+        self._status = code
+        super().send_response(code, message)
+
     def end_headers(self) -> None:
+        # Only a 200 or a 304 is cacheable. An error under `_astro/` marked
+        # immutable would pin a missing-asset 404 at the edge for a year, and
+        # the redirects are cheap enough to ask for every time.
+        if getattr(self, "_status", None) in (200, 304):
+            self.send_header("Cache-Control", cache_control(self.path))
         self.send_header("X-Content-Type-Options", "nosniff")
         self.send_header("Content-Security-Policy", CONTENT_SECURITY_POLICY)
         self.send_header("Referrer-Policy", "no-referrer")
@@ -216,17 +249,23 @@ class GzipHandler(SimpleHTTPRequestHandler):
         self.send_header("Content-Length", str(len(body)))
         self.send_header("ETag", etag)
         self.send_header("Last-Modified", last_modified)
-        # The page's own fetches say no-store; saying it here too keeps
-        # any other client honest about the rewritten-in-place corpus.
-        # `no-store` still permits a conditional request, which is what the
-        # ETag above answers.
-        self.send_header("Cache-Control", "no-store")
         self.end_headers()
         self.wfile.write(body)
 
     def _not_modified(self, etag: str, mtime: float) -> bool:
-        if self.headers.get("If-None-Match") == etag:
-            return True
+        # RFC 9110 13.2.2: an If-None-Match decides alone. Behind Cloudflare
+        # the ETag often never reaches the browser (it is dropped when the edge
+        # recompresses to brotli), so If-Modified-Since against the file's
+        # mtime is what usually carries the revalidation; the two agree, since
+        # the ETag hashes a body keyed on that same mtime.
+        # The comparison is the weak one the RFC prescribes for this header, so
+        # a proxy that strips the `W/` still matches.
+        match = self.headers.get("If-None-Match")
+        if match is not None:
+            if match.strip() == "*":
+                return True
+            tags = {tag.strip().removeprefix("W/") for tag in match.split(",")}
+            return etag.removeprefix("W/") in tags
         since = self.headers.get("If-Modified-Since")
         if not since:
             return False

@@ -61,7 +61,8 @@ index and field labels at their established URLs, plus `data/` and `docs/`.
 It does **not** serve `frontend/`, application source, `.git`, or any other
 repository directory; it provides no directory listings. A foreign `Host`
 is refused and every response carries `nosniff`, a narrow CSP and
-`no-referrer`. Compressed resources support `ETag` and `Last-Modified`, and
+`no-referrer`. Compressed resources support `ETag` and `Last-Modified` (see
+[Caching](#caching)), and
 an LRU cache avoids repeatedly compressing the index. Scripts, styles and
 fonts load locally. No external font or application runtime is required.
 
@@ -71,6 +72,62 @@ A missing corpus/index is shown as a data-loading error, not an empty result
 set. Obtain the corpus using the release instructions in the README, then
 build the index. The old hand-written `dashboard/index.html` is no longer a
 second frontend; always build Astro before previewing a fresh checkout.
+
+### Caching
+
+Two classes of URL, two rules (issue #186). Whatever serves production, now
+`scripts/serve_dashboard.py` and later the static server of #188, must keep
+both:
+
+| URL | `Cache-Control` | Why |
+|---|---|---|
+| `/dashboard/_astro/*` | `public, max-age=31536000, immutable` | Astro names each file after a hash of its content, so a changed file is a new URL. |
+| everything else: `/dashboard/` HTML, `people.json`, `field-labels.json`, `data/**` records, `docs/concept-map.json` | `no-cache` | Rewritten in place: the index after every corpus update, records when a parser gains a field. |
+
+`no-cache` means a browser keeps the copy but must ask the server before
+using it, and the page's own fetches say the same (`cache: "no-cache"` in
+`dashboard.js`). An unchanged 7 MB index then costs one empty 304 instead of
+a full download. The page never shows stale data: a backfilled record or a
+rebuilt index has a new mtime, so the check misses and the new body comes
+back. This replaced `no-store`, which made every visit download everything
+again.
+
+Revalidation has to work with **`If-Modified-Since` alone**. Cloudflare drops
+the origin `ETag` when it recompresses to brotli, so behind it the browser
+often has only `Last-Modified` to send. The server answers either header with
+304, and lets `If-None-Match` decide on its own when both are sent (RFC 9110).
+Only 200 and 304 responses carry `Cache-Control`. A 404 under `_astro/` must
+not be marked immutable, or the edge would keep a missing asset for a year.
+`tests/test_serve_dashboard.py` holds all of this, including a record
+rewritten in place being served fresh.
+
+**Cloudflare rule the operator adds** (Caching → Cache Rules; not set from
+this repository):
+
+- *When:* URI Path starts with `/dashboard/_astro/` (host
+  `vrk.viespirkiai.org`).
+- *Then:* Eligible for cache; Edge TTL "Use cache-control header if present";
+  Browser TTL "Respect origin".
+
+Those assets then show `cf-cache-status: HIT` after the first request. Add no
+rule for the JSON or `data/`. Without one, Cloudflare passes conditional
+requests through to the origin and returns its 304, which is the point. The
+index can be cached at the edge only once it has a content-hashed name
+(the `people.<hash>.json` idea in #186).
+
+A check on production, with `-D -` showing the headers:
+
+```bash
+curl -s -o /dev/null -D - -H 'Accept-Encoding: br, gzip' https://vrk.viespirkiai.org/dashboard/people.json
+```
+
+```bash
+curl -s -o /dev/null -w '%{http_code}\n' -H 'If-Modified-Since: <the Last-Modified above>' https://vrk.viespirkiai.org/dashboard/people.json
+```
+
+The first should show `cache-control: no-cache` and a `last-modified`, and
+the second should print `304`. After a corpus update the same second command
+prints `200`.
 
 The implementation plan and reference revision are recorded in
 [ASTRO_MIGRATION.md](ASTRO_MIGRATION.md).
@@ -676,7 +733,8 @@ pins every rule, so a new entry either follows them or fails there.
 - `scripts/serve_dashboard.py` — the stdlib server plus gzip, an LRU
   compression cache keyed on mtime, and the guards of issue #160 (three
   served directories, a loopback-only `Host`, no listings, conditional
-  requests); maps the Astro build to `/dashboard/`. `tests/test_serve_dashboard.py` drives
+  requests), and the two `Cache-Control` classes of issue #186; maps the
+  Astro build to `/dashboard/`. `tests/test_serve_dashboard.py` drives
   a real server on an ephemeral port.
 - `scripts/find_identity_merge_candidates.py` — scores possible
   surname-change splits and prints the undecided ones; writes
