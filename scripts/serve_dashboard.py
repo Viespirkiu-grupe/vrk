@@ -17,6 +17,12 @@ mtime-keyed LRU; it keeps ETag/Last-Modified,
 loopback Host validation and response hardening from issue #160. Build assets
 are separate from the root dist/ directory used by data releases.
 
+It listens on 127.0.0.1:8791 and answers loopback Host names only. In a
+container behind a proxy (docs/DEPLOY.md) `--bind 0.0.0.0` and
+`--allow-host vrk.viespirkiai.org`, or `VRK_BIND`, `VRK_PORT` and a
+comma-separated `VRK_ALLOW_HOSTS`, open it to that name; the loopback names
+stay allowed beside it, for a health check from inside the container.
+
 Caching (issue #186): Astro's content-hashed `/_astro/*` files are
 `immutable` for a year, and so is a web portrait asked for with its set's
 version (`/portraits/<pid>.webp?v=…`, issue #187), and so is the index's list
@@ -29,6 +35,7 @@ docs/DEPLOY.md the Cloudflare cache rules production needs beside them.
 
 from __future__ import annotations
 
+import argparse
 import gzip
 import hashlib
 import os
@@ -39,6 +46,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 DEFAULT_PORT = 8791
+DEFAULT_BIND = "127.0.0.1"
 
 #: Worth compressing. Portraits are WebP and stay as they are.
 COMPRESSIBLE_SUFFIXES = {".json", ".html", ".tsv", ".csv", ".js", ".css", ".svg", ".txt", ".md"}
@@ -97,7 +105,8 @@ def is_route(url_path: str) -> bool:
 
 #: Hosts a browser reaches a loopback server by. A request naming anything
 #: else is a DNS rebind: the name resolves to 127.0.0.1 while the browser
-#: still treats the response as that name's origin.
+#: still treats the response as that name's origin. `--allow-host` adds the
+#: public name a proxy passes; it never removes these.
 ALLOWED_HOSTS = {"127.0.0.1", "localhost", "[::1]", "::1"}
 
 #: mtime-keyed gzip cache: path -> (mtime, gzipped body). An LRU, so a long
@@ -278,8 +287,21 @@ def _is_served(translated: Path, root: Path) -> bool:
     return relative in files
 
 
+def _host_names(hosts) -> frozenset[str]:  # noqa: ANN001 - any iterable of str
+    return frozenset(h.strip().strip("[]").lower() for h in hosts if h.strip())
+
+
 class GzipHandler(SimpleHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
+
+    #: The Host names answered; `make_server` widens it per server.
+    allowed_hosts = _host_names(ALLOWED_HOSTS)
+
+    #: Python's own table has no `.webp` before 3.13, so on a host without a
+    #: mime.types that lists it (python:3.11-slim, for one) every portrait
+    #: went out as application/octet-stream. Caught by the smoke check
+    #: against the container.
+    extensions_map = {**SimpleHTTPRequestHandler.extensions_map, ".webp": "image/webp"}
 
     def translate_path(self, path: str) -> str:
         """Map a public URL to the file it names (issue #184).
@@ -315,9 +337,9 @@ class GzipHandler(SimpleHTTPRequestHandler):
 
     def _guard(self) -> bool:
         """True when the request may be served; otherwise it is answered."""
-        host = (self.headers.get("Host") or "").rsplit(":", 1)[0].strip("[]")
-        if host and host not in {h.strip("[]") for h in ALLOWED_HOSTS}:
-            self._refuse(403, "This server answers loopback names only")
+        host = (self.headers.get("Host") or "").rsplit(":", 1)[0].strip("[]").lower()
+        if host and host not in self.allowed_hosts:
+            self._refuse(403, "This server does not answer for that host")
             return False
         # The base is `os.getcwd()` because that is what `translate_path`
         # itself joins against; anything else and the two disagree the moment
@@ -438,7 +460,31 @@ class GzipHandler(SimpleHTTPRequestHandler):
             return False
 
 
-def main() -> int:
+def parse_args(argv: list[str] | None = None, environ=os.environ) -> argparse.Namespace:  # noqa: ANN001 - a mapping
+    """The listen address and extra Host names, a flag winning over its env."""
+    parser = argparse.ArgumentParser(description="Serve the site, the index, data/ and portraits/.")
+    parser.add_argument("port", nargs="?", type=int, default=int(environ.get("VRK_PORT") or DEFAULT_PORT))
+    parser.add_argument("--bind", default=environ.get("VRK_BIND") or DEFAULT_BIND, help=f"default {DEFAULT_BIND}")
+    parser.add_argument(
+        "--allow-host",
+        action="append",
+        dest="allow_hosts",
+        metavar="NAME",
+        help="a Host name to answer besides the loopback ones; repeatable or comma-separated",
+    )
+    args = parser.parse_args(argv)
+    given = args.allow_hosts if args.allow_hosts is not None else [environ.get("VRK_ALLOW_HOSTS", "")]
+    args.allow_hosts = sorted(_host_names(name for item in given for name in item.split(",")))
+    return args
+
+
+def make_server(bind: str = DEFAULT_BIND, port: int = DEFAULT_PORT, allow_hosts=()) -> ThreadingHTTPServer:  # noqa: ANN001
+    handler = type("Handler", (GzipHandler,), {"allowed_hosts": GzipHandler.allowed_hosts | _host_names(allow_hosts)})
+    return ThreadingHTTPServer((bind, port), handler)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
     # npm's working directory is frontend/; resolving relative to this script
     # makes direct invocation and npm run preview behave identically.
     os.chdir(Path(__file__).resolve().parents[1])
@@ -446,11 +492,12 @@ def main() -> int:
         print("Astro build not found. Run: cd frontend && npm ci && npm run build", file=sys.stderr)
     if not Path("dashboard/people-list.json").is_file():
         print("Person index not found. After obtaining the corpus, run: python3 scripts/build_person_index.py", file=sys.stderr)
-    port = int(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_PORT
-    server = ThreadingHTTPServer(("127.0.0.1", port), GzipHandler)
+    server = make_server(args.bind, args.port, args.allow_hosts)
+    also = f", also as {', '.join(args.allow_hosts)}" if args.allow_hosts else ""
     print(
         f"Serving the site, the index and {', '.join(name + '/' for name in SERVED_ROOTS)}"
-        f" at http://127.0.0.1:{port}/ (br/gzip on; Ctrl-C stops)"
+        f" at http://{args.bind}:{args.port}/{also} (br/gzip on; Ctrl-C stops)",
+        flush=True,
     )
     try:
         server.serve_forever()

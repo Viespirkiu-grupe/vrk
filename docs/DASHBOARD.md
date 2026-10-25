@@ -972,7 +972,8 @@ pins every rule, so a new entry either follows them or fails there.
 - `scripts/serve_dashboard.py` — the stdlib server plus gzip, an LRU
   compression cache keyed on mtime, and the guards of issue #160 (only the
   build, the index, `data/`, `portraits/` and the concept map, a
-  loopback-only `Host`, no listings, conditional requests), and the two
+  loopback-only `Host` unless `--allow-host` adds a name, no listings,
+  conditional requests), and the two
   `Cache-Control` classes of issue #186; serves the Astro build at `/` and
   the page itself for each view path (issue #184).
   `tests/test_serve_dashboard.py` drives

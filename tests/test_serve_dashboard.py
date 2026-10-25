@@ -266,6 +266,57 @@ class ServerTests(unittest.TestCase):
             with self.subTest(host):
                 self.assertEqual(self.get("/", {**self.GZIP, "Host": host})[0], 200)
 
+    # -- listening in a container (issue #186) -------------------------------
+
+    def serve(self, *args, **kwargs):
+        """Start `make_server(...)` on a free port; returns its port."""
+        server = serve.make_server(*args, **kwargs)
+        threading.Thread(target=server.serve_forever, daemon=True).start()
+        self.addCleanup(server.server_close)
+        self.addCleanup(server.shutdown)
+        return server, server.server_address[1]
+
+    def get_from(self, port, path, host):
+        connection = http.client.HTTPConnection("127.0.0.1", port, timeout=10)
+        try:
+            connection.request("GET", path, headers={**self.GZIP, "Host": host})
+            response = connection.getresponse()
+            response.read()
+            return response.status, dict(response.getheaders())
+        finally:
+            connection.close()
+
+    def test_the_default_server_answers_loopback_names_only(self):
+        server, port = self.serve(port=0)
+        self.assertEqual(server.server_address[0], "127.0.0.1")
+        self.assertEqual(self.get_from(port, "/", "vrk.viespirkiai.org")[0], 403)
+        self.assertEqual(self.get_from(port, "/", "localhost")[0], 200)
+
+    def test_an_allowed_host_is_served_beside_the_loopback_names(self):
+        _, port = self.serve(port=0, allow_hosts=["VRK.viespirkiai.org"])
+        for host in ("vrk.viespirkiai.org", "vrk.viespirkiai.org:443", "Vrk.Viespirkiai.org", "localhost", "127.0.0.1"):
+            with self.subTest(host):
+                status, headers = self.get_from(port, "/people-list.json", host)
+                self.assertEqual(status, 200)
+                self.assertEqual(headers["Content-Encoding"], "gzip")
+        self.assertEqual(self.get_from(port, "/", "evil.example.com")[0], 403)
+        # The widening is per server: the stock handler is untouched.
+        self.assertNotIn("vrk.viespirkiai.org", serve.GzipHandler.allowed_hosts)
+
+    def test_a_bind_of_all_interfaces_is_honoured(self):
+        server, port = self.serve("0.0.0.0", 0, ["vrk.viespirkiai.org"])
+        self.assertEqual(server.server_address[0], "0.0.0.0")
+        self.assertEqual(self.get_from(port, "/", "vrk.viespirkiai.org")[0], 200)
+
+    def test_listen_options_from_flags_and_env(self):
+        args = serve.parse_args([], environ={})
+        self.assertEqual((args.bind, args.port, args.allow_hosts), ("127.0.0.1", 8791, []))
+        env = {"VRK_BIND": "0.0.0.0", "VRK_PORT": "8080", "VRK_ALLOW_HOSTS": "vrk.viespirkiai.org, b.example ,"}
+        args = serve.parse_args([], environ=env)
+        self.assertEqual((args.bind, args.port, args.allow_hosts), ("0.0.0.0", 8080, ["b.example", "vrk.viespirkiai.org"]))
+        args = serve.parse_args(["9000", "--bind", "10.0.0.2", "--allow-host", "a.example", "--allow-host", "c,d"], environ=env)
+        self.assertEqual((args.bind, args.port, args.allow_hosts), ("10.0.0.2", 9000, ["a.example", "c", "d"]))
+
     def test_traversal_stays_blocked(self):
         for path in (
             "/dashboard/../conftest.py",
@@ -432,6 +483,11 @@ class ServerTests(unittest.TestCase):
         self.assertEqual(headers["content-type"], "image/webp")
         self.assertNotIn("content-encoding", headers)
         self.assertTrue(body.startswith(b"RIFF"))
+        # Not from the host's mime table: python:3.11-slim has none that knows
+        # `.webp`, and the container sent application/octet-stream.
+        with unittest.mock.patch("http.server.mimetypes.guess_type", return_value=(None, None)):
+            _, headers, _ = self.get("/portraits/p0123456789ab.webp?v=1")
+        self.assertEqual(headers["Content-type"], "image/webp")
         status, headers, _ = self.get("/portraits/pmissing.webp?v=1")
         self.assertEqual(status, 404)
         self.assertNotIn("Cache-Control", headers)
