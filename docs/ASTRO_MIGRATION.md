@@ -33,14 +33,9 @@ candidate records/portraits under `data/`. Person IDs and legacy name/birth
 hashes keep the same URL contract. Searches and facets remain local to the
 index; records are fetched only when required by a detail/comparison view.
 
-(Since #184 the build is served at `/`, with a path per view;
-[DASHBOARD.md](DASHBOARD.md#url-layout) has the current layout.)
-`scripts/serve_dashboard.py` maps `/dashboard/` to the Astro build and serves
-the existing data URLs with gzip and conditional requests. It binds only to
-loopback, checks the Host, denies repository/source paths and directory
-listings, and keeps its response headers. The old source HTML is retired;
-a missing build produces an explicit setup diagnostic rather than silently
-running a second implementation.
+Since #184 the build is served at `/`, with a path per view, by
+`scripts/serve_dashboard.py`; [DASHBOARD.md](DASHBOARD.md#url-layout) has the
+current layout.
 
 ## Design reference
 

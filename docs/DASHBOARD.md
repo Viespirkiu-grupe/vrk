@@ -28,11 +28,10 @@ npm run build
 npm run preview
 ```
 
-Open <http://127.0.0.1:8791/>. `npm run preview` runs the gzip
-server, which locates the repository regardless of the working directory.
-To choose a different preview port, run
-`python3 scripts/serve_dashboard.py 8792` from the repository root.
-Every view has its own path (see [URL layout](#url-layout)).
+Open <http://127.0.0.1:8791/>. `npm run preview` runs
+`scripts/serve_dashboard.py`, the same server production runs
+([DEPLOY.md](DEPLOY.md)); `python3 scripts/serve_dashboard.py 8792` picks
+another port. Every view has its own path (see [URL layout](#url-layout)).
 
 For development, `cd frontend && npm run dev` starts Astro at
 <http://127.0.0.1:4321/> and a local data server on port 8793.
@@ -75,8 +74,7 @@ older `/#<pid>` hash, pre-pid `name|birth` links and merged-away fragment keys
 still resolve and normalize to that path.
 A missing corpus/index is shown as a data-loading error, not an empty result
 set. Obtain the corpus using the release instructions in the README, then
-build the index. The old hand-written `dashboard/index.html` is no longer a
-second frontend; always build Astro before previewing a fresh checkout.
+build the index.
 
 ### URL layout
 
@@ -118,11 +116,9 @@ yet.
 | `/portraits/<pid>.webp?v=<version>` | `portraits/` |
 | `/docs/concept-map.json` | `docs/concept-map.json` |
 
-The index and labels stay in `dashboard/` on disk: every builder, release
-script and the distribution write or read them there. Only their URL moved.
-A static deploy (#188) copies them next to the build's `index.html`. The page
-fetches all of these by absolute URL (`/people.json`, `/data/…`), so they
-resolve the same from `/asmuo/x` as from `/`.
+The index and labels stay in `dashboard/` on disk, where every builder
+writes them. The page fetches all of these by absolute URL (`/people.json`,
+`/data/…`), so they resolve the same from `/asmuo/x` as from `/`.
 
 **The fallback every server needs.** The view paths are not files: the
 server must answer each with `frontend/dist/index.html` (and its `no-cache`
@@ -130,21 +126,7 @@ policy), and the page's router picks the view. Only these paths fall back.
 A mistyped asset or data URL must stay a 404, not turn into an HTML page,
 and no repository path may become reachable. `serve_dashboard.py` does this
 (`ROUTE_PATHS`, `ROUTE_PREFIXES`; `tests/test_dashboard_ui.py` holds them
-equal to the page's list), and so do the production configs,
-[`deploy/Caddyfile`](../deploy/Caddyfile) and
-[`deploy/nginx/`](../deploy/nginx/) (issue #188;
-`tests/test_deploy_config.py` holds their route regexes to the page's list
-and to `serve_dashboard.py`'s behaviour). A new view is added in all three.
-[DEPLOY.md](DEPLOY.md) is how production is built and served.
-
-Cloudflare passes these paths to the origin like any other; it needs no
-rule for them as long as the origin answers them. If the site is ever served
-from Cloudflare Pages or another static host without such a rule, its
-`_redirects` needs the same paths as 200 rewrites
-(`/asmuo/* /index.html 200`, and so on).
-
-If a cache rule was added for `/dashboard/_astro/` (below), change it to
-`/_astro/`.
+equal to the page's list), so a new view is added in both places.
 
 ### Caching
 

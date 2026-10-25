@@ -1,12 +1,11 @@
 """Check that a running vrk site answers like one (issue #188).
 
     python3 scripts/smoke_check.py https://vrk.viespirkiai.org
-    python3 scripts/smoke_check.py http://127.0.0.1:8781 --expect-version corpus-2026-10-25
+    python3 scripts/smoke_check.py http://127.0.0.1:8791
 
-Usable against any base URL: production, the deploy's preview port, or
-`scripts/serve_dashboard.py` locally. `scripts/deploy.sh` runs it on a new
-release before switching to it, and again after. It needs Python 3.8+ and
-nothing else, so it runs on the server as it is.
+Usable against any base URL: production, or `scripts/serve_dashboard.py`
+locally. It needs Python 3.8+ and nothing else, so it runs on the server as
+it is.
 
 What it asks, each a pass or a failure:
 
@@ -21,7 +20,6 @@ What it asks, each a pass or a failure:
 - Their page, `/asmuo/<slug>-<pid>`, and `/suvestine` answer with the page.
 - `/field-labels.json` and `/docs/concept-map.json` are 200 JSON.
 - `/dashboard/`, `/scripts/`, `/.git/` and a mistyped asset are 404.
-- With `--expect-version`, `/VERSION` names that corpus (or commit).
 
 Exit 0 when every check passes, 1 otherwise; each check prints one line.
 """
@@ -159,7 +157,7 @@ def pick_person(index: dict, record: Optional[str]) -> Tuple[Optional[dict], Opt
     return person, (person["e"][-1] if person else None)
 
 
-def run(base: str, record: Optional[str] = None, expect_version: Optional[str] = None) -> int:
+def run(base: str, record: Optional[str] = None) -> int:
     c = Checker(base)
     print(f"smoke check: {base}")
 
@@ -207,16 +205,6 @@ def run(base: str, record: Optional[str] = None, expect_version: Optional[str] =
     for path in MUST_404:
         c.expect(path, 404)
 
-    if expect_version:
-        version_file = c.expect("/VERSION", 200, "text/plain")
-        if version_file is not None:
-            fields = dict(line.partition("=")[::2] for line in version_file.text().splitlines() if "=" in line)
-            c.check(
-                f"/VERSION is {expect_version}",
-                expect_version in (fields.get("corpus"), fields.get("commit")),
-                f"corpus={fields.get('corpus')} commit={fields.get('commit')}",
-            )
-
     if c.failures:
         print(f"\n{len(c.failures)} check(s) failed against {base}", file=sys.stderr)
         return 1
@@ -226,11 +214,10 @@ def run(base: str, record: Optional[str] = None, expect_version: Optional[str] =
 
 def main(argv: Optional[List[str]] = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("base_url", help="e.g. https://vrk.viespirkiai.org or http://127.0.0.1:8781")
+    parser.add_argument("base_url", help="e.g. https://vrk.viespirkiai.org or http://127.0.0.1:8791")
     parser.add_argument("--record", help="record URL path to probe, e.g. /data/2019-prezidento/gitanas-nauseda-2019-prezidento.json")
-    parser.add_argument("--expect-version", help="the corpus tag (or commit) /VERSION must name")
     args = parser.parse_args(argv)
-    return run(args.base_url, args.record, args.expect_version)
+    return run(args.base_url, args.record)
 
 
 if __name__ == "__main__":

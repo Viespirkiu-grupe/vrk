@@ -18,8 +18,8 @@ fetched, and every portrait its pages link is archived by a second pass over
 the finished scrape (`scripts/run_all_elections.sh` runs both), so parser
 fixes land by offline re-parse.
 
-Three commands check that a change left the corpus in one piece, and each
-answers a question the other two cannot:
+Four commands check that a change left the corpus in one piece, and each
+answers a question the others cannot:
 
 ```bash
 python scripts/reparse_diff.py         # is the corpus what the parsers produce?
@@ -98,18 +98,14 @@ Where to start:
   design notes — why plain `requests`, no browser, one file per candidacy —
   and describes a one-election project, which it says at the top.
 - **Browsing** — `frontend/` is an Astro person-centric browser over the
-  corpus, using the Viešpirkiai design language. With Node.js 22.12+ and the
-  corpus available, run `python scripts/build_person_index.py`, then
+  corpus. With Node.js 22.12+ and the corpus available, run
+  `python scripts/build_person_index.py`, then
   `cd frontend && npm ci && npm run build && npm run preview` and open
-  <http://127.0.0.1:8791/>. The frontend builds without the corpus;
-  browsing requires the generated index and records.
-  [docs/DASHBOARD.md](docs/DASHBOARD.md) covers development and testing;
-  [docs/ASTRO_MIGRATION.md](docs/ASTRO_MIGRATION.md) records the migration plan.
-- **Deploying** — [docs/DEPLOY.md](docs/DEPLOY.md) is the whole path from
-  corpus to vrk.viespirkiai.org: `scripts/build_site.py` builds the site
-  directory, `build_distribution.py --site` ships it as a release asset, and
-  `scripts/deploy.sh` installs it on the server behind a smoke check, with
-  rollback. The server configs are in `deploy/`.
+  <http://127.0.0.1:8791/>. [docs/DASHBOARD.md](docs/DASHBOARD.md) covers
+  development and testing.
+- **Deploying** — production is `scripts/serve_dashboard.py` over a checkout,
+  behind Cloudflare; [docs/DEPLOY.md](docs/DEPLOY.md) has the setup, the
+  update steps and the cache rule.
 
 ## Licence, data terms and personal data
 
