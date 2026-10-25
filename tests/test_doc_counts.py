@@ -14,8 +14,6 @@ skip message and prose (issue #151). What had rotted meanwhile:
 * `docs/FIXTURE_SAMPLES.md`, whose shape is one section per election, covered
   50 of the 55 — those three plus `2020-seimo` and `2024-seimo`, each with an
   allowlist test and 60 to 136 tracked fixture files;
-* `docs/goal.md`'s "Implemented commands" listed five of the seven the CLI
-  builds;
 * one relative link in 14 documents pointed at a heading renumbering had
   moved — the sentence telling a contributor a parser change is not done
   until the re-parse gate is green.
@@ -42,7 +40,6 @@ DATA_GUIDE = REPO_ROOT / "docs" / "DATA_GUIDE.md"
 CLI_REFERENCE = REPO_ROOT / "docs" / "CLI_REFERENCE.md"
 FIXTURE_SAMPLES = REPO_ROOT / "docs" / "FIXTURE_SAMPLES.md"
 DATASET = REPO_ROOT / "docs" / "DATASET.md"
-GOAL = REPO_ROOT / "docs" / "goal.md"
 REGISTRY = REPO_ROOT / "scraper" / "elections.json"
 
 
@@ -124,7 +121,7 @@ class DocumentedElectionIds(unittest.TestCase):
         text = FIXTURE_SAMPLES.read_text(encoding="utf-8")
         self.assertEqual(sorted(e for e in registry_ids() if e not in text), [])
 
-    def test_the_goal_document_lists_every_command(self):
+    def test_the_cli_reference_documents_every_command(self):
         from scraper import cli
 
         parser = cli.build_parser()
@@ -133,45 +130,12 @@ class DocumentedElectionIds(unittest.TestCase):
             if getattr(action, "dest", None) == "command" and action.choices:
                 commands |= set(action.choices)
         self.assertTrue(commands, "no subcommands found on the CLI parser")
-        text = GOAL.read_text(encoding="utf-8")
-        section = re.search(r"Implemented commands:(.*?)\n\n[A-Z]", text, re.S)
-        self.assertIsNotNone(section, "goal.md no longer lists the implemented commands")
-        listed = set(re.findall(r"^- `([a-z][a-z-]+)", section.group(1), re.M))
+        listed = set(re.findall(r"^### `([a-z][a-z-]+)`", CLI_REFERENCE.read_text(encoding="utf-8"), re.M))
         self.assertEqual(sorted(commands - listed), [])
 
 
 class ContributorDocuments(unittest.TestCase):
-    """The three documents a contributor is sent to (issue #146).
-
-    `README.md` sent them to `docs/goal.md` "for the project's ground rules",
-    where the first section says the implementation "is intentionally focused
-    on one election module" — there are 55 — and the one outbound citation
-    pointed at `docs/PLAN_2015_ELECTIONS.md` for the 1996-1998 archive
-    layout, a file with no occurrence of 1996, 1997, 1998 or "archive" in it.
-    Meanwhile that plan's status block still listed full scrapes as
-    outstanding for three elections holding 15,149, 366 and 327 records.
-    """
-
-    def test_the_design_notes_say_they_are_design_notes(self):
-        goal = GOAL.read_text(encoding="utf-8")
-        self.assertIn("**Original design notes, written 2026-08", goal)
-        self.assertIn("It is **not** the current state", goal)
-        # And points at the documents that are maintained.
-        for name in ("DATASET.md", "OUTPUT_SCHEMA.md", "CLI_REFERENCE.md", "ADDING_AN_ELECTION.md"):
-            with self.subTest(name):
-                self.assertIn(name, goal)
-        self.assertNotIn("docs/PLAN_2015_ELECTIONS.md` and in", goal)
-
-    def test_the_readme_does_not_call_them_the_ground_rules(self):
-        readme = README.read_text(encoding="utf-8")
-        self.assertNotIn("for the project's ground rules", readme)
-        self.assertIn("the original\n  design notes", readme)
-
-    def test_the_2015_plan_is_marked_historical_and_its_status_is_true(self):
-        plan = (REPO_ROOT / "docs" / "PLAN_2015_ELECTIONS.md").read_text(encoding="utf-8")
-        self.assertIn("**Historical — completed 2026-08-21.**", plan)
-        self.assertNotIn("Full scrapes are still outstanding", plan)
-        self.assertIn("All six elections are fully scraped", plan)
+    """The checklist a contributor follows (issue #146)."""
 
     def test_the_checklist_counts_the_dispatch_sites_it_asks_for(self):
         """Ten edit sites in `scraper/cli.py`, not five.

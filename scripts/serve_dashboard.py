@@ -2,27 +2,40 @@
 
 Build first with `cd frontend && npm ci && npm run build`, then run this script
 from any directory. The site root `/` is frontend/dist (issue #184); the index
-and field-label JSON are served beside the page at `/people.json` and
-`/field-labels.json` from where the builders write them, `dashboard/`. Besides
+(`/people-version.json`, `/people-list.json`, `/people-details.json`) and
+`/field-labels.json` are served beside the page from where the builders write
+them, `dashboard/`. Besides
 those, only data/, portraits/ and docs/concept-map.json are reachable. The
 page's own routes (`/asmuo/<pid>`, `/suvestine`, …; see `ROUTE_PATHS`) answer
 with the built index.html, which routes on the client. Every other URL
 resolves inside the build, so no source directory, repository file or listing
 is served.
 
-The server preserves gzip compression, an mtime-keyed LRU, ETag/Last-Modified,
+The server sends a precompressed `.br` or `.gz` copy where the builder left
+one beside the file and the client accepts it, else gzips on the fly into an
+mtime-keyed LRU; it keeps ETag/Last-Modified,
 loopback Host validation and response hardening from issue #160. Build assets
 are separate from the root dist/ directory used by data releases.
 
+It listens on 127.0.0.1:8791 and answers loopback Host names only. In a
+container behind a proxy (docs/DEPLOY.md) `--bind 0.0.0.0` and
+`--allow-host vrk.viespirkiai.org`, or `VRK_BIND`, `VRK_PORT` and a
+comma-separated `VRK_ALLOW_HOSTS`, open it to that name; the loopback names
+stay allowed beside it, for a health check from inside the container.
+
 Caching (issue #186): Astro's content-hashed `/_astro/*` files are
 `immutable` for a year, and so is a web portrait asked for with its set's
-version (`/portraits/<pid>.webp?v=…`, issue #187); everything else (HTML, the index, records, the concept
-map) is `no-cache`, kept but revalidated on every load. docs/DASHBOARD.md has
-the rules a replacement static server and the Cloudflare zone must keep.
+version (`/portraits/<pid>.webp?v=…`, issue #187), and so is the index's list
+or details file asked for with `?v=` equal to the hash of what is on disk now
+(step 2 of #186); everything else (HTML, the version file, records, the
+concept map, and an index file asked for with any other `v`) is `no-cache`,
+kept but revalidated on every load. docs/DASHBOARD.md has the rules, and
+docs/DEPLOY.md the Cloudflare cache rules production needs beside them.
 """
 
 from __future__ import annotations
 
+import argparse
 import gzip
 import hashlib
 import os
@@ -33,6 +46,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 DEFAULT_PORT = 8791
+DEFAULT_BIND = "127.0.0.1"
 
 #: Worth compressing. Portraits are WebP and stay as they are.
 COMPRESSIBLE_SUFFIXES = {".json", ".html", ".tsv", ".csv", ".js", ".css", ".svg", ".txt", ".md"}
@@ -50,7 +64,18 @@ SERVED_FILES = ("docs/concept-map.json",)
 #: there on disk and are served at the root, beside the page that fetches them
 #: (issue #184).
 INDEX_DIR = "dashboard"
-INDEX_FILES = ("people.json", "field-labels.json")
+INDEX_FILES = ("people-version.json", "people-list.json", "people-details.json", "field-labels.json")
+
+#: The two index files the page asks for with `?v=<content hash>`, the hash
+#: people-version.json names (scripts/person_index_files.py). Such a URL is
+#: immutable only while `v` is the hash of the file on disk: a request that
+#: lands mid-deploy, with the old version file's hash and the new file's
+#: bytes, must not be pinned at the edge for a year under the old name.
+VERSIONED_FILES = ("people-list.json", "people-details.json")
+
+#: Copies a builder wrote beside a file, most preferred first, by the
+#: Accept-Encoding token that admits them.
+PRECOMPRESSED = (("br", ".br"), ("gzip", ".gz"))
 
 #: The Astro output. Every URL not listed above resolves inside it, which is
 #: what keeps the rest of the repository (frontend/, scripts/, .git/, …) out
@@ -80,12 +105,13 @@ def is_route(url_path: str) -> bool:
 
 #: Hosts a browser reaches a loopback server by. A request naming anything
 #: else is a DNS rebind: the name resolves to 127.0.0.1 while the browser
-#: still treats the response as that name's origin.
+#: still treats the response as that name's origin. `--allow-host` adds the
+#: public name a proxy passes; it never removes these.
 ALLOWED_HOSTS = {"127.0.0.1", "localhost", "[::1]", "::1"}
 
 #: mtime-keyed gzip cache: path -> (mtime, gzipped body). An LRU, so a long
 #: browsing session over 113k record files evicts one small entry rather
-#: than throwing away the 7 MB `people.json` with everything else.
+#: than throwing away the compressed index with everything else.
 _CACHE: OrderedDict[str, tuple[float, bytes]] = OrderedDict()
 _CACHE_MAX_ENTRIES = 512
 
@@ -105,19 +131,94 @@ REVALIDATE_CACHE_CONTROL = "no-cache"
 
 #: Web portraits are keyed by pid and rebuilt in place, so the bare URL is
 #: revalidated like a record. The page always asks with `?v=<version>`, the
-#: hash of the whole portrait set that people.json carries: a changed
+#: hash of the whole portrait set that the index carries: a changed
 #: portrait changes it, so that URL is never reused for other bytes.
 PORTRAITS_PREFIX = "/portraits/"
 
 
-def cache_control(url_path: str) -> str:
-    """The Cache-Control a successful response to this URL carries."""
+def _query_version(query: str) -> str:
+    return next((p[2:] for p in query.split("&") if p.startswith("v=")), "")
+
+
+def is_versioned(url_path: str) -> bool:
+    """Is this one of the index files whose `?v=` can make it immutable?"""
+    path = url_path.split("#", 1)[0].split("?", 1)[0]
+    return path.lstrip("/") in VERSIONED_FILES
+
+
+def cache_control(url_path: str, current: str | None = None) -> str:
+    """The Cache-Control a successful response to this URL carries.
+
+    `current` is the content hash of the file a versioned index URL names;
+    without it, or with a `v` that is not it, the answer is `no-cache`.
+    """
     path, _, query = url_path.split("#", 1)[0].partition("?")
     if path.startswith(IMMUTABLE_PREFIX):
         return IMMUTABLE_CACHE_CONTROL
-    if path.startswith(PORTRAITS_PREFIX) and any(p.startswith("v=") and len(p) > 2 for p in query.split("&")):
+    if path.startswith(PORTRAITS_PREFIX) and _query_version(query):
+        return IMMUTABLE_CACHE_CONTROL
+    if is_versioned(path) and current and _query_version(query) == current:
         return IMMUTABLE_CACHE_CONTROL
     return REVALIDATE_CACHE_CONTROL
+
+
+#: path -> ((mtime_ns, size), hash): the `?v=` of each versioned file, the
+#: same blake2s scripts/person_index_files.content_hash writes.
+_HASHES: dict[str, tuple[tuple[int, int], str]] = {}
+
+
+def content_hash(path: Path) -> str | None:
+    try:
+        stat = path.stat()
+    except OSError:
+        return None
+    key = (stat.st_mtime_ns, stat.st_size)
+    hit = _HASHES.get(str(path))
+    if hit and hit[0] == key:
+        return hit[1]
+    digest = hashlib.blake2s(path.read_bytes(), digest_size=8).hexdigest()
+    _HASHES[str(path)] = (key, digest)
+    return digest
+
+
+def accepted_encodings(header: str) -> set[str]:
+    """The content codings an Accept-Encoding admits (`q=0` refuses one)."""
+    accepted = set()
+    for item in header.split(","):
+        token, _, params = item.strip().partition(";")
+        q = params.strip()
+        if q.startswith("q="):
+            try:
+                if float(q[2:]) == 0:
+                    continue
+            except ValueError:
+                continue
+        if token.strip():
+            accepted.add(token.strip().lower())
+    return accepted
+
+
+def precompressed(path: Path, accepted: set[str]) -> tuple[str, Path] | None:
+    """The builder's copy to send for `path`, or None to compress here.
+
+    Only a copy whose mtime is not older than the file's: the index build
+    gives each the original's mtime, so an older one is from a previous
+    build of a file that has since been rewritten.
+    """
+    try:
+        mtime = path.stat().st_mtime
+    except OSError:
+        return None
+    for coding, suffix in PRECOMPRESSED:
+        if coding not in accepted:
+            continue
+        sibling = path.with_name(path.name + suffix)
+        try:
+            if sibling.is_file() and sibling.stat().st_mtime >= mtime:
+                return coding, sibling
+        except OSError:
+            continue
+    return None
 
 
 CONTENT_SECURITY_POLICY = (
@@ -128,13 +229,22 @@ CONTENT_SECURITY_POLICY = (
 
 
 def _gzipped(path: Path) -> bytes:
+    return _cached(path, lambda: gzip.compress(path.read_bytes(), compresslevel=6))
+
+
+def _read(path: Path) -> bytes:
+    """A precompressed copy, held in the same LRU as what is gzipped here."""
+    return _cached(path, path.read_bytes)
+
+
+def _cached(path: Path, make) -> bytes:  # noqa: ANN001 - a zero-argument callable
     key = str(path)
     mtime = path.stat().st_mtime
     hit = _CACHE.get(key)
     if hit and hit[0] == mtime:
         _CACHE.move_to_end(key)
         return hit[1]
-    body = gzip.compress(path.read_bytes(), compresslevel=6)
+    body = make()
     _CACHE[key] = (mtime, body)
     _CACHE.move_to_end(key)
     while len(_CACHE) > _CACHE_MAX_ENTRIES:
@@ -151,7 +261,7 @@ def _is_served(translated: Path, root: Path) -> bool:
     Compared *lexically*, not through `Path.resolve()`, and against
     `os.getcwd()` — the base `translate_path` itself joins against. `data/`
     is a directory of symlinks on the machine that scraped the corpus and
-    `dashboard/people.json` is one too, so resolving would put every record
+    the index files in `dashboard/` can be too, so resolving would put every record
     fetch outside the root and refuse it; and resolving only one side breaks
     wherever the cwd crosses a symlink, which on macOS is every temporary
     directory. Both were caught by driving the real dashboard and the tests
@@ -177,14 +287,27 @@ def _is_served(translated: Path, root: Path) -> bool:
     return relative in files
 
 
+def _host_names(hosts) -> frozenset[str]:  # noqa: ANN001 - any iterable of str
+    return frozenset(h.strip().strip("[]").lower() for h in hosts if h.strip())
+
+
 class GzipHandler(SimpleHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
+
+    #: The Host names answered; `make_server` widens it per server.
+    allowed_hosts = _host_names(ALLOWED_HOSTS)
+
+    #: Python's own table has no `.webp` before 3.13, so on a host without a
+    #: mime.types that lists it (python:3.11-slim, for one) every portrait
+    #: went out as application/octet-stream. Caught by the smoke check
+    #: against the container.
+    extensions_map = {**SimpleHTTPRequestHandler.extensions_map, ".webp": "image/webp"}
 
     def translate_path(self, path: str) -> str:
         """Map a public URL to the file it names (issue #184).
 
         `data/…` and `portraits/…` are their repository directories,
-        `/docs/concept-map.json` its file, `/people.json` and
+        `/docs/concept-map.json` its file, the index files and
         `/field-labels.json` the generated files in `dashboard/`, and a
         page route (`is_route`) the built index.html. Everything else is the
         Astro output, so `/` is the page and a source path such as
@@ -214,9 +337,9 @@ class GzipHandler(SimpleHTTPRequestHandler):
 
     def _guard(self) -> bool:
         """True when the request may be served; otherwise it is answered."""
-        host = (self.headers.get("Host") or "").rsplit(":", 1)[0].strip("[]")
-        if host and host not in {h.strip("[]") for h in ALLOWED_HOSTS}:
-            self._refuse(403, "This server answers loopback names only")
+        host = (self.headers.get("Host") or "").rsplit(":", 1)[0].strip("[]").lower()
+        if host and host not in self.allowed_hosts:
+            self._refuse(403, "This server does not answer for that host")
             return False
         # The base is `os.getcwd()` because that is what `translate_path`
         # itself joins against; anything else and the two disagree the moment
@@ -243,7 +366,13 @@ class GzipHandler(SimpleHTTPRequestHandler):
         # immutable would pin a missing-asset 404 at the edge for a year, and
         # the redirects are cheap enough to ask for every time.
         if getattr(self, "_status", None) in (200, 304):
-            self.send_header("Cache-Control", cache_control(self.path))
+            current = content_hash(Path(self.translate_path(self.path))) if is_versioned(self.path) else None
+            self.send_header("Cache-Control", cache_control(self.path, current))
+            # The body depends on Accept-Encoding for everything this server
+            # compresses, so a shared cache must key on it.
+            served = Path(self.translate_path(self.path))
+            if (served / "index.html" if served.is_dir() else served).suffix.lower() in COMPRESSIBLE_SUFFIXES:
+                self.send_header("Vary", "Accept-Encoding")
         self.send_header("X-Content-Type-Options", "nosniff")
         self.send_header("Content-Security-Policy", CONTENT_SECURITY_POLICY)
         self.send_header("Referrer-Policy", "no-referrer")
@@ -277,16 +406,19 @@ class GzipHandler(SimpleHTTPRequestHandler):
         if self._redirect_directory(translated):
             return
         path = translated / "index.html" if translated.is_dir() else translated
-        if not (
-            path.is_file()
-            and path.suffix.lower() in COMPRESSIBLE_SUFFIXES
-            and "gzip" in self.headers.get("Accept-Encoding", "")
-        ):
+        accepted = accepted_encodings(self.headers.get("Accept-Encoding", ""))
+        compressible = path.is_file() and path.suffix.lower() in COMPRESSIBLE_SUFFIXES
+        ready = precompressed(path, accepted) if compressible else None
+        if ready:
+            coding, sibling = ready
+            body = _read(sibling)
+        elif compressible and "gzip" in accepted:
+            coding, body = "gzip", _gzipped(path)
+        else:
             super().do_GET()
             return
 
         mtime = path.stat().st_mtime
-        body = _gzipped(path)
         etag = f'W/"{hashlib.blake2s(body, digest_size=8).hexdigest()}"'
         last_modified = formatdate(mtime, usegmt=True)
         if self._not_modified(etag, mtime):
@@ -298,7 +430,7 @@ class GzipHandler(SimpleHTTPRequestHandler):
             return
         self.send_response(200)
         self.send_header("Content-Type", self.guess_type(str(path)))
-        self.send_header("Content-Encoding", "gzip")
+        self.send_header("Content-Encoding", coding)
         self.send_header("Content-Length", str(len(body)))
         self.send_header("ETag", etag)
         self.send_header("Last-Modified", last_modified)
@@ -328,19 +460,44 @@ class GzipHandler(SimpleHTTPRequestHandler):
             return False
 
 
-def main() -> int:
+def parse_args(argv: list[str] | None = None, environ=os.environ) -> argparse.Namespace:  # noqa: ANN001 - a mapping
+    """The listen address and extra Host names, a flag winning over its env."""
+    parser = argparse.ArgumentParser(description="Serve the site, the index, data/ and portraits/.")
+    parser.add_argument("port", nargs="?", type=int, default=int(environ.get("VRK_PORT") or DEFAULT_PORT))
+    parser.add_argument("--bind", default=environ.get("VRK_BIND") or DEFAULT_BIND, help=f"default {DEFAULT_BIND}")
+    parser.add_argument(
+        "--allow-host",
+        action="append",
+        dest="allow_hosts",
+        metavar="NAME",
+        help="a Host name to answer besides the loopback ones; repeatable or comma-separated",
+    )
+    args = parser.parse_args(argv)
+    given = args.allow_hosts if args.allow_hosts is not None else [environ.get("VRK_ALLOW_HOSTS", "")]
+    args.allow_hosts = sorted(_host_names(name for item in given for name in item.split(",")))
+    return args
+
+
+def make_server(bind: str = DEFAULT_BIND, port: int = DEFAULT_PORT, allow_hosts=()) -> ThreadingHTTPServer:  # noqa: ANN001
+    handler = type("Handler", (GzipHandler,), {"allowed_hosts": GzipHandler.allowed_hosts | _host_names(allow_hosts)})
+    return ThreadingHTTPServer((bind, port), handler)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
     # npm's working directory is frontend/; resolving relative to this script
     # makes direct invocation and npm run preview behave identically.
     os.chdir(Path(__file__).resolve().parents[1])
     if not Path("frontend/dist/index.html").is_file():
         print("Astro build not found. Run: cd frontend && npm ci && npm run build", file=sys.stderr)
-    if not Path("dashboard/people.json").is_file():
+    if not Path("dashboard/people-list.json").is_file():
         print("Person index not found. After obtaining the corpus, run: python3 scripts/build_person_index.py", file=sys.stderr)
-    port = int(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_PORT
-    server = ThreadingHTTPServer(("127.0.0.1", port), GzipHandler)
+    server = make_server(args.bind, args.port, args.allow_hosts)
+    also = f", also as {', '.join(args.allow_hosts)}" if args.allow_hosts else ""
     print(
         f"Serving the site, the index and {', '.join(name + '/' for name in SERVED_ROOTS)}"
-        f" at http://127.0.0.1:{port}/ (gzip on; Ctrl-C stops)"
+        f" at http://{args.bind}:{args.port}/{also} (br/gzip on; Ctrl-C stops)",
+        flush=True,
     )
     try:
         server.serve_forever()

@@ -299,7 +299,7 @@ class SpentScriptTests(unittest.TestCase):
     def test_the_index_builder_checks_before_it_writes(self):
         text = (REPO_ROOT / "scripts" / "build_person_index.py").read_text(encoding="utf-8")
         problems = text.index("problems = index_problems(index)")
-        write = text.index("write_json(OUTPUT_PATH, index")
+        write = text.index("write_index(index, INDEX_DIR)")
         self.assertLess(problems, write, "the registry checks must precede the write")
         self.assertIn("argparse.ArgumentParser(", text)
 

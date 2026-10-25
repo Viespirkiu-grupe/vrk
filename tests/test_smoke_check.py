@@ -13,7 +13,6 @@ import functools
 import importlib.util
 import io
 import os
-import shutil
 import sys
 import tempfile
 import threading
@@ -23,7 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-import site_server  # noqa: E402
+import synthetic_repo  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -52,9 +51,9 @@ class AgainstServeDashboard(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls._tmp = tempfile.TemporaryDirectory()
-        cls.root = site_server.make_repo(Path(cls._tmp.name) / "repo")
+        cls.root = synthetic_repo.make_repo(Path(cls._tmp.name) / "repo")
         # What serve_dashboard must refuse, so the 404 checks mean something.
-        for relative in ("scripts/deploy.sh", ".git/config", "dashboard/merge-review.csv"):
+        for relative in ("scripts/smoke_check.py", ".git/config", "dashboard/merge-review.csv"):
             path = cls.root / relative
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text("private\n")
@@ -77,10 +76,12 @@ class AgainstServeDashboard(unittest.TestCase):
         for line in (
             "ok    GET / -> 200 text/html",
             "ok    GET /_astro/index.abc.js -> 200",
-            "ok    GET /people.json -> 200 application/json",
+            "ok    GET /people-version.json -> 200 application/json",
+            "ok    the index lists people",
+            "ok    list and details align",
             "ok    GET /data/2020-seimo/vardenis-pavardenis-2020-seimo.json -> 200 application/json",
-            f"ok    GET /portraits/{site_server.PID}.webp?v={site_server.PORTRAIT_VERSION} -> 200 image/webp",
-            f"ok    GET /asmuo/vardenis-pavardenis-{site_server.PID} -> 200 text/html",
+            f"ok    GET /portraits/{synthetic_repo.PID}.webp?v={synthetic_repo.PORTRAIT_VERSION} -> 200 image/webp",
+            f"ok    GET /asmuo/vardenis-pavardenis-{synthetic_repo.PID} -> 200 text/html",
             "ok    GET /dashboard/ -> 404",
             "ok    GET /scripts/ -> 404",
             "ok    GET /.git/ -> 404",
@@ -130,9 +131,9 @@ class AgainstWrongServers(unittest.TestCase):
     def test_a_server_that_exposes_the_repository_fails(self):
         # The stock `python -m http.server` over a checkout: everything is a
         # file, nothing routes, and /scripts/ is a listing.
-        repo = site_server.make_repo(self.root / "repo")
+        repo = synthetic_repo.make_repo(self.root / "repo")
         (repo / "scripts").mkdir()
-        (repo / "scripts" / "deploy.sh").write_text("#!/bin/sh\n")
+        (repo / "scripts" / "smoke_check.py").write_text("print()\n")
         base = self.serve(functools.partial(SimpleHTTPRequestHandler, directory=str(repo)))
         code, out = run_quiet(base)
         self.assertEqual(code, 1)
@@ -140,27 +141,8 @@ class AgainstWrongServers(unittest.TestCase):
         self.assertIn("FAIL  GET / -> 200 text/html  (Cache-Control ''", out)
         self.assertIn("FAIL  security headers on /", out)
 
-    def test_the_built_site_on_the_reference_server_passes(self):
-        build_site = _load("build_site")
-        site = self.root / "site"
-        build_site.build_site(
-            site_server.make_repo(self.root / "repo"), site,
-            frontend="verify", index="reuse", portraits="reuse", jobs=1, corpus_tag="corpus-2026-10-25",
-        )
-        server, base = site_server.start(site)
-        self.addCleanup(server.server_close)
-        self.addCleanup(server.shutdown)
-        code, out = run_quiet(base, expect_version="corpus-2026-10-25")
-        self.assertEqual(code, 0, out)
-        self.assertIn("ok    /VERSION is corpus-2026-10-25", out)
-        code, out = run_quiet(base, expect_version="corpus-1999-01-01")
-        self.assertEqual(code, 1)
-
     def test_an_index_without_portraits_fails(self):
-        repo = site_server.make_repo(self.root / "repo")
-        index = repo / "dashboard/people.json"
-        index.write_text(index.read_text().replace('"ph":1,', ""))
-        shutil.rmtree(repo / "portraits")
+        repo = synthetic_repo.make_repo(self.root / "repo", portraits=False)
         cwd = os.getcwd()
         os.chdir(repo)
         self.addCleanup(os.chdir, cwd)

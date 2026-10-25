@@ -476,6 +476,13 @@ const SEARCH_DEBOUNCE_MS = 120;
 
 let INDEX = null;
 let CONCEPTS = {};
+//: The index arrives in two files (issue #186, step 2): the list, which the
+//: search, the facets and the rows need, and the details -- record ids,
+//: declared money, workplaces, votes, education, campaigns -- fetched behind
+//: it. `detailsReady` settles when they are merged into INDEX; everything
+//: that reads them waits on it (`whenDetails`).
+let detailsReady = null;
+let detailsLoaded = false;
 const recordCache = new Map();
 const compareSet = new Map();
 // Keep the populated introduction when another view replaces the content pane.
@@ -500,34 +507,158 @@ function bootFailed(err) {
   root.replaceChildren(intro, div);
 }
 
+//: The list file as the rest of the page reads it: `e.id`, `e.p` and `p.k`
+//: put back from the election and party indexes and the name (see
+//: scripts/person_index_files.py). `kn` is the natural key wherever
+//: `NAME|birth` would not spell it.
+function decodeList(list) {
+  const elections = list.elections || [];
+  const partyIds = list.partyIds || [];
+  for (const p of list.people) {
+    p.k = p.kn || `${(p.n || "").toUpperCase()}|${p.b || ""}`;
+    for (const e of p.e) {
+      e.id = elections[e.ei].id;
+      if (e.pi != null) e.p = partyIds[e.pi];
+    }
+  }
+  return list;
+}
+
+function versionedUrl(name, hash) {
+  return `/${name}?v=${encodeURIComponent(hash || "")}`;
+}
+
+//: The details file, merged into the list's candidacies by position. Both
+//: carry the build they were split from; a page that caught one file from
+//: each of two builds (a deploy between the two requests) asks the version
+//: file again. If that names a newer list too, the list on screen is the
+//: stale one and the page reloads, once per build.
+async function loadDetails(version) {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const res = await fetch(versionedUrl("people-details.json", version.details), attempt ? { cache: "reload" } : {});
+    if (!res.ok) throw new Error(`people-details.json: HTTP ${res.status}`);
+    const details = await res.json();
+    if (details.build === INDEX.build && details.people.length === INDEX.people.length) {
+      INDEX.campaigns = details.campaigns || [];
+      INDEX.people.forEach((p, i) => {
+        const rows = details.people[i];
+        p.e.forEach((e, j) => Object.assign(e, rows[j]));
+        p._f = haystack(p);
+      });
+      detailsLoaded = true;
+      return;
+    }
+    const again = await fetch("/people-version.json", { cache: "no-cache" });
+    if (!again.ok) throw new Error(`people-version.json: HTTP ${again.status}`);
+    version = await again.json();
+    if (version.build !== INDEX.build) {
+      const key = "vrk-index-reloaded";
+      let reloaded = null;
+      try { reloaded = sessionStorage.getItem(key); sessionStorage.setItem(key, version.build); } catch { /* private mode */ }
+      if (reloaded !== version.build) { location.reload(); return new Promise(() => {}); }
+    }
+  }
+  throw new Error(`people-details.json: build ${INDEX.build} not found`);
+}
+
+//: Draw a view that reads the details once they are in; until then the pane
+//: says so. A newer view started meanwhile wins (`renderToken`).
+function whenDetails(draw) {
+  if (detailsLoaded) { draw(); return; }
+  const token = ++renderToken;
+  const root = document.getElementById("person");
+  const div = document.createElement("div");
+  div.className = "loading";
+  div.textContent = "kraunama…";
+  root.replaceChildren(div);
+  detailsReady.then(
+    () => { if (token === renderToken) draw(); },
+    (err) => {
+      if (token !== renderToken) return;
+      div.className = "placeholder error-state";
+      div.setAttribute("role", "alert");
+      div.textContent = `Išsamių duomenų įkelti nepavyko (${err.message}). Bandykite dar kartą vėliau.`;
+    },
+  );
+}
+
+//: The CSV needs every candidacy's figures: the button waits for them.
+async function exportCSVWhenReady() {
+  const button = document.getElementById("csvBtn");
+  if (!detailsLoaded) {
+    const label = [...button.childNodes];
+    button.disabled = true;
+    button.textContent = "kraunama…";
+    try {
+      await detailsReady;
+    } catch (err) {
+      console.error("people-details.json neįkeltas", err);
+      return;
+    } finally {
+      button.disabled = false;
+      button.replaceChildren(...label);
+    }
+  }
+  exportCSV();
+}
+
+// A merged person answers to every name they ran under, so the search
+// haystack folds in each natural key's name — the canonical key's (the
+// display name follows the latest election and can differ from it: the
+// Gerasimovičienė→Gasperavičienė remarriage displays only the second
+// name) and every merged-away fragment's from "ak" — plus the canonical
+// names of every party that nominated them and, once the details are in,
+// each candidacy's workplace/position string, so the box also answers
+// "valstiečių" or "Vilniaus universitetas" (issue #87).
+function haystack(p) {
+  const names = [p.k, ...(p.ak || [])].map(k => k.slice(0, k.lastIndexOf("|")));
+  const partyNames = [...new Set(p.e.map(e => e.p).filter(Boolean))]
+    .flatMap(id => { const party = INDEX.parties[id] || {}; return [party.n, party.f]; });
+  const workplaces = p.e.map(e => e.wp);
+  return fold([...new Set([p.n, ...names, ...partyNames, ...workplaces])].filter(Boolean).join(" "));
+}
+
 async function boot() {
   // The index changes after every corpus update; a cached stale copy makes
   // the app quietly disagree with the data on disk. The concept map rides
   // along: the comparison rows resolve through it, so the page carries no
   // path list of its own.
   //
-  // no-cache, not no-store: the browser keeps its copy but must revalidate it
-  // on every load, so a corpus update is still seen on the next visit while
-  // an unchanged 7 MB index costs one 304 (issue #186). The server's
-  // Last-Modified carries that check; Cloudflare drops the ETag whenever it
-  // recompresses.
+  // Only the version file is revalidated (no-cache: one 304 on an unchanged
+  // corpus). It names the content hash of the list and the details, and the
+  // page asks for those as `?v=<hash>`: a URL whose bytes never change,
+  // which the server marks immutable, so a repeat visit fetches neither
+  // (issue #186). The concept map and labels are no-cache as before; the
+  // server's Last-Modified carries that check, since Cloudflare drops the
+  // ETag whenever it recompresses.
   let conceptMap;
   let labelsRes;
+  let version;
   try {
-    const [indexRes, mapRes, fieldRes] = await Promise.all([
-      fetch("/people.json", { cache: "no-cache" }),
+    const [versionRes, mapRes, fieldRes] = await Promise.all([
+      fetch("/people-version.json", { cache: "no-cache" }),
       fetch("/docs/concept-map.json", { cache: "no-cache" }),
       fetch("/field-labels.json", { cache: "no-cache" }).catch(() => null),
     ]);
-    if (!indexRes.ok) throw new Error(`people.json: HTTP ${indexRes.status}`);
+    if (!versionRes.ok) throw new Error(`people-version.json: HTTP ${versionRes.status}`);
     if (!mapRes.ok) throw new Error(`docs/concept-map.json: HTTP ${mapRes.status}`);
-    INDEX = await indexRes.json();
+    version = await versionRes.json();
+    const listRes = await fetch(versionedUrl("people-list.json", version.list));
+    if (!listRes.ok) throw new Error(`people-list.json: HTTP ${listRes.status}`);
+    INDEX = decodeList(await listRes.json());
     conceptMap = await mapRes.json();
     labelsRes = fieldRes;
   } catch (err) {
     bootFailed(err);
     return;
   }
+  // Behind the list, so the two do not split the bandwidth the first paint
+  // waits on.
+  detailsReady = loadDetails(version);
+  detailsReady.then(() => {
+    // The workplaces just joined the haystack.
+    if (document.getElementById("search").value.trim()) renderList();
+  }, (err) => console.error("people-details.json neįkeltas", err));
   // Not fatal: a page without the labels de-slugs, which is what it did
   // before the file existed. It says so once, in the console, rather than
   // replacing the whole view with an error.
@@ -579,21 +710,8 @@ async function boot() {
       (s.generatedAt ? `; indeksas sugeneruotas ${s.generatedAt}` : "") +
       (s.parserCommit ? `; parserio versija ${s.parserCommit}` : "");
   }
-  // A merged person answers to every name they ran under, so the search
-  // haystack folds in each natural key's name — the canonical key's (the
-  // display name follows the latest election and can differ from it: the
-  // Gerasimovičienė→Gasperavičienė remarriage displays only the second
-  // name) and every merged-away fragment's from "ak" — plus the canonical
-  // names of every party that nominated them and each candidacy's
-  // workplace/position string, so the box also answers "valstiečių" or
-  // "Vilniaus universitetas" (issue #87).
-  for (const p of INDEX.people) {
-    const names = [p.k, ...(p.ak || [])].map(k => k.slice(0, k.lastIndexOf("|")));
-    const partyNames = [...new Set(p.e.map(e => e.p).filter(Boolean))]
-      .flatMap(id => { const party = INDEX.parties[id] || {}; return [party.n, party.f]; });
-    const workplaces = p.e.map(e => e.wp);
-    p._f = fold([...new Set([p.n, ...names, ...partyNames, ...workplaces])].filter(Boolean).join(" "));
-  }
+  // Names and parties now; the workplaces join when the details land.
+  for (const p of INDEX.people) if (!p._f) p._f = haystack(p);
   buildFilters();
   // Typing rebuilds 300 rows -- some 2,000 elements -- per keystroke, over a
   // scan that costs 14.0 ms for "SIMONYTE" and 13.2 ms with two facets on:
@@ -630,7 +748,7 @@ async function boot() {
   for (const [id, path] of Object.entries(VIEW_PATHS)) {
     document.getElementById(id).addEventListener("click", () => { navigate(path); focusPane(); });
   }
-  document.getElementById("csvBtn").addEventListener("click", exportCSV);
+  document.getElementById("csvBtn").addEventListener("click", exportCSVWhenReady);
   document.getElementById("cmpGo").addEventListener("click", () => navigate(comparePath([...compareSet.keys()])));
   document.getElementById("cmpClear").addEventListener("click", () => {
     compareSet.clear();
@@ -707,14 +825,15 @@ function route() {
     const person = personByKey(legacy);
     if (!person) { nothing(legacy); return; }
     canonicalize(personPath(person));
-    showPerson(person);
+    whenDetails(() => showPerson(person));
     return;
   }
   if (view === "person") {
     const person = key ? resolvePersonKey(key, personByKey) : null;
     if (!person) { nothing(key); return; }
     canonicalize(personPath(person));
-    showPerson(person);
+    // The record files are named by `c`, which is in the details.
+    whenDetails(() => showPerson(person));
     return;
   }
   if (view === "compare") {
@@ -725,11 +844,14 @@ function route() {
     updateCompareBar();
     renderList();
     canonicalize(comparePath(persons.map(p => p.pid)));
-    showCompare();
+    whenDetails(showCompare);
     return;
   }
   const show = { aggBtn: showAggregates, nominatorBtn: showNominator, coverageBtn: showCoverage, moversBtn: showMovers, switchesBtn: showSwitches }[view];
-  if (show) { canonicalize(VIEW_PATHS[view]); show(); return; }
+  // The coverage grid and the party switches read the list alone; the
+  // statistics, the nominator view and the declaration movers sum details.
+  const needsDetails = { aggBtn: true, nominatorBtn: true, moversBtn: true }[view];
+  if (show) { canonicalize(VIEW_PATHS[view]); if (needsDetails) whenDetails(show); else show(); return; }
   nothing(key);
 }
 

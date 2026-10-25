@@ -121,6 +121,51 @@ Object.assign(records['/data/2024-seimo/test-jonas-2024-seimo.json'].normalized.
   ],
 });
 
+// The index as the page fetches it (issue #186): the version file, the list
+// and the details, split the way scripts/person_index_files.py splits it.
+// Tests write one whole index; this serves it as the three files. `status`
+// fails all three; `detailsDelay` holds the details back, in ms.
+const LIST_KEYS = ['w', 'sv', 'ap', 'tb', 'wm', 'wt', 'r'];
+const DETAIL_KEYS = ['wp', 'm', 'c', 'lt', 'ed', 'v', 'cv', 'ck', 'ds'];
+
+export function splitIndex(whole) {
+  const build = 'b' + JSON.stringify(whole).length;
+  const electionIndex = new Map(whole.elections.map((e, i) => [e.id, i]));
+  const partyIds = Object.keys(whole.parties || {}).sort();
+  const people = [];
+  const details = [];
+  for (const p of whole.people) {
+    const entry = {};
+    for (const key of ['pid', 'n', 'b', 'ph', 'ak']) if (key in p) entry[key] = p[key];
+    if (p.k !== `${(p.n || '').toUpperCase()}|${p.b || ''}`) entry.kn = p.k;
+    entry.e = p.e.map(e => {
+      const row = { ei: electionIndex.get(e.id) };
+      if (e.p) row.pi = partyIds.indexOf(e.p);
+      for (const key of LIST_KEYS) if (key in e) row[key] = e[key];
+      return row;
+    });
+    people.push(entry);
+    details.push(p.e.map(e => Object.fromEntries(DETAIL_KEYS.filter(key => key in e).map(key => [key, e[key]]))));
+  }
+  const { campaigns, people: _, ...tables } = whole;
+  return {
+    version: { build, list: `${build}l`, details: `${build}d` },
+    list: { build, ...tables, partyIds, people },
+    details: { build, campaigns: campaigns || [], people: details },
+  };
+}
+
+export async function routeIndex(page, whole, { status = 200, detailsDelay = 0 } = {}) {
+  const files = splitIndex(whole);
+  const body = (doc) => JSON.stringify(status === 200 ? doc : { error: 'fixture unavailable' });
+  await page.route(url => url.pathname === '/people-version.json', route => route.fulfill({ status, contentType: 'application/json', body: body(files.version) }));
+  await page.route(url => url.pathname === '/people-list.json', route => route.fulfill({ status, contentType: 'application/json', body: body(files.list) }));
+  await page.route(url => url.pathname === '/people-details.json', async route => {
+    await new Promise(resolve => setTimeout(resolve, detailsDelay));
+    return route.fulfill({ status, contentType: 'application/json', body: body(files.details) });
+  });
+}
+
 // A 1×1 PNG, enough for the portrait loader to decode.
 const PIXEL = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==', 'base64');
 
@@ -129,7 +174,7 @@ const PIXEL = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQ
 // answers, after `photoDelay` ms, with the pixel or an empty 404.
 // `recordPhotos` gives every record an archive sidecar path, which the page
 // must not request (issue #187).
-export async function installFixtures(page, { failedRecord, failedIndex = false, portraits = {}, photoDelay = 0, recordPhotos = false } = {}) {
+export async function installFixtures(page, { failedRecord, failedIndex = false, portraits = {}, photoDelay = 0, recordPhotos = false, detailsDelay = 0 } = {}) {
   const served = {
     ...index,
     people: people.map(p => (p.pid in portraits ? { ...p, ph: 1 } : p)),
@@ -137,11 +182,7 @@ export async function installFixtures(page, { failedRecord, failedIndex = false,
   };
   // UI assets, the real concept map and field labels still pass through the
   // production preview server, so missing bundles / bad base URLs fail the suite.
-  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
-    status: failedIndex ? 503 : 200,
-    contentType: 'application/json',
-    body: JSON.stringify(failedIndex ? { error: 'fixture unavailable' } : served),
-  }));
+  await routeIndex(page, served, { status: failedIndex ? 503 : 200, detailsDelay });
   await page.route('**/data/**/*.json', route => {
     const path = new URL(route.request().url()).pathname;
     let record = records[path];
