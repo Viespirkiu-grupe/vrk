@@ -43,4 +43,5 @@ samples-full/
 portraits/
 # Dashboard-generated index
 dashboard/people.json
+dashboard/people-*.json*
 dashboard/merge-review.csv

@@ -89,8 +89,9 @@ Run from the repo root:
     python scripts/build_person_index.py
 
 Reads data/<election-id>/*.json and scraper/elections.json, writes
-dashboard/people.json, and prints the audit counts so a run is its own sanity
-check.
+dashboard/people-list.json, people-details.json and people-version.json
+(scripts/person_index_files.py has the split, issue #186) with their `.br` /
+`.gz` copies, and prints the audit counts so a run is its own sanity check.
 """
 
 from __future__ import annotations
@@ -127,14 +128,14 @@ from scraper.shared.parties import display_name as party_display_name  # noqa: E
 from scraper.shared.parties import entry as party_entry  # noqa: E402
 from scraper.shared.parties import partija  # noqa: E402
 from scraper.shared.provenance import parser_commit, utc_now_iso  # noqa: E402
-from scraper.shared.files import write_json  # noqa: E402
 from scraper.shared.tautybe import tautybe  # noqa: E402
 
 import field_coverage  # noqa: E402
 from build_web_portraits import PORTRAITS_DIR, apply_portrait_flags  # noqa: E402
+from person_index_files import INDEX_DIR, LIST_NAME, write_index  # noqa: E402
 
 DATA_ROOT = Path("data")
-OUTPUT_PATH = Path("dashboard/people.json")
+OUTPUT_PATH = INDEX_DIR / LIST_NAME
 
 REGISTRY_PATH = Path("scraper/elections.json")
 OVERRIDES_PATH = Path("scraper/person_overrides.json")
@@ -856,7 +857,7 @@ def main() -> int:
         for line in problems:
             print(line, file=sys.stderr)
         print(
-            f"\nnot written: {OUTPUT_PATH} still holds the previous build",
+            f"\nnot written: {INDEX_DIR}/ still holds the previous build",
             file=sys.stderr,
         )
         return 1
@@ -866,10 +867,10 @@ def main() -> int:
     # change, scripts/build_web_portraits.py runs next and re-stamps it.
     apply_portrait_flags(index, PORTRAITS_DIR)
 
-    # 29 MB the dashboard fetches whole on every load, and the file with the
-    # most to lose from a half-write: through the atomic writer, in the
-    # compact form the page expects (issue #153).
-    write_json(OUTPUT_PATH, index, indent=None, separators=(",", ":"), newline=False)
+    # Split into the list the page needs first and the details it fetches
+    # behind it (issue #186), each through the atomic writer (issue #153);
+    # the version file, which names both, lands last.
+    written = write_index(index, INDEX_DIR)
     stats = index["stats"]
     print(f"vintage:                  corpus parsed ≤ {stats['corpusParsedAt']}, index built by {stats['parserCommit']}")
     print(f"records:                  {stats['records']}")
@@ -899,7 +900,13 @@ def main() -> int:
         f"elections:                {len(index['elections'])} of {len(load_registry())} registered "
         f"({generals} general, {len(index['elections']) - generals} grouped under a parent)"
     )
-    print(f"wrote {OUTPUT_PATH} ({OUTPUT_PATH.stat().st_size // 1024} KB)")
+    for part in ("list", "details"):
+        sizes = written["sizes"][part]
+        print(
+            f"wrote {part + ':':<9}           {sizes['raw'] // 1024} KB, "
+            + ", ".join(f"{k} {sizes[k] // 1024} KB" for k in ("br", "gz") if k in sizes)
+            + f" (v={written[part]})"
+        )
     return 0
 
 

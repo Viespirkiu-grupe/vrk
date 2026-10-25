@@ -6,7 +6,7 @@ of legal form (komitetas -> partija), a takeover of its registration, or a
 re-brand -- is listed under the successor's `predecessors`. Names alone cannot
 find those pairs: the 2019 „Su Sinkevičiumi ir Osausku“ and the 2023 „Mūsų
 Jonava“ share no word, and 16 of 28 candidates. Candidates can. This script
-reads the person index the dashboard is built from (dashboard/people.json --
+reads the person index the dashboard is built from (dashboard/people-*.json --
 pids, candidacies, nominator ids) and lists every ordered pair A -> B of
 nominators where A's last election precedes B's first and at least a third
 of the smaller side's persons, three or more, stood for both. Each pair is
@@ -36,7 +36,7 @@ Run from the repo root after `python scripts/build_person_index.py`:
 
     python scripts/party_lineage_report.py            # findings, exit 1 on any
     python scripts/party_lineage_report.py --all      # every pair, linked ones too
-    python scripts/party_lineage_report.py --index other/people.json
+    python scripts/party_lineage_report.py --index other/dashboard
 
 Writes the full pair table to data/party-lineage-report.tsv either way.
 """
@@ -44,16 +44,17 @@ Writes the full pair table to data/party-lineage-report.tsv either way.
 from __future__ import annotations
 
 import argparse
-import json
 import sys
 from pathlib import Path
 from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from person_index_files import INDEX_DIR, load_index  # noqa: E402
 from scraper.shared.parties import ancestors, entries, load_registry  # noqa: E402
 
-INDEX = Path("dashboard/people.json")
+INDEX = INDEX_DIR
 REPORT = Path("data/party-lineage-report.tsv")
 
 #: The share of the smaller side's persons that must stand for both, and the
@@ -148,12 +149,12 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
-    parser.add_argument("--index", type=Path, default=INDEX, help="The person index to read.")
+    parser.add_argument("--index", type=Path, default=INDEX, help="The person index directory to read.")
     parser.add_argument("--all", action="store_true", help="Print every pair, linked and reviewed ones too.")
     parser.add_argument("--repo-root", type=Path, default=Path("."), help="Checkout holding data/. Defaults to the cwd.")
     args = parser.parse_args()
 
-    index = json.loads(args.index.read_text(encoding="utf-8"))
+    index = load_index(args.index)
     stats = measure(index)
     unknown = sorted(set(stats) - set(entries()))
     if unknown:

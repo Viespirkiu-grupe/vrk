@@ -51,9 +51,16 @@ class ServerTests(unittest.TestCase):
         (cls.root / "dashboard" / "index.html").write_text("retired MVP", encoding="utf-8")
         (cls.root / "frontend" / "src").mkdir()
         (cls.root / "frontend" / "src" / "private.js").write_text("source only", encoding="utf-8")
-        (cls.root / "dashboard" / "people.json").write_text(
-            json.dumps({"people": [{"n": "Vardenė PAVARDENĖ"}] * 200}), encoding="utf-8"
+        # The split index (issue #186), with the stale whole file an old
+        # checkout still holds: it is no longer served.
+        (cls.root / "dashboard" / "people-list.json").write_text(
+            json.dumps({"build": "b1", "people": [{"n": "Vardenė PAVARDENĖ"}] * 200}), encoding="utf-8"
         )
+        (cls.root / "dashboard" / "people-details.json").write_text(
+            json.dumps({"build": "b1", "people": [[{"wp": "Vilniaus universitetas"}]] * 200}), encoding="utf-8"
+        )
+        (cls.root / "dashboard" / "people-version.json").write_text('{"build": "b1"}', encoding="utf-8")
+        (cls.root / "dashboard" / "people.json").write_text('{"people": []}', encoding="utf-8")
         (cls.root / "data" / "2016-seimo").mkdir(parents=True)
         (cls.root / "data" / "2016-seimo" / "x-2016-seimo.json").write_text("{}", encoding="utf-8")
         (cls.root / "docs").mkdir()
@@ -117,9 +124,15 @@ class ServerTests(unittest.TestCase):
         status, _, body = self.get("/field-labels.json")
         self.assertEqual(status, 200)
         self.assertEqual(json.loads(body), {"turtas": "Turtas"})
-        status, _, body = self.get("/people.json")
-        self.assertEqual(status, 200)
-        self.assertEqual(len(json.loads(body)["people"]), 200)
+        for path in ("/people-list.json", "/people-details.json"):
+            with self.subTest(path):
+                status, _, body = self.get(path)
+                self.assertEqual(status, 200)
+                self.assertEqual(len(json.loads(body)["people"]), 200)
+        status, _, body = self.get("/people-version.json")
+        self.assertEqual(json.loads(body), {"build": "b1"})
+        # The whole index is not written any more; a stale copy stays dark.
+        self.assertEqual(self.get("/people.json")[0], 404)
 
     def test_bundled_javascript_and_css_use_the_dashboard_asset_urls(self):
         for filename, marker, mime in (
@@ -162,8 +175,8 @@ class ServerTests(unittest.TestCase):
                 self.assertNotIn(b"source only", body)
                 self.assertNotIn(b"Astro dashboard", body)
 
-    def test_people_json_is_gzipped(self):
-        status, headers, body = self.get("/people.json", self.GZIP)
+    def test_the_index_is_gzipped(self):
+        status, headers, body = self.get("/people-list.json", self.GZIP)
         self.assertEqual(status, 200)
         self.assertEqual(headers["Content-Encoding"], "gzip")
         decoded = __import__("gzip").decompress(body)
@@ -176,7 +189,7 @@ class ServerTests(unittest.TestCase):
                 self.assertEqual(self.get(path, self.GZIP)[0], 200)
 
     def test_an_uncompressed_client_still_gets_the_file(self):
-        status, headers, body = self.get("/people.json")
+        status, headers, body = self.get("/people-list.json")
         self.assertEqual(status, 200)
         self.assertNotIn("Content-Encoding", headers)
         self.assertEqual(len(json.loads(body)["people"]), 200)
@@ -217,7 +230,11 @@ class ServerTests(unittest.TestCase):
             ("data/2016-seimo/x.json", True),
             ("portraits/p0123456789ab.webp", True),
             ("docs/concept-map.json", True),
-            ("dashboard/people.json", True),
+            ("dashboard/people-list.json", True),
+            ("dashboard/people-details.json", True),
+            ("dashboard/people-version.json", True),
+            ("dashboard/people.json", False),
+            ("dashboard/people-list.json.br", False),
             ("dashboard/field-labels.json", True),
             ("dashboard/merge-review.csv", False),
             ("dashboard/index.html", False),
@@ -241,7 +258,7 @@ class ServerTests(unittest.TestCase):
         # Nothing checked `Host`, so a page the user visits in the same
         # browser could read the served root as same-origin after a DNS
         # rebind.
-        for path in ("/people.json", "/asmuo/x"):
+        for path in ("/people-list.json", "/asmuo/x"):
             with self.subTest(path):
                 status, _, _ = self.get(path, {**self.GZIP, "Host": "evil.example.com"})
                 self.assertEqual(status, 403)
@@ -268,7 +285,7 @@ class ServerTests(unittest.TestCase):
     def test_head_is_guarded_too(self):
         self.assertEqual(self.get("/conftest.py", self.GZIP, method="HEAD")[0], 404)
         self.assertEqual(self.get("/", self.GZIP, method="HEAD")[0], 200)
-        self.assertEqual(self.get("/people.json", self.GZIP, method="HEAD")[0], 200)
+        self.assertEqual(self.get("/people-list.json", self.GZIP, method="HEAD")[0], 200)
 
     # -- redirects and page routes -------------------------------------------
 
@@ -346,7 +363,7 @@ class ServerTests(unittest.TestCase):
             ("/asmuo/x/y", False),
             ("/apreptis/x", False),
             ("/", False),
-            ("/people.json", False),
+            ("/people-list.json", False),
         ):
             with self.subTest(path):
                 self.assertIs(serve.is_route(path), expected)
@@ -354,21 +371,21 @@ class ServerTests(unittest.TestCase):
     # -- caching and headers -----------------------------------------------
 
     def test_a_conditional_request_gets_a_304(self):
-        _, headers, body = self.get("/people.json", self.GZIP)
+        _, headers, body = self.get("/people-list.json", self.GZIP)
         etag, modified = headers["ETag"], headers["Last-Modified"]
         self.assertTrue(etag and modified)
         status, _, empty = self.get(
-            "/people.json", {**self.GZIP, "If-None-Match": etag}
+            "/people-list.json", {**self.GZIP, "If-None-Match": etag}
         )
         self.assertEqual(status, 304)
         self.assertEqual(empty, b"")
         status, _, _ = self.get(
-            "/people.json", {**self.GZIP, "If-Modified-Since": modified}
+            "/people-list.json", {**self.GZIP, "If-Modified-Since": modified}
         )
         self.assertEqual(status, 304)
         # A different ETag still gets the body.
         status, _, again = self.get(
-            "/people.json", {**self.GZIP, "If-None-Match": 'W/"0000000000000000"'}
+            "/people-list.json", {**self.GZIP, "If-None-Match": 'W/"0000000000000000"'}
         )
         self.assertEqual(status, 200)
         self.assertEqual(again, body)
@@ -384,8 +401,12 @@ class ServerTests(unittest.TestCase):
             "/": "no-cache",
             "/?q=x": "no-cache",
             "/index.html": "no-cache",
-            "/people.json": "no-cache",
+            "/people-version.json": "no-cache",
+            "/people-list.json": "no-cache",
+            "/people-details.json?v=0000000000000000": "no-cache",
+            "/people-list.json?v=": "no-cache",
             "/field-labels.json": "no-cache",
+            "/field-labels.json?v=x": "no-cache",
             "/data/2016-seimo/x-2016-seimo.json": "no-cache",
             "/docs/concept-map.json": "no-cache",
             # Issue #187: versioned portraits are a new URL per change.
@@ -418,7 +439,7 @@ class ServerTests(unittest.TestCase):
         self.assertEqual(status, 404)
 
     def test_a_304_repeats_the_cache_control(self):
-        for path in ("/people.json", "/_astro/app.js"):
+        for path in ("/people-list.json", "/_astro/app.js"):
             with self.subTest(path):
                 _, headers, _ = self.get(path, self.GZIP)
                 status, again, _ = self.get(
@@ -439,7 +460,7 @@ class ServerTests(unittest.TestCase):
     def test_if_modified_since_alone_revalidates(self):
         # What a browser sends from behind Cloudflare, which drops the origin
         # ETag when it recompresses: no If-None-Match, only the date.
-        for path in ("/people.json", "/data/2016-seimo/x-2016-seimo.json"):
+        for path in ("/people-list.json", "/data/2016-seimo/x-2016-seimo.json"):
             for encoding in (self.GZIP, {}):
                 with self.subTest(path=path, encoding=encoding):
                     _, headers, _ = self.get(path, encoding)
@@ -472,11 +493,11 @@ class ServerTests(unittest.TestCase):
                 self.assertEqual(json.loads(body), {"turtas": 1200})
 
     def test_if_none_match_takes_precedence_and_compares_weakly(self):
-        _, headers, _ = self.get("/people.json", self.GZIP)
+        _, headers, _ = self.get("/people-list.json", self.GZIP)
         etag, modified = headers["ETag"], headers["Last-Modified"]
         # A mismatched tag wins over a date that alone would be a 304.
         status, _, _ = self.get(
-            "/people.json",
+            "/people-list.json",
             {**self.GZIP, "If-None-Match": 'W/"0000000000000000"', "If-Modified-Since": modified},
         )
         self.assertEqual(status, 200)
@@ -484,12 +505,12 @@ class ServerTests(unittest.TestCase):
         for match in (f'"aaaa", {etag}', etag.removeprefix("W/")):
             with self.subTest(match):
                 status, _, _ = self.get(
-                    "/people.json", {**self.GZIP, "If-None-Match": match}
+                    "/people-list.json", {**self.GZIP, "If-None-Match": match}
                 )
                 self.assertEqual(status, 304)
 
     def test_every_response_carries_the_hardening_headers(self):
-        for path in ("/", "/people.json", "/conftest.py", "/asmuo/x"):
+        for path in ("/", "/people-list.json", "/conftest.py", "/asmuo/x"):
             with self.subTest(path):
                 _, headers, _ = self.get(path, self.GZIP)
                 self.assertEqual(headers["X-Content-Type-Options"], "nosniff")
@@ -502,9 +523,132 @@ class ServerTests(unittest.TestCase):
                 self.assertNotIn("unsafe-inline", script_policy)
 
 
+class VersionedIndexTests(unittest.TestCase):
+    """Step 2 of issue #186: the split index's two big files are cached at the
+    edge for good when asked for by their content hash, and leave the server
+    as the brotli or gzip copy the index build wrote beside them."""
+
+    LIST = b'{"build":"b1","people":[' + b",".join([b'{"n":"Vardene PAVARDENE"}'] * 300) + b"]}"
+    BR = b"precompressed-brotli-stand-in"
+
+    def setUp(self) -> None:
+        serve._CACHE.clear()
+        serve._HASHES.clear()
+        self._tmp = tempfile.TemporaryDirectory()
+        self.root = Path(self._tmp.name)
+        self.addCleanup(self._tmp.cleanup)
+        (self.root / "dashboard").mkdir()
+        self.list = self.root / "dashboard" / "people-list.json"
+        self.list.write_bytes(self.LIST)
+        (self.root / "dashboard" / "people-list.json.gz").write_bytes(__import__("gzip").compress(self.LIST, 9))
+        (self.root / "dashboard" / "people-list.json.br").write_bytes(self.BR)
+        self.age_siblings(0)
+        self.version = __import__("hashlib").blake2s(self.LIST, digest_size=8).hexdigest()
+        cwd = os.getcwd()
+        os.chdir(self.root)
+        self.addCleanup(os.chdir, cwd)
+        self.server = ThreadingHTTPServer(("127.0.0.1", 0), serve.GzipHandler)
+        threading.Thread(target=self.server.serve_forever, daemon=True).start()
+        self.addCleanup(self.server.server_close)
+        self.addCleanup(self.server.shutdown)
+
+    def age_siblings(self, seconds: int) -> None:
+        """Give the .br/.gz copies the list's mtime, minus `seconds`."""
+        mtime = self.list.stat().st_mtime
+        for suffix in (".gz", ".br"):
+            os.utime(self.list.with_name(self.list.name + suffix), (mtime - seconds, mtime - seconds))
+
+    def get(self, path, headers=None):
+        connection = http.client.HTTPConnection("127.0.0.1", self.server.server_address[1], timeout=10)
+        try:
+            connection.request("GET", path, headers=headers or {})
+            response = connection.getresponse()
+            return response.status, {k.lower(): v for k, v in response.getheaders()}, response.read()
+        finally:
+            connection.close()
+
+    def test_the_build_writes_the_hash_the_server_checks(self):
+        spec = importlib.util.spec_from_file_location("person_index_files", REPO_ROOT / "scripts" / "person_index_files.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        self.assertEqual(module.content_hash(self.LIST), self.version)
+        self.assertEqual(serve.content_hash(self.list), self.version)
+
+    def test_the_current_version_is_immutable(self):
+        status, headers, _ = self.get(f"/people-list.json?v={self.version}", {"Accept-Encoding": "gzip"})
+        self.assertEqual(status, 200)
+        self.assertEqual(headers["cache-control"], serve.IMMUTABLE_CACHE_CONTROL)
+        status, headers, _ = self.get(f"/people-list.json?v={self.version}", {"If-Modified-Since": headers["last-modified"]})
+        self.assertEqual(status, 304)
+        self.assertEqual(headers["cache-control"], serve.IMMUTABLE_CACHE_CONTROL)
+
+    def test_any_other_version_is_revalidated(self):
+        # A request that lands mid-deploy: the old version file's hash, the
+        # new file on disk. Pinned for a year, the edge would serve these
+        # bytes under the old name to every later visit.
+        for query in ("", "?v=", "?v=0000000000000000", f"?v={self.version}x", f"?x=1&v={self.version[:-1]}"):
+            with self.subTest(query):
+                _, headers, _ = self.get(f"/people-list.json{query}")
+                self.assertEqual(headers["cache-control"], "no-cache")
+        self.list.write_bytes(self.LIST.replace(b"b1", b"b2"))
+        _, headers, _ = self.get(f"/people-list.json?v={self.version}")
+        self.assertEqual(headers["cache-control"], "no-cache")
+
+    def test_brotli_is_preferred_then_gzip(self):
+        status, headers, body = self.get("/people-list.json", {"Accept-Encoding": "gzip, deflate, br"})
+        self.assertEqual((status, headers["content-encoding"], body), (200, "br", self.BR))
+        self.assertEqual(headers["vary"], "Accept-Encoding")
+        self.assertEqual(headers["content-length"], str(len(self.BR)))
+        status, headers, body = self.get("/people-list.json", {"Accept-Encoding": "gzip"})
+        self.assertEqual(headers["content-encoding"], "gzip")
+        self.assertEqual(__import__("gzip").decompress(body), self.LIST)
+        self.assertEqual(body, (self.root / "dashboard" / "people-list.json.gz").read_bytes())
+        status, headers, body = self.get("/people-list.json", {"Accept-Encoding": "br;q=0, gzip"})
+        self.assertEqual(headers["content-encoding"], "gzip")
+        status, headers, body = self.get("/people-list.json")
+        self.assertNotIn("content-encoding", headers)
+        self.assertEqual(body, self.LIST)
+
+    def test_an_older_copy_is_not_sent(self):
+        # The list was rewritten after its copies: they are a previous build.
+        self.age_siblings(5)
+        status, headers, body = self.get("/people-list.json", {"Accept-Encoding": "br, gzip"})
+        self.assertEqual(status, 200)
+        self.assertEqual(headers["content-encoding"], "gzip")
+        self.assertEqual(__import__("gzip").decompress(body), self.LIST)
+        status, headers, body = self.get("/people-list.json", {"Accept-Encoding": "br"})
+        self.assertNotIn("content-encoding", headers)
+        self.assertEqual(body, self.LIST)
+
+    def test_a_precompressed_copy_revalidates_by_date(self):
+        _, headers, _ = self.get("/people-list.json", {"Accept-Encoding": "br"})
+        status, again, body = self.get(
+            "/people-list.json", {"Accept-Encoding": "br", "If-Modified-Since": headers["last-modified"]}
+        )
+        self.assertEqual((status, body), (304, b""))
+        status, _, _ = self.get("/people-list.json", {"Accept-Encoding": "br", "If-None-Match": headers["etag"]})
+        self.assertEqual(status, 304)
+
+    def test_the_copies_are_not_urls(self):
+        for path in ("/people-list.json.br", "/people-list.json.gz", "/dashboard/people-list.json.br"):
+            with self.subTest(path):
+                self.assertEqual(self.get(path)[0], 404)
+
+    def test_accept_encoding_parsing(self):
+        for header, expected in (
+            ("", set()),
+            ("gzip, deflate, br, zstd", {"gzip", "deflate", "br", "zstd"}),
+            ("br;q=0, gzip;q=0.5", {"gzip"}),
+            ("BR", {"br"}),
+            ("gzip;q=x", set()),
+        ):
+            with self.subTest(header):
+                self.assertEqual(serve.accepted_encodings(header), expected)
+
+
 class CacheTests(unittest.TestCase):
     """The cache used to `clear()` at 512 entries, so every ~275 person views
-    threw away the compressed 7 MB `people.json` with everything else."""
+    threw away the compressed 7 MB index with everything else."""
 
     def setUp(self) -> None:
         serve._CACHE.clear()

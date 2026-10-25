@@ -15,7 +15,9 @@ export default defineConfig({
       proxy: {
         // The page is the site root (issue #184); serve_dashboard.py answers
         // these at the same paths production does.
-        '/people.json': dataOrigin,
+        '/people-version.json': dataOrigin,
+        '/people-list.json': dataOrigin,
+        '/people-details.json': dataOrigin,
         '/field-labels.json': dataOrigin,
         '/data/': dataOrigin,
         '/portraits/': dataOrigin,

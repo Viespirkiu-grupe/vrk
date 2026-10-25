@@ -39,6 +39,7 @@ def _load(name: str):
 
 
 portraits = _load("build_web_portraits")
+index_files = _load("person_index_files")
 
 
 def image_bytes(fmt: str, size=(300, 450), colour=(200, 40, 40), **save) -> bytes:
@@ -280,15 +281,14 @@ class PortraitFlagTests(unittest.TestCase):
     def test_the_main_run_restamps_the_index(self):
         corpus = Corpus(self)
         corpus.photo("2016-seimo", "ona-1", image_bytes("JPEG"))
-        index_path = corpus.root / "people.json"
-        index_path.write_text(json.dumps(self.index()), encoding="utf-8")
+        index_path = corpus.root / "index"
         args = ["--index", str(index_path), "--data-root", str(corpus.data), "--out", str(corpus.out), "--jobs", "1"]
-        people = self.index()["people"]
+        people = [{"k": f"{p['pid'].upper()}|", "n": p["pid"], "b": None, **p} for p in self.index()["people"]]
         people[0]["e"] = [{"id": "2016-seimo", "c": "ona-1"}]
-        index_path.write_text(json.dumps({"people": people}), encoding="utf-8")
+        index_files.write_index({"elections": [{"id": "2016-seimo"}], "parties": {}, "people": people}, index_path)
         with unittest.mock.patch("builtins.print"):
             self.assertEqual(portraits.main(args), 0)
-        written = json.loads(index_path.read_text(encoding="utf-8"))
+        written = index_files.load_index(index_path)
         self.assertEqual([p["pid"] for p in written["people"] if p.get("ph") == 1], ["pona"])
         self.assertEqual(written["portraits"]["n"], 1)
 

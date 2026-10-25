@@ -87,7 +87,11 @@ from collections import defaultdict
 from datetime import date
 from pathlib import Path
 
-INDEX_PATH = Path("dashboard/people.json")
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from person_index_files import index_exists, load_index  # noqa: E402
+
+INDEX_PATH = Path("dashboard")
 REGISTRY_PATH = Path("scraper/elections.json")
 OUTPUT_PATH = Path("dashboard/merge-review.csv")
 OVERRIDES_PATH = Path("scraper/person_overrides.json")
@@ -331,10 +335,10 @@ def load_decisions(path: Path = OVERRIDES_PATH) -> dict[frozenset[str], str]:
 
 
 def main() -> int:
-    if not INDEX_PATH.exists():
-        print(f"No {INDEX_PATH} — build it first.", file=sys.stderr)
+    if not index_exists(INDEX_PATH):
+        print(f"No person index in {INDEX_PATH}/ — build it first.", file=sys.stderr)
         return 1
-    index = json.loads(INDEX_PATH.read_text(encoding="utf-8"))
+    index = load_index(INDEX_PATH)
     decisions = load_decisions()
 
     by_birth: dict[str, list[dict]] = defaultdict(list)

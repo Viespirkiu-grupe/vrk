@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { installFixtures, people, index } from './fixtures.js';
+import { installFixtures, routeIndex, splitIndex, people, index } from './fixtures.js';
 
 const ANNA = '/asmuo/ona-naujoji-test-anna';
 const JONAS = '/asmuo/jonas-bandomasis-test-jonas';
@@ -96,9 +96,7 @@ test('the nationality dropdown counts people, the rows its filter returns (#176)
     ],
     nationalities: [...index.nationalities, { label: 'ingušai' }, { label: 'rusai' }, { label: 'mariai' }],
   };
-  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
-    status: 200, contentType: 'application/json', body: JSON.stringify(served),
-  }));
+  await routeIndex(page, served);
   await page.goto('/');
   await expect(page.locator('#results .row')).toHaveCount(5);
   await openFilters(page);
@@ -138,9 +136,7 @@ test('the party dropdown counts people per party, lineage and coalition set', as
       person('test-coal', 'Kotryna KOALICIJA', ['syn-coal']),
     ],
   };
-  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
-    status: 200, contentType: 'application/json', body: JSON.stringify(served),
-  }));
+  await routeIndex(page, served);
   await page.goto('/');
   await expect(page.locator('#results .row')).toHaveCount(7);
   await openFilters(page);
@@ -188,9 +184,7 @@ test('the party dropdown opens with the most people elected, self-nomination las
       ...Array.from({ length: 4 }, () => run('syn-self', true)),
     ],
   };
-  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
-    status: 200, contentType: 'application/json', body: JSON.stringify(served),
-  }));
+  await routeIndex(page, served);
   await page.goto('/');
   await openFilters(page);
   // The elected-nobody rows by name (Mažoji, Naujųjų, Pavyzdžių), then
@@ -230,9 +224,7 @@ test('the municipality filter groups by county, the most populous first (#213)',
     municipalities: [...index.municipalities, ...extra.map(([name]) => name)],
     municipalityCounties: [...index.municipalityCounties, ...extra.map(([, county]) => county)],
   };
-  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
-    status: 200, contentType: 'application/json', body: JSON.stringify(served),
-  }));
+  await routeIndex(page, served);
   await page.goto('/');
   await expect(page.locator('#results .row')).toHaveCount(4);
   await openFilters(page);
@@ -293,9 +285,7 @@ test('the constituency filter groups by city and county, a district under each g
     constituencies: [...index.constituencies, ...extra.map(([name]) => name)],
     constituencyGroups: [...index.constituencyGroups, ...extra.map(([, groups]) => groups)],
   };
-  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
-    status: 200, contentType: 'application/json', body: JSON.stringify(served),
-  }));
+  await routeIndex(page, served);
   await page.goto('/');
   await expect(page.locator('#results .row')).toHaveCount(5);
   await openFilters(page);
@@ -374,9 +364,7 @@ test('two eras of one constituency name are separate options under their own gro
     constituencyCounties: [...index.constituencyCounties, ['Kauno'], ['Kauno', 'Alytaus']],
     constituencyGroups: [...index.constituencyGroups, ['Kauno miestas'], ['Kauno apskritis', 'Alytaus apskritis']],
   };
-  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
-    status: 200, contentType: 'application/json', body: JSON.stringify(served),
-  }));
+  await routeIndex(page, served);
   await page.goto('/');
   await expect(page.locator('#results .row')).toHaveCount(6);
   await openFilters(page);
@@ -425,10 +413,7 @@ test('a nominator chain shows short labels, muted coalition words and full names
       { id: '2024-seimo', c: 'test-anna', p: 'syn-named', w: false },
     ],
   };
-  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
-    contentType: 'application/json',
-    body: JSON.stringify({ ...index, parties, people: [...index.people, valdas] }),
-  }));
+  await routeIndex(page, { ...index, parties, people: [...index.people, valdas] });
   await page.goto('/#test-valdas');
   const chain = page.locator('#person .phead .parties');
   await expect(chain).toHaveText('SP-B 2020 → koalicija „Kartu mes bandom!“ 2020 → koalicija SP-B + Kita partija 2024 → Bandymų koalicija 2024');
@@ -491,10 +476,7 @@ test('a nominator chain runs in time order, merging only consecutive repeats, wi
       { id: '2020-seimo', c: 'test-anna', p: 'syn-party', w: true },
     ],
   };
-  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
-    contentType: 'application/json',
-    body: JSON.stringify({ ...index, elections, parties, people: [...index.people, birute] }),
-  }));
+  await routeIndex(page, { ...index, elections, parties, people: [...index.people, birute] });
   await page.goto('/#test-birute');
   const chain = page.locator('#person .phead .parties');
   await expect(chain).toHaveText('SP-B 1996–1997 → koalicija „Kartu mes bandom!“ 2000 → SP-B 2002–2024');
@@ -515,7 +497,7 @@ test('the page fetches its data by absolute URL, so a deep path loads too (#184)
   page.on('request', request => requested.push(new URL(request.url()).pathname));
   await ready(page, JONAS);
   await expect(page.locator('#person h2')).toHaveText('Jonas BANDOMASIS');
-  for (const path of ['/people.json', '/docs/concept-map.json', '/field-labels.json']) {
+  for (const path of ['/people-version.json', '/people-list.json', '/people-details.json', '/docs/concept-map.json', '/field-labels.json']) {
     expect(requested, path).toContain(path);
   }
   expect(requested.some(path => path.startsWith('/data/'))).toBe(true);
@@ -597,10 +579,7 @@ const foldPerson = {
 };
 
 async function foldFixture(page) {
-  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
-    contentType: 'application/json',
-    body: JSON.stringify({ ...index, elections: [...foldElections, ...index.elections], parties: foldParties, people: [...index.people, foldPerson] }),
-  }));
+  await routeIndex(page, { ...index, elections: [...foldElections, ...index.elections], parties: foldParties, people: [...index.people, foldPerson] });
   await page.goto('/asmuo/test-folded');
   return page.locator('#person .phead .parties');
 }
@@ -804,10 +783,7 @@ test('party switches rank the movers and the loyal, link each person and fit 320
     person('test-lina', 'Lina LINIJA', ['syn-old', 'syn-new', 'syn-coal', 'syn-new']),
     person('test-jurgis', 'Jurgis VIENAS', ['syn-a', 'syn-b']),
   ];
-  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
-    contentType: 'application/json',
-    body: JSON.stringify({ ...index, elections: [...elections, ...index.elections], parties, people: [...index.people, ...synthetic] }),
-  }));
+  await routeIndex(page, { ...index, elections: [...elections, ...index.elections], parties, people: [...index.people, ...synthetic] });
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/partiju-keitimai');
@@ -850,10 +826,7 @@ test('a party-switch ranking holds 55, shows 5 and a "Rodyti dar 50" button (#19
     pid: `test-mover-${i}`, n: `Keitėjas NR${i}`, b: null, k: `KEITĖJAS NR${i}|`,
     e: [{ id: '2020-seimo', c: `test-mover-${i}`, p: 'syn-a' }, { id: '2024-seimo', c: `test-mover-${i}`, p: 'syn-b' }],
   }));
-  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
-    contentType: 'application/json',
-    body: JSON.stringify({ ...index, parties, people: [...index.people, ...movers] }),
-  }));
+  await routeIndex(page, { ...index, parties, people: [...index.people, ...movers] });
   await page.goto('/partiju-keitimai');
   await expect(page.locator('.switches h4')).toHaveText(['Kiek kartų keitė', 'Dažniausiai keitę partiją', 'Ištikimiausi savo partijai', 'Kaip skaičiuojama']);
   // What counts, then what does not, each its own paragraph before the list.
@@ -895,10 +868,7 @@ test('a party-switch group under 0.1 % reads "<0,1 %", not "0,0 %" (#199)', asyn
     pid: 'test-mover', n: 'Jurgis VIENAS', b: null, k: 'JURGIS VIENAS|',
     e: [{ id: '2020-seimo', c: 'test-mover', p: 'syn-a' }, { id: '2024-seimo', c: 'test-mover', p: 'syn-b' }],
   };
-  await page.route(url => url.pathname === '/people.json', route => route.fulfill({
-    contentType: 'application/json',
-    body: JSON.stringify({ ...index, parties, people: [...index.people, ...many, mover] }),
-  }));
+  await routeIndex(page, { ...index, parties, people: [...index.people, ...many, mover] });
   await page.goto('/partiju-keitimai');
   await expect(page.locator('.switchbar-count')).toHaveText(['1 503 (99,9 %)', '1 (<0,1 %)', '0 (0,0 %)', '0 (0,0 %)', '0 (0,0 %)', '0 (0,0 %)', '0 (0,0 %)']);
 });
@@ -1376,4 +1346,68 @@ test('the sidebar border meets the footer on a tall desktop window', async ({ pa
   const gap = await page.evaluate(() => document.querySelector('footer').getBoundingClientRect().top
     - document.querySelector('#left').getBoundingClientRect().bottom);
   expect(Math.abs(gap)).toBeLessThan(1);
+});
+
+// Issue #186, step 2: the list file alone draws the rows, the facets and a
+// name or party search; the details file (records, money, workplaces) comes
+// behind it, and what reads it waits, saying "kraunama…".
+test.describe('with the details file held back', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.unrouteAll({ behavior: 'ignoreErrors' });
+    await installFixtures(page, { detailsDelay: 1500 });
+  });
+
+  test('the list, the facets and a name or party search work off the list file', async ({ page }) => {
+    const requested = [];
+    page.on('request', request => requested.push(new URL(request.url()).pathname + new URL(request.url()).search));
+    await ready(page);
+    expect(requested).toContain('/people-version.json');
+    expect(requested.some(path => /^\/people-list\.json\?v=\w+/.test(path))).toBe(true);
+    await page.locator('#search').fill('Bandymų partija');
+    await expect(page.locator('#results .row')).toHaveCount(1);
+    await expect(page.locator('#results .row .nm')).toHaveText('Ona NAUJOJI');
+    await page.locator('#search').fill('ONA SENESNĖ');
+    await expect(page.locator('#results .row')).toHaveCount(1);
+    await page.locator('#search').fill('');
+    await openFilters(page);
+    await page.locator('#fElection').selectOption('2020-seimo');
+    await expect(page.locator('#results .row')).toHaveCount(2);
+  });
+
+  test('a workplace search answers once the details land', async ({ page }) => {
+    await ready(page);
+    await page.locator('#search').fill('Bandymų universitetas');
+    await expect(page.locator('#results .row')).toHaveCount(0);
+    await expect(page.locator('#results .row')).toHaveCount(1, { timeout: 5000 });
+  });
+
+  test('a person page waits for the record ids', async ({ page }) => {
+    await page.goto(JONAS);
+    await expect(page.locator('#person .loading')).toHaveText('kraunama…');
+    await expect(page.locator('#person h2')).toHaveText('Jonas BANDOMASIS', { timeout: 5000 });
+  });
+
+  test('the CSV button waits for the figures', async ({ page }) => {
+    await ready(page);
+    const download = page.waitForEvent('download');
+    await page.locator('#csvBtn').click();
+    await expect(page.locator('#csvBtn')).toHaveText('kraunama…');
+    expect((await download).suggestedFilename()).toBe('vrk-atranka.csv');
+    await expect(page.locator('#csvBtn')).not.toHaveText('kraunama…');
+  });
+});
+
+test('details from another build are fetched again, not merged (#186)', async ({ page }) => {
+  // A deploy between the list and the details: the first details answer is
+  // the other build's, which must never be merged into this list.
+  const files = splitIndex(index);
+  let detailsRequests = 0;
+  await page.route(url => url.pathname === '/people-details.json', route => {
+    detailsRequests += 1;
+    const body = detailsRequests === 1 ? { ...files.details, build: 'other', people: [] } : files.details;
+    return route.fulfill({ contentType: 'application/json', body: JSON.stringify(body) });
+  });
+  await page.goto(JONAS);
+  await expect(page.locator('#person h2')).toHaveText('Jonas BANDOMASIS');
+  expect(detailsRequests).toBe(2);
 });
