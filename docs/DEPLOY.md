@@ -23,9 +23,6 @@ On the server, with Docker, `gh` and `python3`:
    tar -xf vrk-web-portraits.tar
    ```
 
-   Always use a release. A scraping machine's `data/` still has private
-   contact details ([PERSONAL_DATA.md](PERSONAL_DATA.md)).
-
 3. **Copy the settings.** Then check `.env`: the user ID in it must be able
    to read `data/` and `portraits/` and write `dashboard/`.
 
