@@ -33,8 +33,7 @@ On the server, with Docker, `gh` and `python3`:
    cp compose.sample.yml compose.yml && cp .env.sample .env
    ```
 
-4. **Build the person index** from `data/` into `dashboard/`. This takes
-   about 35 s.
+4. **Build the person index** from `data/` into `dashboard/`.
 
    ```bash
    docker compose run --rm vrk-app python scripts/build_person_index.py
