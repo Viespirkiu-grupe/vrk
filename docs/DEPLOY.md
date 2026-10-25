@@ -7,29 +7,46 @@ Cloudflare sits in front of it.
 
 On the server, with Docker, `gh` and `python3`:
 
-```bash
-git clone https://github.com/Viespirkiu-grupe/vrk && cd vrk
+1. **Get the code.**
 
-# The data, from the latest release (https://github.com/Viespirkiu-grupe/vrk/releases)
-gh release download corpus-YYYY-MM-DD --pattern 'vrk-corpus.sqlite.gz' --pattern 'vrk-web-portraits.tar'
-gunzip vrk-corpus.sqlite.gz
-python3 scripts/unpack_corpus.py vrk-corpus.sqlite --no-photos   # writes data/, the records
-tar -xf vrk-web-portraits.tar                                     # writes portraits/
+   ```bash
+   git clone https://github.com/Viespirkiu-grupe/vrk && cd vrk
+   ```
 
-# Settings
-cp compose.sample.yml compose.yml && cp .env.sample .env          # then edit .env
+2. **Get the data** from the latest
+   [release](https://github.com/Viespirkiu-grupe/vrk/releases). This writes
+   `data/` (the records) and `portraits/`.
 
-# The person index, built from data/ into dashboard/ (about 35 s)
-docker compose run --rm vrk-app python scripts/build_person_index.py
+   ```bash
+   gh release download corpus-YYYY-MM-DD --pattern 'vrk-corpus.sqlite.gz' --pattern 'vrk-web-portraits.tar'
+   gunzip vrk-corpus.sqlite.gz
+   python3 scripts/unpack_corpus.py vrk-corpus.sqlite --no-photos
+   tar -xf vrk-web-portraits.tar
+   ```
 
-# Start
-docker compose up -d
-```
+   Use the release, not a scraping machine's `data/`. Releases have
+   third-party contact details removed ([PERSONAL_DATA.md](PERSONAL_DATA.md)).
 
-Then point the Cloudflare tunnel at `http://vrk-app:8080`.
+3. **Copy the settings**, then edit `.env`.
 
-Use the release, not a scraping machine's `data/`: releases have
-third-party contact details removed ([PERSONAL_DATA.md](PERSONAL_DATA.md)).
+   ```bash
+   cp compose.sample.yml compose.yml && cp .env.sample .env
+   ```
+
+4. **Build the person index** from `data/` into `dashboard/`. This takes
+   about 35 s.
+
+   ```bash
+   docker compose run --rm vrk-app python scripts/build_person_index.py
+   ```
+
+5. **Start the site.**
+
+   ```bash
+   docker compose up -d
+   ```
+
+6. **Point the Cloudflare tunnel** at `http://vrk-app:8080`.
 
 ## Updating
 
@@ -40,8 +57,7 @@ docker compose up -d
 python3 scripts/smoke_check.py https://vrk.viespirkiai.org
 ```
 
-For a new corpus, rerun the data commands and the index build from above.
-No restart is needed.
+For a new corpus, repeat steps 2 and 4 first. No restart is needed.
 
 ## Docker
 
