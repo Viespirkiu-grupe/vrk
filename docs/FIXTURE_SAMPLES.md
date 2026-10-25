@@ -1,39 +1,25 @@
-# Fixture Samples Policy (2016 Seimo)
+# Fixture samples
 
-Sample HTML fixtures under `samples/html/2016-seimo/` are intentionally versioned and test-protected.
+HTML fixtures under `samples/html/<election_id>/` are versioned and
+test-protected. They let parser work and regression tests run without the
+network.
 
 ## What git carries
 
-`samples/` on the machine that scraped it is 427 MB, two thirds of which is
-base64 portraits embedded in the HTML. That never belonged in git, and for a
-long time none of it was: `.gitignore` ignored `samples/` wholesale, so a fresh
-clone failed 990 tests and errored 194 more, purely because the fixtures were
-absent (issue #83).
+**A fixture unit is tracked when it is at most 1 MiB.**
 
-What git carries now is a subset, chosen by one rule:
-
-> a fixture unit is tracked when it is at most 1 MiB.
-
-A *unit* is a candidate directory with all its files together, a listing
-subdirectory (`lists/`, `districts/`, `municipalities/`, ...), one election's
-`samples/results/<election-id>/` tree, a single top-level listing file, or —
-since issue #145 — one file of `sitemaps/`, the crawl plans and results files
-the parse and results tests read. Only what a parser opens counts — the extensions `.html`, `.htm`, `.json`, `.doc`,
-and a candidate's retained portrait (`portrait.json` and the `portrait.<ext>`
-it names, which the record writer reads to externalize the photo; issue #118)
-— so the 2002 presidential declaration scans (`.jpg`, about 1 MB per
-candidate, recorded by path and never read) stay local.
-
-That is 6,306 files and 78 MiB — 852 of them, 25 MiB, the retained portraits
-of the URL-era fixture candidates, and 76 of them, 9.4 MiB, the sitemaps of
-every election that is not a municipal general — and it leaves every election
-with at least one candidate to parse; `tests/test_tracked_fixtures.py` asserts
-exactly that, along with git and the rule still agreeing. What a clone does
-*not* get is 48 candidates, all of them 2018-2019 pages carrying the portrait
-as a base64 data URI, ten listing trees, nine `results/` trees, four
-`list.html` listings, and the 14 sitemaps of the municipal generals (10,000
-entries each) with their results files. `scripts/tracked_fixtures.py` is the
-rule in code:
+- A *unit* is a candidate directory with all its files, a listing
+  subdirectory (`lists/`, `districts/`, `municipalities/`, …), one election's
+  `samples/results/<election-id>/` tree, a single top-level listing file, or
+  one file of `sitemaps/`.
+- Only files a parser opens count: `.html`, `.htm`, `.json`, `.doc`, and a
+  candidate's retained portrait (`portrait.json` and the `portrait.<ext>` it
+  names). The 2002 presidential declaration scans stay local.
+- Every election keeps at least one tracked candidate to parse;
+  `tests/test_tracked_fixtures.py` asserts that and that git agrees with the
+  rule.
+- A clone lacks the 2018–2019 candidates whose pages embed base64 portraits,
+  some listing and `results/` trees, and the municipal generals' sitemaps.
 
 ```bash
 python scripts/tracked_fixtures.py            # what the rule selects
@@ -41,1029 +27,140 @@ python scripts/tracked_fixtures.py --check    # does git agree?
 python scripts/tracked_fixtures.py --sync     # make git agree
 ```
 
-`--sync` force-adds past the `samples/` and `sitemaps/` ignore rules, which is
-why new fixtures need it: `git add` alone will not see them. (In a worktree
-that reaches these trees through symlinks into the main checkout, `--sync`
-replaces a selected symlink with a copy first, since git would otherwise store
-the link. On the main checkout the first pull that brings tracked sitemaps in
-will refuse to overwrite the identical untracked files already there; remove
-those files and pull again — they come back from git, byte for byte.)
-
-A test that needs something outside the subset — or the large sitemaps, or
-`data/`, or `samples-full/` — skips rather than fails, naming the command that
-would produce it. `tests/local_data.py` holds that machinery and the root
-`conftest.py` applies it, and the rule is **per unit**: a `FileNotFoundError`
-under one of the local-data roots becomes a skip only when the unit the path
-belongs to — the candidate directory, the election's results tree, the
-retained candidate under `samples-full/`, the sitemap file, the election's
-`data/` directory — is absent from the checkout. A path missing *inside* a
-unit that is here is a parser building the wrong path, and stays a failure.
-Until issue #145 any `OSError` under those roots was a skip, which is exactly
-where every path a parser builds lives: a one-character bug in one parser
-(`anketa.html` → `anketa.htm`) turned 18 passing tests into 18 skips and the
-suite exited 0. Tests that read `data/` as a whole call
-`local_data.require_corpus()`, which skips unless an election's records are
-actually there (a `data/` holding only a coverage report is not a corpus —
-`field_coverage.py` no longer creates one), and with `complete=True` unless
-every registered election is, which is what a pin on the whole corpus's record
-count assumes. CI installs node explicitly (`actions/setup-node`) and the
-conftest refuses to start a `CI` session without it: 42 dashboard tests run
-their JavaScript under node and would otherwise skip in silence. And the
-suite never reaches the network: the conftest refuses `requests` for any host
-but the loopback the HTTP tests serve from, naming the URL. A results-rebuild
-test whose sitemap was tracked but whose page cache was not fetched 89 pages
-from vrk.lt on the laptop and passed, then met a 403 on the runner — it skips
-on the absent cache now, and any other test that would fetch fails locally
-first. `VRK_TESTS_ALLOW_NETWORK=1` lifts the refusal for a deliberate live run.
-
-On a clone the suite is 1,993 passed and 426 skipped, 16,393 subtests passed
-in about a minute (`verbosity_subtests` in `pyproject.toml` makes the summary
-line count them); here, with everything scraped, 2,313 passed, nothing
-skipped, 16,858 subtests, six minutes — the whole-corpus walks are most of
-the difference. Both figures were measured on 2026-09-10, the
-clone one by cloning the branch and running `CI=1 pytest` in it, which is
-also how issue #150 found CI red on a fixture the 1 MiB rule keeps out of
-git.
-
-A skip is a test that did not run, and a test that only ever runs on the
-scraping laptop can sit asserting a shape two refactors old while CI stays
-green — the 2019 declaration tests did exactly that after issue #98 (issue
-#111). Two rules keep the skipped set small:
-
-- **Load fixtures lazily, one per attribute.** A test class whose `setUp`
-  parses every fixture it uses skips wholesale on a clone the moment one of
-  them is untracked. `local_data.Fixture` declares each as a class attribute
-  parsed on first read, so only the tests that read an untracked one skip —
-  and inside a `subTest`, only that subtest. Loops over a partly tracked set
-  read each candidate inside its own subtest for that reason.
-- **Pin shapes on a tracked fixture.** Key order, section order and the like
-  hold for every candidate of an election, so assert them on one a clone
-  carries (the election's `TRACKED_CANDIDATE_DIRS`) and keep the untracked
-  ones for the values only they publish.
-
-What still skips on a clone is what no tracked fixture can stand in for: the
-municipal `lists/` walks and the sitemap tests over them, the two `results/`
-trees over the limit, and a handful of value pins on portrait-bearing pages.
-
-## What the tracked fixtures parse to
-
-`tests/fixture-record-hashes.tsv` is one sha256 per tracked candidate — 649
-lines, 73 KiB — over the record the parsers produce for it, with
-`provenance` dropped (its run-stamps differ between any two honest parses).
-`scripts/fixture_record_hashes.py` measures and checks it; a deliberate
-parser change updates it with `--update` in the same commit.
-
-It exists because none of the three commands that check the corpus against
-the parsers can run in CI: `reparse_diff.py`, `field_coverage.py` and
-`anomalies-report` all read `data/`, which is gitignored, and the one
-test-level equivalent skips there for the same reason (issue #157). So a
-parser change answered, in CI, only to the per-election value pins — real
-coverage, but assertions about named fields of named candidates rather than
-about the record as a whole. The manifest is the whole-record half, and its
-diff names every election a change reached.
-
-It is not a second corpus and not a baseline: it says nothing about whether
-a value is *right*, only that today's parsers produce the same bytes as the
-parsers that wrote the hash.
-
-## Why fixtures are versioned
-
-Fixtures are used for:
-
-- parser development without live network dependence
-- regression tests
-- reproducible schema and normalization checks
-
-## Current allowlist
-
-The repository enforces exactly these candidate fixture directories:
-
-- `agne-sirinskiene`
-- `ingrida-simonyte`
-- `regina-ablom`
-- `algirdas-butkevicius`
-- `gabrielius-landsbergis`
-
-This is enforced by:
-
-- `tests/test_seimo_2016_sample_allowlist.py`
-
-## Other elections
-
-Each election folder keeps its own small, test-protected fixture set under
-`samples/html/<election_id>/` with the same policy.
-
-For `2020-seimo` the allowlist (`tests/test_seimo_2020_sample_allowlist.py`)
-is **six candidates out of 1,754**:
-
-- `ingrida-simonyte` — elected in a single-mandate constituency from the top
-  of her party's list (`isrinktasKaip: vienmandate`, list number 1)
-- `gabrielius-landsbergis` — the same shape one list place down, and the
-  worked example in `docs/DATA_GUIDE.md`
-- `algirdas-butkevicius` — elected in a constituency for a third party, which
-  makes him the identity thread through 2012, 2016, 2020 and 2024
-- `agne-sirinskiene` — elected off the multi-mandate list
-  (`isrinktasKaip: daugiamandate`)
-- `giedrius-drukteinis` — not elected, with a campaign participant tab
-- `regina-ablom` — not elected, list place 83, and the one fixture of this
-  election with no campaign tab at all
-
-`list.html` is 2.4 MB of embedded portraits, over the 1 MiB limit on a
-tracked fixture unit, so `page.html` is the only top-level file a clone
-carries. The declaration half of this election is the GPM308 form, whose
-label-prefix income rows issue #81 fixed.
-
-For `2024-seimo` the allowlist (`tests/test_seimo_2024_sample_allowlist.py`)
-is **five candidates out of 1,740**, the same spread one election later:
-
-- `ingrida-simonyte` and `algirdas-butkevicius` — elected in constituencies
-- `gabrielius-landsbergis` and `saulius-skvernelis` — elected off the lists
-- `vilma-aasrum` — not elected, list place 47, and the alphabetically first
-  candidate of the election
-
-Its declarations are the GPM311 form, and as in 2020 `list.html` (2.3 MB)
-stays untracked while `page.html` is carried.
-
-For `2019-ep` the allowlist
-(`tests/test_ep_2019_sample_allowlist.py`) is:
-
-- `daiva-adutaviciene`
-- `petras-austrevicius`
-- `andrius-kubilius`
-- `ausra-maldeikiene`
-- `liudas-mazylis`
-- `laima-liucija-andrikiene`
-
-This mix covers a non-elected candidate, returning MEPs with prior-mandate and
-education record tables, candidates with campaign donation data, and a candidate
-holding an academic degree / pedagogic title (guards the `9.x` and `12.x`
-question-number parsing that would otherwise silently drop those answers).
-
-For `2024-ep` the allowlist (`tests/test_ep_2024_sample_allowlist.py`) is:
-
-- `vitalijus-mitrofanovas`
-- `edvinas-guobys`
-- `zivile-pinskuviene`
-- `tomas-baranauskas`
-- `vilija-blinkeviciute`
-- `petras-grazulis`
-
-This mix covers an elected MEP (elected note in the profile), a candidate with
-an academic degree (guards the 2024 `2.1`/`2.2` biography numbering), a
-candidate with conviction and mandate-loss details (`13.1`-`13.4` and `14.1`
-conditional answers), an extra private-interest section (`Ryšiai sudarius
-sandorius`), and regular non-elected candidates.
-
-For `2024-prezidento` the allowlist
-(`tests/test_prezidento_2024_sample_allowlist.py`) is the complete eight-candidate
-field (as with `2019-prezidento`, presidential elections are small enough to keep
-every candidate):
-
-- `andrius-mazuronis`
-- `dainius-zalimas`
-- `eduardas-vaitkus`
-- `giedrimas-jeglinskas`
-- `gitanas-nauseda`
-- `ignas-vegele`
-- `ingrida-simonyte`
-- `remigijus-zemaitaitis`
-
-This covers the winner (`Išrinktas II ture`), the run-off runner-up (`Dalyvavo
-II ture`), and first-round candidates (`Dalyvavo I ture`); self-nominated vs
-party-nominated candidates; a candidate whose Q8 membership answer is inline
-text rather than a table (guards the empty-records path); an academic with a
-pedagogic title (guards the `2.1`/`2.2` biography numbering); and a candidate
-with an extra `Ryšiai su juridiniais asmenimis` private-interest section.
-
-For `2023-spalio-8-kupiskio-mero` the allowlist
-(`tests/test_kupiskio_mero_2023_sample_allowlist.py`) is the complete
-five-candidate field of this single-municipality race:
-
-- `algirdas-raslanas`
-- `edmundas-jonutis`
-- `egle-blazeviciene`
-- `vytautas-mockus`
-- `zilvinas-aukstikalnis`
-
-This covers the elected mayor (elected note in the profile, second round), a
-candidate with conviction details (`13.1`-`13.4`, whose detail table uses a
-plain hyphen separator), candidates answering the space-numbered `10 .`-`12 .`
-questions both ways, an academic with a pedagogic title, and candidates with the
-extra `Ryšiai su juridiniais asmenimis` / `Ryšiai sudarius sandorius`
-private-interest sections.
-
-For `2023-geguzes-7-visagino-mero` the allowlist
-(`tests/test_visagino_mero_2023_sample_allowlist.py`) is the complete
-two-candidate field of the repeat Visaginas mayoral runoff:
-
-- `dalia-straupaite`
-- `erlandas-galaguz`
-
-This covers the elected mayor (elected note in the profile) and the runner-up;
-the five-tab page set with no campaign tab; empty list fields on the profile
-card; and blank-upstream biography answers (`Nenurodė` nationality and work
-history, a birth date published without a birth place).
-
-For `2023-kovo-5-savivaldybiu-tarybu-ir-meru` the allowlist
-(`tests/test_savivaldybiu_2023_sample_allowlist.py`) is **nine candidates out of
-13,796** — the first election whose fixtures are a sample
-rather than the complete field, because the field is three times the size of the
-rest of the corpus combined. They were chosen to cover one of each archetype the
-record shape depends on:
-
-- `algimantas-rusteika-2423645` — council-only, coalition list, not elected
-- `algirdas-gudaitis-2420505` — council-only, party list, elected to the council
-  (the `Išrinktas pagal … sąrašą` note)
-- `algirdas-zebrauskas-2424292` — dual candidate, coalition list, elected to the
-  council but not as mayor, self-nominated for mayor. The only fixture that
-  exercises both recovered fields: a campaign `sprendimai` decision and a
-  `kiti-duomenys` private-interest free-text section
-- `ingrida-sakalauskiene-2425331` — council-only, party list, not elected, low
-  on the list
-- `linas-urmanavicius-2421676` — council-only, political committee list, elected
-  (guards the committee list name, which is neither a party nor a coalition)
-- `mykolas-majauskas-2420485` — mayor-only, self-nominated, not elected; the
-  largest campaign in the set (98 donation records, 19 contracts)
-- `rasa-vitkauskiene-2423015` — dual, elected mayor in round II, party-nominated,
-  `Atstovaujamasis` campaign participant. Her note is the feminine `Išrinkta …`
-- `skirmantas-mockevicius-2422343` — mayor-only, self-nominated, elected mayor in
-  round II
-- `vitalijus-mitrofanovas-2425352` — dual, elected mayor in round I, whose
-  `Atstovaujamasis` campaign publishes a donations tab with nothing in it
-
-Between them these cover all three `profilis.kita` key sets (council-only,
-mayor-only, dual), both nomination labels, both `pastaba` forms in both genders,
-role-dependent presence of the campaign tab, and both campaign participant
-types.
-
-Because the fixture set is a sample rather than the field, it pins nothing about
-coverage: an archetype not in the list above — a candidate with conviction
-details, say — is not exercised by any test in this election.
-
-Its samples directory also holds the listing fixtures, which are not candidate
-directories and are allowlisted separately by the same test:
-
-- `page.html` — the wrapper page
-- `list.html` — the mayoral listing (433 candidates)
-- `lists-index.html` — the index of 467 party, coalition and committee lists
-- `lists/` — one file per list, `rpgId-<municipality>_rorgId-<list>.html`, 467
-  files, and the test asserts that count. The sitemap needs all of them: a
-  missing file is reported as `missing-list-sample` and its candidates are
-  simply absent from the output.
-
-For `2019-kovo-3-savivaldybiu-tarybu` the allowlist
-(`tests/test_savivaldybiu_2019_sample_allowlist.py`) is **nine candidates out of
-13,666** — a sample rather than the field, for the same reason as the 2023
-municipal election. The archetypes are the ones the record shape depends on:
-role (council-only, mayor-only, dual), list kind, nomination kind, and how the
-person did:
-
-- `agne-aleksejevaite-2409490` — council-only, party list, not elected. No
-  campaign section, no photo, empty biography
-- `gediminas-dauksys-2408494` — dual, `visuomeninis rinkimų komitetas` list,
-  won the council seat but **lost** the mayoralty in round II (so `isrinktas`
-  is true while `meras.elected` is false). The only fixture whose "Kita" tab
-  carries a document — a signed pledge not to bribe voters
-- `judita-ziliene-2409466` — council-only, party list, elected. Her note is the
-  feminine `Išrinkta pagal … sąrašą`
-- `kestutis-armonas-2404237` — council-only, **coalition** list, elected
-  (guards the coalition list name, and the genitive inflection of every member
-  party inside the elected note). Also the fixture that answered Q21, whose
-  answer the parser currently drops — see `docs/OUTPUT_SCHEMA.md`
-- `nerijus-cesiulis-2406286` — dual, elected mayor in **round II**
-- `ricardas-juska-2413847` — mayor-only, party-nominated, not elected; the
-  candidate who declared neither education, languages nor prior mandates
-- `skirmantas-mockevicius-2400117` — mayor-only, **self-nominated**
-  (`išsikėlė pats`), elected mayor. The only fixture with a `Savarankiškas`
-  campaign participant: treasurer, auditor, donation records, a financing
-  report and contracts
-- `vitalijus-mitrofanovas-2406746` — dual, elected mayor in **round I**
-- `vytas-jareckas-2404239` — dual, coalition list, elected mayor, and the only
-  fixture answering a declaration with `Einu` rather than `Neinu`
-
-Between them these cover all three `profilis.kita` key sets, both `pastaba`
-forms in both genders, both election rounds, all three list kinds (party,
-coalition, committee), self- and party-nomination, role-dependent presence of
-the campaign section, the photo and biography, and both campaign participant
-types. All nine parse with zero anomalies.
-
-Because the fixture set is a sample, it pins nothing about coverage: an
-archetype not listed above — a candidate who answered the conviction question
-"Taip", say — is exercised by no test in this election.
-
-Its samples directory also holds the listing fixtures, allowlisted separately
-by the same test:
-
-- `page.html` — the wrapper page
-- `list.html` — the mayoral listing (410 candidates)
-- `lists-index.html` — the index of 465 party, coalition and committee lists
-- `lists/` — one file per list, `rpgId-<municipality>_rorgId-<list>.html`, 465
-  files, and the test asserts that count. The sitemap needs all of them: a
-  missing file is reported as `missing-list-sample` and its candidates are
-  simply absent from the output.
-
-For `2023-rugsejo-3-seimo-raseiniai-kedainiai` the allowlist
-(`tests/test_seimo_raseiniu_kedainiu_2023_sample_allowlist.py`) is the complete
-eight-candidate field of this single-constituency by-election:
-
-- `algirdas-gricius`
-- `andrius-bautronis`
-- `antanas-tautkus`
-- `darius-ulickas`
-- `edvinas-demidavicius`
-- `matas-skamarakas`
-- `meida-sabuniene`
-- `sandra-barzdiene`
-
-This covers the elected candidate (elected note in the profile, second round), a
-candidate with conviction details (`13.1`-`13.4`), and both campaign participant
-types — self-standing (`Savarankiškas`, with treasurer, auditor, financing
-reports and contracts) and party-represented (`Atstovaujamasis`, donations only).
-
-For `2025-kovo-16-meru` the allowlist
-(`tests/test_meru_2025_sample_allowlist.py`) is the complete fourteen-candidate
-field across the three municipalities that voted:
-
-- Jonavos rajono: `jolita-peleckiene`, `povilas-beisys`, `renata-sorakiene`,
-  `romanas-steponavicius`
-- Joniškio rajono: `benjaminas-rimdzius`, `gediminas-cepulis`,
-  `liudas-jonaitis`, `saulius-kuzmarskis`
-- Panevėžio miesto: `algimantas-kolpertas`, `ignas-gaiziunas`,
-  `julius-limantas`, `loreta-masiliuniene`, `saulius-raziunas`, `solveiga-dage`
-
-This covers the two elected mayors, both campaign participant types, and the
-four Jonava candidates struck off by Seimas resolution — who carry a
-`candidateNote` and publish no campaign tab.
-
-For `2017-balandzio-23-meru` the allowlist
-(`tests/test_meru_2017_sample_allowlist.py`) is the complete eleven-candidate
-field:
-
-- Jonavos rajono: `alina-batuleviciene`, `bronislovas-liutkus`, `darius-mockus`,
-  `eugenijus-sabutis`, `remigijus-osauskas`, `rimantas-kiseliovas`
-- Šakių rajono: `dinara-gudaitiene`, `edgaras-pilypaitis`,
-  `raimondas-janusevicius`, `raminta-bastyte`, `vidas-cikana`
-
-This covers the two elected mayors, a candidate who left a declaration blank,
-candidates with prior-mandate record tables, and the four whose campaign data is
-only reachable through the fallback participant URL.
-
-For `2017-rugsejo-10-marijampoles-mero` the allowlist
-(`tests/test_marijampoles_mero_2017_sample_allowlist.py`) is the complete
-eight-candidate field:
-
-- `algis-zvaliauskas`
-- `dobilas-sinkevicius`
-- `gediminas-akelaitis`
-- `gintaras-skamarocius`
-- `irena-lunskiene`
-- `karolis-dvylys`
-- `kestutis-traskevicius`
-- `saulius-skinkys`
-
-This covers the elected mayor, self-nominated and party-nominated candidates, a
-candidate with six prior mandates, one who answered "Nenurodė" to the education
-and prior-mandate questions, one who left a declaration blank, and both campaign
-participant types.
-
-For `2021-spalio-10-meru` the allowlist
-(`tests/test_meru_2021_sample_allowlist.py`) is the complete fourteen-candidate
-field:
-
-- Kelmės rajono: `algirdas-sakalauskas`, `dalia-viliuniene`, `egidijus-uksas`,
-  `ildefonsas-petkevicius`, `jolita-koryzniene`, `juozas-rimkus`,
-  `lina-samulyte`, `stasys-jokubauskas`
-- Trakų rajono: `adas-jakubauskas`, `andrius-satevicius`, `dainius-narkevicius`,
-  `jaroslav-narkevic`, `jonas-kietavicius`, `ramunas-ausrotas`
-
-This covers the two elected mayors, a self-nominated candidate, both campaign
-participant types, and the one candidate with a conviction record — whose nested
-detail table is what exposed the shared `<tbody>` lookup bug.
-
-For `2021-balandzio-11-radviliskio-mero` the allowlist
-(`tests/test_radviliskio_mero_2021_sample_allowlist.py`) is the complete
-seven-candidate field:
-
-- `aurimas-gaidziunas`
-- `gediminas-lipnevicius`
-- `jolanta-margaitiene`
-- `jurgis-baublys`
-- `kazimieras-rackauskis`
-- `mantas-reutas`
-- `vytautas-simelis`
-
-This covers the elected mayor, a self-nominated candidate with both a conviction
-record and the only populated "Kita" tab in the repository, and both campaign
-participant types.
-
-For `2017-balandzio-23-seimo-anyksciai-panevezys` the allowlist
-(`tests/test_seimo_anyksciu_panevezio_2017_sample_allowlist.py`) is the complete
-eleven-candidate field:
-
-- `antanas-baura`, `aukse-kontrimiene`, `edita-tamosiunaite`,
-  `egidijus-baltusis`, `kristupas-augustas-krivickas`, `lukas-pakeltis`,
-  `mindaugas-pauliukas`, `ricardas-sargunas`, `romualdas-gegznas`,
-  `valentinas-sapalas`, `valentinas-stundys`
-
-This covers the elected member (whose elected note shares the name cell),
-candidates with prior-mandate tables of several sizes, a candidate who declared
-neither education nor mandates, and both campaign participant types.
-
-For `2018-rugsejo-16-seimo-zanavykai` the allowlist
-(`tests/test_seimo_zanavyku_2018_sample_allowlist.py`) is the complete
-six-candidate field: `giedrius-surplys`, `irena-haase`, `mindaugas-bastys`,
-`mindaugas-tarnauskas`, `paulius-visockas`, `vigilijus-jukna`. It covers the
-elected member, self-nominated candidates, and prior-mandate tables of three and
-five records.
-
-For `2019-rugsejo-8-seimo` the allowlist
-(`tests/test_seimo_2019_sample_allowlist.py`) is the complete twenty-seven
-candidate field across the three constituencies that voted. It covers one winner
-per constituency, both campaign participant types, and the candidate nominated by
-two parties whose second nominator would otherwise be dropped.
-
-For `2015-kovo-1-seimo-zirmunai` the allowlist
-(`tests/test_seimo_zirmunu_2015_sample_allowlist.py`) is the complete
-twelve-candidate field:
-
-- `anzela-andruskevic`, `lilijana-astra`, `renata-cytacka`, `algis-caplikas`,
-  `ricardas-garuolis`, `vanda-birute-gineviciene`, `sarunas-gustainis`,
-  `radvile-morkunaite-mikuleniene`, `zydrunas-plytnikas`, `algirdas-raslanas`,
-  `joana-tamkeviciute`, `gediminas-vagnorius`
-
-This covers the winner (Gustainis — though no 2015 page marks him as such),
-a self-nominated candidate, both campaign participant types (two candidates are
-represented by their party), candidates with and without prior-mandate tables,
-a `Nenurodė` marital status, a typed "Neturiu" child answer, and the one
-candidate without a program PDF. Candidate directories also hold a
-`campaigns/dalyvis-<id>/` capture of the participant's five campaign tabs (or
-`root.html` for represented participants).
-
-For `2015-birzelio-7-seimo-varena-eisiskes` the allowlist
-(`tests/test_seimo_varenos_eisiskiu_2015_sample_allowlist.py`) is the complete
-eight-candidate field:
-
-- `andzej-andruskevic`, `juozas-baublys`, `vidmantas-bizokas`,
-  `marius-juskevicius`, `gitana-markoviciene`, `vidas-mikalauskas`,
-  `miroslavas-monkevicius`, `virginijus-varanavicius`
-
-Seven candidates are represented by their nominating party's campaign
-(`root.html` card captures); the one self-nominated candidate is the only
-independent participant with the full five campaign tabs.
-
-For `2015-lapkricio-8-telsiu-mero` the allowlist
-(`tests/test_telsiu_mero_2015_sample_allowlist.py`) is the complete
-seven-candidate field:
-
-- `algirdas-bacevicius`, `petras-kuizinas`, `almantas-lukavicius`,
-  `deivydas-rubezius`, `jolanta-rupeikiene`, `mantas-serva`, `saulius-urbonas`
-
-This covers the municipal anketa variant, a self-nominated candidate whose
-card carries "Išsikėlęs kandidatas" instead of list fields, both campaign
-participant types, a candidate who answers the incompatible-duties question
-"Einu", and one who answered almost nothing ("Nenurodė" throughout).
-
-For `2015-birzelio-7-pakartotiniai-sirvintos-trakai` the allowlist
-(`tests/test_pakartotiniai_sirvintu_traku_2015_sample_allowlist.py`) is a
-curated ten of the 327 candidates, the municipal-general pattern rather than
-the whole-field one the small by-elections use:
-
-- `zivile-pinskuviene`, `rita-tamasuniene`, `marija-puc`, `marija-puc-2`,
-  `dangute-mikutiene`, `vytautas-zalieckas`, `kestutis-vilkauskas`,
-  `kestutis-mikulskas`, `julija-meskauskiene`, `albertas-malasauskas`
-
-This covers both municipalities, mayoral-only, council-only and dual
-candidacies, both campaign participant types, and the two ids VRK issued to
-Marija Puč — including the `Rengiama` placeholder page whose questionnaire was
-never published. The samples tree also carries the two district listing pages
-and a `lists/` directory with all nine party-list pages, because the sitemap
-is rebuilt from them offline.
-
-For `2015-birzelio-21-pakartotiniai-silutes` the allowlist
-(`tests/test_pakartotiniai_silutes_2015_sample_allowlist.py`) is a curated ten
-of the 366 candidates:
-
-- `alfredas-stasys-nauseda`, `sandra-tamasauskiene`, `arvydas-jakas`,
-  `virgilijus-pozingis`, `tomas-budrikis`, `vytautas-laurinaitis`,
-  `jonas-jatautas`, `daiva-zebeliene`, `jonas-sakurskis`, `jonas-sakurskis-2`
-
-The first eight are this election's dual candidates, who between them stand on
-all eight party lists including the `Visuomeninis rinkimų komitetas`. The last
-two are different people who share a name, one of whom has no campaign
-participant link at all. The district page and all eight list pages are
-captured alongside them.
-
-For `2015-kovo-1-savivaldybiu` the allowlist
-(`tests/test_savivaldybiu_2015_sample_allowlist.py`) is **nine candidates out
-of 15,149** — a sample rather than the field, as with the 2019 and 2023
-municipal generals:
-
-- `skirmantas-mockevicius-71130`, `mindaugas-filipavicius-71111` — mayor-only,
-  both published as a bare name with no nominator clause
-- `adele-dimsiene-85873` — dual, committee list, list head
-- `irina-rozova-80134` — dual, coalition list
-- `albinas-klimas-79174` / `albinas-klimas-85125` — two different people who
-  share a name, in Plungė and Akmenė, born a year apart; the pair that shows
-  why the id carries VRK's own candidate id
-- `jelena-berezina-74643` — council-only, position 61 on its list
-- `valius-micevicius-85875` — council-only, committee list, and the fixture
-  with no campaign participant at all
-- `antanas-gasparavicius-86679` — council-only, list head
-
-Its samples directory also holds the listing tree, allowlisted separately:
-`index.html` (VRK's municipality index), `merai.html` (the mayoral roll-up
-used as the sitemap's cross-check), 60 `district-<id>.html` pages and a
-`lists/` directory of 478 list pages. The tests assert both counts, because a
-missing list page silently drops its candidates from the sitemap.
-
-For `2011-vasario-27-savivaldybiu` the allowlist
-(`tests/test_savivaldybiu_2011_sample_allowlist.py`) is **ten candidates out
-of 16,403**, chosen for the shapes the record depends on in the one general
-election where individuals stood for the council on their own:
-
-- `darius-norkus-42302`, `mindaugas-kaknevicius-26835` — self-nominated
-  individuals (Vilnius, Alytus): a ballot number, no list, the card's
-  "Išsikėlęs kandidatas" flag
-- `valdemaras-stancikas-42569`, `visvaldas-matijosaitis-29278`,
-  `arturas-zuokas-42680` — leaders of coalitions of self-nominated
-  candidates; Zuokas the elected one, and the one with a conviction
-  explanation after Q9
-- `arunas-karlonas-43800`, `arunas-burksas-27707` — leaders of party
-  coalitions (Kauno rajonas, Neringa), whose cards carry the member party as
-  a second `(Iškėlė` nomination
-- `viktor-uspaskich-48972` — party list head (Darbo partija, Vilnius)
-- `rimvydas-buinickas-59139` — party list, position 60
-- `diana-jokimciene-kachabrisvili-44060` — a double surname, position 31
-
-Its samples directory also holds the listing tree: `index.html` (VRK's
-municipality index), the three roll-ups used as the sitemap's cross-checks
-(`issikele.html`, `koalicijos.html`, `issikele-koalicijos.html`), 60
-`district-<id>.html` pages (ids 7131–7190) and a `lists/` directory of 599
-list pages. Every candidate has exactly the four tabs; there is no
-Biografija and no campaign subtree in this election.
-
-For `2007-vasario-25-savivaldybiu` the allowlist
-(`tests/test_savivaldybiu_2007_sample_allowlist.py`) is **eleven candidates
-out of 13,422**, chosen for the shapes the record depends on in the oldest
-municipal election with candidate pages (party lists only, no
-self-nomination of any kind):
-
-- `arvydas-vysniauskas-7357` — party list head (LSDP, Elektrėnai), elected;
-  the FR0462 income filed on the main form, two flats and two employers in
-  the interest declaration (the rows the record-table fix keeps)
-- `algirdas-strignatavicius-7436` — the same list's last position, 33 of a
-  ballot numbered 1–33 with 29 withdrawn
-- `arturas-zuokas-12711`, `rolandas-paksas-1537` — list heads in Vilnius,
-  the largest municipality (687 candidates); Zuokas has the
-  "Moksliniai laipsniai" line
-- `viktor-uspaskich-9852` — position 25 of the Kėdainiai Darbo partija
-  list, seated third on preference votes; Russian nationality on the form
-- `vigantas-giedraitis-2544`, `bronis-rope-660`, `danute-mileikiene-3258` —
-  leaders of three of the four party coalitions (Neringa and Ignalina
-  elected, Telšiai not); their cards carry a second "Numeris partijos
-  sąraše" line, and Mileikienė's five FR0462 lines are all zero
-- `giedre-ramanauskaite-kedikiene-9665` — a double surname, position 21
-- `zigfridas-herbertas-pilvinis-996` — a three-part name whose
-  questionnaire stops after an empty "Gimimo vieta" and "Tautybė" (the
-  empty-answer row boundary), and an "Einu" on the incompatible-office
-  question
-- `tadeus-romanovskij-11440` — the election's other declaration shape, and
-  the one it took issue #98 to see: his page publishes a *Sutuoktinio turto
-  deklaracija* and no declaration of his own, and the corpus stored the
-  spouse's three figures as his. 28 records are that shape and 352 publish a
-  spouse declaration at all; without a fixture the rule that keeps them apart
-  is untested
-
-Its samples directory also holds the listing tree: `index.html` (VRK's
-index of municipalities and parties), a `parties/` directory of the 24
-by-party pages used as the sitemap's cross-check, 60 `district-<id>.html`
-pages (ids 6776–6835) and a `lists/` directory of 600 list pages. Every
-candidate has exactly the three tabs; there is no Biografija, no Kita and
-no campaign subtree in this election.
-
-For `1996-spalio-20-seimo` the allowlist (`tests/test_seimo_1996_sample_allowlist.py`)
-is a curated five of the 879 candidates:
-
-- `asmolkov-vasilij` — party-nominated, dual candidacy (single-mandate seat
-  plus a `Daugiamandatė` multi-mandate list position)
-- `butkevicius-audrius` — self-nominated (`Išsikėlė pats`), single candidacy
-- `andriukaitis-vytenis-povilas` — party-nominated, single candidacy, a
-  well-known figure to sanity-check the biography text against
-- `saltiene-irena` — has no photo
-- `astrauskas-vytautas` — has no biography link, and is also dual-candidacy
-
-The samples tree also carries a `constituencies/` directory with all 71
-`apgtl.htm` crawl pages the sitemap is built from — discovery scaffolding,
-allowlisted separately from the candidate fixtures.
-
-For `1997-kovo-23-seimo-pakartotiniai` and `1997-gruodzio-21-seimo-pakartotiniai`
-the allowlists (`tests/test_seimo_pakartotiniai_1997_kovo_sample_allowlist.py`,
-`tests/test_seimo_aukstaitijos_1997_gruodzio_sample_allowlist.py`) are the
-complete fields — 23 and 4 candidates — since both re-run elections are this
-small already. The March re-run's fixture set covers both a masculine and a
-feminine self-nomination spelling (`Išsikėlė pats` / `Išsikėlė pati`).
-
-For `1998-kovo-22-seimo-pakartotiniai`,
-`1998-lapkricio-15-seimo-pakartotiniai` and `1999-kovo-21-seimo-pakartotiniai`
-the allowlists (`tests/test_seimo_pakartotiniai_1998_kovo_sample_allowlist.py`,
-`tests/test_seimo_nevezio_1998_lapkricio_sample_allowlist.py`,
-`tests/test_seimo_pakartotiniai_1999_kovo_sample_allowlist.py`) are the
-complete fields — 11, 11 and 22 candidates — so `samples/html/` *is* each of
-these elections and none of them has a `samples-full/` capture:
-
-- March 1998 re-ran two constituencies, Naujosios Vilnios (No. 10) and
-  Vilniaus Trakų (No. 57), with 5 and 6 candidates. Only
-  `filipovic-tadeus` and `tomasevski-valdemar` link a `kpdl.htm`
-  declaration; the other nine publish none, which the allowlist test names
-  so that a missing declaration reads as the source's and not the parser's.
-- November 1998 re-ran one constituency, Nevėžio (No. 26), with 11
-  candidates.
-- March 1999 re-ran three — Naujosios Vilnios, Nevėžio and Vilniaus Trakų —
-  with 7, 8 and 7. Six of its candidates stood in one of the 1998 repeats
-  too, which is what makes this trio the corpus's smallest identity test.
-
-All three are read by the same two shared parsers as the 1996 general
-(`scraper/shared/seimo_archive_1990s.py` and the card questionnaire whose
-three fields hide inside a malformed HTML comment, issue #69), and their
-elected flags come from the results rows joined in by issue #79.
-
-For `1997-kovo-23-savivaldybiu-tarybu` the allowlist
-(`tests/test_savivaldybiu_1997_sample_allowlist.py`) is **six candidates out
-of 6,276** — a sample rather than the field, as with the other municipal
-generals:
-
-- `pilvelis-algirdas`, `kizelavicius-stasys`, `dapkus-ramualdas`,
-  `margeviciene-vince-vaidevute` — spread across four different municipalities
-  (Vilnius, Alytus, Birštonas, Kaunas cities), each a party-list head
-- `tamulevicius-kestutis` / `tamulevicius-kestutis-2` — two different people
-  (VRK ids 37862 and 37809) who share a name, in Alytus and Druskininkai; the
-  pair that guards the positional `-2` suffix against a false merge
-- `abariunas-bronius` — a page that prints **no** `Gimimo vieta` label. Every
-  other fixture happens to carry the full label set, which is why all six
-  passed while 91% of the election's real records had a birth date that had
-  swallowed the following labels. Added as the regression guard once the full
-  corpus was reconciled; the lesson is that a fixture set chosen for
-  *content* variety can still be uniform in *structure*.
-
-Its samples directory also holds the listing tree: `municipalities/` (56
-`apgtl.htm` pages) and `lists/` (449 `pkal.htm` party-list pages), since the
-sitemap is rebuilt from them offline the same way the Seimas archive's
-`constituencies/` directory works.
-
-For `1997-birzelio-29-svenciniu-tarybos-pakartotiniai` the allowlist
-(`tests/test_svencioniu_tarybos_1997_sample_allowlist.py`) is the **complete
-field — all 110 candidates** across the nine party lists Švenčionys fielded in
-the repeat vote, small enough that a curated subset would not save much and
-the full field is a stronger regression guard. Its samples directory holds the
-same `municipalities/`/`lists/` scaffolding as the general election, scoped to
-the one municipality.
-
-For `2014-prezidento` the allowlist
-(`tests/test_prezidento_2014_sample_allowlist.py`) is the complete
-seven-candidate field:
-
-- `zigmantas-balcytis`, `dalia-grybauskaite`, `arturas-paulauskas`,
-  `naglis-puteikis`, `bronis-rope`, `valdemar-tomasevski`, `arturas-zuokas`
-
-All seven are independent campaign participants with the five campaign tabs.
-Every candidate directory also holds `patiketiniai.html`, the presidential
-elections' sixth tab (trustees) — Balčytis's is a "Duomenų nėra" page, the
-empty-list case; Balčytis is also the one candidate whose `Kita` tab links a
-program PDF. Grybauskaitė's campaign link points at election path `423_lt`,
-not the candidate pages' `424_lt`.
-
-For `2007-spalio-7-seimo-dzukija` the allowlist (`tests/test_seimo_dzukijos_2007_sample_allowlist.py`)
-is the complete ten-candidate field: four independent campaign participants
-(Čilinskas, Truncė, Uspaskich, Kadžys — the donor tables and financing
-reports) and six represented ones whose cards say so in words and link no
-campaign. The samples directory holds the district page as `list.html` (the
-index is a meta-refresh to it). No candidate directory holds a `kita.html`.
-
-For `2008-seimo` the allowlist (`tests/test_seimo_2008_sample_allowlist.py`)
-is **eight candidates out of 1,603**, chosen for shape as for 2012: a
-list-only list leader (`gediminas-kirkilas`), a dual list+constituency
-leader (`andrius-kubilius`), a coalition nominee from each member party
-(`loreta-grauziniene`, `virginija-baltraitiene`), a self-nominated
-constituency candidate (`valdemaras-puodziunas`), a single-member-only
-party's candidate (`vytautas-aleksas-lazinka`), and both name collisions
-(`arunas-rimkus-2`, `algis-kaseta-2` — the latter one of two Algis KAŠĖTAs
-in the same constituency). The samples directory holds both indexes
-(`list.html`, `districts.html`), the 16 list pages plus the 4 side pages
-under `lists/` (no self-nominated page exists in 2008) and the 71
-constituency pages under `districts/`. No candidate directory holds a
-`kita.html` or a `campaigns/` tree: the 2008 pages publish neither.
-
-For `2009-ep` the allowlist (`tests/test_ep_2009_sample_allowlist.py`) is
-**fifteen candidates out of 262** — the leader of each of the fifteen lists,
-the same rule as `2014-ep`: `saulius-stoma`, `algirdas-paleckis`,
-`rolandas-paksas`, `vilija-blinkeviciute`, `egidijus-skarbalius`,
-`ona-jukneviciene`, `leonidas-donskis`, `valdemar-tomasevski`,
-`eugenijus-maldeikis`, `gediminas-vagnorius`, `vytautas-landsbergis`,
-`viktor-uspaskich`, `jonas-viesulas`, `arturas-zuokas`, `gintaras-didziokas`.
-Six of them were elected. The set covers the shapes the full field has:
-Zuokas's Q9.2 "Taip" with the free-text explanation, Landsbergis's and
-Maldeikis's two-answer degree line (degree and pedagogical title),
-Tomaševski's dead campaign link (his presidential participant id under the
-EP path — the fixture's `index.json` carries the one `CampaignRootFetchFailed`),
-and the roman-numbered interest sections II–VIII across the fifteen. The
-samples directory holds the list index (`list.html`) and the fifteen list
-pages under `lists/`.
-
-For `2002-prezidento` the allowlist
-(`tests/test_prezidento_2002_sample_allowlist.py`) is the complete
-seventeen-candidate field. Each directory holds the shared listing as
-`anketa.html`, the HTML biography, the Word programme (`programa.doc`)
-and the archived scans — `pareiskimas.jpg`, `duomenu-anketa-1.jpg` and
-`-2.jpg`, `deklaracija.jpg` — except `vytautas-sustauskas`, whose second
-questionnaire page was a 404 on the original 2002 site already. The four
-health-certificate scans the cards link are 404 on VRK's mirror, so no
-directory holds one. The samples directory holds the listing
-(`list.html`) and the trustee index (`patiketiniai-index.html`, the
-name-to-registration-id map whose per-candidate pages are 404). The
-fixture capture is the full scrape.
-
-For `2004-ep` the allowlist (`tests/test_ep_2004_sample_allowlist.py`) is
-**thirteen candidates out of 241**, chosen by shape rather than by list:
-the LSDP leader `justas-vincas-paleckis` (two education records, a prior
-mandate, three children, elected), the TS leader `vytautas-landsbergis`
-(degree and academic title, Q21, elected), the VNDPS leader
-`kazimira-danute-prunskiene` (elected; mandate declared terminated by VRK
-decision Nr. 180) and the list's second `gintaras-didziokas` (seated by
-decision Nr. 181), `laima-liucija-andrikiene` (elected, individual-form
-asset declaration), `vytautas-ricardas-backis` (the one candidate with
-another member state's citizenship — Q8.4.1/8.4.2 answered),
-`nikolajus-salkovskis`, `viktor-balakin` and `vladislavas-kazakevicius`
-(the Q9 block's free-text explanation under 9.2 "Yra", 9.1 "Yra" and 9.3
-"Buvo" respectively), `evalda-siskauskiene` (a page that omits Q19, the
-spouse line and Q20), `juozas-imbrasas` and `marius-kundrotas` (the two
-sparsest questionnaires — no education table, no languages, no
-birthplace; Kundrotas with no income on any form) and
-`kornelijus-platelis` (income filed on three FR0462 variants, so the total
-is a sum). Each directory holds the three pages (`anketa.html`,
-`biografija.html`, `turto-ir-pajamu-deklaracijos.html`) and `index.json`;
-the samples directory holds the list index (`list.html`) and the twelve
-list pages under `lists/`. The field is scraped by
-`scripts/run_election_batches.sh`.
-
-For `2004-prezidento` the allowlist
-(`tests/test_prezidento_2004_sample_allowlist.py`) is the complete
-five-candidate field — `valdas-adamkus` (the runoff winner; the only card
-with the health certificate; individual-form asset declaration with an
-explicit 0 Lt of registered property), `kazimira-danute-prunskiene` (the
-runoff loser), `petras-austrevicius` (the one candidate without a
-programme), `vilija-blinkeviciute` and `ceslovas-jursenas` (family-form
-asset declarations). Each directory holds the shared listing as
-`anketa.html`, the declarations page, the full-portrait page
-(`nuotrauka.html`) and the Word documents (`biografija.doc`, and
-`programa.doc` where published) — the corpus's only binary fixtures; the
-samples directory holds the listing (`list.html`). The fixture capture
-is the full scrape.
-
-For `2004-seimo` the allowlist (`tests/test_seimo_2004_sample_allowlist.py`)
-is **fourteen candidates out of 1,251**, chosen by shape: the Paksas
-coalition's leader `valentinas-mazuronis` (LDP member, first on both lists,
-list seat, independent campaign participant), `irena-degutiene`
-(constituency runoff winner), `zigmantas-balcytis` (first-round
-constituency winner, LSDP member of the Brazauskas–Paulauskas coalition),
-`remigijus-acas` (a coalition list seat lower down), `valdemar-tomasevski`
-(LLRA leader, constituency seat; the one list VRK did not rank),
-`jonas-ramonas` (constituency winner with a Q9 explanation under "Yra"),
-`arimantas-dumcius` (winner with degree and title),
-`vytautas-ricardas-backis` (a numbered-list party's constituency-only
-nominee — an unnumbered row on the TS page), `nikolajus-salkovskis` (LLRA
-list, Lietuvos rusų sąjunga constituency nomination), `saulius-gintautas`
-(party nominee who also self-nominated in the same constituency),
-`alma-vitkiene` (self-nominated, "Išsikėlė pati", constituency only),
-`nikolaj-medvedev` (a constituency-only party's nominee),
-`visvaldas-matkevicius` (list-only coalition candidate whose declarations
-page prints the income extract only) and `genovaite-ziobakiene` (the one
-candidate with no declarations page — her fixture `index.json` carries the
-`MissingExpectedTab`). Seven of the fourteen were elected. The samples
-directory holds both indexes (`list.html`,
-`districts.html`), the 22 party pages under `lists/` and the 71
-constituency pages under `districts/`. The field is scraped by
-`scripts/run_election_batches.sh`.
-
-For `2003-birzelio-15-seimo-nauji` the allowlist
-(`tests/test_seimo_nauji_2003_sample_allowlist.py`) is the complete
-27-candidate field of the four constituencies — Senamiesčio Nr. 2 (7),
-Antakalnio Nr. 3 (7), Šeškinės Nr. 6 (8) and Nevėžio Nr. 26 (5) — so the
-fixture capture is the whole scrape. The samples directory holds the
-constituency index (`districts.html`), the party index (`list.html`), the
-four constituency pages under `districts/` and the 12 party pages under
-`lists/`; the party pages are the cross-check, not a source, because they
-restate the same 27 rows with each candidate's constituency. Shapes the
-field covers without being chosen for them: `viktor-balakin` (the one Q9
-explanation), `zigfrid-rackovskis` (the one non-"-" loan figure), the
-nine "šeimos" declaration forms and the eighteen "gyventojo" ones, and
-the six candidates whose Q12 table has more than one education row.
-
-For `2005-lapkricio-20-seimo-kedainiai` the allowlist
-(`tests/test_seimo_kedainiu_2005_sample_allowlist.py`) is the complete
-five-candidate field — `tomas-bakucionis`, `virginija-baltraitiene` (the
-runoff winner), `steponas-navajauskas`, `stasys-sedbaras`,
-`vytautas-valaitis` (the one without a campaign registration line); the
-samples directory holds the constituency index (`districts.html`), the
-party index (`list.html`) and the one constituency page under `districts/`.
-
-For `2000-seimo` the allowlist (`tests/test_seimo_2000_sample_allowlist.py`)
-is **eighteen candidates out of 1,271**, chosen by shape:
-`andriukaitis-vytenis-povilas` (constituency winner who heads the
-Brazauskas coalition list as an LSDP member — the card's member-party
-line), `sakalas-aloyzas` (a coalition list seat, the winner note on the
-multi-member block), `maldeikis-eugenijus` (a plain-party list seat with
-no photo and no autobiography), `uspaskich-viktor` (self-nominated
-constituency winner, Kėdainiai, with secondary-workplace declaration
-lines), `kaseta-algis` (a constituency-only party's winner, MKDS),
-`bobelis-kazys` (KDS leader: a list with no seats, constituency winner),
-`jukneviciene-rasa` (TS list seat who also self-nominated beside her
-party in Lazdynai — three card blocks, the feminine winner note,
-`kitiIskelejai`), `narviliene-jane` (NDP member of the coalition who won
-a constituency), `petkus-viktoras` (list-only, no autobiography, no
-family line, a school with no qualification), `ozelyte-nijole`
-(self-nominated woman, constituency only, with a birthplace),
-`gaizauskas-raimundas` (a numbered party's constituency-only nominee — an
-unnumbered row on the LCS page), `terleckas-antanas` (LTS list #1,
-Lietuvos laisvės lyga constituency nomination),
-`smigelskas-virginijus` (the one constituency nominee his party page
-omits), `sedzius-alvydas-2` (a namesake with the positional id, LDDP
-member of the coalition list), `cobotas-medardas` (degree, title, five
-languages), `vaitas-vilimantas-stanislovas` (a US citizen who also
-declared a foreign oath: 8.3.1 and a filled 8.4.1),
-`laugalis-victor-vitold-vytautas` (two citizenships — 8.3.1 twice — and
-the empty 8.4.1 template after a "Nėra") and `zukauskas-henrikas` (a
-constituency winner whose page is one of the 32 pre-results-vintage
-captures: CGI links, no winner note). Nine of the eighteen were elected. Each directory holds the
-one page (`candidate.html`) and `index.json`; the samples directory holds
-both indexes (`list.html`, `districts.html`), the 28 party pages under
-`lists/` and the 71 constituency pages under `districts/`. The field is
-scraped by `scripts/run_election_batches.sh`.
-
-For `2000-kovo-19-savivaldybiu-tarybu` the allowlist
-(`tests/test_savivaldybiu_2000_sample_allowlist.py`) is **ten candidates out
-of 9,881**, chosen by shape: `paksas-rolandas-84817` (the Vilnius LLS
-leader, 47,349 preference votes), `cekuolis-jonas-85130` (LLS #52 elected at
-rank 6, the furthest climb), `jusas-albertas-94748` and `zekas-algis-94742`
-(the Alytus district LVP–KDS coalition's leader and its #5 elected at rank
-2, both with the card's member-party line),
-`martusevicius-stasys-algirdas-89379` (Birštonas LSDP #17 elected at rank
-6), `dagys-algirdas-89945` (a coalition candidate ranked 15th, not
-elected), `lizdenis-antanas-85463` (leader of a list below the threshold),
-`petkus-viktoras-89850` (the KDS leader in Vilnius with a sparse card —
-pensioner, no languages, zero income), and `zairys-aloyzas-86350` with
-`karaliene-rasa-88512` (Jurbarkas, one of the five municipalities whose
-per-candidate results VRK never captured: elected status unknown, the
-list's votes and mandates still joined). Each directory holds the one page
-(`candidate.html`) and `index.json`; the samples directory holds the party
-index (`list.html`), the results index used as the municipality directory
-(`municipalities.html`), the 60 municipality pages under
-`municipalities/`, the 651 list pages under `lists/` and the 28 party pages
-under `parties/`. The field is scraped by `scripts/run_election_batches.sh`.
-
-For `2002-gruodzio-22-savivaldybiu-tarybu` the allowlist
-(`tests/test_savivaldybiu_2002_sample_allowlist.py`) is **ten candidates
-out of 10,139**, chosen by shape: `anicetas-lupeika-132972` (the Akmenė
-Tautininkai leader — rank 1, 2,086 preference votes, on the council from
-election day), `arturas-zuokas-154491` and `vytautas-bogusis-22` (the
-Vilnius A. Zuoko coalition's #1 and #2 — the Liberals' and the Moderate
-Christian Democrats' nominees, 42,797 preference votes for Zuokas, and
-VRK person id "22", the election's shortest), `stasys-mikelis-135915`
-(the Neringa coalition's leader), `jadvyga-daukantaite-204265` (not
-elected, on the council from 2004-03-17 as a substitute —
-`isrinktas: false` with `tarybosNarysNuo` set), `stasys-berzinis-132939`
-(a VNDPS candidate whose list starts at position 2 — a withdrawn #1 —
-with a prior-mandate line and a widower's children-only family block),
-`vytautas-juozapavicius-132963` (the 12-item declaration variant with
-the joint bank-accounts item), `algimantas-rasimas-121894` (a
-declaration with an empty workplace), `veronika-staneikiene-202013`
-(a below-threshold-list candidate whose anketa leaves most questions
-blank and omits Q19 entirely) and `rimvydas-vytautas-kliucius-135195`
-(a "Taip" on the 88 str. question with the conviction's circumstances
-in a blockquote of its own — one of 27 in the election). Each
-directory holds the two pages
-(`anketa.html`, `turto-ir-pajamu-deklaracijos.html`) and `index.json`;
-the samples directory holds both indexes (`list.html`, `parties.html`),
-the 60 constituency pages under `municipalities/`, the 25 party pages
-under `parties/` and the 564 party-municipality pages under
-`party-lists/`. The field is scraped by `scripts/run_election_batches.sh`.
-
-For `2009-prezidento` the allowlist
-(`tests/test_prezidento_2009_sample_allowlist.py`) is likewise the complete
-seven-candidate field:
-
-- `algirdas-butkevicius`, `loreta-grauziniene`, `dalia-grybauskaite`,
-  `ceslovas-jezerskas`, `valentinas-mazuronis`,
-  `kazimira-danute-prunskiene`, `valdemar-tomasevski`
-
-All seven are independent campaign participants with five campaign tabs
-(`izdininkas`, `auditorius`, `aukotoju-sarasas`, `finansavimo-ataskaitos`,
-`sutartys`). No directory holds `patiketiniai.html`: the tab is linked on
-every page but VRK never published the file (all seven are 404s), and each
-`index.json` records the link under `unpublishedTabs`. Grybauskaitė's
-donor list is the largest (141 rows, eight flagged unacceptable inline);
-Jezerskas's is the smallest (3) and his is one of the five empty auditor
-pages. Butkevičius's `Kita` tab links three PDFs (the foreign-services
-questionnaire, a health certificate, the party's nomination decision);
-Grybauskaitė's and Prunskienė's anketa carry the academic-degree line,
-which the other five omit.
-
-For `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai` (`tests/test_seimo_silales_silutes_vilniaus_salcininku_2009_sample_allowlist.py`)
-and `2011-vasario-13-seimo-marijampole` (`tests/test_seimo_marijampoles_2011_sample_allowlist.py`) the
-allowlists are the complete fields — 17 candidates across the two November
-2009 constituencies (9 in Šilalės–Šilutės, 8 in Vilniaus–Šalčininkų) and
-the 9 of Marijampolės — with both campaign participant types in each (10
-represented + 7 independent; 4 + 5). The samples directories hold the
-constituency index (`list.html`) and the constituency pages under
-`districts/`.
-
-For `2013-kovo-3-seimo-birzai-zarasai-ukmerge` the allowlist
-(`tests/test_seimo_birzu_zarasu_ukmerges_2013_sample_allowlist.py`) is the
-complete 37-candidate field across the three constituencies (11 in
-Biržų–Kupiškio, 12 in Zarasų–Visagino, 14 in Ukmergės). It spans both
-campaign participant types (24 represented, 13 independent), three
-self-nominations, six candidates with a second-round results link, and the
-sparse forms that omit Q12–Q15 entirely (`algimantas-dumbrava`). The samples
-directory holds the constituency index (`list.html`) and the three
-constituency pages under `districts/`.
-
-For `2014-ep` the allowlist (`tests/test_ep_2014_sample_allowlist.py`) is
-**ten candidates out of 215** — the leader of each of the ten lists:
-
-- `gintaras-steponavicius`, `algirdas-saudargas`, `valdemar-tomasevski`,
-  `viktor-uspaskich`, `rolandas-paksas`, `linas-balsys`, `julius-panka`,
-  `arturas-melianas`, `ramunas-karbauskis`, `zigmantas-balcytis`
-
-One per list pins list name, number and position for every list;
-`valdemar-tomasevski` is the coalition nominee whose card repeats `Iškėlė`
-for the member party. The samples directory holds the list index
-(`list.html`) and the ten list pages under `lists/`. The field is scraped by
-`scripts/run_election_batches.sh`.
-
-For `2012-seimo` the allowlist (`tests/test_seimo_2012_sample_allowlist.py`)
-is **nine candidates out of 1,927**, chosen for listing shape rather than
-content:
-
-- `algirdas-butkevicius` — list leader who also stood in a constituency
-  (both candidacies, both results links)
-- `alvydas-medalinskas` — coalition list nominee (member party on the list
-  row and, in parentheses, on the card — the card's third `Iškėlė`)
-- `naglis-puteikis` — party list candidate whom the constituency listing
-  records as nominated by the party *and* self-nominated
-- `gediminas-navaitis` — self-nominated in a constituency, on a coalition
-  list; one of the three "tik vienmandatėse" page entries who also hold a
-  list seat
-- `vilija-blinkeviciute` — list only (the list page's empty `Apygardanull`
-  constituency link)
-- `linas-balsys` — self-nominated, constituency only, both rounds
-- `tirkisas-amanovas` — nominee of a party that ran in constituencies only
-- `arunas-markunas` / `arunas-markunas-2` — two different people who share a
-  name, on two different lists; the one positional `-2` in the election
-
-The samples directory holds both indexes (`list.html` for the lists,
-`districts.html` for the constituencies), the 18 list pages plus the 11 side
-pages (coalition members, single-member-only parties, the self-nominated)
-under `lists/`, and the 71 constituency pages under `districts/`. The field
-is scraped by `scripts/run_election_batches.sh`.
-
-## CLI behavior and guardrail
-
-By default, sample-fetch commands do not allow creating new candidate directories:
-
-- `fetch-first-candidate-samples`
-- `fetch-candidate-samples`
-
-To intentionally add a new fixture directory, pass:
-
-- `--allow-new-samples`
-
-## When adding fixtures intentionally
-
-1. Capture new fixture with `--allow-new-samples`.
-2. Validate parser output and anomaly behavior.
-3. Update allowlist test if fixture set is intentionally changed.
-4. Keep fixture set small and representative.
-5. `python scripts/tracked_fixtures.py --sync`, so the fixture reaches git and
-   CI rather than only this laptop.
-
-If the new fixture is over the 1 MiB unit limit, step 5 leaves it untracked on
-purpose. Name it in the election's allowlist test as one a clone does not carry
-(`TRACKED_CANDIDATE_DIRS` in `tests/test_ep_2019_sample_allowlist.py` is the
-worked example), declare it in the parser test with `local_data.Fixture`
-rather than parsing it in `setUp` so that only the tests reading it skip on a
-clone (`tests/test_prezidento_2019_anketa_parser.py` shows the pattern), and if
-it is the only fixture that covers a shape, consider whether a smaller candidate
-covers the same one.
-
-## Recommended baseline checks
+`--sync` force-adds past the `samples/` and `sitemaps/` ignore rules, so new
+fixtures need it; `git add` alone will not see them. In a worktree that reaches
+these trees through symlinks, `--sync` replaces a selected symlink with a copy
+first.
+
+## Skips
+
+A test that needs something outside the subset (`data/`, the large sitemaps,
+`samples-full/`) skips and names the command that would produce it.
+`tests/local_data.py` holds the machinery and the root `conftest.py` applies
+it.
+
+- The skip is **per unit**: a `FileNotFoundError` becomes a skip only when the
+  unit the path belongs to is absent. A path missing inside a present unit is
+  a parser bug and fails.
+- Whole-corpus tests call `local_data.require_corpus()`; `complete=True` also
+  requires every registered election.
+- The suite never reaches the network: the conftest refuses `requests` for any
+  host but loopback. `VRK_TESTS_ALLOW_NETWORK=1` lifts it for a deliberate
+  live run.
+- Under `CI` the conftest refuses to start without node, which the dashboard
+  JavaScript tests need.
+
+To keep the skipped set small:
+
+- **Load fixtures lazily, one per attribute.** Declare each with
+  `local_data.Fixture` as a class attribute parsed on first read, so only the
+  tests reading an untracked one skip. Loop over a partly tracked set with one
+  `subTest` per candidate.
+- **Pin shapes on a tracked fixture.** Key and section order hold for every
+  candidate of an election, so assert them on one in the election's
+  `TRACKED_CANDIDATE_DIRS` and keep untracked ones for the values only they
+  publish.
+
+## Record hashes
+
+`tests/fixture-record-hashes.tsv` holds one sha256 per tracked candidate over
+the record the parsers produce, with `provenance` dropped. It is the CI
+stand-in for `reparse_diff.py`, `field_coverage.py` and `anomalies-report`,
+which all need `data/`. It says nothing about whether a value is right, only
+that the parsers still produce the same bytes.
 
 ```bash
-pytest                                        # the suite: ~1 min on a clone, ~5.5 with the corpus
-pytest tests/test_tracked_fixtures.py         # git and the 1 MiB rule agree
-python scripts/fixture_record_hashes.py       # the fixtures still parse to the recorded records
-pytest tests/test_seimo_2016_sample_allowlist.py
-pytest tests/test_seimo_2016_candidate_samples.py
-pytest tests/test_seimo_2016_campaign_parser.py
+python scripts/fixture_record_hashes.py            # check
+python scripts/fixture_record_hashes.py --update   # after a deliberate parser change, same commit
 ```
 
-`.github/workflows/tests.yml` runs the whole suite on every push and pull
-request, on Python 3.11 and 3.13.
+## Allowlists
+
+Each election's allowlist test fixes its exact candidate directories and
+support files; its comments say what each fixture covers.
+
+| election | allowlist test | candidates |
+| --- | --- | --- |
+| `1996-spalio-20-seimo` | `test_seimo_1996_sample_allowlist.py` | 5 |
+| `1997-kovo-23-savivaldybiu-tarybu` | `test_savivaldybiu_1997_sample_allowlist.py` | 7 |
+| `1997-kovo-23-seimo-pakartotiniai` | `test_seimo_pakartotiniai_1997_kovo_sample_allowlist.py` | 23 |
+| `1997-birzelio-29-svenciniu-tarybos-pakartotiniai` | `test_svencioniu_tarybos_1997_sample_allowlist.py` | 110 |
+| `1997-gruodzio-21-seimo-pakartotiniai` | `test_seimo_aukstaitijos_1997_gruodzio_sample_allowlist.py` | 4 |
+| `1998-kovo-22-seimo-pakartotiniai` | `test_seimo_pakartotiniai_1998_kovo_sample_allowlist.py` | 11 |
+| `1998-lapkricio-15-seimo-pakartotiniai` | `test_seimo_nevezio_1998_lapkricio_sample_allowlist.py` | 11 |
+| `1999-kovo-21-seimo-pakartotiniai` | `test_seimo_pakartotiniai_1999_kovo_sample_allowlist.py` | 22 |
+| `2000-kovo-19-savivaldybiu-tarybu` | `test_savivaldybiu_2000_sample_allowlist.py` | 10 |
+| `2000-seimo` | `test_seimo_2000_sample_allowlist.py` | 18 |
+| `2002-prezidento` | `test_prezidento_2002_sample_allowlist.py` | 17 |
+| `2002-gruodzio-22-savivaldybiu-tarybu` | `test_savivaldybiu_2002_sample_allowlist.py` | 10 |
+| `2003-birzelio-15-seimo-nauji` | `test_seimo_nauji_2003_sample_allowlist.py` | 27 |
+| `2004-ep` | `test_ep_2004_sample_allowlist.py` | 13 |
+| `2004-prezidento` | `test_prezidento_2004_sample_allowlist.py` | 5 |
+| `2004-seimo` | `test_seimo_2004_sample_allowlist.py` | 14 |
+| `2005-lapkricio-20-seimo-kedainiai` | `test_seimo_kedainiu_2005_sample_allowlist.py` | 5 |
+| `2007-vasario-25-savivaldybiu` | `test_savivaldybiu_2007_sample_allowlist.py` | 11 |
+| `2007-spalio-7-seimo-dzukija` | `test_seimo_dzukijos_2007_sample_allowlist.py` | 10 |
+| `2008-seimo` | `test_seimo_2008_sample_allowlist.py` | 10 |
+| `2009-prezidento` | `test_prezidento_2009_sample_allowlist.py` | 7 |
+| `2009-ep` | `test_ep_2009_sample_allowlist.py` | 15 |
+| `2009-lapkricio-15-seimo-silale-silute-vilnius-salcininkai` | `test_seimo_silales_silutes_vilniaus_salcininku_2009_sample_allowlist.py` | 17 |
+| `2011-vasario-13-seimo-marijampole` | `test_seimo_marijampoles_2011_sample_allowlist.py` | 9 |
+| `2011-vasario-27-savivaldybiu` | `test_savivaldybiu_2011_sample_allowlist.py` | 10 |
+| `2012-seimo` | `test_seimo_2012_sample_allowlist.py` | 9 |
+| `2013-kovo-3-seimo-birzai-zarasai-ukmerge` | `test_seimo_birzu_zarasu_ukmerges_2013_sample_allowlist.py` | 37 |
+| `2014-prezidento` | `test_prezidento_2014_sample_allowlist.py` | 7 |
+| `2014-ep` | `test_ep_2014_sample_allowlist.py` | 10 |
+| `2015-kovo-1-savivaldybiu` | `test_savivaldybiu_2015_sample_allowlist.py` | 9 |
+| `2015-kovo-1-seimo-zirmunai` | `test_seimo_zirmunu_2015_sample_allowlist.py` | 12 |
+| `2015-birzelio-7-seimo-varena-eisiskes` | `test_seimo_varenos_eisiskiu_2015_sample_allowlist.py` | 8 |
+| `2015-birzelio-7-pakartotiniai-sirvintos-trakai` | `test_pakartotiniai_sirvintu_traku_2015_sample_allowlist.py` | 10 |
+| `2015-birzelio-21-pakartotiniai-silutes` | `test_pakartotiniai_silutes_2015_sample_allowlist.py` | 10 |
+| `2015-lapkricio-8-telsiu-mero` | `test_telsiu_mero_2015_sample_allowlist.py` | 7 |
+| `2016-seimo` | `test_seimo_2016_sample_allowlist.py` | 5 |
+| `2017-balandzio-23-meru` | `test_meru_2017_sample_allowlist.py` | 11 |
+| `2017-balandzio-23-seimo-anyksciai-panevezys` | `test_seimo_anyksciu_panevezio_2017_sample_allowlist.py` | 11 |
+| `2017-rugsejo-10-marijampoles-mero` | `test_marijampoles_mero_2017_sample_allowlist.py` | 8 |
+| `2018-rugsejo-16-seimo-zanavykai` | `test_seimo_zanavyku_2018_sample_allowlist.py` | 6 |
+| `2019-kovo-3-savivaldybiu-tarybu` | `test_savivaldybiu_2019_sample_allowlist.py` | 10 |
+| `2019-prezidento` | `test_prezidento_2019_sample_allowlist.py` | 9 |
+| `2019-ep` | `test_ep_2019_sample_allowlist.py` | 6 |
+| `2019-rugsejo-8-seimo` | `test_seimo_2019_sample_allowlist.py` | 27 |
+| `2020-seimo` | `test_seimo_2020_sample_allowlist.py` | 6 |
+| `2021-balandzio-11-radviliskio-mero` | `test_radviliskio_mero_2021_sample_allowlist.py` | 7 |
+| `2021-spalio-10-meru` | `test_meru_2021_sample_allowlist.py` | 14 |
+| `2023-kovo-5-savivaldybiu-tarybu-ir-meru` | `test_savivaldybiu_2023_sample_allowlist.py` | 9 |
+| `2023-geguzes-7-visagino-mero` | `test_visagino_mero_2023_sample_allowlist.py` | 2 |
+| `2023-rugsejo-3-seimo-raseiniai-kedainiai` | `test_seimo_raseiniu_kedainiu_2023_sample_allowlist.py` | 8 |
+| `2023-spalio-8-kupiskio-mero` | `test_kupiskio_mero_2023_sample_allowlist.py` | 5 |
+| `2024-prezidento` | `test_prezidento_2024_sample_allowlist.py` | 8 |
+| `2024-ep` | `test_ep_2024_sample_allowlist.py` | 6 |
+| `2024-seimo` | `test_seimo_2024_sample_allowlist.py` | 5 |
+| `2025-kovo-16-meru` | `test_meru_2025_sample_allowlist.py` | 14 |
+
+## Adding fixtures
+
+Sample-fetch commands (`fetch-first-candidate-samples`,
+`fetch-candidate-samples`) refuse to create a new candidate directory unless
+given `--allow-new-samples`.
+
+1. Capture the fixture with `--allow-new-samples`.
+2. Check the parser output and anomalies.
+3. Update the election's allowlist test.
+4. Keep the set small and representative.
+5. Run `python scripts/tracked_fixtures.py --sync` so it reaches git and CI.
+
+A fixture over 1 MiB stays untracked: leave it out of the allowlist test's
+`TRACKED_CANDIDATE_DIRS` (see `tests/test_ep_2019_sample_allowlist.py`) and
+declare it with `local_data.Fixture` (see
+`tests/test_prezidento_2019_anketa_parser.py`). Prefer a smaller candidate with
+the same shape.
+
+## Checks
+
+```bash
+pytest                                        # the whole suite
+pytest tests/test_tracked_fixtures.py         # git and the 1 MiB rule agree
+python scripts/fixture_record_hashes.py       # the fixtures still parse to the recorded records
+```
+
+`.github/workflows/tests.yml` runs the suite on every push and pull request.
