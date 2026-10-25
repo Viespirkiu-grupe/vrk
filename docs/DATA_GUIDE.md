@@ -1,41 +1,23 @@
 # Data Guide
 
-The consumer entry point to the corpus: everything a third party needs to
-query 113,073 candidate records across 55 Lithuanian elections (1996–2025)
-without reading the per-election schema appendices first. The headline
-numbers are no longer hand-maintained: `tests/test_doc_counts.py` fails
-whenever this sentence disagrees with `scraper/elections.json` or, on a
-checkout with a local corpus, with `data/` itself (issue #84 — the previous
-revision sat three elections stale for a week and nothing said a word).
+How to query the corpus: 113,073 candidate records across 55 Lithuanian
+elections (1996–2025).
 
-Records live at `data/<election-id>/<candidateId>-<electionId>.json`, one
-file per candidacy. `data/` is not version controlled; see
-[DATASET.md](DATASET.md) for the inventory and how to regenerate it — or
-skip the scrape and download a `corpus-YYYY-MM-DD` release, which carries
-every record (and portrait, and anomaly log) as one SQLite database plus
-the flat table ([CANDIDACIES.md](CANDIDACIES.md#distribution)).
+Records live at `data/<election-id>/<candidateId>-<electionId>.json`, one file
+per candidacy. Get them from a `corpus-YYYY-MM-DD` release
+([CANDIDACIES.md](CANDIDACIES.md#distribution)) or by scraping
+([DATASET.md](DATASET.md)).
 
-**If what you want is one table** — compare education, money, party or
-electedness across elections without learning the 55 per-election schemas —
-build the derived candidacy table first:
-`python scripts/build_candidacy_table.py` writes one row per (person,
-election) with everything already joined, EUR-converted and measure-tagged.
-[CANDIDACIES.md](CANDIDACIES.md) documents every column. The rest of this
-page is for reading the record files themselves.
-
-Every record in the corpus is what today's parser produces from the page it
-was fetched from: `python scripts/reparse_diff.py` re-parses each election
-from its retained HTML and exits non-zero if any record disagrees. Two shape
-divergences this page used to list as traps — `anketa.teistumo-detales`'s
-flat/nested split and `privaciu-interesu-deklaracija.id001a`'s dict/list
-split — turned out to be stale data rather than era differences, so they were
-removed from the corpus instead of documented (issues #86 and #91).
+**If you want one table** (education, money, party or electedness across
+elections), run `python scripts/build_candidacy_table.py`: one row per
+(person, election), joined, EUR-converted and measure-tagged.
+[CANDIDACIES.md](CANDIDACIES.md) documents every column. The rest of this page
+is for the record files.
 
 ## Record anatomy
 
-Seven top-level fields on every record, and two more on most of them. A
-full-corpus root-key census (`tests/test_record_shape.py`, which holds this
-list against `data/`) finds exactly three key-sets, and no others:
+Seven top-level fields on every record, and two optional ones. There are
+exactly three root key-sets:
 
 | records | elections | root fields |
 | --- | --- | --- |
@@ -46,60 +28,46 @@ list against `data/`) finds exactly three key-sets, and no others:
 The seven:
 
 - `electionId`, `candidateId`, `candidateName`
-- `source` — the VRK page URL(s) the record was parsed from
-- `rawData` — source-close parse of the page, camelCase sections
-  (`profile`, `anketa`, `turtoIrPajamuDeklaracijos`, …)
-- `normalized` — the analysis-ready layer, Lithuanian kebab-case sections in
-  one fixed order (`profilis`, `anketa`, `kandidatavimas`,
-  `gyvenamoji-vieta`, `biografija`, `programa`,
-  `turto-ir-pajamu-deklaracijos`, `privaciu-interesu-deklaracija`,
-  `patiketiniai`, `politines-kampanijos-dalyvio-duomenys`, `kita`), of which
-  each record carries a subset — the last five names of that list are one
-  election family or two elections each, and
-  [docs/OUTPUT_SCHEMA.md](OUTPUT_SCHEMA.md#normalized) says which
-- `provenance` — when the primary page was fetched, when this record was
-  parsed, by parsers at which commit, and the source page's sha256
-  ([docs/OUTPUT_SCHEMA.md](OUTPUT_SCHEMA.md#provenance)). Every one of the
-  113,073 records carries it, with the same five keys and `schemaVersion` 1.
-  Compare records by content, not by `parsedAt`/`parserCommit` — those stamp
-  the parse run, and `parserCommit` is `null` on 49,586 records (43.9 %),
-  which were written before provenance existed.
+- `source`: the VRK page URL(s) the record was parsed from
+- `rawData`: source-close parse, camelCase sections (`profile`, `anketa`,
+  `turtoIrPajamuDeklaracijos`, …)
+- `normalized`: the analysis layer, Lithuanian kebab-case sections in one fixed
+  order (`profilis`, `anketa`, `kandidatavimas`, `gyvenamoji-vieta`,
+  `biografija`, `programa`, `turto-ir-pajamu-deklaracijos`,
+  `privaciu-interesu-deklaracija`, `patiketiniai`,
+  `politines-kampanijos-dalyvio-duomenys`, `kita`). Each record carries a
+  subset; [OUTPUT_SCHEMA.md](OUTPUT_SCHEMA.md#normalized) says which.
+- `provenance`: fetch time, parse time, parser commit and the source page's
+  sha256 ([OUTPUT_SCHEMA.md](OUTPUT_SCHEMA.md#provenance)). Compare records by
+  content, not by `parsedAt`/`parserCommit`; `parserCommit` is `null` on
+  49,586 records written before provenance existed.
 
-And the two:
+The two optional:
 
-- `kandidatavimas` — the candidacy block: municipality, role(s), party list
-  (`tarybosNarys.partyList.{id, number, name}`), list positions, per-role
-  `elected` flags and the results-join source URLs. A **root** field on
-  105,737 records across 47 of the 55 elections. The eight exceptions are the
-  1996–1999 archive family (`1996-spalio-20-seimo`, the five 1997–1999 Seimas
-  repeats, and the two 1997 municipal elections), which carry the same block
-  *inside* `normalized` instead — so a consumer that walks the root for it
-  finds nothing there for 7,336 records.
-- `candidateNote` — VRK's own note beside the candidate, on 27,478 records of
-  four elections: `2016-seimo`, `2019-kovo-3-savivaldybiu-tarybu`,
+- `kandidatavimas`: the candidacy block (municipality, roles, party list
+  `tarybosNarys.partyList.{id, number, name}`, list positions, per-role
+  `elected` flags, results-join URLs). A root field on
+  105,737 records across 47 of the 55 elections. The 1996–1999 archive family
+  (eight elections, 7,336 records) carries it *inside* `normalized` instead.
+- `candidateNote`: VRK's note beside the candidate, on 27,478 records of
+  `2016-seimo`, `2019-kovo-3-savivaldybiu-tarybu`,
   `2023-kovo-5-savivaldybiu-tarybu-ir-meru` and `2025-kovo-16-meru`.
 
-Query `normalized`; fall back to `rawData` when you need the verbatim source
-text (nearly every normalized value is traceable to a byte-identical string
-there). **Sections can be absent**, so do not assume fixed section presence.
-Counting only the elections that publish a section on more than 99 % of their
-records — elsewhere its absence is the era, not a gap — eleven records lose
-one: `biografija` on `gintaras-binkauskas-2012-seimo`,
-`gintaras-binkauskas-2016-seimo` and `jonas-korsakas-2020-seimo`;
-`turto-ir-pajamu-deklaracijos` on three of `2002-gruodzio-22`
-(`stasys-stankus-205466`, `saulius-jancys-205870`,
-`mindaugas-kucinskas-205871`), on `genovaite-ziobakiene-2004-seimo`, on
-`darius-juodeska-72579-2015-kovo-1-savivaldybiu` and again on
-`jonas-korsakas-2020-seimo`; and
-`politines-kampanijos-dalyvio-duomenys` on `algimantas-matulevicius-2009-ep`
-and `valdemar-tomasevski-2009-ep`.
+Query `normalized`; fall back to `rawData` for the verbatim source text.
+**Sections can be absent.** In elections that publish a section on over 99 %
+of records, eleven records lack one: `biografija` on
+`gintaras-binkauskas-2012-seimo`, `gintaras-binkauskas-2016-seimo` and
+`jonas-korsakas-2020-seimo`; `turto-ir-pajamu-deklaracijos` on three of
+`2002-gruodzio-22` (`stasys-stankus-205466`, `saulius-jancys-205870`,
+`mindaugas-kucinskas-205871`), `genovaite-ziobakiene-2004-seimo`,
+`darius-juodeska-72579-2015-kovo-1-savivaldybiu` and
+`jonas-korsakas-2020-seimo`; `politines-kampanijos-dalyvio-duomenys` on
+`algimantas-matulevicius-2009-ep` and `valdemar-tomasevski-2009-ep`.
 
 ## Cross-election invariants
 
-**Money.** `turto-ir-pajamu-deklaracijos` carries the same eleven value keys on
-every election from 2004 on — the ones whose pages publish the declaration as
-titled sections — at 100 % presence *of the records that have the section*,
-which is all but the six named under Record anatomy above:
+**Money.** From 2004 on, `turto-ir-pajamu-deklaracijos` carries the same eleven
+value keys on every record that has the section:
 
 - `privalomas-registruoti-turtas`
 - `vertybiniai-popieriai-meno-kuriniai-juvelyriniai-dirbiniai`
@@ -113,187 +81,99 @@ which is all but the six named under Record anatomy above:
 - `turto-pardavimo-pajamos`
 - `turto-isigijimo-kaina`
 
-Values are parsed numbers — never strings — and always **floats**, in EUR from
-2016 on and in litas before it (see the litas trap below). The type is a
-property of the column, not of the figure: `202000` is stored `202000.0` so a
-column does not change type between two candidates because one of them
-happened to declare whole euro. (Until issue #101 it did, in 225 columns.) An
-amount VRK renders without its leading zero (`,35 EUR`) is read as the
-sub-euro figure it is — the page formatter drops the zero, and no election
-prints such an amount as `0,35` — with the source text kept in `rawData`
-either way. `null` means the row was not published or does not parse as a
-number; the last four are published only by the GPM308/GPM311 form as reworded
-in 2018, and are null in every earlier era.
+Values are always **floats** (`202000.0`), EUR from 2016 and litas before.
+`,35 EUR` reads as 0.35. `null` means not published or not a number. The last
+four exist only on the 2018 GPM308/GPM311 rewording.
 
-The same rule holds for every money value in a record, not just this block:
-the private-interest transaction sums (`id001s[].sandorio-suma`,
-`id001s[].sandorio-suma-lt`, `vii-sandoriai[].suma-skaiciais`) and the
-campaign-finance `amountEur`/`amountLt`. Where a column prints the currency in
-the *value* rather than in its heading, the currency is a sibling key:
-`sandorio-suma` is a float and `sandorio-suma-valiuta` is `"EUR"` or `"Lt"`.
-The value-band codes (`sandorio-vertes-litais-kodas` and its siblings) are
-**not** money and stay strings — `"001"` is a band, and its leading zeros
-carry meaning.
+The same holds for every money value: `id001s[].sandorio-suma`,
+`id001s[].sandorio-suma-lt`, `vii-sandoriai[].suma-skaiciais`, campaign
+`amountEur`/`amountLt`. Where the currency is in the value, it is a sibling key
+(`sandorio-suma-valiuta`: `"EUR"` or `"Lt"`). Value-band codes
+(`sandorio-vertes-litais-kodas` and siblings) are strings, not money.
 
-The 1996–2003 pages publish a single un-sectioned form and keep their own key
-set instead (`turtas-ir-pinigines-lesos-metu-pabaigoje`,
-`gautos-pajamos-darbo-santykiu` and so on); `gautos-pajamos`,
-`sumoketas-pajamu-mokestis` and `pinigines-lesos` are the keys they share with
-the rest.
+The 1996–2003 pages use their own key set
+(`turtas-ir-pinigines-lesos-metu-pabaigoje`, `gautos-pajamos-darbo-santykiu`,
+…), sharing only `gautos-pajamos`, `sumoketas-pajamu-mokestis` and
+`pinigines-lesos`.
 
-**A shared key is not a shared measure** (issue #97). Three eras' figures
-sit under the same names while measuring different things, with nothing in
-the record marking the switch:
+**A shared key is not a shared measure:**
 
-- `gautos-pajamos` is income **net of tax** on every 1996–2002 form ("Gauta
-  pajamų (be mokesčių) suma"; 2002's is family-scoped as well) and **gross**
-  from 2004 on. This is provable from the numbers, not just the labels: the
-  modal tax/income ratio in 1996–2002 is 0.40–0.52, above the era's 33 %
-  statutory rate, which a gross base cannot produce. 23,141 populated
-  records are on the net side, and a per-person income series drawn through
-  2002→2004 steps 30–50 % for no real reason unless re-grossed
-  (`gautos-pajamos + sumoketas-pajamu-mokestis`, the two rows of the same
-  form).
-- `sumoketas-pajamu-mokestis` switches from tax *paid* ("Išskaičiuota
-  (sumokėta)…") to tax *payable* ("Deklaruota mokėtina…") with the 2018
-  rewording.
-- the archive eras hold their wealth in combined rows while carrying the
-  modern split keys as always-null placeholders, so summing the eleven keys
-  above reads €0 for 17,654 declarations that do state their wealth.
+- `gautos-pajamos` is **net of tax** on 1996–2002 forms (2002's is
+  family-scoped too) and **gross** from 2004. Re-gross the early figures as
+  `gautos-pajamos + sumoketas-pajamu-mokestis`.
+- `sumoketas-pajamu-mokestis` switches from tax *paid* to tax *payable* with
+  the 2018 rewording.
+- The archive eras hold wealth in combined rows, with the modern split keys
+  always null.
 
-Resolve all three through `scraper/shared/deklaracijos.py` —
-`pajamu_matas()`, `mokescio_matas()`, `deklaruotas_turtas()` and
-`deklaruotos_pajamos_bruto()` name the measure and do the era-aware
-arithmetic — or read the candidacy table
-([CANDIDACIES.md](CANDIDACIES.md)), which carries the measure columns
-alongside every figure.
+Resolve all three through `scraper/shared/deklaracijos.py`
+(`pajamu_matas()`, `mokescio_matas()`, `deklaruotas_turtas()`,
+`deklaruotos_pajamos_bruto()`), or read the candidacy table's measure columns.
 
-**What each declaration is.** Three more keys say what the figures are an
-extract *of*, and a `deklaracijos` list carries each declaration the page
-printed with its own copy of them. The first two are present on the sectioned
-eras (2004 on); `deklaracijos-apimtis` reaches the 2002 and 2003 municipal
-form as well:
+**What each declaration is.** A `deklaracijos` list carries each declaration
+the page printed, each with these keys:
 
 | key | values |
 |---|---|
-| `deklaracijos-metai` | the tax year, where the page states it — 33,494 of the 84,402 sectioned declarations. The 2004, 2007, 2011 and 2015 pages, `2016-seimo` and `2020-seimo` state none |
-| `deklaracijos-forma` | `GPM302`/`GPM305`/`GPM308`/`GPM311`, or `FR0462` for the 2004 and 2007 family |
-| `deklaracijos-apimtis` | `gyventojo`, `seimos`, or `gyventojo-seimos` for the combined heading every page from 2008 on prints |
+| `deklaracijos-metai` | the tax year, where the page states it (33,494 of 84,402 sectioned declarations). The 2004, 2007, 2011 and 2015 pages, `2016-seimo` and `2020-seimo` state none |
+| `deklaracijos-forma` | `GPM302`/`GPM305`/`GPM308`/`GPM311`, or `FR0462` for 2004 and 2007 |
+| `deklaracijos-apimtis` | `gyventojo`, `seimos`, or `gyventojo-seimos` (every page from 2008); also on the 2002–2003 municipal form |
 
-A declaration filed for 2023 and one filed for 2015 used to be
-indistinguishable; **do not compare amounts across elections without reading
-`deklaracijos-metai`**, and note that where it is null the year is genuinely
-not on the page rather than merely unparsed.
+**Do not compare amounts across elections without reading
+`deklaracijos-metai`.** Null means the year is not on the page.
 
-**Conviction declaration.**
-`anketa.pareiskimai.ar-buvote-pripazintas-kaltu` is the yes/no field to
-count on, present in 19 of 20 elections — the 2019 presidential
-questionnaire asks constitutional eligibility questions instead and has no
-conviction declaration. Structured conviction *details* are another matter;
-see the traps below.
+**Conviction declaration.** `anketa.pareiskimai.ar-buvote-pripazintas-kaltu`
+is the yes/no field, in 19 of 20 elections (`2019-prezidento` has none). For
+details, see the traps.
 
-**Elected.** `kandidatavimas.isrinktas` is now `true`/`false` on every
-record of every election — either joined in from VRK's results trees (the
-1996–2015 families, whose pages mark no winner and whose `pastaba` is
-always null; `isrinktasKaip` names the seat, `rezultatuSaltinis` the page,
-a `null` means no results file exists — or one whose `elected` map is empty
-without the builder's `nobodyElected: true`, which only the four elections
-where nobody was elected carry; issue #134) or, on the 2016–2025 layouts,
-derived from the profile's prose note (`profilis.pastaba` starting
-`Išrink`), which names the complete winner set in every one of those
-elections — see `docs/OUTPUT_SCHEMA.md`. Five traps:
+**Elected.** `kandidatavimas.isrinktas` is `true`/`false` on every record:
 
-- *`kandidatavimas` is a list in the 1996-1999 Seimas archive family*, one
-  entry per candidacy — a 1996 candidate could stand in a constituency and on
-  a party list at once. Read `any(c["isrinktas"] for c in kandidatavimas)`,
-  not `kandidatavimas["isrinktas"]`, and expect kebab-case keys there
-  (`isrinktas-kaip`, `rezultatu-saltinis`, `rezultatu-turas`) rather than the
-  camelCase the other families use. `isrinktas` is never null in that family:
-  its pages state an outcome for every constituency, `neįvyko` included.
+- 1996–2015: joined from VRK's results trees. `isrinktasKaip` names the seat,
+  `rezultatuSaltinis` the page.
+- 2016–2025: derived from `profilis.pastaba` starting `Išrink`.
 
-- *The 1997 municipal pair* (the last gap, closed by issue #92) uses the
-  same kebab-case keys on its kandidatavimas *dict*: `isrinktas` on every
-  record, `isrinktas-kaip` (`tarybos-narys`) and `rezultatu-saltinis` on the
-  1,459 + 25 winners, joined from VRK's per-municipality `rikl` elected
-  pages. The March election's Švenčionys result (Nr. 47, 104 candidates)
-  was voided by VRK decision — those records are `isrinktas: false` and
-  carry the decision under `kandidatavimas.rezultatai-negalioja`; the seats
-  actually taken are the June repeat's 25.
+Traps:
 
-- *Presidential:* `pastaba` is non-null for every candidate (`Dalyvavo
-  I ture` and the like), so non-null ≠ elected there.
-- *Party names:* the note inflects the party into the genitive (`Išrinkta
-  pagal Demokratų sąjungos „Vardan Lietuvos“ sąrašą`) — never match parties
-  against this string. In the municipal generals use `kandidatavimas`
-  instead: per-role `elected` flags, and join lists on
-  `kandidatavimas.tarybosNarys.partyList.id`, not on the name.
-- *Annulled results:* 48 March 2015 council winners in Šilutė and Trakai
-  carry `kandidatavimas.rezultataiPanaikinti` (the VRK decision) and
-  `isrinktas: false` — VRK's results page named them, its decision unmade
-  it, and the June repeat elections' records hold the seats actually won.
+- *1996–1999 Seimas archive:* `kandidatavimas` is a **list**, one entry per
+  candidacy. Read `any(c["isrinktas"] for c in kandidatavimas)`. Keys are
+  kebab-case (`isrinktas-kaip`, `rezultatu-saltinis`, `rezultatu-turas`), and
+  `isrinktas` is never null.
+- *1997 municipal pair:* kebab-case keys on a dict. The March Švenčionys
+  result (Nr. 47) was voided: `isrinktas: false` with the decision under
+  `kandidatavimas.rezultatai-negalioja`.
+- *Presidential:* `pastaba` is non-null for every candidate.
+- *Party names:* the note puts the party in the genitive. Never match parties
+  on it; use `kandidatavimas.tarybosNarys.partyList.id`.
+- *Annulled results:* 48 March 2015 council winners in Šilutė and Trakai carry
+  `kandidatavimas.rezultataiPanaikinti` and `isrinktas: false`.
 
-**Votes.** From 1996 through 2015, `kandidatavimas` carries the candidate's
-own showing under one set of names: `pirmumoBalsai` (with
-`porinkiminisNumerisSarase` and `pirmumoBalsuSaltinis`, plus `reitingoBalai`
-where VRK computed rating points) for list candidates, and
-`vienmandatesBalsai` `{balsadezese, pastu, isViso, procentai, vieta,
-saltinis}` for constituency candidates (`vienmandatesBalsai2` for a runoff;
-the 1996-1999 archive family spells the same facts kebab-case inside its
-per-candidacy `turai` list). The 2004-and-earlier figures come off the
-candidate's own pages, the 2007-2015 ones are joined from the results trees
-(issue #99). The 2016-2025 elections publish no results tree the records
-link, so their records hold no vote counts at all — VRK's results for them
-are on pages the corpus does not read. Resolve all of it through
-`scraper/shared/kandidatura.py` rather than by key (issue #133): it returns
-`pirmumo-balsai` with its measure, `sarasas-balsai`, every round of the
-single-winner race as `apygardos-turai` and the last one flattened, and the
-constituency's one name; the candidacy table projects them as
-`preference_votes`, `list_votes`, `constituency_votes` and friends
-([CANDIDACIES.md](CANDIDACIES.md)), and the person index carries `v`, `cv`, `ap`.
+**Votes.** 1996–2015 only; the 2016–2025 records hold none.
+`kandidatavimas` has `pirmumoBalsai` (with `porinkiminisNumerisSarase`,
+`pirmumoBalsuSaltinis`, and `reitingoBalai` where VRK computed it) for list
+candidates, and `vienmandatesBalsai` `{balsadezese, pastu, isViso, procentai,
+vieta, saltinis}` for constituency candidates (`vienmandatesBalsai2` for a
+runoff). The archive family uses kebab-case in its `turai` list. Resolve
+through `scraper/shared/kandidatura.py`; the candidacy table has
+`preference_votes`, `list_votes`, `constituency_votes`.
 
-**Placeholders.** Four placeholder forms normalize to `null`: `Nenurodė`,
-`-`, the empty string, and a value that is nothing but the replacement
-character `U+FFFD` (30 records, 28 of them `2008-seimo` biographies, where
-VRK's page holds a bare NUL byte). A `null` means "not answered on the page";
-the source text is always in `rawData`. Candidate-*typed* variants survive
-verbatim as answers — `Nėra`, `nėra`, `Nenurodyta`, `Nenurodoma`, `--`, `.`
-and similar — because an answered "none" is not the same as unanswered.
-Account for them when counting.
+**Placeholders.** `Nenurodė`, `-`, the empty string and a lone `U+FFFD`
+normalize to `null`. Typed "none" answers (`Nėra`, `Nenurodyta`, `--`, `.`)
+survive verbatim; account for them when counting.
 
-**Trailing separators.** A normalized string never ends in a bare `,` or `;`.
-VRK publishes 3,856 values that do (`"Jonas, Rasa, Živilė, Jovita,"`, one list
-item per separator and one to spare); the separator is dropped because it
-separates nothing and breaks any consumer that splits on it. A full stop is
-kept — a sentence is allowed to end. `rawData` keeps the published text.
+**Trailing separators.** A normalized string never ends in `,` or `;`.
+`rawData` keeps the published text.
 
 ## The era map: concept → path
 
-The questionnaire moved between VRK page eras, so the same concept lives
-under different paths. The machine-readable bridge is
-[concept-map.json](concept-map.json) — per concept, the exact normalized
-path for each election id, plus a `derived` section for the concepts no
-single path resolves (a conviction is published three different ways, so
-`teistumas` is a function rather than a path).
+[concept-map.json](concept-map.json) gives, per concept, the normalized path
+for each election, plus a `derived` section for concepts no single path
+resolves (`teistumas` is a function). How often each path is filled is in
+`data/coverage.tsv` and [coverage-baseline.tsv](coverage-baseline.tsv)
+([FIELD_COVERAGE.md](FIELD_COVERAGE.md)).
 
-**How often each of those paths is actually filled is measured**, not assumed:
-`data/coverage.tsv` (from `python scripts/field_coverage.py`) carries a
-records / keyPresent / nonNull count for all 1,295 mapped cells, and
-[coverage-baseline.tsv](coverage-baseline.tsv) carries the checked-in rate and,
-for the 24 cells no record fills, a status word saying why. Read it before
-concluding a field is missing from an era —
-[FIELD_COVERAGE.md](FIELD_COVERAGE.md) explains the vocabulary.
-
-**The table below covers the two modern eras only — 20 of the corpus's 55
-elections.** `concept-map.json` is the authority and is the thing to read
-programmatically; this table is a human summary of the 2016 and 2020 eras.
-The thirty-five pre-2016 elections
-are mapped in `concept-map.json` but not summarized here: the 2012–2015
-family, the 2004–2005 static-site elections, the two 2000 elections and the 1997 municipal archive all resolve most concepts under
-`anketa.*` with the same kebab-case keys as the 2016 era, while the 1996-1998 Seimas archive publishes
-almost none of these concepts at all (see its `docs/OUTPUT_SCHEMA.md`
-appendix).
-
-The two era groups:
+The table below summarizes the two modern eras only. The pre-2016 elections
+mostly use the 2016 era's `anketa.*` keys; the 1996–1998 Seimas archive
+publishes almost none of these concepts.
 
 - **2016 era** (9): `2016-seimo`, `2017-balandzio-23-meru`,
   `2017-balandzio-23-seimo-anyksciai-panevezys`,
@@ -310,121 +190,71 @@ The two era groups:
 |---|---|---|---|
 | birth date | `anketa.gimimo-data` | `biografija.gimimo-data` | |
 | birth place | `anketa.gimimo-vieta` | `biografija.gimimo-vieta` | |
-| nationality | `anketa.tautybe` | `biografija.tautybe` | not published in the 2024/2025 elections |
-| education | `anketa.issilavinimas.irasai` | `biografija.issilavinimas.irasai` | same item keys in both eras |
+| nationality | `anketa.tautybe` | `biografija.tautybe` | not published in 2024/2025 |
+| education | `anketa.issilavinimas.irasai` | `biografija.issilavinimas.irasai` | same item keys |
 | foreign languages | `anketa.uzsienio-kalbos` | `biografija.uzsienio-kalbos` | |
 | marital status | `anketa.seimine-padetis` | `biografija.seimine-padetis` | |
 | spouse name | `anketa.sutuoktinio-vardas-pavarde` | `biografija.sutuoktinio-vardas-pavarde` | 2020 era: `2020-seimo` only |
 | children | `anketa.vaiku-vardai-pavardes` | `biografija.vaiku-vardai-pavardes` | 2020 era: `2020-seimo` only |
 | hobbies | `anketa.pomegiai` | `biografija.pomegiai` | |
-| current position | — | `anketa.einamos-pareigos` | 2020-era question |
-| main workplace | `anketa.pagrindine-darboviete` | — | 2016-era question; near- but not exact equivalent of the above |
-| public activity | `anketa.visuomenine-veikla` | `biografija.visuomenine-veikla` | `2020-seimo`'s question wording is wider (scientific + pedagogical activity) |
+| current position | — | `anketa.einamos-pareigos` | |
+| main workplace | `anketa.pagrindine-darboviete` | — | near-equivalent of the above |
+| public activity | `anketa.visuomenine-veikla` | `biografija.visuomenine-veikla` | `2020-seimo` asks more widely |
 | other about self | `anketa.kita-apie-save` | `biografija.kita-apie-save` | 2020 era: `2020-seimo` only |
 | party membership | `anketa.politine-organizacija` (string) | `anketa.narystes-politinese-organizacijose.tekstas` (2020–2023) / `.irasai` (2024 on) | three value shapes |
-| nominator | `profilis.kita.<iskele-variant>.reiksme` | same | five key names — see below |
-| post-election list number | `profilis.kita.porinkiminis-eiles-numeris.reiksme` (Seimo family) / `…porinkiminis-numeris-sarase.reiksme` (municipal/EP family) | same split | absent in the presidential elections |
+| nominator | `profilis.kita.<iskele-variant>.reiksme` | same | five key names, see below |
+| post-election list number | `profilis.kita.porinkiminis-eiles-numeris.reiksme` (Seimas) / `…porinkiminis-numeris-sarase.reiksme` (municipal/EP) | same | absent for presidential |
 | conviction declaration | `anketa.pareiskimai.ar-buvote-pripazintas-kaltu` | same | absent in `2019-prezidento` |
-| conviction details | `anketa.teistumo-detales.irasai` | same | one shape in all 17 elections that publish the block, all 11 of the 2020 era and 6 of the 2016 era — the two 2017 mayoral elections and `2019-prezidento` publish no detail table. Resolve with the `teistumas` concept, not by hand |
-| money (×11) | `turto-ir-pajamu-deklaracijos.<key>` | same | identical wherever a declaration is published; the last four only from the 2018 GPM rewording on |
-| declaration year / form / scope | `turto-ir-pajamu-deklaracijos.deklaracijos-{metai,forma,apimtis}` | same | see the money invariant above |
+| conviction details | `anketa.teistumo-detales.irasai` | same | no table in the 2017 mayoral elections or `2019-prezidento`; use `teistumas` |
+| money (×11) | `turto-ir-pajamu-deklaracijos.<key>` | same | last four from the 2018 rewording |
+| declaration year / form / scope | `turto-ir-pajamu-deklaracijos.deklaracijos-{metai,forma,apimtis}` | same | |
 
-The nominator's five key names, all under `profilis.kita`: `iskele` (Seimo
-family), `iskele-i-tarybos-narius-merus` (2017/2019/2021 municipal),
+The nominator's five key names under `profilis.kita`: `iskele` (Seimas),
+`iskele-i-tarybos-narius-merus` (2017/2019/2021 municipal),
 `iskele-i-savivaldybes-merus` and `iskele-i-tarybos-narius-ir-merus` (2023+
-municipal, split by role), `kandidata-iskele` (`2024-prezidento`). The
-profile card alone is not enough: it names no nominator on `2019-ep` and
-`2024-ep` (their list is under `sarasas`), only mayoral candidacies carry it
-in the municipal generals (a council candidate's list is the
-`kandidatavimas.tarybosNarys.partyList` join), and only constituency
-candidacies in `2016-seimo`, `2020-seimo` and `2024-seimo`. **Do not walk
-these paths by hand** — resolve through
-`scraper/shared/nominator.py::resolve_nominator(record)`, which walks the
-ordered per-election path lists [concept-map.json](concept-map.json)
-declares under `iskele` and returns a non-null string for every record of
-every election but the five presidential ones whose candidates self-nominate
-by law (see the next section for the canonical party join).
+municipal, by role), `kandidata-iskele` (`2024-prezidento`). The card names no
+nominator on `2019-ep`/`2024-ep`, for council candidates, or for list-only
+Seimas candidates. **Do not walk these paths by hand:** use
+`scraper/shared/nominator.py::resolve_nominator(record)`, non-null on every
+record except the five presidential elections.
 
 ## Joining people across elections
 
-There is **no cross-election person id**. The `rkndId` in candidate URLs is
-a per-election registration id, and `candidateId` comes in two formats. A
-name slug plus VRK's own candidate id (`ada-grakauskiene-2420696`) is the
-form on **92,357 records of seven elections** — every municipal general from
-2000 on. Everywhere else it is the name slug alone, with a positional
-`-2`/`-3` suffix where two candidates of one election slug the same way:
-**64 records over nine elections**, 47 of them in the 1997 municipal general.
-Never join on it.
+There is **no cross-election person id**, and `candidateId` must not be
+joined on. It is a name slug plus VRK's candidate id
+(`ada-grakauskiene-2420696`) on 92,357 records of seven elections (the
+municipal generals from 2000), and elsewhere the name slug with a positional
+`-2`/`-3` on collisions (64 records over nine elections).
 
-The tested recipe (measured in [DASHBOARD.md](DASHBOARD.md)): **normalized
-name + birth key** — NFC-normalize, uppercase and whitespace-collapse the
-name, keep diacritics, pair it with `gimimo-data`, falling back to
-`~gimimo-metai` for the 170 archive records that publish a year and no date
-(the 64 records left group by name alone). The pair collides for zero
-same-election record pairs, and 1,989 names are shared by distinct people
-that name-only grouping would merge wrongly.
+The key is **normalized name + birth date**: NFC, uppercase, collapsed
+whitespace, diacritics kept, paired with `gimimo-data`, falling back to
+`~gimimo-metai` where only a year is published.
 
-Two things ride on top of the key (issue #96). Each person in
-the person index (`dashboard/people-list.json`) carries a **`pid`** — `p` + 12 hex digits of blake2s
-over the natural `NAME|birth` key, anchored for merged persons at the
-chronologically earliest fragment so it survives rebuilds and new elections
-— and **`scraper/person_overrides.json`** is the checked-in, hand-reviewed
-record of the decisions the key cannot make: a person who changed surname
-between elections is two natural keys, and each reviewed pair is either
-merged (the former keys stay on the person as `"ak"`) or recorded as
-genuinely distinct. `scripts/find_identity_merge_candidates.py` finds and
-scores the candidate pairs; DASHBOARD.md documents the workflow.
+The person index (`dashboard/people-list.json`) gives each person a **`pid`**:
+`p` + 12 hex digits of blake2s over `NAME|birth`, anchored at the earliest
+fragment so it is stable. `scraper/person_overrides.json` holds reviewed
+decisions the key cannot make (a changed surname: merged, with old keys under
+`"ak"`, or recorded as distinct). `scripts/find_identity_merge_candidates.py`
+finds candidate pairs; [DASHBOARD.md](DASHBOARD.md) has the workflow.
 
 ## Joining parties across elections
 
-There is **no cross-election party id** in the corpus either — the
-`partyList.id` of the two municipal generals is a per-municipality list id,
-and no `rorgId` in a nominator URL is shared between two elections — and
-grouping by the raw string silently splits every major party: one party's
-16,268 candidacies split three ways on nothing but the dash glyph between
-the words, and the 2000/2002 profile cards print the same list in the
-genitive (issue #82).
+There is **no cross-election party id**, and raw nominator strings split
+parties on glyphs and grammatical case. Party identity comes from
+[`scraper/parties.json`](../scraper/parties.json): one entry per organisation
+(party, coalition with members under `nariai`, committee, self-nomination),
+with every one of the 393 measured nominator surface forms an exact alias of
+exactly one entry.
 
-Party identity is therefore *created*, by
-[`scraper/parties.json`](../scraper/parties.json): one entry per
-organisation — parties, coalitions (with member party ids under `nariai`
-where the coalition's own name states them), electoral committees,
-self-nomination — with every one of the 393 measured nominator surface forms
-an exact alias of exactly one entry. The registry, not the corpus, carries
-renames (one entry, the old name an alias: LVŽS spans its 2001 and 2006
-names) and lineage (`predecessors`: `ts-lkd` points at `tevynes-sajunga`
-and `lkd`, so pre-2008 candidacies group under the predecessor rather than
-anachronistically under the merged party).
-
-**What one entry is** (issue #123, which audited every entry against the
-Ministry of Justice party register and the corpus): one organisation. A
-rename of a continuing organisation is an alias — the 1999 „Socialdemokratija
-2000“ that became the Lietuvos socialdemokratų sąjunga in 2003, the 2007
-„Pensininkų partija“ whose chairman ran under that name in the Dzūkija
-by-election, a committee's brand across the visuomeninis rinkimų komitetas /
-politinis komitetas legal forms, a coalition line-up VRK spelled four ways.
-An organisation that another one *continues* is a `predecessors` link on the
-successor: a merger under a new name (TS-LKD), a change of legal form
-(`vieningas-kaunas` ← its committee ← its 2011 independents' coalition), a
-differently led project taking over a registration (Muntianas's Pilietinės
-demokratijos partija on the Lietuvos piliečių aljansas registration, two
-shared candidates of 74), or a re-brand that carried at least a third of its
-candidates (Jonava's „Su Sinkevičiumi ir Osausku“ → „Mūsų Jonava“). The
-links form a forest — one successor per organisation, no loops — which the
-dashboard's party facet groups by and `dist/vrk.sqlite` ships as
-`party_predecessors`. Each entry's `note` records the evidence: the JAR
-code, the register's dates, the shared-candidate count. The audit found 28
-same-organisation splits (the registry went from 340 entries to 312) and 34
-lineages; Šustauskas's 1994 Lietuvos laisvės sąjunga and the liberals' 2014
-one are, as suspected, two registrations, and the one string the registry
-still cannot split is „Lietuvos liaudies partija“, used by two different
-registrations (1996–1997 and 2011 on), because matching is by string alone.
-`scripts/party_lineage_report.py` keeps the lineage honest against the
-corpus: it lists every pair of nominators whose candidates carried over and
-fails on one the registry neither links nor records under
-`reviewedDistinct`.
-
-The join is `scraper/shared/parties.py`:
+- **A rename is an alias** of one entry.
+- **A continuation is a `predecessors` link** on the successor: a merger
+  (`ts-lkd` ← `tevynes-sajunga`, `lkd`), a change of legal form, a taken-over
+  registration, a re-brand that kept at least a third of its candidates. The
+  links form a forest; `dist/vrk.sqlite` ships them as `party_predecessors`.
+- Each entry's `note` records the evidence (JAR code, register dates,
+  shared-candidate count). The Ministry of Justice register is the source.
+- „Lietuvos liaudies partija“ names two registrations and cannot be split,
+  because matching is by string.
 
 ```python
 from scraper.shared.parties import partija
@@ -434,170 +264,79 @@ partija(record)
 #  "tipas": "partija"}
 ```
 
-Matching is exact alias → punctuation/case fold → unmatched (`None`), never
-a guess; `scripts/nominator_report.py` re-measures the corpus and lands any
-new surface form in the registry's `unmatched` block, which
-`tests/test_party_registry.py` asserts is empty. The measured forms are
-checked in as [nominator-forms.tsv](nominator-forms.tsv). The records are
-never rewritten — `partija-id` is derived, `partija-vardas-raw` is exactly
-what the record says.
+Matching is exact alias → punctuation/case fold → `None`, never a guess. The
+measured forms are in [nominator-forms.tsv](nominator-forms.tsv).
 
-Two different concepts wear the party's name; do not mix them. The
-**nominator** (this section) is who put the candidate on the ballot — VRK's
-controlled vocabulary, 99.8 % coverage. **Membership**
-(`anketa.politine-organizacija`, `anketa.narystes-politinese-organizacijose`)
-is what the candidate *typed* about their own party history — thousands of
-free-prose singletons, with "Nesu"/"Nepartinis" sitting in the same field as
-party names. Only the 2024-on structured membership table is machine-usable,
-and none of it is canonicalised by the registry.
+The **nominator** (who put the candidate on the ballot) is not
+**membership** (`anketa.politine-organizacija`,
+`anketa.narystes-politinese-organizacijose`, what the candidate typed). Only
+the 2024-on membership table is machine-usable, and the registry does not
+canonicalise any of it.
 
 ## Traps
 
-- **Donations are per campaign, not per candidate.** Every candidate on a
-  shared list carries the whole campaign's donation list; naive summing
-  inflates the corpus 104× overall and one election 1,182×. Group by
-  `rawData…campaigns[].campaignKey` — the *only* correct key; a VRK
-  decision number spans many participants and destroys money — or read the
-  candidacy table's `campaigns` table, which is already de-duplicated. See
-  the caveat in [DATASET.md](DATASET.md#caveats-for-analysis).
+- **Donations are per campaign, not per candidate.** Every candidate on a list
+  carries the whole campaign's donations; naive summing inflates the corpus
+  104×. Group by `rawData…campaigns[].campaignKey` (not the VRK decision
+  number), or use the candidacy table's `campaigns` table
+  ([DATASET.md](DATASET.md#caveats-for-analysis)).
 - **Municipal sections are role-dependent.** In
-  `2019-kovo-3-savivaldybiu-tarybu`, free-text biography, photo and the
-  profile-card nominator are published only for mayoral candidates (~410 of
-  13,666, so ~97% of records carry none of them); in `2023-kovo-5` the
-  nominator keys exist only on the 433 mayoral-role records. Upstream
-  behaviour, not sparseness.
-- **A conviction has three published shapes; read the `teistumas`
-  concept.** `scraper/shared/conviction_details.py` resolves a record's
-  normalized `anketa` to one answer — `neklausta` / `ne` /
-  `deklaruota-be-detaliu` / `deklaruota` — over the structured table, the
-  free-text explanation and the bare yes/no. Doing it by hand has three
-  traps. **The affirmative follows the question's wording**: `Taip` on the
-  Seimas and municipal forms, `Yra` on the 2000 and 2004 static-site ones
-  (which ask whether there is anything to declare), `Buvo` and `Turiu` on
-  their neighbouring questions — filtering on `Taip` alone misses sixteen of
-  the main question's 1,630 declarers. **A conviction can be declared next
-  door**: the 2000–2014 forms ask separately about a grave crime, a foreign
-  court, political persecution and an unserved sentence, and 20 records
-  answer one of those affirmatively while denying the main question, so
-  1,650 records declare a conviction somewhere. `teistumas` returns them
-  under `kiti-pareiskimai`. **An absent key is not a "no"**:
-  `2019-prezidento` and the 1990s archive cards never ask the question.
-  **The entries differ inside** — `nusikalstama-veika` (a string, the
-  offence, 2016–2021) and `nusikalstamos-veikos` (a list of offence records,
-  2023 on) are different things under near-identical names. Since issue #86
-  the key itself is uniform: `{irasai: [...]}` on every record of all 17
-  elections that publish it.
-- **`Neskelbiamas` saturates contact fields in the 2019/2020 eras.** VRK's
-  own "withheld" token fills `anketa.adresas` (and in `2020-seimo` also
-  `anketa.kontaktai.telefonas`/`el-pastas`) at 100% in `2019-kovo-3`,
-  `2019-ep`, `2019-prezidento`, `2020-seimo` and the 2021 mayoral
-  elections. Coverage statistics on those fields are meaningless there;
-  the 2023/2024 elections carry real city-level values instead.
-- **A 2007 declaration can be the spouse's.** `2007-vasario-25-savivaldybiu`
-  and the 2004 pages publish *separate* declarations for the candidate, the
-  family and the spouse. The value keys carry the candidate's own where the
-  page publishes one and the family's where it publishes that instead;
-  `deklaracijos-apimtis` says which, `sutuoktinio` carries a spouse's five
-  asset figures on the 352 records that have one, and `deklaracijos` lists
-  every declaration the page printed. Until issue #98 the last section on the
-  page won, so 243 records of that election reported a spouse's assets as the
-  candidate's. **A 3,672-record slice of that election is family-scope and a
-  9,664-record slice is not**, so filter on `deklaracijos-apimtis` before
-  ranking anyone by declared assets.
-- **The 1990s income total is often refused, and row 1 is not.** The
-  1996–2000 form prints rows 1 (employment income) and 20 (the total) of its
-  income section, and row 20 fails by rendering 0 against a non-zero row 1 —
-  4,463 of `1997-kovo-23-savivaldybiu-tarybu`'s 6,276 records, 147 of
-  `2000-kovo-19`, 9 of `1996-spalio-20-seimo`, 8 of `2000-seimo` and one of
-  the 1997 Švenčionys repeat, 4,628 in all. The
-  parser refuses such a total and leaves `gautos-pajamos` null;
-  `gautos-pajamos-darbo-santykiu` holds row 1 and is present on every one of
-  them. Resolve income with the `deklaruotos-pajamos` concept
-  (`scraper/shared/deklaracijos.py`), which returns the figure and a
-  `saltinis` saying whether it is a declared total or employment income
-  alone; reading `gautos-pajamos` by itself reports those candidates as
-  having declared nothing.
-- **Pre-2016 money is in litas, and the rule is data-driven: divide by
-  3.4528 whenever `valiuta == "Lt"`.** That key is `"Lt"` on every record
-  that carries a declaration block from 1996 through 2015 — all 79,098 of
-  them over 34 elections, not just the 2004–2015 slice an earlier revision of
-  this page named
-  — and absent from 2016 on. **No record anywhere says `"EUR"`**: in the
-  stored corpus the euro era is marked by the key's absence, so a consumer
-  who checks for `"EUR"` converts nothing.
-  `scraper/shared/deklaracijos.py::deklaracijos_valiuta()` turns the absence
-  into an explicit answer, and the candidacy table ships everything
-  EUR-converted with the rate in its own column. The dashboard's index
-  builder converts the same way and flags the converted candidacies.
+  `2019-kovo-3-savivaldybiu-tarybu`, biography, photo and nominator exist only
+  for mayoral candidates; in `2023-kovo-5` the nominator keys exist only on
+  mayoral-role records.
+- **Convictions: read the `teistumas` concept**
+  (`scraper/shared/conviction_details.py`), which returns `neklausta` / `ne` /
+  `deklaruota-be-detaliu` / `deklaruota`. By hand:
+  - the affirmative follows the wording: `Taip`, `Yra` (2000 and 2004 forms),
+    `Buvo`, `Turiu`;
+  - the 2000–2014 forms ask neighbouring questions (grave crime, foreign
+    court, persecution, unserved sentence); `teistumas` returns those under
+    `kiti-pareiskimai`;
+  - an absent key is not "no" (`2019-prezidento`, the 1990s archive);
+  - `nusikalstama-veika` (string, 2016–2021) and `nusikalstamos-veikos` (list,
+    2023 on) differ. The container is `{irasai: [...]}` everywhere.
+- **`Neskelbiamas` fills contact fields** (`anketa.adresas`, and in
+  `2020-seimo` the phone and e-mail) at 100 % in `2019-kovo-3`, `2019-ep`,
+  `2019-prezidento`, `2020-seimo` and the 2021 mayoral elections.
+- **A 2004/2007 declaration can be the family's or the spouse's.** The value
+  keys carry the candidate's own where published, else the family's;
+  `deklaracijos-apimtis` says which, and `sutuoktinio` holds a spouse's asset
+  figures. Filter on `deklaracijos-apimtis` before ranking by assets.
+- **The 1990s income total is often refused.** Where row 20 (total) reads 0
+  against a non-zero row 1, `gautos-pajamos` is null and
+  `gautos-pajamos-darbo-santykiu` holds row 1. Use the `deklaruotos-pajamos`
+  concept, whose `saltinis` says which you got.
+- **Pre-2016 money is in litas: divide by 3.4528 whenever `valiuta == "Lt"`.**
+  That is all 79,098 declaration records from 1996 through 2015. **No record
+  says `"EUR"`**; the euro era is the key's absence.
+  `deklaracijos.py::deklaracijos_valiuta()` makes it explicit, and the
+  candidacy table ships EUR with the rate in its own column.
 - **Photos are sidecar files.** `profilis.nuotrauka` (and
-  `rawData.profile.photoSrc`, or `photoUrl` in the 1996–1999 Seimas archive)
-  is a *reference*: the relative path `photos/<candidateId>.<ext>` of a file
-  beside the records in `data/<election-id>/photos/`, whatever the page did
-  — embedded the portrait as base64 (2016–2019) or linked it on vrk.lt
-  (every other era; fetched into the retained trees by
-  `scripts/backfill_url_portraits.py`, issue #118). `rawData.profile.photoMeta`
-  carries the file's size and sha256, verifiable against the bytes VRK
-  served, plus the `url` and `fetchedAt` of a fetched one. A reference that
-  is still an `http(s)://` URL is a portrait the fetch could not get: its
-  `photoMeta` says when it was tried and how it failed (`error`), and a URL
-  with no `photoMeta` was never tried. **If you copy records elsewhere,
-  bring the election's `photos/` folder along** — a record alone does not
-  contain its portrait. Two curiosities survive faithfully: one candidate's
-  "photo" is a ZIP archive, stored as `.zip`, and a handful of portraits VRK
-  serves as PNG bytes under a `.jpg` URL are stored as `.png`, because the
-  extension follows the bytes.
-- **6 values still hold a replacement character, and it is never a
-  recoverable quote.** `U+FFFD` reached the corpus in 203 values. Fetching one of those
-  pages live returns the character in VRK's own bytes, so the original was
-  destroyed upstream and no re-decode recovers it — but the *character it
-  stood for* is often recoverable from the surviving half of a pair, and 194
-  of the 203 now are: 30 were the whole value (a NUL byte where a biography
-  should be) and normalize to `null`; 153 opened a phrase a closing quote
-  ends and are restored to `„` (`AB „Lietuvos geležinkeliai"`); 8 *closed*
-  one an opening glyph begins; 2 opened one VRK followed with a space; 1 was
-  a bracket.
-  What is left is two classes. Five `2000-seimo` biographies hold a
-  destroyed *letter* — a `š` or `Š` inside a Lithuanian word (`i�rinktas`,
-  `Roki�kio`, `vir�ininku`), on pages where the same words appear correctly
-  elsewhere; a rule that turned an in-word replacement into `š` would be
-  right on all five and wrong the first time the lost byte was a `ž`. And
-  one `2004-seimo` biography holds four closing quotes whose *opening*
-  partner VRK also lost, to a hyphen (`-Termoizoliacija�`, `-Lietuvos
-  rytas�`) — there is no surviving quote glyph to pair against, and "a
-  hyphen opens a quotation" is not a rule this corpus can afford. Both are
-  **left as published**, and `tests/test_corpus_value_hygiene.py` pins the 6
-  so the class cannot grow. (The old account called all 20 survivors quotes
-  with no closing partner, which was false for every one — issue #164.)
-- **`VšĮ` is not a parsing bug.** 20,711 normalized values contain a
-  lowercase letter immediately followed by an uppercase one, which reads like
-  a lost line break. It is not: 12,950 of them carry the legal-form
-  abbreviation `VšĮ` (13,224 occurrences of it), and the rest are company
-  names (`UAB "inChase"`, `DnB`,
-  `GmbH`, `StepArc`) and VRK's own typing (`kAUNO`, `Partija tTvarka`). A
-  sample of 835 such junctions checked against the retained HTML found 797
-  present verbatim, with no tag boundary between the two letters, and the
-  misses were a parser-authored enum value and one biography split across
-  files. Do **not** insert spaces at these junctions.
+  `rawData.profile.photoSrc`, or `photoUrl` in the 1996–1999 archive) is the
+  relative path `photos/<candidateId>.<ext>` in `data/<election-id>/photos/`.
+  `rawData.profile.photoMeta` has size and sha256, plus `url` and `fetchedAt`
+  for fetched ones. A reference that is still a URL failed to fetch
+  (`photoMeta.error`), or was never tried if there is no `photoMeta`. **Copy
+  the `photos/` folder with the records.** The extension follows the bytes
+  (one `.zip`, some `.png`).
+- **6 values still hold a replacement character** (`U+FFFD`), destroyed in
+  VRK's own bytes: five `2000-seimo` biographies with a lost `š`/`Š`, and one
+  `2004-seimo` biography with lost quotes. They are left as published;
+  `tests/test_corpus_value_hygiene.py` pins the count.
+- **`VšĮ` is not a parsing bug.** 20,711 values have a lowercase letter
+  followed by an uppercase one; 12,950 of them are `VšĮ`, the rest company
+  names and VRK's typing. Do **not** insert spaces.
 
 ## Going deeper
 
-- [CANDIDACIES.md](CANDIDACIES.md) — the derived candidacy table: one row
-  per (person, election), education on one ordinal, money EUR-converted with
-  its measure named, the campaign grouping key, and typed absences. Built by
-  `scripts/build_candidacy_table.py` and gated against
-  [candidacy-baseline.tsv](candidacy-baseline.tsv).
-- [concept-map.json](concept-map.json) — the machine-readable concept→path
-  bridge this page's era map is built from. Its `derived` section covers the
-  concepts no single path resolves: `teistumas`
-  (`scraper/shared/conviction_details.py`), `deklaruotos-pajamos`,
-  `deklaruotas-turtas` and `pajamu-matas`
+- [CANDIDACIES.md](CANDIDACIES.md): the derived candidacy table.
+- [concept-map.json](concept-map.json): the concept→path bridge. Derived
+  concepts: `teistumas` (`scraper/shared/conviction_details.py`),
+  `deklaruotos-pajamos`, `deklaruotas-turtas`, `pajamu-matas`
   (`scraper/shared/deklaracijos.py`), `issilavinimo-lygis`
-  (`scraper/shared/education.py`), `partija` (`scraper/shared/parties.py`)
-  and `kandidatura` (`scraper/shared/kandidatura.py`).
-- [FIELD_COVERAGE.md](FIELD_COVERAGE.md) and
-  [coverage-baseline.tsv](coverage-baseline.tsv) — how often every mapped path
-  is filled, and which cells are empty on purpose.
-- [OUTPUT_SCHEMA.md](OUTPUT_SCHEMA.md) — per-election schema appendices.
-- [DATASET.md](DATASET.md) — inventory, run history, analysis caveats.
-- [DASHBOARD.md](DASHBOARD.md) — the reference consumer: a local browser
-  that joins candidacies into persons.
+  (`scraper/shared/education.py`), `partija` (`scraper/shared/parties.py`),
+  `kandidatura` (`scraper/shared/kandidatura.py`).
+- [FIELD_COVERAGE.md](FIELD_COVERAGE.md): fill rates per mapped path.
+- [OUTPUT_SCHEMA.md](OUTPUT_SCHEMA.md): per-election schema.
+- [DATASET.md](DATASET.md): inventory and analysis caveats.
+- [DASHBOARD.md](DASHBOARD.md): the browser that joins candidacies into persons.
