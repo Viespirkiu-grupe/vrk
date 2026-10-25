@@ -407,7 +407,7 @@ A new election makes its candidates' photos the newest for everyone who ran
 in it, so their portraits change. People new to the corpus need one for the
 first time. The portrait build is incremental and renders only those people,
 in seconds rather than the 36 s a full build takes. It then re-stamps `ph`
-and the portrait version in `dashboard/people.json`. Skip it and the new
+and the portrait version in `dashboard/people-list.json`. Skip it and the new
 candidates show no photo, and returning candidates keep their previous
 election's photo. Re-run it too after anything that rewrites `photos/`,
 such as a portrait backfill or `reparse_diff --apply`; a no-op run takes

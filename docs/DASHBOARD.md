@@ -20,7 +20,7 @@ bundled browser code. Its build does not require the corpus.
 From the repository root:
 
 ```bash
-python scripts/build_person_index.py   # requires data/; writes dashboard/people.json
+python scripts/build_person_index.py   # requires data/; writes dashboard/people-{list,details,version}.json
 python scripts/build_web_portraits.py  # requires data/ + the index; writes portraits/, flags the index
 cd frontend
 npm ci
@@ -111,13 +111,13 @@ yet.
 | URL | File |
 |---|---|
 | `/`, `/_astro/*`, `/branding/*`, `/fonts/*` | `frontend/dist/` (the Astro build) |
-| `/people.json`, `/field-labels.json` | `dashboard/people.json`, `dashboard/field-labels.json` |
+| `/people-version.json`, `/people-list.json`, `/people-details.json`, `/field-labels.json` | the same names in `dashboard/` (see *The index files* below) |
 | `/data/<election>/<file>.json` | `data/` |
 | `/portraits/<pid>.webp?v=<version>` | `portraits/` |
 | `/docs/concept-map.json` | `docs/concept-map.json` |
 
 The index and labels stay in `dashboard/` on disk, where every builder
-writes them. The page fetches all of these by absolute URL (`/people.json`,
+writes them. The page fetches all of these by absolute URL (`/people-list.json`,
 `/data/…`), so they resolve the same from `/asmuo/x` as from `/`.
 
 **The fallback every server needs.** The view paths are not files: the
@@ -130,61 +130,129 @@ equal to the page's list), so a new view is added in both places.
 
 ### Caching
 
-Two classes of URL, two rules (issue #186). Whatever serves production
-(the static server of [DEPLOY.md](DEPLOY.md), whose configs are in
-`deploy/`) must keep both, as `scripts/serve_dashboard.py` does locally:
+Three classes of URL (issue #186), which `scripts/serve_dashboard.py` sends
+and production, that same server behind Cloudflare
+([DEPLOY.md](DEPLOY.md)), keeps:
 
 | URL | `Cache-Control` | Why |
 |---|---|---|
 | `/_astro/*` | `public, max-age=31536000, immutable` | Astro names each file after a hash of its content, so a changed file is a new URL. |
-| `/portraits/<pid>.webp?v=<version>` | `public, max-age=31536000, immutable` | The version is the hash of the whole portrait set (`portraits.v` in people.json, issue #187), so a changed portrait is a new URL. The page never asks without it. |
-| everything else: the `/` HTML, `people.json`, `field-labels.json`, `data/**` records, `docs/concept-map.json`, a portrait without `?v=` | `no-cache` | Rewritten in place: the index after every corpus update, records when a parser gains a field. |
+| `/portraits/<pid>.webp?v=<version>` | `public, max-age=31536000, immutable` | The version is the hash of the whole portrait set (`portraits.v` in the index, issue #187), so a changed portrait is a new URL. The page never asks without it. |
+| `/people-list.json?v=<hash>`, `/people-details.json?v=<hash>` | `public, max-age=31536000, immutable` **only while `<hash>` is the content hash of the file on disk**, else `no-cache` | The page takes the hash from `/people-version.json`. A request that lands mid-deploy (the old version file's hash, the new file's bytes) is answered `no-cache`, so the edge never keeps the wrong bytes under a name. |
+| everything else: the `/` HTML, `/people-version.json`, `field-labels.json`, `data/**` records, `docs/concept-map.json`, a portrait or index file without its `?v=` | `no-cache` | Rewritten in place: the version file after every corpus update, records when a parser gains a field. |
 
 `no-cache` means a browser keeps the copy but must ask the server before
 using it, and the page's own fetches say the same (`cache: "no-cache"` in
-`dashboard.js`). An unchanged 7 MB index then costs one empty 304 instead of
-a full download. The page never shows stale data: a backfilled record or a
-rebuilt index has a new mtime, so the check misses and the new body comes
-back. This replaced `no-store`, which made every visit download everything
-again.
+`dashboard.js`). An unchanged file then costs one empty 304 instead of a
+full download. The page never shows stale data: a backfilled record or a
+rebuilt version file has a new mtime, so the check misses and the new body
+comes back. This replaced `no-store`, which made every visit download
+everything again.
+
+So a repeat visit asks for one small file about the index, the version file,
+and gets a 304. The two big files come from the browser's cache, or on a
+first visit from the edge, without reaching the origin.
 
 Revalidation has to work with **`If-Modified-Since` alone**. Cloudflare drops
-the origin `ETag` when it recompresses to brotli, so behind it the browser
+the origin `ETag` when it recompresses, so behind it the browser
 often has only `Last-Modified` to send. The server answers either header with
 304, and lets `If-None-Match` decide on its own when both are sent (RFC 9110).
-Only 200 and 304 responses carry `Cache-Control`. A 404 under `_astro/` must
+Only 200 and 304 responses carry `Cache-Control`, and every compressible one
+carries `Vary: Accept-Encoding`. A 404 under `_astro/` must
 not be marked immutable, or the edge would keep a missing asset for a year.
 `tests/test_serve_dashboard.py` holds all of this, including a record
-rewritten in place being served fresh.
+rewritten in place being served fresh and the hash check on the index files.
 
-**Cloudflare rule the operator adds** (Caching → Cache Rules; not set from
+**Precompressed copies.** `build_person_index.py` writes `.br` (quality 11,
+through Python's `brotli` module or the `brotli` command) and `.gz` (level 9)
+beside the list and details files, each with its original's mtime. The
+server sends the `.br` to a client that accepts `br`, else the `.gz`, and
+only a copy whose mtime is not older than the file's. Anything without a
+copy is gzipped on the fly at level 6 as before. Without brotli installed
+the build writes the `.gz` alone and says so in its sizes.
+
+#### The index files
+
+The person index is three files in `dashboard/`, written by
+`scripts/person_index_files.py` (step 2 of #186). Measured on the
+2026-10-24 index (60,568 people, 113,073 candidacies):
+
+| File | Holds | Raw | gzip -9 | brotli 11 |
+|---|---|---|---|---|
+| `people-version.json` | `build`, and `list` / `details`, the content hash of each (blake2s, 16 hex digits) | 79 B | | |
+| `people-list.json` | every top-level table but `campaigns`, plus `partyIds`; per person `pid`, `n`, `b`, `ph`, `ak`, `kn`; per candidacy `ei`, `pi`, `w`, `sv`, `ap`, `tb`, `wm`, `wt`, `r` | 9.36 MB | 1.81 MB | 1.30 MB |
+| `people-details.json` | `campaigns`; per person, per candidacy `{wp, m, c, lt, ed, v, cv, ck, ds}` | 14.75 MB | 4.01 MB | 2.75 MB |
+
+The single `people.json` it replaces was 30.8 MB, sent as 7.35 MB of
+on-the-fly gzip before the page could show a name.
+
+- `ei` indexes `elections` and `pi` indexes `partyIds`, the sorted keys of
+  `parties`. The page puts back `e.id` and `e.p` from them.
+- The natural key `k` is not sent. The page rebuilds it as
+  `n.toUpperCase() + "|" + (b || "")`, and `kn` carries it whole on the 273
+  people where that would be wrong: 109 whose key holds an older spelling of
+  the name, and 164 keyed `NAME|~year` or `NAME|?` whose shown birth date is
+  the full one a later election published.
+- The details file is aligned with the list by position: its `people[i][j]`
+  belongs to the list's `people[i].e[j]`. The page `Object.assign`s each
+  into its candidacy, so the rest of `dashboard.js` reads one merged index.
+- Both files carry the same `build`, a hash of the whole index they were
+  split from. A page that caught one file from each of two builds asks the
+  version file again, and reloads once if that names a newer list.
+
+The page fetches the version file, then the list, and draws the rows, the
+facets and a name or party search from the list alone. The details follow
+in the background. What reads them waits and shows „kraunama…“ until they
+land: a person's or a comparison's page (the record ids are `c`), the
+statistics, the nominator view, the declaration movers and the CSV export.
+Workplaces join the search when the details land.
+
+Python reads the joined index through `person_index_files.load_index()`.
+`join_index(split_index(x))` is `x` to the byte, key order included, which
+`tests/test_person_index_files.py` holds on a hand-made index, on one the
+builder made from records, and on the built files when they exist.
+`tests/test_dashboard_ui.py` runs the page's own `decodeList` under node over
+the Python split. No whole `people.json` is written any more; an old one
+left in `dashboard/` is ignored and not served.
+
+**Cloudflare rules the operator adds** (Caching → Cache Rules; not set from
 this repository):
 
-- *When:* URI Path starts with `/_astro/` or `/portraits/` (host
-  `vrk.viespirkiai.org`). Cloudflare's default cache key includes the query
-  string, which is what carries a portrait's version.
-- *Then:* Eligible for cache; Edge TTL "Use cache-control header if present";
-  Browser TTL "Respect origin".
+1. *When:* URI Path starts with `/_astro/` or `/portraits/` (host
+   `vrk.viespirkiai.org`). *Then:* Eligible for cache; Edge TTL "Use
+   cache-control header if present"; Browser TTL "Respect origin".
+2. *When:* URI Path equals `/people-list.json` or `/people-details.json`
+   (host `vrk.viespirkiai.org`). *Then:* the same: Eligible for cache; Edge
+   TTL "Use cache-control header if present"; Browser TTL "Respect origin".
+   Leave the cache key's query string included (the default), because `?v=`
+   is the version. The origin decides: an immutable answer is cached for a
+   year, a `no-cache` one is not kept.
 
 Those assets then show `cf-cache-status: HIT` after the first request. Add no
-rule for the JSON or `data/`. Without one, Cloudflare passes conditional
-requests through to the origin and returns its 304, which is the point. The
-index can be cached at the edge only once it has a content-hashed name
-(the `people.<hash>.json` idea in #186).
+rule for `/people-version.json`, the other JSON or `data/`. Without one,
+Cloudflare passes conditional requests through to the origin and returns its
+304, which is the point. JSON is not cached by Cloudflare by default, so
+without rule 2 the index files are fetched from the origin on every first
+visit, still correctly.
 
-A check on production, with `-D -` showing the headers:
+A check on production, with `-D -` showing the headers. Take the hash from
+the first command's body:
 
 ```bash
-curl -s -o /dev/null -D - -H 'Accept-Encoding: br, gzip' https://vrk.viespirkiai.org/people.json
+curl -s --compressed https://vrk.viespirkiai.org/people-version.json
 ```
 
 ```bash
-curl -s -o /dev/null -w '%{http_code}\n' -H 'If-Modified-Since: <the Last-Modified above>' https://vrk.viespirkiai.org/people.json
+curl -s -o /dev/null -D - -H 'Accept-Encoding: br, gzip' 'https://vrk.viespirkiai.org/people-list.json?v=<list hash>'
 ```
 
-The first should show `cache-control: no-cache` and a `last-modified`, and
-the second should print `304`. After a corpus update the same second command
-prints `200`.
+```bash
+curl -s -o /dev/null -D - -H 'Accept-Encoding: br, gzip' 'https://vrk.viespirkiai.org/people-list.json?v=0000000000000000'
+```
+
+The second should show `cache-control: public, max-age=31536000, immutable`
+and, from its second request on, `cf-cache-status: HIT`. The third should
+show `cache-control: no-cache`.
 
 The implementation plan and reference revision are recorded in
 [ASTRO_MIGRATION.md](ASTRO_MIGRATION.md).
@@ -893,8 +961,9 @@ pins every rule, so a new entry either follows them or fails there.
 - `docs/concept-map.json` — the concept → per-election-path bridge the
   comparison rows resolve through; `scripts/field_coverage.py` gates it
   against the corpus.
-- `scripts/build_person_index.py` — builds `dashboard/people.json`
-  (gitignored); applies the override merges, assigns pids, prints the audit
+- `scripts/build_person_index.py` — builds the person index,
+  `dashboard/people-{list,details,version}.json` and their `.br`/`.gz`
+  copies (gitignored; format under *The index files*); applies the override merges, assigns pids, prints the audit
   counts on every run.
 - `scripts/build_web_portraits.py` — builds `portraits/<pid>.webp` and its
   manifest from `data/*/photos/` (gitignored, issue #187) and stamps `ph` in

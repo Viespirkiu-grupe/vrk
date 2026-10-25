@@ -27,7 +27,7 @@ public site. It serves the Astro build at `/`, the index beside it,
   (`scripts/build_web_portraits.py`). A public release has the third-party
   contacts already removed ([PERSONAL_DATA.md](PERSONAL_DATA.md)). A scraping
   disk still has them.
-- **The index**, `dashboard/people.json`, built on the server from `data/`
+- **The index**, `dashboard/people-{list,details,version}.json`, built on the server from `data/`
   with `python scripts/build_person_index.py` (about 35 s). It also stamps
   which people have a portrait in `portraits/`.
 
@@ -58,11 +58,19 @@ in the dashboard (Caching → Cache Rules):
 
 - *When:* hostname is `vrk.viespirkiai.org` and the URI path starts with
   `/_astro/` or `/portraits/`.
-  - TODO (index split): add the index files' path here once they are
-    versioned. [DASHBOARD.md](DASHBOARD.md#caching) has their rule.
 - *Then:* Eligible for cache. Edge TTL: "Use cache-control header if
   present". Browser TTL: "Respect origin". Keep the default cache key,
   because the query string carries a portrait's `?v=` version.
+
+And a second rule, the same but for the person index (issue #186):
+
+- *When:* hostname is `vrk.viespirkiai.org` and the URI path equals
+  `/people-list.json` or `/people-details.json`.
+- *Then:* the same three settings, and the default cache key: `?v=` is the
+  file's content hash. The origin answers `immutable` only when `v` is the
+  hash of the file it holds, and `no-cache` otherwise, so the edge never
+  keeps a mid-deploy answer. [DASHBOARD.md](DASHBOARD.md#caching) has the
+  details and a curl check.
 
 The origin marks only those URLs `immutable`. Everything else is
 `no-cache`, and Cloudflare passes revalidations through, so they come back

@@ -28,7 +28,7 @@ covers.
 The corpus — every release asset (`candidacies.csv.gz`, `campaigns.csv.gz`,
 `coverage.tsv`, `vrk.sqlite.gz`, `vrk-corpus.sqlite.gz`, the
 `vrk-photos-N.sqlite` portrait parts, `MANIFEST.json`), the record files
-under `data/`, `dashboard/people.json` and the documentation describing
+under `data/`, the person index in `dashboard/` and the documentation describing
 them — is published under the **Creative Commons Attribution 4.0
 International licence (CC BY 4.0)**:
 <https://creativecommons.org/licenses/by/4.0/>.
@@ -73,7 +73,7 @@ Three things follow:
   <viespirkiai@viespirkiai.org>, naming the election and the candidate. A
   request from the person concerned, or someone acting for them, is acted
   on in the next release: the record is dropped or corrected in the release
-  assets and in `dashboard/people.json`, the retained source page is kept
+  assets and in the person index in `dashboard/`, the retained source page is kept
   offline only, and the change is noted in the release notes. Anything
   already downloaded by others is outside this project's reach — the
   licence above permits redistribution — which is why the request is acted

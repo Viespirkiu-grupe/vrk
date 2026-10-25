@@ -23,9 +23,17 @@ def record(election: str, candidate: str, name: str) -> dict:
     }
 
 
-def make_repo(root: Path) -> Path:
-    """A repository with a built frontend, an index, portraits and two records."""
+def make_repo(root: Path, portraits: bool = True) -> Path:
+    """A repository with a built frontend, an index, portraits and two records.
+
+    `portraits=False` leaves the person unflagged and the set unbuilt.
+    """
+    import importlib.util
     import json
+
+    spec = importlib.util.spec_from_file_location("person_index_files", Path(__file__).resolve().parents[1] / "scripts" / "person_index_files.py")
+    index_files = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(index_files)
 
     def write(relative: str, content: str | bytes) -> Path:
         path = root / relative
@@ -39,26 +47,28 @@ def make_repo(root: Path) -> Path:
         "docs/concept-map.json": '{"concepts": []}',
     }.items():
         write(relative, body)
+    person = {
+        "k": "VARDENIS PAVARDENIS|1970-01-01",
+        "pid": PID,
+        "n": "Vardenis PAVARDENIS",
+        "b": "1970-01-01",
+        "e": [
+            {"id": "2019-prezidento", "c": "vardenis-pavardenis"},
+            {"id": "2020-seimo", "c": "vardenis-pavardenis"},
+        ],
+        **({"ph": 1} if portraits else {}),
+    }
     index = {
         "elections": [{"id": "2019-prezidento"}, {"id": "2020-seimo"}],
-        "portraits": {"v": PORTRAIT_VERSION, "n": 1},
-        "people": [
-            {
-                "pid": PID,
-                "n": "Vardenis PAVARDENIS",
-                "b": "1970-01-01",
-                "ph": 1,
-                "e": [
-                    {"id": "2019-prezidento", "c": "vardenis-pavardenis"},
-                    {"id": "2020-seimo", "c": "vardenis-pavardenis"},
-                ],
-            }
-        ],
+        "parties": {},
+        "people": [person],
+        **({"portraits": {"v": PORTRAIT_VERSION, "n": 1}} if portraits else {}),
     }
-    write("dashboard/people.json", json.dumps(index, separators=(",", ":")))
+    index_files.write_index(index, root / "dashboard")
     write("dashboard/field-labels.json", json.dumps({"turtas": "Turtas"}))
-    write(f"portraits/{PID}.webp", WEBP)
-    write("portraits/manifest.json", json.dumps({"version": PORTRAIT_VERSION, "portraits": {PID: {"out": "x", "outBytes": len(WEBP)}}}))
+    if portraits:
+        write(f"portraits/{PID}.webp", WEBP)
+        write("portraits/manifest.json", json.dumps({"version": PORTRAIT_VERSION, "portraits": {PID: {"out": "x", "outBytes": len(WEBP)}}}))
     write(
         "frontend/dist/index.html",
         '<!doctype html><html><head><link rel="stylesheet" href="/_astro/index.abc.css">'

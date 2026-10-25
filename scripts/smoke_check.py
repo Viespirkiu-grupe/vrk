@@ -12,7 +12,11 @@ What it asks, each a pass or a failure:
 - `/` is 200 HTML with the security headers, and the `/_astro/` files it
   links are 200 and `immutable` -- the page without its bundle is #183's
   failure, which a status check on `/` alone does not see.
-- `/people.json` is 200, compressed when asked, `no-cache`, and parses.
+- `/people-version.json` is 200 `no-cache` JSON naming the index's build and
+  the hash of each half; `/people-list.json?v=<hash>` and
+  `/people-details.json?v=<hash>` are 200, compressed when asked, `immutable`
+  (the server checks `v` against the file it holds, so a mismatch here means
+  the version file and the files disagree), parse, and carry that build.
 - One record from the index (the first person with a portrait, their newest
   candidacy) is 200 and parses; `--record` names another.
 - That person's portrait, `/portraits/<pid>.webp?v=<version>`, is 200
@@ -143,6 +147,20 @@ class Checker:
         return value
 
 
+def join_people(listing: dict, details: dict) -> dict:
+    """Enough of person_index_files.join_index to pick a record: `id` and `c`.
+
+    Not an import of it: this script runs on the server with Python and
+    nothing else.
+    """
+    elections = listing.get("elections") or []
+    people = []
+    for entry, rows in zip(listing.get("people") or [], details.get("people") or []):
+        e = [dict(row, id=elections[c["ei"]]["id"]) for c, row in zip(entry.get("e") or [], rows)]
+        people.append(dict(entry, e=e))
+    return {"portraits": listing.get("portraits"), "people": people}
+
+
 def pick_person(index: dict, record: Optional[str]) -> Tuple[Optional[dict], Optional[dict]]:
     """The person and candidacy to probe: `--record`'s, or the first with a portrait."""
     people = index.get("people") or []
@@ -170,13 +188,27 @@ def run(base: str, record: Optional[str] = None) -> int:
         for asset in assets:
             c.expect(asset, 200, cache=IMMUTABLE)
 
-    response = c.expect("/people.json", 200, "application/json", NO_CACHE, gzip_ok=True)
-    if response is not None:
-        c.check("/people.json is compressed when asked", response.header("content-encoding") in ("gzip", "br", "zstd"), response.header("content-encoding") or "sent uncompressed")
-    index = c.json("/people.json", response)
-    if index is not None:
-        people = index.get("people") if isinstance(index, dict) else None
-        c.check("/people.json lists people", bool(people), f"{len(people or [])} people")
+    version = c.json("/people-version.json", c.expect("/people-version.json", 200, "application/json", NO_CACHE, gzip_ok=True))
+    halves: Dict[str, dict] = {}
+    if isinstance(version, dict):
+        for half in ("list", "details"):
+            path = f"/people-{half}.json?v={urllib.parse.quote(str(version.get(half, '')))}"
+            response = c.expect(path, 200, "application/json", IMMUTABLE, gzip_ok=True)
+            if response is not None:
+                c.check(f"{path} is compressed when asked", response.header("content-encoding") in ("gzip", "br", "zstd"), response.header("content-encoding") or "sent uncompressed")
+            value = c.json(path, response)
+            if isinstance(value, dict):
+                halves[half] = value
+                c.check(f"{path} is build {version.get('build')}", value.get("build") == version.get("build"), f"it says {value.get('build')!r}")
+    index = None
+    if len(halves) == 2:
+        index = join_people(halves["list"], halves["details"])
+        people = index["people"]
+        c.check("the index lists people", bool(people), f"{len(people)} people")
+        c.check(
+            "list and details align",
+            len(halves["list"].get("people") or []) == len(halves["details"].get("people") or []),
+        )
     for path in ("/field-labels.json", "/docs/concept-map.json"):
         c.json(path, c.expect(path, 200, "application/json", NO_CACHE, gzip_ok=True))
 

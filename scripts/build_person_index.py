@@ -55,7 +55,7 @@ the corpus's usual `anketa.gimimo-data`, so it needs no special case here.
 Identity (issue #96) is carried two ways on top of that join:
 
 - Every person gets a **pid** — `"p"` + blake2s of the natural
-  `name|birth` key, 12 hex digits — emitted into people.json and used by the
+  `name|birth` key, 12 hex digits — emitted into the index and used by the
   dashboard as the deep-link hash. For a merged person the pid derives from
   the natural key of the fragment holding the chronologically earliest
   candidacy, so the id survives both a rebuild and a new election (elections
@@ -79,7 +79,7 @@ Election names and chronology come from the one registry,
 `scraper/elections.json` -- id, first-round date, kind, official Lithuanian
 name, short label, and for a by-election, repeat or re-vote the `parent`
 general election whose term it fills (issue #122) -- and are copied whole
-into people.json so the dashboard carries no election list of its own: the
+into the index so the dashboard carries no election list of its own: the
 `parent` field is what lets its election filter fold the 2017-2019
 seat-fills under `2016 Seimas`. An election directory with no registry entry
 is reported by the run and falls back to its raw id in the UI.
@@ -89,8 +89,9 @@ Run from the repo root:
     python scripts/build_person_index.py
 
 Reads data/<election-id>/*.json and scraper/elections.json, writes
-dashboard/people.json, and prints the audit counts so a run is its own sanity
-check.
+dashboard/people-list.json, people-details.json and people-version.json
+(scripts/person_index_files.py has the split, issue #186) with their `.br` /
+`.gz` copies, and prints the audit counts so a run is its own sanity check.
 """
 
 from __future__ import annotations
@@ -127,14 +128,14 @@ from scraper.shared.parties import display_name as party_display_name  # noqa: E
 from scraper.shared.parties import entry as party_entry  # noqa: E402
 from scraper.shared.parties import partija  # noqa: E402
 from scraper.shared.provenance import parser_commit, utc_now_iso  # noqa: E402
-from scraper.shared.files import write_json  # noqa: E402
 from scraper.shared.tautybe import tautybe  # noqa: E402
 
 import field_coverage  # noqa: E402
 from build_web_portraits import PORTRAITS_DIR, apply_portrait_flags  # noqa: E402
+from person_index_files import INDEX_DIR, LIST_NAME, write_index  # noqa: E402
 
 DATA_ROOT = Path("data")
-OUTPUT_PATH = Path("dashboard/people.json")
+OUTPUT_PATH = INDEX_DIR / LIST_NAME
 
 REGISTRY_PATH = Path("scraper/elections.json")
 OVERRIDES_PATH = Path("scraper/person_overrides.json")
@@ -150,7 +151,7 @@ WORKPLACE_CONCEPTS = ("einamos-pareigos", "pagrindine-darboviete")
 #: Lithuanian display labels for scraper/shared/education.py's 13-tier
 #: ordinal, in rank order. The slugs are ASCII-folded, so de-slugging them in
 #: the page would drop the diacritics ("Aukstasis"); the labels ride in
-#: people.json instead, and build_index() fails if a tier lacks one.
+#: the index instead, and build_index() fails if a tier lacks one.
 EDUCATION_LEVEL_LABELS = {
     "pradinis": "Pradinis",
     "pagrindinis": "Pagrindinis",
@@ -217,7 +218,7 @@ def birth_key_of(record: dict) -> str | None:
     sentence and never promoted to a date). `~1936` keys those records so two
     same-named archive candidates born in different years stay apart — with a
     date they would have. The `~` keeps a year from ever colliding with an
-    ISO date and says in people.json's `b` that the year is all we have.
+    ISO date and says in the index's `b` that the year is all we have.
     """
     date = birth_date_of(record)
     if date:
@@ -234,7 +235,7 @@ def birth_key_of(record: dict) -> str | None:
 # resolver over the corpus's five kandidatavimas shapes. Its `isrinktas` is
 # tri-state -- True, False, or None where no results exist (2000-kovo-19's
 # five unpublished municipalities; the 1997 municipal pair was the larger
-# gap until issue #92 joined its elected pages) -- and people.json carries
+# gap until issue #92 joined its elected pages) -- and the index carries
 # all three: `"w": true`, `"w": false`, or no key. The index used to emit
 # `"w"` only when won, which made "lost" and "no results data" the same
 # absence, and the dashboard read 7,192 unknown outcomes as losses
@@ -247,7 +248,7 @@ def birth_key_of(record: dict) -> str | None:
 # combined turtas + piniginės lėšos: that era does not split them, so it
 # leaves the first two null and would otherwise contribute no turtas at all.
 #
-# ORDER MATTERS: people.json's "m" array follows this order, and the
+# ORDER MATTERS: the index's "m" array follows this order, and the
 # dashboard's MONEY_SERIES and Biggest movers picker index into it.
 MONEY_FIELDS = (
     "privalomas-registruoti-turtas",
@@ -408,7 +409,7 @@ def apply_merges(
 
 
 def _role_code(offices: list[str]) -> str | None:
-    """people.json's "r": the offices of a council-and-mayor ballot as a code
+    """The index's "r": the offices of a council-and-mayor ballot as a code
     string ("m", "tm"), None for the council-only default."""
     code = "".join("m" if office == ROLE_MAYOR else "t" for office in offices if office in (ROLE_COUNCIL, ROLE_MAYOR))
     return None if code in ("", "t") else code
@@ -699,7 +700,7 @@ def build_index(
 
     entries = sorted(people.values(), key=lambda p: (-len(p["e"]), p["n"] or ""))
     multi = sum(1 for p in entries if len({e["id"] for e in p["e"]}) > 1)
-    # Only the elections actually present are carried into people.json; the
+    # Only the elections actually present are carried into the index; the
     # dashboard reads its labels, chronology and term grouping (`parent`)
     # from this list and nothing else. An unregistered directory keeps its
     # raw id as its own label, and is reported so it gets a registry entry
@@ -856,7 +857,7 @@ def main() -> int:
         for line in problems:
             print(line, file=sys.stderr)
         print(
-            f"\nnot written: {OUTPUT_PATH} still holds the previous build",
+            f"\nnot written: {INDEX_DIR}/ still holds the previous build",
             file=sys.stderr,
         )
         return 1
@@ -866,10 +867,10 @@ def main() -> int:
     # change, scripts/build_web_portraits.py runs next and re-stamps it.
     apply_portrait_flags(index, PORTRAITS_DIR)
 
-    # 29 MB the dashboard fetches whole on every load, and the file with the
-    # most to lose from a half-write: through the atomic writer, in the
-    # compact form the page expects (issue #153).
-    write_json(OUTPUT_PATH, index, indent=None, separators=(",", ":"), newline=False)
+    # Split into the list the page needs first and the details it fetches
+    # behind it (issue #186), each through the atomic writer (issue #153);
+    # the version file, which names both, lands last.
+    written = write_index(index, INDEX_DIR)
     stats = index["stats"]
     print(f"vintage:                  corpus parsed ≤ {stats['corpusParsedAt']}, index built by {stats['parserCommit']}")
     print(f"records:                  {stats['records']}")
@@ -899,7 +900,13 @@ def main() -> int:
         f"elections:                {len(index['elections'])} of {len(load_registry())} registered "
         f"({generals} general, {len(index['elections']) - generals} grouped under a parent)"
     )
-    print(f"wrote {OUTPUT_PATH} ({OUTPUT_PATH.stat().st_size // 1024} KB)")
+    for part in ("list", "details"):
+        sizes = written["sizes"][part]
+        print(
+            f"wrote {part + ':':<9}           {sizes['raw'] // 1024} KB, "
+            + ", ".join(f"{k} {sizes[k] // 1024} KB" for k in ("br", "gz") if k in sizes)
+            + f" (v={written[part]})"
+        )
     return 0
 
 

@@ -10,7 +10,7 @@ builds the web asset instead: `portraits/<pid>.webp`, 192x256 (2x the
 desktop box, which also covers a 2x phone), keyed by the person id the page
 already routes by.
 
-Per person, from `dashboard/people.json`:
+Per person, from the person index in `dashboard/`:
 
 - **Source.** The newest candidacy whose portrait file exists -- people age,
   and the recent photo is the one a reader recognises. A file that does not
@@ -39,7 +39,7 @@ The manifest's `version` is a short hash of every pid and output hash. The
 person index carries it, and the page puts it on each portrait URL, so the
 server can mark portraits immutable and a changed portrait is a new URL.
 
-Finally `dashboard/people.json` is re-stamped: `ph: 1` on exactly the people
+Finally the person index (`dashboard/people-list.json`) is re-stamped: `ph: 1` on exactly the people
 whose `portraits/<pid>.webp` exists, and the version beside them. That is
 the same pass `scripts/build_person_index.py` runs on every build, so the
 order after a corpus change is: index, then portraits.
@@ -67,10 +67,15 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
 from scraper.shared.files import write_json  # noqa: E402
+from person_index_files import index_exists, load_index  # noqa: E402
+from person_index_files import write_index as write_split  # noqa: E402
 
 DATA_ROOT = Path("data")
-INDEX_PATH = Path("dashboard/people.json")
+#: The person index's directory (scripts/person_index_files.py, issue #186).
+INDEX_PATH = Path("dashboard")
 PORTRAITS_DIR = Path("portraits")
 MANIFEST_NAME = "manifest.json"
 
@@ -126,7 +131,7 @@ def photo_files(data_root: Path) -> dict[tuple[str, str], Path]:
 def candidate_sources(person: dict, photos: dict[tuple[str, str], Path]) -> list[Path]:
     """The person's portrait files, newest candidacy first.
 
-    `e` in people.json is chronological (the registry's order), so the last
+    `e` in the person index is chronological (the registry's order), so the last
     candidacy is the newest. Candidacies without a file are skipped.
     """
     sources = []
@@ -409,7 +414,7 @@ def apply_portrait_flags(index: dict, portraits_dir: Path = PORTRAITS_DIR) -> bo
     """Stamp `ph: 1` on the people with a web portrait; True if anything changed.
 
     The flag follows the file, not the manifest: a deployment that has
-    people.json but not the portraits must request none (#185), and the
+    the index but not the portraits must request none (#185), and the
     file is what the server would answer with. The manifest's version rides
     beside as `portraits.v`, the query string that busts caches.
     """
@@ -439,26 +444,26 @@ def apply_portrait_flags(index: dict, portraits_dir: Path = PORTRAITS_DIR) -> bo
 
 
 def write_index(index: dict, path: Path = INDEX_PATH) -> None:
-    # The same compact, atomic form build_person_index.py writes.
-    write_json(path, index, indent=None, separators=(",", ":"), newline=False)
+    # The same split files build_person_index.py writes.
+    write_split(index, path)
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--index", type=Path, default=INDEX_PATH, help="person index to read and re-stamp")
+    parser.add_argument("--index", type=Path, default=INDEX_PATH, help="person index directory to read and re-stamp")
     parser.add_argument("--data-root", type=Path, default=DATA_ROOT)
     parser.add_argument("--out", type=Path, default=PORTRAITS_DIR, help="output directory")
     parser.add_argument("--jobs", type=int, default=None, help="worker processes (default: all cores)")
     args = parser.parse_args(argv)
 
-    if not args.index.is_file():
-        print(f"No {args.index} -- run scripts/build_person_index.py first.", file=sys.stderr)
+    if not index_exists(args.index):
+        print(f"No person index in {args.index}/ -- run scripts/build_person_index.py first.", file=sys.stderr)
         return 1
     if not args.data_root.is_dir():
         print(f"No {args.data_root}/ here -- run from the repo root.", file=sys.stderr)
         return 1
     started = time.monotonic()
-    index = json.loads(args.index.read_text(encoding="utf-8"))
+    index = load_index(args.index)
     counts = build(index["people"], args.data_root, args.out, args.jobs)
     restamped = apply_portrait_flags(index, args.out)
     if restamped:

@@ -4,7 +4,7 @@ and the real run whenever the index has been built.
 The registry's `predecessors` (issue #123) say which organisation another
 continues; the report finds the pairs a name cannot -- two committees that
 share no word and sixteen candidates -- and holds the registry to explaining
-each one. The rule is pinned here on a hand-made people.json: a third of the
+each one. The rule is pinned here on a hand-made person index: a third of the
 smaller side, three persons at least, the earlier list wholly before the
 later, and never a local list as a national organisation's predecessor.
 """
@@ -12,12 +12,11 @@ later, and never a local list as a national organisation's predecessor.
 from __future__ import annotations
 
 import importlib.util
-import json
 import unittest
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-INDEX_PATH = REPO_ROOT / "dashboard" / "people.json"
+INDEX_DIR = REPO_ROOT / "dashboard"
 
 _spec = importlib.util.spec_from_file_location(
     "party_lineage_report", REPO_ROOT / "scripts" / "party_lineage_report.py"
@@ -27,7 +26,7 @@ _spec.loader.exec_module(report)
 
 
 def _index(lists: dict[str, tuple[str, list[str]]], elections: list[dict]) -> dict:
-    """A people.json with one candidacy per (person, list). `lists` maps a
+    """A person index with one candidacy per (person, list). `lists` maps a
     nominator id to (election id, person ids)."""
     people: dict[str, dict] = {}
     for party_id, (election_id, pids) in lists.items():
@@ -131,10 +130,10 @@ class ClassificationTests(unittest.TestCase):
         self.assertEqual(report.classify(("lsdp", "komitetas-musu-jonava", 3, 0.4), reviewed)[0], "unreviewed")
 
 
-@unittest.skipUnless(INDEX_PATH.exists(), "dashboard/people.json not built -- python scripts/build_person_index.py")
+@unittest.skipUnless((INDEX_DIR / "people-list.json").exists(), "dashboard/people-list.json not built -- python scripts/build_person_index.py")
 class BuiltIndexTests(unittest.TestCase):
     def test_every_continuity_pair_of_the_built_index_is_explained(self):
-        index = json.loads(INDEX_PATH.read_text(encoding="utf-8"))
+        index = report.load_index(INDEX_DIR)
         stats = report.measure(index)
         self.assertEqual(sorted(set(stats) - set(report.entries())), [], "index ids the registry lacks: rebuild it")
         reviewed = report.reviewed_distinct()

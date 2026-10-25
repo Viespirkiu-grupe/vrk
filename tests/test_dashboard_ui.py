@@ -322,21 +322,32 @@ class ConvictionCellTests(unittest.TestCase):
 
 
 class FreshnessTests(unittest.TestCase):
-    """Both fetches must revalidate the browser cache on every load.
+    """Every fetch whose URL can name new bytes must revalidate on every load.
 
     Records are rewritten in place when a parser gains a field, so a cached
     copy used without asking shows empty rows against a corpus that has the
     figures — and an empty row is indistinguishable from "never declared".
     `no-cache` keeps the copy but asks the server first (a 304 when unchanged,
-    issue #186); anything laxer would let a stale copy through.
+    issue #186); anything laxer would let a stale copy through. The index's
+    two halves are the exception by construction: their URL carries the
+    content hash the no-cache version file names (step 2 of #186), so a cached
+    copy *is* those bytes.
     """
 
-    def test_the_index_is_fetched_no_cache(self):
-        self.assertRegex(SOURCE, r'fetch\("/people\.json",\s*\{\s*cache:\s*"no-cache"')
+    def test_the_version_file_is_fetched_no_cache(self):
+        self.assertRegex(SOURCE, r'fetch\("/people-version\.json",\s*\{\s*cache:\s*"no-cache"')
+
+    def test_the_halves_are_fetched_by_their_hash(self):
+        self.assertIn('fetch(versionedUrl("people-list.json", version.list))', SOURCE)
+        self.assertIn('fetch(versionedUrl("people-details.json", version.details)', SOURCE)
+        self.assertIn("return `/${name}?v=${encodeURIComponent(hash || \"\")}`;", SOURCE)
+        self.assertNotIn('"/people.json"', SOURCE)
 
     def test_no_fetch_uses_the_cache_unrevalidated(self):
+        # `reload` bypasses the cache outright: the details refetch after a
+        # build mismatch, when the copy at hand is the wrong one.
         modes = set(re.findall(r'cache:\s*"([a-z-]+)"', SOURCE))
-        self.assertEqual(modes, {"no-cache"})
+        self.assertEqual(modes, {"no-cache", "reload"})
 
 
 class DeepLinkTests(unittest.TestCase):
@@ -926,9 +937,11 @@ class BootFailureTests(unittest.TestCase):
     """boot() used to have no res.ok check and no try/catch, so a missing
     people.json froze the app on "kraunamas indeksas…" with no message."""
 
-    def test_both_fetches_are_ok_checked(self):
-        self.assertIn("if (!indexRes.ok) throw new Error", SOURCE)
+    def test_every_fetch_is_ok_checked(self):
+        self.assertIn("if (!versionRes.ok) throw new Error", SOURCE)
+        self.assertIn("if (!listRes.ok) throw new Error", SOURCE)
         self.assertIn("if (!mapRes.ok) throw new Error", SOURCE)
+        self.assertIn("if (!res.ok) throw new Error(`people-details.json", SOURCE)
 
     def test_a_failed_boot_reports_instead_of_freezing(self):
         self.assertIn("function bootFailed(", SOURCE)
@@ -1597,10 +1610,12 @@ class RoutingTests(unittest.TestCase):
         # second person is on screen, under their own hash and
         # announcement.
         self.assertIn("let renderToken = 0;", SOURCE)
-        self.assertEqual(SOURCE.count("const token = ++renderToken;"), 2)
-        # Two views await their records. The portrait (issues #185, #187)
-        # checks the token once, before it inserts.
-        self.assertEqual(SOURCE.count("if (token !== renderToken) return;"), 2)
+        self.assertEqual(SOURCE.count("const token = ++renderToken;"), 3)
+        # Two views await their records, and `whenDetails` awaits the index's
+        # details file (issue #186). The portrait (issues #185, #187) checks
+        # the token once, before it inserts.
+        self.assertEqual(SOURCE.count("if (token !== renderToken) return;"), 3)
+        self.assertIn("() => { if (token === renderToken) draw(); }", SOURCE)
         self.assertIn("if (img && token === renderToken) head.prepend(img);", SOURCE)
         # And the synchronous views end whatever is in flight: the
         # placeholder, the election summary, the movers, and the nominator
@@ -1779,6 +1794,69 @@ class FilterCompositionTests(unittest.TestCase):
             self._matches(self.DUAL, election="2019-kovo-3-savivaldybiu-tarybu",
                           party="lsdp", municipality="0", role="t", won="won")
         )
+
+
+class DetailsGateTests(unittest.TestCase):
+    """Everything that reads the details file waits for it (issue #186): the
+    record pages (`c`), the sums, the CSV. The list views do not."""
+
+    def test_the_views_that_read_details_wait(self):
+        self.assertIn("whenDetails(() => showPerson(person));", SOURCE)
+        self.assertIn("whenDetails(showCompare);", SOURCE)
+        self.assertIn("const needsDetails = { aggBtn: true, nominatorBtn: true, moversBtn: true }[view];", SOURCE)
+        self.assertIn('addEventListener("click", exportCSVWhenReady)', SOURCE)
+        self.assertIn('"kraunama…"', SOURCE)
+
+    def test_the_workplaces_join_the_search_when_they_land(self):
+        body = re.search(r"^async function loadDetails\(version\) \{.*?^\}", SOURCE, re.S | re.M).group(0)
+        self.assertIn("p._f = haystack(p);", body)
+        self.assertIn("details.build === INDEX.build", body)
+
+
+@unittest.skipIf(NODE is None, "node not installed — behavioural checks skipped")
+class DecodeListTests(unittest.TestCase):
+    """The page's `decodeList` plus the details merge, run under node over
+    scripts/person_index_files.py's split, give back the index the split
+    came from: the Python and JavaScript halves of the format agree."""
+
+    def test_the_page_rebuilds_the_index(self):
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location("person_index_files", REPO_ROOT / "scripts" / "person_index_files.py")
+        files = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(files)
+        index = {
+            "elections": [{"id": "2016-seimo"}, {"id": "2020-seimo"}],
+            "parties": {"lsdp": {"n": "LSDP"}, "ts-lkd": {"n": "TS-LKD"}},
+            "campaigns": [{"k": "x", "n": 2}],
+            "people": [
+                {"k": "ŽYDRŪNĖ ĄŽUOLAITĖ|1970-01-02", "pid": "p1", "n": "Žydrūnė ĄŽUOLAITĖ", "b": "1970-01-02",
+                 "e": [{"id": "2020-seimo", "c": "z-1", "w": True, "m": [1, None, 2], "p": "ts-lkd", "sv": 0, "wp": "UAB", "ck": 0},
+                       {"id": "2016-seimo", "c": "z-2"}], "ph": 1},
+                {"k": "JONAS JONAITIS|~1950", "pid": "p2", "n": "Jonas JONAITIS", "b": "1950-03-04",
+                 "e": [{"id": "2016-seimo", "c": "j-1", "p": "lsdp"}]},
+                {"k": "ONA ONAITĖ|?", "pid": "p3", "n": "Ona ONAITĖ", "b": None, "e": [{"id": "2020-seimo", "c": "o-1"}]},
+            ],
+        }
+        listing, details = files.split_index(index)
+        decode = re.search(r"^function decodeList\(list\) \{.*?^\}", SOURCE, re.S | re.M).group(0)
+        script = f"""
+        {decode}
+        const INDEX = decodeList({json.dumps(listing, ensure_ascii=False)});
+        const details = {json.dumps(details, ensure_ascii=False)};
+        INDEX.people.forEach((p, i) => p.e.forEach((e, j) => Object.assign(e, details.people[i][j])));
+        console.log(JSON.stringify(INDEX.people.map(p => ({{
+          k: p.k, e: p.e.map(e => Object.fromEntries(Object.entries(e).filter(([k]) => k !== "ei" && k !== "pi"))),
+        }}))));
+        """
+        out = subprocess.run([NODE, "-"], input=script, capture_output=True, text=True, timeout=30)
+        if out.returncode != 0:
+            raise AssertionError(out.stderr.strip())
+        got = json.loads(out.stdout)
+        for person, decoded in zip(index["people"], got):
+            with self.subTest(person["pid"]):
+                self.assertEqual(decoded["k"], person["k"])
+                self.assertEqual([dict(sorted(e.items())) for e in decoded["e"]], [dict(sorted(e.items())) for e in person["e"]])
 
 
 @unittest.skipIf(NODE is None, "node not installed — behavioural checks skipped")

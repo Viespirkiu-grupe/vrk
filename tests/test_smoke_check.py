@@ -13,7 +13,6 @@ import functools
 import importlib.util
 import io
 import os
-import shutil
 import sys
 import tempfile
 import threading
@@ -77,7 +76,9 @@ class AgainstServeDashboard(unittest.TestCase):
         for line in (
             "ok    GET / -> 200 text/html",
             "ok    GET /_astro/index.abc.js -> 200",
-            "ok    GET /people.json -> 200 application/json",
+            "ok    GET /people-version.json -> 200 application/json",
+            "ok    the index lists people",
+            "ok    list and details align",
             "ok    GET /data/2020-seimo/vardenis-pavardenis-2020-seimo.json -> 200 application/json",
             f"ok    GET /portraits/{synthetic_repo.PID}.webp?v={synthetic_repo.PORTRAIT_VERSION} -> 200 image/webp",
             f"ok    GET /asmuo/vardenis-pavardenis-{synthetic_repo.PID} -> 200 text/html",
@@ -141,10 +142,7 @@ class AgainstWrongServers(unittest.TestCase):
         self.assertIn("FAIL  security headers on /", out)
 
     def test_an_index_without_portraits_fails(self):
-        repo = synthetic_repo.make_repo(self.root / "repo")
-        index = repo / "dashboard/people.json"
-        index.write_text(index.read_text().replace('"ph":1,', ""))
-        shutil.rmtree(repo / "portraits")
+        repo = synthetic_repo.make_repo(self.root / "repo", portraits=False)
         cwd = os.getcwd()
         os.chdir(repo)
         self.addCleanup(os.chdir, cwd)
