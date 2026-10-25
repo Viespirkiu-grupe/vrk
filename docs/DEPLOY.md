@@ -8,10 +8,8 @@ public site. It serves the Astro build at `/`, the index beside it,
 
 ## What the server needs
 
-- A checkout of this repository, and Python 3.11+ with
-  `pip install -r requirements.txt` to build the index.
-- Node.js 22.12+ to build the frontend (`frontend/dist/` is gitignored, so a
-  pull alone never updates it; that was #183).
+- A checkout of this repository and Docker with Compose. The image builds
+  the frontend itself and carries the Python to build the index.
 - **`data/`**, the records, from the latest public
   [release](https://github.com/Viespirkiu-grupe/vrk/releases). The server
   needs no full-size photos:
@@ -27,29 +25,48 @@ public site. It serves the Astro build at `/`, the index beside it,
   (`scripts/build_web_portraits.py`). A public release has the third-party
   contacts already removed ([PERSONAL_DATA.md](PERSONAL_DATA.md)). A scraping
   disk still has them.
-- **The index**, `dashboard/people-{list,details,version}.json`, built on the server from `data/`
-  with `python scripts/build_person_index.py` (about 35 s). It also stamps
-  which people have a portrait in `portraits/`.
+- **The index**, `dashboard/people-{list,details,version}.json`, built from
+  `data/` (about 35 s; see below). It also stamps which people have a
+  portrait in `portraits/`.
 
-> **Docker: TODO from operator.** Production probably runs in a container
-> set up by the operator. Add the image, the mounts for `data/`,
-> `portraits/` and `dashboard/`, the restart command, and how requests reach
-> the server here. The stock script binds `127.0.0.1` and refuses a
-> non-loopback `Host` header (issue #160), so something in that setup
-> already accounts for this.
+## Docker
+
+[compose.yaml](../compose.yaml) runs one service, `vrk-app`. It publishes no
+port. It joins the external network `$VRK_NETWORK` (default `proxy`), and
+the front proxy (cloudflared, or a shared Caddy) on that network sends
+`vrk.viespirkiai.org` to **`http://vrk-app:8080`**. `data/` and `portraits/`
+are mounted read-only from the checkout and `dashboard/` read-write. The
+container runs as `$VRK_UID:$VRK_GID` (default 1000:1000), which must be
+able to read the corpus and write `dashboard/`. Put overrides in a `.env`
+beside compose.yaml.
+
+The server answers only `localhost` and the names in `VRK_ALLOW_HOSTS`
+(compose sets `vrk.viespirkiai.org`), so the proxy must pass the original
+`Host` header. cloudflared and Caddy's `reverse_proxy` both do by default.
+It must also leave `Cache-Control` alone, because the cache rules below
+depend on it. Caddy's `encode` leaves a response that is already
+`Content-Encoding: br` as it is.
+
+First setup, after `data/` and `portraits/` are in place:
+
+```bash
+docker network create proxy        # once per host, if it does not exist yet
+docker compose run --rm vrk-app python scripts/build_person_index.py
+docker compose up -d --build
+```
 
 ## Updating
 
 ```bash
 git pull --ff-only
-(cd frontend && npm ci && npm run build)        # every pull that touched frontend/
-python scripts/build_person_index.py            # after new data/ or portraits/
-# restart serve_dashboard.py (see the Docker TODO above)
+docker compose run --rm vrk-app python scripts/build_person_index.py   # after new data/ or portraits/
+docker compose up -d --build                                           # rebuilds the frontend too
 python3 scripts/smoke_check.py https://vrk.viespirkiai.org
 ```
 
 A new corpus means unpacking the new release into `data/` and `portraits/`
-first, as above.
+first, as above. The index files are read from the mount on every request,
+so a rebuilt index is live without a restart.
 
 ## Cloudflare
 

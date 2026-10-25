@@ -1,0 +1,25 @@
+# vrk.viespirkiai.org (docs/DEPLOY.md). No published port: the front proxy
+# (cloudflared or a shared Caddy) on the same external network reaches the
+# site at vrk-app:8080.
+services:
+  vrk-app:
+    build: .
+    image: vrk-app
+    container_name: vrk-app
+    restart: unless-stopped
+    expose:
+      - "8080"
+    environment:
+      VRK_ALLOW_HOSTS: ${VRK_ALLOW_HOSTS:-vrk.viespirkiai.org}
+    # Must be able to read data/ and portraits/, and to write dashboard/ when
+    # the index is built with `docker compose run`.
+    user: "${VRK_UID:-1000}:${VRK_GID:-1000}"
+    volumes:
+      - ./data:/app/data:ro
+      - ./portraits:/app/portraits:ro
+      - ./dashboard:/app/dashboard
+
+networks:
+  default:
+    name: ${VRK_NETWORK:-proxy}
+    external: true
