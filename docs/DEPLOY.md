@@ -12,7 +12,7 @@ First time, on the server:
 3. `cp compose.sample.yml compose.yml && cp .env.sample .env`, then edit `.env`.
 4. `docker compose run --rm vrk-app python scripts/build_person_index.py`
 5. `docker compose up -d`
-6. Point the Cloudflare tunnel or proxy at `http://vrk-app:8080`.
+6. Point the Cloudflare tunnel at `http://vrk-app:8080`.
 
 Every update after that:
 
@@ -58,8 +58,8 @@ not, so don't copy that one to the server.
   `docker network create proxy`). For host networking, as on viespirkiai,
   see the comment in `compose.sample.yml`.
 - **Host names:** the server answers only the names in `VRK_ALLOW_HOSTS`, so
-  the proxy must pass the original `Host` header. cloudflared and Caddy do
-  that by default.
+  the tunnel must pass the original `Host` header. cloudflared does that by
+  default.
 - **Permissions:** the container runs as `VRK_UID:VRK_GID`. That user must be
   able to read `data/` and `portraits/` and write `dashboard/`.
 - **Roll back:** in `compose.yml`, set `image:` to an older tag

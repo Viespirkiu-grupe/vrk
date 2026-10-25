@@ -1,7 +1,6 @@
 # vrk.viespirkiai.org (docs/DEPLOY.md). Copy to compose.yml (gitignored) and
-# .env.sample to .env. No published port: the front proxy (cloudflared or a
-# shared Caddy) on the same external network reaches the site at
-# vrk-app:8080.
+# .env.sample to .env. No published port: the Cloudflare tunnel on the same
+# external network reaches the site at vrk-app:8080.
 services:
   vrk-app:
     # Built by .github/workflows/build-image.yml on every push to main;
