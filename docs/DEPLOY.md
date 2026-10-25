@@ -8,8 +8,9 @@ public site. It serves the Astro build at `/`, the index beside it,
 
 ## What the server needs
 
-- A checkout of this repository and Docker with Compose. The image builds
-  the frontend itself and carries the Python to build the index.
+- A checkout of this repository, for the compose sample and the data
+  directories, and Docker with Compose. The image carries the frontend build
+  and the Python that builds the index.
 - **`data/`**, the records, from the latest public
   [release](https://github.com/Viespirkiu-grupe/vrk/releases). The server
   needs no full-size photos:
@@ -31,70 +32,87 @@ public site. It serves the Astro build at `/`, the index beside it,
 
 ## Docker
 
-[compose.yaml](../compose.yaml) runs one service, `vrk-app`. It publishes no
-port. It joins the external network `$VRK_NETWORK` (default `proxy`), and
-the front proxy (cloudflared, or a shared Caddy) on that network sends
-`vrk.viespirkiai.org` to **`http://vrk-app:8080`**. `data/` and `portraits/`
-are mounted read-only from the checkout and `dashboard/` read-write. The
-container runs as `$VRK_UID:$VRK_GID` (default 1000:1000), which must be
-able to read the corpus and write `dashboard/`. Put overrides in a `.env`
-beside compose.yaml.
+The image is `ghcr.io/viespirkiu-grupe/vrk`, built from the
+[Dockerfile](../Dockerfile) by `build-image.yml` on every push to main. It is
+tagged with the full and short commit SHA, and with `latest` on main.
+[compose.sample.yml](../compose.sample.yml) runs it as one service,
+`vrk-app`. The service publishes no port. It joins the external network
+`$VRK_NETWORK` (default `proxy`), and the front proxy on that network
+(cloudflared, or a shared Caddy) sends `vrk.viespirkiai.org` to
+**`http://vrk-app:8080`**. A commented `network_mode: host` is there for a
+host-network setup like viespirkiai's. `data/` and `portraits/` are mounted
+read-only and `dashboard/` read-write. The container runs as
+`$VRK_UID:$VRK_GID`, which must be able to read the corpus and write
+`dashboard/`.
 
-The server answers only `localhost` and the names in `VRK_ALLOW_HOSTS`
-(compose sets `vrk.viespirkiai.org`), so the proxy must pass the original
-`Host` header. cloudflared and Caddy's `reverse_proxy` both do by default.
-It must also leave `Cache-Control` alone, because the cache rules below
-depend on it. Caddy's `encode` leaves a response that is already
+The server answers only `localhost` and the names in `VRK_ALLOW_HOSTS`, so
+the proxy must pass the original `Host` header. cloudflared and Caddy's
+`reverse_proxy` both do by default. The proxy must also leave
+`Cache-Control` alone. Caddy's `encode` leaves a response that is already
 `Content-Encoding: br` as it is.
 
-First setup, after `data/` and `portraits/` are in place:
+First setup, in the checkout, after `data/` and `portraits/` are in place:
 
 ```bash
+cp compose.sample.yml compose.yml && cp .env.sample .env   # both gitignored; edit .env
 docker network create proxy        # once per host, if it does not exist yet
 docker compose run --rm vrk-app python scripts/build_person_index.py
-docker compose up -d --build
+docker compose up -d
 ```
+
+A new GHCR package is private. Make it public in the package settings, or
+`docker login ghcr.io` on the server. Without the registry,
+`docker compose up -d --build` builds the same image from the checkout.
 
 ## Updating
 
 ```bash
-git pull --ff-only
-docker compose run --rm vrk-app python scripts/build_person_index.py   # after new data/ or portraits/
-docker compose up -d --build                                           # rebuilds the frontend too
+git pull --ff-only                 # the sample and the docs; diff compose.yml against the sample
+docker compose pull
+docker compose run --rm vrk-app python scripts/build_person_index.py   # only after new data/ or portraits/
+docker compose up -d
 python3 scripts/smoke_check.py https://vrk.viespirkiai.org
 ```
 
 A new corpus means unpacking the new release into `data/` and `portraits/`
 first, as above. The index files are read from the mount on every request,
-so a rebuilt index is live without a restart.
+so a rebuilt index is live without a restart. To roll back, set `image:` in
+compose.yml to an older SHA tag (`ghcr.io/viespirkiu-grupe/vrk:sha-<short>`)
+and run `docker compose up -d`.
 
 ## Cloudflare
 
-Nothing in the repository changes the zone. The operator sets one cache rule
-in the dashboard (Caching → Cache Rules):
+Nothing in the repository changes the zone. `/_astro/*` (CSS, JS) and
+`/portraits/*.webp` need no rule. Their extensions are on Cloudflare's
+default cacheable list, so the origin's `public, max-age=31536000,
+immutable` already keeps them at the edge. The default cache key includes
+the query string, which carries a portrait's `?v=` version.
 
-- *When:* hostname is `vrk.viespirkiai.org` and the URI path starts with
-  `/_astro/` or `/portraits/`.
-- *Then:* Eligible for cache. Edge TTL: "Use cache-control header if
-  present". Browser TTL: "Respect origin". Keep the default cache key,
-  because the query string carries a portrait's `?v=` version.
-
-And a second rule, the same but for the person index (issue #186):
+JSON is not on that list, so the person index needs one cache rule
+(Caching → Cache Rules):
 
 - *When:* hostname is `vrk.viespirkiai.org` and the URI path equals
   `/people-list.json` or `/people-details.json`.
-- *Then:* the same three settings, and the default cache key: `?v=` is the
+- *Then:* Eligible for cache. Edge TTL: "Use cache-control header if
+  present". Browser TTL: "Respect origin". Default cache key: `?v=` is the
   file's content hash. The origin answers `immutable` only when `v` is the
   hash of the file it holds, and `no-cache` otherwise, so the edge never
-  keeps a mid-deploy answer. [DASHBOARD.md](DASHBOARD.md#caching) has the
-  details and a curl check.
+  keeps a mid-deploy answer ([DASHBOARD.md](DASHBOARD.md#caching)).
 
-The origin marks only those URLs `immutable`. Everything else is
-`no-cache`, and Cloudflare passes revalidations through, so they come back
-as 304s. Do not add a "Cache Everything" rule for `/` or `/data/`, because
-the edge would then serve a stale index after an update. Leave Auto Minify
-and Rocket Loader off, since they would rewrite the hashed bundles. A rule
-left over for `/dashboard/_astro/*` from before #184 is stale.
+After a deploy, check it with the `list` hash from the version file. The
+second request should say `cf-cache-status: HIT`:
+
+```bash
+v=$(curl -s https://vrk.viespirkiai.org/people-version.json | python3 -c 'import json,sys; print(json.load(sys.stdin)["list"])')
+curl -sI -H 'Accept-Encoding: br' "https://vrk.viespirkiai.org/people-list.json?v=$v" | grep -iE 'cf-cache-status|cache-control|content-encoding'
+```
+
+Everything else is `no-cache`, and Cloudflare passes revalidations through,
+so they come back as 304s. Do not add a "Cache Everything" rule for `/` or
+`/data/`, because the edge would then serve a stale index after an update.
+Leave Auto Minify and Rocket Loader off, since they would rewrite the hashed
+bundles. A rule left over for `/dashboard/_astro/*` from before #184 is
+stale, and so is one for `/_astro/` or `/portraits/`, though it does no harm.
 
 ## Checking
 

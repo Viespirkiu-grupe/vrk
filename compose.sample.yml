@@ -1,0 +1,46 @@
+# vrk.viespirkiai.org (docs/DEPLOY.md). Copy to compose.yml (gitignored) and
+# .env.sample to .env. No published port: the front proxy (cloudflared or a
+# shared Caddy) on the same external network reaches the site at
+# vrk-app:8080.
+services:
+  vrk-app:
+    # Built by .github/workflows/build-image.yml on every push to main;
+    # `docker compose build` builds the same image from this checkout.
+    image: ghcr.io/viespirkiu-grupe/vrk:latest
+    build: .
+    container_name: vrk-app
+    restart: unless-stopped
+    env_file:
+      - .env
+    expose:
+      - "8080"
+    # Must be able to read data/ and portraits/, and to write dashboard/ when
+    # the index is built with `docker compose run`.
+    user: "${VRK_UID:-1000}:${VRK_GID:-1000}"
+    volumes:
+      # The corpus, the portraits and the person index: not in the image.
+      - ./data:/app/data:ro
+      - ./portraits:/app/portraits:ro
+      - ./dashboard:/app/dashboard
+    healthcheck:
+      # The version file is tiny and proves the dashboard/ mount is there.
+      test: ["CMD", "python", "-c", "import os, urllib.request; urllib.request.urlopen('http://127.0.0.1:%s/people-version.json' % os.environ.get('VRK_PORT', '8080'), timeout=4)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          # Serving needs little; the index build peaks at about 460 MB
+          # over the full corpus.
+          memory: 1G
+    # Or, as on the viespirkiai host, share the host's network: drop
+    # `expose` and `networks`, uncomment this, and set VRK_BIND=127.0.0.1 in
+    # .env so only a proxy on the same host reaches the port.
+    # network_mode: host
+
+networks:
+  default:
+    name: ${VRK_NETWORK:-proxy}
+    external: true

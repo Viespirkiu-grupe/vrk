@@ -1,6 +1,7 @@
 # The public site (docs/DEPLOY.md): scripts/serve_dashboard.py over the Astro
 # build. data/, portraits/ and dashboard/ (the person index) are mounted, not
-# baked in; compose.yaml has the mounts and the network.
+# baked in; compose.sample.yml has the mounts, the network and the health
+# check.
 
 FROM node:22-slim AS frontend
 WORKDIR /src/frontend
@@ -27,6 +28,4 @@ USER vrk
 
 ENV VRK_BIND=0.0.0.0 VRK_PORT=8080
 EXPOSE 8080
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD ["python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/people-version.json', timeout=4)"]
 CMD ["python", "scripts/serve_dashboard.py"]

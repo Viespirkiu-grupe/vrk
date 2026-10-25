@@ -29,6 +29,9 @@ dist/
 # Local environment files
 .env
 .env.*
+!.env.sample
+# The operator's copy of compose.sample.yml (docs/DEPLOY.md).
+compose.yml
 
 # Generated scraper outputs
 .run-state/

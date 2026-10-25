@@ -1,5 +1,5 @@
 # The image holds code and the frontend build; the corpus, portraits and the
-# index are mounted at run time (compose.yaml).
+# index are mounted at run time (compose.sample.yml).
 .git
 .github
 .claude
@@ -23,6 +23,8 @@ tests
 *.tar
 .env
 .env.*
+compose.yml
+compose.sample.yml
 frontend/node_modules
 frontend/dist
 frontend/.astro
