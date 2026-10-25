@@ -3,18 +3,35 @@
 The site is one Docker container running `scripts/serve_dashboard.py`.
 Cloudflare sits in front of it.
 
-## Quick start
+## First time
 
-First time, on the server:
+On the server, with Docker, `gh` and `python3`:
 
-1. `git clone https://github.com/Viespirkiu-grupe/vrk && cd vrk`
-2. Get the data (see [Data](#data)).
-3. `cp compose.sample.yml compose.yml && cp .env.sample .env`, then edit `.env`.
-4. `docker compose run --rm vrk-app python scripts/build_person_index.py`
-5. `docker compose up -d`
-6. Point the Cloudflare tunnel at `http://vrk-app:8080`.
+```bash
+git clone https://github.com/Viespirkiu-grupe/vrk && cd vrk
 
-Every update after that:
+# The data, from the latest release (https://github.com/Viespirkiu-grupe/vrk/releases)
+gh release download corpus-YYYY-MM-DD --pattern 'vrk-corpus.sqlite.gz' --pattern 'vrk-web-portraits.tar'
+gunzip vrk-corpus.sqlite.gz
+python3 scripts/unpack_corpus.py vrk-corpus.sqlite --no-photos   # writes data/, the records
+tar -xf vrk-web-portraits.tar                                     # writes portraits/
+
+# Settings
+cp compose.sample.yml compose.yml && cp .env.sample .env          # then edit .env
+
+# The person index, built from data/ into dashboard/ (about 35 s)
+docker compose run --rm vrk-app python scripts/build_person_index.py
+
+# Start
+docker compose up -d
+```
+
+Then point the Cloudflare tunnel at `http://vrk-app:8080`.
+
+Use the release, not a scraping machine's `data/`: releases have
+third-party contact details removed ([PERSONAL_DATA.md](PERSONAL_DATA.md)).
+
+## Updating
 
 ```bash
 git pull --ff-only
@@ -23,28 +40,8 @@ docker compose up -d
 python3 scripts/smoke_check.py https://vrk.viespirkiai.org
 ```
 
-For new data, unpack it first and rerun step 4. You don't need a restart.
-
-## Data
-
-The container needs three folders next to `compose.yml`:
-
-| Folder | What | Where from |
-|---|---|---|
-| `data/` | the records | the latest [release](https://github.com/Viespirkiu-grupe/vrk/releases) |
-| `portraits/` | small portrait images | the same release |
-| `dashboard/` | the person index | step 4 builds it from `data/` (about 35 s) |
-
-```bash
-gh release download corpus-YYYY-MM-DD --pattern 'vrk-corpus.sqlite.gz' --pattern 'vrk-web-portraits.tar'
-gunzip vrk-corpus.sqlite.gz
-python scripts/unpack_corpus.py vrk-corpus.sqlite --no-photos   # writes data/
-tar -xf vrk-web-portraits.tar                                    # writes portraits/
-```
-
-Releases have third-party contact details removed
-([PERSONAL_DATA.md](PERSONAL_DATA.md)). A scraping machine's `data/` does
-not, so don't copy that one to the server.
+For a new corpus, rerun the data commands and the index build from above.
+No restart is needed.
 
 ## Docker
 
