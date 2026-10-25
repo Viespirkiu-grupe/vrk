@@ -36,8 +36,9 @@ def write_json(
     * `indent=1` for the two registries checked in at one space
       (`scraper/shared/vietovardziai.json`, `scraper/parties.json`);
     * `indent=None, separators=(",", ":"), newline=False` for
-      `dashboard/people.json`, 29 MB of compact JSON the page fetches whole,
-      and the file with the most to lose from a half-write.
+      the person index's list and details files in `dashboard/` (24 MB of
+      compact JSON between them, scripts/person_index_files.py), the files
+      with the most to lose from a half-write.
     """
     payload = json.dumps(data, ensure_ascii=False, indent=indent, separators=separators)
     if newline:

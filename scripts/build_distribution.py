@@ -188,7 +188,7 @@ PHOTO_PART_BUDGET = 1_900_000_000
 #: The web portraits as one plain tar (issue #187): `portraits/<pid>.webp`,
 #: unpacked where the server's root is. The builder's own manifest stays
 #: behind -- 7 MB of source paths and build-machine mtimes a server has no
-#: use for; the version the page needs is in people.json, and MANIFEST.json
+#: use for; the version the page needs is in people-list.json, and MANIFEST.json
 #: checksums the tar.
 #: Uncompressed for the same reason as the parts -- WebP leaves gzip nothing.
 #: Built from the repository's `portraits/`, which spans every person, so a
@@ -847,7 +847,7 @@ def write_manifest(
         # consumer after one era's pictures downloads one part, not all.
         "photoParts": corpus_counts["photo_parts"],
         # The version is the query string the page puts on each portrait URL
-        # (people.json's `portraits.v`); the settings are what built them.
+        # (people-list.json's `portraits.v`); the settings are what built them.
         **(
             {"webPortraits": {k: corpus_counts["web_portraits"][k] for k in ("count", "bytes", "version", "settings")}}
             if corpus_counts.get("web_portraits")

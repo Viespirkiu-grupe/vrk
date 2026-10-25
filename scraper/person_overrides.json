@@ -6,7 +6,7 @@
     "fold the fragments into one person) or `distinct` (reviewed, genuinely two people),",
     "and `why` records the evidence. `merge` is applied by scripts/build_person_index.py —",
     "the canonical fragment is the one with the chronologically earliest candidacy, the",
-    "others land in people.json's `ak` so old deep links keep resolving. Both decisions are",
+    "others land in the person index's `ak` so old deep links keep resolving. Both decisions are",
     "read back by scripts/find_identity_merge_candidates.py so reviewed pairs stop",
     "resurfacing. A key that matches no person fails the build: fix it here, never ignore it."
   ],

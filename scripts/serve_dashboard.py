@@ -252,7 +252,7 @@ def _is_served(translated: Path, root: Path) -> bool:
     Compared *lexically*, not through `Path.resolve()`, and against
     `os.getcwd()` — the base `translate_path` itself joins against. `data/`
     is a directory of symlinks on the machine that scraped the corpus and
-    `dashboard/people.json` is one too, so resolving would put every record
+    the index files in `dashboard/` can be too, so resolving would put every record
     fetch outside the root and refuse it; and resolving only one side breaks
     wherever the cwd crosses a symlink, which on macOS is every temporary
     directory. Both were caught by driving the real dashboard and the tests

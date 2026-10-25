@@ -110,7 +110,7 @@ Where to start:
 ## Licence, data terms and personal data
 
 The code is MIT-licensed ([LICENSE](LICENSE)). The corpus it produces — the
-release assets, the record files, `dashboard/people.json` — is a compilation
+release assets, the record files, the person index in `dashboard/` — is a compilation
 of VRK's public candidate pages published under **CC BY 4.0**;
 [DATA_TERMS.md](DATA_TERMS.md) states the required attribution, what the
 compilation adds to VRK's content, and how to ask for a person's record to be

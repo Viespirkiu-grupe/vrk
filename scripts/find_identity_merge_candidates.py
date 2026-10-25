@@ -63,7 +63,7 @@ Decisions do not belong here: an accepted merge or a rejected pair is an
 entry in scraper/person_overrides.json (checked in, applied by
 scripts/build_person_index.py). This script joins that file back in, so a
 reviewed pair prints as decided and only the undecided remainder demands
-attention. A merged pair disappears from people.json and therefore from this
+attention. A merged pair disappears from the person index and therefore from this
 report; a `distinct` pair stays but is marked.
 
 Run from the repo root after building the index:
@@ -106,7 +106,7 @@ SURNAME_SUFFIXES = MAIDEN_SUFFIXES + ("IENĖ",)
 
 #: A person keyed by name alone, or by birth year alone: the 1996-1999 Seimas
 #: archive family publishes no birth date, so `build_person_index` falls back
-#: to `NAME|?` and `NAME|~YYYY`. `people.json` renders the first as a falsy
+#: to `NAME|?` and `NAME|~YYYY`. The person index renders the first as a falsy
 #: `b` and the second as `~YYYY`.
 YEAR_ONLY = re.compile(r"^~(\d{4})$")
 FULL_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -437,7 +437,7 @@ def main() -> int:
 
     # What the passes could *not* look at. Printed because "0 undecided" read
     # as "the corpus is reviewed" while 147 pairs the passes cannot form sat
-    # in people.json (issue #141), and the same silence would come back the
+    # in the person index (issue #141), and the same silence would come back the
     # moment a new key shape appears.
     fragments = [p for p in index["people"] if is_fragment(p)]
     paired_keys = {k for p in pairs for k in (p["key_a"], p["key_b"])}

@@ -131,7 +131,7 @@ def photo_files(data_root: Path) -> dict[tuple[str, str], Path]:
 def candidate_sources(person: dict, photos: dict[tuple[str, str], Path]) -> list[Path]:
     """The person's portrait files, newest candidacy first.
 
-    `e` in people.json is chronological (the registry's order), so the last
+    `e` in the person index is chronological (the registry's order), so the last
     candidacy is the newest. Candidacies without a file are skipped.
     """
     sources = []
@@ -414,7 +414,7 @@ def apply_portrait_flags(index: dict, portraits_dir: Path = PORTRAITS_DIR) -> bo
     """Stamp `ph: 1` on the people with a web portrait; True if anything changed.
 
     The flag follows the file, not the manifest: a deployment that has
-    people.json but not the portraits must request none (#185), and the
+    the index but not the portraits must request none (#185), and the
     file is what the server would answer with. The manifest's version rides
     beside as `portraits.v`, the query string that busts caches.
     """

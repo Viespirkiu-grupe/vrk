@@ -27,7 +27,7 @@ public site. It serves the Astro build at `/`, the index beside it,
   (`scripts/build_web_portraits.py`). A public release has the third-party
   contacts already removed ([PERSONAL_DATA.md](PERSONAL_DATA.md)). A scraping
   disk still has them.
-- **The index**, `dashboard/people.json`, built on the server from `data/`
+- **The index**, `dashboard/people-{list,details,version}.json`, built on the server from `data/`
   with `python scripts/build_person_index.py` (about 35 s). It also stamps
   which people have a portrait in `portraits/`.
 

@@ -249,7 +249,7 @@ are on pages the corpus does not read. Resolve all of it through
 single-winner race as `apygardos-turai` and the last one flattened, and the
 constituency's one name; the candidacy table projects them as
 `preference_votes`, `list_votes`, `constituency_votes` and friends
-([CANDIDACIES.md](CANDIDACIES.md)), and people.json carries `v`, `cv`, `ap`.
+([CANDIDACIES.md](CANDIDACIES.md)), and the person index carries `v`, `cv`, `ap`.
 
 **Placeholders.** Four placeholder forms normalize to `null`: `Nenurodė`,
 `-`, the empty string, and a value that is nothing but the replacement
@@ -365,7 +365,7 @@ same-election record pairs, and 1,989 names are shared by distinct people
 that name-only grouping would merge wrongly.
 
 Two things ride on top of the key (issue #96). Each person in
-`dashboard/people.json` carries a **`pid`** — `p` + 12 hex digits of blake2s
+the person index (`dashboard/people-list.json`) carries a **`pid`** — `p` + 12 hex digits of blake2s
 over the natural `NAME|birth` key, anchored for merged persons at the
 chronologically earliest fragment so it survives rebuilds and new elections
 — and **`scraper/person_overrides.json`** is the checked-in, hand-reviewed
