@@ -30,8 +30,7 @@ On the server, with Docker, `gh` and `python3`:
    cp compose.sample.yml compose.yml && cp .env.sample .env
    ```
 
-4. **Create the Docker network** the tunnel and the site share. Skip this if
-   it already exists.
+4. **Create the Docker network** the tunnel and the site share.
 
    ```bash
    docker network create proxy
